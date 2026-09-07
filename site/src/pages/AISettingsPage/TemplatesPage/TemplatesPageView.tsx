@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	DetailedError,
 	getErrorDetail,
@@ -60,6 +61,8 @@ const TemplateRow: FC<TemplateRowProps> = ({
 	isPending,
 	onToggleAgentsAllowed,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const label = template.display_name || template.name;
 	const organization =
 		template.organization_display_name || template.organization_name;
@@ -97,7 +100,13 @@ const TemplateRow: FC<TemplateRowProps> = ({
 						onToggleAgentsAllowed(template, agentsAllowed)
 					}
 					disabled={isPending}
-					aria-label={`Allow Coder Agents to create workspaces using ${label} in ${organization}`}
+					aria-label={tI18n(
+						"AISettingsPage.TemplatesPage.TemplatesPageView.allow_coder_agents_to_create_workspaces_using_va_c91b9cb4",
+						{
+							value0: label,
+							value1: organization,
+						},
+					)}
 				/>
 			</TableCell>
 		</TableRow>
@@ -113,18 +122,25 @@ export const TemplatesPageView: FC<TemplatesPageViewProps> = ({
 	onToggleAgentsAllowed,
 	pendingTemplateIDs,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const hasValidationError = isApiValidationError(error);
 	const hasLoadError = hasError(error) && !hasValidationError;
 
 	return (
 		<div>
 			<SettingsHeader>
-				<SettingsHeaderTitle>Templates</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"AISettingsPage.TemplatesPage.TemplatesPageView.templates_56b564b7",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Choose which templates Coder Agents can use to create workspaces.
+					{tI18n(
+						"AISettingsPage.TemplatesPage.TemplatesPageView.choose_which_templates_coder_agents_can_use_to_c_47790183",
+					)}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			<TemplatesFilter
 				filter={filterState.filter}
 				error={error}
@@ -141,22 +157,42 @@ export const TemplatesPageView: FC<TemplatesPageViewProps> = ({
 						}
 					/>
 					<Button variant="outline" size="sm" type="button" onClick={onRetry}>
-						Retry
+						{tI18n(
+							"AISettingsPage.TemplatesPage.TemplatesPageView.retry_942087cc",
+						)}
 					</Button>
 				</div>
 			)}
 			{!hasValidationError && (!hasLoadError || templates !== undefined) && (
 				<Table
-					aria-label="Templates Coder Agents can use to create workspaces"
+					aria-label={tI18n(
+						"AISettingsPage.TemplatesPage.TemplatesPageView.templates_coder_agents_can_use_to_create_workspa_96a70ae0",
+					)}
 					className="table-fixed"
 				>
 					<TableHeader>
 						<TableRow>
-							<TableHead className="w-1/2">Template</TableHead>
-							<TableHead className="w-44">Last updated</TableHead>
-							<TableHead className="w-44">Used by</TableHead>
+							<TableHead className="w-1/2">
+								{tI18n(
+									"AISettingsPage.TemplatesPage.TemplatesPageView.template_0575f29d",
+								)}
+							</TableHead>
+							<TableHead className="w-44">
+								{tI18n(
+									"AISettingsPage.TemplatesPage.TemplatesPageView.last_updated_382ac5f3",
+								)}
+							</TableHead>
+							<TableHead className="w-44">
+								{tI18n(
+									"AISettingsPage.TemplatesPage.TemplatesPageView.used_by_681bf81a",
+								)}
+							</TableHead>
 							<TableHead className="w-36 text-right">
-								<span className="sr-only">Coder Agents workspace creation</span>
+								<span className="sr-only">
+									{tI18n(
+										"AISettingsPage.TemplatesPage.TemplatesPageView.coder_agents_workspace_creation_8f9e12ff",
+									)}
+								</span>
 							</TableHead>
 						</TableRow>
 					</TableHeader>
@@ -167,13 +203,19 @@ export const TemplatesPageView: FC<TemplatesPageViewProps> = ({
 							<TableEmpty
 								message={
 									filterState.filter.used
-										? "No results matched your search."
-										: "No templates found."
+										? tI18n(
+												"AISettingsPage.TemplatesPage.TemplatesPageView.no_results_matched_your_search_cf13a234",
+											)
+										: tI18n(
+												"AISettingsPage.TemplatesPage.TemplatesPageView.no_templates_found_821a89da",
+											)
 								}
 								description={
 									filterState.filter.used
 										? undefined
-										: "Create a template before configuring whether Coder Agents can create workspaces."
+										: tI18n(
+												"AISettingsPage.TemplatesPage.TemplatesPageView.create_a_template_before_configuring_whether_cod_4860480d",
+											)
 								}
 								isCompact
 								className="min-h-52"

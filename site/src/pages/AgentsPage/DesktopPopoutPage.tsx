@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
 import { Button } from "#/components/Button/Button";
 import { Spinner } from "#/components/Spinner/Spinner";
@@ -91,6 +92,8 @@ export const DesktopPopoutPageView: FC<DesktopPopoutPageViewProps> = ({
 	onTakeControl,
 	onReleaseControl,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	if (status === "idle" || status === "connecting") {
 		return (
 			<div className="flex h-screen w-screen items-center justify-center bg-surface-primary">
@@ -98,8 +101,12 @@ export const DesktopPopoutPageView: FC<DesktopPopoutPageViewProps> = ({
 					<Spinner loading className="size-6" />
 					<span className="text-sm">
 						{status === "idle"
-							? "Initializing desktop..."
-							: "Connecting to desktop..."}
+							? tI18n(
+									"AgentsPage.DesktopPopoutPage.initializing_desktop_d9528ef8",
+								)
+							: tI18n(
+									"AgentsPage.DesktopPopoutPage.connecting_to_desktop_da0cd407",
+								)}
 					</span>
 				</div>
 			</div>
@@ -111,11 +118,12 @@ export const DesktopPopoutPageView: FC<DesktopPopoutPageViewProps> = ({
 			<div className="flex h-screen w-screen items-center justify-center bg-surface-primary">
 				<div className="flex flex-col items-center gap-3 text-content-secondary">
 					<span className="text-center text-sm">
-						Failed to connect to the desktop session. The agent may not be
-						connected or the desktop environment may not be available.
+						{tI18n(
+							"AgentsPage.DesktopPopoutPage.failed_to_connect_to_the_desktop_session_the_age_4b7b2332",
+						)}
 					</span>
 					<Button variant="outline" size="sm" onClick={reconnect}>
-						Reconnect
+						{tI18n("AgentsPage.DesktopPopoutPage.reconnect_bf8a9eab")}
 					</Button>
 				</div>
 			</div>
@@ -127,7 +135,11 @@ export const DesktopPopoutPageView: FC<DesktopPopoutPageViewProps> = ({
 			<div className="flex h-screen w-screen items-center justify-center bg-surface-primary">
 				<div className="flex flex-col items-center gap-2 text-content-secondary">
 					<Spinner loading className="size-6" />
-					<span className="text-sm">Desktop disconnected. Reconnecting...</span>
+					<span className="text-sm">
+						{tI18n(
+							"AgentsPage.DesktopPopoutPage.desktop_disconnected_reconnecting_6bb59fc0",
+						)}
+					</span>
 				</div>
 			</div>
 		);
@@ -152,8 +164,12 @@ export const DesktopPopoutPageView: FC<DesktopPopoutPageViewProps> = ({
 				role="application"
 				aria-label={
 					isControlling
-						? "Remote desktop (interactive)"
-						: "Remote desktop (view only, take control to interact)"
+						? tI18n(
+								"AgentsPage.DesktopPopoutPage.remote_desktop_interactive_020fa311",
+							)
+						: tI18n(
+								"AgentsPage.DesktopPopoutPage.remote_desktop_view_only_take_control_to_interac_ad95122b",
+							)
 				}
 			/>
 		</div>

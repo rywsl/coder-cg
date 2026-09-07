@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Alert, AlertDescription, AlertTitle } from "#/components/Alert/Alert";
 import { pageTitle } from "#/utils/page";
@@ -31,9 +32,20 @@ const AddMCPServerPageView: FC<AddMCPServerPageViewProps> = ({
 	onCreateServer,
 	onCancel,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<>
-			<title>{pageTitle("Add server", "AI Settings")}</title>
+			<title>
+				{pageTitle(
+					tI18n(
+						"AISettingsPage.MCPServersPage.AddMCPServerPage.AddMCPServerPageView.add_server_1099b2a9",
+					),
+					tI18n(
+						"AISettingsPage.MCPServersPage.AddMCPServerPage.AddMCPServerPageView.ai_settings_a8e5e2c6",
+					),
+				)}
+			</title>
 			{canCreate ? (
 				<MCPServerForm
 					listPath={
@@ -67,10 +79,15 @@ const AddMCPServerPageView: FC<AddMCPServerPageViewProps> = ({
 						showSingleOrganization
 					/>
 					<Alert severity="error" prominent>
-						<AlertTitle>You cannot add servers to this organization</AlertTitle>
+						<AlertTitle>
+							{tI18n(
+								"AISettingsPage.MCPServersPage.AddMCPServerPage.AddMCPServerPageView.you_cannot_add_servers_to_this_organization_f96a481c",
+							)}
+						</AlertTitle>
 						<AlertDescription>
-							Choose an organization where you have permission to add MCP
-							servers.
+							{tI18n(
+								"AISettingsPage.MCPServersPage.AddMCPServerPage.AddMCPServerPageView.choose_an_organization_where_you_have_permission_f1af9e8f",
+							)}
 						</AlertDescription>
 					</Alert>
 				</>

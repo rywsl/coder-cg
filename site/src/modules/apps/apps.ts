@@ -4,6 +4,7 @@ import type {
 	WorkspaceAgent,
 	WorkspaceApp,
 } from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 
 // This is a magic undocumented string that is replaced
 // with a brand-new session token from the backend.
@@ -91,9 +92,14 @@ export const getTerminalHref = ({
 export const openAppInNewWindow = (href: string) => {
 	const popup = window.open("about:blank", "_blank", "width=900,height=600");
 	if (!popup) {
-		toast.error("Failed to open app in new window.", {
-			description: "Popup blocked. Allow popups to open this app.",
-		});
+		toast.error(
+			i18n.t("workspaces:apps.apps.failed_to_open_app_in_new_window_58cef495"),
+			{
+				description: i18n.t(
+					"workspaces:apps.apps.popup_blocked_allow_popups_to_open_this_app_5e9e0aa9",
+				),
+			},
+		);
 		return;
 	}
 	try {

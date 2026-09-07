@@ -5,6 +5,7 @@ import {
 	useCallback,
 	useContext,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import { isApiError } from "#/api/errors";
@@ -42,6 +43,8 @@ export const AuthContext = createContext<AuthContextValue | undefined>(
 );
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
+	const { t: tI18n } = useTranslation("pages");
+
 	const { metadata } = useEmbeddedMetadata();
 	const userMetadataState = metadata.user;
 
@@ -100,9 +103,11 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 		(req: UpdateUserProfileRequest) => {
 			const mutation = updateProfileMutation.mutateAsync(req);
 			toast.promise(mutation, {
-				loading: "Updating profile...",
-				success: "Profile updated successfully.",
-				error: "Failed to update profile.",
+				loading: tI18n("auth.AuthProvider.updating_profile_8c9a8921"),
+				success: tI18n(
+					"auth.AuthProvider.profile_updated_successfully_6ccf8b7d",
+				),
+				error: tI18n("auth.AuthProvider.failed_to_update_profile_6c0c2acb"),
 			});
 		},
 		[updateProfileMutation],

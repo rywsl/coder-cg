@@ -1,4 +1,5 @@
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import { Alert, AlertDescription } from "#/components/Alert/Alert";
 import { Link } from "#/components/Link/Link";
@@ -19,20 +20,31 @@ export const QueuedForCapacityCallout: FC<QueuedForCapacityCalloutProps> = ({
 	canManageLicenses,
 	agentHoursHardLimit,
 }) => {
-	let limitMessage =
-		"Your team has reached the Community license limit for active agents.";
+	const { t: tI18n } = useTranslation("agents");
+
+	let limitMessage = tI18n(
+		"AgentsPage.components.ChatConversation.QueuedForCapacityCallout.your_team_has_reached_the_community_license_limi_40a9872b",
+	);
 	if (hasLicense) {
-		limitMessage =
-			"Your team has reached your license’s limit for active agents.";
+		limitMessage = tI18n(
+			"AgentsPage.components.ChatConversation.QueuedForCapacityCallout.your_team_has_reached_your_license_s_limit_for_a_23e21dd7",
+		);
 	}
 	if (agentHoursHardLimit !== undefined) {
-		limitMessage = `Your team has reached the ${agentHoursHardLimit}-hour Agent Hours hard limit.`;
+		limitMessage = tI18n(
+			"AgentsPage.components.ChatConversation.QueuedForCapacityCallout.your_team_has_reached_the_value0_hour_agent_hour_920bc5a9",
+			{
+				value0: agentHoursHardLimit,
+			},
+		);
 	}
 
 	let action: ReactNode = (
 		<>
 			<Link href={concurrencyDocsUrl} target="_blank" rel="noreferrer">
-				Learn more
+				{tI18n(
+					"AgentsPage.components.ChatConversation.QueuedForCapacityCallout.learn_more_1445799c",
+				)}
 			</Link>
 			.
 		</>
@@ -40,11 +52,17 @@ export const QueuedForCapacityCallout: FC<QueuedForCapacityCalloutProps> = ({
 	if (canManageLicenses && hasLicense) {
 		action = (
 			<>
-				Contact your Coder account team or{" "}
+				{tI18n(
+					"AgentsPage.components.ChatConversation.QueuedForCapacityCallout.contact_your_coder_account_team_or_da9222ce",
+				)}{" "}
 				<Link href="mailto:sales@coder.com" showExternalIcon={false}>
-					sales@coder.com
+					{tI18n(
+						"AgentsPage.components.ChatConversation.QueuedForCapacityCallout.sales_coder_com_71dc2de6",
+					)}
 				</Link>{" "}
-				to upgrade to unlimited concurrent agents.
+				{tI18n(
+					"AgentsPage.components.ChatConversation.QueuedForCapacityCallout.to_upgrade_to_unlimited_concurrent_agents_dc6b8bfa",
+				)}
 			</>
 		);
 	} else if (canManageLicenses) {
@@ -52,12 +70,18 @@ export const QueuedForCapacityCallout: FC<QueuedForCapacityCalloutProps> = ({
 			<>
 				<Link asChild showExternalIcon={false}>
 					<RouterLink to="/deployment/premium">
-						Start an unlimited trial
+						{tI18n(
+							"AgentsPage.components.ChatConversation.QueuedForCapacityCallout.start_an_unlimited_trial_158900fc",
+						)}
 					</RouterLink>
 				</Link>{" "}
-				or{" "}
+				{tI18n(
+					"AgentsPage.components.ChatConversation.QueuedForCapacityCallout.or_7175517a",
+				)}{" "}
 				<Link href={concurrencyDocsUrl} target="_blank" rel="noreferrer">
-					learn more
+					{tI18n(
+						"AgentsPage.components.ChatConversation.QueuedForCapacityCallout.learn_more_d20312bc",
+					)}
 				</Link>
 				.
 			</>
@@ -67,8 +91,11 @@ export const QueuedForCapacityCallout: FC<QueuedForCapacityCalloutProps> = ({
 	return (
 		<Alert severity="warning" className="mt-2">
 			<AlertDescription>
-				{limitMessage} This agent is queued and will start automatically when
-				capacity is available. {action}
+				{limitMessage}
+				{tI18n(
+					"AgentsPage.components.ChatConversation.QueuedForCapacityCallout.this_agent_is_queued_and_will_start_automaticall_94ff3462",
+				)}
+				{action}
 			</AlertDescription>
 		</Alert>
 	);

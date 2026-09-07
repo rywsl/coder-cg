@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
 import { paginatedAudits } from "#/api/queries/audits";
 import { useFilter } from "#/components/Filter/Filter";
@@ -14,6 +15,8 @@ import { useActionFilterMenu, useResourceTypeFilterMenu } from "./AuditFilter";
 import { AuditPageView } from "./AuditPageView";
 
 const AuditPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { permissions } = useAuthenticated();
 	const feats = useFeatureVisibility();
 	// The "else false" is required if audit_log is undefined.
@@ -77,8 +80,7 @@ const AuditPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Audit")}</title>
-
+			<title>{pageTitle(tI18n("AuditPage.AuditPage.audit_bb6aea28"))}</title>
 			<AuditPageView
 				auditLogs={auditsQuery.data?.audit_logs}
 				isNonInitialPage={isNonInitialPage(searchParams)}

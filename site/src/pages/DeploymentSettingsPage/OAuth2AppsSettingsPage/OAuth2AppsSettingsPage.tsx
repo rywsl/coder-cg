@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getApps, getSettings, putSettings } from "#/api/queries/oauth2";
 import { useAuthenticated } from "#/hooks/useAuthenticated";
@@ -6,6 +7,8 @@ import { pageTitle } from "#/utils/page";
 import OAuth2AppsSettingsPageView from "./OAuth2AppsSettingsPageView";
 
 const OAuth2AppsSettingsPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { permissions } = useAuthenticated();
 	const queryClient = useQueryClient();
 
@@ -26,8 +29,13 @@ const OAuth2AppsSettingsPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("OAuth2 applications")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppsSettingsPage.oauth2_applications_5e9425a3",
+					),
+				)}
+			</title>
 			<OAuth2AppsSettingsPageView
 				apps={appsQuery.data}
 				isLoadingApps={appsQuery.isLoading}

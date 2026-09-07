@@ -1,4 +1,5 @@
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import { getErrorMessage } from "#/api/errors";
@@ -17,6 +18,8 @@ import { CreateGatewayKeyDialog } from "./CreateGatewayKeyDialog";
 import { GatewayKeysPageView } from "./GatewayKeysPageView";
 
 const GatewayKeysPage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { permissions } = useAuthenticated();
 	const featureVisibility = useFeatureVisibility();
 	const showPaywall = !featureVisibility.aibridge;
@@ -36,8 +39,13 @@ const GatewayKeysPage: FC = () => {
 
 	return (
 		<RequirePermission isFeatureVisible={permissions.viewAIGatewayKeys}>
-			<title>{pageTitle("AI Gateway Keys")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n(
+						"AISettingsPage.GatewayKeysPage.GatewayKeysPage.ai_gateway_keys_a24b1342",
+					),
+				)}
+			</title>
 			<GatewayKeysPageView
 				keys={keysQuery.data ?? []}
 				isLoading={keysQuery.isLoading}
@@ -47,7 +55,6 @@ const GatewayKeysPage: FC = () => {
 				onCreateKey={() => setIsCreateOpen(true)}
 				onDeleteKey={setKeyToDelete}
 			/>
-
 			<CreateGatewayKeyDialog
 				open={isCreateOpen}
 				onClose={() => {
@@ -59,15 +66,20 @@ const GatewayKeysPage: FC = () => {
 				submitError={createMutation.error}
 				isSubmitting={createMutation.isPending}
 			/>
-
 			<ConfirmDialog
 				type="delete"
-				title="Delete AI Gateway key"
+				title={tI18n(
+					"AISettingsPage.GatewayKeysPage.GatewayKeysPage.delete_ai_gateway_key_02d939d5",
+				)}
 				description={
 					<>
-						Are you sure you want to permanently delete key{" "}
-						<strong>{keyToDelete?.name}</strong>? Any AI Gateway replica using
-						it will no longer be able to authenticate.
+						{tI18n(
+							"AISettingsPage.GatewayKeysPage.GatewayKeysPage.are_you_sure_you_want_to_permanently_delete_key_cf468ed7",
+						)}{" "}
+						<strong>{keyToDelete?.name}</strong>
+						{tI18n(
+							"AISettingsPage.GatewayKeysPage.GatewayKeysPage.any_ai_gateway_replica_using_it_will_no_longer_b_3186c49a",
+						)}
 					</>
 				}
 				open={Boolean(keyToDelete)}
@@ -79,12 +91,24 @@ const GatewayKeysPage: FC = () => {
 					const name = keyToDelete.name;
 					deleteMutation.mutate(keyToDelete.id, {
 						onSuccess: () => {
-							toast.success(`Deleted AI Gateway key "${name}" successfully.`);
+							toast.success(
+								tI18n(
+									"AISettingsPage.GatewayKeysPage.GatewayKeysPage.deleted_ai_gateway_key_value0_successfully_9e750843",
+									{
+										value0: name,
+									},
+								),
+							);
 							setKeyToDelete(undefined);
 						},
 						onError: (error) => {
 							toast.error(
-								getErrorMessage(error, "Failed to delete AI Gateway key."),
+								getErrorMessage(
+									error,
+									tI18n(
+										"AISettingsPage.GatewayKeysPage.GatewayKeysPage.failed_to_delete_ai_gateway_key_9c609405",
+									),
+								),
 							);
 						},
 					});

@@ -1,4 +1,5 @@
 import { type FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import { API } from "#/api/api";
@@ -46,6 +47,8 @@ export const WorkspaceReadyPage: FC<WorkspaceReadyPageProps> = ({
 	template,
 	permissions,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const queryClient = useQueryClient();
 
 	// Build logs
@@ -76,7 +79,12 @@ export const WorkspaceReadyPage: FC<WorkspaceReadyPageProps> = ({
 			toast.error(
 				getErrorMessage(
 					error,
-					`Failed to build workspace "${workspace.name}".`,
+					tI18n(
+						"WorkspacePage.WorkspaceReadyPage.failed_to_build_workspace_value0_658a8c3c",
+						{
+							value0: workspace.name,
+						},
+					),
 				),
 				{
 					description: getErrorDetail(error),
@@ -293,7 +301,14 @@ export const WorkspaceReadyPage: FC<WorkspaceReadyPageProps> = ({
 
 	return (
 		<>
-			<title>{pageTitle(`${workspace.owner_name}/${workspace.name}`)}</title>
+			<title>
+				{pageTitle(
+					tI18n("WorkspacePage.WorkspaceReadyPage.value0_value1_68ee1a5b", {
+						value0: workspace.owner_name,
+						value1: workspace.name,
+					}),
+				)}
+			</title>
 			<link
 				rel="alternate icon"
 				type="image/png"
@@ -304,7 +319,6 @@ export const WorkspaceReadyPage: FC<WorkspaceReadyPageProps> = ({
 				type="image/svg+xml"
 				href={`/favicons/${favicon}-${faviconTheme}.svg`}
 			/>
-
 			<Workspace
 				permissions={permissions}
 				isUpdating={workspaceUpdate.isUpdating}
@@ -356,7 +370,12 @@ export const WorkspaceReadyPage: FC<WorkspaceReadyPageProps> = ({
 						toast.error(
 							getErrorMessage(
 								e,
-								`Error activating workspace "${workspace.name}".`,
+								tI18n(
+									"WorkspacePage.WorkspaceReadyPage.error_activating_workspace_value0_0c6f4298",
+									{
+										value0: workspace.name,
+									},
+								),
 							),
 							{
 								description: getErrorDetail(e),
@@ -368,7 +387,6 @@ export const WorkspaceReadyPage: FC<WorkspaceReadyPageProps> = ({
 					toggleFavoriteMutation.mutate();
 				}}
 			/>
-
 			<WarningDialog
 				open={confirmingRestart.open}
 				onConfirm={() => {
@@ -379,16 +397,24 @@ export const WorkspaceReadyPage: FC<WorkspaceReadyPageProps> = ({
 					setConfirmingRestart({ open: false });
 				}}
 				onClose={() => setConfirmingRestart({ open: false })}
-				title="Restart your workspace?"
-				confirmText="Restart"
+				title={tI18n(
+					"WorkspacePage.WorkspaceReadyPage.restart_your_workspace_914f3b52",
+				)}
+				confirmText={tI18n("WorkspacePage.WorkspaceReadyPage.restart_6b983a81")}
 				description={
 					<>
-						Restarting your workspace will stop all running processes and{" "}
-						<strong>delete non-persistent data</strong>.
+						{tI18n(
+							"WorkspacePage.WorkspaceReadyPage.restarting_your_workspace_will_stop_all_running__66ce2826",
+						)}{" "}
+						<strong>
+							{tI18n(
+								"WorkspacePage.WorkspaceReadyPage.delete_non_persistent_data_4a841ebd",
+							)}
+						</strong>
+						.
 					</>
 				}
 			/>
-
 			<WorkspaceBuildCancelDialog
 				open={isCancelConfirmOpen}
 				onClose={() => setIsCancelConfirmOpen(false)}
@@ -398,7 +424,6 @@ export const WorkspaceReadyPage: FC<WorkspaceReadyPageProps> = ({
 				}}
 				workspace={workspace}
 			/>
-
 			<EphemeralParametersDialog
 				open={ephemeralParametersDialog.open}
 				onClose={() =>
@@ -428,9 +453,7 @@ export const WorkspaceReadyPage: FC<WorkspaceReadyPageProps> = ({
 				workspaceName={workspace.name}
 				templateVersionId={workspace.latest_build.template_version_id}
 			/>
-
 			<WorkspaceUpdateDialogs {...workspaceUpdate.dialogProps} />
-
 			<WorkspaceErrorDialog
 				open={workspaceErrorDialog.open}
 				error={workspaceErrorDialog.error}

@@ -1,6 +1,7 @@
 package httpmw_test
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -15,6 +16,7 @@ import (
 	"github.com/coder/coder/v2/coderd/database/dbtestutil"
 	"github.com/coder/coder/v2/coderd/database/dbtime"
 	"github.com/coder/coder/v2/coderd/httpmw"
+	"github.com/coder/coder/v2/coderd/i18n"
 	"github.com/coder/coder/v2/codersdk"
 	"github.com/coder/coder/v2/testutil"
 )
@@ -389,6 +391,28 @@ func TestOAuth2WWWAuthenticateCompliance(t *testing.T) {
 		require.Contains(t, wwwAuth, "realm=\"coder\"")
 		require.Contains(t, wwwAuth, "error=\"invalid_token\"")
 		require.Contains(t, wwwAuth, "error_description=\"The access token has expired\"")
+	})
+
+	t.Run("LocalizedExpiredTokenResponse", func(t *testing.T) {
+		_, expiredToken := dbgen.APIKey(t, db, database.APIKey{
+			UserID:    user.ID,
+			ExpiresAt: dbtime.Now().Add(-time.Hour),
+		})
+
+		req := httptest.NewRequest("GET", "/test", nil)
+		req.Header.Set("Authorization", "Bearer "+expiredToken)
+		req.Header.Set("Accept-Language", "zh-CN")
+		rec := httptest.NewRecorder()
+		i18n.Middleware(handler).ServeHTTP(rec, req)
+
+		require.Equal(t, http.StatusUnauthorized, rec.Code)
+		require.Equal(t, "zh-CN", rec.Header().Get("Content-Language"))
+		require.Contains(t, rec.Header().Get("WWW-Authenticate"), `error_description="访问令牌已过期"`)
+
+		var response codersdk.Response
+		require.NoError(t, json.NewDecoder(rec.Body).Decode(&response))
+		require.Equal(t, "您已注销或您的会话已过期。请重新登录以继续。", response.Message)
+		require.Contains(t, response.Detail, "API key expired at")
 	})
 
 	t.Run("InsufficientScopeResponse", func(t *testing.T) {

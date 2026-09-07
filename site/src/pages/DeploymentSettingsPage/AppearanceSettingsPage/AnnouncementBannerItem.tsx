@@ -1,5 +1,6 @@
 import { EllipsisVerticalIcon, PencilIcon, TrashIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { BannerConfig } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
 import {
@@ -28,45 +29,66 @@ export const AnnouncementBannerItem: FC<AnnouncementBannerItemProps> = ({
 	onEdit,
 	onDelete,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<TableRow>
 			<TableCell className="align-middle pl-5">
 				<Switch
 					checked={enabled}
-					aria-label="Enabled"
+					aria-label={tI18n(
+						"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerItem.enabled_92c1cdfd",
+					)}
 					onCheckedChange={(checked) => {
 						void onUpdate({ enabled: checked });
 					}}
 				/>
 			</TableCell>
-
 			<TableCell className={!enabled ? "text-content-disabled" : ""}>
-				{message || <em>No message</em>}
+				{message || (
+					<em>
+						{tI18n(
+							"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerItem.no_message_f4e72a06",
+						)}
+					</em>
+				)}
 			</TableCell>
-
 			<TableCell>
 				<div className="size-6 rounded-sm" style={{ backgroundColor }} />
 			</TableCell>
-
 			<TableCell>
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<Button size="icon-lg" variant="subtle" aria-label="Open menu">
+						<Button
+							size="icon-lg"
+							variant="subtle"
+							aria-label={tI18n(
+								"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerItem.open_menu_b40b3713",
+							)}
+						>
 							<EllipsisVerticalIcon aria-hidden="true" />
-							<span className="sr-only">Open menu</span>
+							<span className="sr-only">
+								{tI18n(
+									"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerItem.open_menu_b40b3713",
+								)}
+							</span>
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">
 						<DropdownMenuItem onClick={() => onEdit()}>
 							<PencilIcon className="size-icon-xs" />
-							Edit&hellip;
+							{tI18n(
+								"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerItem.edit_2b8a1a00",
+							)}
 						</DropdownMenuItem>
 						<DropdownMenuItem
 							className="text-content-destructive focus:text-content-destructive"
 							onClick={() => onDelete()}
 						>
 							<TrashIcon className="size-icon-xs" />
-							Delete&hellip;
+							{tI18n(
+								"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerItem.delete_9ce78fe3",
+							)}
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

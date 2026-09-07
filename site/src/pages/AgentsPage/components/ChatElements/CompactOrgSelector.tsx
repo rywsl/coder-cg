@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { CheckIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { Organization } from "#/api/typesGenerated";
 import { ChevronDownIcon } from "#/components/AnimatedIcons/ChevronDown";
 import { Avatar } from "#/components/Avatar/Avatar";
@@ -37,6 +38,8 @@ export const CompactOrgSelector: FC<CompactOrgSelectorProps> = ({
 	dropdownSide = "bottom",
 	dropdownAlign = "start",
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [open, setOpen] = useState(false);
 	const isDisabled = disabled || options.length === 0;
 
@@ -49,8 +52,15 @@ export const CompactOrgSelector: FC<CompactOrgSelectorProps> = ({
 					data-testid="compact-org-selector"
 					aria-label={
 						value
-							? `Organization: ${value.display_name || value.name}`
-							: "Select organization"
+							? tI18n(
+									"AgentsPage.components.ChatElements.CompactOrgSelector.organization_value0_ad717e9b",
+									{
+										value0: value.display_name || value.name,
+									},
+								)
+							: tI18n(
+									"AgentsPage.components.ChatElements.CompactOrgSelector.select_organization_99e5009d",
+								)
 					}
 					className={cn(
 						"group flex h-6 w-auto cursor-pointer items-center gap-1.5 border-none bg-transparent px-1 text-xs text-content-secondary shadow-none whitespace-nowrap transition-colors",
@@ -72,7 +82,11 @@ export const CompactOrgSelector: FC<CompactOrgSelectorProps> = ({
 							</span>
 						</>
 					) : (
-						<span>Select org…</span>
+						<span>
+							{tI18n(
+								"AgentsPage.components.ChatElements.CompactOrgSelector.select_org_2e60057b",
+							)}
+						</span>
 					)}
 					<ChevronDownIcon
 						open={open}
@@ -86,10 +100,17 @@ export const CompactOrgSelector: FC<CompactOrgSelectorProps> = ({
 				className="mobile-full-width-dropdown mobile-full-width-dropdown-bottom w-64 p-0"
 			>
 				<Command loop>
-					<CommandInput placeholder="Find organization…" className="text-xs" />
+					<CommandInput
+						placeholder={tI18n(
+							"AgentsPage.components.ChatElements.CompactOrgSelector.find_organization_d0fc04d7",
+						)}
+						className="text-xs"
+					/>
 					<CommandList>
 						<CommandEmpty className="text-xs">
-							No organizations found
+							{tI18n(
+								"AgentsPage.components.ChatElements.CompactOrgSelector.no_organizations_found_538995db",
+							)}
 						</CommandEmpty>
 						<CommandGroup>
 							{options.map((org) => (

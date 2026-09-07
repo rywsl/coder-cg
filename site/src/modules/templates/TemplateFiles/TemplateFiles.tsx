@@ -2,6 +2,7 @@ import { cn } from "cn";
 import set from "lodash/set";
 import { EditIcon } from "lucide-react";
 import { type FC, useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import { SyntaxHighlighter } from "#/components/SyntaxHighlighter/SyntaxHighlighter";
 import { linkToTemplate, useLinks } from "#/modules/navigation";
@@ -28,6 +29,8 @@ export const TemplateFiles: FC<TemplateFilesProps> = ({
 	currentFiles,
 	baseFiles,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const getLink = useLinks();
 
 	const fileInfo = useCallback(
@@ -121,7 +124,9 @@ export const TemplateFiles: FC<TemplateFilesProps> = ({
 												className="flex items-center gap-1 text-sm no-underline text-content-secondary hover:text-content-primary"
 											>
 												<EditIcon className="text-inherit size-icon-xs" />
-												Edit
+												{tI18n(
+													"templates.TemplateFiles.TemplateFiles.edit_464c4ffd",
+												)}
 											</RouterLink>
 										</div>
 									</header>

@@ -1,5 +1,6 @@
 import { RotateCcwIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { Workspace } from "#/api/typesGenerated";
 import { TopbarButton } from "#/components/FullPageLayout/Topbar";
 import { BuildParametersPopover } from "./BuildParametersPopover";
@@ -15,10 +16,12 @@ export const RetryButton: FC<RetryButtonProps> = ({
 	workspace,
 	enableBuildParameters,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const mainAction = (
 		<TopbarButton onClick={() => handleAction()}>
 			<RotateCcwIcon />
-			Retry
+			{tI18n("WorkspacePage.WorkspaceActions.RetryButton.retry_942087cc")}
 		</TopbarButton>
 	);
 
@@ -30,7 +33,9 @@ export const RetryButton: FC<RetryButtonProps> = ({
 		<div className="flex gap-1 items-center">
 			{mainAction}
 			<BuildParametersPopover
-				label="Retry with build parameters"
+				label={tI18n(
+					"WorkspacePage.WorkspaceActions.RetryButton.retry_with_build_parameters_bfe80e0f",
+				)}
 				workspace={workspace}
 			/>
 		</div>

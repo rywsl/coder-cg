@@ -1,4 +1,5 @@
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollArea } from "#/components/ScrollArea/ScrollArea";
 import { ProviderIcon } from "#/pages/AISettingsPage/ProvidersPage/components/ProviderIcon";
 import { formatProviderLabel } from "#/utils/aiProviders";
@@ -53,6 +54,8 @@ const ModelRow: React.FC<{ model: unknown }> = ({ model }) => {
 const ListSubagentModelsContent: React.FC<{ models: unknown[] }> = ({
 	models,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	// Group by provider like the model picker so models from one provider
 	// sit under a single headed section instead of a flat list.
 	const grouped = new Map<string, unknown[]>();
@@ -75,7 +78,9 @@ const ListSubagentModelsContent: React.FC<{ models: unknown[] }> = ({
 			className="mt-1.5 rounded-md border border-solid border-border-default"
 			viewportClassName="max-h-64"
 			viewportTabIndex={0}
-			viewportAriaLabel="Available models"
+			viewportAriaLabel={tI18n(
+				"AgentsPage.components.ChatElements.tools.ListSubagentModelsTool.available_models_9dbfd047",
+			)}
 			scrollBarClassName="w-1.5"
 		>
 			<div className="px-1 py-1">
@@ -118,19 +123,42 @@ export const ListSubagentModelsTool: React.FC<{
 	isError: boolean;
 	errorMessage?: string;
 }> = ({ models, status, isError, errorMessage }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const hasContent = models.length > 0;
 	const isRunning = status === "running";
 
 	const label = isRunning
-		? "Listing subagent models…"
-		: `Listed ${models.length} subagent ${models.length === 1 ? "model" : "models"}`;
+		? tI18n(
+				"AgentsPage.components.ChatElements.tools.ListSubagentModelsTool.listing_subagent_models_9d302f04",
+			)
+		: tI18n(
+				"AgentsPage.components.ChatElements.tools.ListSubagentModelsTool.listed_value0_subagent_value1_e55e8841",
+				{
+					value0: models.length,
+
+					value1:
+						models.length === 1
+							? tI18n(
+									"AgentsPage.components.ChatElements.tools.ListSubagentModelsTool.model_9372c470",
+								)
+							: tI18n(
+									"AgentsPage.components.ChatElements.tools.ListSubagentModelsTool.models_8edcc26c",
+								),
+				},
+			);
 
 	return (
 		<ToolCall.Root
 			className="max-w-sm"
 			status={status}
 			isError={isError}
-			errorMessage={errorMessage || "Failed to list subagent models"}
+			errorMessage={
+				errorMessage ||
+				tI18n(
+					"AgentsPage.components.ChatElements.tools.ListSubagentModelsTool.failed_to_list_subagent_models_07271754",
+				)
+			}
 			hasContent={hasContent}
 		>
 			<ToolCall.Header iconName="list_subagent_models" label={label} />

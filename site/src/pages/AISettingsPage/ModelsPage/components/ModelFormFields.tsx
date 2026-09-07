@@ -2,6 +2,7 @@ import { cn } from "cn";
 import type { FormikContextType } from "formik";
 import { ChevronDownIcon, ChevronRightIcon, InfoIcon } from "lucide-react";
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Link as RouterLink,
 	useLocation,
@@ -150,6 +151,8 @@ export const ModelFormFields: FC<{
 	showAdvanced,
 	setShowAdvanced,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const modelsPath = useOrganizationModelsPath();
 	const { organization, accessibleOrganizations, permissionsByOrganization } =
 		useOrganizationModels();
@@ -228,7 +231,9 @@ export const ModelFormFields: FC<{
 								}
 								disabled={setDefaultDisabled || isReadOnly}
 							/>
-							Set as Coder Agents default model
+							{tI18n(
+								"AISettingsPage.ModelsPage.components.ModelFormFields.set_as_coder_agents_default_model_99a2d16e",
+							)}
 						</label>
 					</div>
 					<div className="grid gap-1.5">
@@ -236,19 +241,28 @@ export const ModelFormFields: FC<{
 							htmlFor={displayNameField.id}
 							className="flex items-center gap-1 leading-6 text-content-primary"
 						>
-							Display name{" "}
+							{tI18n(
+								"AISettingsPage.ModelsPage.components.ModelFormFields.display_name_2b7f6a84",
+							)}{" "}
 							<span className="text-xs font-bold text-content-destructive">
 								*
 							</span>
 						</Label>
 						<p className="m-0 text-xs text-content-secondary">
-							Friendly name. Defaults to identifier if blank.
+							{tI18n(
+								"AISettingsPage.ModelsPage.components.ModelFormFields.friendly_name_defaults_to_identifier_if_blank_887625da",
+							)}
 						</p>
 						<Input
 							id={displayNameField.id}
 							name={displayNameField.name}
 							className="placeholder:text-content-disabled shadow-none"
-							placeholder={initialModel?.model ?? "Model name"}
+							placeholder={
+								initialModel?.model ??
+								tI18n(
+									"AISettingsPage.ModelsPage.components.ModelFormFields.model_name_a3c3370c",
+								)
+							}
 							value={displayNameField.value}
 							onChange={displayNameField.onChange}
 							onBlur={displayNameField.onBlur}
@@ -260,7 +274,9 @@ export const ModelFormFields: FC<{
 							htmlFor={contextLimitField.id}
 							className="flex items-center gap-1 leading-6 text-content-primary"
 						>
-							Context limit{" "}
+							{tI18n(
+								"AISettingsPage.ModelsPage.components.ModelFormFields.context_limit_284d7b18",
+							)}{" "}
 							<span className="text-xs font-bold text-content-destructive">
 								*
 							</span>
@@ -271,7 +287,9 @@ export const ModelFormFields: FC<{
 							</p>
 						) : (
 							<p className="m-0 text-xs text-content-secondary">
-								Max tokens in the context window.
+								{tI18n(
+									"AISettingsPage.ModelsPage.components.ModelFormFields.max_tokens_in_the_context_window_0a35073e",
+								)}
 							</p>
 						)}
 						<InputGroup
@@ -291,7 +309,11 @@ export const ModelFormFields: FC<{
 								aria-invalid={contextLimitField.error}
 							/>
 							<InputGroupAddon align="inline-end">
-								<span className="text-xs text-content-disabled">Tokens</span>
+								<span className="text-xs text-content-disabled">
+									{tI18n(
+										"AISettingsPage.ModelsPage.components.ModelFormFields.tokens_a039dfb9",
+									)}
+								</span>
 							</InputGroupAddon>
 						</InputGroup>
 					</div>
@@ -300,18 +322,26 @@ export const ModelFormFields: FC<{
 
 				<div className="overflow-hidden rounded-lg border border-solid border-border">
 					<CollapsibleSection
-						title="Cost estimate"
+						title={tI18n(
+							"AISettingsPage.ModelsPage.components.ModelFormFields.cost_estimate_dd62e871",
+						)}
 						description={
 							<>
-								Estimated price per million tokens in USD. Prices are read-only.{" "}
-								Model prices are managed by AI Gateway.{" "}
+								{tI18n(
+									"AISettingsPage.ModelsPage.components.ModelFormFields.estimated_price_per_million_tokens_in_usd_prices_b0c662b0",
+								)}{" "}
+								{tI18n(
+									"AISettingsPage.ModelsPage.components.ModelFormFields.model_prices_are_managed_by_ai_gateway_d6f4012c",
+								)}{" "}
 								<Link
 									href={docs(
 										"/ai-coder/ai-gateway/cost-controls#configure-model-prices",
 									)}
 									size="sm"
 								>
-									Learn how to configure model prices.
+									{tI18n(
+										"AISettingsPage.ModelsPage.components.ModelFormFields.learn_how_to_configure_model_prices_9f021805",
+									)}
 								</Link>
 							</>
 						}
@@ -327,8 +357,12 @@ export const ModelFormFields: FC<{
 
 					{hasProviderConfigFields && (
 						<CollapsibleSection
-							title="Provider configuration"
-							description="Tune provider-specific behavior like reasoning, tool calling, and web search."
+							title={tI18n(
+								"AISettingsPage.ModelsPage.components.ModelFormFields.provider_configuration_0e3159fc",
+							)}
+							description={tI18n(
+								"AISettingsPage.ModelsPage.components.ModelFormFields.tune_provider_specific_behavior_like_reasoning_t_2c776324",
+							)}
 							open={showProviderConfig}
 							onOpenChange={setShowProviderConfig}
 							className="border-0 border-t border-solid border-border"
@@ -351,8 +385,12 @@ export const ModelFormFields: FC<{
 					)}
 
 					<CollapsibleSection
-						title="Advanced"
-						description="Low-level parameters like temperature and penalties. Rarely need changing."
+						title={tI18n(
+							"AISettingsPage.ModelsPage.components.ModelFormFields.advanced_9f088dbe",
+						)}
+						description={tI18n(
+							"AISettingsPage.ModelsPage.components.ModelFormFields.low_level_parameters_like_temperature_and_penalt_d7ad6dd5",
+						)}
 						open={showAdvanced}
 						onOpenChange={setShowAdvanced}
 						className="border-0 border-t border-solid border-border"
@@ -369,13 +407,17 @@ export const ModelFormFields: FC<{
 								htmlFor={compressionThresholdField.id}
 								className="flex items-center gap-1 leading-6 text-content-primary"
 							>
-								Compression threshold
+								{tI18n(
+									"AISettingsPage.ModelsPage.components.ModelFormFields.compression_threshold_7b81a3bf",
+								)}
 								<Tooltip>
 									<TooltipTrigger asChild>
 										<InfoIcon className="size-3 text-content-secondary" />
 									</TooltipTrigger>
 									<TooltipContent side="top" className="max-w-[240px]">
-										Percentage at which context is compressed.
+										{tI18n(
+											"AISettingsPage.ModelsPage.components.ModelFormFields.percentage_at_which_context_is_compressed_c2a4b7d5",
+										)}
 									</TooltipContent>
 								</Tooltip>
 							</Label>
@@ -412,17 +454,25 @@ export const ModelFormFields: FC<{
 				<div className="flex items-center justify-end gap-3">
 					<RouterLink to={modelsPath}>
 						<Button variant="outline" type="button">
-							Cancel
+							{tI18n(
+								"AISettingsPage.ModelsPage.components.ModelFormFields.cancel_19766ed6",
+							)}
 						</Button>
 					</RouterLink>
 					{!isReadOnly && (
 						<Button type="submit" disabled={!canSubmit}>
 							{isSaving && <Spinner loading />}
 							{isEditing
-								? "Update model"
+								? tI18n(
+										"AISettingsPage.ModelsPage.components.ModelFormFields.update_model_34cc9254",
+									)
 								: isDuplicating
-									? "Create duplicate"
-									: "Add Model"}
+									? tI18n(
+											"AISettingsPage.ModelsPage.components.ModelFormFields.create_duplicate_a60883c6",
+										)
+									: tI18n(
+											"AISettingsPage.ModelsPage.components.ModelFormFields.add_model_7060e824",
+										)}
 						</Button>
 					)}
 				</div>

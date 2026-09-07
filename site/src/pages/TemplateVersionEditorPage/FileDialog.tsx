@@ -1,4 +1,5 @@
 import { type ChangeEvent, type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ConfirmDialog } from "#/components/Dialog/ConfirmDialog/ConfirmDialog";
 import { FormField } from "#/components/FormField/FormField";
 import { type FileTree, isFolder, validatePath } from "#/utils/filetree";
@@ -18,6 +19,8 @@ export const CreateFileDialog: FC<CreateFileDialogProps> = ({
 	open,
 	fileTree,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const [pathValue, setPathValue] = useState("");
 	const [error, setError] = useState<string>();
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -54,14 +57,17 @@ export const CreateFileDialog: FC<CreateFileDialogProps> = ({
 			onConfirm={handleConfirm}
 			hideCancel={false}
 			type="success"
-			cancelText="Cancel"
-			confirmText="Create"
-			title="Create File"
+			cancelText={tI18n("TemplateVersionEditorPage.FileDialog.cancel_19766ed6")}
+			confirmText={tI18n(
+				"TemplateVersionEditorPage.FileDialog.create_4759498a",
+			)}
+			title={tI18n("TemplateVersionEditorPage.FileDialog.create_file_f1eb5a82")}
 			description={
 				<div className="flex flex-col gap-8">
 					<p>
-						Specify the path to a file to be created. This path can contain
-						slashes too.
+						{tI18n(
+							"TemplateVersionEditorPage.FileDialog.specify_the_path_to_a_file_to_be_created_this_pa_7153a0f0",
+						)}
 					</p>
 					<FormField
 						autoFocus
@@ -79,9 +85,13 @@ export const CreateFileDialog: FC<CreateFileDialogProps> = ({
 							error: Boolean(error),
 							helperText: error,
 						}}
-						label="File Path"
+						label={tI18n(
+							"TemplateVersionEditorPage.FileDialog.file_path_a1039763",
+						)}
 						autoComplete="off"
-						placeholder="example.tf"
+						placeholder={tI18n(
+							"TemplateVersionEditorPage.FileDialog.example_tf_aa0ead28",
+						)}
 					/>
 				</div>
 			}
@@ -102,17 +112,24 @@ export const DeleteFileDialog: FC<DeleteFileDialogProps> = ({
 	open,
 	filename,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<ConfirmDialog
 			type="delete"
 			onClose={onClose}
 			open={open}
 			onConfirm={onConfirm}
-			title="Delete File"
+			title={tI18n("TemplateVersionEditorPage.FileDialog.delete_file_e1e5fe20")}
 			description={
 				<>
-					Are you sure you want to delete <strong>{filename}</strong>? It will
-					be deleted permanently.
+					{tI18n(
+						"TemplateVersionEditorPage.FileDialog.are_you_sure_you_want_to_delete_c23295ab",
+					)}
+					<strong>{filename}</strong>
+					{tI18n(
+						"TemplateVersionEditorPage.FileDialog.it_will_be_deleted_permanently_9ede105c",
+					)}
 				</>
 			}
 		/>
@@ -136,6 +153,8 @@ export const RenameFileDialog: FC<RenameFileDialogProps> = ({
 	filename,
 	fileTree,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const [pathValue, setPathValue] = useState(filename);
 	const [error, setError] = useState<string>();
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -178,14 +197,19 @@ export const RenameFileDialog: FC<RenameFileDialogProps> = ({
 			onConfirm={handleConfirm}
 			hideCancel={false}
 			type="success"
-			cancelText="Cancel"
-			confirmText="Rename"
-			title="Rename File"
+			cancelText={tI18n("TemplateVersionEditorPage.FileDialog.cancel_19766ed6")}
+			confirmText={tI18n(
+				"TemplateVersionEditorPage.FileDialog.rename_3064d79a",
+			)}
+			title={tI18n("TemplateVersionEditorPage.FileDialog.rename_file_e464ea1f")}
 			description={
 				<div className="flex flex-col gap-4">
 					<p>
-						Rename <strong>{filename}</strong> to something else. This path can
-						contain slashes too!
+						{tI18n("TemplateVersionEditorPage.FileDialog.rename_32a50be4")}
+						<strong>{filename}</strong>
+						{tI18n(
+							"TemplateVersionEditorPage.FileDialog.to_something_else_this_path_can_contain_slashes__1ad84b40",
+						)}
 					</p>
 					<FormField
 						autoFocus
@@ -203,7 +227,9 @@ export const RenameFileDialog: FC<RenameFileDialogProps> = ({
 							error: Boolean(error),
 							helperText: error,
 						}}
-						label="File Path"
+						label={tI18n(
+							"TemplateVersionEditorPage.FileDialog.file_path_a1039763",
+						)}
 						autoComplete="off"
 						placeholder={filename}
 					/>

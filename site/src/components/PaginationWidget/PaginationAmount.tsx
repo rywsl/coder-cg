@@ -1,6 +1,8 @@
 import { cn } from "cn";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Skeleton } from "#/components/Skeleton/Skeleton";
+import { currentIntlLocale } from "#/i18n/locale";
 
 type PaginationHeaderProps = {
 	paginationUnitLabel: string;
@@ -22,6 +24,8 @@ export const PaginationAmount: FC<PaginationHeaderProps> = ({
 	countIsCapped,
 	className,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<div
 			className={cn(
@@ -38,22 +42,32 @@ export const PaginationAmount: FC<PaginationHeaderProps> = ({
 					 * Have to put text content in divs so that flexbox doesn't scramble
 					 * the inner text nodes up
 					 */}
-					{totalRecords === 0 && <div>No records available</div>}
+					{totalRecords === 0 && (
+						<div>
+							{tI18n(
+								"PaginationWidget.PaginationAmount.no_records_available_292e6069",
+							)}
+						</div>
+					)}
 
 					{totalRecords !== 0 && currentOffsetStart !== undefined && (
 						<div>
-							Showing <strong>{currentOffsetStart.toLocaleString()}</strong> to{" "}
+							{tI18n("PaginationWidget.PaginationAmount.showing_7282e1fb")}
+							<strong>
+								{currentOffsetStart.toLocaleString(currentIntlLocale())}
+							</strong>
+							{tI18n("PaginationWidget.PaginationAmount.to_84d0f765")}{" "}
 							<strong>
 								{(
 									currentOffsetStart +
 									(countIsCapped
 										? limit - 1
 										: Math.min(limit - 1, totalRecords - currentOffsetStart))
-								).toLocaleString()}
+								).toLocaleString(currentIntlLocale())}
 							</strong>{" "}
-							of{" "}
+							{tI18n("PaginationWidget.PaginationAmount.of_28391d3b")}{" "}
 							<strong>
-								{totalRecords.toLocaleString()}
+								{totalRecords.toLocaleString(currentIntlLocale())}
 								{countIsCapped && "+"}
 							</strong>{" "}
 							{paginationUnitLabel}

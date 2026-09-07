@@ -1,6 +1,7 @@
 import { isAxiosError } from "axios";
 import type { FC } from "react";
 import { useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router";
 import type { ApiErrorResponse } from "#/api/errors";
@@ -20,13 +21,19 @@ import LoginOAuthDevicePageView from "./LoginOAuthDevicePageView";
 // as that's the only OAuth2 login provider in our backend
 // that currently supports the device flow.
 const LoginOAuthDevicePage: FC = () => {
+	const { t: tI18n } = useTranslation("auth");
+
 	const [searchParams] = useSearchParams();
 
 	const state = searchParams.get("state");
 	if (!state) {
 		return (
 			<SignInLayout>
-				<Welcome>Missing OAuth2 state</Welcome>
+				<Welcome>
+					{tI18n(
+						"LoginOAuthDevicePage.LoginOAuthDevicePage.missing_oauth2_state_ea2c0b9e",
+					)}
+				</Welcome>
 			</SignInLayout>
 		);
 	}

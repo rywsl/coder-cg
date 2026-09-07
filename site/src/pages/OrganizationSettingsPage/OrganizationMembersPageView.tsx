@@ -1,5 +1,6 @@
 import { TriangleAlertIcon, UserPlusIcon } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { getErrorDetail, getErrorMessage } from "#/api/errors";
 import type { User } from "#/api/typesGenerated";
@@ -46,6 +47,8 @@ export const OrganizationMembersPageView: React.FC<
 	addMembers,
 	...props
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { canEditMembers } = props;
 
 	return (
@@ -53,9 +56,12 @@ export const OrganizationMembersPageView: React.FC<
 			<SettingsHeader
 				actions={canEditMembers && <AddUsersDialog onSubmit={addMembers} />}
 			>
-				<SettingsHeaderTitle>Members</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"OrganizationSettingsPage.OrganizationMembersPageView.members_1044a4c0",
+					)}
+				</SettingsHeaderTitle>
 			</SettingsHeader>
-
 			<div className="flex flex-col gap-4">
 				{Boolean(error) && <ErrorAlert error={error} />}
 
@@ -64,7 +70,9 @@ export const OrganizationMembersPageView: React.FC<
 					<div className="flex flex-row text-content-warning gap-2 items-center text-sm font-medium">
 						<TriangleAlertIcon className="size-icon-sm" />
 						<p>
-							You do not have permission to view members other than yourself.
+							{tI18n(
+								"OrganizationSettingsPage.OrganizationMembersPageView.you_do_not_have_permission_to_view_members_other_379fb1b6",
+							)}
 						</p>
 					</div>
 				)}
@@ -81,6 +89,8 @@ interface AddUsersDialogProps {
 }
 
 const AddUsersDialog: React.FC<AddUsersDialogProps> = ({ onSubmit }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const [addUserDialogOpen, setAddUserDialogOpen] = useState(false);
 	const [submitting, setSubmitting] = useState(false);
 	const [filter, setFilter] = useState("");
@@ -95,7 +105,9 @@ const AddUsersDialog: React.FC<AddUsersDialogProps> = ({ onSubmit }) => {
 		<>
 			<Button onClick={() => setAddUserDialogOpen(true)}>
 				<UserPlusIcon />
-				Add users
+				{tI18n(
+					"OrganizationSettingsPage.OrganizationMembersPageView.add_users_4cd030d9",
+				)}
 			</Button>
 			<Dialog
 				open={addUserDialogOpen}
@@ -110,7 +122,9 @@ const AddUsersDialog: React.FC<AddUsersDialogProps> = ({ onSubmit }) => {
 					className="max-w-md gap-4 border-border-default bg-surface-primary p-8 text-content-primary"
 				>
 					<DialogTitle className="font-semibold text-content-primary">
-						Add user(s)
+						{tI18n(
+							"OrganizationSettingsPage.OrganizationMembersPageView.add_user_s_28d7e893",
+						)}
 					</DialogTitle>
 					<MultiUserSelect
 						filter={filter}
@@ -130,7 +144,9 @@ const AddUsersDialog: React.FC<AddUsersDialogProps> = ({ onSubmit }) => {
 							onClick={closeDialog}
 							disabled={submitting}
 						>
-							Cancel
+							{tI18n(
+								"OrganizationSettingsPage.OrganizationMembersPageView.cancel_19766ed6",
+							)}
 						</Button>
 						<Button
 							disabled={submitting || selected.length === 0}
@@ -141,7 +157,12 @@ const AddUsersDialog: React.FC<AddUsersDialogProps> = ({ onSubmit }) => {
 									closeDialog();
 								} catch (error) {
 									toast.error(
-										getErrorMessage(error, "Failed to add members."),
+										getErrorMessage(
+											error,
+											tI18n(
+												"OrganizationSettingsPage.OrganizationMembersPageView.failed_to_add_members_a48a5dd0",
+											),
+										),
 										{
 											description: getErrorDetail(error),
 										},
@@ -152,7 +173,9 @@ const AddUsersDialog: React.FC<AddUsersDialogProps> = ({ onSubmit }) => {
 							}}
 						>
 							<Spinner loading={submitting} />
-							Add users
+							{tI18n(
+								"OrganizationSettingsPage.OrganizationMembersPageView.add_users_4cd030d9",
+							)}
 						</Button>
 					</DialogFooter>
 				</DialogContent>

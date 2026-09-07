@@ -19,6 +19,7 @@ import {
 	useMemo,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import type {
 	DeploymentStats,
@@ -35,6 +36,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { i18n } from "#/i18n";
 import { getDisplayWorkspaceStatus } from "#/utils/workspace";
 
 interface DeploymentBannerViewProps {
@@ -48,6 +50,8 @@ export const DeploymentBannerView: FC<DeploymentBannerViewProps> = ({
 	stats,
 	fetchStats,
 }) => {
+	const { t: tI18n } = useTranslation("dashboard");
+
 	const aggregatedMinutes = useMemo(() => {
 		if (!stats) {
 			return;
@@ -136,7 +140,9 @@ export const DeploymentBannerView: FC<DeploymentBannerViewProps> = ({
 						{healthErrors.length > 0 ? (
 							<>
 								<HelpPopoverTitle>
-									We have detected problems with your Coder deployment.
+									{tI18n(
+										"dashboard.DeploymentBanner.DeploymentBannerView.we_have_detected_problems_with_your_coder_deploy_4240f143",
+									)}
 								</HelpPopoverTitle>
 								<div className="flex flex-col gap-1">
 									{healthErrors.map((error) => (
@@ -145,14 +151,19 @@ export const DeploymentBannerView: FC<DeploymentBannerViewProps> = ({
 								</div>
 							</>
 						) : (
-							"Status of your Coder deployment. Only visible for admins!"
+							tI18n(
+								"dashboard.DeploymentBanner.DeploymentBannerView.status_of_your_coder_deployment_only_visible_for_3243bff3",
+							)
 						)}
 					</TooltipContent>
 				</Tooltip>
 			</TooltipProvider>
-
 			<div className="flex items-center">
-				<div className="mr-4 text-content-primary">Workspaces</div>
+				<div className="mr-4 text-content-primary">
+					{tI18n(
+						"dashboard.DeploymentBanner.DeploymentBannerView.workspaces_1377264b",
+					)}
+				</div>
 				<div className="flex gap-2 text-content-secondary">
 					<WorkspaceBuildValue
 						status="pending"
@@ -180,15 +191,23 @@ export const DeploymentBannerView: FC<DeploymentBannerViewProps> = ({
 					/>
 				</div>
 			</div>
-
 			<div className="flex items-center">
 				<TooltipProvider delayDuration={100}>
 					<Tooltip>
 						<TooltipTrigger asChild>
-							<div className="mr-4 text-content-primary">Transmission</div>
+							<div className="mr-4 text-content-primary">
+								{tI18n(
+									"dashboard.DeploymentBanner.DeploymentBannerView.transmission_3e101342",
+								)}
+							</div>
 						</TooltipTrigger>
 						<TooltipContent>
-							{`Activity in the last ~${aggregatedMinutes} minutes`}
+							{tI18n(
+								"dashboard.DeploymentBanner.DeploymentBannerView.activity_in_the_last_value0_minutes_30d6721d",
+								{
+									value0: aggregatedMinutes,
+								},
+							)}
 						</TooltipContent>
 					</Tooltip>
 				</TooltipProvider>
@@ -201,7 +220,11 @@ export const DeploymentBannerView: FC<DeploymentBannerViewProps> = ({
 									{stats ? prettyBytes(stats.workspaces.rx_bytes) : "-"}
 								</div>
 							</TooltipTrigger>
-							<TooltipContent>Data sent to workspaces</TooltipContent>
+							<TooltipContent>
+								{tI18n(
+									"dashboard.DeploymentBanner.DeploymentBannerView.data_sent_to_workspaces_d18f7495",
+								)}
+							</TooltipContent>
 						</Tooltip>
 					</TooltipProvider>
 					<ValueSeparator />
@@ -213,7 +236,11 @@ export const DeploymentBannerView: FC<DeploymentBannerViewProps> = ({
 									{stats ? prettyBytes(stats.workspaces.tx_bytes) : "-"}
 								</div>
 							</TooltipTrigger>
-							<TooltipContent>Data sent from workspaces</TooltipContent>
+							<TooltipContent>
+								{tI18n(
+									"dashboard.DeploymentBanner.DeploymentBannerView.data_sent_from_workspaces_d5366774",
+								)}
+							</TooltipContent>
 						</Tooltip>
 					</TooltipProvider>
 					<ValueSeparator />
@@ -223,22 +250,34 @@ export const DeploymentBannerView: FC<DeploymentBannerViewProps> = ({
 								<div className="flex items-center gap-1">
 									<GaugeIcon className="size-icon-xs" />
 									{displayLatency > 0
-										? `${displayLatency?.toFixed(2)} ms`
+										? tI18n(
+												"dashboard.DeploymentBanner.DeploymentBannerView.value0_ms_55077da6",
+												{
+													value0: displayLatency?.toFixed(2),
+												},
+											)
 										: "-"}
 								</div>
 							</TooltipTrigger>
 							<TooltipContent>
 								{displayLatency < 0
-									? "No recent workspace connections have been made"
-									: "The average latency of user connections to workspaces"}
+									? tI18n(
+											"dashboard.DeploymentBanner.DeploymentBannerView.no_recent_workspace_connections_have_been_made_1578c2c2",
+										)
+									: tI18n(
+											"dashboard.DeploymentBanner.DeploymentBannerView.the_average_latency_of_user_connections_to_works_560c9d2f",
+										)}
 							</TooltipContent>
 						</Tooltip>
 					</TooltipProvider>
 				</div>
 			</div>
-
 			<div className="flex items-center">
-				<div className="mr-4 text-content-primary">Active Connections</div>
+				<div className="mr-4 text-content-primary">
+					{tI18n(
+						"dashboard.DeploymentBanner.DeploymentBannerView.active_connections_fa1f0a72",
+					)}
+				</div>
 
 				<div className="flex gap-2 text-content-secondary">
 					<TooltipProvider delayDuration={100}>
@@ -256,7 +295,9 @@ export const DeploymentBannerView: FC<DeploymentBannerViewProps> = ({
 								</div>
 							</TooltipTrigger>
 							<TooltipContent>
-								VS Code Editors with the Coder Remote Extension
+								{tI18n(
+									"dashboard.DeploymentBanner.DeploymentBannerView.vs_code_editors_with_the_coder_remote_extension_95239140",
+								)}
 							</TooltipContent>
 						</Tooltip>
 					</TooltipProvider>
@@ -275,7 +316,11 @@ export const DeploymentBannerView: FC<DeploymentBannerViewProps> = ({
 										: stats?.session_count.jetbrains}
 								</div>
 							</TooltipTrigger>
-							<TooltipContent>JetBrains Editors</TooltipContent>
+							<TooltipContent>
+								{tI18n(
+									"dashboard.DeploymentBanner.DeploymentBannerView.jetbrains_editors_ddab2dcd",
+								)}
+							</TooltipContent>
 						</Tooltip>
 					</TooltipProvider>
 					<ValueSeparator />
@@ -289,7 +334,11 @@ export const DeploymentBannerView: FC<DeploymentBannerViewProps> = ({
 										: stats?.session_count.ssh}
 								</div>
 							</TooltipTrigger>
-							<TooltipContent>SSH Sessions</TooltipContent>
+							<TooltipContent>
+								{tI18n(
+									"dashboard.DeploymentBanner.DeploymentBannerView.ssh_sessions_1d3b9f49",
+								)}
+							</TooltipContent>
 						</Tooltip>
 					</TooltipProvider>
 					<ValueSeparator />
@@ -303,12 +352,15 @@ export const DeploymentBannerView: FC<DeploymentBannerViewProps> = ({
 										: stats?.session_count.reconnecting_pty}
 								</div>
 							</TooltipTrigger>
-							<TooltipContent>Web Terminal Sessions</TooltipContent>
+							<TooltipContent>
+								{tI18n(
+									"dashboard.DeploymentBanner.DeploymentBannerView.web_terminal_sessions_d6052b2d",
+								)}
+							</TooltipContent>
 						</Tooltip>
 					</TooltipProvider>
 				</div>
 			</div>
-
 			<div className="ml-auto flex mr-3 items-center gap-8 text-content-primary">
 				<TooltipProvider delayDuration={100}>
 					<Tooltip>
@@ -322,8 +374,9 @@ export const DeploymentBannerView: FC<DeploymentBannerViewProps> = ({
 							className="max-w-xs"
 							collisionPadding={{ right: 20 }}
 						>
-							The last time stats were aggregated. Workspaces report statistics
-							periodically, so it may take a bit for these to update!
+							{tI18n(
+								"dashboard.DeploymentBanner.DeploymentBannerView.the_last_time_stats_were_aggregated_workspaces_r_e291293d",
+							)}
 						</TooltipContent>
 					</Tooltip>
 				</TooltipProvider>
@@ -342,14 +395,19 @@ export const DeploymentBannerView: FC<DeploymentBannerViewProps> = ({
 								size="icon"
 							>
 								<RotateCwIcon />
-								{timeUntilRefresh}s
+								{timeUntilRefresh}
+								{tI18n(
+									"dashboard.DeploymentBanner.DeploymentBannerView.s_043a7187",
+								)}
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent
 							className="max-w-xs"
 							collisionPadding={{ right: 20 }}
 						>
-							A countdown until stats are fetched again. Click to refresh!
+							{tI18n(
+								"dashboard.DeploymentBanner.DeploymentBannerView.a_countdown_until_stats_are_fetched_again_click__5e5b7987",
+							)}
 						</TooltipContent>
 					</Tooltip>
 				</TooltipProvider>
@@ -367,12 +425,16 @@ const WorkspaceBuildValue: FC<WorkspaceBuildValueProps> = ({
 	status,
 	count,
 }) => {
+	const { t: tI18n } = useTranslation("dashboard");
+
 	const displayStatus = getDisplayWorkspaceStatus(status);
 	let statusText = displayStatus.text;
 	let icon = displayStatus.icon;
 	if (status === "starting") {
 		icon = <WrenchIcon className="size-icon-xs" />;
-		statusText = "Building";
+		statusText = tI18n(
+			"dashboard.DeploymentBanner.DeploymentBannerView.building_87c5912f",
+		);
 	}
 
 	return (
@@ -390,7 +452,14 @@ const WorkspaceBuildValue: FC<WorkspaceBuildValueProps> = ({
 						</RouterLink>
 					</Link>
 				</TooltipTrigger>
-				<TooltipContent>{`${statusText} Workspaces`}</TooltipContent>
+				<TooltipContent>
+					{tI18n(
+						"dashboard.DeploymentBanner.DeploymentBannerView.value0_workspaces_87fbdfd2",
+						{
+							value0: statusText,
+						},
+					)}
+				</TooltipContent>
 			</Tooltip>
 		</TooltipProvider>
 	);
@@ -419,11 +488,21 @@ const getHealthErrors = (health: HealthcheckReport) => {
 		"workspace_proxy",
 	] as const;
 	const messages: Record<(typeof sections)[number], string> = {
-		access_url: "Your access URL may be configured incorrectly.",
-		database: "Your database is unhealthy.",
-		derp: "We're noticing DERP proxy issues.",
-		websocket: "We're noticing websocket issues.",
-		workspace_proxy: "We're noticing workspace proxy issues.",
+		access_url: i18n.t(
+			"dashboard:dashboard.DeploymentBanner.DeploymentBannerView.your_access_url_may_be_configured_incorrectly_eda49d5d",
+		),
+		database: i18n.t(
+			"dashboard:dashboard.DeploymentBanner.DeploymentBannerView.your_database_is_unhealthy_44ead0ae",
+		),
+		derp: i18n.t(
+			"dashboard:dashboard.DeploymentBanner.DeploymentBannerView.we_re_noticing_derp_proxy_issues_93b36b22",
+		),
+		websocket: i18n.t(
+			"dashboard:dashboard.DeploymentBanner.DeploymentBannerView.we_re_noticing_websocket_issues_3d3375f8",
+		),
+		workspace_proxy: i18n.t(
+			"dashboard:dashboard.DeploymentBanner.DeploymentBannerView.we_re_noticing_workspace_proxy_issues_1f8bd73f",
+		),
 	} as const;
 
 	for (const section of sections) {

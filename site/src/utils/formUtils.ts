@@ -7,6 +7,7 @@ import type {
 } from "react";
 import * as Yup from "yup";
 import { isApiValidationError, mapApiErrorToFieldErrors } from "#/api/errors";
+import { i18n } from "#/i18n";
 
 interface GetFormHelperOptions {
 	helperText?: ReactNode;
@@ -66,7 +67,14 @@ export const getFormHelpers =
 			typeof value === "string" &&
 			value.length > maxLength - 30
 		) {
-			helperText = `This cannot be longer than ${maxLength} characters. (${value.length}/${maxLength})`;
+			helperText = i18n.t(
+				"pages:formUtils.this_cannot_be_longer_than_value0_characters_val_8cc5c122",
+				{
+					value0: maxLength,
+					value1: value.length,
+					value2: maxLength,
+				},
+			);
 			// Show it as an error, rather than a hint
 			if (value.length > maxLength) {
 				lengthError = helperText;
@@ -103,19 +111,48 @@ const displayNameRE = /^[^\s](.*[^\s])?$/;
 // REMARK: see #1756 for name/username semantics
 export const nameValidator = (name: string): Yup.StringSchema =>
 	Yup.string()
-		.required(`Please enter a ${name.toLowerCase()}.`)
-		.matches(usernameRE, "Special characters (e.g.: !, @, #) are not supported")
-		.max(maxLenName, `${name} cannot be longer than ${maxLenName} characters`);
+		.required(
+			i18n.t("pages:formUtils.please_enter_a_value0_074fe8eb", {
+				value0: name.toLowerCase(),
+			}),
+		)
+		.matches(
+			usernameRE,
+			i18n.t(
+				"pages:formUtils.special_characters_e_g_are_not_supported_3a1bf84b",
+			),
+		)
+		.max(
+			maxLenName,
+			i18n.t(
+				"pages:formUtils.value0_cannot_be_longer_than_value1_characters_6ef52b09",
+				{
+					value0: name,
+					value1: maxLenName,
+				},
+			),
+		);
 
 export const displayNameValidator = (displayName: string): Yup.StringSchema =>
 	Yup.string()
 		.matches(
 			displayNameRE,
-			`${displayName} must start and end with non-whitespace character`,
+			i18n.t(
+				"pages:formUtils.value0_must_start_and_end_with_non_whitespace_ch_25c525ef",
+				{
+					value0: displayName,
+				},
+			),
 		)
 		.max(
 			displayNameMaxLength,
-			`${displayName} cannot be longer than ${displayNameMaxLength} characters`,
+			i18n.t(
+				"pages:formUtils.value0_cannot_be_longer_than_value1_characters_6ef52b09",
+				{
+					value0: displayName,
+					value1: displayNameMaxLength,
+				},
+			),
 		)
 		.optional();
 

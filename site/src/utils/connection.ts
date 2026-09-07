@@ -1,21 +1,22 @@
 import type { ConnectionType } from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 
 export const connectionTypeToFriendlyName = (type: ConnectionType): string => {
 	switch (type) {
 		case "jetbrains":
 			return "JetBrains";
 		case "reconnecting_pty":
-			return "Web Terminal";
+			return i18n.t("pages:connection.web_terminal_608c7d29");
 		case "ssh":
 			return "SSH";
 		case "vscode":
 			return "VS Code";
 		case "port_forwarding":
-			return "Port Forwarding";
+			return i18n.t("pages:connection.port_forwarding_2f9a490c");
 		case "workspace_app":
-			return "Workspace App";
+			return i18n.t("pages:connection.workspace_app_832757fe");
 		case "tunnel":
-			return "Tunnel";
+			return i18n.t("pages:connection.tunnel_cf23f35d");
 	}
 };
 

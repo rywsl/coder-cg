@@ -8,6 +8,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	getValidationErrorMessage,
 	hasError,
@@ -146,6 +147,8 @@ export const Filter: FC<FilterProps> = ({
 	className,
 	...props
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	// Storing local copy of the filter query so that it can be updated more
 	// aggressively without re-renders rippling out to the rest of the app every
 	// single time. Exists for performance reasons - not really a good way to
@@ -195,7 +198,7 @@ export const Filter: FC<FilterProps> = ({
 							ref={textboxInputRef}
 							className="w-full"
 							value={queryCopy}
-							aria-label="Filter"
+							aria-label={tI18n("Filter.Filter.filter_638e249f")}
 							aria-invalid={shouldDisplayError}
 							onChange={(query) => {
 								setQueryCopy(query);
@@ -210,7 +213,7 @@ export const Filter: FC<FilterProps> = ({
 								if (queryCopy === filter.query) return;
 								setQueryCopy(filter.query);
 							}}
-							placeholder="Search..."
+							placeholder={tI18n("Filter.Filter.search_7f553822")}
 						/>
 						{hasError(error) && (
 							<span className="text-content-destructive text-sm">
@@ -242,12 +245,14 @@ const PresetMenu: FC<PresetMenuProps> = ({
 	learnMoreLink2,
 	onSelect,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button variant="outline">
 					<SlidersHorizontalIcon />
-					Filters
+					{tI18n("Filter.Filter.filters_546ebb8e")}
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent side="bottom" align="start">
@@ -267,7 +272,7 @@ const PresetMenu: FC<PresetMenuProps> = ({
 					<DropdownMenuItem asChild>
 						<a href={learnMoreLink} target="_blank" rel="noreferrer">
 							<ExternalLinkIcon className="size-icon-xs" />
-							View advanced filtering
+							{tI18n("Filter.Filter.view_advanced_filtering_6ce9af32")}
 						</a>
 					</DropdownMenuItem>
 				)}

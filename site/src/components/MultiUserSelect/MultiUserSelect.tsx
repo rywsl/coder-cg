@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import { type FC, type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { keepPreviousData, useQuery } from "react-query";
 import { organizationMembers } from "#/api/queries/organizations";
 import { users } from "#/api/queries/users";
@@ -96,6 +97,8 @@ const UsersTable = <T extends SelectedUser>({
 	selected,
 	users,
 }: UsersTable<T>) => {
+	const { t: tI18n } = useTranslation("components");
+
 	if (error) {
 		return (
 			<div className="p-3">
@@ -111,7 +114,12 @@ const UsersTable = <T extends SelectedUser>({
 	if (users.length === 0) {
 		return (
 			<div className="p-3">
-				<EmptyState message="No users found" isCompact />
+				<EmptyState
+					message={tI18n(
+						"MultiUserSelect.MultiUserSelect.no_users_found_bf1e104f",
+					)}
+					isCompact
+				/>
 			</div>
 		);
 	}
@@ -139,7 +147,12 @@ const UsersTable = <T extends SelectedUser>({
 								onCheckedChange={(checked) => {
 									onChange(user, Boolean(checked));
 								}}
-								aria-label={`Select user ${user.username}`}
+								aria-label={tI18n(
+									"MultiUserSelect.MultiUserSelect.select_user_value0_5c93173f",
+									{
+										value0: user.username,
+									},
+								)}
 							/>
 							<AvatarData
 								title={user.username}
@@ -171,6 +184,8 @@ const InnerMultiSelect = <T extends SelectedUser>({
 	setFilter,
 	users,
 }: InnerAutocompleteProps<T>) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const [inputValue, setInputValue] = useState("");
 	const { debounced, cancelDebounce } = useDebouncedFunction(
 		(nextFilter: string) => {
@@ -184,7 +199,9 @@ const InnerMultiSelect = <T extends SelectedUser>({
 			<SearchField
 				className="h-12 w-full rounded-lg"
 				value={inputValue}
-				aria-label="Search users"
+				aria-label={tI18n(
+					"MultiUserSelect.MultiUserSelect.search_users_e4bb77af",
+				)}
 				onChange={(query) => {
 					setInputValue(query);
 					debounced(query);
@@ -194,7 +211,9 @@ const InnerMultiSelect = <T extends SelectedUser>({
 					setInputValue("");
 					setFilter("");
 				}}
-				placeholder="Search users..."
+				placeholder={tI18n(
+					"MultiUserSelect.MultiUserSelect.search_users_beb0e209",
+				)}
 			/>
 			<div className="h-96 w-full rounded-lg border border-border border-solid">
 				<div className="h-full overflow-hidden p-px">

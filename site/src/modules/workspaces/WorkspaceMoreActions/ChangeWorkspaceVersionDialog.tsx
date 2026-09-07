@@ -1,5 +1,6 @@
 import { InfoIcon } from "lucide-react";
 import { type FC, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { templateVersions } from "#/api/queries/templates";
 import type { TemplateVersion, Workspace } from "#/api/typesGenerated";
@@ -34,6 +35,8 @@ type ChangeWorkspaceVersionDialogProps = {
 export const ChangeWorkspaceVersionDialog: FC<
 	ChangeWorkspaceVersionDialogProps
 > = ({ workspace, onClose, onConfirm, open }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const { data: versions } = useQuery({
 		...templateVersions(workspace.template_id),
 		select: (data) => [...data].reverse(),
@@ -73,12 +76,22 @@ export const ChangeWorkspaceVersionDialog: FC<
 			}}
 			hideCancel={false}
 			type="success"
-			cancelText="Cancel"
-			confirmText="Change"
-			title="Change version"
+			cancelText={tI18n(
+				"workspaces.WorkspaceMoreActions.ChangeWorkspaceVersionDialog.cancel_19766ed6",
+			)}
+			confirmText={tI18n(
+				"workspaces.WorkspaceMoreActions.ChangeWorkspaceVersionDialog.change_c0bf75bd",
+			)}
+			title={tI18n(
+				"workspaces.WorkspaceMoreActions.ChangeWorkspaceVersionDialog.change_version_b8b6c8ad",
+			)}
 			description={
 				<div className="flex flex-col gap-4">
-					<p>You are about to change the version of this workspace.</p>
+					<p>
+						{tI18n(
+							"workspaces.WorkspaceMoreActions.ChangeWorkspaceVersionDialog.you_are_about_to_change_the_version_of_this_work_90f15bcb",
+						)}
+					</p>
 					{validVersions ? (
 						<>
 							<FormFields>
@@ -97,9 +110,13 @@ export const ChangeWorkspaceVersionDialog: FC<
 									<ComboboxTrigger asChild>
 										<ComboboxButton
 											id="template-version-autocomplete"
-											aria-label="Template version"
+											aria-label={tI18n(
+												"workspaces.WorkspaceMoreActions.ChangeWorkspaceVersionDialog.template_version_1c5f9189",
+											)}
 											selectedOption={selectedOption}
-											placeholder="Template version name"
+											placeholder={tI18n(
+												"workspaces.WorkspaceMoreActions.ChangeWorkspaceVersionDialog.template_version_name_f9d2028f",
+											)}
 											className="w-full min-w-0 pl-3.5"
 										/>
 									</ComboboxTrigger>
@@ -107,7 +124,11 @@ export const ChangeWorkspaceVersionDialog: FC<
 										className="max-w-none min-w-[min(100%,320px)]"
 										align="start"
 									>
-										<ComboboxInput placeholder="Search versions…" />
+										<ComboboxInput
+											placeholder={tI18n(
+												"workspaces.WorkspaceMoreActions.ChangeWorkspaceVersionDialog.search_versions_978ac74d",
+											)}
+										/>
 										<ComboboxList>
 											{validVersions.map((option) => (
 												<ComboboxItem
@@ -136,7 +157,11 @@ export const ChangeWorkspaceVersionDialog: FC<
 																</div>
 																{workspace.template_active_version_id ===
 																	option.id && (
-																	<Badge variant="green">Active</Badge>
+																	<Badge variant="green">
+																		{tI18n(
+																			"workspaces.WorkspaceMoreActions.ChangeWorkspaceVersionDialog.active_92340695",
+																		)}
+																	</Badge>
 																)}
 															</div>
 														}
@@ -145,7 +170,11 @@ export const ChangeWorkspaceVersionDialog: FC<
 												</ComboboxItem>
 											))}
 										</ComboboxList>
-										<ComboboxEmpty>No template versions found</ComboboxEmpty>
+										<ComboboxEmpty>
+											{tI18n(
+												"workspaces.WorkspaceMoreActions.ChangeWorkspaceVersionDialog.no_template_versions_found_16001385",
+											)}
+										</ComboboxEmpty>
 									</ComboboxContent>
 								</Combobox>
 							</FormFields>
@@ -158,7 +187,10 @@ export const ChangeWorkspaceVersionDialog: FC<
 									)}
 									<Alert severity="info">
 										<AlertTitle>
-											Published by {selectedVersion.created_by.username}
+											{tI18n(
+												"workspaces.WorkspaceMoreActions.ChangeWorkspaceVersionDialog.published_by_277cd83f",
+											)}
+											{selectedVersion.created_by.username}
 										</AlertTitle>
 									</Alert>
 								</>

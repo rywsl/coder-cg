@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
 import { Avatar } from "#/components/Avatar/Avatar";
@@ -27,14 +28,19 @@ const OAuth2ProviderPageView: FC<OAuth2ProviderPageViewProps> = ({
 	apps,
 	revoke,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	return (
 		<>
 			{error && <ErrorAlert error={error} />}
-
 			<Table>
 				<TableHeader>
 					<TableRow>
-						<TableHead>Name</TableHead>
+						<TableHead>
+							{tI18n(
+								"UserSettingsPage.OAuth2ProviderPage.OAuth2ProviderPageView.name_dcd1d522",
+							)}
+						</TableHead>
 						<TableHead className="w-[1%]" />
 					</TableRow>
 				</TableHeader>
@@ -44,7 +50,11 @@ const OAuth2ProviderPageView: FC<OAuth2ProviderPageViewProps> = ({
 						<OAuth2AppRow key={app.id} app={app} revoke={revoke} />
 					))}
 					{apps?.length === 0 && (
-						<TableEmpty message="No OAuth2 applications have been authorized." />
+						<TableEmpty
+							message={tI18n(
+								"UserSettingsPage.OAuth2ProviderPage.OAuth2ProviderPageView.no_oauth2_applications_have_been_authorized_7ae44223",
+							)}
+						/>
 					)}
 				</TableBody>
 			</Table>
@@ -58,6 +68,8 @@ type OAuth2AppRowProps = {
 };
 
 const OAuth2AppRow: FC<OAuth2AppRowProps> = ({ app, revoke }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	return (
 		<TableRow key={app.id} data-testid={`app-${app.id}`}>
 			<TableCell>
@@ -66,10 +78,11 @@ const OAuth2AppRow: FC<OAuth2AppRowProps> = ({ app, revoke }) => {
 					<span className="font-semibold">{app.name}</span>
 				</div>
 			</TableCell>
-
 			<TableCell>
 				<Button size="sm" variant="destructive" onClick={() => revoke(app)}>
-					Revoke&hellip;
+					{tI18n(
+						"UserSettingsPage.OAuth2ProviderPage.OAuth2ProviderPageView.revoke_585d4c41",
+					)}
 				</Button>
 			</TableCell>
 		</TableRow>

@@ -1,5 +1,6 @@
 import { ChevronRightIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { Button } from "#/components/Button/Button";
@@ -16,11 +17,15 @@ import {
 } from "#/components/Collapsible/Collapsible";
 import { Link } from "#/components/Link/Link";
 import { Spinner } from "#/components/Spinner/Spinner";
+import { i18n } from "#/i18n";
+import { currentIntlLocale } from "#/i18n/locale";
 import { formatDate } from "#/utils/time";
 
 const chartConfig = {
 	users: {
-		label: "Users",
+		label: i18n.t(
+			"administration:DeploymentSettingsPage.OverviewPage.UserEngagementChart.users_6b0cc904",
+		),
 		color: "hsl(var(--highlight-purple))",
 	},
 } satisfies ChartConfig;
@@ -35,12 +40,18 @@ type UserEngagementChartProps = {
 };
 
 export const UserEngagementChart: FC<UserEngagementChartProps> = ({ data }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<section className="border border-solid rounded">
 			<div className="p-4">
 				<Collapsible>
 					<header className="flex flex-col gap-2 items-start">
-						<h3 className="text-md m-0 font-medium">User Engagement</h3>
+						<h3 className="text-md m-0 font-medium">
+							{tI18n(
+								"DeploymentSettingsPage.OverviewPage.UserEngagementChart.user_engagement_99b8b115",
+							)}
+						</h3>
 
 						<CollapsibleTrigger asChild>
 							<Button
@@ -51,7 +62,9 @@ export const UserEngagementChart: FC<UserEngagementChartProps> = ({ data }) => {
 								`}
 							>
 								<ChevronRightIcon />
-								How we calculate engaged users
+								{tI18n(
+									"DeploymentSettingsPage.OverviewPage.UserEngagementChart.how_we_calculate_engaged_users_a9a80eac",
+								)}
 							</Button>
 						</CollapsibleTrigger>
 					</header>
@@ -63,25 +76,33 @@ export const UserEngagementChart: FC<UserEngagementChartProps> = ({ data }) => {
 						`}
 					>
 						<p>
-							A user is considered "engaged" if they initiate a connection to
-							their workspace via apps, web terminal, or SSH. The graph displays
-							the daily count of unique users who engaged at least once, with
-							additional insights available through the{" "}
+							{tI18n(
+								"DeploymentSettingsPage.OverviewPage.UserEngagementChart.a_user_is_considered_engaged_if_they_initiate_a__70d06ac4",
+							)}{" "}
 							<Link size="sm" asChild>
-								<RouterLink to="/audit">Activity Audit</RouterLink>
-							</Link>{" "}
-							and{" "}
-							<Link size="sm" asChild>
-								<RouterLink to="/deployment/licenses">
-									License Consumption
+								<RouterLink to="/audit">
+									{tI18n(
+										"DeploymentSettingsPage.OverviewPage.UserEngagementChart.activity_audit_11dfc62e",
+									)}
 								</RouterLink>
 							</Link>{" "}
-							tools.
+							{tI18n(
+								"DeploymentSettingsPage.OverviewPage.UserEngagementChart.and_6201111b",
+							)}{" "}
+							<Link size="sm" asChild>
+								<RouterLink to="/deployment/licenses">
+									{tI18n(
+										"DeploymentSettingsPage.OverviewPage.UserEngagementChart.license_consumption_33ed153a",
+									)}
+								</RouterLink>
+							</Link>{" "}
+							{tI18n(
+								"DeploymentSettingsPage.OverviewPage.UserEngagementChart.tools_8e194cf4",
+							)}
 						</p>
 					</CollapsibleContent>
 				</Collapsible>
 			</div>
-
 			<div className="p-6 border-0 border-t border-solid">
 				<div className="h-64">
 					{data ? (
@@ -122,7 +143,9 @@ export const UserEngagementChart: FC<UserEngagementChartProps> = ({ data }) => {
 										axisLine={false}
 										tickMargin={12}
 										tickFormatter={(value: number) => {
-											return value === 0 ? "" : value.toLocaleString();
+											return value === 0
+												? ""
+												: value.toLocaleString(currentIntlLocale());
 										}}
 									/>
 									<ChartTooltip
@@ -137,7 +160,7 @@ export const UserEngagementChart: FC<UserEngagementChartProps> = ({ data }) => {
 												}}
 												formatter={(_v, _n, item) => {
 													const date = new Date(item.payload.date);
-													return date.toLocaleString(undefined, {
+													return date.toLocaleString(currentIntlLocale(), {
 														month: "long",
 														day: "2-digit",
 													});
@@ -178,7 +201,9 @@ export const UserEngagementChart: FC<UserEngagementChartProps> = ({ data }) => {
 									text-content-secondary text-sm font-medium
 								`}
 							>
-								No data available
+								{tI18n(
+									"DeploymentSettingsPage.OverviewPage.UserEngagementChart.no_data_available_d2d2d48c",
+								)}
 							</div>
 						)
 					) : (

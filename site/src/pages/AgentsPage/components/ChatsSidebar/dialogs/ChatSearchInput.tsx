@@ -6,6 +6,7 @@ import type {
 	KeyboardEventHandler,
 	RefObject,
 } from "react";
+import { useTranslation } from "react-i18next";
 
 export type SearchFilter = {
 	readonly key: string;
@@ -39,6 +40,8 @@ export const ChatSearchInput: FC<ChatSearchInputProps> = ({
 	isDropdownOpen,
 	onToggleDropdown,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const completedFilters = filters.filter((f) => f.value !== null);
 	const incompleteFilter = filters.find((f) => f.value === null);
 
@@ -60,7 +63,13 @@ export const ChatSearchInput: FC<ChatSearchInputProps> = ({
 					>
 						<span
 							className="block min-w-0 truncate"
-							title={`${f.key}:${f.value}`}
+							title={tI18n(
+								"AgentsPage.components.ChatsSidebar.dialogs.ChatSearchInput.value0_value1_737f6be4",
+								{
+									value0: f.key,
+									value1: f.value,
+								},
+							)}
 						>
 							{f.key}:{f.value}
 						</span>
@@ -71,7 +80,12 @@ export const ChatSearchInput: FC<ChatSearchInputProps> = ({
 								onRemoveFilter(f.key);
 							}}
 							className="inline-flex shrink-0 cursor-pointer items-center border-none bg-transparent p-0 text-content-secondary hover:text-content-primary"
-							aria-label={`Remove ${f.key} filter`}
+							aria-label={tI18n(
+								"AgentsPage.components.ChatsSidebar.dialogs.ChatSearchInput.remove_value0_filter_a79a6ff5",
+								{
+									value0: f.key,
+								},
+							)}
 						>
 							<XIcon className="size-3" />
 						</button>
@@ -87,9 +101,17 @@ export const ChatSearchInput: FC<ChatSearchInputProps> = ({
 					value={value}
 					onChange={onChange}
 					onKeyDown={onKeyDown}
-					placeholder={filters.length > 0 ? "" : "Search chats..."}
+					placeholder={
+						filters.length > 0
+							? ""
+							: tI18n(
+									"AgentsPage.components.ChatsSidebar.dialogs.ChatSearchInput.search_chats_c4712865",
+								)
+					}
 					className="min-w-[60px] flex-1 basis-[60px] border-none bg-transparent py-0.5 text-sm text-content-primary outline-hidden placeholder:text-content-disabled"
-					aria-label="Search chats"
+					aria-label={tI18n(
+						"AgentsPage.components.ChatsSidebar.dialogs.ChatSearchInput.search_chats_02a39c4a",
+					)}
 					role="combobox"
 					aria-controls={hasResults ? listboxId : undefined}
 					aria-expanded={hasResults}
@@ -104,7 +126,9 @@ export const ChatSearchInput: FC<ChatSearchInputProps> = ({
 					"inline-flex h-7 shrink-0 cursor-pointer items-center border-none bg-transparent p-0 text-content-secondary hover:text-content-primary",
 					isDropdownOpen && "text-content-primary",
 				)}
-				aria-label="Toggle filters"
+				aria-label={tI18n(
+					"AgentsPage.components.ChatsSidebar.dialogs.ChatSearchInput.toggle_filters_fa866516",
+				)}
 				aria-expanded={isDropdownOpen}
 			>
 				<ListFilterIcon className="size-4" />

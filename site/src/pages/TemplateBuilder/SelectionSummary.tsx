@@ -1,6 +1,7 @@
 import { cva } from "class-variance-authority";
 import { cn } from "cn";
 import { createContext, type PropsWithChildren, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { Avatar } from "#/components/Avatar/Avatar";
 import type { StepId } from "./steps";
 
@@ -50,6 +51,8 @@ export const SelectionSummary: React.FC<SelectionSummaryProps> = ({
 	onNavigateStep,
 	onNavigateModule,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const indicatorVariant = (step: number): Variant => {
 		if (currentStep === step) return "current";
 		if (step <= maxReachedStep) return "complete";
@@ -63,7 +66,9 @@ export const SelectionSummary: React.FC<SelectionSummaryProps> = ({
 	const reachable = (step: number) => step <= maxReachedStep;
 	return (
 		<div>
-			<h2 className="text-xl font-semibold">Selection</h2>
+			<h2 className="text-xl font-semibold">
+				{tI18n("TemplateBuilder.SelectionSummary.selection_ca406707")}
+			</h2>
 			<div className="text-sm">
 				<VariantContext.Provider value={indicatorVariant(1)}>
 					<StepIndicator
@@ -72,7 +77,7 @@ export const SelectionSummary: React.FC<SelectionSummaryProps> = ({
 							reachable(1) ? () => onNavigateStep("base-infra") : undefined
 						}
 					>
-						Base Template
+						{tI18n("TemplateBuilder.SelectionSummary.base_template_2357e68c")}
 					</StepIndicator>
 				</VariantContext.Provider>
 				<VariantContext.Provider value={dividerVariant(1)}>
@@ -96,7 +101,7 @@ export const SelectionSummary: React.FC<SelectionSummaryProps> = ({
 							reachable(2) ? () => onNavigateStep("module-select") : undefined
 						}
 					>
-						Modules
+						{tI18n("TemplateBuilder.SelectionSummary.modules_76c86c4c")}
 					</StepIndicator>
 				</VariantContext.Provider>
 				<VariantContext.Provider value={dividerVariant(2)}>
@@ -116,7 +121,7 @@ export const SelectionSummary: React.FC<SelectionSummaryProps> = ({
 							reachable(3) ? () => onNavigateStep("customizations") : undefined
 						}
 					>
-						Customizations
+						{tI18n("TemplateBuilder.SelectionSummary.customizations_2213674d")}
 					</StepIndicator>
 				</VariantContext.Provider>
 			</div>
@@ -157,15 +162,27 @@ const StepIndicator: React.FC<StepIndicatorProps> = ({
 	onClick,
 	children,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const variant = useContext(VariantContext);
-	const label = typeof children === "string" ? children : `step ${step}`;
+	const label =
+		typeof children === "string"
+			? children
+			: tI18n("TemplateBuilder.SelectionSummary.step_value0_e15dc4e4", {
+					value0: step,
+				});
 
 	if (onClick) {
 		return (
 			<button
 				type="button"
 				onClick={onClick}
-				aria-label={`Go to ${label}`}
+				aria-label={tI18n(
+					"TemplateBuilder.SelectionSummary.go_to_value0_865f936d",
+					{
+						value0: label,
+					},
+				)}
 				className={cn(
 					"flex items-center gap-2 w-full text-left text-content-primary p-0 bg-transparent border-0 cursor-pointer rounded-sm",
 					"focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-border-primary",
@@ -227,13 +244,20 @@ const BaseTemplateSelection: React.FC<BaseTemplateSelectionProps> = ({
 	template,
 	onClick,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<StepDivider>
 			{onClick ? (
 				<button
 					type="button"
 					onClick={onClick}
-					aria-label={`Configure ${template.name}`}
+					aria-label={tI18n(
+						"TemplateBuilder.SelectionSummary.configure_value0_6698cf14",
+						{
+							value0: template.name,
+						},
+					)}
 					className={cn(
 						"flex items-center gap-2 w-full text-left p-1 rounded-sm bg-transparent border-0 cursor-pointer",
 						"text-content-secondary hover:text-content-primary hover:bg-surface-secondary",
@@ -264,6 +288,8 @@ const ModuleSelection: React.FC<ModuleSelectionProps> = ({
 	modules,
 	onSelectModule,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<StepDivider className="max-h-72 overflow-y-auto">
 			{modules.map((module) => (
@@ -271,7 +297,12 @@ const ModuleSelection: React.FC<ModuleSelectionProps> = ({
 					key={module.id}
 					type="button"
 					onClick={() => onSelectModule(module.id)}
-					aria-label={`Configure ${module.name}`}
+					aria-label={tI18n(
+						"TemplateBuilder.SelectionSummary.configure_value0_6698cf14",
+						{
+							value0: module.name,
+						},
+					)}
 					className={cn(
 						"flex items-start w-full text-left p-1 mb-1 rounded-sm bg-transparent border-0 cursor-pointer",
 						"text-sm text-content-secondary hover:text-content-primary hover:bg-surface-secondary",

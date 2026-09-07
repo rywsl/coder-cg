@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { SectionHeader } from "./components/SectionHeader";
 import { UserCompactionThresholdSettings } from "./components/UserCompactionThresholdSettings";
@@ -33,11 +34,17 @@ export const AgentSettingsCompactionPageView: FC<
 	onSaveThreshold,
 	onResetThreshold,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<div className="flex flex-col gap-8">
 			<SectionHeader
-				label="Compaction"
-				description="Customize when conversations with models are automatically compacted."
+				label={tI18n(
+					"AgentsPage.AgentSettingsCompactionPageView.compaction_a0ade140",
+				)}
+				description={tI18n(
+					"AgentsPage.AgentSettingsCompactionPageView.customize_when_conversations_with_models_are_aut_f33389e3",
+				)}
 			/>
 			<UserCompactionThresholdSettings
 				models={models ?? []}

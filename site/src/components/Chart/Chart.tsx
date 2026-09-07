@@ -1,3 +1,4 @@
+import { currentIntlLocale } from "#/i18n/locale";
 /**
  * Copied from shadc/ui on 01/13/2025
  * @see {@link https://ui.shadcn.com/docs/components/chart}
@@ -260,7 +261,7 @@ export const ChartTooltipContent: React.FC<ChartTooltipContentProps> = ({
 										</div>
 										{item.value && (
 											<span className="font-mono font-medium tabular-nums text-content-primary">
-												{item.value.toLocaleString()}
+												{item.value.toLocaleString(currentIntlLocale())}
 											</span>
 										)}
 									</div>

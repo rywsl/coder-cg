@@ -11,6 +11,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "#/components/Button/Button";
 import {
 	annotationLineForBox,
@@ -112,6 +113,8 @@ export const InlinePromptInput: FC<{
 	onSubmit: (text: string) => void;
 	onCancel: () => void;
 }> = ({ onSubmit, onCancel }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [text, setText] = useState("");
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -125,7 +128,9 @@ export const InlinePromptInput: FC<{
 				<textarea
 					ref={textareaRef}
 					className="w-full resize-none border-none bg-transparent px-3 py-2 font-sans text-sm leading-5 text-content-primary placeholder:text-content-secondary outline-hidden ring-0 focus:outline-hidden focus:ring-0"
-					placeholder="Add a comment..."
+					placeholder={tI18n(
+						"AgentsPage.components.DiffViewer.CommentableDiffViewer.add_a_comment_23c5f331",
+					)}
 					rows={2}
 					value={text}
 					onChange={(e) => setText(e.target.value)}
@@ -145,7 +150,11 @@ export const InlinePromptInput: FC<{
 					}}
 				/>
 				<div className="flex items-end justify-between gap-2 pl-2.5 pr-1.5 pb-1.5">
-					<span className="text-xs text-content-secondary">Esc to cancel</span>
+					<span className="text-xs text-content-secondary">
+						{tI18n(
+							"AgentsPage.components.DiffViewer.CommentableDiffViewer.esc_to_cancel_2155dc56",
+						)}
+					</span>
 					<Button
 						size="icon"
 						variant="default"
@@ -162,7 +171,11 @@ export const InlinePromptInput: FC<{
 						}}
 					>
 						<ArrowUpIcon />
-						<span className="sr-only">Add to chat</span>
+						<span className="sr-only">
+							{tI18n(
+								"AgentsPage.components.DiffViewer.CommentableDiffViewer.add_to_chat_b33b6171",
+							)}
+						</span>
 					</Button>
 				</div>
 			</div>

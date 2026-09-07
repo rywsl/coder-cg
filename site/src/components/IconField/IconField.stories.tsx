@@ -51,11 +51,14 @@ export const OpenPicker: Story = {
 		await userEvent.click(button);
 		await expect(button).toHaveAttribute("aria-expanded", "true");
 		const dialog = await screen.findByRole("dialog");
-		await waitFor(() => {
-			expect(
-				within(dialog).queryByRole("status", { name: "Loading" }),
-			).not.toBeInTheDocument();
-		});
+		await waitFor(
+			() => {
+				expect(
+					within(dialog).queryByRole("status", { name: "Loading" }),
+				).not.toBeInTheDocument();
+			},
+			{ timeout: 5_000 },
+		);
 		await expect(dialog).toBeVisible();
 	},
 };

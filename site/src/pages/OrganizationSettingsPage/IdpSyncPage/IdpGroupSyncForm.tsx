@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import { PlusIcon, TrashIcon, TriangleAlertIcon } from "lucide-react";
 import { type FC, type KeyboardEventHandler, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import type {
 	Group,
@@ -39,6 +40,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { i18n } from "#/i18n";
 import { isEveryoneGroup } from "#/modules/groups";
 import { docs } from "#/utils/docs";
 import { isUUID } from "#/utils/uuid";
@@ -53,7 +55,9 @@ const groupSyncValidationSchema = Yup.object({
 	mapping: Yup.object()
 		.test(
 			"valid-mapping",
-			"Invalid group sync settings mapping structure",
+			i18n.t(
+				"administration:OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.invalid_group_sync_settings_mapping_structure_86c08aad",
+			),
 			(value) => {
 				if (!value) return true;
 				return Object.entries(value).every(
@@ -92,6 +96,8 @@ export const IdpGroupSyncForm: FC<IdpGroupSyncFormProps> = ({
 	onSubmit,
 	onSyncFieldChange,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const form = useFormik<GroupSyncSettings>({
 		initialValues: {
 			field: groupSyncSettings?.field ?? "",
@@ -160,10 +166,14 @@ export const IdpGroupSyncForm: FC<IdpGroupSyncFormProps> = ({
 					<div className="flex flex-row items-center gap-5">
 						<div className="grid grid-cols-2 gap-2 grid-rows-[20px_auto_20px]">
 							<Label className="text-sm" htmlFor={`${id}-sync-field`}>
-								Group sync field
+								{tI18n(
+									"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.group_sync_field_828927f6",
+								)}
 							</Label>
 							<Label className="text-sm" htmlFor={`${id}-regex-filter`}>
-								Regex filter
+								{tI18n(
+									"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.regex_filter_8c7c1818",
+								)}
 							</Label>
 							<Input
 								id={`${id}-sync-field`}
@@ -192,11 +202,15 @@ export const IdpGroupSyncForm: FC<IdpGroupSyncFormProps> = ({
 									}}
 								>
 									<Spinner loading={form.isSubmitting} />
-									Save
+									{tI18n(
+										"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.save_1509f561",
+									)}
 								</Button>
 							</div>
 							<p className="text-content-secondary text-2xs m-0">
-								If empty, group sync is deactivated
+								{tI18n(
+									"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.if_empty_group_sync_is_deactivated_b5b4a737",
+								)}
 							</p>
 						</div>
 					</div>
@@ -220,7 +234,9 @@ export const IdpGroupSyncForm: FC<IdpGroupSyncFormProps> = ({
 					</Spinner>
 					<span className="flex flex-row items-center gap-1">
 						<Label htmlFor={`${id}-auto-create-missing-groups`}>
-							Auto create missing groups
+							{tI18n(
+								"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.auto_create_missing_groups_82fae119",
+							)}
 						</Label>
 						<AutoCreateMissingGroupsHelpPopover />
 					</span>
@@ -228,7 +244,9 @@ export const IdpGroupSyncForm: FC<IdpGroupSyncFormProps> = ({
 				<div className="flex flex-row gap-2 justify-between items-start">
 					<div className="grid items-center gap-1 w-72">
 						<Label className="text-sm" htmlFor={`${id}-idp-group-name`}>
-							IdP group name
+							{tI18n(
+								"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.idp_group_name_f56f321f",
+							)}
 						</Label>
 						{claimFieldValues ? (
 							<Combobox
@@ -245,14 +263,18 @@ export const IdpGroupSyncForm: FC<IdpGroupSyncFormProps> = ({
 												? { label: idpGroupName, value: idpGroupName }
 												: undefined
 										}
-										placeholder="Select IdP group"
+										placeholder={tI18n(
+											"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.select_idp_group_c6eb586b",
+										)}
 									/>
 								</ComboboxTrigger>
 								<ComboboxContent className="w-72">
 									<ComboboxInput
 										value={comboInputValue}
 										onValueChange={setComboInputValue}
-										placeholder="Search..."
+										placeholder={tI18n(
+											"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.search_7f553822",
+										)}
 										onKeyDown={handleKeyDown}
 									/>
 									<ComboboxList>
@@ -287,7 +309,9 @@ export const IdpGroupSyncForm: FC<IdpGroupSyncFormProps> = ({
 					</div>
 					<div className="grid items-center gap-1 flex-1">
 						<Label className="text-sm" htmlFor={`${id}-coder-group`}>
-							Coder group
+							{tI18n(
+								"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.coder_group_4b56cf6a",
+							)}
 						</Label>
 						<MultiSelectCombobox
 							inputProps={{
@@ -303,10 +327,14 @@ export const IdpGroupSyncForm: FC<IdpGroupSyncFormProps> = ({
 									value: group.id,
 								}))}
 							hidePlaceholderWhenSelected
-							placeholder="Select group"
+							placeholder={tI18n(
+								"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.select_group_720c488f",
+							)}
 							emptyIndicator={
 								<p className="text-center text-md text-content-primary">
-									No more groups to select
+									{tI18n(
+										"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.no_more_groups_to_select_bf31dceb",
+									)}
 								</p>
 							}
 						/>
@@ -334,7 +362,9 @@ export const IdpGroupSyncForm: FC<IdpGroupSyncFormProps> = ({
 							<Spinner loading={form.isSubmitting}>
 								<PlusIcon />
 							</Spinner>
-							Add IdP group
+							{tI18n(
+								"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.add_idp_group_1b3638e8",
+							)}
 						</Button>
 					</div>
 				</div>
@@ -400,6 +430,8 @@ const GroupRow: FC<GroupRowProps> = ({
 	coderGroup,
 	onDelete,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<TableRow data-testid={`group-${idpGroup}`}>
 			<TableCell>
@@ -416,29 +448,33 @@ const GroupRow: FC<GroupRowProps> = ({
 								sideOffset={8}
 								className="p-2 text-xs text-content-secondary max-w-sm"
 							>
-								This value has not be seen in the specified claim field before.
-								You might want to check your IdP configuration and ensure that
-								this value is not misspelled.
+								{tI18n(
+									"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.this_value_has_not_be_seen_in_the_specified_clai_69d1ded4",
+								)}
 							</TooltipContent>
 						</Tooltip>
 					)}
 				</div>
 			</TableCell>
-
 			<TableCell>
 				<IdpPillList roles={coderGroup} />
 			</TableCell>
-
 			<TableCell>
 				<Button
 					variant="outline"
 					size="icon"
 					className="text-content-primary"
-					aria-label="delete"
+					aria-label={tI18n(
+						"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.delete_61975955",
+					)}
 					onClick={() => onDelete(idpGroup)}
 				>
 					<TrashIcon />
-					<span className="sr-only">Delete IdP mapping</span>
+					<span className="sr-only">
+						{tI18n(
+							"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.delete_idp_mapping_8c31481a",
+						)}
+					</span>
 				</Button>
 			</TableCell>
 		</TableRow>
@@ -446,13 +482,16 @@ const GroupRow: FC<GroupRowProps> = ({
 };
 
 const AutoCreateMissingGroupsHelpPopover: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<HelpPopover>
 			<HelpPopoverIconTrigger />
 			<HelpPopoverContent>
 				<HelpPopoverText>
-					Enabling auto create missing groups will automatically create groups
-					returned by the OIDC provider if they do not exist in Coder.
+					{tI18n(
+						"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.enabling_auto_create_missing_groups_will_automat_115de3a5",
+					)}
 				</HelpPopoverText>
 			</HelpPopoverContent>
 		</HelpPopover>
@@ -460,22 +499,32 @@ const AutoCreateMissingGroupsHelpPopover: FC = () => {
 };
 
 const LegacyGroupSyncHeader: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<h4 className="text-xl font-medium">
 			<div className="flex items-end gap-2">
-				<span>Legacy group sync settings</span>
+				<span>
+					{tI18n(
+						"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.legacy_group_sync_settings_677299d7",
+					)}
+				</span>
 				<HelpPopover>
 					<HelpPopoverIconTrigger />
 					<HelpPopoverContent>
-						<HelpPopoverTitle>Legacy group sync settings</HelpPopoverTitle>
+						<HelpPopoverTitle>
+							{tI18n(
+								"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.legacy_group_sync_settings_677299d7",
+							)}
+						</HelpPopoverTitle>
 						<HelpPopoverText>
-							These settings were configured using environment variables, and
-							only apply to the default organization. It is now recommended to
-							configure IdP sync via the CLI or the UI, which enables sync to be
-							configured for any organization, and for those settings to be
-							persisted without manually setting environment variables.{" "}
+							{tI18n(
+								"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.these_settings_were_configured_using_environment_88f712a6",
+							)}{" "}
 							<Link href={docs("/admin/users/idp-sync")}>
-								Learn more&hellip;
+								{tI18n(
+									"OrganizationSettingsPage.IdpSyncPage.IdpGroupSyncForm.learn_more_bdc5b959",
+								)}
 							</Link>
 						</HelpPopoverText>
 					</HelpPopoverContent>

@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { type FormikTouched, useFormik } from "formik";
 import { type FC, type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	type FieldError,
 	getErrorMessage,
@@ -30,6 +31,7 @@ import { Label } from "#/components/Label/Label";
 import { Separator } from "#/components/Separator/Separator";
 import { Spinner } from "#/components/Spinner/Spinner";
 import { Textarea } from "#/components/Textarea/Textarea";
+import { i18n } from "#/i18n";
 import { getFormHelpers } from "#/utils/formUtils";
 import {
 	buildCreateUserSecretRequest,
@@ -65,7 +67,9 @@ const emptyValues: SecretFormValues = {
 	file_path: "",
 };
 
-const infoText = "Secret values cannot be retrieved once saved.";
+const infoText = i18n.t(
+	"users:UserSettingsPage.SecretsPage.SecretDialog.secret_values_cannot_be_retrieved_once_saved_b82a8b54",
+);
 export const SAVED_SECRET_VALUE_DISPLAY = "••••••••••••••••••••";
 
 export const SecretDialog: FC<SecretDialogProps> = ({
@@ -78,6 +82,8 @@ export const SecretDialog: FC<SecretDialogProps> = ({
 	onUpdateSecret,
 	onImportSecrets,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	const isEdit = Boolean(secret);
 	const initialValues = secret
 		? {
@@ -144,14 +150,17 @@ export const SecretDialog: FC<SecretDialogProps> = ({
 		const format = secretsFileFormatFromFilename(file.name);
 		if (!format) {
 			setImportError({
-				message:
-					"Unsupported file type. Import a .env, .json, .yaml, or .yml file.",
+				message: tI18n(
+					"UserSettingsPage.SecretsPage.SecretDialog.unsupported_file_type_import_a_env_json_yaml_or__813e37a5",
+				),
 			});
 			return;
 		}
 		if (file.size > MaxSecretsFileBytes) {
 			setImportError({
-				message: "File is too large. Import a file of 1 MiB or smaller.",
+				message: tI18n(
+					"UserSettingsPage.SecretsPage.SecretDialog.file_is_too_large_import_a_file_of_1_mib_or_smal_2ad522e5",
+				),
 			});
 			return;
 		}
@@ -170,7 +179,11 @@ export const SecretDialog: FC<SecretDialogProps> = ({
 			}
 		};
 		reader.onerror = () => {
-			setImportError({ message: "Failed to read the selected file." });
+			setImportError({
+				message: tI18n(
+					"UserSettingsPage.SecretsPage.SecretDialog.failed_to_read_the_selected_file_d48c5240",
+				),
+			});
 			setIsImporting(false);
 		};
 		reader.readAsText(file);
@@ -208,7 +221,15 @@ export const SecretDialog: FC<SecretDialogProps> = ({
 				}}
 			>
 				<DialogHeader>
-					<DialogTitle>{secret ? "Edit secret" : "Add secret"}</DialogTitle>
+					<DialogTitle>
+						{secret
+							? tI18n(
+									"UserSettingsPage.SecretsPage.SecretDialog.edit_secret_b5068d24",
+								)
+							: tI18n(
+									"UserSettingsPage.SecretsPage.SecretDialog.add_secret_f57a23c6",
+								)}
+					</DialogTitle>
 				</DialogHeader>
 
 				<form
@@ -236,9 +257,13 @@ export const SecretDialog: FC<SecretDialogProps> = ({
 							<SecretValueField
 								key={`${secret.name}-${open}`}
 								field={getFieldHelpers("value", {
-									helperText: "Leave blank to keep the existing value.",
+									helperText: tI18n(
+										"UserSettingsPage.SecretsPage.SecretDialog.leave_blank_to_keep_the_existing_value_37e1207c",
+									),
 								})}
-								placeholder="Leave blank to keep existing value"
+								placeholder={tI18n(
+									"UserSettingsPage.SecretsPage.SecretDialog.leave_blank_to_keep_existing_value_01a009d2",
+								)}
 								showSavedValue={open}
 								clearValueRequested={clearValueRequested}
 								onClearValue={() => {
@@ -264,9 +289,15 @@ export const SecretDialog: FC<SecretDialogProps> = ({
 										setImportFile(undefined);
 										setImportError(undefined);
 									}}
-									removeLabel="Remove file"
-									title="Import secrets from a file"
-									description="Import a single or multiple secrets at once with a .env, .json, .yaml, or .yml file."
+									removeLabel={tI18n(
+										"UserSettingsPage.SecretsPage.SecretDialog.remove_file_fffa2e32",
+									)}
+									title={tI18n(
+										"UserSettingsPage.SecretsPage.SecretDialog.import_secrets_from_a_file_329de98a",
+									)}
+									description={tI18n(
+										"UserSettingsPage.SecretsPage.SecretDialog.import_a_single_or_multiple_secrets_at_once_with_ca2eac74",
+									)}
 									extensions={["env", "json", "yaml", "yml"]}
 								/>
 								{importError !== undefined && (
@@ -276,7 +307,9 @@ export const SecretDialog: FC<SecretDialogProps> = ({
 							<div className="flex items-center">
 								<Separator className="flex-1" />
 								<span className="whitespace-nowrap px-3 text-xs text-content-secondary">
-									or add individually
+									{tI18n(
+										"UserSettingsPage.SecretsPage.SecretDialog.or_add_individually_fce85069",
+									)}
 								</span>
 								<Separator className="flex-1" />
 							</div>
@@ -291,11 +324,19 @@ export const SecretDialog: FC<SecretDialogProps> = ({
 
 					<DialogFooter>
 						<Button variant="outline" disabled={isBusy} onClick={closeDialog}>
-							Cancel
+							{tI18n(
+								"UserSettingsPage.SecretsPage.SecretDialog.cancel_19766ed6",
+							)}
 						</Button>
 						<Button type="submit" disabled={confirmDisabled}>
 							<Spinner loading={isSubmitting || form.isSubmitting} />
-							{secret ? "Update" : "Save"}
+							{secret
+								? tI18n(
+										"UserSettingsPage.SecretsPage.SecretDialog.update_c1c1009d",
+									)
+								: tI18n(
+										"UserSettingsPage.SecretsPage.SecretDialog.save_1509f561",
+									)}
 						</Button>
 					</DialogFooter>
 				</form>
@@ -317,6 +358,8 @@ const SecretFields: FC<SecretFieldsProps> = ({
 	showRequiredLabels,
 	showValue,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	return (
 		<>
 			<FormField
@@ -327,12 +370,16 @@ const SecretFields: FC<SecretFieldsProps> = ({
 				})}
 				label={
 					showRequiredLabels ? (
-						<RequiredFieldLabel>Name</RequiredFieldLabel>
+						<RequiredFieldLabel>
+							{tI18n("UserSettingsPage.SecretsPage.SecretDialog.name_dcd1d522")}
+						</RequiredFieldLabel>
 					) : (
-						"Name"
+						tI18n("UserSettingsPage.SecretsPage.SecretDialog.name_dcd1d522")
 					)
 				}
-				placeholder="Secret name"
+				placeholder={tI18n(
+					"UserSettingsPage.SecretsPage.SecretDialog.secret_name_5cdf573b",
+				)}
 				className="placeholder:text-content-disabled"
 				disabled={disableName}
 				aria-required={showRequiredLabels}
@@ -340,28 +387,38 @@ const SecretFields: FC<SecretFieldsProps> = ({
 			/>
 			<FormField
 				field={getFieldHelpers("env_name", {
-					helperText:
-						"Optional. Exposes the secret as an environment variable with this name in your workspace.",
+					helperText: tI18n(
+						"UserSettingsPage.SecretsPage.SecretDialog.optional_exposes_the_secret_as_an_environment_va_cee2139f",
+					),
 				})}
-				label="Environment variable"
+				label={tI18n(
+					"UserSettingsPage.SecretsPage.SecretDialog.environment_variable_b86ad171",
+				)}
 				placeholder="SERVICE_TOKEN"
 				className="placeholder:text-content-disabled"
 				ignorePasswordManagers
 			/>
 			<FormField
 				field={getFieldHelpers("file_path", {
-					helperText:
-						"Optional. Exposes the secret as a file at this path in your workspace. Path must start with ~/ or /.",
+					helperText: tI18n(
+						"UserSettingsPage.SecretsPage.SecretDialog.optional_exposes_the_secret_as_a_file_at_this_pa_8a07d70a",
+					),
 				})}
-				label="File path"
-				placeholder="~/api-key.txt"
+				label={tI18n(
+					"UserSettingsPage.SecretsPage.SecretDialog.file_path_2fb6d386",
+				)}
+				placeholder={tI18n(
+					"UserSettingsPage.SecretsPage.SecretDialog.api_key_txt_fdbbd460",
+				)}
 				className="placeholder:text-content-disabled"
 				ignorePasswordManagers
 			/>
 			{showValue && (
 				<SecretValueField
 					field={getFieldHelpers("value")}
-					placeholder="Enter secret value"
+					placeholder={tI18n(
+						"UserSettingsPage.SecretsPage.SecretDialog.enter_secret_value_7b3820f7",
+					)}
 					required={showRequiredLabels}
 				/>
 			)}
@@ -400,6 +457,8 @@ const SecretValueField: FC<SecretValueFieldProps> = ({
 	onClearValue,
 	onUndoClearValue,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	const [hasHiddenSavedValue, setHasHiddenSavedValue] = useState(false);
 	const isShowingSavedValue =
 		showSavedValue && !clearValueRequested && !hasHiddenSavedValue;
@@ -419,7 +478,9 @@ const SecretValueField: FC<SecretValueFieldProps> = ({
 				...field,
 				helperText: field.error
 					? field.helperText
-					: "Saved value will be cleared when you update.",
+					: tI18n(
+							"UserSettingsPage.SecretsPage.SecretDialog.saved_value_will_be_cleared_when_you_update_2385a011",
+						),
 			}
 		: field;
 	const errorId = `${field.id}-error`;
@@ -428,7 +489,13 @@ const SecretValueField: FC<SecretValueFieldProps> = ({
 	return (
 		<div className="flex flex-col gap-2">
 			<Label htmlFor={field.id}>
-				{required ? <RequiredFieldLabel>Value</RequiredFieldLabel> : "Value"}
+				{required ? (
+					<RequiredFieldLabel>
+						{tI18n("UserSettingsPage.SecretsPage.SecretDialog.value_8e37953d")}
+					</RequiredFieldLabel>
+				) : (
+					tI18n("UserSettingsPage.SecretsPage.SecretDialog.value_8e37953d")
+				)}
 			</Label>
 			<div className="flex flex-col gap-2 sm:flex-row sm:items-start">
 				<Textarea
@@ -484,7 +551,11 @@ const SecretValueField: FC<SecretValueFieldProps> = ({
 						)}
 						onClick={clearValueRequested ? onUndoClearValue : onClearValue}
 					>
-						{clearValueRequested ? "Undo" : "Clear"}
+						{clearValueRequested
+							? tI18n("UserSettingsPage.SecretsPage.SecretDialog.undo_a8283ade")
+							: tI18n(
+									"UserSettingsPage.SecretsPage.SecretDialog.clear_83b12c22",
+								)}
 					</Button>
 				)}
 			</div>
@@ -508,18 +579,26 @@ type SecretDescriptionFieldProps = {
 };
 
 const SecretDescriptionField: FC<SecretDescriptionFieldProps> = ({ field }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	const errorId = `${field.id}-error`;
 
 	return (
 		<div className="flex flex-col gap-2">
-			<Label htmlFor={field.id}>Description</Label>
+			<Label htmlFor={field.id}>
+				{tI18n(
+					"UserSettingsPage.SecretsPage.SecretDialog.description_526e0087",
+				)}
+			</Label>
 			<Textarea
 				id={field.id}
 				name={field.name}
 				value={field.value}
 				onChange={field.onChange}
 				onBlur={field.onBlur}
-				placeholder="Optional"
+				placeholder={tI18n(
+					"UserSettingsPage.SecretsPage.SecretDialog.optional_59be7133",
+				)}
 				aria-invalid={field.error}
 				aria-describedby={field.error ? errorId : undefined}
 				className={cn(
@@ -549,6 +628,8 @@ type ImportSecretsErrorProps = {
 };
 
 const ImportSecretsError: FC<ImportSecretsErrorProps> = ({ error }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	const validations = getImportSecretValidations(error);
 	if (validations.length === 0) {
 		return <ErrorAlert error={error} showDebugDetail={false} />;
@@ -557,7 +638,12 @@ const ImportSecretsError: FC<ImportSecretsErrorProps> = ({ error }) => {
 	return (
 		<Alert severity="error" prominent>
 			<AlertTitle>
-				{getErrorMessage(error, "Failed to import secrets.")}
+				{getErrorMessage(
+					error,
+					tI18n(
+						"UserSettingsPage.SecretsPage.SecretDialog.failed_to_import_secrets_65200858",
+					),
+				)}
 			</AlertTitle>
 			<AlertDescription>
 				<ul className="m-0 flex list-disc flex-col gap-1 pl-5">

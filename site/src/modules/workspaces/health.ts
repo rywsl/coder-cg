@@ -1,4 +1,5 @@
 import type { WorkspaceAgent } from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 
 /**
  * Canonical messages for startup and shutdown script issues.
@@ -8,24 +9,36 @@ import type { WorkspaceAgent } from "#/api/typesGenerated";
  */
 export const agentScriptMessages = {
 	start_error: {
-		title: "Startup script failed",
-		detail:
-			"A startup script exited with an error. Check the agent logs for details.",
+		title: i18n.t(
+			"workspaces:workspaces.health.startup_script_failed_e21378a6",
+		),
+		detail: i18n.t(
+			"workspaces:workspaces.health.a_startup_script_exited_with_an_error_check_the__ea3b30c2",
+		),
 	},
 	start_timeout: {
-		title: "Startup script is taking longer than expected",
-		detail:
-			"A startup script has exceeded the expected time. Check the agent logs for details.",
+		title: i18n.t(
+			"workspaces:workspaces.health.startup_script_is_taking_longer_than_expected_60a26e90",
+		),
+		detail: i18n.t(
+			"workspaces:workspaces.health.a_startup_script_has_exceeded_the_expected_time__68b6212b",
+		),
 	},
 	shutdown_error: {
-		title: "Shutdown script failed",
-		detail:
-			"A shutdown script exited with an error. Check the agent logs for details.",
+		title: i18n.t(
+			"workspaces:workspaces.health.shutdown_script_failed_7ab20100",
+		),
+		detail: i18n.t(
+			"workspaces:workspaces.health.a_shutdown_script_exited_with_an_error_check_the_c058bbb5",
+		),
 	},
 	shutdown_timeout: {
-		title: "Shutdown script is taking longer than expected",
-		detail:
-			"A shutdown script has exceeded the expected time. Check the agent logs for details.",
+		title: i18n.t(
+			"workspaces:workspaces.health.shutdown_script_is_taking_longer_than_expected_244d247e",
+		),
+		detail: i18n.t(
+			"workspaces:workspaces.health.a_shutdown_script_has_exceeded_the_expected_time_1ec0de74",
+		),
 	},
 } as const;
 
@@ -35,19 +48,28 @@ export const agentScriptMessages = {
  */
 export const agentConnectionMessages = {
 	connecting: {
-		title: "Workspace agent is connecting",
-		detail:
-			"The workspace agent has not connected yet. Wait for it to connect or check the logs if it does not.",
+		title: i18n.t(
+			"workspaces:workspaces.health.workspace_agent_is_connecting_fd9c7084",
+		),
+		detail: i18n.t(
+			"workspaces:workspaces.health.the_workspace_agent_has_not_connected_yet_wait_f_dd2878f5",
+		),
 	},
 	timeout: {
-		title: "Agent is taking longer than expected to connect",
-		detail:
-			"Continue to wait and check the log output for errors. If agents do not connect, try restarting the workspace.",
+		title: i18n.t(
+			"workspaces:workspaces.health.agent_is_taking_longer_than_expected_to_connect_4bf35e2d",
+		),
+		detail: i18n.t(
+			"workspaces:workspaces.health.continue_to_wait_and_check_the_log_output_for_er_6a0a605b",
+		),
 	},
 	disconnected: {
-		title: "Workspace agent has disconnected",
-		detail:
-			"Check the log output for errors. If agents do not reconnect, try restarting the workspace.",
+		title: i18n.t(
+			"workspaces:workspaces.health.workspace_agent_has_disconnected_6e158a18",
+		),
+		detail: i18n.t(
+			"workspaces:workspaces.health.check_the_log_output_for_errors_if_agents_do_not_df36abf7",
+		),
 	},
 } as const;
 
@@ -100,8 +122,12 @@ export function getAgentConnectivityIssues(
 		agent.lifecycle_state === "shutdown_timeout"
 	) {
 		issues.push({
-			title: "Workspace agent is shutting down",
-			detail: "The workspace is not available while agents shut down.",
+			title: i18n.t(
+				"workspaces:workspaces.health.workspace_agent_is_shutting_down_c0beef22",
+			),
+			detail: i18n.t(
+				"workspaces:workspaces.health.the_workspace_is_not_available_while_agents_shut_fe596802",
+			),
 			severity: "info",
 			prominent: false,
 		});
@@ -133,8 +159,18 @@ export function getAgentScriptIssues(
 		switch (script.status) {
 			case "timed_out":
 				issues.push({
-					title: `"${script.display_name}" is taking longer than expected`,
-					detail: `"${script.display_name}" has exceeded the expected time. Check the agent logs for details.`,
+					title: i18n.t(
+						"workspaces:workspaces.health.value0_is_taking_longer_than_expected_d3723604",
+						{
+							value0: script.display_name,
+						},
+					),
+					detail: i18n.t(
+						"workspaces:workspaces.health.value0_has_exceeded_the_expected_time_check_the__eb095b63",
+						{
+							value0: script.display_name,
+						},
+					),
 					severity: "warning",
 					prominent: false,
 				});
@@ -142,15 +178,36 @@ export function getAgentScriptIssues(
 			case "exit_failure":
 				if (script.exit_code) {
 					issues.push({
-						title: `"${script.display_name}" failed`,
-						detail: `"${script.display_name}" exited with ${script.exit_code}. Check the agent logs for details.`,
+						title: i18n.t(
+							"workspaces:workspaces.health.value0_failed_eca3057d",
+							{
+								value0: script.display_name,
+							},
+						),
+						detail: i18n.t(
+							"workspaces:workspaces.health.value0_exited_with_value1_check_the_agent_logs_f_e2e3ea20",
+							{
+								value0: script.display_name,
+								value1: script.exit_code,
+							},
+						),
 						severity: "warning",
 						prominent: false,
 					});
 				} else {
 					issues.push({
-						title: `"${script.display_name}" failed`,
-						detail: `"${script.display_name}" has exited with an error. Check the agent logs for details.`,
+						title: i18n.t(
+							"workspaces:workspaces.health.value0_failed_eca3057d",
+							{
+								value0: script.display_name,
+							},
+						),
+						detail: i18n.t(
+							"workspaces:workspaces.health.value0_has_exited_with_an_error_check_the_agent__10648efc",
+							{
+								value0: script.display_name,
+							},
+						),
 						severity: "warning",
 						prominent: false,
 					});
@@ -158,8 +215,15 @@ export function getAgentScriptIssues(
 				break;
 			case "pipes_left_open":
 				issues.push({
-					title: `"${script.display_name}" left pipes open`,
-					detail: "Check the agent logs for details.",
+					title: i18n.t(
+						"workspaces:workspaces.health.value0_left_pipes_open_4b31b1c2",
+						{
+							value0: script.display_name,
+						},
+					),
+					detail: i18n.t(
+						"workspaces:workspaces.health.check_the_agent_logs_for_details_516741c0",
+					),
 					severity: "warning",
 					prominent: false,
 				});

@@ -1,5 +1,6 @@
 import { ArrowLeftIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import { Link, useNavigate, useSearchParams } from "react-router";
 import { toast } from "sonner";
@@ -15,6 +16,8 @@ import { OAuth2AppForm } from "./OAuth2AppForm";
 const BACK_HREF = "/deployment/oauth2-provider/apps";
 
 export const CreateOAuth2AppPageView: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
 	const { permissions } = useAuthenticated();
@@ -30,22 +33,43 @@ export const CreateOAuth2AppPageView: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Add an OAuth2 application")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.CreateOAuth2AppPageView.add_an_oauth2_application_6ad3c877",
+					),
+				)}
+			</title>
 			<Button variant="subtle" asChild className="-ml-3">
 				<Link to={BACK_HREF}>
 					<ArrowLeftIcon />
-					<span>Back to applications</span>
+					<span>
+						{tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.CreateOAuth2AppPageView.back_to_applications_494219fd",
+						)}
+					</span>
 				</Link>
 			</Button>
-
 			<div className="flex flex-col gap-6 pt-6">
 				<div className="flex items-center gap-4 min-w-0">
-					<Avatar variant="icon" size="lg" src={icon} fallback="App" />
-					<SettingsHeaderTitle>Add an OAuth2 application</SettingsHeaderTitle>
+					<Avatar
+						variant="icon"
+						size="lg"
+						src={icon}
+						fallback={tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.CreateOAuth2AppPageView.app_0d04bfeb",
+						)}
+					/>
+					<SettingsHeaderTitle>
+						{tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.CreateOAuth2AppPageView.add_an_oauth2_application_6ad3c877",
+						)}
+					</SettingsHeaderTitle>
 				</div>
 				<p className="text-sm text-content-secondary m-0">
-					Configure an application to use Coder as an OAuth2 provider.
+					{tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.CreateOAuth2AppPageView.configure_an_application_to_use_coder_as_an_oaut_a431f62a",
+					)}
 				</p>
 
 				<div className="border border-solid p-6 rounded-lg">
@@ -54,7 +78,12 @@ export const CreateOAuth2AppPageView: FC = () => {
 							try {
 								const app = await postAppMutation.mutateAsync(req);
 								toast.success(
-									`OAuth2 application "${app.name}" created successfully.`,
+									tI18n(
+										"DeploymentSettingsPage.OAuth2AppsSettingsPage.CreateOAuth2AppPageView.oauth2_application_value0_created_successfully_a29b3762",
+										{
+											value0: app.name,
+										},
+									),
 								);
 								// Awaited so the form's submitting state stays true through
 								// navigation, keeping the unsaved-changes prompt suppressed.

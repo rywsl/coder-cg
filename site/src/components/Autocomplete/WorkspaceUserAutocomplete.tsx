@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import { type FC, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { keepPreviousData, useQuery } from "react-query";
 import { getErrorMessage } from "#/api/errors";
 import { workspaceAvailableUsers } from "#/api/queries/users";
@@ -91,6 +92,8 @@ const InnerAutocomplete = <T extends SelectedUser>({
 	users,
 	value,
 }: InnerAutocompleteProps<T>) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const DEBOUNCE_MS = 750;
 
 	const [open, setOpen] = useState(false);
@@ -146,7 +149,11 @@ const InnerAutocomplete = <T extends SelectedUser>({
 									fallback={value.username}
 								/>
 							)}
-							{value?.email ?? value?.username ?? "Select a user"}
+							{value?.email ??
+								value?.username ??
+								tI18n(
+									"Autocomplete.WorkspaceUserAutocomplete.select_a_user_8b2477f1",
+								)}
 						</span>
 						<ChevronDownIcon className="p-0.5" />
 					</Button>
@@ -156,7 +163,9 @@ const InnerAutocomplete = <T extends SelectedUser>({
 					shouldFilter={shouldFilter}
 				>
 					<ComboboxInput
-						placeholder="Username or email"
+						placeholder={tI18n(
+							"Autocomplete.WorkspaceUserAutocomplete.username_or_email_2d4a46f3",
+						)}
 						value={inputValue}
 						onValueChange={(nextInputValue) => {
 							setInputValue(nextInputValue);
@@ -197,9 +206,16 @@ const InnerAutocomplete = <T extends SelectedUser>({
 								<Spinner size="sm" loading />
 							</div>
 						) : error ? (
-							getErrorMessage(error, "Unable to fetch users")
+							getErrorMessage(
+								error,
+								tI18n(
+									"Autocomplete.WorkspaceUserAutocomplete.unable_to_fetch_users_1594d9fe",
+								),
+							)
 						) : (
-							"No users found"
+							tI18n(
+								"Autocomplete.WorkspaceUserAutocomplete.no_users_found_bf1e104f",
+							)
 						)}
 					</ComboboxEmpty>
 				</ComboboxContent>

@@ -1,4 +1,5 @@
 import frontMatter from "front-matter";
+import { i18n } from "#/i18n";
 
 export const PERSONAL_SKILL_MAX_SIZE_BYTES = 64 * 1024;
 const PERSONAL_SKILL_MAX_NAME_BYTES = 256;
@@ -157,7 +158,12 @@ export const parsePersonalSkillMarkdown = (
 		try {
 			return frontMatter<Record<string, unknown>>(parseableContent);
 		} catch (error) {
-			const message = error instanceof Error ? error.message : "unknown error";
+			const message =
+				error instanceof Error
+					? error.message
+					: i18n.t(
+							"agents:AgentsPage.utils.personalSkills.unknown_error_3e4443e5",
+						);
 			throw new PersonalSkillMarkdownError(`Invalid frontmatter: ${message}`);
 		}
 	})();

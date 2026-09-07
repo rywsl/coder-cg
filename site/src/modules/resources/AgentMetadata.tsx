@@ -8,6 +8,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { watchAgentMetadata } from "#/api/api";
 import type {
@@ -53,6 +54,8 @@ export const AgentMetadata: FC<AgentMetadataProps> = ({
 	agent,
 	initialMetadata,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [activeMetadata, setActiveMetadata] = useState(initialMetadata);
 	useEffect(() => {
 		// This is an unfortunate pitfall with this component's testing setup,
@@ -87,17 +90,28 @@ export const AgentMetadata: FC<AgentMetadataProps> = ({
 				retries++;
 				if (retries >= maxSocketErrorRetryCount) {
 					toast.error(
-						"Unexpected disconnect while watching Metadata changes.",
+						tI18n(
+							"resources.AgentMetadata.unexpected_disconnect_while_watching_metadata_ch_c8e96f63",
+						),
 						{
-							description: "Please try refreshing the page.",
+							description: tI18n(
+								"resources.AgentMetadata.please_try_refreshing_the_page_ed111497",
+							),
 						},
 					);
 					return;
 				}
 
-				toast.error("Unexpected disconnect while watching Metadata changes.", {
-					description: "Creating new connection...",
-				});
+				toast.error(
+					tI18n(
+						"resources.AgentMetadata.unexpected_disconnect_while_watching_metadata_ch_c8e96f63",
+					),
+					{
+						description: tI18n(
+							"resources.AgentMetadata.creating_new_connection_26284980",
+						),
+					},
+				);
 				timeoutId = window.setTimeout(() => {
 					createNewConnection();
 				}, 3_000);
@@ -105,9 +119,16 @@ export const AgentMetadata: FC<AgentMetadataProps> = ({
 
 			socket.addEventListener("message", (e) => {
 				if (e.parseError) {
-					toast.error("Unable to process newest response from server.", {
-						description: "Please try refreshing the page.",
-					});
+					toast.error(
+						tI18n(
+							"resources.AgentMetadata.unable_to_process_newest_response_from_server_745b5142",
+						),
+						{
+							description: tI18n(
+								"resources.AgentMetadata.please_try_refreshing_the_page_ed111497",
+							),
+						},
+					);
 					return;
 				}
 
@@ -162,6 +183,8 @@ interface MetadataItemProps {
 }
 
 const MetadataItem: FC<MetadataItemProps> = ({ item }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const staleThreshold = Math.max(
 		item.description.interval + item.description.timeout * 2,
 		// In case there is intense backpressure, we give a little bit of slack.
@@ -196,7 +219,9 @@ const MetadataItem: FC<MetadataItemProps> = ({ item }) => {
 					</StaticWidth>
 				</TooltipTrigger>
 				<TooltipContent side="bottom">
-					This data is stale and no longer up to date
+					{tI18n(
+						"resources.AgentMetadata.this_data_is_stale_and_no_longer_up_to_date_06331081",
+					)}
 				</TooltipContent>
 			</Tooltip>
 		) : (

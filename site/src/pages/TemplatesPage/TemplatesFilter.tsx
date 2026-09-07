@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { API } from "#/api/api";
 import type { Organization } from "#/api/typesGenerated";
 import { Avatar } from "#/components/Avatar/Avatar";
@@ -74,6 +75,8 @@ export const TemplatesFilter: FC<TemplatesFilterProps> = ({
 	error,
 	userMenu,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const { showOrganizations } = useDashboard();
 	const width = showOrganizations ? DEFAULT_USER_FILTER_WIDTH : undefined;
 	const organizationMenu = useFilterMenu({
@@ -111,8 +114,12 @@ export const TemplatesFilter: FC<TemplatesFilterProps> = ({
 				<>
 					{userMenu && <UserMenu width={width} menu={userMenu} />}
 					<SelectFilter
-						placeholder="All organizations"
-						label="Select an organization"
+						placeholder={tI18n(
+							"TemplatesPage.TemplatesFilter.all_organizations_e3002b23",
+						)}
+						label={tI18n(
+							"TemplatesPage.TemplatesFilter.select_an_organization_48326f52",
+						)}
 						options={organizationMenu.searchOptions}
 						selectedOption={organizationMenu.selectedOption ?? undefined}
 						onSelect={organizationMenu.selectOption}

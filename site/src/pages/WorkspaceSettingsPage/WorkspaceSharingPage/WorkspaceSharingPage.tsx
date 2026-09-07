@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { checkAuthorization } from "#/api/queries/authCheck";
 import type { WorkspacePermissions } from "#/modules/workspaces/permissions";
@@ -9,6 +10,8 @@ import { useWorkspaceSettings } from "../useWorkspaceSettings";
 import { WorkspaceSharingPageView } from "./WorkspaceSharingPageView";
 
 const WorkspaceSharingPage: FC = () => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const { workspace } = useWorkspaceSettings();
 	const sharing = useWorkspaceSharing(workspace);
 
@@ -24,8 +27,14 @@ const WorkspaceSharingPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle(workspace.name, "Sharing")}</title>
-
+			<title>
+				{pageTitle(
+					workspace.name,
+					tI18n(
+						"WorkspaceSettingsPage.WorkspaceSharingPage.WorkspaceSharingPage.sharing_bbedc70e",
+					),
+				)}
+			</title>
 			<WorkspaceSharingPageView
 				workspace={workspace}
 				workspaceACL={sharing.workspaceACL}

@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import { ChevronRightIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import {
 	AgentsUnsupportedProviderTypes,
 	type AIProvider,
@@ -26,6 +27,8 @@ export const ProviderRow: React.FC<ProviderRowProps> = ({
 	provider,
 	onClick,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const clickableProps = useClickableTableRow({
 		onClick: () => onClick?.(),
 	});
@@ -53,7 +56,11 @@ export const ProviderRow: React.FC<ProviderRowProps> = ({
 							</span>
 							{disabled && (
 								<Badge asChild size="sm" variant="default">
-									<span>Disabled</span>
+									<span>
+										{tI18n(
+											"AISettingsPage.ProvidersPage.components.ProviderRow.disabled_75081b59",
+										)}
+									</span>
 								</Badge>
 							)}
 						</span>
@@ -97,12 +104,17 @@ export const ProviderRow: React.FC<ProviderRowProps> = ({
 									onKeyDown={stopPropagation}
 									onKeyUp={stopPropagation}
 								>
-									<button type="button">Not supported in Agents</button>
+									<button type="button">
+										{tI18n(
+											"AISettingsPage.ProvidersPage.components.ProviderRow.not_supported_in_agents_95ba4b18",
+										)}
+									</button>
 								</Badge>
 							</TooltipTrigger>
 							<TooltipContent className="max-w-xs">
-								This provider works with the AI Gateway Proxy but Coder Agents
-								can't use it.
+								{tI18n(
+									"AISettingsPage.ProvidersPage.components.ProviderRow.this_provider_works_with_the_ai_gateway_proxy_bu_9e1b028d",
+								)}
 							</TooltipContent>
 						</Tooltip>
 					)}
@@ -118,9 +130,16 @@ export const ProviderRow: React.FC<ProviderRowProps> = ({
 								>
 									<button
 										type="button"
-										aria-label={`Warning: ${provider.status.warnings.join("; ")}`}
+										aria-label={tI18n(
+											"AISettingsPage.ProvidersPage.components.ProviderRow.warning_value0_06f7ca87",
+											{
+												value0: provider.status.warnings.join("; "),
+											},
+										)}
 									>
-										Warning
+										{tI18n(
+											"AISettingsPage.ProvidersPage.components.ProviderRow.warning_e981ddae",
+										)}
 									</button>
 								</Badge>
 							</TooltipTrigger>

@@ -17,6 +17,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { ChevronDownIcon } from "#/components/AnimatedIcons/ChevronDown";
 import { Avatar } from "#/components/Avatar/Avatar";
 import { Badge } from "#/components/Badge/Badge";
@@ -203,6 +204,7 @@ export const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
 	"data-testid": dataTestId,
 	ref,
 }) => {
+	const { t: tI18n } = useTranslation("components");
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [open, setOpen] = useState(false);
 	const [onScrollbar, setOnScrollbar] = useState(false);
@@ -358,7 +360,7 @@ export const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
 		listRef.current.scrollIntoView({ behavior: "smooth" });
 	}, [open]);
 
-	const CreatableItem = () => {
+	const renderCreatableItem = () => {
 		if (!creatable) {
 			return undefined;
 		}
@@ -388,7 +390,8 @@ export const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
 					onChange?.(newOptions);
 				}}
 			>
-				Create "{inputValue}"
+				{tI18n("MultiSelectCombobox.MultiSelectCombobox.create_dc242335")}
+				{inputValue}"
 			</CommandItem>
 		);
 
@@ -624,7 +627,7 @@ export const MultiSelectCombobox: React.FC<MultiSelectComboboxProps> = ({
 						) : (
 							<>
 								{EmptyItem()}
-								{CreatableItem()}
+								{renderCreatableItem()}
 								{!selectFirstItem && (
 									<CommandItem value="-" className="hidden" />
 								)}

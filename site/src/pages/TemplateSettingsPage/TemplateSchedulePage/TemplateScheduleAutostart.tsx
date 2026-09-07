@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "#/components/Button/Button";
 import {
 	sortedDays,
@@ -69,21 +70,36 @@ const AutostartHelperText: FC<AutostartHelperTextProps> = ({
 	allowed,
 	days: unsortedDays,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	if (!allowed) {
-		return <span>Workspaces are not allowed to auto start.</span>;
+		return (
+			<span>
+				{tI18n(
+					"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleAutostart.workspaces_are_not_allowed_to_auto_start_9470dad4",
+				)}
+			</span>
+		);
 	}
 
 	const days = new Set(unsortedDays);
 
 	if (days.size === 7) {
 		// If every day is allowed, no more explaining is needed.
-		return <span>Workspaces are allowed to auto start on any day.</span>;
+		return (
+			<span>
+				{tI18n(
+					"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleAutostart.workspaces_are_allowed_to_auto_start_on_any_day_f7455434",
+				)}
+			</span>
+		);
 	}
 	if (days.size === 0) {
 		return (
 			<span>
-				Workspaces will never auto start. This is effectively the same as
-				disabling autostart.
+				{tI18n(
+					"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleAutostart.workspaces_will_never_auto_start_this_is_effecti_46145a80",
+				)}
 			</span>
 		);
 	}
@@ -96,6 +112,11 @@ const AutostartHelperText: FC<AutostartHelperTextProps> = ({
 	}
 
 	return (
-		<span>{daymsg} These days are relative to the user&apos;s timezone.</span>
+		<span>
+			{daymsg}
+			{tI18n(
+				"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleAutostart.these_days_are_relative_to_the_user_s_timezone_749c43a4",
+			)}
+		</span>
 	);
 };

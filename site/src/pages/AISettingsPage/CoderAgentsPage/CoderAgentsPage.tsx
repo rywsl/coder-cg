@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useSearchParams } from "react-router";
 import {
@@ -24,6 +25,8 @@ import { CoderAgentsPageView } from "./CoderAgentsPageView";
 import { OrganizationAgentSettings } from "./OrganizationAgentSettings";
 
 const CoderAgentsPage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { permissions } = useAuthenticated();
 	const { experiments, organizations } = useDashboard();
 	const queryClient = useQueryClient();
@@ -96,7 +99,16 @@ const CoderAgentsPage: FC = () => {
 
 	return (
 		<RequirePermission isFeatureVisible={isFeatureVisible}>
-			<title>{pageTitle("Coder Agents", "AI Settings")}</title>
+			<title>
+				{pageTitle(
+					tI18n(
+						"AISettingsPage.CoderAgentsPage.CoderAgentsPage.coder_agents_19b8e154",
+					),
+					tI18n(
+						"AISettingsPage.CoderAgentsPage.CoderAgentsPage.ai_settings_a8e5e2c6",
+					),
+				)}
+			</title>
 			<CoderAgentsPageView
 				organization={activeOrganization}
 				organizations={accessibleOrganizationsQuery.organizations}

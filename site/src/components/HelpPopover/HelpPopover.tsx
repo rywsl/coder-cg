@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { CircleHelpIcon, ExternalLinkIcon } from "lucide-react";
 import type { FC, HTMLAttributes, PropsWithChildren, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Popover,
 	PopoverContent,
@@ -48,12 +49,14 @@ export const HelpPopoverIconTrigger: React.FC<HelpPopoverIconTriggerProps> = ({
 	className,
 	...buttonProps
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<HelpPopoverTrigger asChild>
 			<button
 				{...buttonProps}
 				type="button"
-				aria-label="More info"
+				aria-label={tI18n("HelpPopover.HelpPopover.more_info_7dd4d97d")}
 				className={cn(
 					"flex items-center justify-center px-0 py-1",
 					"border-0 border-none bg-transparent cursor-pointer text-inherit",

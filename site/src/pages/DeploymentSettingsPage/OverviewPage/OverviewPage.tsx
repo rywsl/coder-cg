@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { deploymentDAUs } from "#/api/queries/deployment";
 import {
@@ -12,6 +13,8 @@ import { pageTitle } from "#/utils/page";
 import { OverviewPageView } from "./OverviewPageView";
 
 const OverviewPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { deploymentConfig } = useDeploymentConfig();
 	const safeExperimentsQuery = useQuery(availableExperiments());
 
@@ -28,8 +31,16 @@ const OverviewPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Overview", "Deployment")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n(
+						"DeploymentSettingsPage.OverviewPage.OverviewPage.overview_d4b1ea57",
+					),
+					tI18n(
+						"DeploymentSettingsPage.OverviewPage.OverviewPage.deployment_870a8ffd",
+					),
+				)}
+			</title>
 			<OverviewPageView
 				deploymentOptions={deploymentConfig.options}
 				dailyActiveUsers={dailyActiveUsers}

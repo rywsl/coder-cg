@@ -1,4 +1,5 @@
 import { type FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	TemplateVersionVariable,
 	VariableValue,
@@ -26,6 +27,8 @@ type MissingTemplateVariablesDialogProps = {
 export const MissingTemplateVariablesDialog: FC<
 	MissingTemplateVariablesDialogProps
 > = ({ missingVariables, onSubmit, open, onClose }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const [variableValues, setVariableValues] = useState<VariableValue[]>([]);
 
 	// Pre-fill the form with the default values when missing variables are loaded
@@ -49,10 +52,15 @@ export const MissingTemplateVariablesDialog: FC<
 		>
 			<DialogContent className="max-w-md" data-testid="dialog">
 				<DialogHeader>
-					<DialogTitle>Template variables</DialogTitle>
+					<DialogTitle>
+						{tI18n(
+							"TemplateVersionEditorPage.MissingTemplateVariablesDialog.template_variables_ff084774",
+						)}
+					</DialogTitle>
 					<DialogDescription>
-						There are a few missing template variable values. Please fill them
-						in.
+						{tI18n(
+							"TemplateVersionEditorPage.MissingTemplateVariablesDialog.there_are_a_few_missing_template_variable_values_d63469f2",
+						)}
 					</DialogDescription>
 				</DialogHeader>
 
@@ -87,10 +95,14 @@ export const MissingTemplateVariablesDialog: FC<
 
 				<DialogFooter>
 					<Button variant="outline" type="button" onClick={onClose}>
-						Cancel
+						{tI18n(
+							"TemplateVersionEditorPage.MissingTemplateVariablesDialog.cancel_19766ed6",
+						)}
 					</Button>
 					<Button type="submit" form="updateVariables">
-						Submit
+						{tI18n(
+							"TemplateVersionEditorPage.MissingTemplateVariablesDialog.submit_155f816c",
+						)}
 					</Button>
 				</DialogFooter>
 			</DialogContent>

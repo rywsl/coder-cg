@@ -1,6 +1,7 @@
 import { ExternalLinkIcon } from "lucide-react";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "#/components/Button/Button";
 import { Spinner } from "#/components/Spinner/Spinner";
@@ -18,6 +19,8 @@ interface DesktopPanelProps {
 }
 
 export const DesktopPanel: FC<DesktopPanelProps> = ({ chatId, isVisible }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	// Delay the VNC connection until the desktop tab is first selected.
 	// Once activated, the connection stays alive even when the tab is
 	// switched away.
@@ -84,9 +87,15 @@ export const DesktopPanel: FC<DesktopPanelProps> = ({ chatId, isVisible }) => {
 				role="status"
 			>
 				<ExternalLinkIcon className="size-8" />
-				<span className="text-sm">Desktop is open in a separate window.</span>
+				<span className="text-sm">
+					{tI18n(
+						"AgentsPage.components.RightPanel.DesktopPanel.desktop_is_open_in_a_separate_window_c86f3b40",
+					)}
+				</span>
 				<Button variant="outline" size="sm" onClick={handleBringBack}>
-					Bring back
+					{tI18n(
+						"AgentsPage.components.RightPanel.DesktopPanel.bring_back_8295d4fa",
+					)}
 				</Button>
 			</div>
 		);
@@ -130,11 +139,17 @@ export const DesktopPanelView: FC<DesktopPanelViewProps> = ({
 	onReleaseControl,
 	onPopOut,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	if (status === "connecting") {
 		return (
 			<div className="flex h-full flex-col items-center justify-center gap-2 text-content-secondary">
 				<Spinner loading className="size-6" />
-				<span className="text-sm">Connecting to desktop...</span>
+				<span className="text-sm">
+					{tI18n(
+						"AgentsPage.components.RightPanel.DesktopPanel.connecting_to_desktop_da0cd407",
+					)}
+				</span>
 			</div>
 		);
 	}
@@ -143,7 +158,11 @@ export const DesktopPanelView: FC<DesktopPanelViewProps> = ({
 		return (
 			<div className="flex h-full flex-col items-center justify-center gap-2 text-content-secondary">
 				<Spinner loading className="size-6" />
-				<span className="text-sm">Desktop disconnected. Reconnecting...</span>
+				<span className="text-sm">
+					{tI18n(
+						"AgentsPage.components.RightPanel.DesktopPanel.desktop_disconnected_reconnecting_6bb59fc0",
+					)}
+				</span>
 			</div>
 		);
 	}
@@ -152,11 +171,14 @@ export const DesktopPanelView: FC<DesktopPanelViewProps> = ({
 		return (
 			<div className="flex h-full flex-col items-center justify-center gap-3 text-content-secondary">
 				<span className="text-center text-sm">
-					Failed to connect to the desktop session. The agent may not be
-					connected or the desktop environment may not be available.
+					{tI18n(
+						"AgentsPage.components.RightPanel.DesktopPanel.failed_to_connect_to_the_desktop_session_the_age_4b7b2332",
+					)}
 				</span>
 				<Button variant="outline" size="sm" onClick={reconnect}>
-					Reconnect
+					{tI18n(
+						"AgentsPage.components.RightPanel.DesktopPanel.reconnect_bf8a9eab",
+					)}
 				</Button>
 			</div>
 		);
@@ -166,7 +188,11 @@ export const DesktopPanelView: FC<DesktopPanelViewProps> = ({
 		return (
 			<div className="flex h-full flex-col items-center justify-center gap-2 text-content-secondary">
 				<Spinner loading className="size-6" />
-				<span className="text-sm">Initializing desktop...</span>
+				<span className="text-sm">
+					{tI18n(
+						"AgentsPage.components.RightPanel.DesktopPanel.initializing_desktop_d9528ef8",
+					)}
+				</span>
 			</div>
 		);
 	}
@@ -182,7 +208,6 @@ export const DesktopPanelView: FC<DesktopPanelViewProps> = ({
 				onReleaseControl={onReleaseControl}
 				onPopOut={onPopOut}
 			/>
-
 			<div className="min-h-0 flex-1 overflow-hidden bg-surface-secondary">
 				<div
 					ref={(el) => {
@@ -193,8 +218,12 @@ export const DesktopPanelView: FC<DesktopPanelViewProps> = ({
 					role="application"
 					aria-label={
 						isControlling
-							? "Remote desktop (interactive)"
-							: "Remote desktop (view only, take control to interact)"
+							? tI18n(
+									"AgentsPage.components.RightPanel.DesktopPanel.remote_desktop_interactive_020fa311",
+								)
+							: tI18n(
+									"AgentsPage.components.RightPanel.DesktopPanel.remote_desktop_view_only_take_control_to_interac_ad95122b",
+								)
 					}
 				/>
 			</div>

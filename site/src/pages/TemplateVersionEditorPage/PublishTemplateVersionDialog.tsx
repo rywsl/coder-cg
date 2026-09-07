@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { useFormik } from "formik";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { EnterpriseBadge } from "#/components/Badge/PresetBadges";
 import { Checkbox } from "#/components/Checkbox/Checkbox";
@@ -41,6 +42,8 @@ export const PublishTemplateVersionDialog: FC<
 	defaultName,
 	publishingError,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const form = useFormik({
 		initialValues: {
 			name: defaultName,
@@ -72,30 +75,48 @@ export const PublishTemplateVersionDialog: FC<
 			}}
 			hideCancel={false}
 			type="success"
-			cancelText="Cancel"
-			confirmText="Publish"
-			title="Publish new version"
+			cancelText={tI18n(
+				"TemplateVersionEditorPage.PublishTemplateVersionDialog.cancel_19766ed6",
+			)}
+			confirmText={tI18n(
+				"TemplateVersionEditorPage.PublishTemplateVersionDialog.publish_859390eb",
+			)}
+			title={tI18n(
+				"TemplateVersionEditorPage.PublishTemplateVersionDialog.publish_new_version_2d25c9b1",
+			)}
 			description={
 				<form id="publish-version" onSubmit={form.handleSubmit}>
 					<div className="flex flex-col gap-4">
-						<p>You are about to publish a new version of this template.</p>
+						<p>
+							{tI18n(
+								"TemplateVersionEditorPage.PublishTemplateVersionDialog.you_are_about_to_publish_a_new_version_of_this_t_debd40ff",
+							)}
+						</p>
 						<FormFields>
 							<FormField
 								field={getFieldHelpers("name")}
-								label="Version name"
+								label={tI18n(
+									"TemplateVersionEditorPage.PublishTemplateVersionDialog.version_name_c5be1c55",
+								)}
 								autoFocus
 								disabled={isPublishing}
 							/>
 
 							<div className="flex flex-col gap-2">
-								<Label htmlFor={messageField.id}>Message</Label>
+								<Label htmlFor={messageField.id}>
+									{tI18n(
+										"TemplateVersionEditorPage.PublishTemplateVersionDialog.message_2f77668a",
+									)}
+								</Label>
 								<Textarea
 									id={messageField.id}
 									name={messageField.name}
 									value={messageField.value ?? ""}
 									onChange={messageField.onChange}
 									onBlur={messageField.onBlur}
-									placeholder="Write a short message about the changes you made..."
+									placeholder={tI18n(
+										"TemplateVersionEditorPage.PublishTemplateVersionDialog.write_a_short_message_about_the_changes_you_made_25e75970",
+									)}
 									disabled={isPublishing}
 									rows={5}
 									aria-invalid={messageField.error}
@@ -130,17 +151,25 @@ export const PublishTemplateVersionDialog: FC<
 										name="isActiveVersion"
 									/>
 									<Label htmlFor="isActiveVersion" className="cursor-pointer">
-										Promote to active version
+										{tI18n(
+											"TemplateVersionEditorPage.PublishTemplateVersionDialog.promote_to_active_version_48004815",
+										)}
 									</Label>
 								</div>
 
 								<HelpPopover>
 									<HelpPopoverIconTrigger />
 									<HelpPopoverContent>
-										<HelpPopoverTitle>Active versions</HelpPopoverTitle>
+										<HelpPopoverTitle>
+											{tI18n(
+												"TemplateVersionEditorPage.PublishTemplateVersionDialog.active_versions_8969a7b0",
+											)}
+										</HelpPopoverTitle>
 										<HelpPopoverText>
-											Templates can enforce that the active version be used for
-											all workspaces <EnterpriseBadge />
+											{tI18n(
+												"TemplateVersionEditorPage.PublishTemplateVersionDialog.templates_can_enforce_that_the_active_version_be_ffee1e41",
+											)}
+											<EnterpriseBadge />
 										</HelpPopoverText>
 										<HelpPopoverLinksGroup>
 											<HelpPopoverLink
@@ -148,7 +177,9 @@ export const PublishTemplateVersionDialog: FC<
 													"/admin/templates/managing-templates#template-update-policies",
 												)}
 											>
-												Review the documentation
+												{tI18n(
+													"TemplateVersionEditorPage.PublishTemplateVersionDialog.review_the_documentation_aa0f2c23",
+												)}
 											</HelpPopoverLink>
 										</HelpPopoverLinksGroup>
 									</HelpPopoverContent>

@@ -2,6 +2,7 @@ import { cn } from "cn";
 import { saveAs } from "file-saver";
 import { ChevronDownIcon, DownloadIcon } from "lucide-react";
 import { type FC, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { toast } from "sonner";
 import { getErrorDetail, getErrorMessage } from "#/api/errors";
@@ -66,6 +67,8 @@ export const DebugRunCard: FC<DebugRunCardProps> = ({
 	isVisible,
 	download = saveAs,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [isExpanded, setIsExpanded] = useState(false);
 	const [isExporting, setIsExporting] = useState(false);
 	const mcpConnectHeadingId = useId();
@@ -147,9 +150,14 @@ export const DebugRunCard: FC<DebugRunCardProps> = ({
 			);
 		} catch (error) {
 			console.error(error);
-			toast.error("Failed to export debug run.", {
-				description: getErrorDetail(error),
-			});
+			toast.error(
+				tI18n(
+					"AgentsPage.components.RightPanel.DebugPanel.DebugRunCard.failed_to_export_debug_run_eb306b22",
+				),
+				{
+					description: getErrorDetail(error),
+				},
+			);
 		}
 	};
 
@@ -183,7 +191,10 @@ export const DebugRunCard: FC<DebugRunCardProps> = ({
 								variant={getStatusBadgeVariant(effectiveStatus)}
 								className="shrink-0"
 							>
-								{effectiveStatus || "unknown"}
+								{effectiveStatus ||
+									tI18n(
+										"AgentsPage.components.RightPanel.DebugPanel.DebugRunCard.unknown_b23a6a84",
+									)}
 							</Badge>
 							<ChevronDownIcon
 								className={cn(
@@ -198,14 +209,18 @@ export const DebugRunCard: FC<DebugRunCardProps> = ({
 					{runDetailQuery.isLoading ? (
 						<div className="flex items-center gap-2 text-sm text-content-secondary">
 							<Spinner size="sm" loading />
-							Loading run details...
+							{tI18n(
+								"AgentsPage.components.RightPanel.DebugPanel.DebugRunCard.loading_run_details_e4e81257",
+							)}
 						</div>
 					) : runDetailQuery.isError && !runDetailQuery.data ? (
 						<Alert severity="error" prominent>
 							<p className="text-sm text-content-primary">
 								{getErrorMessage(
 									runDetailQuery.error,
-									"Unable to load debug run details.",
+									tI18n(
+										"AgentsPage.components.RightPanel.DebugPanel.DebugRunCard.unable_to_load_debug_run_details_056d26d4",
+									),
 								)}
 							</p>
 						</Alert>
@@ -216,7 +231,9 @@ export const DebugRunCard: FC<DebugRunCardProps> = ({
 									<p className="text-sm text-content-primary">
 										{getErrorMessage(
 											runDetailQuery.error,
-											"Unable to refresh debug run details. Showing cached data.",
+											tI18n(
+												"AgentsPage.components.RightPanel.DebugPanel.DebugRunCard.unable_to_refresh_debug_run_details_showing_cach_71ee2d49",
+											),
 										)}
 									</p>
 								</Alert>
@@ -230,7 +247,9 @@ export const DebugRunCard: FC<DebugRunCardProps> = ({
 										id={mcpConnectHeadingId}
 										className="m-0 text-xs font-medium text-content-secondary"
 									>
-										MCP server connections
+										{tI18n(
+											"AgentsPage.components.RightPanel.DebugPanel.DebugRunCard.mcp_server_connections_1d980e0c",
+										)}
 									</h4>
 									<ul className="m-0 list-none space-y-1 p-0 pt-1.5">
 										{summaryVm.mcpConnect.map((server, index) => (
@@ -257,7 +276,13 @@ export const DebugRunCard: FC<DebugRunCardProps> = ({
 												server.toolCount > 0 ? (
 													<span className="shrink-0 text-content-secondary">
 														{server.toolCount}{" "}
-														{server.toolCount === 1 ? "tool" : "tools"}
+														{server.toolCount === 1
+															? tI18n(
+																	"AgentsPage.components.RightPanel.DebugPanel.DebugRunCard.tool_7c9bbe5e",
+																)
+															: tI18n(
+																	"AgentsPage.components.RightPanel.DebugPanel.DebugRunCard.tools_f9d35d43",
+																)}
 													</span>
 												) : null}
 												{server.error ? (
@@ -273,9 +298,20 @@ export const DebugRunCard: FC<DebugRunCardProps> = ({
 									</ul>
 									{summaryVm.mcpConnectDropped > 0 ? (
 										<p className="m-0 pt-1.5 text-xs text-content-secondary">
-											{summaryVm.mcpConnectDropped} earlier connection{" "}
-											{summaryVm.mcpConnectDropped === 1 ? "sample" : "samples"}{" "}
-											omitted
+											{summaryVm.mcpConnectDropped}
+											{tI18n(
+												"AgentsPage.components.RightPanel.DebugPanel.DebugRunCard.earlier_connection_b1932b7f",
+											)}{" "}
+											{summaryVm.mcpConnectDropped === 1
+												? tI18n(
+														"AgentsPage.components.RightPanel.DebugPanel.DebugRunCard.sample_af2bdbe1",
+													)
+												: tI18n(
+														"AgentsPage.components.RightPanel.DebugPanel.DebugRunCard.samples_24baa7a7",
+													)}{" "}
+											{tI18n(
+												"AgentsPage.components.RightPanel.DebugPanel.DebugRunCard.omitted_f34912a1",
+											)}
 										</p>
 									) : null}
 								</section>
@@ -285,7 +321,9 @@ export const DebugRunCard: FC<DebugRunCardProps> = ({
 							))}
 							{steps.length === 0 ? (
 								<p className="text-sm text-content-secondary">
-									No steps recorded.
+									{tI18n(
+										"AgentsPage.components.RightPanel.DebugPanel.DebugRunCard.no_steps_recorded_1d94e72e",
+									)}
 								</p>
 							) : null}
 							{runDetailQuery.data ? (
@@ -306,7 +344,9 @@ export const DebugRunCard: FC<DebugRunCardProps> = ({
 										) : (
 											<DownloadIcon className="size-4" />
 										)}
-										Export this run
+										{tI18n(
+											"AgentsPage.components.RightPanel.DebugPanel.DebugRunCard.export_this_run_810490d3",
+										)}
 									</Button>
 								</div>
 							) : null}

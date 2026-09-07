@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { API } from "#/api/api";
 import { Avatar } from "#/components/Avatar/Avatar";
 import { ComboboxInput } from "#/components/Combobox/Combobox";
@@ -89,21 +90,23 @@ interface UserMenuProps {
 }
 
 export const UserMenu: FC<UserMenuProps> = ({ menu, width, placeholder }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<SelectFilter
-			label="Select user"
-			placeholder={placeholder ?? "All users"}
-			emptyText="No users found"
+			label={tI18n("Filter.UserFilter.select_user_217e627e")}
+			placeholder={placeholder ?? tI18n("Filter.UserFilter.all_users_f7898130")}
+			emptyText={tI18n("Filter.UserFilter.no_users_found_bf1e104f")}
 			options={menu.searchOptions}
 			onSelect={menu.selectOption}
 			selectedOption={menu.selectedOption ?? undefined}
 			width={width}
 			selectFilterSearch={
 				<ComboboxInput
-					placeholder="Search user..."
+					placeholder={tI18n("Filter.UserFilter.search_user_fd399cd4")}
 					value={menu.query}
 					onValueChange={menu.setQuery}
-					aria-label="Search user"
+					aria-label={tI18n("Filter.UserFilter.search_user_40c7accc")}
 				/>
 			}
 		/>

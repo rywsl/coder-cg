@@ -7,6 +7,7 @@ import {
 	TrashIcon,
 } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Avatar } from "#/components/Avatar/Avatar";
@@ -31,12 +32,18 @@ import { getProviderIcon } from "#/pages/AISettingsPage/ProvidersPage/components
 import { useOrganizationModelsPath } from "../organizationModels";
 
 export const ModelFormBackLink: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const modelsPath = useOrganizationModelsPath();
 	return (
 		<Link to={modelsPath} className="-ml-3">
 			<Button variant="subtle" type="button">
 				<ArrowLeftIcon />
-				<span>Back to models</span>
+				<span>
+					{tI18n(
+						"AISettingsPage.ModelsPage.components.ModelFormHeader.back_to_models_054f9f84",
+					)}
+				</span>
 			</Button>
 		</Link>
 	);
@@ -67,6 +74,8 @@ export const ModelFormHeader: FC<{
 	enabledToggleDisabled,
 	onRequestDelete,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<>
 			<div className="flex items-center justify-between">
@@ -81,7 +90,9 @@ export const ModelFormHeader: FC<{
 									size="icon"
 									type="button"
 									disabled={isSaving}
-									aria-label="Model actions"
+									aria-label={tI18n(
+										"AISettingsPage.ModelsPage.components.ModelFormHeader.model_actions_a18b4b35",
+									)}
 								>
 									<EllipsisVerticalIcon />
 								</Button>
@@ -90,13 +101,17 @@ export const ModelFormHeader: FC<{
 								{onShareModel && (
 									<DropdownMenuItem onClick={onShareModel}>
 										<ShieldIcon className="size-icon-sm" />
-										Manage permissions
+										{tI18n(
+											"AISettingsPage.ModelsPage.components.ModelFormHeader.manage_permissions_2630ba4d",
+										)}
 									</DropdownMenuItem>
 								)}
 								{onDuplicate && (
 									<DropdownMenuItem onClick={onDuplicate}>
 										<CopyIcon className="size-icon-sm" />
-										Duplicate model
+										{tI18n(
+											"AISettingsPage.ModelsPage.components.ModelFormHeader.duplicate_model_69556f96",
+										)}
 									</DropdownMenuItem>
 								)}
 								{onDeleteModel && (onShareModel || onDuplicate) && (
@@ -108,7 +123,9 @@ export const ModelFormHeader: FC<{
 										onClick={onRequestDelete}
 									>
 										<TrashIcon />
-										Delete…
+										{tI18n(
+											"AISettingsPage.ModelsPage.components.ModelFormHeader.delete_9ce78fe3",
+										)}
 									</DropdownMenuItem>
 								)}
 							</DropdownMenuContent>
@@ -133,12 +150,22 @@ export const ModelFormHeader: FC<{
 						</span>
 					</SettingsHeaderTitle>
 					{isEditing && editingModel?.is_default && (
-						<Badge variant="default">Default</Badge>
+						<Badge variant="default">
+							{tI18n(
+								"AISettingsPage.ModelsPage.components.ModelFormHeader.default_21b111cb",
+							)}
+						</Badge>
 					)}
 					{isEditing &&
 						editingModel &&
 						!editingModel.is_default &&
-						!editingModel.enabled && <Badge variant="default">Disabled</Badge>}
+						!editingModel.enabled && (
+							<Badge variant="default">
+								{tI18n(
+									"AISettingsPage.ModelsPage.components.ModelFormHeader.disabled_75081b59",
+								)}
+							</Badge>
+						)}
 				</div>
 				{isEditing && editingModel && onToggleEnabled && (
 					<div className="flex shrink-0 items-center gap-2">
@@ -149,19 +176,31 @@ export const ModelFormHeader: FC<{
 										checked={editingModel.enabled}
 										onCheckedChange={onToggleEnabled}
 										disabled={enabledToggleDisabled}
-										aria-label="Model enabled"
+										aria-label={tI18n(
+											"AISettingsPage.ModelsPage.components.ModelFormHeader.model_enabled_d3dcce89",
+										)}
 									/>
 								</span>
 							</TooltipTrigger>
 							<TooltipContent side="bottom">
 								{editingModel.is_default && editingModel.enabled
-									? "Default model cannot be disabled. Set another model as default first."
+									? tI18n(
+											"AISettingsPage.ModelsPage.components.ModelFormHeader.default_model_cannot_be_disabled_set_another_mod_4d5b4837",
+										)
 									: editingModel.enabled
-										? "Disable this model. It will be hidden from users."
-										: "Enable this model. It will be visible to users."}
+										? tI18n(
+												"AISettingsPage.ModelsPage.components.ModelFormHeader.disable_this_model_it_will_be_hidden_from_users_70aa0ddf",
+											)
+										: tI18n(
+												"AISettingsPage.ModelsPage.components.ModelFormHeader.enable_this_model_it_will_be_visible_to_users_87e5e785",
+											)}
 							</TooltipContent>
 						</Tooltip>
-						<span className="text-sm">Enable</span>
+						<span className="text-sm">
+							{tI18n(
+								"AISettingsPage.ModelsPage.components.ModelFormHeader.enable_5342e09f",
+							)}
+						</span>
 					</div>
 				)}
 			</div>

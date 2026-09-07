@@ -2,6 +2,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "cn";
 import { ChevronRightIcon, TriangleAlertIcon } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "#/components/Button/Button";
 import {
 	Collapsible,
@@ -9,6 +10,7 @@ import {
 	CollapsibleTrigger,
 } from "#/components/Collapsible/Collapsible";
 import { Link } from "#/components/Link/Link";
+import { i18n } from "#/i18n";
 
 const formatMessage = (message: string) => {
 	// If the message ends with an alphanumeric character, add a period.
@@ -86,11 +88,17 @@ const getBannerVariant = (
 const bannerTitle = (variant: LicenseBannerVariant): string => {
 	switch (variant) {
 		case "error":
-			return "License errors require attention";
+			return i18n.t(
+				"dashboard:dashboard.LicenseBanner.LicenseBannerView.license_errors_require_attention_ed5339d1",
+			);
 		case "warningProminent":
-			return "Your license limits have been reached";
+			return i18n.t(
+				"dashboard:dashboard.LicenseBanner.LicenseBannerView.your_license_limits_have_been_reached_394dd9d6",
+			);
 		case "warning":
-			return "License notices";
+			return i18n.t(
+				"dashboard:dashboard.LicenseBanner.LicenseBannerView.license_notices_7f9b5c13",
+			);
 	}
 };
 
@@ -131,6 +139,8 @@ const ExpandableLicenseMessageList: React.FC<{
 	visibleMessages: readonly LicenseBannerMessage[];
 	hiddenMessages: readonly LicenseBannerMessage[];
 }> = ({ visibleMessages, hiddenMessages }) => {
+	const { t: tI18n } = useTranslation("dashboard");
+
 	const [showDetails, setShowDetails] = useState(false);
 
 	return (
@@ -158,7 +168,15 @@ const ExpandableLicenseMessageList: React.FC<{
 									showDetails ? "-rotate-90" : "",
 								)}
 							/>
-							<span>{showDetails ? "Show less" : "Show more"}</span>
+							<span>
+								{showDetails
+									? tI18n(
+											"dashboard.LicenseBanner.LicenseBannerView.show_less_94ea9b1d",
+										)
+									: tI18n(
+											"dashboard.LicenseBanner.LicenseBannerView.show_more_f5c9bd13",
+										)}
+							</span>
 						</Button>
 					</CollapsibleTrigger>
 				</Collapsible>

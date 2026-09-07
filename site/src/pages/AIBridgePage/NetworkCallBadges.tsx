@@ -1,5 +1,6 @@
 import { BanIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { AIBridgeSessionNetworkCallSummary } from "#/api/typesGenerated";
 import { Badge } from "#/components/Badge/Badge";
 import {
@@ -8,6 +9,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { currentIntlLocale } from "#/i18n/locale";
 import {
 	NetworkMonitoringDisabled,
 	NetworkNoActivity,
@@ -20,6 +22,8 @@ interface NetworkCallBadgesProps {
 }
 
 export const NetworkCallBadges: FC<NetworkCallBadgesProps> = ({ summary }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	if (!summary) {
 		return <NetworkMonitoringDisabled />;
 	}
@@ -34,18 +38,20 @@ export const NetworkCallBadges: FC<NetworkCallBadgesProps> = ({ summary }) => {
 				<TooltipTrigger asChild>
 					<button
 						type="button"
-						aria-label="More info"
+						aria-label={tI18n(
+							"AIBridgePage.NetworkCallBadges.more_info_7dd4d97d",
+						)}
 						className="flex items-center whitespace-nowrap border-0 bg-transparent p-0 text-inherit"
 					>
 						<Badge className="rounded-e-none">
-							{summary.total.toLocaleString("en-US")}
+							{summary.total.toLocaleString(currentIntlLocale())}
 						</Badge>
 						<Badge
 							svgSize="xs"
 							className="gap-0 bg-surface-tertiary rounded-s-none text-content-warning"
 						>
 							<BanIcon className="shrink-0" />
-							{summary.blocked.toLocaleString("en-US")}
+							{summary.blocked.toLocaleString(currentIntlLocale())}
 						</Badge>
 					</button>
 				</TooltipTrigger>
@@ -56,12 +62,18 @@ export const NetworkCallBadges: FC<NetworkCallBadgesProps> = ({ summary }) => {
 				>
 					<div className="flex flex-col gap-1">
 						<div className="flex items-center justify-between gap-4">
-							<span className="text-content-secondary">Total requests</span>
-							<span>{summary.total.toLocaleString("en-US")}</span>
+							<span className="text-content-secondary">
+								{tI18n(
+									"AIBridgePage.NetworkCallBadges.total_requests_128269f3",
+								)}
+							</span>
+							<span>{summary.total.toLocaleString(currentIntlLocale())}</span>
 						</div>
 						<div className="flex items-center justify-between gap-4">
-							<span className="text-content-secondary">Blocked</span>
-							<span>{summary.blocked.toLocaleString("en-US")}</span>
+							<span className="text-content-secondary">
+								{tI18n("AIBridgePage.NetworkCallBadges.blocked_18f2a094")}
+							</span>
+							<span>{summary.blocked.toLocaleString(currentIntlLocale())}</span>
 						</div>
 					</div>
 				</TooltipContent>

@@ -1,4 +1,5 @@
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Dialog,
 	DialogContent,
@@ -21,21 +22,28 @@ export const RequirePermission: FC<RequirePermissionProps> = ({
 	children,
 	isFeatureVisible,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	if (!isFeatureVisible) {
 		return (
 			<Dialog open>
 				<DialogContent>
 					<DialogHeader>
 						<DialogTitle>
-							You don't have permission to view this page
+							{tI18n(
+								"permissions.RequirePermission.you_don_t_have_permission_to_view_this_page_99d2f046",
+							)}
 						</DialogTitle>
 					</DialogHeader>
 					<DialogDescription>
-						If you believe this is a mistake, please contact your administrator
-						or try signing in with different credentials.
+						{tI18n(
+							"permissions.RequirePermission.if_you_believe_this_is_a_mistake_please_contact__c519a6f1",
+						)}
 					</DialogDescription>
 					<DialogFooter>
-						<Link href="/">Go to workspaces</Link>
+						<Link href="/">
+							{tI18n("permissions.RequirePermission.go_to_workspaces_38ce977a")}
+						</Link>
 					</DialogFooter>
 				</DialogContent>
 			</Dialog>

@@ -1,4 +1,8 @@
-const DEFAULT_THINKING_TITLE = "Thinking";
+import { i18n } from "#/i18n";
+
+const DEFAULT_THINKING_TITLE = i18n.t(
+	"agents:AgentsPage.components.ChatConversation.thinkingTitle.thinking_a20d12c5",
+);
 
 type LineRange = {
 	line: string;
@@ -232,7 +236,13 @@ export const getThinkingDisclosureDisplay = (
 	}
 
 	return {
-		title: `${DEFAULT_THINKING_TITLE} about ${lowercaseSentenceStart(heading.text)}`,
+		title: i18n.t(
+			"agents:AgentsPage.components.ChatConversation.thinkingTitle.value0_about_value1_4294bc63",
+			{
+				value0: DEFAULT_THINKING_TITLE,
+				value1: lowercaseSentenceStart(heading.text),
+			},
+		),
 		body: removeHeading(text, heading),
 	};
 };

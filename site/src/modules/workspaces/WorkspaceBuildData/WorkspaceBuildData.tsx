@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import { InfoIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import type { WorkspaceBuild } from "#/api/typesGenerated";
 import { Skeleton } from "#/components/Skeleton/Skeleton";
 import {
@@ -22,6 +23,8 @@ type WorkspaceBuildDataProps = {
 export const WorkspaceBuildData: React.FC<WorkspaceBuildDataProps> = ({
 	build,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<div className="flex flex-row items-center gap-3 leading-normal">
 			<BuildIcon transition={build.transition} jobStatus={build.job.status} />
@@ -32,7 +35,10 @@ export const WorkspaceBuildData: React.FC<WorkspaceBuildDataProps> = ({
 						"whitespace-nowrap flex items-center gap-1",
 					)}
 				>
-					<span className="capitalize">{build.transition}</span> by{" "}
+					<span className="capitalize">{build.transition}</span>
+					{tI18n(
+						"workspaces.WorkspaceBuildData.WorkspaceBuildData.by_653caee4",
+					)}{" "}
 					<span className="font-medium">
 						{getDisplayWorkspaceBuildInitiatedBy(build)}
 					</span>

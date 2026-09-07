@@ -1,5 +1,6 @@
 import { ChevronRightIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { AIBridgeSession } from "#/api/typesGenerated";
 import { Avatar } from "#/components/Avatar/Avatar";
 import { Badge } from "#/components/Badge/Badge";
@@ -26,6 +27,8 @@ export const ListSessionsRow: FC<ListSessionsRowProps> = ({
 	session,
 	onClick,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<TableRow
 			hover
@@ -41,7 +44,11 @@ export const ListSessionsRow: FC<ListSessionsRowProps> = ({
 							<p className="truncate">{session.last_prompt}</p>
 						</TooltipTrigger>
 						<TooltipContent className="max-w-64" side="top" align="start">
-							<div className="font-bold">Last prompt</div>
+							<div className="font-bold">
+								{tI18n(
+									"AIBridgePage.ListSessionsPage.ListSessionsRow.last_prompt_35160c91",
+								)}
+							</div>
 							<div>{session.last_prompt}</div>
 						</TooltipContent>
 					</Tooltip>
@@ -66,7 +73,10 @@ export const ListSessionsRow: FC<ListSessionsRowProps> = ({
 				<div className="min-w-0 overflow-hidden">
 					{session.providers.length > 1 ? (
 						<Badge className="max-w-full">
-							{session.providers.length} providers
+							{session.providers.length}
+							{tI18n(
+								"AIBridgePage.ListSessionsPage.ListSessionsRow.providers_1d04771b",
+							)}
 						</Badge>
 					) : session.providers.length === 1 ? (
 						<Badge className="gap-1.5 max-w-full">
@@ -93,7 +103,10 @@ export const ListSessionsRow: FC<ListSessionsRowProps> = ({
 							/>
 						</div>
 						<span className="truncate min-w-0">
-							{session.client ?? "Unknown"}
+							{session.client ??
+								tI18n(
+									"AIBridgePage.ListSessionsPage.ListSessionsRow.unknown_b764cdc0",
+								)}
 						</span>
 					</Badge>
 				</div>

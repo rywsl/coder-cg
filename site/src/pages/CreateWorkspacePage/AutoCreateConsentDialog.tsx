@@ -1,5 +1,6 @@
 import { TriangleAlertIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "#/components/Button/Button";
 import {
 	Dialog,
@@ -26,6 +27,8 @@ export const AutoCreateConsentDialog: FC<AutoCreateConsentDialogProps> = ({
 	onConfirm,
 	onDeny,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<Dialog open={open}>
 			<DialogContent
@@ -36,19 +39,23 @@ export const AutoCreateConsentDialog: FC<AutoCreateConsentDialogProps> = ({
 				<DialogHeader>
 					<DialogTitle>
 						<TriangleAlertIcon className="size-icon-lg text-content-warning inline-block align-text-bottom mr-2" />
-						Warning: Automatic Workspace Creation
+						{tI18n(
+							"CreateWorkspacePage.AutoCreateConsentDialog.warning_automatic_workspace_creation_d5419492",
+						)}
 					</DialogTitle>
 					<DialogDescription>
-						A link is attempting to automatically create a workspace using the
-						following external configurations. Running scripts from untrusted
-						sources can be dangerous.
+						{tI18n(
+							"CreateWorkspacePage.AutoCreateConsentDialog.a_link_is_attempting_to_automatically_create_a_w_39ce95ea",
+						)}
 					</DialogDescription>
 				</DialogHeader>
 
 				{presetName && (
 					<div className="flex min-w-0 flex-col gap-2">
 						<span className="text-sm font-semibold text-content-primary">
-							Preset:
+							{tI18n(
+								"CreateWorkspacePage.AutoCreateConsentDialog.preset_4336d942",
+							)}
 						</span>
 						<code className="block whitespace-pre overflow-x-auto">
 							{presetName}
@@ -59,7 +66,9 @@ export const AutoCreateConsentDialog: FC<AutoCreateConsentDialogProps> = ({
 				{autofillParameters.length > 0 && (
 					<div className="flex min-w-0 flex-col gap-2">
 						<span className="text-sm font-semibold text-content-primary">
-							Parameters:
+							{tI18n(
+								"CreateWorkspacePage.AutoCreateConsentDialog.parameters_03acaf78",
+							)}
 						</span>
 						<code className="block whitespace-pre overflow-x-auto">
 							{autofillParameters
@@ -71,10 +80,14 @@ export const AutoCreateConsentDialog: FC<AutoCreateConsentDialogProps> = ({
 
 				<DialogFooter>
 					<Button variant="outline" onClick={onDeny}>
-						Cancel
+						{tI18n(
+							"CreateWorkspacePage.AutoCreateConsentDialog.cancel_19766ed6",
+						)}
 					</Button>
 					<Button variant="default" onClick={onConfirm}>
-						Confirm and Create
+						{tI18n(
+							"CreateWorkspacePage.AutoCreateConsentDialog.confirm_and_create_37502394",
+						)}
 					</Button>
 				</DialogFooter>
 			</DialogContent>

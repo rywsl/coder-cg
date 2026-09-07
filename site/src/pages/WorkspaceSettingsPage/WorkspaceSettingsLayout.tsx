@@ -1,4 +1,5 @@
 import { type FC, Suspense } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { Outlet, useParams } from "react-router";
 import {
@@ -21,6 +22,8 @@ import { Sidebar } from "./Sidebar";
 import { WorkspaceSettings } from "./useWorkspaceSettings";
 
 export const WorkspaceSettingsLayout: FC = () => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const params = useParams() as {
 		workspace: string;
 		username: string;
@@ -42,13 +45,23 @@ export const WorkspaceSettingsLayout: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle(workspaceName, "Workspace Settings")}</title>
-
+			<title>
+				{pageTitle(
+					workspaceName,
+					tI18n(
+						"WorkspaceSettingsPage.WorkspaceSettingsLayout.workspace_settings_8e258324",
+					),
+				)}
+			</title>
 			<div>
 				<Breadcrumb>
 					<BreadcrumbList>
 						<BreadcrumbItem>
-							<BreadcrumbPage>Workspace Settings</BreadcrumbPage>
+							<BreadcrumbPage>
+								{tI18n(
+									"WorkspaceSettingsPage.WorkspaceSettingsLayout.workspace_settings_8e258324",
+								)}
+							</BreadcrumbPage>
 						</BreadcrumbItem>
 						{workspace && (
 							<>

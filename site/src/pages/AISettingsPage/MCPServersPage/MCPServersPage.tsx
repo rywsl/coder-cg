@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router";
 import { mcpServerConfigs } from "#/api/queries/chats";
@@ -13,6 +14,8 @@ import MCPServersPageView from "./MCPServersPageView";
 import { orgSearchParam, selectOrganization } from "./organizationParam";
 
 const MCPServersPage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { permissions } = useAuthenticated();
 	const { organizations } = useDashboard();
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -89,7 +92,16 @@ const MCPServersPage: FC = () => {
 				authorizedOrganizations.length > 0
 			}
 		>
-			<title>{pageTitle("MCP servers", "AI Settings")}</title>
+			<title>
+				{pageTitle(
+					tI18n(
+						"AISettingsPage.MCPServersPage.MCPServersPage.mcp_servers_22a7559f",
+					),
+					tI18n(
+						"AISettingsPage.MCPServersPage.MCPServersPage.ai_settings_a8e5e2c6",
+					),
+				)}
+			</title>
 			{organizationPermissionsQuery.isLoadingError ? (
 				<ErrorAlert error={organizationPermissionsQuery.error} />
 			) : !permissions.editDeploymentConfig &&

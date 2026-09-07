@@ -1,8 +1,10 @@
 import { type FC, Fragment, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { deploymentConfig } from "#/api/queries/deployment";
 import type { Workspace, WorkspaceBuildParameter } from "#/api/typesGenerated";
 import { useAuthenticated } from "#/hooks/useAuthenticated";
+import { i18n } from "#/i18n";
 import {
 	type ActionType,
 	abilitiesByWorkspaceStatus,
@@ -54,6 +56,8 @@ export const WorkspaceActions: FC<WorkspaceActionsProps> = ({
 	handleDebug,
 	handleDormantActivate,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const {
 		permissions: { viewDeploymentConfig },
 		user,
@@ -140,10 +144,34 @@ export const WorkspaceActions: FC<WorkspaceActionsProps> = ({
 			/>
 		),
 
-		deleting: <DisabledButton label="Deleting" />,
-		canceling: <DisabledButton label="Canceling..." />,
-		deleted: <DisabledButton label="Deleted" />,
-		pending: <DisabledButton label="Pending..." />,
+		deleting: (
+			<DisabledButton
+				label={tI18n(
+					"WorkspacePage.WorkspaceActions.WorkspaceActions.deleting_21ed2f9e",
+				)}
+			/>
+		),
+		canceling: (
+			<DisabledButton
+				label={tI18n(
+					"WorkspacePage.WorkspaceActions.WorkspaceActions.canceling_37b4fbc5",
+				)}
+			/>
+		),
+		deleted: (
+			<DisabledButton
+				label={tI18n(
+					"WorkspacePage.WorkspaceActions.WorkspaceActions.deleted_b48ff39c",
+				)}
+			/>
+		),
+		pending: (
+			<DisabledButton
+				label={tI18n(
+					"WorkspacePage.WorkspaceActions.WorkspaceActions.pending_e2018b95",
+				)}
+			/>
+		),
 		activate: <ActivateButton handleAction={handleDormantActivate} />,
 		activating: <ActivateButton loading handleAction={handleDormantActivate} />,
 		retry: (
@@ -204,11 +232,15 @@ function getTooltipText(
 	canChangeVersions: boolean,
 ): string {
 	if (canChangeVersions && workspace.template_require_active_version) {
-		return "This template requires automatic updates on workspace startup, but template administrators can ignore this policy.";
+		return i18n.t(
+			"workspaces:WorkspacePage.WorkspaceActions.WorkspaceActions.this_template_requires_automatic_updates_on_work_c41153e2",
+		);
 	}
 
 	if (workspace.automatic_updates === "always") {
-		return "Automatic updates are enabled for this workspace. Modify the update policy in workspace settings if you want to preserve the template version.";
+		return i18n.t(
+			"workspaces:WorkspacePage.WorkspaceActions.WorkspaceActions.automatic_updates_are_enabled_for_this_workspace_425de450",
+		);
 	}
 
 	return "";

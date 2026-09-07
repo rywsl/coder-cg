@@ -6,6 +6,7 @@ import {
 	type Workspace,
 	type WorkspaceBuild,
 } from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 
 /**
  * Returns the moment a workspace's identity transferred to its
@@ -231,7 +232,12 @@ export function notifyDeleteQueueState(
 	const matched = deleteBuild.matched_provisioners;
 	if (matched && matched.count === 0) {
 		toast.warning(
-			`Delete enqueued for "${workspace.name}", but no matching provisioners are available. The workspace will be deleted once one comes online.`,
+			i18n.t(
+				"agents:AgentsPage.utils.agentWorkspaceUtils.delete_enqueued_for_value0_but_no_matching_provi_60fb1c12",
+				{
+					value0: workspace.name,
+				},
+			),
 		);
 	}
 }
@@ -245,30 +251,53 @@ export function notifyArchiveAndDeleteFailed(
 	const cause = error instanceof ArchiveAndDeleteError ? error.cause : error;
 
 	if (step === "archive") {
-		const label = workspace ? `"${workspace.name}"` : "the workspace";
+		const label = workspace
+			? `"${workspace.name}"`
+			: i18n.t(
+					"agents:AgentsPage.utils.agentWorkspaceUtils.the_workspace_e93d11f7",
+				);
 		const prefix = `Failed to archive the chat for ${label}.`;
 		const detail = getErrorMessage(cause, "");
 		toast.error(detail ? `${prefix} ${detail}` : prefix);
 		return;
 	}
 
-	const description =
-		"The chat was archived but the workspace delete failed. Unarchive it from the archived filter, or open the workspace to delete it manually.";
+	const description = i18n.t(
+		"agents:AgentsPage.utils.agentWorkspaceUtils.the_chat_was_archived_but_the_workspace_delete_f_b8b6731b",
+	);
 
 	if (!workspace) {
-		toast.error(getErrorMessage(cause, "Failed to delete workspace."), {
-			description,
-		});
+		toast.error(
+			getErrorMessage(
+				cause,
+				i18n.t(
+					"agents:AgentsPage.utils.agentWorkspaceUtils.failed_to_delete_workspace_f06ebbe9",
+				),
+			),
+			{
+				description,
+			},
+		);
 		return;
 	}
 
 	const path = `/@${workspace.owner_name}/${workspace.name}`;
 	toast.error(
-		getErrorMessage(cause, `Failed to delete workspace "${workspace.name}".`),
+		getErrorMessage(
+			cause,
+			i18n.t(
+				"agents:AgentsPage.utils.agentWorkspaceUtils.failed_to_delete_workspace_value0_7c221751",
+				{
+					value0: workspace.name,
+				},
+			),
+		),
 		{
 			description,
 			action: {
-				label: "Open workspace",
+				label: i18n.t(
+					"agents:AgentsPage.utils.agentWorkspaceUtils.open_workspace_b3e34b18",
+				),
 				onClick: () => onOpenWorkspace(path),
 			},
 		},

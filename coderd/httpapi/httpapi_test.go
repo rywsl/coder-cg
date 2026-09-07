@@ -25,6 +25,7 @@ import (
 	"github.com/coder/coder/v2/coderd/httpapi"
 	"github.com/coder/coder/v2/coderd/httpmw/loggermw"
 	"github.com/coder/coder/v2/coderd/httpmw/loggermw/loggermock"
+	"github.com/coder/coder/v2/coderd/i18n"
 	"github.com/coder/coder/v2/codersdk"
 	"github.com/coder/coder/v2/testutil"
 	"github.com/coder/quartz"
@@ -78,6 +79,45 @@ func TestWrite(t *testing.T) {
 		require.NoError(t, err)
 		_, ok := m["errors"]
 		require.False(t, ok)
+	})
+	t.Run("LocalizedResponse", func(t *testing.T) {
+		t.Parallel()
+		rw := httptest.NewRecorder()
+		rw.Header().Set("Content-Language", "zh-CN")
+		httpapi.Write(context.Background(), rw, http.StatusBadRequest, codersdk.Response{
+			Message: "Validation failed.",
+			Detail:  "database: connection refused",
+			Validations: []codersdk.ValidationError{
+				{Field: "client_id", Detail: "Missing required parameter: client_id"},
+			},
+		})
+
+		var response codersdk.Response
+		require.NoError(t, json.NewDecoder(rw.Body).Decode(&response))
+		require.Equal(t, "验证失败。", response.Message)
+		require.Equal(t, "缺少必需参数：client_id", response.Validations[0].Detail)
+		require.Equal(t, "database: connection refused", response.Detail)
+	})
+	t.Run("LocalizedOAuthDescription", func(t *testing.T) {
+		t.Parallel()
+		rw := httptest.NewRecorder()
+		rw.Header().Set("Content-Language", "zh-CN")
+		httpapi.WriteOAuth2Error(context.Background(), rw, http.StatusBadRequest, codersdk.OAuth2ErrorCodeInvalidRequest, "Missing required parameter: client_id")
+
+		var response codersdk.OAuth2Error
+		require.NoError(t, json.NewDecoder(rw.Body).Decode(&response))
+		require.Equal(t, codersdk.OAuth2ErrorCodeInvalidRequest, response.Error)
+		require.Equal(t, "缺少必需参数：client_id", response.ErrorDescription)
+	})
+	t.Run("ContextLocale", func(t *testing.T) {
+		t.Parallel()
+		ctx := i18n.WithLocale(context.Background(), i18n.LocaleSimplifiedChinese)
+		rw := httptest.NewRecorder()
+		httpapi.Write(ctx, rw, http.StatusForbidden, codersdk.Response{Message: "Forbidden."})
+
+		var response codersdk.Response
+		require.NoError(t, json.NewDecoder(rw.Body).Decode(&response))
+		require.Equal(t, "禁止访问。", response.Message)
 	})
 }
 

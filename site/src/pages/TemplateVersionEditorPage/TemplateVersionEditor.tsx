@@ -8,6 +8,7 @@ import {
 	XIcon,
 } from "lucide-react";
 import { type FC, useCallback, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Link as RouterLink,
 	useNavigate,
@@ -132,6 +133,8 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 	activePath,
 	onActivePathChange,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const navigate = useNavigate();
 	const getLink = useLinks();
 	const [selectedTab, setSelectedTab] = useState<Tab>(defaultTab);
@@ -147,9 +150,17 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 			await onPreview(fileTree);
 			setSelectedTab("logs");
 		} catch (error) {
-			toast.error(getErrorMessage(error, "Error on previewing the template."), {
-				description: getErrorDetail(error),
-			});
+			toast.error(
+				getErrorMessage(
+					error,
+					tI18n(
+						"TemplateVersionEditorPage.TemplateVersionEditor.error_on_previewing_the_template_e65da07e",
+					),
+				),
+				{
+					description: getErrorDetail(error),
+				},
+			);
 		}
 	}, [fileTree, onPreview]);
 
@@ -195,10 +206,17 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 		) {
 			setDirty(false);
 			toast.success(
-				`Template version "${previousVersion.current.name}" built successfully.`,
+				tI18n(
+					"TemplateVersionEditorPage.TemplateVersionEditor.template_version_value0_built_successfully_c8aaee62",
+					{
+						value0: previousVersion.current.name,
+					},
+				),
 				{
 					action: {
-						label: "View template",
+						label: tI18n(
+							"TemplateVersionEditorPage.TemplateVersionEditor.view_template_b6532e54",
+						),
 						onClick: () => navigate(templateLink),
 					},
 				},
@@ -225,14 +243,18 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 								<TopbarIconButton asChild>
 									<RouterLink
 										to={templateLink}
-										aria-label="Back to the template"
+										aria-label={tI18n(
+											"TemplateVersionEditorPage.TemplateVersionEditor.back_to_the_template_79d3f3df",
+										)}
 									>
 										<ChevronLeftIcon />
 									</RouterLink>
 								</TopbarIconButton>
 							</TooltipTrigger>
 							<TooltipContent side="bottom">
-								Back to the template
+								{tI18n(
+									"TemplateVersionEditorPage.TemplateVersionEditor.back_to_the_template_79d3f3df",
+								)}
 							</TooltipContent>
 						</Tooltip>
 					</div>
@@ -263,7 +285,9 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 									rel="noopener noreferrer"
 									className="flex items-center"
 								>
-									Browse the Coder Registry
+									{tI18n(
+										"TemplateVersionEditorPage.TemplateVersionEditor.browse_the_coder_registry_e8b55341",
+									)}
 									<ExternalLinkIcon className="size-icon-sm ml-1" />
 								</a>
 							</Button>
@@ -273,14 +297,18 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 
 						<div className="flex gap-1 items-center">
 							<TopbarButton
-								title="Build template (Ctrl + Enter)"
+								title={tI18n(
+									"TemplateVersionEditorPage.TemplateVersionEditor.build_template_ctrl_enter_7e5225d6",
+								)}
 								disabled={!canBuild}
 								onClick={async () => {
 									await triggerPreview();
 								}}
 							>
 								<PlayIcon />
-								Build
+								{tI18n(
+									"TemplateVersionEditorPage.TemplateVersionEditor.build_bdd254b6",
+								)}
 							</TopbarButton>
 							<ProvisionerTagsPopover
 								tags={provisionerTags}
@@ -293,7 +321,9 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 							disabled={dirty || !canPublish}
 							onClick={onPublish}
 						>
-							Publish
+							{tI18n(
+								"TemplateVersionEditorPage.TemplateVersionEditor.publish_859390eb",
+							)}
 						</TopbarButton>
 					</div>
 				</Topbar>
@@ -313,13 +343,18 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 								actions={
 									<Button asChild size="sm">
 										<RouterLink to={createWorkspaceUrl ?? ""}>
-											Create a workspace
+											{tI18n(
+												"TemplateVersionEditorPage.TemplateVersionEditor.create_a_workspace_954bd1fe",
+											)}
 										</RouterLink>
 									</Button>
 								}
 							>
 								<AlertTitle>
-									Successfully published {publishedVersion.name}!
+									{tI18n(
+										"TemplateVersionEditorPage.TemplateVersionEditor.successfully_published_1680e6c0",
+									)}
+									{publishedVersion.name}!
 								</AlertTitle>
 							</Alert>
 						</div>
@@ -327,7 +362,11 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 
 					<Sidebar>
 						<div className="h-[42px] py-0 pr-2 pl-4 flex items-center">
-							<span className="text-content-primary text-sm">Files</span>
+							<span className="text-content-primary text-sm">
+								{tI18n(
+									"TemplateVersionEditorPage.TemplateVersionEditor.files_abc7e989",
+								)}
+							</span>
 
 							<div className="ml-auto [&_svg]:fill-content-primary">
 								<Tooltip>
@@ -335,7 +374,9 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 										<Button
 											size="icon"
 											variant="subtle"
-											aria-label="Create File"
+											aria-label={tI18n(
+												"TemplateVersionEditorPage.TemplateVersionEditor.create_file_f1eb5a82",
+											)}
 											onClick={(event) => {
 												setCreateFileOpen(true);
 												event.currentTarget.blur();
@@ -344,7 +385,11 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 											<PlusIcon />
 										</Button>
 									</TooltipTrigger>
-									<TooltipContent>Create File</TooltipContent>
+									<TooltipContent>
+										{tI18n(
+											"TemplateVersionEditorPage.TemplateVersionEditor.create_file_f1eb5a82",
+										)}
+									</TooltipContent>
 								</Tooltip>
 							</div>
 							<CreateFileDialog
@@ -426,8 +471,9 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 										<div className="flex flex-col items-center max-w-[420px] text-center">
 											<TriangleAlertIcon className="text-content-warning size-icon-lg" />
 											<p className="m-0 p-0 mt-6">
-												The file is not displayed in the text editor because it
-												is either binary or uses an unsupported text encoding.
+												{tI18n(
+													"TemplateVersionEditorPage.TemplateVersionEditor.the_file_is_not_displayed_in_the_text_editor_bec_c649b8ff",
+												)}
 											</p>
 										</div>
 									</div>
@@ -447,7 +493,11 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 									/>
 								)
 							) : (
-								<div>No file opened</div>
+								<div>
+									{tI18n(
+										"TemplateVersionEditorPage.TemplateVersionEditor.no_file_opened_37fa1f8b",
+									)}
+								</div>
 							)}
 						</div>
 
@@ -467,7 +517,9 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 											setSelectedTab("logs");
 										}}
 									>
-										Output
+										{tI18n(
+											"TemplateVersionEditorPage.TemplateVersionEditor.output_b2439bcb",
+										)}
 									</button>
 
 									<button
@@ -478,7 +530,9 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 											setSelectedTab("resources");
 										}}
 									>
-										Resources
+										{tI18n(
+											"TemplateVersionEditorPage.TemplateVersionEditor.resources_e89b30aa",
+										)}
 									</button>
 								</div>
 
@@ -489,7 +543,9 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 										rel="noopener noreferrer"
 										className="flex items-center gap-1 px-3 text-xs text-content-secondary hover:text-content-primary"
 									>
-										View raw logs
+										{tI18n(
+											"TemplateVersionEditorPage.TemplateVersionEditor.view_raw_logs_ed3f405c",
+										)}
 										<ExternalLinkIcon className="size-3" />
 									</a>
 								)}
@@ -515,7 +571,9 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 									{templateVersion.job.error ? (
 										<div>
 											<ProvisionerAlert
-												title="Error during the build"
+												title={tI18n(
+													"TemplateVersionEditorPage.TemplateVersionEditor.error_during_the_build_f68af1e2",
+												)}
 												detail={templateVersion.job.error}
 												severity="error"
 												tags={templateVersion.job.tags}
@@ -577,7 +635,6 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 					</div>
 				</div>
 			</div>
-
 			<PublishTemplateVersionDialog
 				key={templateVersion.name}
 				publishingError={publishingError}
@@ -587,7 +644,6 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 				isPublishing={isPublishing}
 				defaultName={templateVersion.name}
 			/>
-
 			<MissingTemplateVariablesDialog
 				open={isPromptingMissingVariables}
 				onClose={onCancelSubmitMissingVariableValues}
@@ -599,8 +655,11 @@ export const TemplateVersionEditor: FC<TemplateVersionEditorProps> = ({
 };
 
 const useLeaveSiteWarning = (enabled: boolean) => {
-	const MESSAGE =
-		"You have unpublished changes. Are you sure you want to leave?";
+	const { t: tI18n } = useTranslation("templates");
+
+	const MESSAGE = tI18n(
+		"TemplateVersionEditorPage.TemplateVersionEditor.you_have_unpublished_changes_are_you_sure_you_wa_1da66002",
+	);
 
 	// This works for regular browser actions like close tab and back button
 	useEffect(() => {
@@ -616,7 +675,7 @@ const useLeaveSiteWarning = (enabled: boolean) => {
 		return () => {
 			window.removeEventListener("beforeunload", onBeforeUnload);
 		};
-	}, [enabled]);
+	}, [enabled, MESSAGE]);
 
 	// This is used for react router navigation that is not triggered by the
 	// browser

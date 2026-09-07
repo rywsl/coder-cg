@@ -1,5 +1,6 @@
 import { XIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	Organization,
 	ProvisionerJob,
@@ -85,12 +86,23 @@ type OrganizationProvisionerJobsPageViewProps = {
 const OrganizationProvisionerJobsPageView: FC<
 	OrganizationProvisionerJobsPageViewProps
 > = ({ jobs, organization, error, filter, onFilterChange, onRetry }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	if (!organization) {
 		return (
 			<>
-				<title>{pageTitle("Provisioner Jobs")}</title>
-
-				<EmptyState message="Organization not found" />
+				<title>
+					{pageTitle(
+						tI18n(
+							"OrganizationSettingsPage.OrganizationProvisionerJobsPage.OrganizationProvisionerJobsPageView.provisioner_jobs_e4be4fbf",
+						),
+					)}
+				</title>
+				<EmptyState
+					message={tI18n(
+						"OrganizationSettingsPage.OrganizationProvisionerJobsPage.OrganizationProvisionerJobsPageView.organization_not_found_00c50f7a",
+					)}
+				/>
 			</>
 		);
 	}
@@ -99,19 +111,27 @@ const OrganizationProvisionerJobsPageView: FC<
 		<div className="w-full max-w-(--breakpoint-2xl) pb-10">
 			<title>
 				{pageTitle(
-					"Provisioner Jobs",
+					tI18n(
+						"OrganizationSettingsPage.OrganizationProvisionerJobsPage.OrganizationProvisionerJobsPageView.provisioner_jobs_e4be4fbf",
+					),
 					organization.display_name || organization.name,
 				)}
 			</title>
-
 			<section>
 				<SettingsHeader>
-					<SettingsHeaderTitle>Provisioner Jobs</SettingsHeaderTitle>
+					<SettingsHeaderTitle>
+						{tI18n(
+							"OrganizationSettingsPage.OrganizationProvisionerJobsPage.OrganizationProvisionerJobsPageView.provisioner_jobs_e4be4fbf",
+						)}
+					</SettingsHeaderTitle>
 					<SettingsHeaderDescription>
-						Provisioner Jobs are the individual tasks assigned to Provisioners
-						when the workspaces are being built.{" "}
+						{tI18n(
+							"OrganizationSettingsPage.OrganizationProvisionerJobsPage.OrganizationProvisionerJobsPageView.provisioner_jobs_are_the_individual_tasks_assign_edb6176d",
+						)}{" "}
 						<Link href={docs("/admin/provisioners/manage-provisioner-jobs")}>
-							View docs
+							{tI18n(
+								"OrganizationSettingsPage.OrganizationProvisionerJobsPage.OrganizationProvisionerJobsPageView.view_docs_61479fda",
+							)}
 						</Link>
 					</SettingsHeaderDescription>
 				</SettingsHeader>
@@ -132,11 +152,19 @@ const OrganizationProvisionerJobsPageView: FC<
 												onFilterChange({ ...filter, ids: "" });
 											}}
 										>
-											<span className="sr-only">Clear ID</span>
+											<span className="sr-only">
+												{tI18n(
+													"OrganizationSettingsPage.OrganizationProvisionerJobsPage.OrganizationProvisionerJobsPageView.clear_id_9537d728",
+												)}
+											</span>
 											<XIcon />
 										</Button>
 									</TooltipTrigger>
-									<TooltipContent>Clear ID</TooltipContent>
+									<TooltipContent>
+										{tI18n(
+											"OrganizationSettingsPage.OrganizationProvisionerJobsPage.OrganizationProvisionerJobsPageView.clear_id_9537d728",
+										)}
+									</TooltipContent>
 								</Tooltip>
 							</div>
 						</div>
@@ -152,7 +180,11 @@ const OrganizationProvisionerJobsPageView: FC<
 						}}
 					>
 						<SelectTrigger className="w-[180px]" data-testid="status-filter">
-							<SelectValue placeholder="All statuses" />
+							<SelectValue
+								placeholder={tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerJobsPage.OrganizationProvisionerJobsPageView.all_statuses_8ee57323",
+								)}
+							/>
 						</SelectTrigger>
 						<SelectContent>
 							<SelectGroup>
@@ -174,11 +206,31 @@ const OrganizationProvisionerJobsPageView: FC<
 				<Table className="mt-6">
 					<TableHeader>
 						<TableRow>
-							<TableHead>Created</TableHead>
-							<TableHead>Type</TableHead>
-							<TableHead>Template</TableHead>
-							<TableHead>Tags</TableHead>
-							<TableHead>Status</TableHead>
+							<TableHead>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerJobsPage.OrganizationProvisionerJobsPageView.created_d70b9e24",
+								)}
+							</TableHead>
+							<TableHead>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerJobsPage.OrganizationProvisionerJobsPageView.type_baaddf70",
+								)}
+							</TableHead>
+							<TableHead>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerJobsPage.OrganizationProvisionerJobsPageView.template_0575f29d",
+								)}
+							</TableHead>
+							<TableHead>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerJobsPage.OrganizationProvisionerJobsPageView.tags_1331275b",
+								)}
+							</TableHead>
+							<TableHead>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerJobsPage.OrganizationProvisionerJobsPageView.status_920e413c",
+								)}
+							</TableHead>
 							<TableHead />
 						</TableRow>
 					</TableHeader>
@@ -193,14 +245,22 @@ const OrganizationProvisionerJobsPageView: FC<
 									/>
 								))
 							) : (
-								<TableEmpty message="No provisioner jobs found" />
+								<TableEmpty
+									message={tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionerJobsPage.OrganizationProvisionerJobsPageView.no_provisioner_jobs_found_a6dc6e49",
+									)}
+								/>
 							)
 						) : error ? (
 							<TableEmpty
-								message="Error loading the provisioner jobs"
+								message={tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerJobsPage.OrganizationProvisionerJobsPageView.error_loading_the_provisioner_jobs_c06b62fc",
+								)}
 								cta={
 									<Button size="sm" onClick={onRetry}>
-										Retry
+										{tI18n(
+											"OrganizationSettingsPage.OrganizationProvisionerJobsPage.OrganizationProvisionerJobsPageView.retry_942087cc",
+										)}
 									</Button>
 								}
 							/>

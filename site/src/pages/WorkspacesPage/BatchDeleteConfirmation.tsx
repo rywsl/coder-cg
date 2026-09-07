@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { ClockIcon, UserIcon } from "lucide-react";
 import { type FC, type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { Workspace } from "#/api/typesGenerated";
 import { ConfirmDialog } from "#/components/Dialog/ConfirmDialog/ConfirmDialog";
 import { ExternalImage } from "#/components/ExternalImage/ExternalImage";
@@ -24,6 +25,8 @@ export const BatchDeleteConfirmation: FC<BatchDeleteConfirmationProps> = ({
 	onConfirm,
 	isLoading,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [stage, setStage] = useState<
 		"consequences" | "workspaces" | "resources"
 	>("consequences");
@@ -46,9 +49,20 @@ export const BatchDeleteConfirmation: FC<BatchDeleteConfirmationProps> = ({
 		checkedWorkspaces.length === 1 ? "workspace" : "workspaces"
 	}`;
 
-	let confirmText: ReactNode = <>Review selected workspaces&hellip;</>;
+	let confirmText: ReactNode = (
+		<>
+			{tI18n(
+				"WorkspacesPage.BatchDeleteConfirmation.review_selected_workspaces_0beb56b3",
+			)}
+		</>
+	);
 	if (stage === "workspaces") {
-		confirmText = <>Confirm {workspaceCount}&hellip;</>;
+		confirmText = (
+			<>
+				{tI18n("WorkspacesPage.BatchDeleteConfirmation.confirm_cb98700a")}
+				{workspaceCount}&hellip;
+			</>
+		);
 	}
 	if (stage === "resources") {
 		const resources = checkedWorkspaces
@@ -59,7 +73,10 @@ export const BatchDeleteConfirmation: FC<BatchDeleteConfirmationProps> = ({
 		}`;
 		confirmText = (
 			<>
-				Delete {workspaceCount} and {resourceCount}
+				{tI18n("WorkspacesPage.BatchDeleteConfirmation.delete_85941fb9")}
+				{workspaceCount}
+				{tI18n("WorkspacesPage.BatchDeleteConfirmation.and_e3ee915a")}
+				{resourceCount}
 			</>
 		);
 	}
@@ -86,7 +103,12 @@ export const BatchDeleteConfirmation: FC<BatchDeleteConfirmationProps> = ({
 				setStage("consequences");
 				onClose();
 			}}
-			title={`Delete ${workspaceCount}`}
+			title={tI18n(
+				"WorkspacesPage.BatchDeleteConfirmation.delete_value0_50256b39",
+				{
+					value0: workspaceCount,
+				},
+			)}
 			confirmLoading={isLoading}
 			confirmText={confirmText}
 			onConfirm={onProceed}
@@ -111,20 +133,34 @@ interface StageProps {
 }
 
 const Consequences: FC = () => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<>
-			<p>Deleting workspaces is irreversible!</p>
+			<p>
+				{tI18n(
+					"WorkspacesPage.BatchDeleteConfirmation.deleting_workspaces_is_irreversible_3688372c",
+				)}
+			</p>
 			<ul className="flex flex-col gap-2 pl-4 mb-0">
 				<li>
-					Terraform resources belonging to deleted workspaces will be destroyed.
+					{tI18n(
+						"WorkspacesPage.BatchDeleteConfirmation.terraform_resources_belonging_to_deleted_workspa_39726340",
+					)}
 				</li>
-				<li>Any data stored in the workspace will be permanently deleted.</li>
+				<li>
+					{tI18n(
+						"WorkspacesPage.BatchDeleteConfirmation.any_data_stored_in_the_workspace_will_be_permane_cd59d3eb",
+					)}
+				</li>
 			</ul>
 		</>
 	);
 };
 
 const Workspaces: FC<StageProps> = ({ workspaces }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const mostRecent = workspaces.reduce(
 		(latestSoFar, against) => {
 			if (!latestSoFar) {
@@ -181,7 +217,12 @@ const Workspaces: FC<StageProps> = ({ workspaces }) => {
 				{mostRecent && (
 					<div className="flex items-center gap-2">
 						<ClockIcon className="size-icon-xs" />
-						<span>Last used {dayjs(mostRecent.last_used_at).fromNow()}</span>
+						<span>
+							{tI18n(
+								"WorkspacesPage.BatchDeleteConfirmation.last_used_d18c1db4",
+							)}
+							{dayjs(mostRecent.last_used_at).fromNow()}
+						</span>
 					</div>
 				)}
 			</div>
@@ -190,6 +231,8 @@ const Workspaces: FC<StageProps> = ({ workspaces }) => {
 };
 
 const Resources: FC<StageProps> = ({ workspaces }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const resources: Record<string, { count: number; icon: string }> = {};
 	for (const workspace of workspaces) {
 		for (const resource of workspace.latest_build.resources) {
@@ -207,9 +250,17 @@ const Resources: FC<StageProps> = ({ workspaces }) => {
 	return (
 		<div className="flex flex-col gap-4">
 			<p>
-				Deleting{" "}
-				{workspaces.length === 1 ? "this workspace" : "these workspaces"} will
-				also permanently destroy&hellip;
+				{tI18n("WorkspacesPage.BatchDeleteConfirmation.deleting_21ed2f9e")}{" "}
+				{workspaces.length === 1
+					? tI18n(
+							"WorkspacesPage.BatchDeleteConfirmation.this_workspace_3afd67e2",
+						)
+					: tI18n(
+							"WorkspacesPage.BatchDeleteConfirmation.these_workspaces_92f72fe8",
+						)}
+				{tI18n(
+					"WorkspacesPage.BatchDeleteConfirmation.will_also_permanently_destroy_f2f6f3de",
+				)}
 			</p>
 			<div className="flex flex-wrap justify-center gap-x-5 gap-y-1.5 text-sm">
 				{Object.entries(resources).map(([type, summary]) => (

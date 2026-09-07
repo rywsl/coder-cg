@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Dialog, DialogContent, DialogTitle } from "#/components/Dialog/Dialog";
 import { Response } from "./ChatElements/Response";
 
@@ -36,6 +37,8 @@ export const TextPreviewDialog: FC<TextPreviewDialogProps> = ({
 	mediaType,
 	onClose,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const renderAsMarkdown = isMarkdownPreview(fileName, mediaType);
 
 	return (
@@ -45,7 +48,10 @@ export const TextPreviewDialog: FC<TextPreviewDialogProps> = ({
 				aria-describedby={undefined}
 			>
 				<DialogTitle className="px-4 py-3 border-b border-border-default text-sm font-medium">
-					{fileName ?? "Pasted text"}
+					{fileName ??
+						tI18n(
+							"AgentsPage.components.TextPreviewDialog.pasted_text_39cfc32b",
+						)}
 				</DialogTitle>
 				<div className="overflow-auto p-4 max-h-[calc(85vh-3rem)]">
 					{renderAsMarkdown ? (

@@ -9,6 +9,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { ChevronDownIcon } from "#/components/AnimatedIcons/ChevronDown";
 import {
 	Command,
@@ -25,6 +26,7 @@ import {
 	PopoverTrigger,
 } from "#/components/Popover/Popover";
 import { Spinner } from "#/components/Spinner/Spinner";
+import { i18n } from "#/i18n";
 
 interface AutocompleteProps<TOption> {
 	value: TOption | null;
@@ -63,7 +65,9 @@ export function Autocomplete<TOption>({
 	isOptionEqualToValue,
 	renderOption,
 	loading = false,
-	placeholder = "Select an option",
+	placeholder = i18n.t(
+		"components:Autocomplete.Autocomplete.select_an_option_fb1cbc38",
+	),
 	noOptionsText = "No results found",
 	open: controlledOpen,
 	onOpenChange,
@@ -81,6 +85,8 @@ export function Autocomplete<TOption>({
 	id,
 	"data-testid": testId,
 }: AutocompleteProps<TOption>) {
+	const { t: tI18n } = useTranslation("components");
+
 	const inlineInputRef = useRef<HTMLInputElement>(null);
 	const [managedOpen, setManagedOpen] = useState(false);
 	const [managedInputValue, setManagedInputValue] = useState("");
@@ -412,7 +418,9 @@ export function Autocomplete<TOption>({
 									}
 								}}
 								className="flex items-center justify-center size-5 rounded hover:bg-surface-secondary transition-colors cursor-pointer"
-								aria-label="Clear selection"
+								aria-label={tI18n(
+									"Autocomplete.Autocomplete.clear_selection_cea4d2e0",
+								)}
 							>
 								<XIcon className="size-4 text-content-secondary hover:text-content-primary" />
 							</span>

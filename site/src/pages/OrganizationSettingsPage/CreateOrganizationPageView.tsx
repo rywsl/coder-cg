@@ -2,6 +2,7 @@ import { cn } from "cn";
 import { useFormik } from "formik";
 import { ArrowLeftIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -22,6 +23,7 @@ import {
 } from "#/components/SettingsHeader/SettingsHeader";
 import { Spinner } from "#/components/Spinner/Spinner";
 import { Textarea } from "#/components/Textarea/Textarea";
+import { i18n } from "#/i18n";
 import { PremiumPaywall } from "#/modules/paywall/PremiumPaywall";
 import type { Permissions } from "#/modules/permissions";
 import { docs } from "#/utils/docs";
@@ -33,11 +35,24 @@ import {
 } from "#/utils/formUtils";
 
 const MAX_DESCRIPTION_CHAR_LIMIT = 128;
-const MAX_DESCRIPTION_MESSAGE = `Please enter a description that is no longer than ${MAX_DESCRIPTION_CHAR_LIMIT} characters.`;
+const MAX_DESCRIPTION_MESSAGE = i18n.t(
+	"administration:OrganizationSettingsPage.CreateOrganizationPageView.please_enter_a_description_that_is_no_longer_tha_41a269dc",
+	{
+		value0: MAX_DESCRIPTION_CHAR_LIMIT,
+	},
+);
 
 const validationSchema = Yup.object({
-	name: nameValidator("Name"),
-	display_name: displayNameValidator("Display name"),
+	name: nameValidator(
+		i18n.t(
+			"administration:OrganizationSettingsPage.CreateOrganizationPageView.name_dcd1d522",
+		),
+	),
+	display_name: displayNameValidator(
+		i18n.t(
+			"administration:OrganizationSettingsPage.CreateOrganizationPageView.display_name_2b7f6a84",
+		),
+	),
 	description: Yup.string().max(
 		MAX_DESCRIPTION_CHAR_LIMIT,
 		MAX_DESCRIPTION_MESSAGE,
@@ -52,6 +67,8 @@ interface CreateOrganizationPageViewProps {
 export const CreateOrganizationPageView: FC<
 	CreateOrganizationPageViewProps
 > = ({ isEntitled, permissions }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 	const createOrganizationMutation = useMutation(
@@ -70,7 +87,14 @@ export const CreateOrganizationPageView: FC<
 		onSubmit: (values) => {
 			createOrganizationMutation.mutate(values, {
 				onSuccess: () => {
-					toast.success(`Organization "${values.name}" created successfully.`);
+					toast.success(
+						tI18n(
+							"OrganizationSettingsPage.CreateOrganizationPageView.organization_value0_created_successfully_1b622eb2",
+							{
+								value0: values.name,
+							},
+						),
+					);
 					void navigate(`/organizations/${values.name}`);
 				},
 			});
@@ -79,10 +103,14 @@ export const CreateOrganizationPageView: FC<
 	const getFieldHelpers = getFormHelpers(form, error);
 	const descriptionField = getFieldHelpers("description", {
 		maxLength: MAX_DESCRIPTION_CHAR_LIMIT,
-		helperText: "Optional. Short summary of this organization.",
+		helperText: tI18n(
+			"OrganizationSettingsPage.CreateOrganizationPageView.optional_short_summary_of_this_organization_389c25be",
+		),
 	});
 	const iconField = getFieldHelpers("icon", {
-		helperText: "Optional. URL or emoji shown for this organization.",
+		helperText: tI18n(
+			"OrganizationSettingsPage.CreateOrganizationPageView.optional_url_or_emoji_shown_for_this_organizatio_fd921083",
+		),
 	});
 	const descriptionErrorId = `${descriptionField.id}-error`;
 	const descriptionHelperId = `${descriptionField.id}-helper`;
@@ -93,17 +121,26 @@ export const CreateOrganizationPageView: FC<
 				<Button variant="subtle" asChild className="-ml-3">
 					<Link to="/organizations">
 						<ArrowLeftIcon />
-						<span>Back to organizations</span>
+						<span>
+							{tI18n(
+								"OrganizationSettingsPage.CreateOrganizationPageView.back_to_organizations_2257dc4a",
+							)}
+						</span>
 					</Link>
 				</Button>
 			</div>
 			<div className="flex flex-col gap-4 w-full mx-auto max-w-2xl">
 				<div className="flex flex-col">
 					<SettingsHeader>
-						<SettingsHeaderTitle>New Organization</SettingsHeaderTitle>
+						<SettingsHeaderTitle>
+							{tI18n(
+								"OrganizationSettingsPage.CreateOrganizationPageView.new_organization_4876e647",
+							)}
+						</SettingsHeaderTitle>
 						<SettingsHeaderDescription>
-							Isolate members, templates, and provisioners for a team or
-							project.{" "}
+							{tI18n(
+								"OrganizationSettingsPage.CreateOrganizationPageView.isolate_members_templates_and_provisioners_for_a_59c2f444",
+							)}{" "}
 							<SettingsHeaderDocsLink
 								href={docs("/admin/users/organizations")}
 							/>
@@ -113,12 +150,22 @@ export const CreateOrganizationPageView: FC<
 					{!isEntitled ? (
 						<PremiumPaywall
 							source="multiple_organizations"
-							message="Organizations"
-							description="Run isolated business units on one deployment, each with its own users, templates, provisioners, and infrastructure."
+							message={tI18n(
+								"OrganizationSettingsPage.CreateOrganizationPageView.organizations_2730183d",
+							)}
+							description={tI18n(
+								"OrganizationSettingsPage.CreateOrganizationPageView.run_isolated_business_units_on_one_deployment_ea_3b4f63c9",
+							)}
 							features={[
-								"Isolate provisioners & infrastructure",
-								"Sync org membership from your IdP",
-								"Manage orgs at scale via Terraform",
+								tI18n(
+									"OrganizationSettingsPage.CreateOrganizationPageView.isolate_provisioners_infrastructure_b9bf8bb0",
+								),
+								tI18n(
+									"OrganizationSettingsPage.CreateOrganizationPageView.sync_org_membership_from_your_idp_48008951",
+								),
+								tI18n(
+									"OrganizationSettingsPage.CreateOrganizationPageView.manage_orgs_at_scale_via_terraform_5dea644c",
+								),
 							]}
 							canViewPremium={permissions.viewAllLicenses}
 						/>
@@ -126,7 +173,9 @@ export const CreateOrganizationPageView: FC<
 						<div className="border border-solid p-6 rounded-lg">
 							<form
 								onSubmit={form.handleSubmit}
-								aria-label="Organization settings form"
+								aria-label={tI18n(
+									"OrganizationSettingsPage.CreateOrganizationPageView.organization_settings_form_c66805d0",
+								)}
 								className="flex flex-col gap-6 w-full"
 							>
 								{Boolean(error) && !isApiValidationError(error) && (
@@ -139,24 +188,35 @@ export const CreateOrganizationPageView: FC<
 									<div className="grid grid-cols-1 sm:grid-cols-2 items-start gap-4">
 										<FormField
 											field={getFieldHelpers("name", {
-												helperText: "Unique identifier used in URLs.",
+												helperText: tI18n(
+													"OrganizationSettingsPage.CreateOrganizationPageView.unique_identifier_used_in_urls_d00e951c",
+												),
 											})}
-											label="Slug"
+											label={tI18n(
+												"OrganizationSettingsPage.CreateOrganizationPageView.slug_d15387ec",
+											)}
 											required
 											className="w-full"
 											onChange={onChangeTrimmed(form)}
 										/>
 										<FormField
 											field={getFieldHelpers("display_name", {
-												helperText:
-													"Friendly name. Defaults to the slug if blank.",
+												helperText: tI18n(
+													"OrganizationSettingsPage.CreateOrganizationPageView.friendly_name_defaults_to_the_slug_if_blank_00e6a878",
+												),
 											})}
-											label="Display name"
+											label={tI18n(
+												"OrganizationSettingsPage.CreateOrganizationPageView.display_name_2b7f6a84",
+											)}
 											className="w-full"
 										/>
 									</div>
 									<div className="flex flex-col gap-2">
-										<Label htmlFor={descriptionField.id}>Description</Label>
+										<Label htmlFor={descriptionField.id}>
+											{tI18n(
+												"OrganizationSettingsPage.CreateOrganizationPageView.description_526e0087",
+											)}
+										</Label>
 										<Textarea
 											id={descriptionField.id}
 											name={descriptionField.name}
@@ -207,11 +267,17 @@ export const CreateOrganizationPageView: FC<
 								</fieldset>
 								<div className="flex justify-end gap-4">
 									<Button asChild variant="outline">
-										<Link to="/organizations">Cancel</Link>
+										<Link to="/organizations">
+											{tI18n(
+												"OrganizationSettingsPage.CreateOrganizationPageView.cancel_19766ed6",
+											)}
+										</Link>
 									</Button>
 									<Button type="submit" disabled={form.isSubmitting}>
 										<Spinner loading={form.isSubmitting} />
-										Create organization
+										{tI18n(
+											"OrganizationSettingsPage.CreateOrganizationPageView.create_organization_f14e1b22",
+										)}
 									</Button>
 								</div>
 							</form>

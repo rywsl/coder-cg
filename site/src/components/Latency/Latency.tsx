@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { CircleHelpIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Abbr } from "#/components/Abbr/Abbr";
 import { Spinner } from "#/components/Spinner/Spinner";
 import {
@@ -21,6 +22,8 @@ export const Latency: FC<LatencyProps> = ({
 	isLoading,
 	className,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	// Always use the no latency color for loading.
 	const latencyColor = getLatencyColor(isLoading ? undefined : latency);
 
@@ -41,7 +44,9 @@ export const Latency: FC<LatencyProps> = ({
 						<Spinner loading className={cn("size-icon-xs!", latencyColor)} />
 					</div>
 				</TooltipTrigger>
-				<TooltipContent side="bottom">Loading latency...</TooltipContent>
+				<TooltipContent side="bottom">
+					{tI18n("Latency.Latency.loading_latency_92da998c")}
+				</TooltipContent>
 			</Tooltip>
 		);
 	}
@@ -51,20 +56,26 @@ export const Latency: FC<LatencyProps> = ({
 			<Tooltip>
 				<TooltipTrigger asChild>
 					<CircleHelpIcon
-						aria-label="Latency not available"
+						aria-label={tI18n("Latency.Latency.latency_not_available_cea65bce")}
 						className={cn("size-icon-sm!", latencyColor, className)}
 					/>
 				</TooltipTrigger>
-				<TooltipContent side="bottom">Latency not available</TooltipContent>
+				<TooltipContent side="bottom">
+					{tI18n("Latency.Latency.latency_not_available_cea65bce")}
+				</TooltipContent>
 			</Tooltip>
 		);
 	}
 
 	return (
 		<div className={cn("text-sm", latencyColor, className)}>
-			<span className="sr-only">Latency: </span>
+			<span className="sr-only">
+				{tI18n("Latency.Latency.latency_4774635c")}
+			</span>
 			{latency.toFixed(0)}
-			<Abbr title="milliseconds">ms</Abbr>
+			<Abbr title={tI18n("Latency.Latency.milliseconds_c7fa2402")}>
+				{tI18n("Latency.Latency.ms_f785c3ce")}
+			</Abbr>
 		</div>
 	);
 };

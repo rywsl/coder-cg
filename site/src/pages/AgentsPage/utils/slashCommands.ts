@@ -1,3 +1,4 @@
+import { i18n } from "#/i18n";
 /**
  * A built-in chat command offered by the "/" trigger menu. Unlike
  * personal skills, commands are fixed client-side actions: the
@@ -11,13 +12,16 @@ export type ChatSlashCommand = {
 
 export const COMPACT_SLASH_COMMAND: ChatSlashCommand = {
 	name: "compact",
-	description:
-		"Summarize the conversation so far to free up context window space",
+	description: i18n.t(
+		"agents:AgentsPage.utils.slashCommands.summarize_the_conversation_so_far_to_free_up_con_37969803",
+	),
 };
 
 export const CLEAR_SLASH_COMMAND: ChatSlashCommand = {
 	name: "clear",
-	description: "Clear the conversation context; the next message starts fresh",
+	description: i18n.t(
+		"agents:AgentsPage.utils.slashCommands.clear_the_conversation_context_the_next_message__6c631696",
+	),
 };
 
 /**

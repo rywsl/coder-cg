@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 /**
  * Copied from shadc/ui on 12/13/2024
  * @see {@link https://ui.shadcn.com/docs/components/breadcrumb}
@@ -12,7 +13,14 @@ type BreadcrumbProps = React.ComponentPropsWithRef<"nav"> & {
 };
 
 export const Breadcrumb: React.FC<BreadcrumbProps> = ({ ...props }) => {
-	return <nav aria-label="breadcrumb" {...props} />;
+	const { t: tI18n } = useTranslation("components");
+
+	return (
+		<nav
+			aria-label={tI18n("Breadcrumb.Breadcrumb.breadcrumb_d6dc6b5e")}
+			{...props}
+		/>
+	);
 };
 
 export const BreadcrumbList: React.FC<React.ComponentPropsWithRef<"ol">> = ({
@@ -99,6 +107,8 @@ export const BreadcrumbSeparator: React.FC<
 export const BreadcrumbEllipsis: React.FC<
 	Omit<React.ComponentPropsWithRef<"span">, "children">
 > = ({ className, ...props }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<span
 			role="presentation"
@@ -107,7 +117,9 @@ export const BreadcrumbEllipsis: React.FC<
 			{...props}
 		>
 			<MoreHorizontalIcon className="size-4" />
-			<span className="sr-only">More</span>
+			<span className="sr-only">
+				{tI18n("Breadcrumb.Breadcrumb.more_d47d7cb0")}
+			</span>
 		</span>
 	);
 };

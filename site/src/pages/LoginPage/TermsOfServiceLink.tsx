@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "#/components/Link/Link";
 
 interface TermsOfServiceLinkProps {
@@ -6,16 +7,20 @@ interface TermsOfServiceLinkProps {
 }
 
 export const TermsOfServiceLink: FC<TermsOfServiceLinkProps> = ({ url }) => {
+	const { t: tI18n } = useTranslation("auth");
+
 	return (
 		<div className="pt-3 text-base">
-			By continuing, you agree to the{" "}
+			{tI18n(
+				"LoginPage.TermsOfServiceLink.by_continuing_you_agree_to_the_6e55c1da",
+			)}{" "}
 			<Link
 				className="font-medium whitespace-nowrap"
 				href={url}
 				target="_blank"
 				rel="noreferrer"
 			>
-				Terms of Service
+				{tI18n("LoginPage.TermsOfServiceLink.terms_of_service_4afa55bf")}
 			</Link>
 		</div>
 	);

@@ -1,5 +1,6 @@
 import { TriangleAlertIcon, XIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { JobError } from "#/api/queries/templates";
 import type { TemplateVersion } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
@@ -40,6 +41,8 @@ export const BuildLogsDrawer: FC<BuildLogsDrawerProps> = ({
 	onFillVariables,
 	onCloseAutoFocus,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const logs = useWatchVersionLogs(templateVersion);
 
 	const isMissingVariables =
@@ -71,12 +74,18 @@ export const BuildLogsDrawer: FC<BuildLogsDrawerProps> = ({
 						style={{ height: navHeight }}
 					>
 						<DrawerTitle className="m-0 text-base font-medium">
-							Creating template...
+							{tI18n(
+								"CreateTemplatePage.BuildLogsDrawer.creating_template_df6c9040",
+							)}
 						</DrawerTitle>
 						<DrawerClose asChild>
 							<Button size="icon-lg" variant="subtle">
 								<XIcon />
-								<span className="sr-only">Close build logs</span>
+								<span className="sr-only">
+									{tI18n(
+										"CreateTemplatePage.BuildLogsDrawer.close_build_logs_1292e798",
+									)}
+								</span>
 							</Button>
 						</DrawerClose>
 					</header>
@@ -114,14 +123,21 @@ type MissingVariablesBannerProps = { onFillVariables: () => void };
 const MissingVariablesBanner: FC<MissingVariablesBannerProps> = ({
 	onFillVariables,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<div className="flex items-center justify-center p-10">
 			<div className="flex max-w-[360px] flex-col items-center text-center">
 				<TriangleAlertIcon className="size-icon-lg text-content-warning" />
-				<h4 className="m-0 mt-4 font-medium leading-none">Missing variables</h4>
+				<h4 className="m-0 mt-4 font-medium leading-none">
+					{tI18n(
+						"CreateTemplatePage.BuildLogsDrawer.missing_variables_80ec03a4",
+					)}
+				</h4>
 				<p className="m-0 mt-2 text-sm leading-6 text-content-secondary">
-					During the build process, we identified some missing variables. Rest
-					assured, we have automatically added them to the form for you.
+					{tI18n(
+						"CreateTemplatePage.BuildLogsDrawer.during_the_build_process_we_identified_some_miss_06929d61",
+					)}
 				</p>
 				<Button
 					className="mt-4"
@@ -129,7 +145,7 @@ const MissingVariablesBanner: FC<MissingVariablesBannerProps> = ({
 					variant="outline"
 					onClick={onFillVariables}
 				>
-					Fill variables
+					{tI18n("CreateTemplatePage.BuildLogsDrawer.fill_variables_0cb49954")}
 				</Button>
 			</div>
 		</div>

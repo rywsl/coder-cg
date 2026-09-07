@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { CopyButton } from "#/components/CopyButton/CopyButton";
 import { formatDate } from "#/utils/time";
 import { TokenBadges } from "../../TokenBadges";
@@ -21,6 +22,8 @@ export const ToolCallTable: FC<ToolCallTableProps> = ({
 	tokenUsageMetadata,
 	className,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<div
 			className={cn(
@@ -29,7 +32,11 @@ export const ToolCallTable: FC<ToolCallTableProps> = ({
 			)}
 		>
 			<div className="flex items-center justify-between whitespace-nowrap">
-				<span className="pr-4 whitespace-nowrap">In / out tokens</span>
+				<span className="pr-4 whitespace-nowrap">
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionTimeline.ToolCallTable.in_out_tokens_6ffefed3",
+					)}
+				</span>
 				<TokenBadges
 					inputTokens={inputTokens}
 					outputTokens={outputTokens}
@@ -37,7 +44,11 @@ export const ToolCallTable: FC<ToolCallTableProps> = ({
 				/>
 			</div>
 			<div className="flex items-center justify-between">
-				<span className="pr-4 whitespace-nowrap">Started at</span>
+				<span className="pr-4 whitespace-nowrap">
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionTimeline.ToolCallTable.started_at_fe752875",
+					)}
+				</span>
 				<span
 					className="font-mono text-xs whitespace-nowrap truncate"
 					title={formatDate(timestamp)}
@@ -47,9 +58,18 @@ export const ToolCallTable: FC<ToolCallTableProps> = ({
 			</div>
 			{serverURL && (
 				<div className="flex items-center justify-between">
-					<span className="pr-4 whitespace-nowrap">MCP server</span>
+					<span className="pr-4 whitespace-nowrap">
+						{tI18n(
+							"AIBridgePage.SessionThreadsPage.SessionTimeline.ToolCallTable.mcp_server_d938c816",
+						)}
+					</span>
 					<span className="font-mono truncate">{serverURL}</span>
-					<CopyButton text={serverURL} label="Copy MCP server URL" />
+					<CopyButton
+						text={serverURL}
+						label={tI18n(
+							"AIBridgePage.SessionThreadsPage.SessionTimeline.ToolCallTable.copy_mcp_server_url_bd08f2eb",
+						)}
+					/>
 				</div>
 			)}
 		</div>

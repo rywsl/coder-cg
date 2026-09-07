@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import { type FC, type HTMLAttributes, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Tooltip,
 	TooltipContent,
@@ -27,6 +28,8 @@ export const CopyableValue: FC<CopyableValueProps> = ({
 	onKeyUp,
 	...attrs
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const { showCopiedSuccess, copyToClipboard } = useClipboard();
 	const [tooltipOpen, setTooltipOpen] = useState(false);
 	const [isFocused, setIsFocused] = useState(false);
@@ -81,7 +84,9 @@ export const CopyableValue: FC<CopyableValueProps> = ({
 				</span>
 			</TooltipTrigger>
 			<TooltipContent side={side}>
-				{showCopiedSuccess ? "Copied!" : "Click to copy"}
+				{showCopiedSuccess
+					? tI18n("CopyableValue.CopyableValue.copied_ea61bc15")
+					: tI18n("CopyableValue.CopyableValue.click_to_copy_6fdb8f60")}
 			</TooltipContent>
 		</Tooltip>
 	);

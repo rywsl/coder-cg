@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { aiProvidersList } from "#/api/queries/aiProviders";
 import { useAuthenticated } from "#/hooks/useAuthenticated";
@@ -6,6 +7,8 @@ import ProvidersPageView from "#/pages/AISettingsPage/ProvidersPage/ProvidersPag
 import { pageTitle } from "#/utils/page";
 
 const ProvidersPage: React.FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { permissions } = useAuthenticated();
 	const hasPermission = permissions.viewAnyAIProvider;
 
@@ -13,8 +16,13 @@ const ProvidersPage: React.FC = () => {
 
 	return (
 		<RequirePermission isFeatureVisible={hasPermission}>
-			<title>{pageTitle("AI Providers")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n(
+						"AISettingsPage.ProvidersPage.ProvidersPage.ai_providers_5aef60a9",
+					),
+				)}
+			</title>
 			<ProvidersPageView
 				isLoading={providersQuery.isLoading}
 				isFetching={providersQuery.isFetching}

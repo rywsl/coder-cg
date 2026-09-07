@@ -1,4 +1,5 @@
 import type { AuditDiff } from "#/api/typesGenerated";
+import { currentIntlLocale } from "#/i18n/locale";
 
 interface GroupMember {
 	user_id: string;
@@ -39,7 +40,7 @@ export const formatAuditDiffValue = (value: unknown): string => {
 			return "null";
 		}
 
-		return new Date(value.Time).toLocaleString();
+		return new Date(value.Time).toLocaleString(currentIntlLocale());
 	}
 
 	if (Array.isArray(value)) {

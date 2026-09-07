@@ -1,4 +1,5 @@
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { richParameters } from "#/api/queries/templates";
 import type { TemplateVersionParameter, Workspace } from "#/api/typesGenerated";
@@ -73,6 +74,8 @@ const BuildParametersPopoverContent: FC<BuildParametersPopoverContentProps> = ({
 	workspace,
 	ephemeralParameters,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	if (!ephemeralParameters) {
 		return <Loader />;
 	}
@@ -80,9 +83,15 @@ const BuildParametersPopoverContent: FC<BuildParametersPopoverContentProps> = ({
 	if (ephemeralParameters.length === 0) {
 		return (
 			<div className="p-5 text-content-secondary">
-				<HelpPopoverTitle>Build Options</HelpPopoverTitle>
+				<HelpPopoverTitle>
+					{tI18n(
+						"WorkspacePage.WorkspaceActions.BuildParametersPopover.build_options_e2604caf",
+					)}
+				</HelpPopoverTitle>
 				<HelpPopoverText>
-					This template has no ephemeral build options.
+					{tI18n(
+						"WorkspacePage.WorkspaceActions.BuildParametersPopover.this_template_has_no_ephemeral_build_options_9782bb29",
+					)}
 				</HelpPopoverText>
 				<HelpPopoverLinksGroup>
 					<HelpPopoverLink
@@ -90,7 +99,9 @@ const BuildParametersPopoverContent: FC<BuildParametersPopoverContentProps> = ({
 							"/admin/templates/extending-templates/parameters#ephemeral-parameters",
 						)}
 					>
-						Read the docs
+						{tI18n(
+							"WorkspacePage.WorkspaceActions.BuildParametersPopover.read_the_docs_559b1cc4",
+						)}
 					</HelpPopoverLink>
 				</HelpPopoverLinksGroup>
 			</div>
@@ -100,11 +111,10 @@ const BuildParametersPopoverContent: FC<BuildParametersPopoverContentProps> = ({
 	return (
 		<div className="flex flex-col gap-4 p-5">
 			<p className="m-0 text-sm text-content-secondary">
-				This workspace has ephemeral parameters which may use a temporary value
-				on workspace start. Configure the following parameters in workspace
-				settings.
+				{tI18n(
+					"WorkspacePage.WorkspaceActions.BuildParametersPopover.this_workspace_has_ephemeral_parameters_which_ma_d81c5f9c",
+				)}
 			</p>
-
 			<div>
 				<ul className="list-none pl-3 space-y-2">
 					{ephemeralParameters.map((param) => (
@@ -121,12 +131,13 @@ const BuildParametersPopoverContent: FC<BuildParametersPopoverContentProps> = ({
 					))}
 				</ul>
 			</div>
-
 			<Link
 				href={`/@${workspace.owner_name}/${workspace.name}/settings/parameters`}
 				className="self-start"
 			>
-				Go to workspace parameters
+				{tI18n(
+					"WorkspacePage.WorkspaceActions.BuildParametersPopover.go_to_workspace_parameters_1986a430",
+				)}
 			</Link>
 		</div>
 	);

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -16,6 +17,8 @@ import { getTemplatePageTitle } from "../utils";
 import { VersionsTable } from "./VersionsTable";
 
 const TemplateVersionsPage = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const navigate = useNavigate();
 	const getLink = useLinks();
 	const { template, permissions } = useTemplateLayoutContext();
@@ -51,8 +54,14 @@ const TemplateVersionsPage = () => {
 
 	return (
 		<>
-			<title>{getTemplatePageTitle("Versions", template)}</title>
-
+			<title>
+				{getTemplatePageTitle(
+					tI18n(
+						"TemplatePage.TemplateVersionsPage.TemplateVersionsPage.versions_f89ea270",
+					),
+					template,
+				)}
+			</title>
 			<VersionsTable
 				versions={data}
 				onPromoteClick={
@@ -76,15 +85,33 @@ const TemplateVersionsPage = () => {
 						await promoteVersion(id);
 						setLatestActiveVersion(id);
 						setVersionToPromote(undefined);
-						toast.success(`Version "${name}" promoted successfully.`, {
-							action: {
-								label: "View template",
-								onClick: () => navigate(templateLink),
+						toast.success(
+							tI18n(
+								"TemplatePage.TemplateVersionsPage.TemplateVersionsPage.version_value0_promoted_successfully_77e01d3b",
+								{
+									value0: name,
+								},
+							),
+							{
+								action: {
+									label: tI18n(
+										"TemplatePage.TemplateVersionsPage.TemplateVersionsPage.view_template_b6532e54",
+									),
+									onClick: () => navigate(templateLink),
+								},
 							},
-						});
+						);
 					} catch (error) {
 						toast.error(
-							getErrorMessage(error, `Failed to promote version "${name}".`),
+							getErrorMessage(
+								error,
+								tI18n(
+									"TemplatePage.TemplateVersionsPage.TemplateVersionsPage.failed_to_promote_version_value0_7351d1c9",
+									{
+										value0: name,
+									},
+								),
+							),
 							{
 								description: getErrorDetail(error),
 							},
@@ -92,14 +119,22 @@ const TemplateVersionsPage = () => {
 					}
 				}}
 				onClose={() => setVersionToPromote(undefined)}
-				title="Promote version"
+				title={tI18n(
+					"TemplatePage.TemplateVersionsPage.TemplateVersionsPage.promote_version_0a906639",
+				)}
 				confirmLoading={isPromoting}
-				confirmText="Promote"
+				confirmText={tI18n(
+					"TemplatePage.TemplateVersionsPage.TemplateVersionsPage.promote_5834dab0",
+				)}
 				description={
 					<>
-						Are you sure you want to promote version{" "}
-						<strong>{versionToPromote?.name}</strong>? Workspaces will be
-						prompted to “Update” to this version once promoted.
+						{tI18n(
+							"TemplatePage.TemplateVersionsPage.TemplateVersionsPage.are_you_sure_you_want_to_promote_version_e4961816",
+						)}{" "}
+						<strong>{versionToPromote?.name}</strong>
+						{tI18n(
+							"TemplatePage.TemplateVersionsPage.TemplateVersionsPage.workspaces_will_be_prompted_to_update_to_this_ve_4905cb63",
+						)}
 					</>
 				}
 			/>
@@ -118,10 +153,25 @@ const TemplateVersionsPage = () => {
 							queryKey: templateVersionsQueryKey(template.id),
 						});
 						setVersionToArchive(undefined);
-						toast.success(`Version "${name}" archived successfully.`);
+						toast.success(
+							tI18n(
+								"TemplatePage.TemplateVersionsPage.TemplateVersionsPage.version_value0_archived_successfully_811473d1",
+								{
+									value0: name,
+								},
+							),
+						);
 					} catch (error) {
 						toast.error(
-							getErrorMessage(error, `Failed to archive version "${name}".`),
+							getErrorMessage(
+								error,
+								tI18n(
+									"TemplatePage.TemplateVersionsPage.TemplateVersionsPage.failed_to_archive_version_value0_1f57254b",
+									{
+										value0: name,
+									},
+								),
+							),
 							{
 								description: getErrorDetail(error),
 							},
@@ -129,14 +179,22 @@ const TemplateVersionsPage = () => {
 					}
 				}}
 				onClose={() => setVersionToArchive(undefined)}
-				title="Archive version"
+				title={tI18n(
+					"TemplatePage.TemplateVersionsPage.TemplateVersionsPage.archive_version_dde38162",
+				)}
 				confirmLoading={isArchiving}
-				confirmText="Archive"
+				confirmText={tI18n(
+					"TemplatePage.TemplateVersionsPage.TemplateVersionsPage.archive_66f4804e",
+				)}
 				description={
 					<>
-						Are you sure you want to archive version{" "}
-						<strong>{versionToArchive?.name}</strong>? This is reversible.
-						Archived versions cannot be used by workspaces.
+						{tI18n(
+							"TemplatePage.TemplateVersionsPage.TemplateVersionsPage.are_you_sure_you_want_to_archive_version_d73f9d9e",
+						)}{" "}
+						<strong>{versionToArchive?.name}</strong>
+						{tI18n(
+							"TemplatePage.TemplateVersionsPage.TemplateVersionsPage.this_is_reversible_archived_versions_cannot_be_u_8ce1ff59",
+						)}
 					</>
 				}
 			/>

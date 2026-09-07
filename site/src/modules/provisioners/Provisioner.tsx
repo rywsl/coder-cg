@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { Building2Icon, UserIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { HealthMessage, ProvisionerDaemon } from "#/api/typesGenerated";
 import { Badge } from "#/components/Badge/Badge";
 import {
@@ -20,6 +21,8 @@ export const Provisioner: FC<ProvisionerProps> = ({
 	provisioner,
 	warnings,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const daemonScope = provisioner.tags.scope || "organization";
 	const iconScope =
 		daemonScope === "organization" ? (
@@ -57,14 +60,15 @@ export const Provisioner: FC<ProvisionerProps> = ({
 								<span className="first-letter:uppercase">{daemonScope}</span>
 							</Badge>
 						</TooltipTrigger>
-						<TooltipContent side="bottom">Scope</TooltipContent>
+						<TooltipContent side="bottom">
+							{tI18n("provisioners.Provisioner.scope_b073f6c6")}
+						</TooltipContent>
 					</Tooltip>
 					{extraTags.map(([key, value]) => (
 						<ProvisionerTag key={key} tagName={key} tagValue={value} />
 					))}
 				</div>
 			</header>
-
 			<div className="border-solid border-0 border-t border-border flex items-center justify-between py-3 px-6 text-xs text-content-secondary">
 				{warnings && warnings.length > 0 ? (
 					<div className="flex flex-col">
@@ -73,11 +77,12 @@ export const Provisioner: FC<ProvisionerProps> = ({
 						))}
 					</div>
 				) : (
-					<span>No warnings</span>
+					<span>{tI18n("provisioners.Provisioner.no_warnings_3a1134d5")}</span>
 				)}
 				{provisioner.last_seen_at && (
 					<span className="text-content-primary" data-pixel="ignore">
-						Last seen {createDayString(provisioner.last_seen_at)}
+						{tI18n("provisioners.Provisioner.last_seen_af14468f")}
+						{createDayString(provisioner.last_seen_at)}
 					</span>
 				)}
 			</div>

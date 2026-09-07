@@ -1,5 +1,6 @@
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	FriendlyDiagnostic,
 	PreviewParameter,
@@ -46,6 +47,8 @@ export const TemplateEmbedPageView: React.FC<TemplateEmbedPageViewProps> = ({
 	sendMessage,
 	isLoading,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const [formState, setFormState] = useState<{
 		mode: "manual" | "auto";
 		paramValues: Record<string, string>;
@@ -99,10 +102,15 @@ export const TemplateEmbedPageView: React.FC<TemplateEmbedPageViewProps> = ({
 				<div className="flex flex-col gap-9">
 					<section className="flex flex-col gap-2">
 						<div>
-							<h2 className="text-lg font-bold m-0">Creation mode</h2>
+							<h2 className="text-lg font-bold m-0">
+								{tI18n(
+									"TemplatePage.TemplateEmbedPage.TemplateEmbedPageView.creation_mode_bedbc0ba",
+								)}
+							</h2>
 							<p className="text-sm text-content-secondary m-0">
-								When set to automatic mode, clicking the button will create the
-								workspace automatically without displaying a form to the user.
+								{tI18n(
+									"TemplatePage.TemplateEmbedPage.TemplateEmbedPageView.when_set_to_automatic_mode_clicking_the_button_w_8299923b",
+								)}
 							</p>
 						</div>
 						<RadioGroup
@@ -117,13 +125,17 @@ export const TemplateEmbedPageView: React.FC<TemplateEmbedPageViewProps> = ({
 							<div className="flex items-center gap-3">
 								<RadioGroupItem value="manual" id="manual" />
 								<Label htmlFor="manual" className="cursor-pointer">
-									Manual
+									{tI18n(
+										"TemplatePage.TemplateEmbedPage.TemplateEmbedPageView.manual_b0b9fe24",
+									)}
 								</Label>
 							</div>
 							<div className="flex items-center gap-3">
 								<RadioGroupItem value="auto" id="automatic" />
 								<Label htmlFor="automatic" className="cursor-pointer">
-									Automatic
+									{tI18n(
+										"TemplatePage.TemplateEmbedPage.TemplateEmbedPageView.automatic_d461a493",
+									)}
 								</Label>
 							</div>
 						</RadioGroup>
@@ -154,7 +166,11 @@ export const TemplateEmbedPageView: React.FC<TemplateEmbedPageViewProps> = ({
 
 					<div className="flex flex-row items-center gap-4">
 						{isLoading ? (
-							<Button disabled={isLoading}>Test</Button>
+							<Button disabled={isLoading}>
+								{tI18n(
+									"TemplatePage.TemplateEmbedPage.TemplateEmbedPageView.test_532eaabd",
+								)}
+							</Button>
 						) : (
 							<Button asChild>
 								<a
@@ -165,7 +181,9 @@ export const TemplateEmbedPageView: React.FC<TemplateEmbedPageViewProps> = ({
 										mode: "manual",
 									})}
 								>
-									Test
+									{tI18n(
+										"TemplatePage.TemplateEmbedPage.TemplateEmbedPageView.test_532eaabd",
+									)}
 								</a>
 							</Button>
 						)}
@@ -174,7 +192,6 @@ export const TemplateEmbedPageView: React.FC<TemplateEmbedPageViewProps> = ({
 					</div>
 				</div>
 			</div>
-
 			<ButtonPreview template={template} buttonValues={buttonValues} />
 		</div>
 	);
@@ -200,24 +217,40 @@ const ParametersSkeleton: React.FC = () => {
 };
 
 const TestHelpPopover: React.FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<HelpPopover>
 			<HelpPopoverIconTrigger size="small" />
 			<HelpPopoverContent>
-				<HelpPopoverTitle>Testing your Open in Coder settings</HelpPopoverTitle>
+				<HelpPopoverTitle>
+					{tI18n(
+						"TemplatePage.TemplateEmbedPage.TemplateEmbedPageView.testing_your_open_in_coder_settings_c6510bf6",
+					)}
+				</HelpPopoverTitle>
 				<HelpPopoverText>
-					This button will open the workspace creation page in a new tab with
-					the parameters that you have supplied. Use this to debug your{" "}
-					<strong>Open in Coder</strong> button before using it.
+					{tI18n(
+						"TemplatePage.TemplateEmbedPage.TemplateEmbedPageView.this_button_will_open_the_workspace_creation_pag_e64d1a9d",
+					)}{" "}
+					<strong>
+						{tI18n(
+							"TemplatePage.TemplateEmbedPage.TemplateEmbedPageView.open_in_coder_36d6a061",
+						)}
+					</strong>
+					{tI18n(
+						"TemplatePage.TemplateEmbedPage.TemplateEmbedPageView.button_before_using_it_a5923dc7",
+					)}
 				</HelpPopoverText>
 				<HelpPopoverText>
-					Note: Even if you have set creation mode to auto, this button will not
-					automatically create a workspace so that you have the opportunity to
-					inspect the parameters and check for errors.
+					{tI18n(
+						"TemplatePage.TemplateEmbedPage.TemplateEmbedPageView.note_even_if_you_have_set_creation_mode_to_auto__94c5ba82",
+					)}
 				</HelpPopoverText>
 				<HelpPopoverLinksGroup>
 					<HelpPopoverLink href={docs("/admin/templates/open-in-coder")}>
-						Templates &ndash; Open in Coder
+						{tI18n(
+							"TemplatePage.TemplateEmbedPage.TemplateEmbedPageView.templates_open_in_coder_a1317a42",
+						)}
 					</HelpPopoverLink>
 				</HelpPopoverLinksGroup>
 			</HelpPopoverContent>
@@ -253,6 +286,8 @@ const ButtonPreview: React.FC<ButtonPreviewProps> = ({
 	template,
 	buttonValues,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const clipboard = useClipboard();
 	return (
 		<div className="flex gap-8 pt-4 flex-col items-center justify-center">
@@ -261,7 +296,12 @@ const ButtonPreview: React.FC<ButtonPreviewProps> = ({
 				flex flex-col items-center justify-center p-6
 			 	rounded-lg border border-border border-solid bg-surface-secondary"
 			>
-				<img src="/open-in-coder.svg" alt="Open in Coder button" />
+				<img
+					src="/open-in-coder.svg"
+					alt={tI18n(
+						"TemplatePage.TemplateEmbedPage.TemplateEmbedPageView.open_in_coder_button_cbf07d6b",
+					)}
+				/>
 			</div>
 			<Button
 				variant="default"
@@ -271,8 +311,10 @@ const ButtonPreview: React.FC<ButtonPreviewProps> = ({
 					clipboard.copyToClipboard(textToCopy);
 				}}
 			>
-				{clipboard.showCopiedSuccess ? <CheckIcon /> : <CopyIcon />} Copy button
-				Markdown
+				{clipboard.showCopiedSuccess ? <CheckIcon /> : <CopyIcon />}
+				{tI18n(
+					"TemplatePage.TemplateEmbedPage.TemplateEmbedPageView.copy_button_markdown_1b17df3f",
+				)}
 			</Button>
 		</div>
 	);

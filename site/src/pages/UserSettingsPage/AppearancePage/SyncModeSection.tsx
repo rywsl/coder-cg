@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "#/components/Badge/Badge";
 import type { ConcreteThemeName } from "#/theme";
 import { ThemePreview } from "./ThemePreview";
@@ -59,16 +60,29 @@ const SyncCard: FC<SyncCardProps> = ({
 	name,
 	onSelect,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	const [previewTheme, setPreviewTheme] = useState<
 		ConcreteThemeName | undefined
 	>(undefined);
 	const Icon = scheme === "light" ? SunIcon : MoonIcon;
-	const title = scheme === "light" ? "Light theme" : "Dark theme";
+	const title =
+		scheme === "light"
+			? tI18n(
+					"UserSettingsPage.AppearancePage.SyncModeSection.light_theme_3669a1b2",
+				)
+			: tI18n(
+					"UserSettingsPage.AppearancePage.SyncModeSection.dark_theme_3f11a5cc",
+				);
 	const displayedTheme = previewTheme ?? selected;
 	const description =
 		scheme === "light"
-			? 'This theme will be active when your system is set to "light mode".'
-			: 'This theme will be active when your system is set to "dark mode".';
+			? tI18n(
+					"UserSettingsPage.AppearancePage.SyncModeSection.this_theme_will_be_active_when_your_system_is_se_51b6ebee",
+				)
+			: tI18n(
+					"UserSettingsPage.AppearancePage.SyncModeSection.this_theme_will_be_active_when_your_system_is_se_2103e8de",
+				);
 
 	return (
 		<div
@@ -84,7 +98,9 @@ const SyncCard: FC<SyncCardProps> = ({
 				</div>
 				{active && (
 					<Badge variant="info" size="sm">
-						Active
+						{tI18n(
+							"UserSettingsPage.AppearancePage.SyncModeSection.active_92340695",
+						)}
 					</Badge>
 				)}
 			</div>
@@ -95,7 +111,14 @@ const SyncCard: FC<SyncCardProps> = ({
 				label={THEME_COPY[displayedTheme].title}
 			/>
 			<fieldset className="m-0 min-w-0 border-0 p-0">
-				<legend className="sr-only">{`${title} options`}</legend>
+				<legend className="sr-only">
+					{tI18n(
+						"UserSettingsPage.AppearancePage.SyncModeSection.value0_options_c1bfbdcb",
+						{
+							value0: title,
+						},
+					)}
+				</legend>
 				<div className="flex flex-wrap items-center gap-3">
 					{SYNC_MODE_THEMES.map((theme) => (
 						<ThemeSwatch

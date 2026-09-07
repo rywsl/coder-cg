@@ -1,4 +1,5 @@
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import { getErrorDetail, getErrorMessage } from "#/api/errors";
@@ -11,6 +12,8 @@ import {
 import { SSHKeysPageView } from "./SSHKeysPageView";
 
 const SSHKeysPage: FC = () => {
+	const { t: tI18n } = useTranslation("users");
+
 	const [isConfirmingRegeneration, setIsConfirmingRegeneration] =
 		useState(false);
 
@@ -23,7 +26,9 @@ const SSHKeysPage: FC = () => {
 	return (
 		<>
 			<SettingsHeader>
-				<SettingsHeaderTitle>SSH keys</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n("UserSettingsPage.SSHKeysPage.SSHKeysPage.ssh_keys_f9a7470a")}
+				</SettingsHeaderTitle>
 			</SettingsHeader>
 			<SSHKeysPageView
 				isLoading={userSSHKeyQuery.isLoading}
@@ -31,23 +36,37 @@ const SSHKeysPage: FC = () => {
 				sshKey={userSSHKeyQuery.data}
 				onRegenerateClick={() => setIsConfirmingRegeneration(true)}
 			/>
-
 			<ConfirmDialog
 				type="delete"
 				hideCancel={false}
 				open={isConfirmingRegeneration}
 				confirmLoading={regenerateSSHKeyMutation.isPending}
-				title="Regenerate SSH key?"
-				description="You will need to replace the public SSH key on services you use it with, and you'll need to rebuild existing workspaces."
-				confirmText="Confirm"
+				title={tI18n(
+					"UserSettingsPage.SSHKeysPage.SSHKeysPage.regenerate_ssh_key_0a4bb7a8",
+				)}
+				description={tI18n(
+					"UserSettingsPage.SSHKeysPage.SSHKeysPage.you_will_need_to_replace_the_public_ssh_key_on_s_2d0f1412",
+				)}
+				confirmText={tI18n(
+					"UserSettingsPage.SSHKeysPage.SSHKeysPage.confirm_eebdd24a",
+				)}
 				onClose={() => setIsConfirmingRegeneration(false)}
 				onConfirm={async () => {
 					try {
 						await regenerateSSHKeyMutation.mutateAsync();
-						toast.success("SSH Key regenerated successfully.");
+						toast.success(
+							tI18n(
+								"UserSettingsPage.SSHKeysPage.SSHKeysPage.ssh_key_regenerated_successfully_1cf1a3cc",
+							),
+						);
 					} catch (error) {
 						toast.error(
-							getErrorMessage(error, "Failed to regenerate SSH key"),
+							getErrorMessage(
+								error,
+								tI18n(
+									"UserSettingsPage.SSHKeysPage.SSHKeysPage.failed_to_regenerate_ssh_key_fde6f92d",
+								),
+							),
 							{
 								description: getErrorDetail(error),
 							},

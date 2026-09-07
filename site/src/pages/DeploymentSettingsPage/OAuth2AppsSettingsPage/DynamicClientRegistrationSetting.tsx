@@ -1,4 +1,5 @@
 import { type FC, useId, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "#/components/Badge/Badge";
 import { Button } from "#/components/Button/Button";
 import { ConfirmDialog } from "#/components/Dialog/ConfirmDialog/ConfirmDialog";
@@ -14,6 +15,8 @@ type DynamicClientRegistrationSettingProps = {
 export const DynamicClientRegistrationSetting: FC<
 	DynamicClientRegistrationSettingProps
 > = ({ enabled, canEdit, isUpdating, onChange }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const headingId = useId();
 	const [isEnableDialogOpen, setIsEnableDialogOpen] = useState(false);
 	const buttonRef = useRef<HTMLButtonElement>(null);
@@ -30,11 +33,15 @@ export const DynamicClientRegistrationSetting: FC<
 							id={headingId}
 							className="text-content-primary text-base font-semibold m-0"
 						>
-							Dynamic Client Registration
+							{tI18n(
+								"DeploymentSettingsPage.OAuth2AppsSettingsPage.DynamicClientRegistrationSetting.dynamic_client_registration_86d7b75f",
+							)}
 						</h2>
 						{enabled && (
 							<Badge size="sm" variant="green" className="border-0 shadow-none">
-								Enabled
+								{tI18n(
+									"DeploymentSettingsPage.OAuth2AppsSettingsPage.DynamicClientRegistrationSetting.enabled_92c1cdfd",
+								)}
 							</Badge>
 						)}
 					</div>
@@ -44,11 +51,13 @@ export const DynamicClientRegistrationSetting: FC<
 					 * admin who has just disabled needs it as much as one deciding to.
 					 */}
 					<p className="text-sm text-content-secondary m-0">
-						Allow OAuth2 clients to register themselves at{" "}
-						<code className="text-xs">/oauth2/register</code> without prior
-						administrator approval (RFC 7591). Disabling stops new
-						registrations. Clients that already registered keep working until an
-						administrator deletes them.
+						{tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.DynamicClientRegistrationSetting.allow_oauth2_clients_to_register_themselves_at_8adea33c",
+						)}{" "}
+						<code className="text-xs">/oauth2/register</code>
+						{tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.DynamicClientRegistrationSetting.without_prior_administrator_approval_rfc_7591_di_c2a4043c",
+						)}
 					</p>
 					{/*
 					 * A disabled button takes no focus and no pointer events, so it
@@ -57,8 +66,9 @@ export const DynamicClientRegistrationSetting: FC<
 					 */}
 					{!canEdit && (
 						<p className="text-sm text-content-secondary m-0 mt-1">
-							You need permission to edit deployment configuration to change
-							this setting.
+							{tI18n(
+								"DeploymentSettingsPage.OAuth2AppsSettingsPage.DynamicClientRegistrationSetting.you_need_permission_to_edit_deployment_configura_5673b79d",
+							)}
 						</p>
 					)}
 				</div>
@@ -88,10 +98,15 @@ export const DynamicClientRegistrationSetting: FC<
 					}}
 				>
 					<Spinner loading={isUpdating} aria-hidden />
-					{enabled ? "Disable" : "Enable"}
+					{enabled
+						? tI18n(
+								"DeploymentSettingsPage.OAuth2AppsSettingsPage.DynamicClientRegistrationSetting.disable_b7e3e4aa",
+							)
+						: tI18n(
+								"DeploymentSettingsPage.OAuth2AppsSettingsPage.DynamicClientRegistrationSetting.enable_5342e09f",
+							)}
 				</Button>
 			</section>
-
 			<ConfirmDialog
 				type="delete"
 				open={isEnableDialogOpen}
@@ -108,9 +123,15 @@ export const DynamicClientRegistrationSetting: FC<
 					event.preventDefault();
 					buttonRef.current?.focus();
 				}}
-				title="Enable Dynamic Client Registration?"
-				confirmText="Enable"
-				description="Any client that can reach this deployment will be able to register itself as an OAuth2 application, with no Coder account and no administrator approval. Disabling later blocks new registrations but does not revoke clients that already registered."
+				title={tI18n(
+					"DeploymentSettingsPage.OAuth2AppsSettingsPage.DynamicClientRegistrationSetting.enable_dynamic_client_registration_6973b685",
+				)}
+				confirmText={tI18n(
+					"DeploymentSettingsPage.OAuth2AppsSettingsPage.DynamicClientRegistrationSetting.enable_5342e09f",
+				)}
+				description={tI18n(
+					"DeploymentSettingsPage.OAuth2AppsSettingsPage.DynamicClientRegistrationSetting.any_client_that_can_reach_this_deployment_will_b_5bd0287f",
+				)}
 			/>
 		</>
 	);

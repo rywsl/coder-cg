@@ -22,6 +22,7 @@ import {
 	SquarePenIcon,
 } from "lucide-react";
 import { type FC, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, type Location, NavLink } from "react-router";
 import type { Chat, ChatModel } from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
@@ -131,6 +132,8 @@ export const ChatsPanel: FC<ChatsPanelProps> = ({
 	location,
 	currentUserId,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const locationSearch = normalizeLocationSearch(location.search);
 	const [expandedById, setExpandedById] = useState<Record<string, boolean>>({});
 	const [collapsedSections, setCollapsedSections] = useState<
@@ -334,12 +337,24 @@ export const ChatsPanel: FC<ChatsPanelProps> = ({
 	).filter((section) => section.chats.length > 0);
 	const isShowingEmptyState = visibleRootIDs.length === 0;
 	const isViewingArchived = sidebarFilters.archiveStatus === "archived";
-	const chatsHeadingLabel = isViewingArchived ? "Archived chats" : "Chats";
+	const chatsHeadingLabel = isViewingArchived
+		? tI18n(
+				"AgentsPage.components.ChatsSidebar.chats.ChatsPanel.archived_chats_ca0acade",
+			)
+		: tI18n(
+				"AgentsPage.components.ChatsSidebar.chats.ChatsPanel.chats_ef5b4049",
+			);
 	const emptyStateMessage = hasAppliedResultFilters
-		? "No agents match these filters"
+		? tI18n(
+				"AgentsPage.components.ChatsSidebar.chats.ChatsPanel.no_agents_match_these_filters_cd75117b",
+			)
 		: isViewingArchived
-			? "No archived agents"
-			: "No agents yet";
+			? tI18n(
+					"AgentsPage.components.ChatsSidebar.chats.ChatsPanel.no_archived_agents_3b28db09",
+				)
+			: tI18n(
+					"AgentsPage.components.ChatsSidebar.chats.ChatsPanel.no_agents_yet_971b61f8",
+				);
 	const clearResultFilters = () => {
 		onSidebarFiltersChange({
 			...sidebarFilters,
@@ -359,7 +374,9 @@ export const ChatsPanel: FC<ChatsPanelProps> = ({
 			inert={isSettingsPanel ? true : undefined}
 		>
 			<nav
-				aria-label="Sidebar"
+				aria-label={tI18n(
+					"AgentsPage.components.ChatsSidebar.chats.ChatsPanel.sidebar_f7efa7bc",
+				)}
 				className="hidden px-2 py-1.5 sm:flex sm:flex-col sm:gap-0.5"
 			>
 				<div className="flex items-center justify-between mb-2.5 ml-2.5">
@@ -373,7 +390,9 @@ export const ChatsPanel: FC<ChatsPanelProps> = ({
 							asChild
 							variant="subtle"
 							size="icon"
-							aria-label="Settings"
+							aria-label={tI18n(
+								"AgentsPage.components.ChatsSidebar.chats.ChatsPanel.settings_74a883a0",
+							)}
 							className={cn(
 								"size-7 min-w-0 text-content-secondary hover:text-content-primary",
 								isSettingsPanel && "text-content-primary",
@@ -391,7 +410,9 @@ export const ChatsPanel: FC<ChatsPanelProps> = ({
 								variant="subtle"
 								size="icon"
 								onClick={onCollapse}
-								aria-label="Collapse sidebar"
+								aria-label={tI18n(
+									"AgentsPage.components.ChatsSidebar.chats.ChatsPanel.collapse_sidebar_aab31cde",
+								)}
 								className="size-7 min-w-0 text-content-secondary hover:text-content-primary"
 							>
 								<PanelLeftCloseIcon />
@@ -401,7 +422,9 @@ export const ChatsPanel: FC<ChatsPanelProps> = ({
 				</div>
 				<SettingsNavItem
 					icon={SquarePenIcon}
-					label="New chat"
+					label={tI18n(
+						"AgentsPage.components.ChatsSidebar.chats.ChatsPanel.new_chat_db18382a",
+					)}
 					active={isChatsActive}
 					to={{ pathname: "/agents", search: locationSearch }}
 					onClick={onBeforeNewAgent}
@@ -410,9 +433,13 @@ export const ChatsPanel: FC<ChatsPanelProps> = ({
 				{onOpenSearchDialog && (
 					<SettingsNavItem
 						icon={SearchIcon}
-						label="Search"
+						label={tI18n(
+							"AgentsPage.components.ChatsSidebar.chats.ChatsPanel.search_49c266ba",
+						)}
 						active={false}
-						ariaLabel="Search chats"
+						ariaLabel={tI18n(
+							"AgentsPage.components.ChatsSidebar.chats.ChatsPanel.search_chats_02a39c4a",
+						)}
 						onClick={onOpenSearchDialog}
 						className="group focus-visible:bg-surface-tertiary/50 focus-visible:text-content-primary"
 						trailing={
@@ -435,7 +462,9 @@ export const ChatsPanel: FC<ChatsPanelProps> = ({
 								<Button
 									variant="subtle"
 									size="icon"
-									aria-label="Search chats"
+									aria-label={tI18n(
+										"AgentsPage.components.ChatsSidebar.chats.ChatsPanel.search_chats_02a39c4a",
+									)}
 									onClick={onOpenSearchDialog}
 									className="size-7 sm:hidden"
 								>
@@ -468,7 +497,9 @@ export const ChatsPanel: FC<ChatsPanelProps> = ({
 								<ErrorAlert error={loadError} />
 								{onRetryLoad && (
 									<Button size="sm" variant="outline" onClick={onRetryLoad}>
-										Retry
+										{tI18n(
+											"AgentsPage.components.ChatsSidebar.chats.ChatsPanel.retry_942087cc",
+										)}
 									</Button>
 								)}
 							</div>
@@ -505,7 +536,9 @@ export const ChatsPanel: FC<ChatsPanelProps> = ({
 													className="mt-2 cursor-pointer border-none bg-transparent p-0 text-xs text-content-secondary hover:text-content-primary hover:underline"
 													onClick={clearResultFilters}
 												>
-													Clear filters
+													{tI18n(
+														"AgentsPage.components.ChatsSidebar.chats.ChatsPanel.clear_filters_7179ea00",
+													)}
 												</button>
 											)}
 										</div>

@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { CheckIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { Organization } from "#/api/typesGenerated";
 import { ChevronDownIcon } from "#/components/AnimatedIcons/ChevronDown";
 import { Avatar } from "#/components/Avatar/Avatar";
@@ -19,6 +20,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "#/components/Popover/Popover";
+import { i18n } from "#/i18n";
 
 type OrganizationAutocompleteProps = {
 	value: Organization | null;
@@ -69,6 +71,8 @@ export const OrganizationAutocomplete: FC<OrganizationAutocompleteProps> = ({
 	triggerClassName,
 	optionsTabbable = false,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const [open, setOpen] = useState(false);
 	const labelContext = labelOrganizations ?? options;
 
@@ -110,7 +114,14 @@ export const OrganizationAutocomplete: FC<OrganizationAutocompleteProps> = ({
 						</>
 					) : (
 						<span className="text-content-secondary">
-							Select an organization{required ? "…" : " (optional)"}
+							{tI18n(
+								"OrganizationAutocomplete.OrganizationAutocomplete.select_an_organization_48326f52",
+							)}
+							{required
+								? "…"
+								: tI18n(
+										"OrganizationAutocomplete.OrganizationAutocomplete.optional_edbfc3dc",
+									)}
 						</span>
 					)}
 					<ChevronDownIcon className="ml-auto size-icon-sm! shrink-0 text-content-secondary" />
@@ -121,9 +132,17 @@ export const OrganizationAutocomplete: FC<OrganizationAutocompleteProps> = ({
 				className="w-(--radix-popover-trigger-width) p-0"
 			>
 				<Command loop>
-					<CommandInput placeholder="Find organization…" />
+					<CommandInput
+						placeholder={tI18n(
+							"OrganizationAutocomplete.OrganizationAutocomplete.find_organization_d0fc04d7",
+						)}
+					/>
 					<CommandList>
-						<CommandEmpty>No organizations found.</CommandEmpty>
+						<CommandEmpty>
+							{tI18n(
+								"OrganizationAutocomplete.OrganizationAutocomplete.no_organizations_found_2a91b4a9",
+							)}
+						</CommandEmpty>
 						<CommandGroup>
 							{sortedOptions.map((org) => (
 								<CommandItem
@@ -169,6 +188,8 @@ const OrganizationValue: FC<OrganizationValueProps> = ({
 	id,
 	className,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const label = getOrganizationLabel(
 		organization,
 		labelOrganizations ?? [organization],
@@ -177,7 +198,12 @@ const OrganizationValue: FC<OrganizationValueProps> = ({
 		<div
 			id={id}
 			role="group"
-			aria-label={`Organization ${label}`}
+			aria-label={tI18n(
+				"OrganizationAutocomplete.OrganizationAutocomplete.organization_value0_792b6bda",
+				{
+					value0: label,
+				},
+			)}
 			className={cn(
 				"flex h-10 items-center gap-2 rounded-md border border-solid border-border px-3 py-2 text-sm text-content-primary",
 				className,
@@ -218,7 +244,9 @@ export const OrganizationField: FC<OrganizationFieldProps> = ({
 	onChange,
 	className,
 	disabled,
-	label = "Organization",
+	label = i18n.t(
+		"components:OrganizationAutocomplete.OrganizationAutocomplete.organization_d764d425",
+	),
 	showLabel = true,
 	showSingleOrganization = false,
 	readOnly = false,
@@ -226,6 +254,8 @@ export const OrganizationField: FC<OrganizationFieldProps> = ({
 	optionsTabbable,
 	required = true,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const hasSingleSelectedOrganization =
 		organizations.length <= 1 &&
 		organizations.some((option) => option.id === organization.id);
@@ -263,7 +293,13 @@ export const OrganizationField: FC<OrganizationFieldProps> = ({
 			) : (
 				<OrganizationAutocomplete
 					id={id}
-					ariaLabel={`${label} ${organizationLabel}`}
+					ariaLabel={tI18n(
+						"OrganizationAutocomplete.OrganizationAutocomplete.value0_value1_ecbddc5e",
+						{
+							value0: label,
+							value1: organizationLabel,
+						},
+					)}
 					value={organization}
 					onChange={(org) => {
 						if (org) {

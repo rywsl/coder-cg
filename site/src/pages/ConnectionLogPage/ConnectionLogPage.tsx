@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
 import { paginatedConnectionLogs } from "#/api/queries/connectionlog";
 import { useFilter } from "#/components/Filter/Filter";
@@ -14,6 +15,8 @@ import { useStatusFilterMenu, useTypeFilterMenu } from "./ConnectionLogFilter";
 import { ConnectionLogPageView } from "./ConnectionLogPageView";
 
 const ConnectionLogPage: FC = () => {
+	const { t: tI18n } = useTranslation("pages");
+
 	const { permissions } = useAuthenticated();
 	const feats = useFeatureVisibility();
 
@@ -73,8 +76,11 @@ const ConnectionLogPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Connection Log")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n("ConnectionLogPage.ConnectionLogPage.connection_log_7bb75459"),
+				)}
+			</title>
 			<ConnectionLogPageView
 				connectionLogs={connectionlogsQuery.data?.connection_logs}
 				isNonInitialPage={isNonInitialPage(searchParams)}

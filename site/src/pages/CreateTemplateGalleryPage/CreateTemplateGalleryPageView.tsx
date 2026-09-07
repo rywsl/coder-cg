@@ -1,5 +1,6 @@
 import { ExternalLinkIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
 import { Button } from "#/components/Button/Button";
@@ -22,6 +23,8 @@ interface CreateTemplateGalleryPageViewProps {
 export const CreateTemplateGalleryPageView: FC<
 	CreateTemplateGalleryPageViewProps
 > = ({ starterTemplatesByTag, templateBuilderEnabled, error }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<Margins className="pb-12">
 			<PageHeader
@@ -34,7 +37,9 @@ export const CreateTemplateGalleryPageView: FC<
 								rel="noopener noreferrer"
 								className="flex items-center"
 							>
-								Browse other Templates on the Coder Registry
+								{tI18n(
+									"CreateTemplateGalleryPage.CreateTemplateGalleryPageView.browse_other_templates_on_the_coder_registry_d375756b",
+								)}
 								<ExternalLinkIcon className="size-icon-sm ml-1" />
 							</a>
 						</Button>
@@ -45,20 +50,28 @@ export const CreateTemplateGalleryPageView: FC<
 								rel="noopener noreferrer"
 								className="flex items-center"
 							>
-								Use our template agent skill
+								{tI18n(
+									"CreateTemplateGalleryPage.CreateTemplateGalleryPageView.use_our_template_agent_skill_2a2460f8",
+								)}
 								<ExternalLinkIcon className="size-icon-sm ml-1" />
 							</a>
 						</Button>
 					</div>
 				}
 			>
-				<PageHeaderTitle>Create a Template</PageHeaderTitle>
+				<PageHeaderTitle>
+					{tI18n(
+						"CreateTemplateGalleryPage.CreateTemplateGalleryPageView.create_a_template_c0794aff",
+					)}
+				</PageHeaderTitle>
 			</PageHeader>
 			<div className="flex flex-col gap-16">
 				<div className="flex flex-row gap-8">
 					<div className="w-[202px]">
 						<h2 className="m-0 text-base font-normal text-content-primary">
-							Choose a starting point for your new template
+							{tI18n(
+								"CreateTemplateGalleryPage.CreateTemplateGalleryPageView.choose_a_starting_point_for_your_new_template_16732005",
+							)}
 						</h2>
 					</div>
 					<div className="flex h-max flex-wrap gap-8">
@@ -74,10 +87,14 @@ export const CreateTemplateGalleryPageView: FC<
 							</div>
 							<div>
 								<h4 className="m-0 mb-1 text-sm font-semibold text-content-secondary">
-									Upload Template
+									{tI18n(
+										"CreateTemplateGalleryPage.CreateTemplateGalleryPageView.upload_template_3e79263d",
+									)}
 								</h4>
 								<span className="block text-xs font-normal leading-[1.6] text-content-secondary">
-									Get started by uploading an existing template
+									{tI18n(
+										"CreateTemplateGalleryPage.CreateTemplateGalleryPageView.get_started_by_uploading_an_existing_template_044d0296",
+									)}
 								</span>
 							</div>
 						</RouterLink>

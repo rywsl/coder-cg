@@ -1,9 +1,11 @@
 import { useFormik } from "formik";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import type * as TypesGen from "#/api/typesGenerated";
 import { DefaultChatDebugRetentionDays } from "#/api/typesGenerated";
 import { useTemporarySavedState } from "#/components/TemporarySavedState/TemporarySavedState";
+import { i18n } from "#/i18n";
 import { DaysField, LifecycleSettingLayout } from "./LifecycleSettingLayout";
 
 interface MutationCallbacks {
@@ -33,10 +35,28 @@ const validationSchema = Yup.object({
 		is: true,
 		then: (schema) =>
 			schema
-				.integer("Debug retention days must be a whole number.")
-				.min(DAYS_MIN, "Debug retention period must be at least 1 day.")
-				.max(DAYS_MAX, "Must not exceed 3650 days (~10 years).")
-				.required("Debug retention days is required."),
+				.integer(
+					i18n.t(
+						"agents:AISettingsPage.LifecyclePage.components.DebugRetentionSettings.debug_retention_days_must_be_a_whole_number_12a7f64e",
+					),
+				)
+				.min(
+					DAYS_MIN,
+					i18n.t(
+						"agents:AISettingsPage.LifecyclePage.components.DebugRetentionSettings.debug_retention_period_must_be_at_least_1_day_db98b46a",
+					),
+				)
+				.max(
+					DAYS_MAX,
+					i18n.t(
+						"agents:AISettingsPage.LifecyclePage.components.DebugRetentionSettings.must_not_exceed_3650_days_10_years_24a2a467",
+					),
+				)
+				.required(
+					i18n.t(
+						"agents:AISettingsPage.LifecyclePage.components.DebugRetentionSettings.debug_retention_days_is_required_b13f4bec",
+					),
+				),
 	}),
 });
 
@@ -48,6 +68,8 @@ export const DebugRetentionSettings: FC<DebugRetentionSettingsProps> = ({
 	isSavingDebugRetentionDays,
 	isSaveDebugRetentionDaysError,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { isSavedVisible, showSavedState } = useTemporarySavedState();
 	const serverDebugRetentionDays =
 		debugRetentionDaysData?.debug_retention_days ??
@@ -88,11 +110,17 @@ export const DebugRetentionSettings: FC<DebugRetentionSettingsProps> = ({
 
 	return (
 		<LifecycleSettingLayout
-			title="Chat debug data retention"
-			description="Chat debug runs and debug steps older than this are automatically deleted. This does not control chat message retention."
+			title={tI18n(
+				"AISettingsPage.LifecyclePage.components.DebugRetentionSettings.chat_debug_data_retention_ac2dd81f",
+			)}
+			description={tI18n(
+				"AISettingsPage.LifecyclePage.components.DebugRetentionSettings.chat_debug_runs_and_debug_steps_older_than_this__26b395c6",
+			)}
 			checked={form.values.enabled}
 			onCheckedChange={(checked) => void form.setFieldValue("enabled", checked)}
-			switchLabel="Enable chat debug data retention"
+			switchLabel={tI18n(
+				"AISettingsPage.LifecyclePage.components.DebugRetentionSettings.enable_chat_debug_data_retention_0d931458",
+			)}
 			disabled={isSavingDebugRetentionDays || isDebugRetentionDaysLoading}
 			showSave={form.dirty}
 			isSaving={isSavingDebugRetentionDays}
@@ -109,12 +137,16 @@ export const DebugRetentionSettings: FC<DebugRetentionSettingsProps> = ({
 						)}
 						{isSaveDebugRetentionDaysError && (
 							<p className="m-0">
-								Failed to save chat debug retention setting.
+								{tI18n(
+									"AISettingsPage.LifecyclePage.components.DebugRetentionSettings.failed_to_save_chat_debug_retention_setting_614a1f12",
+								)}
 							</p>
 						)}
 						{isDebugRetentionDaysLoadError && (
 							<p className="m-0">
-								Failed to load chat debug retention setting.
+								{tI18n(
+									"AISettingsPage.LifecyclePage.components.DebugRetentionSettings.failed_to_load_chat_debug_retention_setting_0d80c48e",
+								)}
 							</p>
 						)}
 					</>
@@ -126,7 +158,9 @@ export const DebugRetentionSettings: FC<DebugRetentionSettingsProps> = ({
 				value={form.values.debug_retention_days}
 				onChange={form.handleChange}
 				onBlur={form.handleBlur}
-				label="Chat debug data retention period in days"
+				label={tI18n(
+					"AISettingsPage.LifecyclePage.components.DebugRetentionSettings.chat_debug_data_retention_period_in_days_3fd121cc",
+				)}
 				disabled={
 					!form.values.enabled ||
 					isSavingDebugRetentionDays ||

@@ -1,8 +1,10 @@
 import { useFormik } from "formik";
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
 import { useTemporarySavedState } from "#/components/TemporarySavedState/TemporarySavedState";
+import { i18n } from "#/i18n";
 import { ModelSelector } from "#/pages/AgentsPage/components/ChatElements/ModelSelector";
 import { ModelOverrideAlerts } from "#/pages/AgentsPage/components/ModelOverrideAlerts";
 import type { ProviderInfo } from "#/pages/AgentsPage/utils/modelOptions";
@@ -58,10 +60,16 @@ export const SubagentModelOverrideSettings: FC<
 	isSaving,
 	isSaveError,
 	saveErrorMessage,
-	unsetPlaceholder = "Use chat default",
-	unavailableModelWarning = "The saved model is no longer enabled and will be ignored until you choose a new override.",
+	unsetPlaceholder = i18n.t(
+		"agents:AISettingsPage.CoderAgentsPage.components.SubagentModelOverrideSettings.use_chat_default_c22d4ca2",
+	),
+	unavailableModelWarning = i18n.t(
+		"agents:AISettingsPage.CoderAgentsPage.components.SubagentModelOverrideSettings.the_saved_model_is_no_longer_enabled_and_will_be_fdd3e148",
+	),
 	disabled = false,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { isSavedVisible, showSavedState } = useTemporarySavedState();
 	const hasLoadedModelOverride = modelOverrideData !== undefined;
 	const enabledModelOptions = enabledModels.map((modelConfig) => {
@@ -157,10 +165,20 @@ export const SubagentModelOverrideSettings: FC<
 					}}
 					disabled={isFormDisabled}
 					placeholder={
-						isUnavailableSavedModel ? "Unavailable model" : unsetPlaceholder
+						isUnavailableSavedModel
+							? tI18n(
+									"AISettingsPage.CoderAgentsPage.components.SubagentModelOverrideSettings.unavailable_model_45052f31",
+								)
+							: unsetPlaceholder
 					}
 					emptyMessage={
-						isLoading ? "Loading models..." : "No enabled models found."
+						isLoading
+							? tI18n(
+									"AISettingsPage.CoderAgentsPage.components.SubagentModelOverrideSettings.loading_models_80243524",
+								)
+							: tI18n(
+									"AISettingsPage.CoderAgentsPage.components.SubagentModelOverrideSettings.no_enabled_models_found_bd30f5d9",
+								)
 					}
 					className="h-10 w-full justify-between rounded-md border border-border border-solid bg-transparent px-3 text-sm"
 					contentClassName="min-w-[18rem]"
@@ -188,7 +206,9 @@ export const SubagentModelOverrideSettings: FC<
 				disabled={isFormDisabled}
 				className="h-10"
 			>
-				Clear
+				{tI18n(
+					"AISettingsPage.CoderAgentsPage.components.SubagentModelOverrideSettings.clear_83b12c22",
+				)}
 			</Button>
 		</AgentSettingLayout>
 	);

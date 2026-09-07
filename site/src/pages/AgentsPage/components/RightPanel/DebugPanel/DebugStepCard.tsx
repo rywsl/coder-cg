@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { ChevronDownIcon, WrenchIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { getErrorMessage } from "#/api/errors";
 import type { ChatDebugStep } from "#/api/typesGenerated";
 import { Badge } from "#/components/Badge/Badge";
@@ -9,6 +10,7 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "#/components/Collapsible/Collapsible";
+import { currentIntlLocale } from "#/i18n/locale";
 import { DebugAttemptAccordion } from "./DebugAttemptAccordion";
 import {
 	CopyableCodeBlock,
@@ -49,6 +51,8 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 	step,
 	defaultOpen = false,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	// Single active metadata pill: only one section open at a time.
 	const [activeSection, setActiveSection] = useState<SectionKey | null>(null);
 
@@ -123,7 +127,10 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 					>
 						<div className="min-w-0 flex flex-1 items-center gap-2 overflow-hidden">
 							<span className="shrink-0 text-xs font-medium text-content-tertiary">
-								Step {step.step_number}
+								{tI18n(
+									"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.step_474a987f",
+								)}
+								{step.step_number}
 							</span>
 							{model ? (
 								<span className="min-w-0 truncate text-xs text-content-secondary">
@@ -145,7 +152,10 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 								variant={getStatusBadgeVariant(step.status)}
 								className="shrink-0"
 							>
-								{step.status || "unknown"}
+								{step.status ||
+									tI18n(
+										"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.unknown_b23a6a84",
+									)}
 							</Badge>
 							<ChevronDownIcon
 								className={cn(
@@ -160,16 +170,27 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 				<CollapsibleContent className="space-y-3 border-0 border-t border-solid border-border-default/30 bg-surface-primary/10 px-3 pb-3 pt-3">
 					{/* ── Metadata bar ────────────────────────────── */}
 					<div className="flex flex-wrap gap-x-3 gap-y-1 text-xs leading-5 text-content-secondary">
-						{model ? <MetadataItem label="Model" value={model} /> : null}
+						{model ? (
+							<MetadataItem
+								label={tI18n(
+									"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.model_5e2c614c",
+								)}
+								value={model}
+							/>
+						) : null}
 						{request.options.max_output_tokens !== undefined ? (
 							<MetadataItem
-								label="Max tokens"
+								label={tI18n(
+									"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.max_tokens_409e75c0",
+								)}
 								value={String(request.options.max_output_tokens)}
 							/>
 						) : null}
 						{request.policy.tool_choice !== undefined ? (
 							<MetadataItem
-								label="Tool choice"
+								label={tI18n(
+									"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.tool_choice_d3a2c6a3",
+								)}
 								value={(() => {
 									const tc = request.policy.tool_choice;
 									if (tc == null) return "";
@@ -184,7 +205,14 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 						) : null}
 						{attemptCount > 0 ? (
 							<span className="text-xs text-content-tertiary">
-								{attemptCount} {attemptCount === 1 ? "attempt" : "attempts"}
+								{attemptCount}{" "}
+								{attemptCount === 1
+									? tI18n(
+											"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.attempt_c7ce66d0",
+										)
+									: tI18n(
+											"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.attempts_1ac7d61d",
+										)}
 							</span>
 						) : null}
 					</div>
@@ -194,7 +222,9 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 						<div className="flex flex-wrap gap-1">
 							{toolCount > 0 ? (
 								<PillToggle
-									label="Tools"
+									label={tI18n(
+										"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.tools_ea93d6a2",
+									)}
 									count={toolCount}
 									isActive={activeSection === "tools"}
 									onToggle={() => toggleSection("tools")}
@@ -203,7 +233,9 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 							) : null}
 							{optionCount > 0 ? (
 								<PillToggle
-									label="Options"
+									label={tI18n(
+										"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.options_d0db8b5e",
+									)}
 									count={optionCount}
 									isActive={activeSection === "options"}
 									onToggle={() => toggleSection("options")}
@@ -211,7 +243,9 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 							) : null}
 							{usageEntryCount > 0 ? (
 								<PillToggle
-									label="Usage"
+									label={tI18n(
+										"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.usage_8d59829c",
+									)}
 									count={usageEntryCount}
 									isActive={activeSection === "usage"}
 									onToggle={() => toggleSection("usage")}
@@ -219,7 +253,9 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 							) : null}
 							{policyCount > 0 ? (
 								<PillToggle
-									label="Policy"
+									label={tI18n(
+										"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.policy_c611981f",
+									)}
 									count={policyCount}
 									isActive={activeSection === "policy"}
 									onToggle={() => toggleSection("policy")}
@@ -243,9 +279,16 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 										</p>
 									) : null}
 									<ToolPayloadDisclosure
-										label="JSON schema"
+										label={tI18n(
+											"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.json_schema_a07e848c",
+										)}
 										code={tool.inputSchema}
-										copyLabel={`Copy ${tool.name} JSON schema`}
+										copyLabel={tI18n(
+											"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.copy_value0_json_schema_e489b540",
+											{
+												value0: tool.name,
+											},
+										)}
 									/>
 								</div>
 							))}
@@ -253,24 +296,38 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 					) : null}
 
 					{activeSection === "options" && optionCount > 0 ? (
-						<DebugDataSection title="Options">
+						<DebugDataSection
+							title={tI18n(
+								"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.options_d0db8b5e",
+							)}
+						>
 							<KeyValueGrid entries={request.options} />
 						</DebugDataSection>
 					) : null}
 
 					{activeSection === "usage" && usageEntryCount > 0 ? (
-						<DebugDataSection title="Usage">
+						<DebugDataSection
+							title={tI18n(
+								"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.usage_8d59829c",
+							)}
+						>
 							<KeyValueGrid
 								entries={mergedUsage}
 								formatValue={(v) =>
-									typeof v === "number" ? v.toLocaleString("en-US") : String(v)
+									typeof v === "number"
+										? v.toLocaleString(currentIntlLocale())
+										: String(v)
 								}
 							/>
 						</DebugDataSection>
 					) : null}
 
 					{activeSection === "policy" && policyCount > 0 ? (
-						<DebugDataSection title="Policy">
+						<DebugDataSection
+							title={tI18n(
+								"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.policy_c611981f",
+							)}
+						>
 							<KeyValueGrid entries={request.policy} />
 						</DebugDataSection>
 					) : null}
@@ -278,7 +335,11 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 					{/* ── Input / Output sections ──────────────────── */}
 					<div className="grid gap-4">
 						{/* ── Input column ────────────────────────── */}
-						<DebugDataSection title="Input">
+						<DebugDataSection
+							title={tI18n(
+								"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.input_36ecb4f8",
+							)}
+						>
 							{totalMessages > 0 ? (
 								<div className="space-y-2">
 									{hiddenCount > 0 ? (
@@ -287,7 +348,13 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 											onClick={() => setShowAllMessages(true)}
 											className="border-0 bg-transparent p-0 text-2xs font-medium text-content-link transition-colors hover:underline"
 										>
-											Show all {totalMessages} messages
+											{tI18n(
+												"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.show_all_6134b894",
+											)}
+											{totalMessages}
+											{tI18n(
+												"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.messages_6e2fd28d",
+											)}
 										</button>
 									) : null}
 
@@ -298,7 +365,13 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 											onClick={() => setShowAllMessages(false)}
 											className="border-0 bg-transparent p-0 text-2xs font-medium text-content-link transition-colors hover:underline"
 										>
-											Show last {TRANSCRIPT_PREVIEW_COUNT} only
+											{tI18n(
+												"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.show_last_8801a30e",
+											)}
+											{TRANSCRIPT_PREVIEW_COUNT}
+											{tI18n(
+												"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.only_e850fc29",
+											)}
 										</button>
 									) : null}
 
@@ -311,12 +384,20 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 									))}
 								</div>
 							) : (
-								<EmptyHelper message="No input messages captured." />
+								<EmptyHelper
+									message={tI18n(
+										"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.no_input_messages_captured_3a0e6584",
+									)}
+								/>
 							)}
 						</DebugDataSection>
 
 						{/* ── Output column ───────────────────────── */}
-						<DebugDataSection title="Output">
+						<DebugDataSection
+							title={tI18n(
+								"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.output_b2439bcb",
+							)}
+						>
 							{hasOutput ? (
 								<div className="space-y-2">
 									{/* Primary response content: visually prominent. */}
@@ -334,9 +415,16 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 													key={tc.id ?? `${tc.name}-${idx}`}
 													badgeLabel={tc.name}
 													toolCallId={tc.id}
-													payloadLabel="Arguments"
+													payloadLabel={tI18n(
+														"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.arguments_7f816072",
+													)}
 													payload={tc.arguments}
-													copyLabel={`Copy ${tc.name} arguments`}
+													copyLabel={tI18n(
+														"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.copy_value0_arguments_b9512f92",
+														{
+															value0: tc.name,
+														},
+													)}
 												/>
 											))}
 										</div>
@@ -345,7 +433,10 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 									{/* Secondary metadata: finish reason + warnings. */}
 									{response.finishReason ? (
 										<span className="block text-2xs text-content-tertiary">
-											Finish: {response.finishReason}
+											{tI18n(
+												"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.finish_b8c20c08",
+											)}
+											{response.finishReason}
 										</span>
 									) : null}
 									{response.warnings.length > 0 ? (
@@ -353,7 +444,11 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 											{response.warnings.map((w, idx) => (
 												<p key={idx} className="text-xs text-content-warning">
 													<span aria-hidden="true">⚠</span>{" "}
-													<span className="sr-only">Warning: </span>
+													<span className="sr-only">
+														{tI18n(
+															"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.warning_3299fe5c",
+														)}
+													</span>
 													{w}
 												</p>
 											))}
@@ -361,17 +456,33 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 									) : null}
 								</div>
 							) : (
-								<EmptyHelper message="No output captured." />
+								<EmptyHelper
+									message={tI18n(
+										"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.no_output_captured_74089f24",
+									)}
+								/>
 							)}
 						</DebugDataSection>
 					</div>
 
 					{/* ── Error ───────────────────────────────────── */}
 					{hasError ? (
-						<DebugDataSection title="Error">
+						<DebugDataSection
+							title={tI18n(
+								"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.error_54a0e8c1",
+							)}
+						>
 							<CopyableCodeBlock
 								code={errorText}
-								label={isStringError ? "Copy error text" : "Copy error JSON"}
+								label={
+									isStringError
+										? tI18n(
+												"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.copy_error_text_54db0f62",
+											)
+										: tI18n(
+												"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.copy_error_json_a39d2348",
+											)
+								}
 							/>
 						</DebugDataSection>
 					) : null}
@@ -384,13 +495,17 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 								className="group/raw flex items-center gap-1.5 border-0 bg-transparent p-0 text-xs font-medium text-content-secondary transition-colors hover:text-content-primary"
 							>
 								<ChevronDownIcon className="size-3 transition-transform group-data-[state=open]/raw:rotate-180" />
-								Request body
+								{tI18n(
+									"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.request_body_a9b31e37",
+								)}
 							</button>
 						</CollapsibleTrigger>
 						<CollapsibleContent className="mt-1.5">
 							<CopyableCodeBlock
 								code={safeJsonStringify(step.normalized_request)}
-								label="Copy request body JSON"
+								label={tI18n(
+									"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.copy_request_body_json_f280bbfd",
+								)}
 							/>
 						</CollapsibleContent>
 					</Collapsible>
@@ -404,13 +519,17 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 									className="group/raw flex items-center gap-1.5 border-0 bg-transparent p-0 text-xs font-medium text-content-secondary transition-colors hover:text-content-primary"
 								>
 									<ChevronDownIcon className="size-3 transition-transform group-data-[state=open]/raw:rotate-180" />
-									Response body
+									{tI18n(
+										"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.response_body_f736153d",
+									)}
 								</button>
 							</CollapsibleTrigger>
 							<CollapsibleContent className="mt-1.5">
 								<CopyableCodeBlock
 									code={safeJsonStringify(step.normalized_response)}
-									label="Copy response body JSON"
+									label={tI18n(
+										"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.copy_response_body_json_a7764a78",
+									)}
 								/>
 							</CollapsibleContent>
 						</Collapsible>
@@ -421,7 +540,11 @@ export const DebugStepCard: FC<DebugStepCardProps> = ({
 					(normalizedAttempts.rawFallback &&
 						normalizedAttempts.rawFallback !== "{}" &&
 						normalizedAttempts.rawFallback !== "[]") ? (
-						<DebugDataSection title="Raw attempts">
+						<DebugDataSection
+							title={tI18n(
+								"AgentsPage.components.RightPanel.DebugPanel.DebugStepCard.raw_attempts_0821dc8a",
+							)}
+						>
 							<DebugAttemptAccordion
 								attempts={normalizedAttempts.parsed}
 								rawFallback={normalizedAttempts.rawFallback}

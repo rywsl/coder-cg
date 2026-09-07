@@ -2,6 +2,7 @@ import { cn } from "cn";
 import { type FormikContextType, getIn } from "formik";
 import { InfoIcon } from "lucide-react";
 import { type FC, Fragment, type ReactNode, useId } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import {
 	type FieldSchema,
@@ -34,6 +35,7 @@ import {
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
 import { useDebouncedValue } from "#/hooks/debounce";
+import { i18n } from "#/i18n";
 import { normalizeProvider } from "#/modules/aiModels/helpers";
 import { useFeatureVisibility } from "#/modules/dashboard/useFeatureVisibility";
 import { microsToDollars } from "#/utils/currency";
@@ -50,9 +52,24 @@ import {
 } from "./modelConfigFormLogic";
 
 const booleanFieldOptions = [
-	{ label: "Off", value: "false" },
-	{ label: "On", value: "true" },
-	{ label: "Default", value: "" },
+	{
+		label: i18n.t(
+			"agents:AgentsPage.components.ChatModelAdminPanel.ModelConfigFields.off_ca7981b4",
+		),
+		value: "false",
+	},
+	{
+		label: i18n.t(
+			"agents:AgentsPage.components.ChatModelAdminPanel.ModelConfigFields.on_13001175",
+		),
+		value: "true",
+	},
+	{
+		label: i18n.t(
+			"agents:AgentsPage.components.ChatModelAdminPanel.ModelConfigFields.default_21b111cb",
+		),
+		value: "",
+	},
 ] as const;
 
 /** Sentinel value for Select components to represent "no selection". */
@@ -237,7 +254,9 @@ const SelectField: FC<
 	label,
 	description,
 	options,
-	placeholderLabel = "Default",
+	placeholderLabel = i18n.t(
+		"agents:AgentsPage.components.ChatModelAdminPanel.ModelConfigFields.default_21b111cb",
+	),
 }) => {
 	const errorId = `${fieldKey}-error`;
 	const fieldError = fieldErrors[errorKey ?? fieldKey];
@@ -589,6 +608,8 @@ export const ReasoningEffortConfigFields: FC<ModelConfigFieldsProps> = ({
 	fieldErrors,
 	disabled,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const ctx: FieldRenderContext = { form, fieldErrors, disabled };
 	const fields = getVisibleGeneralFields(provider)
 		.filter(({ json_name }) => isReasoningEffortField(json_name))
@@ -612,7 +633,9 @@ export const ReasoningEffortConfigFields: FC<ModelConfigFieldsProps> = ({
 						label={snakeToPrettyLabel(field)}
 						description={field.description}
 						options={field.enum ?? []}
-						placeholderLabel="Not set"
+						placeholderLabel={tI18n(
+							"AgentsPage.components.ChatModelAdminPanel.ModelConfigFields.not_set_4895f731",
+						)}
 					/>
 				);
 			})}
@@ -680,6 +703,8 @@ export const PricingEstimateFields: FC<{
 	provider: string;
 	model: string;
 }> = ({ provider, model }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const fieldIdPrefix = useId();
 	const aibridgeEntitled = Boolean(useFeatureVisibility().aibridge);
 	const normalizedProvider = normalizeProvider(provider);
@@ -725,7 +750,9 @@ export const PricingEstimateFields: FC<{
 		return (
 			<p className="m-0 flex items-center gap-1.5 text-xs text-content-secondary sm:col-span-full">
 				<InfoIcon className="size-3.5 shrink-0" />
-				Couldn't load pricing.
+				{tI18n(
+					"AgentsPage.components.ChatModelAdminPanel.ModelConfigFields.couldn_t_load_pricing_2c990f2c",
+				)}
 			</p>
 		);
 	}
@@ -737,7 +764,9 @@ export const PricingEstimateFields: FC<{
 	) {
 		return (
 			<p className="m-0 text-xs text-content-secondary sm:col-span-full">
-				No pricing data for this model.
+				{tI18n(
+					"AgentsPage.components.ChatModelAdminPanel.ModelConfigFields.no_pricing_data_for_this_model_c0a78b92",
+				)}
 			</p>
 		);
 	}
@@ -758,7 +787,12 @@ export const PricingEstimateFields: FC<{
 							</InputGroupAddon>
 							{livePriceLoading ? (
 								<Skeleton
-									aria-label={`${label} price loading`}
+									aria-label={tI18n(
+										"AgentsPage.components.ChatModelAdminPanel.ModelConfigFields.value0_price_loading_239df877",
+										{
+											value0: label,
+										},
+									)}
 									className="mx-3 h-2 w-2/5 flex-1 rounded-full"
 								/>
 							) : (
@@ -774,12 +808,19 @@ export const PricingEstimateFields: FC<{
 							)}
 							{price?.belowThreshold && !livePriceLoading && (
 								<span id={`${fieldId}-threshold`} className="sr-only">
-									{`less than $${price.value} USD per million tokens`}
+									{tI18n(
+										"AgentsPage.components.ChatModelAdminPanel.ModelConfigFields.less_than_value0_usd_per_million_tokens_64271aca",
+										{
+											value0: price.value,
+										},
+									)}
 								</span>
 							)}
 							<InputGroupAddon align="inline-end">
 								<span className="text-xs text-content-disabled">
-									USD/1M tokens
+									{tI18n(
+										"AgentsPage.components.ChatModelAdminPanel.ModelConfigFields.usd_1m_tokens_4333fc60",
+									)}
 								</span>
 							</InputGroupAddon>
 						</InputGroup>

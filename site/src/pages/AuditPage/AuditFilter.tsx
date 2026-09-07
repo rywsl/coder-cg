@@ -1,5 +1,6 @@
 import capitalize from "lodash/capitalize";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { AuditActions, ResourceTypes } from "#/api/typesGenerated";
 import {
 	Filter,
@@ -120,10 +121,12 @@ interface ActionMenuProps {
 }
 
 const ActionMenu: FC<ActionMenuProps> = ({ menu, width }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<SelectFilter
-			label="Select an action"
-			placeholder="All actions"
+			label={tI18n("AuditPage.AuditFilter.select_an_action_537bfe79")}
+			placeholder={tI18n("AuditPage.AuditFilter.all_actions_83140cf1")}
 			options={menu.searchOptions}
 			onSelect={menu.selectOption}
 			selectedOption={menu.selectedOption ?? undefined}
@@ -136,31 +139,33 @@ export const useResourceTypeFilterMenu = ({
 	value,
 	onChange,
 }: Pick<UseFilterMenuOptions, "value" | "onChange">) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const actionOptions: SelectFilterOption[] = ResourceTypes.map((type) => {
 		let label: string = capitalize(type);
 
 		if (type === "api_key") {
-			label = "API Key";
+			label = tI18n("AuditPage.AuditFilter.api_key_23189d55");
 		}
 
 		if (type === "git_ssh_key") {
-			label = "Git SSH Key";
+			label = tI18n("AuditPage.AuditFilter.git_ssh_key_e23a9943");
 		}
 
 		if (type === "template_version") {
-			label = "Template Version";
+			label = tI18n("AuditPage.AuditFilter.template_version_1e335c28");
 		}
 
 		if (type === "workspace_build") {
-			label = "Workspace Build";
+			label = tI18n("AuditPage.AuditFilter.workspace_build_65dbaa41");
 		}
 
 		if (type === "chat_instruction_settings") {
-			label = "Chat Instruction Settings";
+			label = tI18n("AuditPage.AuditFilter.chat_instruction_settings_06aa1db9");
 		}
 
 		if (type === "chat_operational_settings") {
-			label = "Chat Operational Settings";
+			label = tI18n("AuditPage.AuditFilter.chat_operational_settings_bb40b86e");
 		}
 
 		return {
@@ -186,10 +191,12 @@ interface ResourceTypeMenuProps {
 }
 
 const ResourceTypeMenu: FC<ResourceTypeMenuProps> = ({ menu, width }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<SelectFilter
-			label="Select a resource type"
-			placeholder="All resource types"
+			label={tI18n("AuditPage.AuditFilter.select_a_resource_type_ae11a03f")}
+			placeholder={tI18n("AuditPage.AuditFilter.all_resource_types_6e3a449e")}
 			options={menu.searchOptions}
 			onSelect={menu.selectOption}
 			selectedOption={menu.selectedOption ?? undefined}

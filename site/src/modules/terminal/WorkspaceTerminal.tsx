@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import "@xterm/xterm/css/xterm.css";
 import { CanvasAddon } from "@xterm/addon-canvas";
 import { FitAddon } from "@xterm/addon-fit";
@@ -99,6 +100,8 @@ export const WorkspaceTerminal = ({
 	errorMessage,
 	testId,
 }: WorkspaceTerminalProps) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const scopeId = useId();
 	const terminalWrapperRef = useRef<HTMLDivElement>(null);
 	const fitAddonRef = useRef<FitAddon | undefined>(undefined);
@@ -137,7 +140,11 @@ export const WorkspaceTerminal = ({
 				terminal.paste(text);
 			}
 		} catch (error) {
-			toast.error("Failed to paste from clipboard");
+			toast.error(
+				tI18n(
+					"terminal.WorkspaceTerminal.failed_to_paste_from_clipboard_060d4942",
+				),
+			);
 			console.error(error);
 		} finally {
 			terminal.focus();
@@ -646,10 +653,10 @@ export const WorkspaceTerminal = ({
 						disabled={!hasSelection}
 						onSelect={copyTerminalSelection}
 					>
-						Copy
+						{tI18n("terminal.WorkspaceTerminal.copy_e21f935f")}
 					</ContextMenuItem>
 					<ContextMenuItem onSelect={() => void pasteIntoTerminal()}>
-						Paste
+						{tI18n("terminal.WorkspaceTerminal.paste_f3380f7b")}
 					</ContextMenuItem>
 				</ContextMenuContent>
 			</ContextMenu>

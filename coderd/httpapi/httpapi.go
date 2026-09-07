@@ -18,6 +18,7 @@ import (
 
 	"cdr.dev/slog/v3"
 	"github.com/coder/coder/v2/coderd/httpapi/httpapiconstraints"
+	"github.com/coder/coder/v2/coderd/i18n"
 	"github.com/coder/coder/v2/coderd/tracing"
 	"github.com/coder/coder/v2/codersdk"
 	"github.com/coder/websocket"
@@ -208,7 +209,7 @@ func Write(ctx context.Context, rw http.ResponseWriter, status int, response int
 
 	// We can't really do much about these errors, it's probably due to a
 	// dropped connection.
-	_ = enc.Encode(response)
+	_ = enc.Encode(i18n.LocalizeResponse(i18n.FromResponse(ctx, rw), response))
 }
 
 func WriteIndent(ctx context.Context, rw http.ResponseWriter, status int, response interface{}) {
@@ -226,7 +227,7 @@ func WriteIndent(ctx context.Context, rw http.ResponseWriter, status int, respon
 
 	// We can't really do much about these errors, it's probably due to a
 	// dropped connection.
-	_ = enc.Encode(response)
+	_ = enc.Encode(i18n.LocalizeResponse(i18n.FromResponse(ctx, rw), response))
 }
 
 // DefaultMaxRequestBodyBytes bounds the request body that a JSON endpoint will
@@ -391,6 +392,7 @@ func ServerSentEventSender(rw http.ResponseWriter, r *http.Request) (
 	}()
 
 	sendEvent := func(newEvent codersdk.ServerSentEvent) error {
+		newEvent.Data = i18n.LocalizeResponse(i18n.FromContext(ctx), newEvent.Data)
 		buf := &bytes.Buffer{}
 		_, err := fmt.Fprintf(buf, "event: %s\n", newEvent.Type)
 		if err != nil {
@@ -482,6 +484,7 @@ func OneWayWebSocketEventSender(log slog.Logger, watcher *WSWatcher) func(rw htt
 			for {
 				select {
 				case event := <-eventC:
+					event.Data = i18n.LocalizeResponse(i18n.FromContext(ctx), event.Data)
 					writeCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
 					err := wsjson.Write(writeCtx, socket, event)
 					cancel()

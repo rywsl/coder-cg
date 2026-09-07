@@ -1,4 +1,5 @@
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollArea } from "#/components/ScrollArea/ScrollArea";
 import { Response } from "../Response";
 import { ToolCall } from "./ToolCall";
@@ -17,6 +18,8 @@ export const ChatSummarizedTool: React.FC<{
 	errorMessage?: string;
 	source?: string;
 }> = ({ summary, status, isError, errorMessage, source }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const hasSummary = summary.trim().length > 0;
 	const isRunning = status === "running";
 	const isManual = source === "manual";
@@ -26,17 +29,28 @@ export const ChatSummarizedTool: React.FC<{
 			className="w-full"
 			status={status}
 			isError={isError}
-			errorMessage={errorMessage || "Failed to summarize conversation"}
+			errorMessage={
+				errorMessage ||
+				tI18n(
+					"AgentsPage.components.ChatElements.tools.ChatSummarizedTool.failed_to_summarize_conversation_5f47db5f",
+				)
+			}
 			hasContent={hasSummary}
 		>
 			<ToolCall.Header
 				iconName="chat_summarized"
 				label={
 					isRunning
-						? "Summarizing…"
+						? tI18n(
+								"AgentsPage.components.ChatElements.tools.ChatSummarizedTool.summarizing_c09d71ca",
+							)
 						: isManual
-							? "Summarized (manual)"
-							: "Summarized"
+							? tI18n(
+									"AgentsPage.components.ChatElements.tools.ChatSummarizedTool.summarized_manual_1af8c4db",
+								)
+							: tI18n(
+									"AgentsPage.components.ChatElements.tools.ChatSummarizedTool.summarized_f117cfaa",
+								)
 				}
 			/>
 			<ToolCall.Content>
@@ -44,7 +58,9 @@ export const ChatSummarizedTool: React.FC<{
 					className="mt-1.5 rounded-md border border-solid border-border-default"
 					viewportClassName="max-h-64"
 					viewportTabIndex={0}
-					viewportAriaLabel="Conversation summary"
+					viewportAriaLabel={tI18n(
+						"AgentsPage.components.ChatElements.tools.ChatSummarizedTool.conversation_summary_cdec06e0",
+					)}
 					scrollBarClassName="w-1.5"
 				>
 					<div className="px-3 py-2">

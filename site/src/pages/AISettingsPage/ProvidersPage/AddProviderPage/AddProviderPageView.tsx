@@ -1,5 +1,6 @@
 import { ArrowLeftIcon } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -23,6 +24,8 @@ const indefiniteArticle = (word: string): string =>
 const AddProviderPageView: React.FC<AddProviderPageViewProps> = ({
 	provider,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 	const createMutation = useMutation(createAIProviderMutation(queryClient));
@@ -34,18 +37,31 @@ const AddProviderPageView: React.FC<AddProviderPageViewProps> = ({
 			<Link to="/ai/settings/providers" className="-ml-3">
 				<Button variant="subtle">
 					<ArrowLeftIcon />
-					<span>Back to providers</span>
+					<span>
+						{tI18n(
+							"AISettingsPage.ProvidersPage.AddProviderPage.AddProviderPageView.back_to_providers_efe5419c",
+						)}
+					</span>
 				</Button>
 			</Link>
 			<div className="flex flex-col gap-6 pt-6">
 				<div className="flex items-center gap-4 min-w-0">
 					<Avatar variant="icon" size="lg" src={icon || defaultIcon} />
-					<SettingsHeaderTitle>{`Add ${indefiniteArticle(
-						provider.label,
-					)} ${provider.label} provider`}</SettingsHeaderTitle>
+					<SettingsHeaderTitle>
+						{tI18n(
+							"AISettingsPage.ProvidersPage.AddProviderPage.AddProviderPageView.add_value0_value1_provider_b589ed14",
+							{
+								value0: indefiniteArticle(provider.label),
+
+								value1: provider.label,
+							},
+						)}
+					</SettingsHeaderTitle>
 				</div>
 				<p className="text-sm text-content-secondary m-0">
-					Configure connection details and credentials.
+					{tI18n(
+						"AISettingsPage.ProvidersPage.AddProviderPage.AddProviderPageView.configure_connection_details_and_credentials_9a3956c2",
+					)}
 				</p>
 				<div className="border border-solid p-6 rounded-lg">
 					<ProviderForm
@@ -59,7 +75,12 @@ const AddProviderPageView: React.FC<AddProviderPageViewProps> = ({
 							try {
 								const res = await createMutation.mutateAsync(request);
 								toast.success(
-									`Provider "${res.display_name || res.name}" added.`,
+									tI18n(
+										"AISettingsPage.ProvidersPage.AddProviderPage.AddProviderPageView.provider_value0_added_0573a800",
+										{
+											value0: res.display_name || res.name,
+										},
+									),
 								);
 								// Awaited so the form's submitting state stays true through
 								// navigation, keeping the unsaved-changes prompt suppressed.

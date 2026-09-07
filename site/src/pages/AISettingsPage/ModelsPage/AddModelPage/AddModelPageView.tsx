@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate, useSearchParams } from "react-router";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Alert, AlertDescription, AlertTitle } from "#/components/Alert/Alert";
@@ -39,6 +40,8 @@ const AddModelPageView: FC<AddModelPageViewProps> = ({
 	onProviderChange,
 	onCreateModel,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { organization, accessibleOrganizations, permissionsByOrganization } =
 		useOrganizationModels();
 	const location = useLocation();
@@ -87,10 +90,15 @@ const AddModelPageView: FC<AddModelPageViewProps> = ({
 			<div className="flex flex-col items-start gap-4">
 				<ModelFormBackLink />
 				<Alert severity="warning">
-					<AlertTitle>Provider not found</AlertTitle>
+					<AlertTitle>
+						{tI18n(
+							"AISettingsPage.ModelsPage.AddModelPage.AddModelPageView.provider_not_found_90c36c40",
+						)}
+					</AlertTitle>
 					<AlertDescription>
-						The provider you are trying to add a model for is not available.
-						Please try again.
+						{tI18n(
+							"AISettingsPage.ModelsPage.AddModelPage.AddModelPageView.the_provider_you_are_trying_to_add_a_model_for_i_5ec54655",
+						)}
 					</AlertDescription>
 				</Alert>
 				{organizationPicker}

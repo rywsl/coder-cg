@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { NavLink, useLocation } from "react-router";
 import { API } from "#/api/api";
 import type * as TypesGen from "#/api/typesGenerated";
@@ -157,6 +158,8 @@ interface NavItemsProps {
 }
 
 const NavItems: FC<NavItemsProps> = ({ className, canCreateChat }) => {
+	const { t: tI18n } = useTranslation("dashboard");
+
 	const location = useLocation();
 
 	return (
@@ -170,7 +173,7 @@ const NavItems: FC<NavItemsProps> = ({ className, canCreateChat }) => {
 				}}
 				to="/workspaces"
 			>
-				Workspaces
+				{tI18n("dashboard.Navbar.NavbarView.workspaces_1377264b")}
 			</NavLink>
 			<NavLink
 				className={({ isActive }) => {
@@ -178,7 +181,7 @@ const NavItems: FC<NavItemsProps> = ({ className, canCreateChat }) => {
 				}}
 				to="/templates"
 			>
-				Templates
+				{tI18n("dashboard.Navbar.NavbarView.templates_56b564b7")}
 			</NavLink>
 			{canCreateChat && (
 				<NavLink
@@ -187,7 +190,7 @@ const NavItems: FC<NavItemsProps> = ({ className, canCreateChat }) => {
 					}}
 					to="/agents"
 				>
-					Agents
+					{tI18n("dashboard.Navbar.NavbarView.agents_279b44d2")}
 				</NavLink>
 			)}
 		</nav>
@@ -206,6 +209,8 @@ interface SupportButtonProps {
 }
 
 const SupportButton: FC<SupportButtonProps> = ({ name, target, icon }) => {
+	const { t: tI18n } = useTranslation("dashboard");
+
 	return (
 		<Button asChild variant="outline">
 			<a
@@ -216,7 +221,9 @@ const SupportButton: FC<SupportButtonProps> = ({ name, target, icon }) => {
 			>
 				{icon && <SupportIcon icon={icon} className="text-content-secondary" />}
 				{name}
-				<span className="sr-only"> (link opens in new tab)</span>
+				<span className="sr-only">
+					{tI18n("dashboard.Navbar.NavbarView.link_opens_in_new_tab_20897869")}
+				</span>
 			</a>
 		</Button>
 	);

@@ -1,5 +1,6 @@
 import { UsersIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { SharedWorkspaceActor } from "#/api/typesGenerated";
 import { Badge } from "#/components/Badge/Badge";
 import { Link } from "#/components/Link/Link";
@@ -18,6 +19,8 @@ export const WorkspaceSharingIndicator: FC<WorkspaceSharingIndicatorProps> = ({
 	sharedWith,
 	settingsPath,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	// Sort by type (users then groups) and then alphabetically by name.
 	const sortedActors = [...sharedWith].sort((a, b) => {
 		if (a.actor_type !== b.actor_type) {
@@ -36,7 +39,9 @@ export const WorkspaceSharingIndicator: FC<WorkspaceSharingIndicatorProps> = ({
 			<TooltipContent className="w-56 p-0">
 				<div className="px-3 py-2">
 					<p className="m-0 text-sm font-semibold text-content-primary">
-						Workspace permissions
+						{tI18n(
+							"WorkspacesPage.WorkspaceSharingIndicator.workspace_permissions_32f5fedc",
+						)}
 					</p>
 				</div>
 				<ul className="flex flex-col gap-1 m-0 p-0 list-none max-h-48 overflow-y-auto">
@@ -50,7 +55,9 @@ export const WorkspaceSharingIndicator: FC<WorkspaceSharingIndicatorProps> = ({
 								<span className="text-sm truncate">{actor.name}</span>
 								{isAdmin && (
 									<Badge size="sm" variant="default">
-										Admin
+										{tI18n(
+											"WorkspacesPage.WorkspaceSharingIndicator.admin_c1c224b0",
+										)}
 									</Badge>
 								)}
 							</li>
@@ -64,7 +71,9 @@ export const WorkspaceSharingIndicator: FC<WorkspaceSharingIndicatorProps> = ({
 						onClick={(e) => e.stopPropagation()}
 						showExternalIcon={false}
 					>
-						Change permissions
+						{tI18n(
+							"WorkspacesPage.WorkspaceSharingIndicator.change_permissions_9bc98ccd",
+						)}
 					</Link>
 				</div>
 			</TooltipContent>

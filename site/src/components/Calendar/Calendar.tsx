@@ -8,6 +8,7 @@
  */
 
 import { cn } from "cn";
+import { enUS, zhCN } from "date-fns/locale";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 import {
@@ -16,6 +17,7 @@ import {
 	getDefaultClassNames,
 } from "react-day-picker";
 import { Button, type ButtonProps } from "#/components/Button/Button";
+import { currentIntlLocale, currentLocale } from "#/i18n/locale";
 
 function Calendar({
 	className,
@@ -25,6 +27,7 @@ function Calendar({
 	buttonVariant = "subtle",
 	formatters,
 	components,
+	locale,
 	...props
 }: ComponentProps<typeof DayPicker> & {
 	buttonVariant?: ButtonProps["variant"];
@@ -33,6 +36,7 @@ function Calendar({
 
 	return (
 		<DayPicker
+			locale={locale ?? (currentLocale() === "zh-CN" ? zhCN : enUS)}
 			showOutsideDays={showOutsideDays}
 			className={cn(
 				"bg-surface-primary group/calendar p-3 [--cell-size:2rem]",
@@ -41,7 +45,7 @@ function Calendar({
 			captionLayout={captionLayout}
 			formatters={{
 				formatMonthDropdown: (date) =>
-					date.toLocaleString("default", { month: "short" }),
+					date.toLocaleString(currentIntlLocale(), { month: "short" }),
 				...formatters,
 			}}
 			classNames={{
@@ -176,7 +180,7 @@ function CalendarDayButton({
 		<Button
 			variant="subtle"
 			size="icon"
-			data-day={day.date.toLocaleDateString()}
+			data-day={day.date.toLocaleDateString(currentIntlLocale())}
 			data-selected-single={
 				modifiers.selected &&
 				!modifiers.range_start &&

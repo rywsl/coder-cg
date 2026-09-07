@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import { type FC, memo, useLayoutEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import type { UrlTransform } from "streamdown";
 import { preferenceSettings } from "#/api/queries/users";
@@ -233,6 +234,8 @@ export const BlockList: FC<BlockListProps> = ({
 	hasUserResponseAfterAskQuestion = false,
 	urlTransform,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const prefQuery = useQuery(preferenceSettings());
 	const thinkingDisplayMode: ThinkingDisplayMode =
 		prefQuery.data?.thinking_display_mode || "auto";
@@ -306,7 +309,13 @@ export const BlockList: FC<BlockListProps> = ({
 									{block.file_name}:
 									{block.start_line === block.end_line
 										? block.start_line
-										: `${block.start_line}\u2013${block.end_line}`}
+										: tI18n(
+												"AgentsPage.components.ChatConversation.MessageBlocks.value0_value1_ab500f8f",
+												{
+													value0: block.start_line,
+													value1: block.end_line,
+												},
+											)}
 								</span>
 							</div>
 						);

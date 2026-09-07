@@ -1,5 +1,6 @@
 import { ListFilterIcon, SearchIcon } from "lucide-react";
 import { type ReactNode, useId } from "react";
+import { useTranslation } from "react-i18next";
 import { Avatar } from "#/components/Avatar/Avatar";
 import { Badge } from "#/components/Badge/Badge";
 import { Button } from "#/components/Button/Button";
@@ -8,6 +9,7 @@ import {
 	InputGroupButton,
 } from "#/components/InputGroup/InputGroup";
 import { Spinner } from "#/components/Spinner/Spinner";
+import { i18n } from "#/i18n";
 import { chipToken } from "./filterQuery";
 import {
 	FilterComboboxChip,
@@ -52,13 +54,19 @@ export function FilterCombobox({
 	value,
 	onChange,
 	categories,
-	placeholder = "Search and filter…",
+	placeholder = i18n.t(
+		"components:Filter.FilterCombobox.FilterCombobox.search_and_filter_31747a69",
+	),
 	className,
 	errorMessage,
 	getSearchResults,
 	onSearchResultSelect,
-	searchResultsLabel = "Results",
+	searchResultsLabel = i18n.t(
+		"components:Filter.FilterCombobox.FilterCombobox.results_219c4a6c",
+	),
 }: FilterComboboxProps) {
+	const { t: tI18n } = useTranslation("components");
+
 	const {
 		open,
 		inputValue,
@@ -133,7 +141,12 @@ export function FilterCombobox({
 								{activeCategory.chipKeys &&
 								!activeCategory.chipKeys.includes(activeCategory.key)
 									? activeCategory.label
-									: `${activeCategory.key}:`}
+									: tI18n(
+											"Filter.FilterCombobox.FilterCombobox.value0_4f3b292b",
+											{
+												value0: activeCategory.key,
+											},
+										)}
 							</Badge>
 						)}
 						<FilterComboboxChipsInput
@@ -155,7 +168,9 @@ export function FilterCombobox({
 						<InputGroupButton
 							type="button"
 							variant="subtle"
-							aria-label="Toggle filters"
+							aria-label={tI18n(
+								"Filter.FilterCombobox.FilterCombobox.toggle_filters_fa866516",
+							)}
 							aria-expanded={open}
 							aria-haspopup="listbox"
 							className="min-h-10 w-10 min-w-10 shrink-0 rounded-none rounded-r-md px-0 [&>svg]:p-0"
@@ -266,6 +281,8 @@ function TypeaheadList({
 	onSelectSearchResult,
 	onRetry,
 }: TypeaheadListProps) {
+	const { t: tI18n } = useTranslation("components");
+
 	const valueSuggestionsByCategory = new Map<string, ValueSuggestion[]>();
 	for (const suggestion of valueSuggestions) {
 		const categorySuggestions = valueSuggestionsByCategory.get(
@@ -287,7 +304,13 @@ function TypeaheadList({
 
 	return (
 		<>
-			{isEmpty && <FilterComboboxEmpty>No filters found.</FilterComboboxEmpty>}
+			{isEmpty && (
+				<FilterComboboxEmpty>
+					{tI18n(
+						"Filter.FilterCombobox.FilterCombobox.no_filters_found_e7ff77a3",
+					)}
+				</FilterComboboxEmpty>
+			)}
 			<FilterComboboxList className="p-3">
 				{listedCategories.map((category) => (
 					<FilterComboboxItem
@@ -356,14 +379,20 @@ function TypeaheadList({
 				)}
 				{typeaheadLoading && (
 					<div className="flex items-center justify-center px-2 py-2.5">
-						<Spinner loading size="sm" label="Loading suggestions" />
+						<Spinner
+							loading
+							size="sm"
+							label={tI18n(
+								"Filter.FilterCombobox.FilterCombobox.loading_suggestions_6fcf5091",
+							)}
+						/>
 					</div>
 				)}
 				{typeaheadError && !typeaheadLoading && (
 					<div className="flex flex-col items-center gap-2 px-2 py-2.5 text-center text-sm text-content-secondary">
 						<span>{typeaheadErrorLabel}</span>
 						<Button size="sm" variant="outline" onClick={onRetry}>
-							Retry
+							{tI18n("Filter.FilterCombobox.FilterCombobox.retry_942087cc")}
 						</Button>
 					</div>
 				)}
@@ -391,6 +420,8 @@ function CategoryOptionsList({
 	retryActiveOptions,
 	onSelectOption,
 }: CategoryOptionsListProps) {
+	const { t: tI18n } = useTranslation("components");
+
 	// While the popover animates closed the active category resets to null; render
 	// nothing rather than flashing a "Loading…"/empty state on the way out.
 	if (activeCategoryKey === null) {
@@ -401,11 +432,16 @@ function CategoryOptionsList({
 		return (
 			<div className="flex flex-col items-center gap-2 px-3 py-6 text-center text-sm text-content-secondary">
 				<span>
-					Couldn&rsquo;t load {activeCategory ? activeCategory.label : "filter"}{" "}
-					options.
+					{tI18n("Filter.FilterCombobox.FilterCombobox.couldn_t_load_9c2a58a8")}
+					{activeCategory
+						? activeCategory.label
+						: tI18n(
+								"Filter.FilterCombobox.FilterCombobox.filter_dfc3376b",
+							)}{" "}
+					{tI18n("Filter.FilterCombobox.FilterCombobox.options_f63eceaa")}
 				</span>
 				<Button size="sm" variant="outline" onClick={retryActiveOptions}>
-					Retry
+					{tI18n("Filter.FilterCombobox.FilterCombobox.retry_942087cc")}
 				</Button>
 			</div>
 		);
@@ -417,7 +453,7 @@ function CategoryOptionsList({
 				className="px-3 py-6 text-center text-sm text-content-secondary"
 				aria-hidden
 			>
-				Loading…
+				{tI18n("Filter.FilterCombobox.FilterCombobox.loading_ba3bbbe1")}
 			</div>
 		);
 	}
@@ -426,8 +462,15 @@ function CategoryOptionsList({
 		<>
 			<FilterComboboxEmpty>
 				{activeCategory
-					? `No ${activeCategory.label} matches`
-					: "No filters found."}
+					? tI18n(
+							"Filter.FilterCombobox.FilterCombobox.no_value0_matches_b6c97919",
+							{
+								value0: activeCategory.label,
+							},
+						)
+					: tI18n(
+							"Filter.FilterCombobox.FilterCombobox.no_filters_found_e7ff77a3",
+						)}
 			</FilterComboboxEmpty>
 			<FilterComboboxList className="p-3">
 				{activeCategoryKey !== null && (

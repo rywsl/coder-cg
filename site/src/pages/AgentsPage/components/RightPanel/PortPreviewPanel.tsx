@@ -1,7 +1,9 @@
 import { ExternalLinkIcon, NetworkIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { Workspace, WorkspaceAgent } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
+import { i18n } from "#/i18n";
 import { WorkspaceIframe } from "#/modules/apps/WorkspaceAppFrame";
 import { portForwardURL } from "#/utils/portForward";
 import type { UserRightPanelTab } from "../../utils/rightPanelTabs";
@@ -12,6 +14,8 @@ export const PortPreviewPanel: FC<{
 	host: string;
 	tab: Extract<UserRightPanelTab, { kind: "port" }>;
 }> = ({ workspace, agent, host, tab }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const url = portForwardURL(
 		host,
 		tab.port,
@@ -35,7 +39,9 @@ export const PortPreviewPanel: FC<{
 						size="icon"
 						variant="subtle"
 						disabled
-						aria-label="Open port in new tab"
+						aria-label={tI18n(
+							"AgentsPage.components.RightPanel.PortPreviewPanel.open_port_in_new_tab_e0d5c04f",
+						)}
 					>
 						<ExternalLinkIcon />
 					</Button>
@@ -45,7 +51,9 @@ export const PortPreviewPanel: FC<{
 							href={url}
 							target="_blank"
 							rel="noreferrer"
-							aria-label="Open port in new tab"
+							aria-label={tI18n(
+								"AgentsPage.components.RightPanel.PortPreviewPanel.open_port_in_new_tab_e0d5c04f",
+							)}
 						>
 							<ExternalLinkIcon />
 						</a>
@@ -73,13 +81,19 @@ function getUnavailableMessage({
 	url: string;
 }): string | undefined {
 	if (host.trim() === "") {
-		return "Port previews require a wildcard access URL.";
+		return i18n.t(
+			"agents:AgentsPage.components.RightPanel.PortPreviewPanel.port_previews_require_a_wildcard_access_url_c023812a",
+		);
 	}
 	if (agent.status !== "connected") {
-		return "Port preview will be available once the workspace agent reconnects.";
+		return i18n.t(
+			"agents:AgentsPage.components.RightPanel.PortPreviewPanel.port_preview_will_be_available_once_the_workspac_d287032d",
+		);
 	}
 	if (url === "#") {
-		return "The wildcard access URL produced an invalid preview URL. Check the deployment's wildcard access URL configuration.";
+		return i18n.t(
+			"agents:AgentsPage.components.RightPanel.PortPreviewPanel.the_wildcard_access_url_produced_an_invalid_prev_846953f0",
+		);
 	}
 	return undefined;
 }

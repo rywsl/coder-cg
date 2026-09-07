@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import { type FC, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	useInfiniteQuery,
 	useMutation,
@@ -155,6 +156,8 @@ export const chatCostIdToInvalidate = (
 };
 
 const AgentsPageLayout: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	useAgentsPWA();
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
@@ -289,7 +292,12 @@ const AgentsPageLayout: FC = () => {
 		},
 		onError: (error, chatId, context) => {
 			archiveChatBase.onError(error, chatId, context);
-			toast.error(getErrorMessage(error, "Failed to archive agent."));
+			toast.error(
+				getErrorMessage(
+					error,
+					tI18n("AgentsPage.AgentsPageLayout.failed_to_archive_agent_fb91b900"),
+				),
+			);
 		},
 	});
 	const archiveAndDeleteMutation = useMutation({
@@ -354,7 +362,14 @@ const AgentsPageLayout: FC = () => {
 		...unarchiveChatBase,
 		onError: (error, chatId, context) => {
 			unarchiveChatBase.onError(error, chatId, context);
-			toast.error(getErrorMessage(error, "Failed to unarchive agent."));
+			toast.error(
+				getErrorMessage(
+					error,
+					tI18n(
+						"AgentsPage.AgentsPageLayout.failed_to_unarchive_agent_2b394aed",
+					),
+				),
+			);
 		},
 	});
 	const pinChatBase = pinChat(queryClient);
@@ -362,7 +377,12 @@ const AgentsPageLayout: FC = () => {
 		...pinChatBase,
 		onError: (error, chatId, context) => {
 			pinChatBase.onError(error, chatId, context);
-			toast.error(getErrorMessage(error, "Failed to pin agent."));
+			toast.error(
+				getErrorMessage(
+					error,
+					tI18n("AgentsPage.AgentsPageLayout.failed_to_pin_agent_b613f830"),
+				),
+			);
 		},
 	});
 	const unpinChatBase = unpinChat(queryClient);
@@ -370,20 +390,37 @@ const AgentsPageLayout: FC = () => {
 		...unpinChatBase,
 		onError: (error, chatId, context) => {
 			unpinChatBase.onError(error, chatId, context);
-			toast.error(getErrorMessage(error, "Failed to unpin agent."));
+			toast.error(
+				getErrorMessage(
+					error,
+					tI18n("AgentsPage.AgentsPageLayout.failed_to_unpin_agent_1314376d"),
+				),
+			);
 		},
 	});
 	const reorderPinnedChatMutation = useMutation({
 		...reorderPinnedChat(queryClient),
 		onError: (error) => {
-			toast.error(getErrorMessage(error, "Failed to reorder pinned agents."));
+			toast.error(
+				getErrorMessage(
+					error,
+					tI18n(
+						"AgentsPage.AgentsPageLayout.failed_to_reorder_pinned_agents_7eb930b5",
+					),
+				),
+			);
 		},
 	});
 	const proposeTitleMutation = useMutation(proposeChatTitle(queryClient));
 	const renameTitleMutation = useMutation({
 		...updateChatTitle(queryClient),
 		onError: (error: unknown) => {
-			toast.error(getErrorMessage(error, "Failed to rename chat."));
+			toast.error(
+				getErrorMessage(
+					error,
+					tI18n("AgentsPage.AgentsPageLayout.failed_to_rename_chat_83b70214"),
+				),
+			);
 		},
 	});
 	const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -481,7 +518,12 @@ const AgentsPageLayout: FC = () => {
 			}
 		} catch (error) {
 			toast.error(
-				getErrorMessage(error, "Failed to look up workspace for deletion."),
+				getErrorMessage(
+					error,
+					tI18n(
+						"AgentsPage.AgentsPageLayout.failed_to_look_up_workspace_for_deletion_5e511818",
+					),
+				),
 			);
 		}
 	};
@@ -818,9 +860,15 @@ const AgentsPageLayout: FC = () => {
 				entity="workspace"
 				name={pendingWorkspaceName}
 				confirmLoading={archiveAndDeleteMutation.isPending}
-				title="Archive agent & delete workspace"
-				verb="Archiving and deleting"
-				info="This will archive the agent and permanently delete the associated workspace and all its resources."
+				title={tI18n(
+					"AgentsPage.AgentsPageLayout.archive_agent_delete_workspace_97cdec8f",
+				)}
+				verb={tI18n(
+					"AgentsPage.AgentsPageLayout.archiving_and_deleting_3220c299",
+				)}
+				info={tI18n(
+					"AgentsPage.AgentsPageLayout.this_will_archive_the_agent_and_permanently_dele_728e797b",
+				)}
 			/>
 		</>
 	);

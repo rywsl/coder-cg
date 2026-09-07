@@ -1,4 +1,5 @@
 import { cn } from "cn";
+import { useTranslation } from "react-i18next";
 import {
 	Paywall,
 	PaywallContent,
@@ -26,6 +27,8 @@ const PaywallSmall = ({
 	onCTAClick,
 	...props
 }: PaywallProps) => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<Paywall
 			className={cn(
@@ -67,11 +70,13 @@ const PaywallSmall = ({
 						className="w-full ml-0 mr-8"
 						onClick={onCTAClick}
 					>
-						Start trial for free
+						{tI18n("Paywall.PaywallSmall.start_trial_for_free_1386ba3c")}
 					</PaywallCTALink>
 				) : (
 					<PaywallGuidance>
-						Contact your deployment administrator for Premium.
+						{tI18n(
+							"Paywall.PaywallSmall.contact_your_deployment_administrator_for_premiu_e349ee15",
+						)}
 					</PaywallGuidance>
 				)}
 			</PaywallStack>

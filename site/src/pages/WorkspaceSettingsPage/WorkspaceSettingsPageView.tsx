@@ -1,4 +1,5 @@
 import type { ComponentProps, FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { Workspace } from "#/api/typesGenerated";
 import {
 	SettingsHeader,
@@ -20,15 +21,22 @@ export const WorkspaceSettingsPageView: FC<WorkspaceSettingsPageViewProps> = ({
 	error,
 	workspace,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<div className="flex flex-col gap-12">
 			<SettingsHeader>
-				<SettingsHeaderTitle>General</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"WorkspaceSettingsPage.WorkspaceSettingsPageView.general_c910d474",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Update the name and automatic update behavior for this workspace.
+					{tI18n(
+						"WorkspaceSettingsPage.WorkspaceSettingsPageView.update_the_name_and_automatic_update_behavior_fo_ccf9f3ef",
+					)}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			<WorkspaceSettingsForm
 				error={error}
 				workspace={workspace}

@@ -1,5 +1,6 @@
 import { EllipsisVerticalIcon, PencilIcon, TrashIcon } from "lucide-react";
 import { type FC, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { UserSecret } from "#/api/typesGenerated";
 import { Badge } from "#/components/Badge/Badge";
 import { Button } from "#/components/Button/Button";
@@ -56,6 +57,8 @@ export const SecretsTable: FC<SecretsTableProps> = ({
 	onDeleteSecret,
 	onToggleEnabled,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	const [secretToDelete, setSecretToDelete] = useState<UserSecret>();
 	const [togglingSecretId, setTogglingSecretId] = useState<string | null>(null);
 
@@ -92,17 +95,40 @@ export const SecretsTable: FC<SecretsTableProps> = ({
 						});
 				}}
 			/>
-
-			<Table aria-label="User secrets">
+			<Table
+				aria-label={tI18n(
+					"UserSettingsPage.SecretsPage.SecretsTable.user_secrets_26978735",
+				)}
+			>
 				<TableHeader>
 					<TableRow>
 						<TableHead className="w-9"></TableHead>
-						<TableHead>Name</TableHead>
-						<TableHead>Env var</TableHead>
-						<TableHead className="whitespace-nowrap">File path</TableHead>
-						<TableHead>Type</TableHead>
-						<TableHead className="w-full">Description</TableHead>
-						<TableHead>Updated</TableHead>
+						<TableHead>
+							{tI18n("UserSettingsPage.SecretsPage.SecretsTable.name_dcd1d522")}
+						</TableHead>
+						<TableHead>
+							{tI18n(
+								"UserSettingsPage.SecretsPage.SecretsTable.env_var_a806a90c",
+							)}
+						</TableHead>
+						<TableHead className="whitespace-nowrap">
+							{tI18n(
+								"UserSettingsPage.SecretsPage.SecretsTable.file_path_2fb6d386",
+							)}
+						</TableHead>
+						<TableHead>
+							{tI18n("UserSettingsPage.SecretsPage.SecretsTable.type_baaddf70")}
+						</TableHead>
+						<TableHead className="w-full">
+							{tI18n(
+								"UserSettingsPage.SecretsPage.SecretsTable.description_526e0087",
+							)}
+						</TableHead>
+						<TableHead>
+							{tI18n(
+								"UserSettingsPage.SecretsPage.SecretsTable.updated_3a5ecca1",
+							)}
+						</TableHead>
 						<TableHead></TableHead>
 					</TableRow>
 				</TableHeader>
@@ -110,11 +136,17 @@ export const SecretsTable: FC<SecretsTableProps> = ({
 					{isLoading && <TableLoader />}
 					{hasLoaded && !isLoading && (!secrets || secrets.length === 0) && (
 						<TableEmpty
-							message="No secrets yet"
-							description="Create a secret to inject it into workspaces you own."
+							message={tI18n(
+								"UserSettingsPage.SecretsPage.SecretsTable.no_secrets_yet_5aa40906",
+							)}
+							description={tI18n(
+								"UserSettingsPage.SecretsPage.SecretsTable.create_a_secret_to_inject_it_into_workspaces_you_efcbd454",
+							)}
 							cta={
 								<Button onClick={(event) => onAddSecret(event.currentTarget)}>
-									Add secret
+									{tI18n(
+										"UserSettingsPage.SecretsPage.SecretsTable.add_secret_f57a23c6",
+									)}
 								</Button>
 							}
 						/>
@@ -148,7 +180,9 @@ export const SecretsTable: FC<SecretsTableProps> = ({
 										</span>
 									) : (
 										<span className="text-content-disabled">
-											No description
+											{tI18n(
+												"UserSettingsPage.SecretsPage.SecretsTable.no_description_bcd8cc53",
+											)}
 										</span>
 									)}
 								</TableCell>
@@ -184,22 +218,42 @@ const OptionalSecretValue: FC<{ value?: string; fallback?: string }> = ({
 };
 
 const SecretTypeBadge: FC<{ secret: UserSecret }> = ({ secret }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	const hasEnv = Boolean(secret.env_name);
 	const hasFile = Boolean(secret.file_path);
 
 	if (hasEnv && hasFile) {
-		return <Badge>env var + file</Badge>;
+		return (
+			<Badge>
+				{tI18n(
+					"UserSettingsPage.SecretsPage.SecretsTable.env_var_file_448cf068",
+				)}
+			</Badge>
+		);
 	}
 
 	if (hasEnv) {
-		return <Badge>env var</Badge>;
+		return (
+			<Badge>
+				{tI18n("UserSettingsPage.SecretsPage.SecretsTable.env_var_7fcabcd7")}
+			</Badge>
+		);
 	}
 
 	if (hasFile) {
-		return <Badge>file</Badge>;
+		return (
+			<Badge>
+				{tI18n("UserSettingsPage.SecretsPage.SecretsTable.file_3b9c358f")}
+			</Badge>
+		);
 	}
 
-	return <Badge>not injected</Badge>;
+	return (
+		<Badge>
+			{tI18n("UserSettingsPage.SecretsPage.SecretsTable.not_injected_72d29aa1")}
+		</Badge>
+	);
 };
 
 type EnabledToggleProps = {
@@ -213,6 +267,8 @@ const EnabledToggle: FC<EnabledToggleProps> = ({
 	isPending,
 	onToggle,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	const hasTarget = Boolean(secret.env_name) || Boolean(secret.file_path);
 	// An enabled secret must have at least one injection target. Prevent
 	// enabling a target-less secret; the user must add a target first.
@@ -229,7 +285,12 @@ const EnabledToggle: FC<EnabledToggleProps> = ({
 				 */}
 				<span tabIndex={0} className="inline-flex">
 					<Switch
-						aria-label={`Toggle secret ${secret.name}`}
+						aria-label={tI18n(
+							"UserSettingsPage.SecretsPage.SecretsTable.toggle_secret_value0_5208b2bb",
+							{
+								value0: secret.name,
+							},
+						)}
 						checked={secret.enabled}
 						disabled={isPending || cannotEnable}
 						onCheckedChange={(checked) => onToggle(secret, checked)}
@@ -238,7 +299,9 @@ const EnabledToggle: FC<EnabledToggleProps> = ({
 			</TooltipTrigger>
 			{cannotEnable && (
 				<TooltipContent side="top">
-					Add an environment variable or file path before enabling this secret.
+					{tI18n(
+						"UserSettingsPage.SecretsPage.SecretsTable.add_an_environment_variable_or_file_path_before__38f59ca6",
+					)}
 				</TooltipContent>
 			)}
 		</Tooltip>
@@ -259,7 +322,14 @@ const SecretRowActions: FC<SecretRowActionsProps> = ({
 	onEditSecret,
 	onDeleteSecret,
 }) => {
-	const label = `Open secret actions for ${secret.name}`;
+	const { t: tI18n } = useTranslation("users");
+
+	const label = tI18n(
+		"UserSettingsPage.SecretsPage.SecretsTable.open_secret_actions_for_value0_0eb109b4",
+		{
+			value0: secret.name,
+		},
+	);
 	const triggerRef = useRef<HTMLButtonElement>(null);
 
 	return (
@@ -279,7 +349,9 @@ const SecretRowActions: FC<SecretRowActionsProps> = ({
 					onSelect={() => onEditSecret(secret, triggerRef.current)}
 				>
 					<PencilIcon className="size-icon-xs" />
-					Edit secret
+					{tI18n(
+						"UserSettingsPage.SecretsPage.SecretsTable.edit_secret_b5068d24",
+					)}
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem
@@ -287,7 +359,7 @@ const SecretRowActions: FC<SecretRowActionsProps> = ({
 					onSelect={() => onDeleteSecret(secret)}
 				>
 					<TrashIcon className="size-icon-xs" />
-					Delete
+					{tI18n("UserSettingsPage.SecretsPage.SecretsTable.delete_e2d0a549")}
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
@@ -307,16 +379,23 @@ const DeleteSecretDialog: FC<DeleteSecretDialogProps> = ({
 	onCancel,
 	onConfirm,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	return (
 		<ConfirmDialog
 			type="delete"
 			open={Boolean(secret)}
 			confirmLoading={isDeleting}
-			title="Delete secret"
+			title={tI18n(
+				"UserSettingsPage.SecretsPage.SecretsTable.delete_secret_1a48c8c8",
+			)}
 			description={
 				<p>
-					Deleting <strong>{secret?.name}</strong> is irreversible. Workspaces
-					that depend on this secret will no longer receive it on future starts.
+					{tI18n("UserSettingsPage.SecretsPage.SecretsTable.deleting_8c4133b4")}
+					<strong>{secret?.name}</strong>
+					{tI18n(
+						"UserSettingsPage.SecretsPage.SecretsTable.is_irreversible_workspaces_that_depend_on_this_s_11c78669",
+					)}
 				</p>
 			}
 			onClose={() => {

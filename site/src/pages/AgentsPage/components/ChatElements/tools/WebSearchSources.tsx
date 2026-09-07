@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { ExternalLinkIcon, GlobeIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { ToolCall } from "./ToolCall";
 
 interface WebSearchSourcesProps {
@@ -9,6 +10,8 @@ interface WebSearchSourcesProps {
 
 /** Collapsible web-search result pills, styled as a ToolCall row. */
 const WebSearchSources: FC<WebSearchSourcesProps> = ({ sources }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	// Deduplicate sources by URL, keeping the first occurrence.
 	const unique = (() => {
 		const seen = new Set<string>();
@@ -34,7 +37,10 @@ const WebSearchSources: FC<WebSearchSourcesProps> = ({ sources }) => {
 					<GlobeIcon className="size-4 shrink-0 stroke-[1.5] text-current" />
 				</ToolCall.LeadingIcon>
 				<ToolCall.Label>
-					Searched <span className="text-content-secondary/60">{detail}</span>
+					{tI18n(
+						"AgentsPage.components.ChatElements.tools.WebSearchSources.searched_91c62b08",
+					)}
+					<span className="text-content-secondary/60">{detail}</span>
 				</ToolCall.Label>
 				<ToolCall.Chevron />
 			</ToolCall.HeaderButton>

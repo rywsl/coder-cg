@@ -1,6 +1,7 @@
 import capitalize from "lodash/capitalize";
 import { ExternalLinkIcon, FileIcon, LayoutGridIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	WorkspaceAppStatus as APIWorkspaceAppStatus,
 	Workspace,
@@ -39,6 +40,8 @@ export const AppStatuses: FC<AppStatusesProps> = ({
 	agent,
 	referenceDate,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [displayStatuses, setDisplayStatuses] = useState(false);
 	// Statuses are returned from the API sorted by created_at DESC, id DESC.
 	const allStatuses: StatusWithAppInfo[] = agent.apps.flatMap((app) =>
@@ -95,7 +98,9 @@ export const AppStatuses: FC<AppStatusesProps> = ({
 									</span>
 								</TooltipTrigger>
 								<TooltipContent>
-									This file is located in your workspace
+									{tI18n(
+										"WorkspacePage.AppStatuses.this_file_is_located_in_your_workspace_34e04596",
+									)}
 								</TooltipContent>
 							</Tooltip>
 						) : (
@@ -121,12 +126,13 @@ export const AppStatuses: FC<AppStatusesProps> = ({
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent>
-							{displayStatuses ? "Hide statuses" : "Show statuses"}
+							{displayStatuses
+								? tI18n("WorkspacePage.AppStatuses.hide_statuses_16c9a8b3")
+								: tI18n("WorkspacePage.AppStatuses.show_statuses_158646a5")}
 						</TooltipContent>
 					</Tooltip>
 				</div>
 			</div>
-
 			{displayStatuses && (
 				<ScrollArea className="h-[200px]">
 					{otherStatuses.map((status) => {

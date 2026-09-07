@@ -1,5 +1,6 @@
 import { CircleCheckIcon, CircleMinusIcon, TagIcon, XIcon } from "lucide-react";
 import type { ComponentProps, FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "#/components/Badge/Badge";
 import { Button } from "#/components/Button/Button";
 
@@ -31,6 +32,8 @@ export const ProvisionerTag: FC<ProvisionerTagProps> = ({
 	tagValue,
 	onDelete,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { valid, value: boolValue } = parseBool(tagValue);
 	const kv = (
 		<>
@@ -49,7 +52,10 @@ export const ProvisionerTag: FC<ProvisionerTagProps> = ({
 				className="size-6 -my-1"
 			>
 				<XIcon className="size-icon-xs" />
-				<span className="sr-only">Delete {tagName}</span>
+				<span className="sr-only">
+					{tI18n("provisioners.ProvisionerTag.delete_85941fb9")}
+					{tagName}
+				</span>
 			</Button>
 		</>
 	) : (

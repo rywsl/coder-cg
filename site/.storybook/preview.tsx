@@ -2,12 +2,19 @@ import "../src/index.css";
 import "../src/theme/globalFonts";
 import { isPixel } from "@coder/pixel-storybook/storyapi";
 import { DecoratorHelpers } from "@storybook/addon-themes";
-import type { Decorator, Parameters } from "@storybook/react-vite";
+import type { Decorator, Loader, Parameters } from "@storybook/react-vite";
 import { MotionConfig, MotionGlobalConfig } from "motion/react";
 import { StrictMode } from "react";
+import { I18nextProvider } from "react-i18next";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { withRouter } from "storybook-addon-remix-react-router";
 import { TooltipProvider } from "../src/components/Tooltip/Tooltip";
+import { i18n } from "../src/i18n";
+import {
+	applyLocale,
+	isSupportedLocale,
+	testDefaultLocale,
+} from "../src/i18n/locale";
 import themes, { baseModeFor, isConcreteThemeName } from "../src/theme";
 import { AppearanceProvider } from "../src/theme/appearance";
 import { ThemeContextProvider } from "../src/theme/context";
@@ -15,6 +22,24 @@ import { ThemeContextProvider } from "../src/theme/context";
 DecoratorHelpers.initializeThemeState(Object.keys(themes), "dark");
 
 MotionGlobalConfig.skipAnimations = isPixel();
+
+export const globalTypes = {
+	locale: {
+		description: "Interface language",
+		defaultValue: testDefaultLocale,
+		toolbar: {
+			icon: "globe",
+			items: [
+				{ value: "en", title: "English" },
+				{ value: "zh-CN", title: "简体中文" },
+			],
+		},
+	},
+};
+
+export const initialGlobals = {
+	locale: testDefaultLocale,
+};
 
 // Two Radix modal-layer behaviors race play functions under pixel, so both
 // are neutralized there only; vitest, Storybook dev, and the app keep their
@@ -151,9 +176,28 @@ const withSkipAnimations: Decorator = (Story) => (
 	</MotionConfig>
 );
 
+const loadLocale: Loader = async (context) => {
+	const selectedLocale = isSupportedLocale(context.globals.locale)
+		? context.globals.locale
+		: testDefaultLocale;
+	applyLocale(selectedLocale);
+	await i18n.changeLanguage(selectedLocale);
+};
+
+export const loaders: Loader[] = [loadLocale];
+
+const withI18n: Decorator = (Story) => {
+	return (
+		<I18nextProvider i18n={i18n}>
+			<Story />
+		</I18nextProvider>
+	);
+};
+
 export const decorators: Decorator[] = [
 	withRouter,
 	withQuery,
 	withTheme,
 	withSkipAnimations,
+	withI18n,
 ];

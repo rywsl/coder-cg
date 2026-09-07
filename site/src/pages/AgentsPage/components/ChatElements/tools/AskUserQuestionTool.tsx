@@ -5,10 +5,12 @@ import {
 	TriangleAlertIcon,
 } from "lucide-react";
 import { type FC, type FormEvent, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation } from "react-query";
 import { Button } from "#/components/Button/Button";
 import { Input } from "#/components/Input/Input";
 import { RadioGroup, RadioGroupItem } from "#/components/RadioGroup/RadioGroup";
+import { i18n } from "#/i18n";
 import { ToolCall } from "./ToolCall";
 import type { ToolStatus } from "./utils";
 
@@ -129,7 +131,9 @@ const getSubmissionErrorMessage = (error: unknown): string | undefined => {
 		return error.message;
 	}
 
-	return "Failed to submit your answer.";
+	return i18n.t(
+		"agents:AgentsPage.components.ChatElements.tools.AskUserQuestionTool.failed_to_submit_your_answer_cc17faaf",
+	);
 };
 
 type SelectableAnswerOptionProps = {
@@ -191,12 +195,27 @@ const QuestionOption: FC<QuestionOptionProps> = ({
 	isInteractive,
 	isSubmitting,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<SelectableAnswerOption
 			id={`${questionIdBase}-option-${optionIndex}`}
 			value={`option-${optionIndex}`}
-			label={option.label || `Option ${optionIndex + 1}`}
-			description={option.description || "No description provided."}
+			label={
+				option.label ||
+				tI18n(
+					"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.option_value0_c333077e",
+					{
+						value0: optionIndex + 1,
+					},
+				)
+			}
+			description={
+				option.description ||
+				tI18n(
+					"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.no_description_provided_2527a18a",
+				)
+			}
 			isInteractive={isInteractive}
 			isSubmitting={isSubmitting}
 		/>
@@ -222,6 +241,8 @@ const OtherQuestionOption: FC<OtherQuestionOptionProps> = ({
 	isSubmitting,
 	onTextChange,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const isOtherSelected = answer?.kind === "other";
 
 	return (
@@ -229,8 +250,12 @@ const OtherQuestionOption: FC<OtherQuestionOptionProps> = ({
 			<SelectableAnswerOption
 				id={`${questionIdBase}-option-${optionIndex}`}
 				value={OTHER_OPTION_VALUE}
-				label="Other"
-				description="Share a different answer."
+				label={tI18n(
+					"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.other_f97e9da0",
+				)}
+				description={tI18n(
+					"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.share_a_different_answer_7272d5b8",
+				)}
 				isInteractive={isInteractive}
 				isSubmitting={isSubmitting}
 			/>
@@ -238,9 +263,16 @@ const OtherQuestionOption: FC<OtherQuestionOptionProps> = ({
 				<div className="pl-7">
 					<Input
 						autoFocus={isInteractive}
-						aria-label={`Other response for ${questionHeader}`}
+						aria-label={tI18n(
+							"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.other_response_for_value0_0e5eb095",
+							{
+								value0: questionHeader,
+							},
+						)}
 						disabled={!isInteractive || isSubmitting}
-						placeholder="Describe another answer"
+						placeholder={tI18n(
+							"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.describe_another_answer_3b9f898e",
+						)}
 						value={answer.text}
 						onChange={(event) => {
 							onTextChange(event.currentTarget.value);
@@ -275,6 +307,8 @@ const QuestionStep: FC<QuestionStepProps> = ({
 	onOptionChange,
 	onOtherTextChange,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const questionHeader = getQuestionHeader(question, questionIndex);
 	const questionText = getQuestionText(question);
 	const questionIdBase = `${idPrefix}-question-${questionIndex}`;
@@ -286,7 +320,14 @@ const QuestionStep: FC<QuestionStepProps> = ({
 		<div className="space-y-3">
 			{showProgress && (
 				<p className="text-xs font-medium text-content-secondary">
-					Question {questionIndex + 1} of {questionCount}
+					{tI18n(
+						"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.question_39821a75",
+					)}
+					{questionIndex + 1}
+					{tI18n(
+						"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.of_a4282e4b",
+					)}
+					{questionCount}
 				</p>
 			)}
 			<div className="flex items-start gap-1.5 text-content-secondary">
@@ -301,7 +342,11 @@ const QuestionStep: FC<QuestionStepProps> = ({
 					<span className="sr-only" id={questionHeaderId}>
 						{questionHeader}
 					</span>
-					<span aria-hidden="true">Asking: </span>
+					<span aria-hidden="true">
+						{tI18n(
+							"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.asking_6b18649b",
+						)}
+					</span>
 					<span>{questionText}</span>
 				</p>
 			</div>
@@ -351,6 +396,8 @@ const AnsweredQuestionText: FC<AnsweredQuestionTextProps> = ({
 	questionIndex,
 	idPrefix,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<div className="flex items-start gap-1.5 text-content-secondary">
 			<MessageCircleQuestionIcon
@@ -361,7 +408,11 @@ const AnsweredQuestionText: FC<AnsweredQuestionTextProps> = ({
 				id={`${idPrefix}-question-${questionIndex}-text`}
 				className="m-0 min-w-0 flex-1 whitespace-pre-wrap text-[13px]"
 			>
-				<span aria-hidden="true">Asked: </span>
+				<span aria-hidden="true">
+					{tI18n(
+						"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.asked_74075f90",
+					)}
+				</span>
 				<span>{getQuestionText(question)}</span>
 			</p>
 		</div>
@@ -378,6 +429,8 @@ export const AskUserQuestionTool: FC<AskUserQuestionToolProps> = ({
 	previousResponseText,
 	onSubmitAnswer,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const idPrefix = useId();
 	const filteredQuestions = questions.map(filterQuestionOptions);
 	const [answers, setAnswers] = useState<Array<QuestionAnswer | undefined>>(
@@ -540,12 +593,22 @@ export const AskUserQuestionTool: FC<AskUserQuestionToolProps> = ({
 				<ToolCall.Root
 					status={status}
 					isError
-					errorMessage={errorMessage || "Failed to ask questions"}
+					errorMessage={
+						errorMessage ||
+						tI18n(
+							"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.failed_to_ask_questions_5138683a",
+						)
+					}
 					hasContent={false}
 				>
 					<ToolCall.Header
 						iconName="ask_user_question"
-						label={errorMessage || "Failed to ask questions"}
+						label={
+							errorMessage ||
+							tI18n(
+								"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.failed_to_ask_questions_5138683a",
+							)
+						}
 					/>
 				</ToolCall.Root>
 			</div>
@@ -564,12 +627,16 @@ export const AskUserQuestionTool: FC<AskUserQuestionToolProps> = ({
 					>
 						<ToolCall.Header
 							iconName="ask_user_question"
-							label="Asking for clarification..."
+							label={tI18n(
+								"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.asking_for_clarification_dfd1fbb1",
+							)}
 						/>
 					</ToolCall.Root>
 				) : (
 					<p className="text-[13px] italic text-content-secondary">
-						No questions available.
+						{tI18n(
+							"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.no_questions_available_d889d64e",
+						)}
 					</p>
 				)}
 			</div>
@@ -619,10 +686,15 @@ export const AskUserQuestionTool: FC<AskUserQuestionToolProps> = ({
 			{showSubmittedResponse && (
 				<div className="mt-4 rounded-md border border-solid border-border-default bg-surface-secondary px-3 py-2">
 					<p className="text-xs font-medium text-content-secondary">
-						Submitted answer
+						{tI18n(
+							"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.submitted_answer_3df2eacb",
+						)}
 					</p>
 					<p className="mt-1 whitespace-pre-wrap text-[13px] text-content-primary">
-						{displayedSubmittedResponseText || "No answer recorded."}
+						{displayedSubmittedResponseText ||
+							tI18n(
+								"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.no_answer_recorded_85dd2304",
+							)}
 					</p>
 				</div>
 			)}
@@ -647,7 +719,9 @@ export const AskUserQuestionTool: FC<AskUserQuestionToolProps> = ({
 							onClick={handleBack}
 							disabled={activeQuestionIndex === 0 || isSubmitting}
 						>
-							Back
+							{tI18n(
+								"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.back_76900f1b",
+							)}
 						</Button>
 					)}
 					{isWizard && !isFinalQuestion ? (
@@ -657,7 +731,9 @@ export const AskUserQuestionTool: FC<AskUserQuestionToolProps> = ({
 							variant="outline"
 							disabled={!canAdvanceToNextQuestion || isSubmitting}
 						>
-							Next
+							{tI18n(
+								"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.next_1ff57a29",
+							)}
 						</Button>
 					) : (
 						<Button
@@ -669,7 +745,13 @@ export const AskUserQuestionTool: FC<AskUserQuestionToolProps> = ({
 							{isSubmitting && (
 								<LoaderIcon className="size-3.5 animate-spin motion-reduce:animate-none" />
 							)}
-							{isSubmitting ? "Submitting..." : "Submit"}
+							{isSubmitting
+								? tI18n(
+										"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.submitting_64115d5b",
+									)
+								: tI18n(
+										"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.submit_155f816c",
+									)}
 						</Button>
 					)}
 				</div>
@@ -688,7 +770,9 @@ export const AskUserQuestionTool: FC<AskUserQuestionToolProps> = ({
 				>
 					<ToolCall.Header
 						iconName="ask_user_question"
-						label="Asking for clarification..."
+						label={tI18n(
+							"AgentsPage.components.ChatElements.tools.AskUserQuestionTool.asking_for_clarification_dfd1fbb1",
+						)}
 					/>
 				</ToolCall.Root>
 			)}

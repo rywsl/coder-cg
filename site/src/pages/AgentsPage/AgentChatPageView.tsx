@@ -7,6 +7,7 @@ import {
 	useEffect,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 import type { UrlTransform } from "streamdown";
 import { invalidateChatDiffContents } from "#/api/queries/chats";
@@ -259,6 +260,8 @@ const UserTabContent: FC<UserTabContentProps> = ({
 	isPending,
 	onTerminalReady,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	switch (tab.kind) {
 		case "terminal":
 			return workspace && workspaceAgent ? (
@@ -273,7 +276,11 @@ const UserTabContent: FC<UserTabContentProps> = ({
 					workspaceAgent={workspaceAgent}
 				/>
 			) : (
-				<UnavailableTabMessage message="Terminal will be available once the workspace agent is ready." />
+				<UnavailableTabMessage
+					message={tI18n(
+						"AgentsPage.AgentChatPageView.terminal_will_be_available_once_the_workspace_ag_341c3585",
+					)}
+				/>
 			);
 		case "workspace_app": {
 			if (!workspace) {
@@ -282,7 +289,11 @@ const UserTabContent: FC<UserTabContentProps> = ({
 			const app = findWorkspaceAppWithAgent(workspace, tab.agentId, tab.appId);
 			if (!app || !isWorkspaceAppEmbeddable(app)) {
 				return (
-					<UnavailableTabMessage message="This workspace app is no longer available as a right-panel tab." />
+					<UnavailableTabMessage
+						message={tI18n(
+							"AgentsPage.AgentChatPageView.this_workspace_app_is_no_longer_available_as_a_r_09eb2ca1",
+						)}
+					/>
 				);
 			}
 			return (
@@ -296,7 +307,11 @@ const UserTabContent: FC<UserTabContentProps> = ({
 			const agent = findWorkspaceAgent(workspace, tab.agentId);
 			if (!agent) {
 				return (
-					<UnavailableTabMessage message="This port preview tab is no longer available." />
+					<UnavailableTabMessage
+						message={tI18n(
+							"AgentsPage.AgentChatPageView.this_port_preview_tab_is_no_longer_available_4c67d820",
+						)}
+					/>
 				);
 			}
 			return (
@@ -399,6 +414,8 @@ export const AgentChatPageView: FC<AgentChatPageViewProps> = ({
 	chatContext,
 	workspaceSkills,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const queryClient = useQueryClient();
 	const { proxy } = useProxy();
 	const { entitlements } = useDashboard();
@@ -539,12 +556,43 @@ export const AgentChatPageView: FC<AgentChatPageViewProps> = ({
 	// new tab can never be added to one without the other going out of
 	// sync. Desktop is ordered before terminals so terminals are rightmost.
 	const builtInSidebarTabConfigs = [
-		{ id: "summary", label: "Summary" },
+		{
+			id: "summary",
+			label: tI18n("AgentsPage.AgentChatPageView.summary_8e76a94a"),
+		},
 		{ id: "git", label: "Git" },
-		...(debugLoggingEnabled ? [{ id: "debug", label: "Debug" }] : []),
-		...(availableBrowserApp ? [{ id: "browser", label: "Browser" }] : []),
-		...(availableDesktopChatId ? [{ id: "desktop", label: "Desktop" }] : []),
-		...(hasBuiltInTerminal ? [{ id: "terminal", label: "Terminal" }] : []),
+		...(debugLoggingEnabled
+			? [
+					{
+						id: "debug",
+						label: tI18n("AgentsPage.AgentChatPageView.debug_1a03bd2f"),
+					},
+				]
+			: []),
+		...(availableBrowserApp
+			? [
+					{
+						id: "browser",
+						label: tI18n("AgentsPage.AgentChatPageView.browser_d31de1a5"),
+					},
+				]
+			: []),
+		...(availableDesktopChatId
+			? [
+					{
+						id: "desktop",
+						label: tI18n("AgentsPage.AgentChatPageView.desktop_9bd88f24"),
+					},
+				]
+			: []),
+		...(hasBuiltInTerminal
+			? [
+					{
+						id: "terminal",
+						label: tI18n("AgentsPage.AgentChatPageView.terminal_e0926fda"),
+					},
+				]
+			: []),
 	];
 	// Dense terminal numbering: position among unlabeled terminal tabs,
 	// after the built-in Terminal when visible. Labeled terminals (command
@@ -568,7 +616,11 @@ export const AgentChatPageView: FC<AgentChatPageViewProps> = ({
 				id: tab.id,
 				label:
 					tab.label ??
-					(terminalNumber === 1 ? "Terminal" : `Terminal ${terminalNumber}`),
+					(terminalNumber === 1
+						? tI18n("AgentsPage.AgentChatPageView.terminal_e0926fda")
+						: tI18n("AgentsPage.AgentChatPageView.terminal_value0_825eef14", {
+								value0: terminalNumber,
+							})),
 			};
 		}),
 	];
@@ -837,10 +889,17 @@ export const AgentChatPageView: FC<AgentChatPageViewProps> = ({
 	const chatOwnerUsername = chatOwner?.username?.trim();
 	const chatOwnerLabel =
 		chatOwner?.name?.trim() ||
-		(chatOwnerUsername ? `@${chatOwnerUsername}` : "another user");
+		(chatOwnerUsername
+			? `@${chatOwnerUsername}`
+			: tI18n("AgentsPage.AgentChatPageView.another_user_fdf0295d"));
 	const isOtherUserReadOnly = !isArchived && chatOwner !== undefined;
 	const chatOwnerWarning = isOtherUserReadOnly
-		? `This chat is owned by ${chatOwnerLabel}. It is read-only.`
+		? tI18n(
+				"AgentsPage.AgentChatPageView.this_chat_is_owned_by_value0_it_is_read_only_175ccc93",
+				{
+					value0: chatOwnerLabel,
+				},
+			)
 		: undefined;
 
 	const hasLicense = entitlements.has_license;
@@ -948,7 +1007,9 @@ export const AgentChatPageView: FC<AgentChatPageViewProps> = ({
 								{isArchived && (
 									<div className="flex shrink-0 items-center gap-2 border-b border-border-default bg-surface-secondary px-4 py-2 text-xs text-content-secondary">
 										<ArchiveIcon className="size-4 shrink-0" />
-										This agent has been archived and is read-only.
+										{tI18n(
+											"AgentsPage.AgentChatPageView.this_agent_has_been_archived_and_is_read_only_9a29426a",
+										)}
 									</div>
 								)}
 								<div
@@ -1229,6 +1290,8 @@ export const AgentChatPageNotFoundView: FC<AgentChatPageNotFoundViewProps> = ({
 	isSidebarCollapsed,
 	onToggleSidebarCollapsed,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<div className="flex h-full min-h-0 min-w-0 flex-1 flex-col">
 			{titleElement}
@@ -1245,7 +1308,7 @@ export const AgentChatPageNotFoundView: FC<AgentChatPageNotFoundViewProps> = ({
 				onToggleSidebarCollapsed={onToggleSidebarCollapsed}
 			/>
 			<div className="flex flex-1 items-center justify-center text-content-secondary">
-				Chat not found
+				{tI18n("AgentsPage.AgentChatPageView.chat_not_found_1e816494")}
 			</div>
 		</div>
 	);

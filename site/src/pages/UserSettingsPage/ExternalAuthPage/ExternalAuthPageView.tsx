@@ -1,5 +1,6 @@
 import { EllipsisVerticalIcon, RefreshCcwIcon } from "lucide-react";
 import { type FC, useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { externalAuthProvider } from "#/api/queries/externalAuth";
 import type {
@@ -51,6 +52,8 @@ export const ExternalAuthPageView: FC<ExternalAuthPageViewProps> = ({
 	onUnlinkExternalAuth,
 	onValidateExternalAuth,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	if (getAuthsError) {
 		// Nothing to show if there is an error
 		return <ErrorAlert error={getAuthsError} />;
@@ -64,10 +67,16 @@ export const ExternalAuthPageView: FC<ExternalAuthPageViewProps> = ({
 		<Table>
 			<TableHeader>
 				<TableRow>
-					<TableHead>Application</TableHead>
+					<TableHead>
+						{tI18n(
+							"UserSettingsPage.ExternalAuthPage.ExternalAuthPageView.application_e7ad522e",
+						)}
+					</TableHead>
 					<TableHead>
 						<span aria-hidden className="sr-only">
-							Link to connect
+							{tI18n(
+								"UserSettingsPage.ExternalAuthPage.ExternalAuthPageView.link_to_connect_4c74bc30",
+							)}
 						</span>
 					</TableHead>
 					<TableHead className="w-[1%]" />
@@ -75,7 +84,11 @@ export const ExternalAuthPageView: FC<ExternalAuthPageViewProps> = ({
 			</TableHeader>
 			<TableBody>
 				{auths.providers === null || auths.providers?.length === 0 ? (
-					<TableEmpty message="No providers have been configured" />
+					<TableEmpty
+						message={tI18n(
+							"UserSettingsPage.ExternalAuthPage.ExternalAuthPageView.no_providers_have_been_configured_88893779",
+						)}
+					/>
 				) : (
 					auths.providers?.map((app) => (
 						<ExternalAuthRow
@@ -112,6 +125,8 @@ const ExternalAuthRow: FC<ExternalAuthRowProps> = ({
 	onUnlinkExternalAuth,
 	onValidateExternalAuth,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	const name = app.display_name || app.id || app.type;
 	const authURL = `/external-auth/${app.id}`;
 
@@ -142,13 +157,19 @@ const ExternalAuthRow: FC<ExternalAuthRowProps> = ({
 								<RefreshCcwIcon className="size-3" />
 							</TooltipTrigger>
 							<TooltipContent side="right" className="max-w-xs">
-								Authentication token will automatically refresh when expired.
+								{tI18n(
+									"UserSettingsPage.ExternalAuthPage.ExternalAuthPageView.authentication_token_will_automatically_refresh__54f02337",
+								)}
 							</TooltipContent>
 						</Tooltip>
 					)}
 					{link?.validate_error && (
 						<span>
-							<span className="pl-[1em] text-content-destructive">Error: </span>
+							<span className="pl-[1em] text-content-destructive">
+								{tI18n(
+									"UserSettingsPage.ExternalAuthPage.ExternalAuthPageView.error_8eecdde0",
+								)}
+							</span>
 							{link?.validate_error}
 						</span>
 					)}
@@ -163,15 +184,31 @@ const ExternalAuthRow: FC<ExternalAuthRowProps> = ({
 					}}
 				>
 					<Spinner loading={externalAuthPollingState === "polling"} />
-					{authenticated ? "Authenticated" : "Click to Login"}
+					{authenticated
+						? tI18n(
+								"UserSettingsPage.ExternalAuthPage.ExternalAuthPageView.authenticated_6ab694cf",
+							)
+						: tI18n(
+								"UserSettingsPage.ExternalAuthPage.ExternalAuthPageView.click_to_login_edaddeac",
+							)}
 				</Button>
 			</TableCell>
 			<TableCell>
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<Button size="icon-lg" variant="subtle" aria-label="Open menu">
+						<Button
+							size="icon-lg"
+							variant="subtle"
+							aria-label={tI18n(
+								"UserSettingsPage.ExternalAuthPage.ExternalAuthPageView.open_menu_b40b3713",
+							)}
+						>
 							<EllipsisVerticalIcon aria-hidden="true" />
-							<span className="sr-only">Open menu</span>
+							<span className="sr-only">
+								{tI18n(
+									"UserSettingsPage.ExternalAuthPage.ExternalAuthPageView.open_menu_b40b3713",
+								)}
+							</span>
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">
@@ -185,7 +222,9 @@ const ExternalAuthRow: FC<ExternalAuthRowProps> = ({
 								await refetch();
 							}}
 						>
-							Test Validate&hellip;
+							{tI18n(
+								"UserSettingsPage.ExternalAuthPage.ExternalAuthPageView.test_validate_1cf3179d",
+							)}
 						</DropdownMenuItem>
 						<DropdownMenuItem
 							className="text-content-destructive focus:text-content-destructive"
@@ -194,7 +233,9 @@ const ExternalAuthRow: FC<ExternalAuthRowProps> = ({
 								await refetch();
 							}}
 						>
-							Unlink&hellip;
+							{tI18n(
+								"UserSettingsPage.ExternalAuthPage.ExternalAuthPageView.unlink_cf3a7ab9",
+							)}
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

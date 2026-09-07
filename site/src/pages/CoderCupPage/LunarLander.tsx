@@ -1,4 +1,6 @@
 import { type FC, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
+import { i18n } from "#/i18n";
 import { ROSTER } from "./roster";
 
 // ---------------------------------------------------------------------------
@@ -554,10 +556,22 @@ function drawTerrain(ctx: CanvasRenderingContext2D, terrain: Terrain) {
 
 		if (pad.isStation) {
 			drawSpaceStation(ctx, midX, pad.y, pad.width);
-			drawVectorText(ctx, "CODER BASE", midX, pad.y + tick + 10, 7);
+			drawVectorText(
+				ctx,
+				i18n.t("pages:CoderCupPage.LunarLander.coder_base_c64fbfa2"),
+				midX,
+				pad.y + tick + 10,
+				7,
+			);
 		} else {
 			const helpH = Math.min(10, pad.width / 4);
-			drawVectorText(ctx, "HELP", midX, pad.y + tick + 10, helpH);
+			drawVectorText(
+				ctx,
+				i18n.t("pages:CoderCupPage.LunarLander.help_37a6760f"),
+				midX,
+				pad.y + tick + 10,
+				helpH,
+			);
 		}
 	}
 }
@@ -932,19 +946,31 @@ function drawDashboard(
 	const yawWarn = Math.abs(yawDeg) > (LANDING_ANGLE_TOL * 180) / Math.PI;
 
 	const smallPanels = [
-		{ label: "VELOCITY", value: `${state.velocity.toFixed(1)}`, warn: velWarn },
-		{ label: "YAW", value: `${yawDeg.toFixed(1)}\u00b0`, warn: yawWarn },
 		{
-			label: "ALTITUDE",
+			label: i18n.t("pages:CoderCupPage.LunarLander.velocity_b64b06c8"),
+			value: `${state.velocity.toFixed(1)}`,
+			warn: velWarn,
+		},
+		{
+			label: i18n.t("pages:CoderCupPage.LunarLander.yaw_4316c003"),
+			value: `${yawDeg.toFixed(1)}\u00b0`,
+			warn: yawWarn,
+		},
+		{
+			label: i18n.t("pages:CoderCupPage.LunarLander.altitude_afa52caf"),
 			value: `${Math.max(0, state.altitude).toFixed(0)}`,
 			warn: false,
 		},
 		{
-			label: "FUEL",
+			label: i18n.t("pages:CoderCupPage.LunarLander.fuel_0e2f3c16"),
 			value: `${state.fuel.toFixed(0)}%`,
 			warn: state.fuel < FUEL_WARN_THRESHOLD,
 		},
-		{ label: "SAVED", value: `${savedPct.toFixed(0)}%`, warn: false },
+		{
+			label: i18n.t("pages:CoderCupPage.LunarLander.saved_d10036cc"),
+			value: `${savedPct.toFixed(0)}%`,
+			warn: false,
+		},
 	];
 
 	let cx = padX;
@@ -956,7 +982,11 @@ function drawDashboard(
 			ctx.fillStyle = "#fff";
 			ctx.font = "bold 8px monospace";
 			ctx.textAlign = "center";
-			ctx.fillText("⚠ WARNING", cx + smallW / 2, panelY + panelH - 7);
+			ctx.fillText(
+				i18n.t("pages:CoderCupPage.LunarLander.warning_2649de28"),
+				cx + smallW / 2,
+				panelY + panelH - 7,
+			);
 		}
 		cx += smallW + gap;
 	}
@@ -975,7 +1005,13 @@ function drawDashboard(
 			ctx.fillText(`${i + 1}: ${cargo[i].name} - ${cargo[i].role}`, sx, sy);
 		} else {
 			ctx.fillStyle = "#555";
-			ctx.fillText(`${i + 1}: ---- unoccupied ----`, sx, sy);
+			ctx.fillText(
+				i18n.t("pages:CoderCupPage.LunarLander.value0_unoccupied_6a9f74d2", {
+					value0: i + 1,
+				}),
+				sx,
+				sy,
+			);
 		}
 	}
 }
@@ -1577,6 +1613,20 @@ function drawVectorText(
 	centerY: number,
 	lh: number,
 ) {
+	const hasUnsupportedGlyph = [...text].some(
+		(character) => character !== " " && VECTOR_FONT[character] === undefined,
+	);
+	if (hasUnsupportedGlyph) {
+		ctx.save();
+		ctx.fillStyle = "white";
+		ctx.font = `600 ${lh}px ui-sans-serif, system-ui, sans-serif`;
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
+		ctx.fillText(text, centerX, centerY);
+		ctx.restore();
+		return;
+	}
+
 	const lw = lh * 0.6;
 	const spacing = lh * 0.15;
 	const totalW = text.length * lw + (text.length - 1) * spacing;
@@ -1619,7 +1669,13 @@ function drawTada(
 	centerX: number,
 	centerY: number,
 ) {
-	drawVectorText(ctx, "TADA!", centerX, centerY, 52);
+	drawVectorText(
+		ctx,
+		i18n.t("pages:CoderCupPage.LunarLander.tada_8023b926"),
+		centerX,
+		centerY,
+		52,
+	);
 }
 
 function createCelebrationExplosions(
@@ -1687,7 +1743,11 @@ function drawSidebar(
 	ctx.fillStyle = "#666";
 	ctx.font = "bold 10px monospace";
 	ctx.textAlign = "left";
-	ctx.fillText("CODERNAUTS ROSTER", x + padX, headerH - 6);
+	ctx.fillText(
+		i18n.t("pages:CoderCupPage.LunarLander.codernauts_roster_3acd586f"),
+		x + padX,
+		headerH - 6,
+	);
 
 	// Clip to sidebar area below header.
 	ctx.save();
@@ -1763,6 +1823,8 @@ function sidebarHitTest(
 }
 
 export const LunarLander: FC = () => {
+	const { t: tI18n } = useTranslation("pages");
+
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -1995,23 +2057,45 @@ export const LunarLander: FC = () => {
 				cx.fillRect(0, 0, logicalW, logicalH);
 
 				const playH = logicalH - DASHBOARD_H;
-				drawVectorText(cx, "SAVE ALL", dashW / 2, playH * 0.25, 44);
-				drawVectorText(cx, "CODERNAUTS", dashW / 2, playH * 0.43, 44);
+				drawVectorText(
+					cx,
+					i18n.t("pages:CoderCupPage.LunarLander.save_all_f766b3da"),
+					dashW / 2,
+					playH * 0.25,
+					44,
+				);
+				drawVectorText(
+					cx,
+					tI18n("CoderCupPage.LunarLander.codernauts_f1eb9a12"),
+					dashW / 2,
+					playH * 0.43,
+					44,
+				);
 
 				cx.fillStyle = "white";
 				cx.font = "bold 14px monospace";
 				cx.textAlign = "center";
 				cx.fillText(
-					"press \u2190 to rotate left, press \u2192 to rotate right",
+					i18n.t(
+						"pages:CoderCupPage.LunarLander.press_to_rotate_left_press_to_rotate_right_514cbff6",
+					),
 					dashW / 2,
 					playH * 0.59,
 				);
-				cx.fillText("press \u2193 for main thruster", dashW / 2, playH * 0.65);
+				cx.fillText(
+					i18n.t(
+						"pages:CoderCupPage.LunarLander.press_for_main_thruster_20f23add",
+					),
+					dashW / 2,
+					playH * 0.65,
+				);
 				if (Math.floor(introTimer * 2.5) % 2 === 0) {
 					cx.fillStyle = "#888";
 					cx.font = "12px monospace";
 					cx.fillText(
-						`get ready... ${Math.ceil(introTimer)}`,
+						i18n.t("pages:CoderCupPage.LunarLander.get_ready_value0_637b8653", {
+							value0: Math.ceil(introTimer),
+						}),
 						dashW / 2,
 						playH * 0.76,
 					);
@@ -2046,7 +2130,13 @@ export const LunarLander: FC = () => {
 				cx.fillStyle = "#aaa";
 				cx.font = "14px monospace";
 				cx.textAlign = "center";
-				cx.fillText("All Codernauts have been saved!", dashW / 2, playH * 0.6);
+				cx.fillText(
+					i18n.t(
+						"pages:CoderCupPage.LunarLander.all_codernauts_have_been_saved_e3dfb56a",
+					),
+					dashW / 2,
+					playH * 0.6,
+				);
 
 				const savedPct = (savedNames.size / ROSTER.length) * 100;
 				drawDashboard(
@@ -2242,8 +2332,10 @@ export const LunarLander: FC = () => {
 					const scx = station.x + station.width / 2;
 					drawTooltip(
 						cx,
-						"Everyone saved here!",
-						"Onto the next base...",
+						i18n.t(
+							"pages:CoderCupPage.LunarLander.everyone_saved_here_37383721",
+						),
+						tI18n("CoderCupPage.LunarLander.onto_the_next_base_dcb756f1"),
 						scx,
 						station.y - 40,
 					);
@@ -2271,7 +2363,13 @@ export const LunarLander: FC = () => {
 						const padY = terrain.pads[naut.padIdx].y;
 						const jy =
 							-Math.abs(Math.sin(naut.spotlightPhase * Math.PI * 3)) * 10;
-						drawTooltip(cx, "It's me!", naut.name, naut.x, padY + jy - 14);
+						drawTooltip(
+							cx,
+							i18n.t("pages:CoderCupPage.LunarLander.it_s_me_7e729c85"),
+							naut.name,
+							naut.x,
+							padY + jy - 14,
+						);
 					}
 				}
 			}
@@ -2338,7 +2436,9 @@ export const LunarLander: FC = () => {
 						const scx = station.x + station.width / 2;
 						drawTooltip(
 							cx,
-							"I am already saved!",
+							i18n.t(
+								"pages:CoderCupPage.LunarLander.i_am_already_saved_de893f15",
+							),
 							savedBubbleName,
 							scx,
 							station.y - 40,
@@ -2371,7 +2471,16 @@ export const LunarLander: FC = () => {
 				cx.fillStyle = "white";
 				cx.font = "bold 11px monospace";
 				cx.textAlign = "center";
-				cx.fillText(`Travel to save ${dialogTarget}?`, dlgX, dlgY - 8);
+				cx.fillText(
+					i18n.t(
+						"pages:CoderCupPage.LunarLander.travel_to_save_value0_6415de21",
+						{
+							value0: dialogTarget,
+						},
+					),
+					dlgX,
+					dlgY - 8,
+				);
 
 				// Buttons.
 				const btnW = 60;

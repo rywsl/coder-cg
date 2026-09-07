@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "#/components/Badge/Badge";
 import {
 	Tooltip,
@@ -12,6 +13,8 @@ interface PillListProps {
 }
 
 export const IdpPillList: FC<PillListProps> = ({ roles }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<div className="flex flex-row gap-2">
 			{roles.length > 0 ? (
@@ -22,9 +25,12 @@ export const IdpPillList: FC<PillListProps> = ({ roles }) => {
 					{roles[0]}
 				</Badge>
 			) : (
-				<p>None</p>
+				<p>
+					{tI18n(
+						"OrganizationSettingsPage.IdpSyncPage.IdpPillList.none_dc937b59",
+					)}
+				</p>
 			)}
-
 			{roles.length > 1 && <OverflowPill roles={roles.slice(1)} />}
 		</div>
 	);
@@ -35,14 +41,18 @@ interface OverflowPillProps {
 }
 
 const OverflowPill: FC<OverflowPillProps> = ({ roles }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<Tooltip>
 			<TooltipTrigger asChild>
 				<Badge className="w-fit" data-testid="overflow-pill">
-					+{roles.length} more
+					+{roles.length}
+					{tI18n(
+						"OrganizationSettingsPage.IdpSyncPage.IdpPillList.more_226ba18b",
+					)}
 				</Badge>
 			</TooltipTrigger>
-
 			<TooltipContent className="px-4 py-3 border-surface-quaternary">
 				<ul className="flex flex-col gap-2 list-none my-0 pl-0">
 					{roles.map((role) => (

@@ -4,6 +4,7 @@ import relativeTimePlugin from "dayjs/plugin/relativeTime";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import humanizeDuration from "humanize-duration";
+import { currentIntlLocale, currentLocale } from "#/i18n/locale";
 
 // Load required plugins
 dayjs.extend(duration);
@@ -63,7 +64,7 @@ export function formatDate(
 	date: Date,
 	options?: { locale?: Intl.LocalesArgument } & Intl.DateTimeFormatOptions,
 ) {
-	return date.toLocaleDateString(options?.locale, {
+	return date.toLocaleDateString(options?.locale ?? currentIntlLocale(), {
 		...defaultDateLocaleOptions,
 		...options,
 	});
@@ -72,7 +73,8 @@ export function formatDate(
 // Duration functions
 export function humanDuration(durationInMs: number) {
 	return humanizeDuration(durationInMs, {
-		conjunction: " and ",
+		conjunction: currentLocale() === "zh-CN" ? "、" : " and ",
+		language: currentLocale() === "zh-CN" ? "zh_CN" : "en",
 		serialComma: false,
 		round: true,
 		units: ["y", "mo", "w", "d", "h", "m", "s", "ms"],

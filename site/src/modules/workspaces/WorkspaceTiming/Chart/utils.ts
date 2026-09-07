@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { currentIntlLocale } from "#/i18n/locale";
 
 export type TimeRange = {
 	startedAt: Date;
@@ -116,7 +117,7 @@ export const formatTime = (time: number): string => {
 		unit = "y";
 		frac = 0;
 	}
-	return `${value.toLocaleString(undefined, {
+	return `${value.toLocaleString(currentIntlLocale(), {
 		maximumFractionDigits: frac,
 	})}${unit}`;
 };

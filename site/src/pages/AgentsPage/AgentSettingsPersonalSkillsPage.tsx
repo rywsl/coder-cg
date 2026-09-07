@@ -3,6 +3,7 @@ import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import type { FC } from "react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import { getErrorDetail, getErrorMessage } from "#/api/errors";
@@ -14,6 +15,7 @@ import {
 	userSkills,
 } from "#/api/queries/userSkills";
 import type { UserSkillMetadata } from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 import {
 	AgentSettingsPersonalSkillsPageView,
 	type PersonalSkillDeleteState,
@@ -49,13 +51,21 @@ const personalSkillError = (
 	const status = isAxiosError(error) ? error.response?.status : undefined;
 	let statusFallback = fallback;
 	if (status === 400) {
-		statusFallback = "Skill content is invalid.";
+		statusFallback = i18n.t(
+			"agents:AgentsPage.AgentSettingsPersonalSkillsPage.skill_content_is_invalid_162ef93a",
+		);
 	} else if (status === 403) {
-		statusFallback = "You do not have permission to manage personal skills.";
+		statusFallback = i18n.t(
+			"agents:AgentsPage.AgentSettingsPersonalSkillsPage.you_do_not_have_permission_to_manage_personal_sk_f85815ae",
+		);
 	} else if (status === 404) {
-		statusFallback = "That personal skill was not found.";
+		statusFallback = i18n.t(
+			"agents:AgentsPage.AgentSettingsPersonalSkillsPage.that_personal_skill_was_not_found_e2b011a4",
+		);
 	} else if (status === 409) {
-		statusFallback = "A skill with that name already exists.";
+		statusFallback = i18n.t(
+			"agents:AgentsPage.AgentSettingsPersonalSkillsPage.a_skill_with_that_name_already_exists_5e125c8d",
+		);
 	}
 
 	return {
@@ -94,6 +104,8 @@ const exportPersonalSkillsArchive = async (
 };
 
 const AgentSettingsPersonalSkillsPage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const queryClient = useQueryClient();
 	const [dialogState, setDialogState] = useState<DialogState>(null);
 	const skillsQuery = useQuery(userSkills());
@@ -118,7 +130,11 @@ const AgentSettingsPersonalSkillsPage: FC = () => {
 					? null
 					: current,
 			);
-			toast.success("Personal skill created.");
+			toast.success(
+				tI18n(
+					"AgentsPage.AgentSettingsPersonalSkillsPage.personal_skill_created_920c846d",
+				),
+			);
 		},
 	});
 
@@ -134,11 +150,19 @@ const AgentSettingsPersonalSkillsPage: FC = () => {
 					? null
 					: current,
 			);
-			toast.success("Personal skill saved.");
+			toast.success(
+				tI18n(
+					"AgentsPage.AgentSettingsPersonalSkillsPage.personal_skill_saved_2a38ef85",
+				),
+			);
 		},
 		onError: (error, variables) => {
 			if (isAxiosError(error) && error.response?.status === 404) {
-				toast.info("That skill was deleted while you were editing it.");
+				toast.info(
+					tI18n(
+						"AgentsPage.AgentSettingsPersonalSkillsPage.that_skill_was_deleted_while_you_were_editing_it_d2fb59af",
+					),
+				);
 				setDialogState((current) =>
 					current?.type === "edit" &&
 					current.name === variables.name &&
@@ -163,7 +187,11 @@ const AgentSettingsPersonalSkillsPage: FC = () => {
 					? null
 					: current,
 			);
-			toast.success("Personal skill deleted.");
+			toast.success(
+				tI18n(
+					"AgentsPage.AgentSettingsPersonalSkillsPage.personal_skill_deleted_3cff058d",
+				),
+			);
 		},
 		onError: (error, variables) => {
 			if (isAxiosError(error) && error.response?.status === 404) {
@@ -187,7 +215,12 @@ const AgentSettingsPersonalSkillsPage: FC = () => {
 			downloadPersonalSkillFile(name, fetchSkillContent),
 		onError: (error) => {
 			toast.error(
-				getErrorMessage(error, "Failed to download personal skill."),
+				getErrorMessage(
+					error,
+					tI18n(
+						"AgentsPage.AgentSettingsPersonalSkillsPage.failed_to_download_personal_skill_4c94aa32",
+					),
+				),
 				{
 					description: getErrorDetail(error),
 				},
@@ -198,9 +231,17 @@ const AgentSettingsPersonalSkillsPage: FC = () => {
 	const exportAllMutation = useMutation({
 		mutationFn: () => exportPersonalSkillsArchive(skills, fetchSkillContent),
 		onError: (error) => {
-			toast.error(getErrorMessage(error, "Failed to export personal skills."), {
-				description: getErrorDetail(error),
-			});
+			toast.error(
+				getErrorMessage(
+					error,
+					tI18n(
+						"AgentsPage.AgentSettingsPersonalSkillsPage.failed_to_export_personal_skills_b278acfe",
+					),
+				),
+				{
+					description: getErrorDetail(error),
+				},
+			);
 		},
 	});
 

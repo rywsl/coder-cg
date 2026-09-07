@@ -1,6 +1,7 @@
 import { isAxiosError } from "axios";
 import type { FC } from "react";
 import { useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "react-query";
 import { useParams, useSearchParams } from "react-router";
 import type { ApiErrorResponse } from "#/api/errors";
@@ -20,6 +21,8 @@ import { useAuthenticated } from "#/hooks/useAuthenticated";
 import ExternalAuthPageView from "./ExternalAuthPageView";
 
 const ExternalAuthPage: FC = () => {
+	const { t: tI18n } = useTranslation("auth");
+
 	const { provider } = useParams() as { provider: string };
 	const [searchParams] = useSearchParams();
 	const { permissions } = useAuthenticated();
@@ -100,13 +103,15 @@ const ExternalAuthPage: FC = () => {
 			// show an error there?
 			return (
 				<SignInLayout>
-					<Welcome>Failed to validate oauth access token</Welcome>
-
+					<Welcome>
+						{tI18n(
+							"ExternalAuthPage.ExternalAuthPage.failed_to_validate_oauth_access_token_0475d37c",
+						)}
+					</Welcome>
 					<p className="text-center">
-						Attempted to validate the user&apos;s oauth access token from the
-						authentication flow. This situation may occur as a result of an
-						external authentication provider misconfiguration. Verify the
-						external authentication validation URL is accurately configured.
+						{tI18n(
+							"ExternalAuthPage.ExternalAuthPage.attempted_to_validate_the_user_s_oauth_access_to_c9352bac",
+						)}
 					</p>
 					<br />
 					<Button
@@ -116,7 +121,7 @@ const ExternalAuthPage: FC = () => {
 							location.href = `/external-auth/${provider}/callback`;
 						}}
 					>
-						Retry
+						{tI18n("ExternalAuthPage.ExternalAuthPage.retry_942087cc")}
 					</Button>
 				</SignInLayout>
 			);

@@ -1,5 +1,6 @@
 import type React from "react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { Workspace } from "#/api/typesGenerated";
 import {
 	StatusIndicator,
@@ -37,6 +38,8 @@ export const WorkspaceStatusIndicator: FC<WorkspaceStatusIndicatorProps> = ({
 	workspace,
 	children,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	let { text, type } = getDisplayWorkspaceStatus(
 		workspace.latest_build.status,
 		workspace.latest_build.job,
@@ -49,7 +52,12 @@ export const WorkspaceStatusIndicator: FC<WorkspaceStatusIndicatorProps> = ({
 	const statusIndicator = (
 		<StatusIndicator variant={variantByStatusType[type]}>
 			<StatusIndicatorDot />
-			<span className="sr-only">Workspace status:</span> {text}
+			<span className="sr-only">
+				{tI18n(
+					"workspaces.WorkspaceStatusIndicator.WorkspaceStatusIndicator.workspace_status_7e474491",
+				)}
+			</span>{" "}
+			{text}
 			{children}
 		</StatusIndicator>
 	);
@@ -63,13 +71,19 @@ export const WorkspaceStatusIndicator: FC<WorkspaceStatusIndicatorProps> = ({
 			<TooltipTrigger asChild>
 				<StatusIndicator variant={variantByStatusType[type]}>
 					<StatusIndicatorDot />
-					<span className="sr-only">Workspace status:</span> {text}
+					<span className="sr-only">
+						{tI18n(
+							"workspaces.WorkspaceStatusIndicator.WorkspaceStatusIndicator.workspace_status_7e474491",
+						)}
+					</span>{" "}
+					{text}
 					{children}
 				</StatusIndicator>
 			</TooltipTrigger>
 			<TooltipContent>
-				One or more workspace agents need attention. Expand an agent's logs for
-				details.
+				{tI18n(
+					"workspaces.WorkspaceStatusIndicator.WorkspaceStatusIndicator.one_or_more_workspace_agents_need_attention_expa_95b5589b",
+				)}
 			</TooltipContent>
 		</Tooltip>
 	);

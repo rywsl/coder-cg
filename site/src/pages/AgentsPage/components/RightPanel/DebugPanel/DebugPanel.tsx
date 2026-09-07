@@ -1,6 +1,7 @@
 import { saveAs } from "file-saver";
 import { DownloadIcon } from "lucide-react";
 import { type FC, type ReactNode, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	type QueryClient,
 	useMutation,
@@ -19,6 +20,7 @@ import { Alert } from "#/components/Alert/Alert";
 import { Button } from "#/components/Button/Button";
 import { ScrollArea } from "#/components/ScrollArea/ScrollArea";
 import { Spinner } from "#/components/Spinner/Spinner";
+import { i18n } from "#/i18n";
 import { DebugRunList } from "./DebugRunList";
 import {
 	buildChatDebugExport,
@@ -38,7 +40,13 @@ const DEBUG_RUN_EXPORT_FETCH_CONCURRENCY = 5;
 
 const getMissingRunsDescription = (failedRunCount: number): string => {
 	const noun = failedRunCount === 1 ? "run" : "runs";
-	return `${failedRunCount} ${noun} could not be fetched. The downloaded JSON lists them in failed_runs.`;
+	return i18n.t(
+		"agents:AgentsPage.components.RightPanel.DebugPanel.DebugPanel.value0_value1_could_not_be_fetched_the_downloade_516c5e34",
+		{
+			value0: failedRunCount,
+			value1: noun,
+		},
+	);
 };
 
 const isTerminalDebugRun = (run: ChatDebugRunSummary): boolean => {
@@ -89,7 +97,9 @@ const fetchDebugRunDetailsForExport = async (
 				run_id: run.id,
 				message: getErrorMessage(
 					result.reason,
-					"Unable to fetch debug run detail.",
+					i18n.t(
+						"agents:AgentsPage.components.RightPanel.DebugPanel.DebugPanel.unable_to_fetch_debug_run_detail_5abf4d5e",
+					),
 				),
 			});
 		}
@@ -103,6 +113,8 @@ export const DebugPanel: FC<DebugPanelProps> = ({
 	isVisible = false,
 	download = saveAs,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const runsQuery = useQuery({
 		...chatDebugRuns(chatId),
 		enabled: isVisible,
@@ -122,7 +134,9 @@ export const DebugPanel: FC<DebugPanelProps> = ({
 					<p className="text-sm text-content-primary">
 						{getErrorMessage(
 							runsQuery.error,
-							"Unable to refresh debug runs. Showing cached data.",
+							tI18n(
+								"AgentsPage.components.RightPanel.DebugPanel.DebugPanel.unable_to_refresh_debug_runs_showing_cached_data_93db1ee9",
+							),
 						)}
 					</p>
 				</Alert>
@@ -137,7 +151,9 @@ export const DebugPanel: FC<DebugPanelProps> = ({
 					<p className="text-sm text-content-primary">
 						{getErrorMessage(
 							runsQuery.error,
-							"Unable to load debug panel data.",
+							tI18n(
+								"AgentsPage.components.RightPanel.DebugPanel.DebugPanel.unable_to_load_debug_panel_data_0cb418e9",
+							),
 						)}
 					</p>
 				</Alert>
@@ -147,7 +163,9 @@ export const DebugPanel: FC<DebugPanelProps> = ({
 		content = (
 			<div className="flex items-center gap-2 p-4 text-sm text-content-secondary">
 				<Spinner size="sm" loading />
-				Loading debug runs...
+				{tI18n(
+					"AgentsPage.components.RightPanel.DebugPanel.DebugPanel.loading_debug_runs_ced3fbe8",
+				)}
 			</div>
 		);
 	} else if (sortedRuns.length === 0) {
@@ -156,13 +174,20 @@ export const DebugPanel: FC<DebugPanelProps> = ({
 				{refreshWarning}
 				<div className="flex flex-col gap-2 p-4 text-sm text-content-secondary">
 					<p className="font-medium text-content-primary">
-						No debug runs recorded yet
+						{tI18n(
+							"AgentsPage.components.RightPanel.DebugPanel.DebugPanel.no_debug_runs_recorded_yet_addf8579",
+						)}
 					</p>
 					<p>
-						Debug logging captures LLM request/response data for each chat turn,
-						title generation, and compaction operation.
+						{tI18n(
+							"AgentsPage.components.RightPanel.DebugPanel.DebugPanel.debug_logging_captures_llm_request_response_data_b67c74b8",
+						)}
 					</p>
-					<p>Send a message in this chat to start capturing debug data.</p>
+					<p>
+						{tI18n(
+							"AgentsPage.components.RightPanel.DebugPanel.DebugPanel.send_a_message_in_this_chat_to_start_capturing_d_fb4fa10b",
+						)}
+					</p>
 				</div>
 			</>
 		);
@@ -209,6 +234,8 @@ const ExportAllDebugRunsButton: FC<ExportAllDebugRunsButtonProps> = ({
 	runs,
 	download,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const queryClient = useQueryClient();
 	const activeExportControllerRef = useRef<AbortController | null>(null);
 	const exportDebugRunsMutation = useMutation({
@@ -225,9 +252,16 @@ const ExportAllDebugRunsButton: FC<ExportAllDebugRunsButtonProps> = ({
 					return;
 				}
 				if (runDetails.length === 0) {
-					toast.error("Failed to export debug logs.", {
-						description: "No debug run details could be fetched.",
-					});
+					toast.error(
+						tI18n(
+							"AgentsPage.components.RightPanel.DebugPanel.DebugPanel.failed_to_export_debug_logs_31984d39",
+						),
+						{
+							description: tI18n(
+								"AgentsPage.components.RightPanel.DebugPanel.DebugPanel.no_debug_run_details_could_be_fetched_7a14f2fa",
+							),
+						},
+					);
 					return;
 				}
 
@@ -248,15 +282,25 @@ const ExportAllDebugRunsButton: FC<ExportAllDebugRunsButtonProps> = ({
 				}
 
 				if (failedRuns.length > 0) {
-					toast.warning("Exported debug logs with missing runs.", {
-						description: getMissingRunsDescription(failedRuns.length),
-					});
+					toast.warning(
+						tI18n(
+							"AgentsPage.components.RightPanel.DebugPanel.DebugPanel.exported_debug_logs_with_missing_runs_8f3e6b8e",
+						),
+						{
+							description: getMissingRunsDescription(failedRuns.length),
+						},
+					);
 				}
 			} catch (error) {
 				console.error(error);
-				toast.error("Failed to export debug logs.", {
-					description: getErrorDetail(error),
-				});
+				toast.error(
+					tI18n(
+						"AgentsPage.components.RightPanel.DebugPanel.DebugPanel.failed_to_export_debug_logs_31984d39",
+					),
+					{
+						description: getErrorDetail(error),
+					},
+				);
 			}
 		},
 		onSettled: (_data, _error, controller) => {
@@ -292,7 +336,9 @@ const ExportAllDebugRunsButton: FC<ExportAllDebugRunsButtonProps> = ({
 				) : (
 					<DownloadIcon className="size-4" />
 				)}
-				Export debug logs
+				{tI18n(
+					"AgentsPage.components.RightPanel.DebugPanel.DebugPanel.export_debug_logs_e41b1e16",
+				)}
 			</Button>
 		</div>
 	);

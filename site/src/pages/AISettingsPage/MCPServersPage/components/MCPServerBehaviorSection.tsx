@@ -1,6 +1,7 @@
 import type { FormikContextType } from "formik";
 import { InfoIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Input } from "#/components/Input/Input";
 import {
 	Select,
@@ -32,10 +33,14 @@ export const MCPServerBehaviorSection: FC<MCPServerBehaviorSectionProps> = ({
 	formId,
 	disabled,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<>
 			<Field
-				label="Availability"
+				label={tI18n(
+					"AISettingsPage.MCPServersPage.components.MCPServerBehaviorSection.availability_12f67f85",
+				)}
 				htmlFor={`${formId}-availability`}
 				className="max-w-md"
 				description={
@@ -65,57 +70,81 @@ export const MCPServerBehaviorSection: FC<MCPServerBehaviorSectionProps> = ({
 			</Field>
 			<div className="flex flex-col gap-4">
 				<SwitchField
-					label="Model intent"
+					label={tI18n(
+						"AISettingsPage.MCPServersPage.components.MCPServerBehaviorSection.model_intent_cdad59c0",
+					)}
 					checked={form.values.modelIntent}
 					onCheckedChange={(checked) =>
 						void form.setFieldValue("modelIntent", checked)
 					}
 					disabled={disabled}
-					tooltip="Allows this server to be used for model-intent tools."
+					tooltip={tI18n(
+						"AISettingsPage.MCPServersPage.components.MCPServerBehaviorSection.allows_this_server_to_be_used_for_model_intent_t_c3c59254",
+					)}
 				/>
 				<SwitchField
-					label="Allow all tools from this MCP server in root plan mode"
+					label={tI18n(
+						"AISettingsPage.MCPServersPage.components.MCPServerBehaviorSection.allow_all_tools_from_this_mcp_server_in_root_pla_d8f994af",
+					)}
 					checked={form.values.allowInPlanMode}
 					onCheckedChange={(checked) =>
 						void form.setFieldValue("allowInPlanMode", checked)
 					}
 					disabled={disabled}
-					tooltip="Allows tools during planning. Workspace MCP and plan-mode controls still apply."
+					tooltip={tI18n(
+						"AISettingsPage.MCPServersPage.components.MCPServerBehaviorSection.allows_tools_during_planning_workspace_mcp_and_p_2f8e0f21",
+					)}
 				/>
 				<SwitchField
-					label="Forward Coder identity headers"
+					label={tI18n(
+						"AISettingsPage.MCPServersPage.components.MCPServerBehaviorSection.forward_coder_identity_headers_611b9c11",
+					)}
 					checked={form.values.forwardCoderHeaders}
 					onCheckedChange={(checked) =>
 						void form.setFieldValue("forwardCoderHeaders", checked)
 					}
 					disabled={disabled}
-					tooltip="Only enable for first-party or trusted MCP servers."
+					tooltip={tI18n(
+						"AISettingsPage.MCPServersPage.components.MCPServerBehaviorSection.only_enable_for_first_party_or_trusted_mcp_serve_26202b63",
+					)}
 				/>
 			</div>
 			<div className="grid items-start gap-4 sm:grid-cols-2">
 				<Field
-					label="Tool allow list"
+					label={tI18n(
+						"AISettingsPage.MCPServersPage.components.MCPServerBehaviorSection.tool_allow_list_c850e118",
+					)}
 					htmlFor={`${formId}-allow-list`}
-					description="Comma-separated. Empty = all allowed."
+					description={tI18n(
+						"AISettingsPage.MCPServersPage.components.MCPServerBehaviorSection.comma_separated_empty_all_allowed_436208b6",
+					)}
 				>
 					<Input
 						id={`${formId}-allow-list`}
 						className="placeholder:text-content-disabled shadow-none"
 						{...form.getFieldProps("toolAllowList")}
-						placeholder="tool 1, tool 2"
+						placeholder={tI18n(
+							"AISettingsPage.MCPServersPage.components.MCPServerBehaviorSection.tool_1_tool_2_28cae6a1",
+						)}
 						disabled={disabled}
 					/>
 				</Field>
 				<Field
-					label="Tool deny list"
+					label={tI18n(
+						"AISettingsPage.MCPServersPage.components.MCPServerBehaviorSection.tool_deny_list_cf3b4d71",
+					)}
 					htmlFor={`${formId}-deny-list`}
-					description="Comma-separated names to block."
+					description={tI18n(
+						"AISettingsPage.MCPServersPage.components.MCPServerBehaviorSection.comma_separated_names_to_block_fe8783d6",
+					)}
 				>
 					<Input
 						id={`${formId}-deny-list`}
 						className="placeholder:text-content-disabled shadow-none"
 						{...form.getFieldProps("toolDenyList")}
-						placeholder="tool 1, tool 2"
+						placeholder={tI18n(
+							"AISettingsPage.MCPServersPage.components.MCPServerBehaviorSection.tool_1_tool_2_28cae6a1",
+						)}
 						disabled={disabled}
 					/>
 				</Field>

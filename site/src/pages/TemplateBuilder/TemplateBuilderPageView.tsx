@@ -6,6 +6,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router";
@@ -83,6 +84,8 @@ export const TemplateBuilderPageView: FC<TemplateBuilderPageViewProps> = ({
 	onClearCreateError,
 	sessionId,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const [state, dispatch] = useReducer(
 		wizardReducer,
 		{ sessionId, preselectedBase },
@@ -281,21 +284,27 @@ export const TemplateBuilderPageView: FC<TemplateBuilderPageViewProps> = ({
 	return (
 		<Margins className="pb-12">
 			<PageHeader>
-				<PageHeaderTitle>Create new template</PageHeaderTitle>
+				<PageHeaderTitle>
+					{tI18n(
+						"TemplateBuilder.TemplateBuilderPageView.create_new_template_4dbf15ff",
+					)}
+				</PageHeaderTitle>
 				<PageHeaderSubtitle>
-					A Terraform blueprint for reproducible workspaces.
+					{tI18n(
+						"TemplateBuilder.TemplateBuilderPageView.a_terraform_blueprint_for_reproducible_workspace_59cbb36d",
+					)}
 					<Link
 						href={docs("/admin/templates")}
 						target="_blank"
 						className="ml-1 font-normal"
 					>
-						View docs
+						{tI18n(
+							"TemplateBuilder.TemplateBuilderPageView.view_docs_61479fda",
+						)}
 					</Link>
 				</PageHeaderSubtitle>
 			</PageHeader>
-
 			{error != null && <ErrorAlert error={error} />}
-
 			<div className="flex gap-8">
 				{/* Main content area */}
 				<div className="flex-1 min-w-0">
@@ -319,7 +328,7 @@ export const TemplateBuilderPageView: FC<TemplateBuilderPageViewProps> = ({
 							<div />
 						) : (
 							<Button variant="outline" onClick={handleBack}>
-								Back
+								{tI18n("TemplateBuilder.TemplateBuilderPageView.back_76900f1b")}
 							</Button>
 						)}
 						{isLastStep ? (
@@ -328,11 +337,15 @@ export const TemplateBuilderPageView: FC<TemplateBuilderPageViewProps> = ({
 								form={TEMPLATE_CUSTOMIZATIONS_FORM_ID}
 								disabled={state.hasProvisioners === false}
 							>
-								Create Template
+								{tI18n(
+									"TemplateBuilder.TemplateBuilderPageView.create_template_b79296f1",
+								)}
 							</Button>
 						) : (
 							<Button onClick={handleNext} disabled={!canContinue}>
-								Continue
+								{tI18n(
+									"TemplateBuilder.TemplateBuilderPageView.continue_31fbef16",
+								)}
 							</Button>
 						)}
 					</div>

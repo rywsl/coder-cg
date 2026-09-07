@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useOutletContext } from "react-router";
 import type { HealthcheckReport } from "#/api/typesGenerated";
 import { Alert } from "#/components/Alert/Alert";
@@ -14,21 +15,29 @@ import {
 import { MuteWarningsButton } from "./MuteWarningsButton";
 
 const ProvisionerDaemonsPage: FC = () => {
+	const { t: tI18n } = useTranslation("pages");
+
 	const healthStatus = useOutletContext<HealthcheckReport>();
 	const { provisioner_daemons: daemons } = healthStatus;
 
 	return (
 		<>
-			<title>{pageTitle("Provisioner Daemons - Health")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n(
+						"HealthPage.ProvisionerDaemonsPage.provisioner_daemons_health_370fe6ce",
+					),
+				)}
+			</title>
 			<Header>
 				<HeaderTitle>
 					<HealthyDot severity={daemons.severity} />
-					Provisioner Daemons
+					{tI18n(
+						"HealthPage.ProvisionerDaemonsPage.provisioner_daemons_c0fe9f1e",
+					)}
 				</HeaderTitle>
 				<MuteWarningsButton healthcheck="ProvisionerDaemons" />
 			</Header>
-
 			<Main>
 				{daemons.error && (
 					<Alert severity="error" prominent>

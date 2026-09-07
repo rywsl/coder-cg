@@ -8,6 +8,7 @@ import type { WorkspaceStatus } from "#/api/typesGenerated";
 import { Avatar } from "#/components/Avatar/Avatar";
 import type { FilterOption } from "#/components/Filter/FilterCombobox/types";
 import { StatusIndicatorDot } from "#/components/StatusIndicator/StatusIndicator";
+import { i18n } from "#/i18n";
 import { variantByStatusType } from "#/modules/workspaces/WorkspaceStatusIndicator/WorkspaceStatusIndicator";
 import { getDisplayWorkspaceStatus } from "#/utils/workspace";
 
@@ -92,7 +93,12 @@ type OwnerIdentity = Readonly<{ username: string; avatar_url?: string }>;
 // sentinel, matching the page's `owner:me` fallback, rather than a static
 // `owner:<username>`.
 const selfOwnerOption = (me: OwnerIdentity): FilterOption => ({
-	label: `${me.username} (you)`,
+	label: i18n.t(
+		"workspaces:WorkspacesPage.filter.categoryOptions.value0_you_62d58551",
+		{
+			value0: me.username,
+		},
+	),
 	value: "me",
 	startIcon: <Avatar fallback={me.username} src={me.avatar_url} size="md" />,
 });
@@ -153,19 +159,25 @@ const attributeIcon = (icon: ReactNode): ReactNode => (
 
 const ATTRIBUTE_DEFINITIONS: readonly AttributeDefinition[] = [
 	{
-		label: "Outdated",
+		label: i18n.t(
+			"workspaces:WorkspacesPage.filter.categoryOptions.outdated_c759f42e",
+		),
 		value: "outdated",
 		icon: <RefreshCwOffIcon className="size-icon-sm" />,
 		requiresDormantEntitlement: false,
 	},
 	{
-		label: "Dormant",
+		label: i18n.t(
+			"workspaces:WorkspacesPage.filter.categoryOptions.dormant_027d0e4c",
+		),
 		value: "dormant",
 		icon: <MoonIcon className="size-icon-sm" />,
 		requiresDormantEntitlement: true,
 	},
 	{
-		label: "Shared",
+		label: i18n.t(
+			"workspaces:WorkspacesPage.filter.categoryOptions.shared_e3c4b39d",
+		),
 		value: "shared",
 		icon: <Share2Icon className="size-icon-sm" />,
 		requiresDormantEntitlement: false,

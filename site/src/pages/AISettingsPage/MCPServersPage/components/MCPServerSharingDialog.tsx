@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import {
@@ -81,6 +82,8 @@ const OpenMCPServerSharingDialog: FC<OpenMCPServerSharingDialogProps> = ({
 	serverId,
 	serverName,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const queryClient = useQueryClient();
 	const aclOptions = mcpServerConfigACL(organizationId, serverId);
 	const aclQuery = useQuery({ ...aclOptions, refetchOnMount: "always" });
@@ -94,15 +97,32 @@ const OpenMCPServerSharingDialog: FC<OpenMCPServerSharingDialogProps> = ({
 
 	return (
 		<ResourceSharingDialog
-			title="Server permissions"
+			title={tI18n(
+				"AISettingsPage.MCPServersPage.components.MCPServerSharingDialog.server_permissions_d2673811",
+			)}
 			description={
-				<>Manage which organization members and groups can use {serverName}.</>
+				<>
+					{tI18n(
+						"AISettingsPage.MCPServersPage.components.MCPServerSharingDialog.manage_which_organization_members_and_groups_can_f823c9bd",
+					)}
+					{serverName}.
+				</>
 			}
-			loadingLabel="Loading server permissions"
-			emptyTitle="No members or groups have permission yet"
-			tableLabel="Server permissions for members and groups"
-			roleLabel="Read"
-			confirmText="Save permissions"
+			loadingLabel={tI18n(
+				"AISettingsPage.MCPServersPage.components.MCPServerSharingDialog.loading_server_permissions_7d424583",
+			)}
+			emptyTitle={tI18n(
+				"AISettingsPage.MCPServersPage.components.MCPServerSharingDialog.no_members_or_groups_have_permission_yet_d375694d",
+			)}
+			tableLabel={tI18n(
+				"AISettingsPage.MCPServersPage.components.MCPServerSharingDialog.server_permissions_for_members_and_groups_1ad60e30",
+			)}
+			roleLabel={tI18n(
+				"AISettingsPage.MCPServersPage.components.MCPServerSharingDialog.read_9b9a8d05",
+			)}
+			confirmText={tI18n(
+				"AISettingsPage.MCPServersPage.components.MCPServerSharingDialog.save_permissions_1eab372a",
+			)}
 			data={data}
 			loadError={data ? null : aclQuery.error}
 			refetchError={data ? aclQuery.error : null}
@@ -127,7 +147,14 @@ const OpenMCPServerSharingDialog: FC<OpenMCPServerSharingDialogProps> = ({
 					{ organization: organizationId, id: serverId, req },
 					{
 						onSuccess: () => {
-							toast.success(`Permissions for "${serverName}" updated.`);
+							toast.success(
+								tI18n(
+									"AISettingsPage.MCPServersPage.components.MCPServerSharingDialog.permissions_for_value0_updated_8c0e630e",
+									{
+										value0: serverName,
+									},
+								),
+							);
 							close();
 						},
 					},

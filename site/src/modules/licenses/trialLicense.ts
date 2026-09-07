@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { i18n } from "#/i18n";
 
 // Keep in sync with cli/login.go. The values are forwarded to the Coder licensor,
 // so changing them requires coordinating with the licensor service.
@@ -30,44 +31,101 @@ export const trialInfoValidationSchema = Yup.object({
 	first_name: Yup.string()
 		.max(
 			MAX_NAME_LENGTH,
-			`First name should be no longer than ${MAX_NAME_LENGTH} characters.`,
+			i18n.t(
+				"components:licenses.trialLicense.first_name_should_be_no_longer_than_value0_chara_b0b62e67",
+				{
+					value0: MAX_NAME_LENGTH,
+				},
+			),
 		)
-		.required("Please enter your first name."),
+		.required(
+			i18n.t(
+				"components:licenses.trialLicense.please_enter_your_first_name_815c131f",
+			),
+		),
 	last_name: Yup.string()
 		.max(
 			MAX_NAME_LENGTH,
-			`Last name should be no longer than ${MAX_NAME_LENGTH} characters.`,
+			i18n.t(
+				"components:licenses.trialLicense.last_name_should_be_no_longer_than_value0_charac_b56a3ac5",
+				{
+					value0: MAX_NAME_LENGTH,
+				},
+			),
 		)
-		.required("Please enter your last name."),
+		.required(
+			i18n.t(
+				"components:licenses.trialLicense.please_enter_your_last_name_06cee31d",
+			),
+		),
 	phone_number: Yup.string()
 		.matches(PHONE_NUMBER_RE, {
-			message:
-				"Phone number should be in international format (e.g. +14155552671).",
+			message: i18n.t(
+				"components:licenses.trialLicense.phone_number_should_be_in_international_format_e_0c777683",
+			),
 			excludeEmptyString: true,
 		})
-		.required("Please enter your phone number."),
+		.required(
+			i18n.t(
+				"components:licenses.trialLicense.please_enter_your_phone_number_0ec2b7d6",
+			),
+		),
 	job_title: Yup.string()
 		.min(
 			MIN_JOB_TITLE_LENGTH,
-			`Job title should be at least ${MIN_JOB_TITLE_LENGTH} characters.`,
+			i18n.t(
+				"components:licenses.trialLicense.job_title_should_be_at_least_value0_characters_149a12be",
+				{
+					value0: MIN_JOB_TITLE_LENGTH,
+				},
+			),
 		)
 		.max(
 			MAX_JOB_TITLE_LENGTH,
-			`Job title should be no longer than ${MAX_JOB_TITLE_LENGTH} characters.`,
+			i18n.t(
+				"components:licenses.trialLicense.job_title_should_be_no_longer_than_value0_charac_663434a7",
+				{
+					value0: MAX_JOB_TITLE_LENGTH,
+				},
+			),
 		)
-		.required("Please enter your job title."),
+		.required(
+			i18n.t(
+				"components:licenses.trialLicense.please_enter_your_job_title_b3e9323a",
+			),
+		),
 	company_name: Yup.string()
 		.min(
 			MIN_COMPANY_NAME_LENGTH,
-			`Company name should be at least ${MIN_COMPANY_NAME_LENGTH} characters.`,
+			i18n.t(
+				"components:licenses.trialLicense.company_name_should_be_at_least_value0_character_eec21f3b",
+				{
+					value0: MIN_COMPANY_NAME_LENGTH,
+				},
+			),
 		)
 		.max(
 			MAX_COMPANY_NAME_LENGTH,
-			`Company name should be no longer than ${MAX_COMPANY_NAME_LENGTH} characters.`,
+			i18n.t(
+				"components:licenses.trialLicense.company_name_should_be_no_longer_than_value0_cha_7073bad7",
+				{
+					value0: MAX_COMPANY_NAME_LENGTH,
+				},
+			),
 		)
-		.required("Please enter your company name."),
-	country: Yup.string().required("Please select your country."),
+		.required(
+			i18n.t(
+				"components:licenses.trialLicense.please_enter_your_company_name_141a108d",
+			),
+		),
+	country: Yup.string().required(
+		i18n.t(
+			"components:licenses.trialLicense.please_select_your_country_08442f26",
+		),
+	),
 	developers: Yup.string().required(
-		"Please select the number of developers in your company.",
+		i18n.t(
+			"components:licenses.trialLicense.please_select_the_number_of_developers_in_your_c_aa7bee7c",
+		),
 	),
 });

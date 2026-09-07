@@ -1,5 +1,6 @@
 import { CheckIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { keepPreviousData, useQuery } from "react-query";
 import { templaceACLAvailable } from "#/api/queries/templates";
 import type { Group, ReducedUser } from "#/api/typesGenerated";
@@ -24,6 +25,8 @@ export const UserOrGroupAutocomplete: FC<UserOrGroupAutocompleteProps> = ({
 	templateID,
 	exclude,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const [inputValue, setInputValue] = useState("");
 	const [open, setOpen] = useState(false);
 
@@ -86,8 +89,12 @@ export const UserOrGroupAutocomplete: FC<UserOrGroupAutocompleteProps> = ({
 			inputValue={inputValue}
 			onInputChange={setInputValue}
 			loading={aclAvailableQuery.isFetching}
-			placeholder="Search for user or group"
-			noOptionsText="No users or groups found"
+			placeholder={tI18n(
+				"TemplateSettingsPage.TemplatePermissionsPage.UserOrGroupAutocomplete.search_for_user_or_group_0aa07b31",
+			)}
+			noOptionsText={tI18n(
+				"TemplateSettingsPage.TemplatePermissionsPage.UserOrGroupAutocomplete.no_users_or_groups_found_02da3b9f",
+			)}
 			className="w-[300px]"
 			id="user-or-group-autocomplete"
 		/>

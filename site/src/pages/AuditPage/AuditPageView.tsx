@@ -1,4 +1,5 @@
 import type { ComponentProps, FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { AuditLog } from "#/api/typesGenerated";
 import { Margins } from "#/components/Margins/Margins";
 import {
@@ -43,6 +44,8 @@ export const AuditPageView: FC<AuditPageViewProps> = ({
 	showOrgDetails,
 	permissions,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const isLoading =
 		(auditLogs === undefined || paginationResult.totalRecords === undefined) &&
 		!error;
@@ -54,16 +57,17 @@ export const AuditPageView: FC<AuditPageViewProps> = ({
 			<PageHeader>
 				<PageHeaderTitle>
 					<div className="flex flex-row gap-2 items-center">
-						<span>Audit</span>
+						<span>{tI18n("AuditPage.AuditPageView.audit_bb6aea28")}</span>
 						<AuditHelpPopover />
 					</div>
 				</PageHeaderTitle>
 				<PageHeaderSubtitle>
-					View events in your audit log.{" "}
+					{tI18n(
+						"AuditPage.AuditPageView.view_events_in_your_audit_log_a2177edb",
+					)}{" "}
 					<SettingsHeaderDocsLink href={docs("/admin/security/audit-logs")} />
 				</PageHeaderSubtitle>
 			</PageHeader>
-
 			{isAuditLogVisible ? (
 				<>
 					<AuditFilter {...filterProps} />
@@ -89,12 +93,20 @@ export const AuditPageView: FC<AuditPageViewProps> = ({
 			) : (
 				<PremiumPaywall
 					source="audit_log"
-					message="Audit logs"
-					description="See exactly who changed what and when, with every workspace, template, and user action logged for compliance and incident response."
+					message={tI18n("AuditPage.AuditPageView.audit_logs_569ef18c")}
+					description={tI18n(
+						"AuditPage.AuditPageView.see_exactly_who_changed_what_and_when_with_every_9f61d583",
+					)}
 					features={[
-						"Configurable retention & auto-purge",
-						"API export to Splunk, Datadog & more",
-						"Meets SOC 2 & HIPAA audit requirements",
+						tI18n(
+							"AuditPage.AuditPageView.configurable_retention_auto_purge_de9ce451",
+						),
+						tI18n(
+							"AuditPage.AuditPageView.api_export_to_splunk_datadog_more_a20357db",
+						),
+						tI18n(
+							"AuditPage.AuditPageView.meets_soc_2_hipaa_audit_requirements_2ef21a94",
+						),
 					]}
 					canViewPremium={permissions.viewAllLicenses}
 				/>
@@ -120,17 +132,27 @@ const AuditTableBody: FC<AuditTableBodyProps> = ({
 	isNonInitialPage,
 	showOrgDetails,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	// An error renders as an empty table.
 	if (error) {
-		return <TableEmpty message="An error occurred while loading audit logs" />;
+		return (
+			<TableEmpty
+				message={tI18n(
+					"AuditPage.AuditPageView.an_error_occurred_while_loading_audit_logs_9385fa07",
+				)}
+			/>
+		);
 	}
 	if (isLoading) {
 		return <TableLoader />;
 	}
 	if (isEmpty) {
 		const emptyMessage = isNonInitialPage
-			? "No audit logs available on this page"
-			: "No audit logs available";
+			? tI18n(
+					"AuditPage.AuditPageView.no_audit_logs_available_on_this_page_1297d7e7",
+				)
+			: tI18n("AuditPage.AuditPageView.no_audit_logs_available_ac0929aa");
 		return <TableEmpty message={emptyMessage} />;
 	}
 	if (!auditLogs) {

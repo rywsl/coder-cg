@@ -410,6 +410,34 @@ export const SelectTerminalFont: Story = {
 	},
 };
 
+export const SelectSimplifiedChinese: Story = {
+	args: {
+		initialValues: { ...baseSettings, theme_preference: "dark" },
+		onSubmit: fn(),
+	},
+	play: async ({ canvasElement, args }) => {
+		const user = userEvent.setup();
+		const canvas = within(canvasElement);
+		const language = await canvas.findByRole("combobox", { name: "Language" });
+
+		await user.click(language);
+		await user.click(
+			await within(document.body).findByRole("option", {
+				name: "Simplified Chinese",
+			}),
+		);
+
+		await waitFor(() => {
+			expect(canvas.getByRole("combobox", { name: "语言" })).toHaveTextContent(
+				"简体中文",
+			);
+			expect(document.documentElement.lang).toBe("zh-CN");
+		});
+		expect(canvas.getByRole("radio", { name: /dark default/i })).toBeChecked();
+		expect(args.onSubmit).not.toHaveBeenCalled();
+	},
+};
+
 export const ResyncsWhenInitialValuesChange: Story = {
 	args: {
 		initialValues: { ...baseSettings, theme_preference: "dark" },

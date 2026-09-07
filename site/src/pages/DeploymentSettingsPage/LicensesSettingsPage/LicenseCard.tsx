@@ -2,6 +2,7 @@ import { cn } from "cn";
 import dayjs from "dayjs";
 import { ChevronDownIcon, EllipsisVerticalIcon, TrashIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { GetLicensesResponse } from "#/api/api";
 import type { Feature } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
@@ -42,6 +43,8 @@ export const LicenseCard: FC<LicenseCardProps> = ({
 	onRemove,
 	isRemoving,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const [licenseIDMarkedForRemoval, setLicenseIDMarkedForRemoval] = useState<
 		number | undefined
 	>(undefined);
@@ -203,16 +206,28 @@ export const LicenseCard: FC<LicenseCardProps> = ({
 				? "text-content-warning"
 				: "text-content-success";
 	const statusText = isAgentHoursHardLimitExceeded
-		? "Limit exceeded"
+		? tI18n(
+				"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.limit_exceeded_c5d1937b",
+			)
 		: isAgentHoursExceeded
-			? "Agent hours exceeded"
+			? tI18n(
+					"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.agent_hours_exceeded_cf4f066f",
+				)
 			: isAiGovernanceAddOnExceeded
-				? "Add-on exceeded"
+				? tI18n(
+						"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.add_on_exceeded_05be64ad",
+					)
 				: isExpired
-					? "Expired"
+					? tI18n(
+							"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.expired_424a2551",
+						)
 					: isNotYetValid
-						? "Not started"
-						: "Active";
+						? tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.not_started_ba35f0c4",
+							)
+						: tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.active_92340695",
+							);
 	const includesAgents =
 		Boolean(license.claims.trial) || licenseGrantsAgentHours;
 	const includedProducts = isPremium
@@ -255,24 +270,46 @@ export const LicenseCard: FC<LicenseCardProps> = ({
 
 			<div className="ml-auto flex items-center gap-12 text-xs font-medium">
 				<div className="flex flex-col items-center">
-					<span className="text-content-secondary">Status</span>
+					<span className="text-content-secondary">
+						{tI18n(
+							"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.status_920e413c",
+						)}
+					</span>
 					<span className={statusClassName}>{statusText}</span>
 				</div>
 				<div className="flex flex-col items-center">
-					<span className="text-content-secondary">Type</span>
+					<span className="text-content-secondary">
+						{tI18n(
+							"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.type_baaddf70",
+						)}
+					</span>
 					<span className="license-type text-content-primary">
-						{license.claims.trial ? "Trial" : "Standard"}
+						{license.claims.trial
+							? tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.trial_98a66e97",
+								)
+							: tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.standard_ef669154",
+								)}
 					</span>
 				</div>
 				<div className="flex flex-col items-center">
-					<span className="text-content-secondary">Users</span>
+					<span className="text-content-secondary">
+						{tI18n(
+							"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.users_6b0cc904",
+						)}
+					</span>
 					<span className="text-content-primary user-limit">
 						{userLimitActual} {` / ${currentUserLimit || "Unlimited"}`}
 					</span>
 				</div>
 				{license.claims.nbf && (
 					<div className="flex flex-col items-center">
-						<span className="text-content-secondary">Valid From</span>
+						<span className="text-content-secondary">
+							{tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.valid_from_f38b0e27",
+							)}
+						</span>
 						<span
 							className={cn("license-valid-from", {
 								"text-content-warning": statusText === "Not started",
@@ -284,7 +321,11 @@ export const LicenseCard: FC<LicenseCardProps> = ({
 					</div>
 				)}
 				<div className="flex flex-col items-center">
-					<span className="text-content-secondary">Valid Until</span>
+					<span className="text-content-secondary">
+						{tI18n(
+							"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.valid_until_b252ed96",
+						)}
+					</span>
 					<span className="text-content-primary license-expires">
 						{dayjs.unix(license.claims.license_expires).format("MMMM D, YYYY")}
 					</span>
@@ -304,16 +345,30 @@ export const LicenseCard: FC<LicenseCardProps> = ({
 					setLicenseIDMarkedForRemoval(undefined);
 				}}
 				onCancel={() => setLicenseIDMarkedForRemoval(undefined)}
-				entity="license"
+				entity={tI18n(
+					"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.license_cc1d3b02",
+				)}
 				name={confirmationName}
-				label="ID of the license to remove"
-				title="Confirm license removal"
-				verb="Removing"
-				confirmText="Remove"
+				label={tI18n(
+					"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.id_of_the_license_to_remove_af756af2",
+				)}
+				title={tI18n(
+					"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.confirm_license_removal_9952c9b1",
+				)}
+				verb={tI18n(
+					"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.removing_9f2c59a1",
+				)}
+				confirmText={tI18n(
+					"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.remove_c3812fc4",
+				)}
 				info={
 					isExpired
-						? "This license has already expired and is not providing any features. Removing it will not affect your current entitlements."
-						: "Removing this license will disable all Premium features. You can add a new license at any time."
+						? tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.this_license_has_already_expired_and_is_not_prov_6a5aae22",
+							)
+						: tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.removing_this_license_will_disable_all_premium_f_8f5def18",
+							)
 				}
 				confirmLoading={isRemoving}
 			/>
@@ -340,7 +395,11 @@ export const LicenseCard: FC<LicenseCardProps> = ({
 								className="size-[30px]"
 							>
 								<EllipsisVerticalIcon />
-								<span className="sr-only">Show license actions</span>
+								<span className="sr-only">
+									{tI18n(
+										"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.show_license_actions_a942a24c",
+									)}
+								</span>
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
@@ -349,7 +408,9 @@ export const LicenseCard: FC<LicenseCardProps> = ({
 								onClick={() => setLicenseIDMarkedForRemoval(license.id)}
 							>
 								<TrashIcon />
-								Remove&hellip;
+								{tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.remove_708d2523",
+								)}
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
@@ -358,7 +419,9 @@ export const LicenseCard: FC<LicenseCardProps> = ({
 				<CollapsibleContent>
 					<div className="border-0 border-t border-solid border-border bg-surface-primary px-4 py-4">
 						<div className="text-sm font-medium text-content-secondary">
-							Products
+							{tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.products_4edc8bfa",
+							)}
 						</div>
 						<div className="mt-3 flex flex-wrap gap-3">
 							<CoderWorkspacesProductCard
@@ -378,12 +441,18 @@ export const LicenseCard: FC<LicenseCardProps> = ({
 						{hasExplicitAiGovernanceAddOn && (
 							<>
 								<div className="mt-4 text-sm font-medium text-content-secondary">
-									Add-ons
+									{tI18n(
+										"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.add_ons_ccfc53fc",
+									)}
 								</div>
 								<div className="mt-3 flex flex-wrap gap-3">
 									<AIGovernanceAddOnCard
-										title="AI Governance"
-										unit="Seats"
+										title={tI18n(
+											"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.ai_governance_2ab040bd",
+										)}
+										unit={tI18n(
+											"DeploymentSettingsPage.LicensesSettingsPage.LicenseCard.seats_f3b81325",
+										)}
 										actual={aiGovernanceDisplayActual}
 										limit={aiGovernanceLimit}
 										isExceeded={isAiGovernanceAddOnExceeded}

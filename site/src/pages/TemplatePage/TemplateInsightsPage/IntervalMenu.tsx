@@ -8,13 +8,18 @@ import {
 	DropdownMenuRadioItem,
 	DropdownMenuTrigger,
 } from "#/components/DropdownMenu/DropdownMenu";
+import { i18n } from "#/i18n";
 
 const insightsIntervals = {
 	day: {
-		label: "Daily",
+		label: i18n.t(
+			"templates:TemplatePage.TemplateInsightsPage.IntervalMenu.daily_b36c2611",
+		),
 	},
 	week: {
-		label: "Weekly",
+		label: i18n.t(
+			"templates:TemplatePage.TemplateInsightsPage.IntervalMenu.weekly_29751324",
+		),
 	},
 } as const;
 

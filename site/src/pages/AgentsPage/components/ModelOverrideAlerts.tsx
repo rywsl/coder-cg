@@ -1,4 +1,5 @@
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, AlertDescription } from "#/components/Alert/Alert";
 
 interface ModelOverrideAlertsProps {
@@ -14,6 +15,8 @@ export const ModelOverrideAlerts: FC<ModelOverrideAlertsProps> = ({
 	modelsError,
 	children,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<>
 			{isUnavailableSavedModel && (
@@ -24,7 +27,9 @@ export const ModelOverrideAlerts: FC<ModelOverrideAlertsProps> = ({
 			{children}
 			{Boolean(modelsError) && (
 				<p className="m-0 text-xs text-content-destructive">
-					Failed to load models.
+					{tI18n(
+						"AgentsPage.components.ModelOverrideAlerts.failed_to_load_models_dc2d723d",
+					)}
 				</p>
 			)}
 		</>

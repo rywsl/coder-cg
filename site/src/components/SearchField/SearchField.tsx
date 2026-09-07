@@ -1,5 +1,6 @@
 import { SearchIcon, XIcon } from "lucide-react";
 import { type Ref, useEffectEvent, useLayoutEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	InputGroup,
 	InputGroupAddon,
@@ -11,6 +12,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { i18n } from "#/i18n";
 
 export type SearchFieldProps = {
 	value: string;
@@ -29,13 +31,15 @@ export const SearchField: React.FC<SearchFieldProps> = ({
 	value = "",
 	onChange,
 	onClear,
-	placeholder = "Search...",
+	placeholder = i18n.t("components:SearchField.SearchField.search_7f553822"),
 	className,
 	autoFocus = false,
 	onBlur,
 	ref,
 	...ariaProps
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const internalRef = useRef<HTMLInputElement | null>(null);
 	const focusOnMount = useEffectEvent((): void => {
 		if (autoFocus) {
@@ -83,11 +87,13 @@ export const SearchField: React.FC<SearchFieldProps> = ({
 						<TooltipTrigger asChild>
 							<InputGroupButton onClick={handleClear} size="icon">
 								<XIcon />
-								<span className="sr-only">Clear search</span>
+								<span className="sr-only">
+									{tI18n("SearchField.SearchField.clear_search_3b7ea517")}
+								</span>
 							</InputGroupButton>
 						</TooltipTrigger>
 						<TooltipContent align="end" sideOffset={8} alignOffset={-8}>
-							Clear search
+							{tI18n("SearchField.SearchField.clear_search_3b7ea517")}
 						</TooltipContent>
 					</Tooltip>
 				</InputGroupAddon>

@@ -1,4 +1,5 @@
 import { type FC, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	keepPreviousData,
 	useMutation,
@@ -26,6 +27,8 @@ import { useTemplateSettings } from "../TemplateSettingsLayout";
 import { TemplateVariablesPageView } from "./TemplateVariablesPageView";
 
 const TemplateVariablesPage: FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const getLink = useLinks();
 	const { template } = useTemplateSettings();
 	const navigate = useNavigate();
@@ -64,7 +67,12 @@ const TemplateVariablesPage: FC = () => {
 		async (versionId: string) => {
 			await sendUpdateActiveTemplateVersion(versionId);
 			toast.success(
-				`Template "${template.name}" variables updated successfully.`,
+				tI18n(
+					"TemplateSettingsPage.TemplateVariablesPage.TemplateVariablesPage.template_value0_variables_updated_successfully_1502f5fc",
+					{
+						value0: template.name,
+					},
+				),
 			);
 		},
 		[sendUpdateActiveTemplateVersion, template.name],
@@ -91,8 +99,14 @@ const TemplateVariablesPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle(template.name, "Template variables")}</title>
-
+			<title>
+				{pageTitle(
+					template.name,
+					tI18n(
+						"TemplateSettingsPage.TemplateVariablesPage.TemplateVariablesPage.template_variables_ff084774",
+					),
+				)}
+			</title>
 			<TemplateVariablesPageView
 				isSubmitting={isSubmitting}
 				templateVersion={version}

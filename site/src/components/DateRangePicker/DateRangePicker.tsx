@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+import { i18n } from "#/i18n";
 /**
  * A date-range picker composed from the project's Calendar, Popover, and
  * Button primitives. Replaces the legacy react-date-range based DateRange
@@ -31,21 +33,27 @@ const buildDefaultPresets = (now?: Date): DateRangePreset[] => {
 	const getCurrentTime = () => dayjs(now ?? new Date());
 	return [
 		{
-			label: "Today",
+			label: i18n.t(
+				"components:DateRangePicker.DateRangePicker.today_2b065c7c",
+			),
 			range: () => {
 				const currentTime = getCurrentTime();
 				return { from: currentTime.toDate(), to: currentTime.toDate() };
 			},
 		},
 		{
-			label: "Yesterday",
+			label: i18n.t(
+				"components:DateRangePicker.DateRangePicker.yesterday_56618125",
+			),
 			range: () => {
 				const d = getCurrentTime().subtract(1, "day").toDate();
 				return { from: d, to: d };
 			},
 		},
 		{
-			label: "Last 7 days",
+			label: i18n.t(
+				"components:DateRangePicker.DateRangePicker.last_7_days_0603deca",
+			),
 			range: () => {
 				const currentTime = getCurrentTime();
 				return {
@@ -55,7 +63,9 @@ const buildDefaultPresets = (now?: Date): DateRangePreset[] => {
 			},
 		},
 		{
-			label: "Last 14 days",
+			label: i18n.t(
+				"components:DateRangePicker.DateRangePicker.last_14_days_d9f1e161",
+			),
 			range: () => {
 				const currentTime = getCurrentTime();
 				return {
@@ -65,7 +75,9 @@ const buildDefaultPresets = (now?: Date): DateRangePreset[] => {
 			},
 		},
 		{
-			label: "Last 30 days",
+			label: i18n.t(
+				"components:DateRangePicker.DateRangePicker.last_30_days_f8f03fb4",
+			),
 			range: () => {
 				const currentTime = getCurrentTime();
 				return {
@@ -122,6 +134,8 @@ export const DateRangePicker: FC<DateRangePickerProps> = ({
 	presets,
 	size = "sm",
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const [open, setOpen] = useState(false);
 	const currentTime = now ?? new Date();
 	const resolvedPresets = presets ?? buildDefaultPresets(now);
@@ -221,7 +235,9 @@ export const DateRangePicker: FC<DateRangePickerProps> = ({
 							>
 								{selection?.from
 									? dayjs(selection.from).format("MMM D, YYYY")
-									: "Start date"}
+									: tI18n(
+											"DateRangePicker.DateRangePicker.start_date_81696931",
+										)}
 							</span>
 							<MoveRightIcon className="size-3.5 text-content-secondary" />
 							<span
@@ -234,7 +250,7 @@ export const DateRangePicker: FC<DateRangePickerProps> = ({
 							>
 								{selection?.to
 									? dayjs(selection.to).format("MMM D, YYYY")
-									: "End date"}
+									: tI18n("DateRangePicker.DateRangePicker.end_date_14303aa0")}
 							</span>
 						</div>
 
@@ -253,10 +269,10 @@ export const DateRangePicker: FC<DateRangePickerProps> = ({
 						{/* Apply footer */}
 						<div className="flex items-center justify-end gap-2 border-t border-border-default px-4 py-2">
 							<Button variant="subtle" size="sm" onClick={() => setOpen(false)}>
-								Cancel
+								{tI18n("DateRangePicker.DateRangePicker.cancel_19766ed6")}
 							</Button>
 							<Button size="sm" onClick={commit} disabled={!canApply}>
-								Apply
+								{tI18n("DateRangePicker.DateRangePicker.apply_31e392d1")}
 							</Button>
 						</div>
 					</div>

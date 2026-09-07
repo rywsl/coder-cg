@@ -9,6 +9,7 @@ import {
 	useLayoutEffect,
 	useRef,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { VariableSizeList as List } from "react-window";
 import type { WorkspaceAgentLogSource } from "#/api/typesGenerated";
 import { Badge } from "#/components/Badge/Badge";
@@ -52,6 +53,8 @@ export const AgentLogs: FC<AgentLogsProps> = ({
 	ref,
 	...listProps
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const logSourceById = Object.fromEntries(sources.map((s) => [s.id, s]));
 	const getLogSource = (id: string) => logSourceById[id] || fallbackLog;
 
@@ -213,7 +216,9 @@ export const AgentLogs: FC<AgentLogsProps> = ({
 												{assignedIcon && (
 													<i>
 														<br />
-														No icon specified!
+														{tI18n(
+															"resources.AgentLogs.AgentLogs.no_icon_specified_8a35e7ea",
+														)}
 													</i>
 												)}
 											</TooltipContent>
@@ -225,7 +230,6 @@ export const AgentLogs: FC<AgentLogsProps> = ({
 					);
 				}}
 			</List>
-
 			{overflowed && (
 				<Tooltip>
 					<TooltipTrigger asChild>
@@ -233,7 +237,11 @@ export const AgentLogs: FC<AgentLogsProps> = ({
 							asChild
 							className="max-w-fit py-1.5 px-3 absolute bottom-3 left-1/2 -translate-x-1/2"
 						>
-							<span>Logs overflowed</span>
+							<span>
+								{tI18n(
+									"resources.AgentLogs.AgentLogs.logs_overflowed_c512766f",
+								)}
+							</span>
 						</Badge>
 					</TooltipTrigger>
 					<TooltipContent
@@ -241,14 +249,21 @@ export const AgentLogs: FC<AgentLogsProps> = ({
 						className="w-full text-sm text-content-secondary bg-surface-primary max-w-prose leading-relaxed m-0 p-4"
 					>
 						<p>
-							Startup logs exceeded the max size of{" "}
-							<span className="tracking-wide font-mono">1MB</span>, and will not
-							continue to be written to the database. Logs will continue to be
-							written to the{" "}
+							{tI18n(
+								"resources.AgentLogs.AgentLogs.startup_logs_exceeded_the_max_size_of_d6637fb6",
+							)}{" "}
+							<span className="tracking-wide font-mono">
+								{tI18n("resources.AgentLogs.AgentLogs.1mb_fe81b4d1")}
+							</span>
+							{tI18n(
+								"resources.AgentLogs.AgentLogs.and_will_not_continue_to_be_written_to_the_datab_d0454bef",
+							)}{" "}
 							<span className="font-mono bg-surface-tertiary rounded-md px-1.5 py-0.5">
 								/tmp/coder-startup-script.log
 							</span>{" "}
-							file in the workspace.
+							{tI18n(
+								"resources.AgentLogs.AgentLogs.file_in_the_workspace_d73fcd56",
+							)}
 						</p>
 					</TooltipContent>
 				</Tooltip>

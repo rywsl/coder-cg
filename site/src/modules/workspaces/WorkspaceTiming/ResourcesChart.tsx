@@ -1,11 +1,13 @@
 import { ExternalLinkIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { i18n } from "#/i18n";
 import type { Theme } from "#/theme";
 import { useTheme } from "#/theme/context";
 import { Bar } from "./Chart/Bar";
@@ -54,6 +56,8 @@ export const ResourcesChart: FC<ResourcesChartProps> = ({
 	timings,
 	onBack,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const generalTiming = mergeTimeRanges(timings.map((t) => t.range));
 	const totalTime = calcDuration(generalTiming);
 	const [ticks, scale] = makeTicks(totalTime);
@@ -85,7 +89,9 @@ export const ResourcesChart: FC<ResourcesChartProps> = ({
 					]}
 				/>
 				<ChartSearch
-					placeholder="Filter results..."
+					placeholder={tI18n(
+						"workspaces.WorkspaceTiming.ResourcesChart.filter_results_6335eaba",
+					)}
 					value={filter}
 					onChange={setFilter}
 				/>
@@ -94,11 +100,18 @@ export const ResourcesChart: FC<ResourcesChartProps> = ({
 			<ChartContent>
 				<YAxis>
 					<YAxisSection>
-						<YAxisHeader>{stage.name} stage</YAxisHeader>
+						<YAxisHeader>
+							{stage.name}
+							{tI18n(
+								"workspaces.WorkspaceTiming.ResourcesChart.stage_545870f5",
+							)}
+						</YAxisHeader>
 						<YAxisLabels>
 							{visibleTimings.map((t) => {
 								const label = isStageBoundary(t.name)
-									? "total stage duration"
+									? tI18n(
+											"workspaces.WorkspaceTiming.ResourcesChart.total_stage_duration_6f585227",
+										)
 									: t.name;
 								return (
 									<YAxisLabel key={label} id={encodeURIComponent(t.name)}>
@@ -116,7 +129,11 @@ export const ResourcesChart: FC<ResourcesChartProps> = ({
 							const stageBoundary = isStageBoundary(t.name);
 							const duration = calcDuration(t.range);
 							const legend = legendsByAction[t.action] ?? { label: t.action };
-							const label = stageBoundary ? "total stage duration" : t.name;
+							const label = stageBoundary
+								? tI18n(
+										"workspaces.WorkspaceTiming.ResourcesChart.total_stage_duration_6f585227",
+									)
+								: t.name;
 
 							return (
 								<XAxisRow
@@ -144,7 +161,9 @@ export const ResourcesChart: FC<ResourcesChartProps> = ({
 													className="flex items-center gap-1 no-underline text-xs text-inherit hover:text-content-primary"
 												>
 													<ExternalLinkIcon className="size-icon-xs" />
-													view template
+													{tI18n(
+														"workspaces.WorkspaceTiming.ResourcesChart.view_template_ebc3e89c",
+													)}
 												</Link>
 											)}
 										</TooltipContent>
@@ -181,27 +200,37 @@ function getLegendsByAction(
 ): Record<string, ChartLegend | undefined> {
 	return {
 		"state refresh": {
-			label: "state refresh",
+			label: i18n.t(
+				"workspaces:workspaces.WorkspaceTiming.ResourcesChart.state_refresh_a559b47c",
+			),
 		},
 		provision: {
-			label: "provision",
+			label: i18n.t(
+				"workspaces:workspaces.WorkspaceTiming.ResourcesChart.provision_267d294a",
+			),
 		},
 		create: {
-			label: "create",
+			label: i18n.t(
+				"workspaces:workspaces.WorkspaceTiming.ResourcesChart.create_fa8847b0",
+			),
 			colors: {
 				fill: theme.roles.success.background,
 				stroke: theme.roles.success.outline,
 			},
 		},
 		delete: {
-			label: "delete",
+			label: i18n.t(
+				"workspaces:workspaces.WorkspaceTiming.ResourcesChart.delete_61975955",
+			),
 			colors: {
 				fill: theme.roles.warning.background,
 				stroke: theme.roles.warning.outline,
 			},
 		},
 		read: {
-			label: "read",
+			label: i18n.t(
+				"workspaces:workspaces.WorkspaceTiming.ResourcesChart.read_3316348d",
+			),
 			colors: {
 				fill: theme.roles.active.background,
 				stroke: theme.roles.active.outline,

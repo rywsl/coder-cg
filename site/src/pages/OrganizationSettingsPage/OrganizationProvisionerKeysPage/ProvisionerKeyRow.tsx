@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { ChevronRightIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import type { ProvisionerDaemon, ProvisionerKey } from "#/api/typesGenerated";
 import { Badge } from "#/components/Badge/Badge";
@@ -24,6 +25,8 @@ export const ProvisionerKeyRow: FC<ProvisionerKeyRowProps> = ({
 	provisioners,
 	defaultIsOpen = false,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const [isOpen, setIsOpen] = useState(defaultIsOpen);
 
 	return (
@@ -42,7 +45,17 @@ export const ProvisionerKeyRow: FC<ProvisionerKeyRowProps> = ({
 						<ChevronRightIcon
 							className={cn("mr-4 transition-transform", isOpen && "rotate-90")}
 						/>
-						<span className="sr-only">({isOpen ? "Hide" : "Show more"})</span>
+						<span className="sr-only">
+							(
+							{isOpen
+								? tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionerKeysPage.ProvisionerKeyRow.hide_ac20a57b",
+									)
+								: tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionerKeysPage.ProvisionerKeyRow.show_more_f5c9bd13",
+									)}
+							)
+						</span>
 						{provisionerKey.name}
 					</Button>
 				</TableCell>
@@ -50,14 +63,22 @@ export const ProvisionerKeyRow: FC<ProvisionerKeyRowProps> = ({
 					{Object.entries(provisionerKey.tags).length > 0 ? (
 						<ProvisionerTruncateTags tags={provisionerKey.tags} />
 					) : (
-						<span className="text-content-disabled">No tags</span>
+						<span className="text-content-disabled">
+							{tI18n(
+								"OrganizationSettingsPage.OrganizationProvisionerKeysPage.ProvisionerKeyRow.no_tags_147e6bba",
+							)}
+						</span>
 					)}
 				</TableCell>
 				<TableCell>
 					{provisioners.length > 0 ? (
 						<TruncateProvisioners provisioners={provisioners} />
 					) : (
-						<span className="text-content-disabled">No provisioners</span>
+						<span className="text-content-disabled">
+							{tI18n(
+								"OrganizationSettingsPage.OrganizationProvisionerKeysPage.ProvisionerKeyRow.no_provisioners_da36aeb4",
+							)}
+						</span>
 					)}
 				</TableCell>
 				<TableCell>
@@ -66,7 +87,6 @@ export const ProvisionerKeyRow: FC<ProvisionerKeyRowProps> = ({
 					</span>
 				</TableCell>
 			</TableRow>
-
 			{isOpen && (
 				<TableRow>
 					<TableCell colSpan={999} className="p-4 border-t-0">
@@ -77,14 +97,26 @@ export const ProvisionerKeyRow: FC<ProvisionerKeyRowProps> = ({
 								"[&_dd]:text-content-primary [&_dd]:font-mono [&_dd]:leading-[22px] [&_dt]:font-medium",
 							])}
 						>
-							<dt>Creation time:</dt>
+							<dt>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerKeysPage.ProvisionerKeyRow.creation_time_e087974b",
+								)}
+							</dt>
 							<dd data-pixel="ignore">{provisionerKey.created_at}</dd>
 
-							<dt>Tags:</dt>
+							<dt>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerKeysPage.ProvisionerKeyRow.tags_865658f8",
+								)}
+							</dt>
 							<dd>
 								<ProvisionerTags>
 									{Object.entries(provisionerKey.tags).length === 0 && (
-										<span className="text-content-disabled">No tags</span>
+										<span className="text-content-disabled">
+											{tI18n(
+												"OrganizationSettingsPage.OrganizationProvisionerKeysPage.ProvisionerKeyRow.no_tags_147e6bba",
+											)}
+										</span>
 									)}
 									{Object.entries(provisionerKey.tags).map(([key, value]) => (
 										<ProvisionerTag key={key} label={key} value={value} />
@@ -92,12 +124,18 @@ export const ProvisionerKeyRow: FC<ProvisionerKeyRowProps> = ({
 								</ProvisionerTags>
 							</dd>
 
-							<dt>Provisioners:</dt>
+							<dt>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerKeysPage.ProvisionerKeyRow.provisioners_7f30ba51",
+								)}
+							</dt>
 							<dd>
 								<ProvisionerTags>
 									{provisioners.length === 0 && (
 										<span className="text-content-disabled">
-											No provisioners
+											{tI18n(
+												"OrganizationSettingsPage.OrganizationProvisionerKeysPage.ProvisionerKeyRow.no_provisioners_da36aeb4",
+											)}
 										</span>
 									)}
 									{provisioners.map((provisioner) => (

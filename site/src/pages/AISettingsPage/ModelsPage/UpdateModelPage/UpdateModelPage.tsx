@@ -1,5 +1,6 @@
 import { isAxiosError } from "axios";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Navigate, useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
@@ -22,6 +23,8 @@ import {
 import UpdateModelPageView from "./UpdateModelPageView";
 
 const UpdateModelPage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { modelId } = useParams<{ modelId: string }>();
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
@@ -61,7 +64,16 @@ const UpdateModelPage: FC = () => {
 	if (modelQuery.isLoading || organizationModelsQuery.isLoading) {
 		return (
 			<>
-				<title>{pageTitle("Loading...", "AI Settings")}</title>
+				<title>
+					{pageTitle(
+						tI18n(
+							"AISettingsPage.ModelsPage.UpdateModelPage.UpdateModelPage.loading_47d2a515",
+						),
+						tI18n(
+							"AISettingsPage.ModelsPage.UpdateModelPage.UpdateModelPage.ai_settings_a8e5e2c6",
+						),
+					)}
+				</title>
 				<Loader fullscreen />
 			</>
 		);
@@ -107,11 +119,23 @@ const UpdateModelPage: FC = () => {
 						req,
 					});
 					toast.success(
-						`Model "${updated.display_name || updated.model}" updated.`,
+						tI18n(
+							"AISettingsPage.ModelsPage.UpdateModelPage.UpdateModelPage.model_value0_updated_b0962b04",
+							{
+								value0: updated.display_name || updated.model,
+							},
+						),
 					);
 					await navigate(modelsPath);
 				} catch (error) {
-					toast.error(getErrorMessage(error, "Failed to update model."));
+					toast.error(
+						getErrorMessage(
+							error,
+							tI18n(
+								"AISettingsPage.ModelsPage.UpdateModelPage.UpdateModelPage.failed_to_update_model_a446bfbd",
+							),
+						),
+					);
 				}
 			}}
 			onDeleteModel={async (id) => {
@@ -121,11 +145,23 @@ const UpdateModelPage: FC = () => {
 						modelId: id,
 					});
 					toast.success(
-						`Model "${model.display_name || model.model}" deleted.`,
+						tI18n(
+							"AISettingsPage.ModelsPage.UpdateModelPage.UpdateModelPage.model_value0_deleted_e2e36cb6",
+							{
+								value0: model.display_name || model.model,
+							},
+						),
 					);
 					await navigate(modelsPath, { replace: true });
 				} catch (error) {
-					toast.error(getErrorMessage(error, "Failed to delete model."));
+					toast.error(
+						getErrorMessage(
+							error,
+							tI18n(
+								"AISettingsPage.ModelsPage.UpdateModelPage.UpdateModelPage.failed_to_delete_model_c724a9e6",
+							),
+						),
+					);
 				}
 			}}
 			onDuplicate={() => {
@@ -150,13 +186,24 @@ const UpdateModelPage: FC = () => {
 					{
 						onSuccess: () => {
 							toast.success(
-								`Model "${model.display_name || model.model}" ${
-									enabled ? "enabled" : "disabled"
-								}.`,
+								tI18n(
+									"AISettingsPage.ModelsPage.UpdateModelPage.UpdateModelPage.model_value0_value1_e15159f2",
+									{
+										value0: model.display_name || model.model,
+										value1: enabled ? "enabled" : "disabled",
+									},
+								),
 							);
 						},
 						onError: (error) => {
-							toast.error(getErrorMessage(error, "Failed to update model."));
+							toast.error(
+								getErrorMessage(
+									error,
+									tI18n(
+										"AISettingsPage.ModelsPage.UpdateModelPage.UpdateModelPage.failed_to_update_model_a446bfbd",
+									),
+								),
+							);
 						},
 					},
 				);

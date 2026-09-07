@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { SerpentOption } from "#/api/typesGenerated";
 import {
 	Table,
@@ -23,16 +24,28 @@ interface OptionsTableProps {
 }
 
 const OptionsTable: FC<OptionsTableProps> = ({ options, additionalValues }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	if (options.length === 0) {
-		return <p>No options to configure</p>;
+		return (
+			<p>
+				{tI18n(
+					"DeploymentSettingsPage.OptionsTable.no_options_to_configure_0c282e4f",
+				)}
+			</p>
+		);
 	}
 
 	return (
 		<Table className="options-table">
 			<TableHeader>
 				<TableRow>
-					<TableHead className="w-1/2">Option</TableHead>
-					<TableHead className="w-1/2">Value</TableHead>
+					<TableHead className="w-1/2">
+						{tI18n("DeploymentSettingsPage.OptionsTable.option_45aaacba")}
+					</TableHead>
+					<TableHead className="w-1/2">
+						{tI18n("DeploymentSettingsPage.OptionsTable.value_8e37953d")}
+					</TableHead>
 				</TableRow>
 			</TableHeader>
 			<TableBody>
@@ -57,7 +70,11 @@ const OptionsTable: FC<OptionsTableProps> = ({ options, additionalValues }) => {
 									)}
 									{option.env && (
 										<OptionConfig isSource={option.value_source === "env"}>
-											<OptionConfigFlag>ENV</OptionConfigFlag>
+											<OptionConfigFlag>
+												{tI18n(
+													"DeploymentSettingsPage.OptionsTable.env_416861c7",
+												)}
+											</OptionConfigFlag>
 											{option.env}
 										</OptionConfig>
 									)}
@@ -69,7 +86,6 @@ const OptionsTable: FC<OptionsTableProps> = ({ options, additionalValues }) => {
 									)}
 								</div>
 							</TableCell>
-
 							<TableCell>
 								<OptionValue>
 									{optionValue(option, additionalValues)}

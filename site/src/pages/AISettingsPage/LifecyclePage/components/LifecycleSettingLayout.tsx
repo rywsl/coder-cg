@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import type { FC, FormEventHandler, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "#/components/Button/Button";
 import { Spinner } from "#/components/Spinner/Spinner";
 import { Switch } from "#/components/Switch/Switch";
@@ -36,6 +37,8 @@ export const LifecycleSettingLayout: FC<LifecycleSettingLayoutProps> = ({
 	saveDisabled,
 	onSubmit,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<form className="flex items-start gap-3" onSubmit={onSubmit} noValidate>
 			<Switch
@@ -66,7 +69,9 @@ export const LifecycleSettingLayout: FC<LifecycleSettingLayoutProps> = ({
 									className="h-10 min-w-[88px]"
 								>
 									{isSaving && <Spinner loading className="size-4" />}
-									Save
+									{tI18n(
+										"AISettingsPage.LifecyclePage.components.LifecycleSettingLayout.save_1509f561",
+									)}
 								</Button>
 							))}
 					</div>
@@ -102,6 +107,8 @@ export const DaysField: FC<DaysFieldProps> = ({
 	min,
 	max,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<label
 			className={cn(
@@ -126,7 +133,9 @@ export const DaysField: FC<DaysFieldProps> = ({
 				className="min-w-0 w-full border-none bg-transparent p-0 text-sm font-medium leading-6 text-content-placeholder outline-hidden disabled:cursor-not-allowed [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]"
 			/>
 			<span className="shrink-0 text-xs font-normal leading-[18px] text-content-placeholder">
-				Days
+				{tI18n(
+					"AISettingsPage.LifecyclePage.components.LifecycleSettingLayout.days_e08c0aa8",
+				)}
 			</span>
 		</label>
 	);

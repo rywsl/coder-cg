@@ -1,4 +1,5 @@
 import { type FC, Suspense } from "react";
+import { useTranslation } from "react-i18next";
 import { Outlet } from "react-router";
 import { Avatar } from "#/components/Avatar/Avatar";
 import {
@@ -14,18 +15,21 @@ import { pageTitle } from "#/utils/page";
 import { Sidebar } from "./Sidebar";
 
 const Layout: FC = () => {
+	const { t: tI18n } = useTranslation("users");
+
 	const { user: me } = useAuthenticated();
 
 	return (
 		<>
-			<title>{pageTitle("Settings")}</title>
-
+			<title>
+				{pageTitle(tI18n("UserSettingsPage.Layout.settings_74a883a0"))}
+			</title>
 			<div>
 				<Breadcrumb>
 					<BreadcrumbList>
 						<BreadcrumbItem>
 							<BreadcrumbPage className="text-content-primary">
-								User Settings
+								{tI18n("UserSettingsPage.Layout.user_settings_818ed0c8")}
 							</BreadcrumbPage>
 						</BreadcrumbItem>
 						<BreadcrumbSeparator />

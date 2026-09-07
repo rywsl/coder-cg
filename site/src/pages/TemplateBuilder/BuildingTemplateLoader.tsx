@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { MotionConfigContext, motion } from "motion/react";
 import { type FC, useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 type FloatingIcon = {
 	name: string;
@@ -34,6 +35,8 @@ const ICONS: FloatingIcon[] = [
  * label.
  */
 export const BuildingTemplateLoader: FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	// skipAnimations jumps to each loop's final keyframe, which is
 	// blank here (icons offscreen, dots faded), so hold a visible frame.
 	const { skipAnimations = false } = useContext(MotionConfigContext);
@@ -42,7 +45,9 @@ export const BuildingTemplateLoader: FC = () => {
 		<div
 			className="relative flex flex-col items-center justify-end w-full min-h-[480px] overflow-hidden"
 			role="status"
-			aria-label="Building your template"
+			aria-label={tI18n(
+				"TemplateBuilder.BuildingTemplateLoader.building_your_template_def8fa21",
+			)}
 		>
 			{/* Floating icon boxes; bottom-24 keeps them above the progress bar */}
 			<div className="absolute inset-0 bottom-24">
@@ -74,7 +79,6 @@ export const BuildingTemplateLoader: FC = () => {
 					</motion.div>
 				))}
 			</div>
-
 			{/* Progress bar and label */}
 			<div className="relative z-10 flex w-full max-w-[480px] flex-col items-center gap-3 pb-8">
 				{/* Progress track */}
@@ -94,7 +98,11 @@ export const BuildingTemplateLoader: FC = () => {
 
 				{/* Label */}
 				<p className="flex items-center gap-0.5 text-xs leading-[18px] text-content-secondary">
-					<span>Building your template</span>
+					<span>
+						{tI18n(
+							"TemplateBuilder.BuildingTemplateLoader.building_your_template_def8fa21",
+						)}
+					</span>
 					<span className="inline-flex gap-0.5">
 						<motion.span
 							animate={

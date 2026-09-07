@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	HelpPopover,
 	HelpPopoverContent,
@@ -11,20 +12,27 @@ import {
 import { docs } from "#/utils/docs";
 
 export const ConnectionLogHelpPopover: FC = () => {
+	const { t: tI18n } = useTranslation("pages");
+
 	return (
 		<HelpPopover>
 			<HelpPopoverIconTrigger />
-
 			<HelpPopoverContent>
-				<HelpPopoverTitle>Why are some events missing?</HelpPopoverTitle>
+				<HelpPopoverTitle>
+					{tI18n(
+						"ConnectionLogPage.ConnectionLogHelpPopover.why_are_some_events_missing_72fe9b21",
+					)}
+				</HelpPopoverTitle>
 				<HelpPopoverText>
-					The connection log is a best-effort log of workspace access. Some
-					events are reported by workspace agents, and receipt of these events
-					by the server is not guaranteed.
+					{tI18n(
+						"ConnectionLogPage.ConnectionLogHelpPopover.the_connection_log_is_a_best_effort_log_of_works_1c074b73",
+					)}
 				</HelpPopoverText>
 				<HelpPopoverLinksGroup>
 					<HelpPopoverLink href={docs("/admin/monitoring/connection-logs")}>
-						Connection log documentation
+						{tI18n(
+							"ConnectionLogPage.ConnectionLogHelpPopover.connection_log_documentation_5464f12a",
+						)}
 					</HelpPopoverLink>
 				</HelpPopoverLinksGroup>
 			</HelpPopoverContent>

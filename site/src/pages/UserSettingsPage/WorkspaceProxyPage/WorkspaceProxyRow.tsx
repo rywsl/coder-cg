@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { Region, WorkspaceProxy } from "#/api/typesGenerated";
 import { Avatar } from "#/components/Avatar/Avatar";
 import { AvatarData } from "#/components/Avatar/AvatarData";
@@ -19,6 +20,8 @@ interface ProxyRowProps {
 }
 
 export const ProxyRow: FC<ProxyRowProps> = ({ proxy, latency }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	// If we have a more specific proxy status, use that.
 	// All users can see healthy/unhealthy, some can see more.
 	let statusBadge = <ProxyStatus proxy={proxy} />;
@@ -79,7 +82,16 @@ export const ProxyRow: FC<ProxyRowProps> = ({ proxy, latency }) => {
 							: "text-content-secondary",
 					)}
 				>
-					{latency ? `${latency.latencyMS.toFixed(0)} ms` : "Not available"}
+					{latency
+						? tI18n(
+								"UserSettingsPage.WorkspaceProxyPage.WorkspaceProxyRow.value0_ms_55077da6",
+								{
+									value0: latency.latencyMS.toFixed(0),
+								},
+							)
+						: tI18n(
+								"UserSettingsPage.WorkspaceProxyPage.WorkspaceProxyRow.not_available_67a926f7",
+							)}
 				</TableCell>
 			</TableRow>
 			{shouldShowMessages && (
@@ -108,15 +120,21 @@ const ProxyMessagesRow: FC<ProxyMessagesRowProps> = ({
 	proxy,
 	extraWarnings,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	return (
 		<>
 			<ProxyMessagesList
-				title="Errors"
+				title={tI18n(
+					"UserSettingsPage.WorkspaceProxyPage.WorkspaceProxyRow.errors_cb702378",
+				)}
 				titleClassName="text-content-destructive"
 				messages={proxy.status?.report?.errors}
 			/>
 			<ProxyMessagesList
-				title="Warnings"
+				title={tI18n(
+					"UserSettingsPage.WorkspaceProxyPage.WorkspaceProxyRow.warnings_0e04cd10",
+				)}
 				titleClassName="text-content-warning"
 				messages={[...(proxy.status?.report?.warnings ?? []), ...extraWarnings]}
 			/>

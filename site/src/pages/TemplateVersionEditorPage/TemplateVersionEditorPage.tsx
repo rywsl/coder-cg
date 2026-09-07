@@ -1,4 +1,5 @@
 import { type FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	keepPreviousData,
 	useMutation,
@@ -23,6 +24,7 @@ import type {
 	TemplateVersion,
 } from "#/api/typesGenerated";
 import { Loader } from "#/components/Loader/Loader";
+import { i18n } from "#/i18n";
 import { linkToTemplate, useLinks } from "#/modules/navigation";
 import { useWatchVersionLogs } from "#/modules/templates/useWatchVersionLogs";
 import { existsFile, type FileTree, traverse } from "#/utils/filetree";
@@ -32,6 +34,8 @@ import { createTemplateVersionFileTree } from "#/utils/templateVersion";
 import { TemplateVersionEditor } from "./TemplateVersionEditor";
 
 const TemplateVersionEditorPage: FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const getLink = useLinks();
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
@@ -128,8 +132,14 @@ const TemplateVersionEditorPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle(templateName, "Template Editor")}</title>
-
+			<title>
+				{pageTitle(
+					templateName,
+					tI18n(
+						"TemplateVersionEditorPage.TemplateVersionEditorPage.template_editor_a3fc59dd",
+					),
+				)}
+			</title>
 			{!(templateQuery.data && activeTemplateVersion && fileTree) ? (
 				<Loader fullscreen />
 			) : (
@@ -264,9 +274,14 @@ const useFileTree = (templateVersion: TemplateVersion | undefined) => {
 				setTarFile(tarFile);
 			} catch (error) {
 				console.error(error);
-				toast.error("Error on initializing the editor.", {
-					description: getErrorDetail(error),
-				});
+				toast.error(
+					i18n.t(
+						"templates:TemplateVersionEditorPage.TemplateVersionEditorPage.error_on_initializing_the_editor_4e57490a",
+					),
+					{
+						description: getErrorDetail(error),
+					},
+				);
 			}
 		};
 

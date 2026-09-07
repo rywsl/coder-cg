@@ -14,7 +14,7 @@ import { fileURLToPath } from "node:url";
 import { transformSync } from "@babel/core";
 
 // Resolve the site/ directory (ESM equivalent of __dirname + "..").
-const siteDir = new URL("..", import.meta.url).pathname;
+const siteDir = decodeURIComponent(new URL("..", import.meta.url).pathname);
 
 // Directories opted in to React Compiler. Keep this list in sync with
 // the include filter in vite.config.mts.

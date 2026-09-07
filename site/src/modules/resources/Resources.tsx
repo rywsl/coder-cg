@@ -1,4 +1,5 @@
 import { type FC, type JSX, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { WorkspaceAgent, WorkspaceResource } from "#/api/typesGenerated";
 import { ChevronDownIcon } from "#/components/AnimatedIcons/ChevronDown";
 import { Button } from "#/components/Button/Button";
@@ -14,6 +15,8 @@ interface ResourcesProps {
 }
 
 export const Resources: FC<ResourcesProps> = ({ resources, agentRow }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [shouldDisplayHideResources, setShouldDisplayHideResources] =
 		useState(false);
 	const displayResources = shouldDisplayHideResources
@@ -41,7 +44,10 @@ export const Resources: FC<ResourcesProps> = ({ resources, agentRow }) => {
 						size="sm"
 						onClick={() => setShouldDisplayHideResources((v) => !v)}
 					>
-						{shouldDisplayHideResources ? "Hide" : "Show hidden"} resources
+						{shouldDisplayHideResources
+							? tI18n("resources.Resources.hide_ac20a57b")
+							: tI18n("resources.Resources.show_hidden_88ee90bc")}
+						{tI18n("resources.Resources.resources_f822c39a")}
 						<ChevronDownIcon
 							open={shouldDisplayHideResources}
 							className="ml-2"

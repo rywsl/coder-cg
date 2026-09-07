@@ -2,6 +2,7 @@ import { cn } from "cn";
 import dayjs from "dayjs";
 import { EllipsisVerticalIcon } from "lucide-react";
 import { type FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useOutletContext } from "react-router";
 import { toast } from "sonner";
@@ -55,6 +56,8 @@ type MemberWithSpend = ReducedUser & {
 };
 
 const GroupMembersPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const {
 		group: groupData,
 		members,
@@ -101,7 +104,9 @@ const GroupMembersPage: FC = () => {
 		}),
 	);
 	const aiBudgetNote = [
-		"Approximate monthly AI spend for this user.",
+		tI18n(
+			"GroupsPage.GroupMembersPage.approximate_monthly_ai_spend_for_this_user_571db012",
+		),
 		// Spend resets at period_end, rendered in the viewer's local time.
 		aiSpend &&
 			`Resets ${dayjs(aiSpend.period_end).format("MMM D, YYYY h:mm A")}.`,
@@ -115,7 +120,10 @@ const GroupMembersPage: FC = () => {
 	useEffect(() => {
 		if (membersSpendQuery.error) {
 			toast.error(
-				getErrorMessage(membersSpendQuery.error, "Unable to load AI spend."),
+				getErrorMessage(
+					membersSpendQuery.error,
+					tI18n("GroupsPage.GroupMembersPage.unable_to_load_ai_spend_56745e64"),
+				),
 				{
 					description: getErrorDetail(membersSpendQuery.error),
 				},
@@ -126,26 +134,31 @@ const GroupMembersPage: FC = () => {
 	return (
 		<div className="flex flex-col w-full gap-1 pb-8">
 			<UsersFilter {...filterProps} />
-
 			<PaginationContainer query={membersQuery} paginationUnitLabel="members">
-				<Table aria-label="Group members">
+				<Table
+					aria-label={tI18n(
+						"GroupsPage.GroupMembersPage.group_members_dd0fd917",
+					)}
+				>
 					<TableHeader>
 						<TableRow>
 							<TableHead className={aibridgeVisible ? undefined : "w-2/5"}>
-								User
+								{tI18n("GroupsPage.GroupMembersPage.user_b512d97e")}
 							</TableHead>
 							<TableHead className={aibridgeVisible ? undefined : "w-3/5"}>
-								Status
+								{tI18n("GroupsPage.GroupMembersPage.status_920e413c")}
 							</TableHead>
 							{aibridgeVisible && (
 								<>
 									<TableHead>
 										<div className="flex items-center gap-1">
-											AI spend
+											{tI18n("GroupsPage.GroupMembersPage.ai_spend_aa5699b0")}
 											{membersSpendQuery.isError ? (
 												<StatusIconTooltip
 													kind="warning"
-													message="AI spend couldn't be loaded, so budgets aren't shown."
+													message={tI18n(
+														"GroupsPage.GroupMembersPage.ai_spend_couldn_t_be_loaded_so_budgets_aren_t_sh_ab1deeeb",
+													)}
 												/>
 											) : (
 												<StatusIconTooltip
@@ -160,8 +173,14 @@ const GroupMembersPage: FC = () => {
 									</TableHead>
 									<TableHead>
 										<div className="flex items-center gap-1">
-											Budget group
-											<StatusIconTooltip message="The group or individual budget currently responsible for this user's AI spend. Admins can reassign this at any time, so spend history may span multiple sources." />
+											{tI18n(
+												"GroupsPage.GroupMembersPage.budget_group_37717ac8",
+											)}
+											<StatusIconTooltip
+												message={tI18n(
+													"GroupsPage.GroupMembersPage.the_group_or_individual_budget_currently_respons_0c8ae32a",
+												)}
+											/>
 										</div>
 									</TableHead>
 								</>
@@ -172,7 +191,11 @@ const GroupMembersPage: FC = () => {
 
 					<TableBody>
 						{members.length === 0 ? (
-							<TableEmpty message="No members found" />
+							<TableEmpty
+								message={tI18n(
+									"GroupsPage.GroupMembersPage.no_members_found_a4e937d2",
+								)}
+							/>
 						) : (
 							membersWithSpend.map((member) => (
 								<GroupMemberRow
@@ -188,10 +211,28 @@ const GroupMembersPage: FC = () => {
 											userId: member.id,
 										});
 										toast.promise(mutation, {
-											loading: `Removing member "${member.username}" from "${groupData.name}"...`,
-											success: `Member "${member.username}" has been removed from "${groupData.name}" successfully.`,
+											loading: tI18n(
+												"GroupsPage.GroupMembersPage.removing_member_value0_from_value1_b16c41a9",
+												{
+													value0: member.username,
+													value1: groupData.name,
+												},
+											),
+											success: tI18n(
+												"GroupsPage.GroupMembersPage.member_value0_has_been_removed_from_value1_succe_fae29014",
+												{
+													value0: member.username,
+													value1: groupData.name,
+												},
+											),
 											error: (error) => ({
-												message: `Failed to remove member "${member.username}" from "${groupData.name}".`,
+												message: tI18n(
+													"GroupsPage.GroupMembersPage.failed_to_remove_member_value0_from_value1_115f2e59",
+													{
+														value0: member.username,
+														value1: groupData.name,
+													},
+												),
 												description: getErrorDetail(error),
 											}),
 										});
@@ -202,7 +243,6 @@ const GroupMembersPage: FC = () => {
 					</TableBody>
 				</Table>
 			</PaginationContainer>
-
 			{aibridgeVisible && budgetUser && (
 				<UserAIBudgetOverrideDialog
 					open
@@ -238,6 +278,8 @@ const GroupMemberRow: FC<GroupMemberRowProps> = ({
 	onManageAIBudget,
 	onRemove,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const budgetFromOtherOrganization =
 		effectiveBudgetGroup(member.spend, group).kind === "otherOrg";
 
@@ -254,7 +296,9 @@ const GroupMemberRow: FC<GroupMemberRowProps> = ({
 					}
 					title={member.username}
 					subtitle={
-						member.is_service_account ? "Service Account" : member.email
+						member.is_service_account
+							? tI18n("GroupsPage.GroupMembersPage.service_account_562c51b8")
+							: member.email
 					}
 				/>
 			</TableCell>
@@ -279,9 +323,17 @@ const GroupMemberRow: FC<GroupMemberRowProps> = ({
 				{canUpdate && (
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<Button size="icon-lg" variant="subtle" aria-label="Open menu">
+							<Button
+								size="icon-lg"
+								variant="subtle"
+								aria-label={tI18n(
+									"GroupsPage.GroupMembersPage.open_menu_b40b3713",
+								)}
+							>
 								<EllipsisVerticalIcon aria-hidden="true" />
-								<span className="sr-only">Open menu</span>
+								<span className="sr-only">
+									{tI18n("GroupsPage.GroupMembersPage.open_menu_b40b3713")}
+								</span>
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
@@ -290,7 +342,9 @@ const GroupMemberRow: FC<GroupMemberRowProps> = ({
 									onClick={onManageAIBudget}
 									disabled={budgetFromOtherOrganization}
 								>
-									Manage AI budget
+									{tI18n(
+										"GroupsPage.GroupMembersPage.manage_ai_budget_a299a2a5",
+									)}
 								</DropdownMenuItem>
 							)}
 							<DropdownMenuItem
@@ -298,7 +352,7 @@ const GroupMemberRow: FC<GroupMemberRowProps> = ({
 								onClick={onRemove}
 								disabled={group.id === group.organization_id}
 							>
-								Remove
+								{tI18n("GroupsPage.GroupMembersPage.remove_c3812fc4")}
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>

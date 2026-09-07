@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
@@ -16,6 +17,8 @@ import { useTemplateSettings } from "../TemplateSettingsLayout";
 import { TemplateSettingsPageView } from "./TemplateSettingsPageView";
 
 const TemplateSettingsPage: FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const { template: templateName } = useParams() as { template: string };
 	const navigate = useNavigate();
 	const getLink = useLinks();
@@ -51,12 +54,27 @@ const TemplateSettingsPage: FC = () => {
 					}),
 				]);
 			}
-			toast.success(`Template "${data.name}" updated successfully.`);
+			toast.success(
+				tI18n(
+					"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsPage.template_value0_updated_successfully_0d1a056b",
+					{
+						value0: data.name,
+					},
+				),
+			);
 			navigate(getLink(linkToTemplate(data.organization_name, data.name)));
 		},
 		onError: (error) => {
 			toast.error(
-				getErrorMessage(error, `Failed to update template "${template.name}".`),
+				getErrorMessage(
+					error,
+					tI18n(
+						"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsPage.failed_to_update_template_value0_2b242a34",
+						{
+							value0: template.name,
+						},
+					),
+				),
 				{
 					description: getErrorDetail(error),
 				},
@@ -66,8 +84,14 @@ const TemplateSettingsPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle(template.name, "General Settings")}</title>
-
+			<title>
+				{pageTitle(
+					template.name,
+					tI18n(
+						"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsPage.general_settings_de322f87",
+					),
+				)}
+			</title>
 			<TemplateSettingsPageView
 				isSubmitting={isSubmitting}
 				template={template}

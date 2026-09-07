@@ -7,6 +7,7 @@ import {
 	useId,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import * as Yup from "yup";
 import { isApiValidationError } from "#/api/errors";
@@ -40,6 +41,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "#/components/Table/Table";
+import { i18n } from "#/i18n";
 import {
 	displayNameValidator,
 	getFormHelpers,
@@ -48,8 +50,16 @@ import {
 } from "#/utils/formUtils";
 
 const validationSchema = Yup.object({
-	name: nameValidator("Name"),
-	display_name: displayNameValidator("Display name"),
+	name: nameValidator(
+		i18n.t(
+			"administration:OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.name_dcd1d522",
+		),
+	),
+	display_name: displayNameValidator(
+		i18n.t(
+			"administration:OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.display_name_2b7f6a84",
+		),
+	),
 });
 
 type CreateEditRolePageViewProps = {
@@ -69,6 +79,8 @@ export const CreateEditRolePageView: FC<CreateEditRolePageViewProps> = ({
 	organizationName,
 	allResources = false,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const isEditing = role !== undefined;
 	const rolesHref = `/organizations/${organizationName}/roles`;
 	const form = useFormik<CustomRoleRequest>({
@@ -92,17 +104,28 @@ export const CreateEditRolePageView: FC<CreateEditRolePageViewProps> = ({
 			<Button variant="subtle" asChild className="-ml-3">
 				<Link to={rolesHref}>
 					<ArrowLeftIcon />
-					<span>Back to roles</span>
+					<span>
+						{tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.back_to_roles_094ed2c4",
+						)}
+					</span>
 				</Link>
 			</Button>
-
 			<div className="pt-6">
 				<SettingsHeader>
 					<SettingsHeaderTitle>
-						{isEditing ? "Edit Custom Role" : "New Custom Role"}
+						{isEditing
+							? tI18n(
+									"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.edit_custom_role_0cb81d2b",
+								)
+							: tI18n(
+									"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.new_custom_role_64946125",
+								)}
 					</SettingsHeaderTitle>
 					<SettingsHeaderDescription>
-						Set a name and permissions for this role.
+						{tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.set_a_name_and_permissions_for_this_role_9067fc29",
+						)}
 					</SettingsHeaderDescription>
 				</SettingsHeader>
 
@@ -111,7 +134,9 @@ export const CreateEditRolePageView: FC<CreateEditRolePageViewProps> = ({
 						onSubmit={form.handleSubmit}
 						noValidate
 						autoComplete="off"
-						aria-label="Custom role settings form"
+						aria-label={tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.custom_role_settings_form_372a2004",
+						)}
 						className="flex flex-col gap-6"
 					>
 						<fieldset
@@ -124,9 +149,13 @@ export const CreateEditRolePageView: FC<CreateEditRolePageViewProps> = ({
 
 							<FormField
 								field={getFieldHelpers("name", {
-									helperText: "Cannot be changed after the role is created.",
+									helperText: tI18n(
+										"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.cannot_be_changed_after_the_role_is_created_883a1c05",
+									),
 								})}
-								label="Name"
+								label={tI18n(
+									"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.name_dcd1d522",
+								)}
 								required
 								autoFocus
 								disabled={isEditing}
@@ -135,9 +164,13 @@ export const CreateEditRolePageView: FC<CreateEditRolePageViewProps> = ({
 							/>
 							<FormField
 								field={getFieldHelpers("display_name", {
-									helperText: "Keep empty to default to the name.",
+									helperText: tI18n(
+										"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.keep_empty_to_default_to_the_name_d01699a7",
+									),
 								})}
-								label="Display name"
+								label={tI18n(
+									"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.display_name_2b7f6a84",
+								)}
 								className="w-full"
 							/>
 							<ActionCheckboxes
@@ -149,11 +182,21 @@ export const CreateEditRolePageView: FC<CreateEditRolePageViewProps> = ({
 
 						<FormFooter>
 							<Button asChild variant="outline">
-								<Link to={rolesHref}>Cancel</Link>
+								<Link to={rolesHref}>
+									{tI18n(
+										"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.cancel_19766ed6",
+									)}
+								</Link>
 							</Button>
 							<Button type="submit" disabled={isLoading}>
 								<Spinner loading={isLoading} aria-hidden />
-								{isEditing ? "Save" : "Create custom role"}
+								{isEditing
+									? tI18n(
+											"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.save_1509f561",
+										)
+									: tI18n(
+											"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.create_custom_role_661dd96c",
+										)}
 							</Button>
 						</FormFooter>
 					</form>
@@ -208,6 +251,8 @@ const ActionCheckboxes: FC<ActionCheckboxesProps> = ({
 	form,
 	allResources,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const [checkedActions, setCheckActions] = useState(permissions);
 	const [showAllResources, setShowAllResources] = useState(allResources);
 
@@ -271,10 +316,18 @@ const ActionCheckboxes: FC<ActionCheckboxesProps> = ({
 	};
 
 	return (
-		<Table aria-label="Role permissions">
+		<Table
+			aria-label={tI18n(
+				"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.role_permissions_f3e968d0",
+			)}
+		>
 			<TableHeader>
 				<TableRow>
-					<TableHead>Permission</TableHead>
+					<TableHead>
+						{tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.permission_229efc8f",
+						)}
+					</TableHead>
 					<TableHead className="py-1 text-right">
 						<ShowAllResourcesSwitch
 							showAllResources={showAllResources}
@@ -394,14 +447,20 @@ const ShowAllResourcesSwitch: FC<ShowAllResourcesSwitchProps> = ({
 	showAllResources,
 	setShowAllResources,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const id = useId();
 
 	return (
 		<div className="mr-2 inline-flex items-center justify-end gap-2">
 			<Label htmlFor={id} className="cursor-pointer text-xs font-normal">
 				{showAllResources
-					? "Hide advanced permissions"
-					: "Show advanced permissions"}
+					? tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.hide_advanced_permissions_157a93f8",
+						)
+					: tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePageView.show_advanced_permissions_85db9534",
+						)}
 			</Label>
 			<Switch
 				id={id}

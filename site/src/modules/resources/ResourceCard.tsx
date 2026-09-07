@@ -1,4 +1,5 @@
 import { Children, type FC, type JSX, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { WorkspaceAgent, WorkspaceResource } from "#/api/typesGenerated";
 import { ChevronDownIcon } from "#/components/AnimatedIcons/ChevronDown";
 import { Button } from "#/components/Button/Button";
@@ -18,6 +19,8 @@ interface ResourceCardProps {
 }
 
 export const ResourceCard: FC<ResourceCardProps> = ({ resource, agentRow }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [shouldDisplayAllMetadata, setShouldDisplayAllMetadata] =
 		useState(false);
 	const metadataToDisplay = resource.metadata ?? [];
@@ -62,7 +65,7 @@ export const ResourceCard: FC<ResourceCardProps> = ({ resource, agentRow }) => {
 					{resource.daily_cost > 0 && (
 						<div className="font-normal text-sm leading-6">
 							<div className="overflow-hidden text-ellipsis whitespace-nowrap font-normal text-xs text-content-secondary">
-								<b>Daily cost</b>
+								<b>{tI18n("resources.ResourceCard.daily_cost_77086c01")}</b>
 							</div>
 							<div className="overflow-hidden text-ellipsis whitespace-nowrap">
 								{resource.daily_cost}
@@ -120,12 +123,13 @@ export const ResourceCard: FC<ResourceCardProps> = ({ resource, agentRow }) => {
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent side="bottom">
-							{shouldDisplayAllMetadata ? "Hide metadata" : "Show all metadata"}
+							{shouldDisplayAllMetadata
+								? tI18n("resources.ResourceCard.hide_metadata_98f21acf")
+								: tI18n("resources.ResourceCard.show_all_metadata_d83896e9")}
 						</TooltipContent>
 					</Tooltip>
 				)}
 			</div>
-
 			{resource.agents && resource.agents.length > 0 && (
 				<div>{resource.agents.map(agentRow)}</div>
 			)}

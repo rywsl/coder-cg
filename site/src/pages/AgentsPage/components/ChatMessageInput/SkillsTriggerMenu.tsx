@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import { useLayoutEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Command,
 	CommandEmpty,
@@ -12,6 +13,7 @@ import {
 	PopoverAnchor,
 	PopoverContent,
 } from "#/components/Popover/Popover";
+import { i18n } from "#/i18n";
 
 type SkillSource = "personal" | "workspace";
 
@@ -77,12 +79,20 @@ type SkillsTriggerMenuProps = {
 const getEmptyMessage = (query: string, workspaceSkillsEnabled: boolean) => {
 	if (query) {
 		return workspaceSkillsEnabled
-			? "No skills match that query."
-			: "No personal skills match that query.";
+			? i18n.t(
+					"agents:AgentsPage.components.ChatMessageInput.SkillsTriggerMenu.no_skills_match_that_query_4cf7dbe6",
+				)
+			: i18n.t(
+					"agents:AgentsPage.components.ChatMessageInput.SkillsTriggerMenu.no_personal_skills_match_that_query_97156b78",
+				);
 	}
 	return workspaceSkillsEnabled
-		? "No personal or workspace skills found."
-		: "No personal skills found.";
+		? i18n.t(
+				"agents:AgentsPage.components.ChatMessageInput.SkillsTriggerMenu.no_personal_or_workspace_skills_found_aaf5aeed",
+			)
+		: i18n.t(
+				"agents:AgentsPage.components.ChatMessageInput.SkillsTriggerMenu.no_personal_skills_found_c15c4e92",
+			);
 };
 
 const SkillCommandItem = ({
@@ -166,6 +176,8 @@ export const SkillsTriggerMenu = ({
 	onSelect,
 	onClose,
 }: SkillsTriggerMenuProps) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const allSkills = [...commands, ...personalSkills, ...workspaceSkills];
 	const statusItems = [
 		isPersonalLoading && personalSkills.length === 0
@@ -241,19 +253,31 @@ export const SkillsTriggerMenu = ({
 				>
 					<CommandList className="max-h-72 border-t-0 mobile-full-width-dropdown-scroll-area">
 						{commands.length > 0 && (
-							<CommandGroup heading="Commands">
+							<CommandGroup
+								heading={tI18n(
+									"AgentsPage.components.ChatMessageInput.SkillsTriggerMenu.commands_b269dc4e",
+								)}
+							>
 								{commands.map((skill, index) => renderSkill(skill, index))}
 							</CommandGroup>
 						)}
 						{personalSkills.length > 0 && (
-							<CommandGroup heading="Personal skills">
+							<CommandGroup
+								heading={tI18n(
+									"AgentsPage.components.ChatMessageInput.SkillsTriggerMenu.personal_skills_4907a3e2",
+								)}
+							>
 								{personalSkills.map((skill, index) =>
 									renderSkill(skill, commands.length + index),
 								)}
 							</CommandGroup>
 						)}
 						{workspaceSkills.length > 0 && (
-							<CommandGroup heading="Workspace skills">
+							<CommandGroup
+								heading={tI18n(
+									"AgentsPage.components.ChatMessageInput.SkillsTriggerMenu.workspace_skills_10657f7b",
+								)}
+							>
 								{workspaceSkills.map((skill, index) =>
 									renderSkill(
 										skill,

@@ -1,4 +1,5 @@
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import type { UseMutateFunction } from "react-query";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Alert } from "#/components/Alert/Alert";
@@ -96,18 +97,28 @@ export const CoderAgentsPageView: FC<CoderAgentsPageViewProps> = ({
 	isSavingComputerUseProvider,
 	computerUseProviderSaveError,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<div className="flex max-w-4xl flex-col gap-10">
 			<SettingsHeader>
-				<SettingsHeaderTitle>Coder Agents</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"AISettingsPage.CoderAgentsPage.CoderAgentsPageView.coder_agents_19b8e154",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Configure organization model choices and deployment-wide Coder Agents
-					capabilities.
+					{tI18n(
+						"AISettingsPage.CoderAgentsPage.CoderAgentsPageView.configure_organization_model_choices_and_deploym_eca69869",
+					)}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			{isOrganizationAccessLoading ? (
-				<Loader label="Loading organization settings" />
+				<Loader
+					label={tI18n(
+						"AISettingsPage.CoderAgentsPage.CoderAgentsPageView.loading_organization_settings_f5be3dcc",
+					)}
+				/>
 			) : organization ? (
 				<section
 					aria-labelledby="organization-agent-settings"
@@ -119,20 +130,25 @@ export const CoderAgentsPageView: FC<CoderAgentsPageViewProps> = ({
 								id="organization-agent-settings"
 								className="m-0 text-xl font-semibold"
 							>
-								Organization settings
+								{tI18n(
+									"AISettingsPage.CoderAgentsPage.CoderAgentsPageView.organization_settings_4fd62541",
+								)}
 							</h2>
 							<p className="mt-1 mb-0 text-sm text-content-secondary">
-								Choose model and reasoning defaults for each Coder Agents
-								context.
+								{tI18n(
+									"AISettingsPage.CoderAgentsPage.CoderAgentsPageView.choose_model_and_reasoning_defaults_for_each_cod_3badd541",
+								)}
 							</p>
 						</div>
 						{organizations.length > 1 && (
 							<OrganizationAutocomplete
 								value={organization}
-								ariaLabel={`Organization ${getOrganizationLabel(
-									organization,
-									organizations,
-								)}`}
+								ariaLabel={tI18n(
+									"AISettingsPage.CoderAgentsPage.CoderAgentsPageView.organization_value0_792b6bda",
+									{
+										value0: getOrganizationLabel(organization, organizations),
+									},
+								)}
 								options={organizations}
 								triggerClassName="w-60"
 								optionsTabbable
@@ -146,8 +162,13 @@ export const CoderAgentsPageView: FC<CoderAgentsPageViewProps> = ({
 					</div>
 					{requestedOrganizationDenied && (
 						<Alert severity="warning">
-							The requested organization is not available. Showing settings for{" "}
-							{organization.display_name || organization.name} instead.
+							{tI18n(
+								"AISettingsPage.CoderAgentsPage.CoderAgentsPageView.the_requested_organization_is_not_available_show_89eae427",
+							)}{" "}
+							{organization.display_name || organization.name}
+							{tI18n(
+								"AISettingsPage.CoderAgentsPage.CoderAgentsPageView.instead_d360b016",
+							)}
 						</Alert>
 					)}
 					{organizationAccessError != null && (
@@ -161,7 +182,6 @@ export const CoderAgentsPageView: FC<CoderAgentsPageViewProps> = ({
 			) : organizationAccessError != null ? (
 				<ErrorAlert error={organizationAccessError} />
 			) : null}
-
 			{canEditDeploymentConfig && (
 				<section
 					aria-labelledby="deployment-agent-settings"
@@ -172,11 +192,14 @@ export const CoderAgentsPageView: FC<CoderAgentsPageViewProps> = ({
 							id="deployment-agent-settings"
 							className="m-0 text-xl font-semibold"
 						>
-							Deployment settings
+							{tI18n(
+								"AISettingsPage.CoderAgentsPage.CoderAgentsPageView.deployment_settings_777bc7ac",
+							)}
 						</h2>
 						<p className="mt-1 mb-0 text-sm text-content-secondary">
-							Configure Coder Agents capabilities that apply to every
-							organization.
+							{tI18n(
+								"AISettingsPage.CoderAgentsPage.CoderAgentsPageView.configure_coder_agents_capabilities_that_apply_t_fa5efb62",
+							)}
 						</p>
 					</div>
 					<div className="flex flex-col gap-6 rounded-lg border border-solid border-border px-6 py-7">

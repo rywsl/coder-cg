@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "#/components/Badge/Badge";
 import { CopyButton } from "#/components/CopyButton/CopyButton";
 import { getRoleBadgeVariant, safeJsonStringify } from "./debugPanelUtils";
@@ -94,6 +95,8 @@ export const PillToggle: FC<PillToggleProps> = ({
 	onToggle,
 	icon,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<button
 			type="button"
@@ -108,7 +111,14 @@ export const PillToggle: FC<PillToggleProps> = ({
 		>
 			{icon}
 			{label}
-			{count !== undefined && count > 0 ? ` (${count})` : null}
+			{count !== undefined && count > 0
+				? tI18n(
+						"AgentsPage.components.RightPanel.DebugPanel.DebugPanelPrimitives.value0_8f24a88f",
+						{
+							value0: count,
+						},
+					)
+				: null}
 		</button>
 	);
 };

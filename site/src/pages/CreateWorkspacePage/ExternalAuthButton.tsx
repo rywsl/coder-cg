@@ -1,5 +1,6 @@
 import { CheckIcon, RedoIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { TemplateVersionExternalAuth } from "#/api/typesGenerated";
 import { Badge } from "#/components/Badge/Badge";
 import { Button } from "#/components/Button/Button";
@@ -32,6 +33,8 @@ export const ExternalAuthButton: FC<ExternalAuthButtonProps> = ({
 	error,
 	canAuthenticate = true,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<div className="flex items-center gap-2 border border-border border-solid rounded-md p-3 justify-between">
 			<span className="flex flex-row items-center gap-2">
@@ -39,23 +42,29 @@ export const ExternalAuthButton: FC<ExternalAuthButtonProps> = ({
 					<ExternalImage
 						className="size-5"
 						src={auth.display_icon}
-						alt={`${auth.display_name} Icon`}
+						alt={tI18n(
+							"CreateWorkspacePage.ExternalAuthButton.value0_icon_456d71b2",
+							{
+								value0: auth.display_name,
+							},
+						)}
 					/>
 				)}
 				<p className="font-semibold text-sm m-0">{auth.display_name}</p>
 				{!auth.authenticated && !auth.optional && (
 					<Badge size="sm" variant={error ? "destructive" : "warning"}>
-						Required
+						{tI18n("CreateWorkspacePage.ExternalAuthButton.required_4850b174")}
 					</Badge>
 				)}
 			</span>
-
 			<span className="flex flex-row items-center gap-2">
 				{auth.authenticated ? (
 					<>
 						<CheckIcon className="size-4 text-content-success" />
 						<p className="text-xs font-semibold text-content-secondary m-0">
-							Authenticated
+							{tI18n(
+								"CreateWorkspacePage.ExternalAuthButton.authenticated_6ab694cf",
+							)}
 						</p>
 					</>
 				) : canAuthenticate ? (
@@ -74,7 +83,10 @@ export const ExternalAuthButton: FC<ExternalAuthButtonProps> = ({
 							}}
 						>
 							<Spinner loading={isLoading} />
-							Login with {auth.display_name}
+							{tI18n(
+								"CreateWorkspacePage.ExternalAuthButton.login_with_11939094",
+							)}
+							{auth.display_name}
 						</Button>
 
 						{displayRetry && (
@@ -86,18 +98,27 @@ export const ExternalAuthButton: FC<ExternalAuthButtonProps> = ({
 										onClick={onStartPolling}
 									>
 										<RedoIcon />
-										<span className="sr-only">Refresh external auth</span>
+										<span className="sr-only">
+											{tI18n(
+												"CreateWorkspacePage.ExternalAuthButton.refresh_external_auth_69c1481f",
+											)}
+										</span>
 									</Button>
 								</TooltipTrigger>
 								<TooltipContent>
-									Retry login with {auth.display_name}
+									{tI18n(
+										"CreateWorkspacePage.ExternalAuthButton.retry_login_with_7a19f72c",
+									)}
+									{auth.display_name}
 								</TooltipContent>
 							</Tooltip>
 						)}
 					</>
 				) : (
 					<p className="text-xs font-semibold text-content-secondary m-0">
-						Not connected
+						{tI18n(
+							"CreateWorkspacePage.ExternalAuthButton.not_connected_0303e182",
+						)}
 					</p>
 				)}
 			</span>

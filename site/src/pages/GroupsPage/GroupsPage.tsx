@@ -1,4 +1,5 @@
 import { type FC, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router";
 import { toast } from "sonner";
@@ -20,6 +21,8 @@ import { useGroupsSettings } from "./GroupsPageProvider";
 import { GroupsPageView, joinGroupsSpend } from "./GroupsPageView";
 
 const GroupsPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { permissions: authPermissions } = useAuthenticated();
 	const { template_rbac: groupsEnabled, aibridge } = useFeatureVisibility();
 	const { organization, showOrganizations } = useGroupsSettings();
@@ -51,7 +54,10 @@ const GroupsPage: FC = () => {
 	useEffect(() => {
 		if (groupsQuery.error) {
 			toast.error(
-				getErrorMessage(groupsQuery.error, "Unable to load groups."),
+				getErrorMessage(
+					groupsQuery.error,
+					tI18n("GroupsPage.GroupsPage.unable_to_load_groups_2d2aa329"),
+				),
 				{
 					description: getErrorDetail(groupsQuery.error),
 				},
@@ -62,7 +68,10 @@ const GroupsPage: FC = () => {
 	useEffect(() => {
 		if (groupsSpendQuery.error) {
 			toast.error(
-				getErrorMessage(groupsSpendQuery.error, "Unable to load AI spend."),
+				getErrorMessage(
+					groupsSpendQuery.error,
+					tI18n("GroupsPage.GroupsPage.unable_to_load_ai_spend_56745e64"),
+				),
 				{
 					description: getErrorDetail(groupsSpendQuery.error),
 				},
@@ -73,7 +82,10 @@ const GroupsPage: FC = () => {
 	useEffect(() => {
 		if (permissionsQuery.error) {
 			toast.error(
-				getErrorMessage(permissionsQuery.error, "Unable to load permissions."),
+				getErrorMessage(
+					permissionsQuery.error,
+					tI18n("GroupsPage.GroupsPage.unable_to_load_permissions_a4c6356b"),
+				),
 				{
 					description: getErrorDetail(permissionsQuery.error),
 				},
@@ -82,14 +94,20 @@ const GroupsPage: FC = () => {
 	}, [permissionsQuery.error]);
 
 	if (!organization) {
-		return <EmptyState message="Organization not found" />;
+		return (
+			<EmptyState
+				message={tI18n("GroupsPage.GroupsPage.organization_not_found_00c50f7a")}
+			/>
+		);
 	}
 
 	if (permissionsQuery.isLoading) {
 		return <Loader />;
 	}
 
-	const title = <title>{pageTitle("Groups")}</title>;
+	const title = (
+		<title>{pageTitle(tI18n("GroupsPage.GroupsPage.groups_39bbb719"))}</title>
+	);
 
 	const permissions = permissionsQuery.data?.[organization.id];
 

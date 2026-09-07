@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { i18n } from "#/i18n";
 
 export interface QuickPreset {
 	id: string;
@@ -16,7 +17,9 @@ export interface DateTimeRangeValue {
 export const DEFAULT_QUICK_PRESETS: QuickPreset[] = [
 	{
 		id: "last_15m",
-		label: "Last 15 min",
+		label: i18n.t(
+			"components:DateTimeRangePicker.dateTimeRange.last_15_min_9192a681",
+		),
 		range: (now) => ({
 			start: dayjs(now).subtract(15, "minute").toDate(),
 			end: now,
@@ -24,7 +27,9 @@ export const DEFAULT_QUICK_PRESETS: QuickPreset[] = [
 	},
 	{
 		id: "last_1h",
-		label: "Last hour",
+		label: i18n.t(
+			"components:DateTimeRangePicker.dateTimeRange.last_hour_a8dfe9d8",
+		),
 		range: (now) => ({
 			start: dayjs(now).subtract(1, "hour").toDate(),
 			end: now,
@@ -32,7 +37,9 @@ export const DEFAULT_QUICK_PRESETS: QuickPreset[] = [
 	},
 	{
 		id: "last_24h",
-		label: "Last 24 hours",
+		label: i18n.t(
+			"components:DateTimeRangePicker.dateTimeRange.last_24_hours_5c37cf8f",
+		),
 		range: (now) => ({
 			start: dayjs(now).subtract(24, "hour").toDate(),
 			end: now,
@@ -40,12 +47,16 @@ export const DEFAULT_QUICK_PRESETS: QuickPreset[] = [
 	},
 	{
 		id: "today",
-		label: "Today",
+		label: i18n.t(
+			"components:DateTimeRangePicker.dateTimeRange.today_2b065c7c",
+		),
 		range: (now) => ({ start: dayjs(now).startOf("day").toDate(), end: now }),
 	},
 	{
 		id: "this_week",
-		label: "This week",
+		label: i18n.t(
+			"components:DateTimeRangePicker.dateTimeRange.this_week_8c4eef5a",
+		),
 		range: (now) => ({ start: dayjs(now).startOf("week").toDate(), end: now }),
 	},
 ];

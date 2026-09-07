@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useMutation } from "react-query";
 import { toast } from "sonner";
 import { API } from "#/api/api";
@@ -27,6 +28,8 @@ type UseBatchActionsResult = Readonly<{
 export function useBatchActions(
 	options: UseBatchActionsOptions,
 ): UseBatchActionsResult {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const { onSuccess } = options;
 
 	const startAllMutation = useMutation({
@@ -41,9 +44,14 @@ export function useBatchActions(
 		},
 		onSuccess,
 		onError: (error) => {
-			toast.error("Failed to start workspaces.", {
-				description: getErrorDetail(error),
-			});
+			toast.error(
+				tI18n(
+					"WorkspacesPage.batchActions.failed_to_start_workspaces_4518344a",
+				),
+				{
+					description: getErrorDetail(error),
+				},
+			);
 		},
 	});
 
@@ -57,9 +65,12 @@ export function useBatchActions(
 		},
 		onSuccess,
 		onError: (error) => {
-			toast.error("Failed to stop workspaces.", {
-				description: getErrorDetail(error),
-			});
+			toast.error(
+				tI18n("WorkspacesPage.batchActions.failed_to_stop_workspaces_e9878454"),
+				{
+					description: getErrorDetail(error),
+				},
+			);
 		},
 	});
 
@@ -69,9 +80,14 @@ export function useBatchActions(
 		},
 		onSuccess,
 		onError: (error) => {
-			toast.error("Failed to delete some workspaces.", {
-				description: getErrorDetail(error),
-			});
+			toast.error(
+				tI18n(
+					"WorkspacesPage.batchActions.failed_to_delete_some_workspaces_8cb8a270",
+				),
+				{
+					description: getErrorDetail(error),
+				},
+			);
 		},
 	});
 
@@ -86,9 +102,14 @@ export function useBatchActions(
 		},
 		onSuccess,
 		onError: (error) => {
-			toast.error("Failed to update some workspaces.", {
-				description: getErrorDetail(error),
-			});
+			toast.error(
+				tI18n(
+					"WorkspacesPage.batchActions.failed_to_update_some_workspaces_4f7e5b1b",
+				),
+				{
+					description: getErrorDetail(error),
+				},
+			);
 		},
 	});
 
@@ -107,9 +128,14 @@ export function useBatchActions(
 		},
 		onSuccess,
 		onError: (error) => {
-			toast.error("Failed to favorite some workspaces.", {
-				description: getErrorDetail(error),
-			});
+			toast.error(
+				tI18n(
+					"WorkspacesPage.batchActions.failed_to_favorite_some_workspaces_ee9e28d9",
+				),
+				{
+					description: getErrorDetail(error),
+				},
+			);
 		},
 	});
 
@@ -123,9 +149,14 @@ export function useBatchActions(
 		},
 		onSuccess,
 		onError: (error) => {
-			toast.error("Failed to unfavorite some workspaces.", {
-				description: getErrorDetail(error),
-			});
+			toast.error(
+				tI18n(
+					"WorkspacesPage.batchActions.failed_to_unfavorite_some_workspaces_fca4023a",
+				),
+				{
+					description: getErrorDetail(error),
+				},
+			);
 		},
 	});
 

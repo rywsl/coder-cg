@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { RotateCcwIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { getErrorMessage } from "#/api/errors";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Badge } from "#/components/Badge/Badge";
@@ -62,17 +63,24 @@ const parseThresholdDraft = (value: string): number | null => {
 	return parsedValue;
 };
 
-const ContextCompactionHeader: FC = () => (
-	<div className="flex flex-col gap-2">
-		<h3 className="m-0 text-sm font-semibold text-content-primary">
-			Context compaction
-		</h3>
-		<p className="mt-0.5! m-0 text-xs text-content-secondary">
-			Control when conversation context is automatically summarized for each
-			model. Setting 100% means the conversation will never auto-compact.
-		</p>
-	</div>
-);
+const ContextCompactionHeader: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
+	return (
+		<div className="flex flex-col gap-2">
+			<h3 className="m-0 text-sm font-semibold text-content-primary">
+				{tI18n(
+					"AgentsPage.components.UserCompactionThresholdSettings.context_compaction_3820cab0",
+				)}
+			</h3>
+			<p className="mt-0.5! m-0 text-xs text-content-secondary">
+				{tI18n(
+					"AgentsPage.components.UserCompactionThresholdSettings.control_when_conversation_context_is_automatical_0115f7a0",
+				)}
+			</p>
+		</div>
+	);
+};
 
 export const UserCompactionThresholdSettings: FC<
 	UserCompactionThresholdSettingsProps
@@ -88,6 +96,8 @@ export const UserCompactionThresholdSettings: FC<
 	onSaveThreshold,
 	onResetThreshold,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [drafts, setDrafts] = useState<Record<string, string>>({});
 	const [rowErrors, setRowErrors] = useState<Record<string, string>>({});
 	const [pendingModels, setPendingModels] = useState<Set<string>>(new Set());
@@ -170,7 +180,9 @@ export const UserCompactionThresholdSettings: FC<
 					...currentErrors,
 					[modelId]: getErrorMessage(
 						error,
-						"Failed to reset compaction threshold.",
+						tI18n(
+							"AgentsPage.components.UserCompactionThresholdSettings.failed_to_reset_compaction_threshold_8864c2eb",
+						),
 					),
 				}));
 			})
@@ -208,7 +220,9 @@ export const UserCompactionThresholdSettings: FC<
 						...currentErrors,
 						[modelId]: getErrorMessage(
 							error,
-							"Failed to save compaction threshold.",
+							tI18n(
+								"AgentsPage.components.UserCompactionThresholdSettings.failed_to_save_compaction_threshold_ee34a505",
+							),
 						),
 					}));
 					return false;
@@ -259,7 +273,9 @@ export const UserCompactionThresholdSettings: FC<
 				<ContextCompactionHeader />
 				<div className="flex items-center gap-2 text-sm text-content-secondary">
 					<Spinner loading className="size-4" />
-					Loading thresholds...
+					{tI18n(
+						"AgentsPage.components.UserCompactionThresholdSettings.loading_thresholds_951c3934",
+					)}
 				</div>
 			</div>
 		);
@@ -272,7 +288,9 @@ export const UserCompactionThresholdSettings: FC<
 				<p className="m-0 text-xs text-content-destructive">
 					{getErrorMessage(
 						thresholdsError,
-						"Failed to load compaction thresholds.",
+						tI18n(
+							"AgentsPage.components.UserCompactionThresholdSettings.failed_to_load_compaction_thresholds_908a5fb9",
+						),
 					)}
 				</p>
 			</div>
@@ -285,16 +303,24 @@ export const UserCompactionThresholdSettings: FC<
 			{isLoadingModels ? (
 				<div className="flex items-center gap-2 text-sm text-content-secondary">
 					<Spinner loading className="size-4" />
-					Loading models...
+					{tI18n(
+						"AgentsPage.components.UserCompactionThresholdSettings.loading_models_80243524",
+					)}
 				</div>
 			) : modelsError && enabledModels.length === 0 ? (
 				<p className="m-0 text-xs text-content-destructive">
-					{getErrorMessage(modelsError, "Failed to load model configurations.")}
+					{getErrorMessage(
+						modelsError,
+						tI18n(
+							"AgentsPage.components.UserCompactionThresholdSettings.failed_to_load_model_configurations_077c236c",
+						),
+					)}
 				</p>
 			) : enabledModels.length === 0 ? (
 				<p className="m-0 text-xs text-content-secondary">
-					No enabled chat models available. An administrator must configure chat
-					models before compaction thresholds can be set.
+					{tI18n(
+						"AgentsPage.components.UserCompactionThresholdSettings.no_enabled_chat_models_available_an_administrato_792aa6a5",
+					)}
 				</p>
 			) : (
 				<>
@@ -302,7 +328,9 @@ export const UserCompactionThresholdSettings: FC<
 						<p className="m-0 text-xs text-content-destructive">
 							{getErrorMessage(
 								modelsError,
-								"Some organization models could not be loaded.",
+								tI18n(
+									"AgentsPage.components.UserCompactionThresholdSettings.some_organization_models_could_not_be_loaded_00aac8f9",
+								),
 							)}
 						</p>
 					)}
@@ -310,10 +338,15 @@ export const UserCompactionThresholdSettings: FC<
 						<div>
 							<OrganizationAutocomplete
 								value={activeOrganization}
-								ariaLabel={`Organization ${getOrganizationLabel(
-									activeOrganization,
-									organizationOptions,
-								)}`}
+								ariaLabel={tI18n(
+									"AgentsPage.components.UserCompactionThresholdSettings.organization_value0_792b6bda",
+									{
+										value0: getOrganizationLabel(
+											activeOrganization,
+											organizationOptions,
+										),
+									},
+								)}
 								options={organizationOptions}
 								triggerClassName="w-60"
 								optionsTabbable
@@ -329,10 +362,20 @@ export const UserCompactionThresholdSettings: FC<
 					<Table>
 						<TableHeader>
 							<TableRow>
-								<TableHead className="text-content-secondary">Model</TableHead>
-								<TableHead className="w-0 whitespace-nowrap">Default</TableHead>
+								<TableHead className="text-content-secondary">
+									{tI18n(
+										"AgentsPage.components.UserCompactionThresholdSettings.model_5e2c614c",
+									)}
+								</TableHead>
 								<TableHead className="w-0 whitespace-nowrap">
-									Threshold
+									{tI18n(
+										"AgentsPage.components.UserCompactionThresholdSettings.default_21b111cb",
+									)}
+								</TableHead>
+								<TableHead className="w-0 whitespace-nowrap">
+									{tI18n(
+										"AgentsPage.components.UserCompactionThresholdSettings.threshold_0da627ad",
+									)}
 								</TableHead>
 							</TableRow>
 						</TableHeader>
@@ -369,7 +412,14 @@ export const UserCompactionThresholdSettings: FC<
 												size="md"
 												variant="default"
 												className="w-fit"
-												aria-label={`${providerLabel} ${modelName} in ${organizationName}`}
+												aria-label={tI18n(
+													"AgentsPage.components.UserCompactionThresholdSettings.value0_value1_in_value2_902103f5",
+													{
+														value0: providerLabel,
+														value1: modelName,
+														value2: organizationName,
+													},
+												)}
 											>
 												<ProviderIcon provider={provider} className="size-4" />
 												{modelName}
@@ -392,7 +442,13 @@ export const UserCompactionThresholdSettings: FC<
 													<TooltipTrigger asChild>
 														<div className="relative">
 															<Input
-																aria-label={`${modelName} compaction threshold for ${organizationName}`}
+																aria-label={tI18n(
+																	"AgentsPage.components.UserCompactionThresholdSettings.value0_compaction_threshold_for_value1_67119695",
+																	{
+																		value0: modelName,
+																		value1: organizationName,
+																	},
+																)}
 																aria-invalid={isInvalid || undefined}
 																type="text"
 																min={0}
@@ -428,8 +484,12 @@ export const UserCompactionThresholdSettings: FC<
 													{(isInvalid || isDraftDisablingCompaction) && (
 														<TooltipContent>
 															{isInvalid
-																? "Enter a whole number between 0 and 100."
-																: "Setting 100% will disable auto-compaction for this model."}
+																? tI18n(
+																		"AgentsPage.components.UserCompactionThresholdSettings.enter_a_whole_number_between_0_and_100_a2756ca1",
+																	)
+																: tI18n(
+																		"AgentsPage.components.UserCompactionThresholdSettings.setting_100_will_disable_auto_compaction_for_thi_e318ed46",
+																	)}
 														</TooltipContent>
 													)}
 												</Tooltip>
@@ -444,7 +504,13 @@ export const UserCompactionThresholdSettings: FC<
 																	? "opacity-100"
 																	: "pointer-events-none opacity-0",
 															)}
-															aria-label={`Reset ${modelName} for ${organizationName} to default`}
+															aria-label={tI18n(
+																"AgentsPage.components.UserCompactionThresholdSettings.reset_value0_for_value1_to_default_cfcb8e99",
+																{
+																	value0: modelName,
+																	value1: organizationName,
+																},
+															)}
 															aria-hidden={!hasOverride}
 															tabIndex={hasOverride ? 0 : -1}
 															disabled={isThisModelMutating || !hasOverride}
@@ -455,7 +521,9 @@ export const UserCompactionThresholdSettings: FC<
 													</TooltipTrigger>
 													{hasOverride && (
 														<TooltipContent>
-															Reset to default (
+															{tI18n(
+																"AgentsPage.components.UserCompactionThresholdSettings.reset_to_default_590783da",
+															)}
 															{modelConfig.compression_threshold}%)
 														</TooltipContent>
 													)}
@@ -463,13 +531,16 @@ export const UserCompactionThresholdSettings: FC<
 											</div>
 											{isInvalid && (
 												<span className="sr-only" aria-live="polite">
-													Enter a whole number between 0 and 100.
+													{tI18n(
+														"AgentsPage.components.UserCompactionThresholdSettings.enter_a_whole_number_between_0_and_100_a2756ca1",
+													)}
 												</span>
 											)}
 											{isDraftDisablingCompaction && (
 												<span className="sr-only" aria-live="polite">
-													Setting 100% will disable auto-compaction for this
-													model.
+													{tI18n(
+														"AgentsPage.components.UserCompactionThresholdSettings.setting_100_will_disable_auto_compaction_for_thi_e318ed46",
+													)}
 												</span>
 											)}
 										</TableCell>
@@ -493,7 +564,9 @@ export const UserCompactionThresholdSettings: FC<
 														onClick={handleCancelAll}
 														disabled={hasAnyPending}
 													>
-														Cancel
+														{tI18n(
+															"AgentsPage.components.UserCompactionThresholdSettings.cancel_19766ed6",
+														)}
 													</Button>
 													{dirtyRows.length > 0 && (
 														<Button
@@ -505,8 +578,23 @@ export const UserCompactionThresholdSettings: FC<
 														>
 															{hasAnyPending && <Spinner loading size="sm" />}
 															{hasAnyPending
-																? "Saving..."
-																: `Save ${dirtyRows.length} ${dirtyRows.length === 1 ? "change" : "changes"}`}
+																? tI18n(
+																		"AgentsPage.components.UserCompactionThresholdSettings.saving_dc85af8f",
+																	)
+																: tI18n(
+																		"AgentsPage.components.UserCompactionThresholdSettings.save_value0_value1_68b393da",
+																		{
+																			value0: dirtyRows.length,
+																			value1:
+																				dirtyRows.length === 1
+																					? tI18n(
+																							"AgentsPage.components.UserCompactionThresholdSettings.change_12ea12ea",
+																						)
+																					: tI18n(
+																							"AgentsPage.components.UserCompactionThresholdSettings.changes_d0b4ba23",
+																						),
+																		},
+																	)}
 														</Button>
 													)}
 												</>

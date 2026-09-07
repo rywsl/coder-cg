@@ -1,6 +1,7 @@
 import { saveAs } from "file-saver";
 import { ChevronDownIcon, DownloadIcon, PackageIcon } from "lucide-react";
 import { type FC, type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { getErrorDetail } from "#/api/errors";
 import { Button } from "#/components/Button/Button";
@@ -35,6 +36,8 @@ export const DownloadSelectedAgentLogsButton: FC<
 	disabled = false,
 	download = saveAs,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [isDownloading, setIsDownloading] = useState(false);
 	const downloadLogs = async (logsText: string, filenameSuffix: string) => {
 		try {
@@ -42,9 +45,17 @@ export const DownloadSelectedAgentLogsButton: FC<
 			const file = new Blob([logsText], { type: "text/plain" });
 			await download(file, `${agentName}-${filenameSuffix}.txt`);
 		} catch (error) {
-			toast.error(`Failed to download "${agentName}" logs.`, {
-				description: getErrorDetail(error),
-			});
+			toast.error(
+				tI18n(
+					"resources.DownloadSelectedAgentLogsButton.failed_to_download_value0_logs_01b2fd08",
+					{
+						value0: agentName,
+					},
+				),
+				{
+					description: getErrorDetail(error),
+				},
+			);
 		} finally {
 			setIsDownloading(false);
 		}
@@ -63,7 +74,13 @@ export const DownloadSelectedAgentLogsButton: FC<
 				>
 					<DownloadIcon />
 					<span className="sr-only">
-						{isDownloading ? "Downloading..." : "Download agent logs"}
+						{isDownloading
+							? tI18n(
+									"resources.DownloadSelectedAgentLogsButton.downloading_f976eb28",
+								)
+							: tI18n(
+									"resources.DownloadSelectedAgentLogsButton.download_agent_logs_39def46c",
+								)}
 					</span>
 					<ChevronDownIcon className="size-icon-sm" />
 				</Button>
@@ -80,7 +97,9 @@ export const DownloadSelectedAgentLogsButton: FC<
 					}}
 				>
 					<PackageIcon />
-					Download all logs
+					{tI18n(
+						"resources.DownloadSelectedAgentLogsButton.download_all_logs_1b265753",
+					)}
 				</DropdownMenuItem>
 				{logSets.map((logSet) => (
 					<DropdownMenuItem
@@ -91,7 +110,12 @@ export const DownloadSelectedAgentLogsButton: FC<
 						}}
 					>
 						{logSet.startIcon}
-						<span>Download {logSet.label}</span>
+						<span>
+							{tI18n(
+								"resources.DownloadSelectedAgentLogsButton.download_37722639",
+							)}
+							{logSet.label}
+						</span>
 					</DropdownMenuItem>
 				))}
 			</DropdownMenuContent>

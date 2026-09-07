@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { TemplateVersion } from "#/api/typesGenerated";
 import { Table, TableBody } from "#/components/Table/Table";
 import { TableEmpty } from "#/components/TableEmpty/TableEmpty";
@@ -19,6 +20,8 @@ export const VersionsTable: FC<VersionsTableProps> = ({
 	onArchiveClick,
 	onPromoteClick,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const latestVersionId = versions?.reduce<TemplateVersion | undefined>(
 		(latestSoFar, against) => {
 			if (against.job.status !== "succeeded") {
@@ -60,7 +63,11 @@ export const VersionsTable: FC<VersionsTableProps> = ({
 				)}
 
 				{versions && versions.length === 0 && (
-					<TableEmpty message="No versions found" />
+					<TableEmpty
+						message={tI18n(
+							"TemplatePage.TemplateVersionsPage.VersionsTable.no_versions_found_9f3bfc4a",
+						)}
+					/>
 				)}
 			</TableBody>
 		</Table>

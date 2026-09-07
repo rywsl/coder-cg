@@ -1,4 +1,5 @@
 import type { ComponentProps, FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery } from "react-query";
 import { toast } from "sonner";
 import { API } from "#/api/api";
@@ -16,6 +17,8 @@ import {
 } from "./SingleSignOnSection";
 
 const SecurityPage: FC = () => {
+	const { t: tI18n } = useTranslation("users");
+
 	const { user: me } = useAuthenticated();
 	const updatePasswordMutation = useMutation(updatePassword());
 	const authMethodsQuery = useQuery(authMethods());
@@ -41,7 +44,11 @@ const SecurityPage: FC = () => {
 							userId: me.id,
 							...data,
 						});
-						toast.success("Updated password.");
+						toast.success(
+							tI18n(
+								"UserSettingsPage.SecurityPage.SecurityPage.updated_password_caa322d0",
+							),
+						);
 						// Refresh the browser session. We need to improve the AuthProvider
 						// to include better API to handle these scenarios
 						location.href = location.origin;
@@ -72,11 +79,17 @@ export const SecurityPageView: FC<SecurityPageViewProps> = ({
 	security,
 	oidc,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	return (
 		<div className="flex flex-col gap-12">
 			<div>
 				<SettingsHeader>
-					<SettingsHeaderTitle>Security</SettingsHeaderTitle>
+					<SettingsHeaderTitle>
+						{tI18n(
+							"UserSettingsPage.SecurityPage.SecurityPage.security_8f6fb4eb",
+						)}
+					</SettingsHeaderTitle>
 				</SettingsHeader>
 				<SecurityForm {...security.form} />
 			</div>

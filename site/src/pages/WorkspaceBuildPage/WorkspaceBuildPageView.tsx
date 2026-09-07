@@ -7,6 +7,7 @@ import {
 	useLayoutEffect,
 	useRef,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useSearchParams } from "react-router";
 import type {
 	ProvisionerJobLog,
@@ -84,6 +85,8 @@ export const WorkspaceBuildPageView: FC<WorkspaceBuildPageViewProps> = ({
 	builds,
 	activeBuildNumber,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	if (buildError) {
@@ -121,39 +124,67 @@ export const WorkspaceBuildPageView: FC<WorkspaceBuildPageViewProps> = ({
 						jobStatus={build.job.status}
 					/>
 					<div>
-						<PageHeaderTitle>Build #{build.build_number}</PageHeaderTitle>
+						<PageHeaderTitle>
+							{tI18n(
+								"WorkspaceBuildPage.WorkspaceBuildPageView.build_c65265a4",
+							)}
+							{build.build_number}
+						</PageHeaderTitle>
 						<PageHeaderSubtitle>{build.initiator_name}</PageHeaderSubtitle>
 					</div>
 				</div>
 				<Stats
-					aria-label="Build details"
+					aria-label={tI18n(
+						"WorkspaceBuildPage.WorkspaceBuildPageView.build_details_2de9d89c",
+					)}
 					className="flex flex-col items-start gap-2 px-0 border-none grow basis-0 md:flex-row md:gap-x-12 md:gap-y-6"
 				>
-					<BuildStatsItem label="Workspace">
+					<BuildStatsItem
+						label={tI18n(
+							"WorkspaceBuildPage.WorkspaceBuildPageView.workspace_87bb59ba",
+						)}
+					>
 						<Link
 							to={`/@${build.workspace_owner_name}/${build.workspace_name}`}
 						>
 							{build.workspace_name}
 						</Link>
 					</BuildStatsItem>
-					<BuildStatsItem label="Template version">
+					<BuildStatsItem
+						label={tI18n(
+							"WorkspaceBuildPage.WorkspaceBuildPageView.template_version_1c5f9189",
+						)}
+					>
 						{build.template_version_name}
 					</BuildStatsItem>
-					<BuildStatsItem label="Duration">
+					<BuildStatsItem
+						label={tI18n(
+							"WorkspaceBuildPage.WorkspaceBuildPageView.duration_4fc52a3c",
+						)}
+					>
 						{displayWorkspaceBuildDuration(build)}
 					</BuildStatsItem>
-					<BuildStatsItem label="Started at">
+					<BuildStatsItem
+						label={tI18n(
+							"WorkspaceBuildPage.WorkspaceBuildPageView.started_at_fe752875",
+						)}
+					>
 						{formatDate(new Date(build.created_at))}
 					</BuildStatsItem>
-					<BuildStatsItem label="Action">
+					<BuildStatsItem
+						label={tI18n(
+							"WorkspaceBuildPage.WorkspaceBuildPageView.action_64cff131",
+						)}
+					>
 						<span className="capitalize">{build.transition}</span>
 					</BuildStatsItem>
 				</Stats>
 			</FullWidthPageHeader>
-
 			<div className="flex items-start overflow-hidden grow basis-0">
 				<Sidebar>
-					<SidebarCaption>Builds</SidebarCaption>
+					<SidebarCaption>
+						{tI18n("WorkspaceBuildPage.WorkspaceBuildPageView.builds_6a3fe887")}
+					</SidebarCaption>
 					{!builds &&
 						Array.from({ length: 15 }, (_, i) => (
 							<SidebarItem key={i}>
@@ -191,10 +222,17 @@ export const WorkspaceBuildPageView: FC<WorkspaceBuildPageViewProps> = ({
 							className="w-full -m-px"
 						>
 							<TabsList variant="insideBox">
-								<TabsTrigger value="build">Build</TabsTrigger>
+								<TabsTrigger value="build">
+									{tI18n(
+										"WorkspaceBuildPage.WorkspaceBuildPageView.build_bdd254b6",
+									)}
+								</TabsTrigger>
 								{agents.map((agent) => (
 									<TabsTrigger value={agent.id} key={agent.id}>
-										coder_agent.{agent.name}
+										{tI18n(
+											"WorkspaceBuildPage.WorkspaceBuildPageView.coder_agent_2f95f276",
+										)}
+										{agent.name}
 									</TabsTrigger>
 								))}
 							</TabsList>
@@ -206,7 +244,9 @@ export const WorkspaceBuildPageView: FC<WorkspaceBuildPageViewProps> = ({
 											target="_blank"
 											rel="noopener noreferrer"
 										>
-											View raw logs
+											{tI18n(
+												"WorkspaceBuildPage.WorkspaceBuildPageView.view_raw_logs_ed3f405c",
+											)}
 											<ExternalLinkIcon className="size-3" />
 										</a>
 									</Button>
@@ -219,12 +259,15 @@ export const WorkspaceBuildPageView: FC<WorkspaceBuildPageViewProps> = ({
 											className="rounded-none border-0 border-b border-solid border-border"
 										>
 											<div>
-												The workspace may have failed to delete due to a
-												Terraform state mismatch. A template admin may run{" "}
+												{tI18n(
+													"WorkspaceBuildPage.WorkspaceBuildPageView.the_workspace_may_have_failed_to_delete_due_to_a_a9f02a29",
+												)}{" "}
 												<code className="font-semibold w-fit inline-block">
 													{`coder rm ${`${build.workspace_owner_name}/${build.workspace_name}`} --orphan`}
 												</code>{" "}
-												to delete the workspace skipping resource destruction.
+												{tI18n(
+													"WorkspaceBuildPage.WorkspaceBuildPageView.to_delete_the_workspace_skipping_resource_destru_06e98d48",
+												)}
 											</div>
 										</Alert>
 									)}
@@ -234,8 +277,9 @@ export const WorkspaceBuildPageView: FC<WorkspaceBuildPageViewProps> = ({
 										prominent
 										className="rounded-none border-0 border-b border-solid border-border"
 									>
-										Provisioner logs exceeded the max size of 1MB. Will not
-										continue to write provisioner logs for workspace build.
+										{tI18n(
+											"WorkspaceBuildPage.WorkspaceBuildPageView.provisioner_logs_exceeded_the_max_size_of_1mb_wi_4ff17fd2",
+										)}
 									</Alert>
 								)}
 								<BuildLogsContent logs={logs} build={build} />
@@ -249,7 +293,9 @@ export const WorkspaceBuildPageView: FC<WorkspaceBuildPageViewProps> = ({
 												target="_blank"
 												rel="noopener noreferrer"
 											>
-												View raw logs
+												{tI18n(
+													"WorkspaceBuildPage.WorkspaceBuildPageView.view_raw_logs_ed3f405c",
+												)}
 												<ExternalLinkIcon className="size-3" />
 											</a>
 										</Button>

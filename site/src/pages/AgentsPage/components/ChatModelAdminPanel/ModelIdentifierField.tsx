@@ -8,6 +8,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Autocomplete } from "#/components/Autocomplete/Autocomplete";
 import { Input } from "#/components/Input/Input";
 import { Label } from "#/components/Label/Label";
@@ -67,6 +68,8 @@ export const ModelIdentifierField = ({
 	disabled,
 	controlClassName,
 }: ModelIdentifierFieldProps) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [initialFormValues] = useState(() => form.initialValues);
 	const [open, setOpen] = useState(false);
 	const [searchValue, setSearchValue] = useState("");
@@ -383,7 +386,9 @@ export const ModelIdentifierField = ({
 						controlClassName,
 						hasError && "border-content-destructive",
 					)}
-					placeholder="e.g. gpt-5, claude-sonnet-4-5"
+					placeholder={tI18n(
+						"AgentsPage.components.ChatModelAdminPanel.ModelIdentifierField.e_g_gpt_5_claude_sonnet_4_5_c13fe6e5",
+					)}
 					value={modelField.value}
 					onChange={modelField.onChange}
 					onBlur={modelField.onBlur}
@@ -432,7 +437,9 @@ export const ModelIdentifierField = ({
 				}}
 				inlineSearch
 				onEnterEmpty={() => handleOpenChange(false)}
-				placeholder="e.g. gpt-5, claude-sonnet-4-5"
+				placeholder={tI18n(
+					"AgentsPage.components.ChatModelAdminPanel.ModelIdentifierField.e_g_gpt_5_claude_sonnet_4_5_c13fe6e5",
+				)}
 				className={cn(
 					"placeholder:text-content-disabled",
 					controlClassName,
@@ -457,11 +464,15 @@ export const ModelIdentifierField = ({
 				htmlFor={modelField.id}
 				className="flex items-center gap-1 leading-6 text-content-primary"
 			>
-				Model identifier{" "}
+				{tI18n(
+					"AgentsPage.components.ChatModelAdminPanel.ModelIdentifierField.model_identifier_e426c302",
+				)}{" "}
 				<span className="text-xs font-bold text-content-destructive">*</span>
 			</Label>
 			<p className="m-0 text-xs text-content-secondary">
-				The model identifier sent to the provider API.
+				{tI18n(
+					"AgentsPage.components.ChatModelAdminPanel.ModelIdentifierField.the_model_identifier_sent_to_the_provider_api_2e9fa272",
+				)}
 			</p>
 			{renderControl()}
 			{hasError && (

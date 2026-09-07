@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { Permission } from "#/api/typesGenerated";
 import { Badge } from "#/components/Badge/Badge";
 import {
@@ -19,6 +20,8 @@ interface PermissionPillsListProps {
 export const PermissionPillsList: FC<PermissionPillsListProps> = ({
 	permissions,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const resourceTypes = getUniqueResourceTypes(permissions);
 
 	return (
@@ -29,9 +32,12 @@ export const PermissionPillsList: FC<PermissionPillsListProps> = ({
 					permissions={permissions}
 				/>
 			) : (
-				<p>None</p>
+				<p>
+					{tI18n(
+						"OrganizationSettingsPage.CustomRolesPage.PermissionPillsList.none_dc937b59",
+					)}
+				</p>
 			)}
-
 			{resourceTypes.length > 1 && (
 				<OverflowPermissionPill
 					resources={resourceTypes.slice(1)}
@@ -72,14 +78,18 @@ const OverflowPermissionPill: FC<OverflowPermissionPillProps> = ({
 	resources,
 	permissions,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<Tooltip>
 			<TooltipTrigger asChild>
 				<Badge className="w-fit" data-testid="overflow-permissions-pill">
-					+{resources.length} more
+					+{resources.length}
+					{tI18n(
+						"OrganizationSettingsPage.CustomRolesPage.PermissionPillsList.more_226ba18b",
+					)}
 				</Badge>
 			</TooltipTrigger>
-
 			<TooltipContent className="px-4 py-3 border-surface-quaternary">
 				<ul className="flex flex-col gap-2 list-none my-0 pl-0">
 					{resources.map((resource) => (

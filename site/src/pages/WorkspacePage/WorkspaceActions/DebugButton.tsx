@@ -1,5 +1,6 @@
 import { BugIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { Workspace } from "#/api/typesGenerated";
 import { TopbarButton } from "#/components/FullPageLayout/Topbar";
 import { BuildParametersPopover } from "./BuildParametersPopover";
@@ -15,10 +16,12 @@ export const DebugButton: FC<DebugButtonProps> = ({
 	workspace,
 	enableBuildParameters,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const mainAction = (
 		<TopbarButton onClick={() => handleAction()}>
 			<BugIcon />
-			Debug
+			{tI18n("WorkspacePage.WorkspaceActions.DebugButton.debug_1a03bd2f")}
 		</TopbarButton>
 	);
 
@@ -30,7 +33,9 @@ export const DebugButton: FC<DebugButtonProps> = ({
 		<div className="flex gap-1 items-center">
 			{mainAction}
 			<BuildParametersPopover
-				label="Debug with build parameters"
+				label={tI18n(
+					"WorkspacePage.WorkspaceActions.DebugButton.debug_with_build_parameters_6fbabb34",
+				)}
 				workspace={workspace}
 			/>
 		</div>

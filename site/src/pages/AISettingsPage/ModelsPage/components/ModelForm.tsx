@@ -1,11 +1,13 @@
 import { useFormik } from "formik";
 import { type FC, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate, useSearchParams } from "react-router";
 import * as Yup from "yup";
 import type * as TypesGen from "#/api/typesGenerated";
 import { OrganizationField } from "#/components/OrganizationAutocomplete/OrganizationAutocomplete";
 import { SettingsHeaderTitle } from "#/components/SettingsHeader/SettingsHeader";
 import { useUnsavedChangesPrompt } from "#/hooks/useUnsavedChangesPrompt";
+import { i18n } from "#/i18n";
 import {
 	canManageProviderModels,
 	type ProviderState,
@@ -33,19 +35,33 @@ const indefiniteArticle = (word: string): string =>
 	/^[aeiou]/i.test(word) ? "an" : "a";
 
 const validationSchema = Yup.object({
-	model: Yup.string().trim().required("Model ID is required."),
+	model: Yup.string()
+		.trim()
+		.required(
+			i18n.t(
+				"agents:AISettingsPage.ModelsPage.components.ModelForm.model_id_is_required_e0f61566",
+			),
+		),
 	displayName: Yup.string(),
 	enabled: Yup.boolean(),
 	contextLimit: Yup.string()
-		.required("Context limit is required.")
+		.required(
+			i18n.t(
+				"agents:AISettingsPage.ModelsPage.components.ModelForm.context_limit_is_required_70f78f7a",
+			),
+		)
 		.test(
 			"positive-integer",
-			"Context limit must be a positive integer.",
+			i18n.t(
+				"agents:AISettingsPage.ModelsPage.components.ModelForm.context_limit_must_be_a_positive_integer_975c1c27",
+			),
 			(value) => !value?.trim() || parsePositiveInteger(value) !== null,
 		),
 	compressionThreshold: Yup.string().test(
 		"threshold-range",
-		"Compression threshold must be a number between 0 and 100.",
+		i18n.t(
+			"agents:AISettingsPage.ModelsPage.components.ModelForm.compression_threshold_must_be_a_number_between_0_985a12a8",
+		),
 		(value) => !value?.trim() || parseThresholdInteger(value) !== null,
 	),
 	isDefault: Yup.boolean(),
@@ -90,6 +106,8 @@ export const ModelForm: FC<ModelFormProps> = ({
 	currentDefaultModel,
 	onToggleEnabled,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { organization, accessibleOrganizations, permissionsByOrganization } =
 		useOrganizationModels();
 	const location = useLocation();
@@ -297,7 +315,11 @@ export const ModelForm: FC<ModelFormProps> = ({
 			<>
 				<ModelFormBackLink />
 				<div className="flex flex-col gap-6 pt-6">
-					<SettingsHeaderTitle>Add model</SettingsHeaderTitle>
+					<SettingsHeaderTitle>
+						{tI18n(
+							"AISettingsPage.ModelsPage.components.ModelForm.add_model_b2609f7d",
+						)}
+					</SettingsHeaderTitle>
 					<div className="border border-solid p-6 rounded-lg">
 						<div className="space-y-3">
 							<ModelFormProviderSelect
@@ -310,8 +332,15 @@ export const ModelForm: FC<ModelFormProps> = ({
 							{selectedProviderState && (
 								<p className="text-sm text-content-secondary m-0">
 									{selectedProviderState.providerDescriptor.enabled === false
-										? `${selectedProviderState.label} is disabled. Enable it before adding models.`
-										: "Set an API key for this provider before adding models."}
+										? tI18n(
+												"AISettingsPage.ModelsPage.components.ModelForm.value0_is_disabled_enable_it_before_adding_model_8358c2c2",
+												{
+													value0: selectedProviderState.label,
+												},
+											)
+										: tI18n(
+												"AISettingsPage.ModelsPage.components.ModelForm.set_an_api_key_for_this_provider_before_adding_m_971ded1a",
+											)}
 								</p>
 							)}
 							{addOrganizationField}
@@ -331,10 +360,23 @@ export const ModelForm: FC<ModelFormProps> = ({
 	const title = isEditing
 		? editingModel
 			? editingModel.display_name || editingModel.model
-			: "Edit model"
+			: tI18n(
+					"AISettingsPage.ModelsPage.components.ModelForm.edit_model_1733ca79",
+				)
 		: isDuplicating
-			? `Duplicate ${providerLabel} model`
-			: `Add ${indefiniteArticle(providerLabel)} ${providerLabel} model`;
+			? tI18n(
+					"AISettingsPage.ModelsPage.components.ModelForm.duplicate_value0_model_aa6ec3cf",
+					{
+						value0: providerLabel,
+					},
+				)
+			: tI18n(
+					"AISettingsPage.ModelsPage.components.ModelForm.add_value0_value1_model_4e7b6d60",
+					{
+						value0: indefiniteArticle(providerLabel),
+						value1: providerLabel,
+					},
+				);
 
 	return (
 		<>

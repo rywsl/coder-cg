@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
 	chatPlanModeInstructions,
@@ -12,6 +13,8 @@ import { pageTitle } from "#/utils/page";
 import { InstructionsPageView } from "./InstructionsPageView";
 
 const InstructionsPage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { permissions } = useAuthenticated();
 	const queryClient = useQueryClient();
 
@@ -32,8 +35,16 @@ const InstructionsPage: FC = () => {
 
 	return (
 		<RequirePermission isFeatureVisible={permissions.editDeploymentConfig}>
-			<title>{pageTitle("Instructions", "AI Settings")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n(
+						"AISettingsPage.InstructionsPage.InstructionsPage.instructions_934652dc",
+					),
+					tI18n(
+						"AISettingsPage.InstructionsPage.InstructionsPage.ai_settings_a8e5e2c6",
+					),
+				)}
+			</title>
 			<InstructionsPageView
 				systemPromptData={systemPromptQuery.data}
 				planModeInstructionsData={planModeInstructionsQuery.data}

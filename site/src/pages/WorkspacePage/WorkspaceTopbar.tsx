@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { ChevronLeftIcon, CircleDollarSignIcon, TrashIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { Link as RouterLink } from "react-router";
 import { workspaceQuota } from "#/api/queries/workspaceQuota";
@@ -78,6 +79,8 @@ export const WorkspaceTopbar: FC<WorkspaceTopbarProps> = ({
 	handleRetry,
 	handleDebug,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const { entitlements, organizations, showOrganizations } = useDashboard();
 	const getLink = useLinks();
 
@@ -121,14 +124,20 @@ export const WorkspaceTopbar: FC<WorkspaceTopbarProps> = ({
 			<Tooltip>
 				<TooltipTrigger asChild>
 					<TopbarIconButton asChild>
-						<RouterLink to="/workspaces" aria-label="Back to workspaces">
+						<RouterLink
+							to="/workspaces"
+							aria-label={tI18n(
+								"WorkspacePage.WorkspaceTopbar.back_to_workspaces_17474371",
+							)}
+						>
 							<ChevronLeftIcon className="size-icon-sm" />
 						</RouterLink>
 					</TopbarIconButton>
 				</TooltipTrigger>
-				<TooltipContent side="bottom">Back to workspaces</TooltipContent>
+				<TooltipContent side="bottom">
+					{tI18n("WorkspacePage.WorkspaceTopbar.back_to_workspaces_17474371")}
+				</TooltipContent>
 			</Tooltip>
-
 			<div className="flex items-center gap-y-6 gap-x-2 flex-wrap px-3 py-2 mr-auto">
 				<TopbarData className="flex-wrap">
 					<OwnerBreadcrumb
@@ -172,8 +181,15 @@ export const WorkspaceTopbar: FC<WorkspaceTopbarProps> = ({
 						}
 						title={
 							showOrganizations
-								? `See affected workspaces for ${orgDisplayName}`
-								: "See affected workspaces"
+								? tI18n(
+										"WorkspacePage.WorkspaceTopbar.see_affected_workspaces_for_value0_a10454fc",
+										{
+											value0: orgDisplayName,
+										},
+									)
+								: tI18n(
+										"WorkspacePage.WorkspaceTopbar.see_affected_workspaces_a81b73a3",
+									)
 						}
 						className="text-inherit no-underline"
 					>
@@ -181,13 +197,17 @@ export const WorkspaceTopbar: FC<WorkspaceTopbarProps> = ({
 							<TopbarIcon>
 								<CircleDollarSignIcon
 									className="size-icon-sm"
-									aria-label="Daily usage"
+									aria-label={tI18n(
+										"WorkspacePage.WorkspaceTopbar.daily_usage_4e830b73",
+									)}
 								/>
 							</TopbarIcon>
 
 							<span>
 								{workspace.latest_build.daily_cost}{" "}
-								<span className="text-content-secondary">credits of</span>{" "}
+								<span className="text-content-secondary">
+									{tI18n("WorkspacePage.WorkspaceTopbar.credits_of_466458a5")}
+								</span>{" "}
 								{quota.budget}
 							</span>
 						</TopbarData>
@@ -201,19 +221,23 @@ export const WorkspaceTopbar: FC<WorkspaceTopbarProps> = ({
 						</TopbarIcon>
 						<RouterLink
 							to={`${templateLink}/settings/schedule`}
-							title="Schedule settings"
+							title={tI18n(
+								"WorkspacePage.WorkspaceTopbar.schedule_settings_7da983ff",
+							)}
 							className="text-inherit no-underline"
 						>
 							{workspace.deleting_at ? (
-								<>Deletion on {formatDate(new Date(workspace.deleting_at))}</>
+								<>
+									{tI18n("WorkspacePage.WorkspaceTopbar.deletion_on_d02bd02f")}
+									{formatDate(new Date(workspace.deleting_at))}
+								</>
 							) : (
-								"Deletion soon"
+								tI18n("WorkspacePage.WorkspaceTopbar.deletion_soon_f7d3a87d")
 							)}
 						</RouterLink>
 					</TopbarData>
 				)}
 			</div>
-
 			{!isImmutable && (
 				<div className="flex flex-wrap grow items-center justify-end gap-x-4 gap-y-2 min-h-12">
 					<WorkspaceScheduleControls
@@ -264,6 +288,8 @@ const OwnerBreadcrumb: FC<OwnerBreadcrumbProps> = ({
 	ownerName,
 	ownerAvatarUrl,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<HelpPopover>
 			<HelpPopoverTrigger asChild>
@@ -272,9 +298,12 @@ const OwnerBreadcrumb: FC<OwnerBreadcrumbProps> = ({
 					<span className={BREADCRUMB_TEXT_CLASS}>{ownerName}</span>
 				</span>
 			</HelpPopoverTrigger>
-
 			<HelpPopoverContent align="center">
-				<AvatarData title={ownerName} subtitle="Owner" src={ownerAvatarUrl} />
+				<AvatarData
+					title={ownerName}
+					subtitle={tI18n("WorkspacePage.WorkspaceTopbar.owner_4b1b8aa3")}
+					src={ownerAvatarUrl}
+				/>
 			</HelpPopoverContent>
 		</HelpPopover>
 	);
@@ -291,6 +320,8 @@ const OrganizationBreadcrumb: FC<OrganizationBreadcrumbProps> = ({
 	orgPageUrl,
 	orgIconUrl,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<HelpPopover>
 			<HelpPopoverTrigger asChild>
@@ -304,7 +335,6 @@ const OrganizationBreadcrumb: FC<OrganizationBreadcrumbProps> = ({
 					<span className={BREADCRUMB_TEXT_CLASS}>{orgName}</span>
 				</span>
 			</HelpPopoverTrigger>
-
 			<HelpPopoverContent align="center">
 				<AvatarData
 					title={
@@ -316,7 +346,9 @@ const OrganizationBreadcrumb: FC<OrganizationBreadcrumbProps> = ({
 							orgName
 						)
 					}
-					subtitle="Organization"
+					subtitle={tI18n(
+						"WorkspacePage.WorkspaceTopbar.organization_d764d425",
+					)}
 					avatar={
 						orgIconUrl && (
 							<Avatar
@@ -351,6 +383,8 @@ const WorkspaceBreadcrumb: FC<WorkspaceBreadcrumbProps> = ({
 	latestBuildVersionName,
 	templateDisplayName,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<div className="flex items-center">
 			<HelpPopover>
@@ -381,7 +415,8 @@ const WorkspaceBreadcrumb: FC<WorkspaceBreadcrumbProps> = ({
 								<RouterLink
 									to={`${rootTemplateUrl}/versions/${encodeURIComponent(templateVersionName)}`}
 								>
-									Version: {latestBuildVersionName}
+									{tI18n("WorkspacePage.WorkspaceTopbar.version_74f20322")}
+									{latestBuildVersionName}
 								</RouterLink>
 							</Link>
 						}
@@ -397,7 +432,12 @@ const WorkspaceBreadcrumb: FC<WorkspaceBreadcrumbProps> = ({
 					/>
 				</HelpPopoverContent>
 			</HelpPopover>
-			<CopyButton text={workspaceName} label="Copy workspace name" />
+			<CopyButton
+				text={workspaceName}
+				label={tI18n(
+					"WorkspacePage.WorkspaceTopbar.copy_workspace_name_ba63192e",
+				)}
+			/>
 		</div>
 	);
 };

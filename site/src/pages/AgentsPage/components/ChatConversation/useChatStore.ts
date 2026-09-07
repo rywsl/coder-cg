@@ -21,6 +21,7 @@ import {
 	upsertChatMessages,
 } from "#/api/queries/chats";
 import type * as TypesGen from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 import type { OneWayMessageEvent } from "#/utils/OneWayWebSocket";
 import { createReconnectingWebSocket } from "#/utils/reconnectingWebSocket";
 import { type ChatDetailError, normalizeChatErrorPayload } from "./chatError";
@@ -487,7 +488,9 @@ export const useChatStore = (
 			if (payload.parseError || !payload.parsedMessage) {
 				store.setStreamError({
 					kind: "generic",
-					message: "Failed to parse chat stream update.",
+					message: i18n.t(
+						"agents:AgentsPage.components.ChatConversation.useChatStore.failed_to_parse_chat_stream_update_f91d86ee",
+					),
 				});
 				return;
 			}
@@ -647,7 +650,9 @@ export const useChatStore = (
 						case "error": {
 							const reason = normalizeChatErrorPayload(streamEvent.error) ?? {
 								kind: "generic",
-								message: "Chat processing failed.",
+								message: i18n.t(
+									"agents:AgentsPage.components.ChatConversation.useChatStore.chat_processing_failed_d86b91fe",
+								),
 							};
 							// An error ends the turn. Clear the partial
 							// stream so no tool keeps spinning. Parts stay

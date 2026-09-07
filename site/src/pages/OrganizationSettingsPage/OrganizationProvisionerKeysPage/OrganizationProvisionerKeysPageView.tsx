@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	type ProvisionerKeyDaemons,
 	ProvisionerKeyIDBuiltIn,
@@ -45,6 +46,8 @@ interface OrganizationProvisionerKeysPageViewProps {
 export const OrganizationProvisionerKeysPageView: FC<
 	OrganizationProvisionerKeysPageViewProps
 > = ({ showPaywall, provisionerKeyDaemons, error, permissions, onRetry }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const filteredProvisionerKeyDaemons = provisionerKeyDaemons?.filter(
 		(pkd) => !HIDDEN_PROVISIONER_KEYS.includes(pkd.key.id),
 	);
@@ -52,23 +55,40 @@ export const OrganizationProvisionerKeysPageView: FC<
 	return (
 		<section className="w-full max-w-(--breakpoint-2xl) pb-10">
 			<SettingsHeader>
-				<SettingsHeaderTitle>Provisioner Keys</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPageView.provisioner_keys_3c2d4e86",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Manage provisioner keys used to authenticate provisioner instances.{" "}
+					{tI18n(
+						"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPageView.manage_provisioner_keys_used_to_authenticate_pro_e96c9692",
+					)}{" "}
 					<SettingsHeaderDocsLink href={docs("/admin/provisioners")} />
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			{showPaywall ? (
 				<PremiumPaywall
 					source="provisioner_keys"
-					message="Provisioners"
-					description="Scoped authentication keys for org provisioners."
+					message={tI18n(
+						"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPageView.provisioners_82d4a12e",
+					)}
+					description={tI18n(
+						"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPageView.scoped_authentication_keys_for_org_provisioners_758e4685",
+					)}
 					features={[
-						"Scoped per organization & tag",
-						"Recommended provisioner authentication",
-						"Rotate keys without downtime",
-						"Fully isolated per organization",
+						tI18n(
+							"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPageView.scoped_per_organization_tag_4a40599a",
+						),
+						tI18n(
+							"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPageView.recommended_provisioner_authentication_456d0fae",
+						),
+						tI18n(
+							"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPageView.rotate_keys_without_downtime_514151cc",
+						),
+						tI18n(
+							"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPageView.fully_isolated_per_organization_897f8b10",
+						),
 					]}
 					canViewPremium={permissions.viewAllLicenses}
 				/>
@@ -76,18 +96,38 @@ export const OrganizationProvisionerKeysPageView: FC<
 				<Table className="mt-6">
 					<TableHeader>
 						<TableRow>
-							<TableHead>Name</TableHead>
-							<TableHead>Tags</TableHead>
-							<TableHead>Active Provisioners</TableHead>
-							<TableHead>Created</TableHead>
+							<TableHead>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPageView.name_dcd1d522",
+								)}
+							</TableHead>
+							<TableHead>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPageView.tags_1331275b",
+								)}
+							</TableHead>
+							<TableHead>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPageView.active_provisioners_0cc63c4e",
+								)}
+							</TableHead>
+							<TableHead>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPageView.created_d70b9e24",
+								)}
+							</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
 						{filteredProvisionerKeyDaemons ? (
 							filteredProvisionerKeyDaemons.length === 0 ? (
 								<TableEmpty
-									message="No provisioner keys"
-									description="Create your first provisioner key to authenticate external provisioner daemons."
+									message={tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPageView.no_provisioner_keys_68c4769b",
+									)}
+									description={tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPageView.create_your_first_provisioner_key_to_authenticat_c041923a",
+									)}
 								/>
 							) : (
 								filteredProvisionerKeyDaemons.map((pkd) => (
@@ -101,10 +141,14 @@ export const OrganizationProvisionerKeysPageView: FC<
 							)
 						) : error ? (
 							<TableEmpty
-								message="Error loading provisioner keys"
+								message={tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPageView.error_loading_provisioner_keys_3b4d253e",
+								)}
 								cta={
 									<Button onClick={onRetry} size="sm">
-										Retry
+										{tI18n(
+											"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPageView.retry_942087cc",
+										)}
 									</Button>
 								}
 							/>

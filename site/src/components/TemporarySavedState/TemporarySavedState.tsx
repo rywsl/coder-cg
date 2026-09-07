@@ -1,6 +1,7 @@
 import { CheckIcon } from "lucide-react";
 import type { FC } from "react";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const useTemporarySavedState = (
 	durationMs = 2500,
@@ -33,12 +34,18 @@ export const useTemporarySavedState = (
 	return { isSavedVisible, showSavedState };
 };
 
-export const TemporarySavedState: FC = () => (
-	<div
-		aria-live="polite"
-		className="inline-flex min-w-8 min-h-6 shrink-0 items-center justify-center gap-1 rounded-md border border-border-success bg-surface-success px-2 font-sans text-2xs font-medium whitespace-nowrap text-content-success"
-	>
-		<CheckIcon className="size-3.5" />
-		<span>Saved</span>
-	</div>
-);
+export const TemporarySavedState: FC = () => {
+	const { t: tI18n } = useTranslation("components");
+
+	return (
+		<div
+			aria-live="polite"
+			className="inline-flex min-w-8 min-h-6 shrink-0 items-center justify-center gap-1 rounded-md border border-border-success bg-surface-success px-2 font-sans text-2xs font-medium whitespace-nowrap text-content-success"
+		>
+			<CheckIcon className="size-3.5" />
+			<span>
+				{tI18n("TemporarySavedState.TemporarySavedState.saved_b5c120b3")}
+			</span>
+		</div>
+	);
+};

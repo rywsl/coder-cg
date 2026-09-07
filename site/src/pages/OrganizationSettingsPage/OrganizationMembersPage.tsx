@@ -1,4 +1,5 @@
 import { type FC, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams, useSearchParams } from "react-router";
 import { toast } from "sonner";
@@ -29,6 +30,8 @@ import { pageTitle } from "#/utils/page";
 import { OrganizationMembersPageView } from "./OrganizationMembersPageView";
 
 const OrganizationMembersPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const queryClient = useQueryClient();
 	const { user: me } = useAuthenticated();
 	const { organization: organizationName } = useParams() as {
@@ -88,12 +91,23 @@ const OrganizationMembersPage: FC = () => {
 	}, [organization?.default_org_member_roles, organizationRolesQuery.data]);
 
 	if (!organization) {
-		return <EmptyState message="Organization not found" />;
+		return (
+			<EmptyState
+				message={tI18n(
+					"OrganizationSettingsPage.OrganizationMembersPage.organization_not_found_00c50f7a",
+				)}
+			/>
+		);
 	}
 
 	const title = (
 		<title>
-			{pageTitle("Members", organization.display_name || organization.name)}
+			{pageTitle(
+				tI18n(
+					"OrganizationSettingsPage.OrganizationMembersPage.members_1044a4c0",
+				),
+				organization.display_name || organization.name,
+			)}
 		</title>
 	);
 
@@ -138,7 +152,6 @@ const OrganizationMembersPage: FC = () => {
 				canViewMembers={organizationPermissions.viewMembers}
 				canViewActivity={entitlements.features.audit_log.enabled}
 			/>
-
 			<RoleSelectorDialog
 				key={memberToEditRoles?.username}
 				user={memberToEditRoles}
@@ -146,30 +159,50 @@ const OrganizationMembersPage: FC = () => {
 				additionalImpliedRoles={defaultMemberImpliedRoles}
 				onCancel={() => setMemberToEditRoles(undefined)}
 				onUpdateRoles={async (roles) => {
+					const member = memberToEditRoles;
+					if (!member) {
+						return;
+					}
 					try {
 						await updateMemberRolesMutation.mutateAsync({
-							userId: memberToEditRoles!.user_id,
+							userId: member.user_id,
 							roles,
 						});
 						toast.success(
-							`${memberToEditRoles!.username}'s roles have been updated.`,
+							tI18n(
+								"OrganizationSettingsPage.OrganizationMembersPage.value0_s_roles_have_been_updated_709670d0",
+								{
+									value0: member.username,
+								},
+							),
 						);
 						setMemberToEditRoles(undefined);
 					} catch (e) {
-						toast.error(getErrorMessage(e, "Error updating member roles."), {
-							description: getErrorDetail(e),
-						});
+						toast.error(
+							getErrorMessage(
+								e,
+								tI18n(
+									"OrganizationSettingsPage.OrganizationMembersPage.error_updating_member_roles_a2b89cd1",
+								),
+							),
+							{
+								description: getErrorDetail(e),
+							},
+						);
 					}
 				}}
 				isUpdatingRoles={updateMemberRolesMutation.isPending}
 			/>
-
 			<ConfirmDialog
 				type="delete"
 				open={memberToRemove !== undefined}
 				onClose={() => setMemberToRemove(undefined)}
-				title="Remove member"
-				confirmText="Remove"
+				title={tI18n(
+					"OrganizationSettingsPage.OrganizationMembersPage.remove_member_9438e0ba",
+				)}
+				confirmText={tI18n(
+					"OrganizationSettingsPage.OrganizationMembersPage.remove_c3812fc4",
+				)}
 				onConfirm={() => {
 					if (memberToRemove) {
 						const mutation = removeMemberMutation.mutateAsync(
@@ -181,12 +214,30 @@ const OrganizationMembersPage: FC = () => {
 							},
 						);
 						toast.promise(mutation, {
-							loading: `Removing "${memberToRemove.username}" from "${organization.display_name}"...`,
-							success: `"${memberToRemove.username}" has been removed from "${organization.display_name}".`,
+							loading: tI18n(
+								"OrganizationSettingsPage.OrganizationMembersPage.removing_value0_from_value1_5ac7cb4b",
+								{
+									value0: memberToRemove.username,
+									value1: organization.display_name,
+								},
+							),
+							success: tI18n(
+								"OrganizationSettingsPage.OrganizationMembersPage.value0_has_been_removed_from_value1_c6858675",
+								{
+									value0: memberToRemove.username,
+									value1: organization.display_name,
+								},
+							),
 							error: (error) =>
 								getErrorMessage(
 									error,
-									`Failed to remove "${memberToRemove.username}" from "${organization.display_name}".`,
+									tI18n(
+										"OrganizationSettingsPage.OrganizationMembersPage.failed_to_remove_value0_from_value1_9227ee44",
+										{
+											value0: memberToRemove.username,
+											value1: organization.display_name,
+										},
+									),
 								),
 						});
 						setMemberToRemove(undefined);
@@ -195,18 +246,33 @@ const OrganizationMembersPage: FC = () => {
 				description={
 					<div className="flex flex-col gap-4">
 						<p>
-							Removing this member will:
+							{tI18n(
+								"OrganizationSettingsPage.OrganizationMembersPage.removing_this_member_will_8fe8e7a7",
+							)}
 							<ul>
-								<li>Remove the member from all groups in this organization</li>
-								<li>Remove all user role assignments</li>
 								<li>
-									Orphan all the member's workspaces associated with this
-									organization
+									{tI18n(
+										"OrganizationSettingsPage.OrganizationMembersPage.remove_the_member_from_all_groups_in_this_organi_d713beb3",
+									)}
+								</li>
+								<li>
+									{tI18n(
+										"OrganizationSettingsPage.OrganizationMembersPage.remove_all_user_role_assignments_4d8b95c1",
+									)}
+								</li>
+								<li>
+									{tI18n(
+										"OrganizationSettingsPage.OrganizationMembersPage.orphan_all_the_member_s_workspaces_associated_wi_dc60c5b1",
+									)}
 								</li>
 							</ul>
 						</p>
 
-						<p className="pb-5">Are you sure you want to remove this member?</p>
+						<p className="pb-5">
+							{tI18n(
+								"OrganizationSettingsPage.OrganizationMembersPage.are_you_sure_you_want_to_remove_this_member_308e35ff",
+							)}
+						</p>
 					</div>
 				}
 			/>

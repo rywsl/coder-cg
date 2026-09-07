@@ -14,6 +14,7 @@ import {
 	RowsIcon,
 } from "lucide-react";
 import { type FC, type RefObject, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import type {
 	ChatDiffStatus,
@@ -31,6 +32,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { i18n } from "#/i18n";
 import type { ChatMessageInputRef } from "../AgentChatInput";
 import { DiffStatBadge } from "../DiffViewer/DiffStats";
 import {
@@ -43,11 +45,17 @@ import { RemoteDiffPanel } from "../DiffViewer/RemoteDiffPanel";
 
 type GitView = { type: "remote" } | { type: "local"; repoRoot: string };
 
-const GIT_NOT_SETUP_TITLE = "Git is not set up for this chat";
-const GIT_NOT_SETUP_SENTENCE = "Git is not set up for this chat.";
+const GIT_NOT_SETUP_TITLE = i18n.t(
+	"agents:AgentsPage.components.GitPanel.GitPanel.git_is_not_set_up_for_this_chat_3ec49182",
+);
+const GIT_NOT_SETUP_SENTENCE = i18n.t(
+	"agents:AgentsPage.components.GitPanel.GitPanel.git_is_not_set_up_for_this_chat_fea01dae",
+);
 const GIT_NOT_SETUP_BODY =
 	"Git status will appear here once a Git repository is detected in the workspace.";
-const GIT_STATUS_LOADING_TITLE = "Waiting for Git status";
+const GIT_STATUS_LOADING_TITLE = i18n.t(
+	"agents:AgentsPage.components.GitPanel.GitPanel.waiting_for_git_status_8740e896",
+);
 const GIT_STATUS_LOADING_BODY = "Checking the workspace for Git repositories.";
 
 interface DiffStats {
@@ -118,6 +126,8 @@ export const GitPanel: FC<GitPanelProps> = ({
 	chatInputRef,
 	everDirty,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const hasRemoteDiff =
 		(remoteDiffStats?.changed_files ?? 0) > 0 ||
 		(remoteDiffStats?.additions ?? 0) > 0 ||
@@ -210,10 +220,17 @@ export const GitPanel: FC<GitPanelProps> = ({
 	const handleRefresh = () => {
 		const sent = onRefresh();
 		if (!sent) {
-			toast.error("Unable to refresh git status.", {
-				id: "git-refresh-disconnected",
-				description: "Connection lost. Reconnecting\u2026",
-			});
+			toast.error(
+				tI18n(
+					"AgentsPage.components.GitPanel.GitPanel.unable_to_refresh_git_status_4d15072f",
+				),
+				{
+					id: "git-refresh-disconnected",
+					description: tI18n(
+						"AgentsPage.components.GitPanel.GitPanel.connection_lost_reconnecting_210ff02f",
+					),
+				},
+			);
 			return;
 		}
 		setSpinning(true);
@@ -340,7 +357,9 @@ export const GitPanel: FC<GitPanelProps> = ({
 						<button
 							type="button"
 							onClick={() => handleDiffStyleChange("unified")}
-							aria-label="Unified diff"
+							aria-label={tI18n(
+								"AgentsPage.components.GitPanel.GitPanel.unified_diff_8b751c85",
+							)}
 							disabled={!hasGitContext}
 							title={!hasGitContext ? GIT_NOT_SETUP_TITLE : undefined}
 							className={cn(
@@ -355,7 +374,9 @@ export const GitPanel: FC<GitPanelProps> = ({
 						<button
 							type="button"
 							onClick={() => handleDiffStyleChange("split")}
-							aria-label="Split diff"
+							aria-label={tI18n(
+								"AgentsPage.components.GitPanel.GitPanel.split_diff_1c7e7f1e",
+							)}
 							disabled={!hasGitContext}
 							title={!hasGitContext ? GIT_NOT_SETUP_TITLE : undefined}
 							className={cn(
@@ -379,7 +400,9 @@ export const GitPanel: FC<GitPanelProps> = ({
 							variant="subtle"
 							size="icon"
 							onClick={handleRefresh}
-							aria-label="Refresh"
+							aria-label={tI18n(
+								"AgentsPage.components.GitPanel.GitPanel.refresh_0e916101",
+							)}
 							disabled={!hasGitContext}
 							className="size-6 text-content-secondary hover:text-content-primary"
 						>
@@ -472,6 +495,8 @@ const GitViewSwitcher: FC<GitViewSwitcherProps> = ({
 	hasRemoteItem,
 	onSelect,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	if (!activeItem) {
 		return (
 			<div
@@ -479,7 +504,9 @@ const GitViewSwitcher: FC<GitViewSwitcherProps> = ({
 				data-testid="git-panel-view-switcher"
 			>
 				<GitBranchIcon className="size-3.5! shrink-0" />
-				<span>No changes</span>
+				<span>
+					{tI18n("AgentsPage.components.GitPanel.GitPanel.no_changes_c699aa00")}
+				</span>
 			</div>
 		);
 	}
@@ -526,7 +553,9 @@ const GitViewSwitcher: FC<GitViewSwitcherProps> = ({
 					type="button"
 					className="inline-flex h-6 min-w-0 max-w-full cursor-pointer items-stretch overflow-hidden rounded-md border border-solid border-border-default bg-surface-primary text-xs transition-colors hover:bg-surface-secondary"
 					data-testid="git-panel-view-switcher"
-					aria-label="Switch git view"
+					aria-label={tI18n(
+						"AgentsPage.components.GitPanel.GitPanel.switch_git_view_2802c368",
+					)}
 				>
 					{triggerContent}
 				</button>
@@ -592,6 +621,8 @@ const RemoteContent: FC<{
 	diffStyle,
 	diffStatus,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	if (!prTab) {
 		return (
 			<div className="flex h-full flex-col items-center justify-center p-8 text-center">
@@ -604,14 +635,18 @@ const RemoteContent: FC<{
 				</div>
 				<p className="text-sm font-medium text-content-primary">
 					{hasGitContext
-						? "No pushed changes yet"
+						? tI18n(
+								"AgentsPage.components.GitPanel.GitPanel.no_pushed_changes_yet_e95e3894",
+							)
 						: isGitStatusLoading
 							? GIT_STATUS_LOADING_TITLE
 							: GIT_NOT_SETUP_SENTENCE}
 				</p>
 				<p className="mt-1 max-w-52 text-xs text-content-secondary">
 					{hasGitContext
-						? "Once commits are pushed, the branch diff will appear here."
+						? tI18n(
+								"AgentsPage.components.GitPanel.GitPanel.once_commits_are_pushed_the_branch_diff_will_app_2d0fbdc0",
+							)
 						: isGitStatusLoading
 							? GIT_STATUS_LOADING_BODY
 							: GIT_NOT_SETUP_BODY}
@@ -684,6 +719,8 @@ const RepoHeader: FC<{
 	diffStats: DiffStats;
 	onCommit: () => void;
 }> = ({ repoRoot, repo, diffStats, onCommit }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<div className="flex shrink-0 items-center gap-2 border-0 border-b border-solid border-border-default px-3 py-1.5">
 			<div className="flex min-w-0 items-center gap-1.5 text-[13px] text-content-secondary">
@@ -705,7 +742,7 @@ const RepoHeader: FC<{
 					className="inline-flex cursor-pointer items-center gap-1 rounded-sm border border-solid border-border-default bg-transparent px-2 text-[13px] font-medium leading-5 text-content-primary no-underline transition-colors hover:bg-surface-secondary disabled:pointer-events-none disabled:opacity-50"
 				>
 					<CheckIcon className="size-3" />
-					Commit
+					{tI18n("AgentsPage.components.GitPanel.GitPanel.commit_82a9c46f")}
 				</button>
 			</div>
 		</div>

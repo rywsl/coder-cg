@@ -1,4 +1,5 @@
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import { getErrorDetail, getErrorMessage } from "#/api/errors";
@@ -34,6 +35,8 @@ export const UserActionDialogs: FC<UserActionDialogsProps> = ({
 	action,
 	onClose,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const queryClient = useQueryClient();
 	const user = action?.user;
 	const rolesQuery = useQuery({
@@ -72,11 +75,20 @@ export const UserActionDialogs: FC<UserActionDialogsProps> = ({
 								roles: nextRoles,
 							});
 							await invalidateUser(user);
-							toast.success("User roles updated successfully.");
+							toast.success(
+								tI18n(
+									"users.UserActionDialogs.user_roles_updated_successfully_078e9bfc",
+								),
+							);
 							onClose();
 						} catch (error) {
 							toast.error(
-								getErrorMessage(error, "Error updating user roles."),
+								getErrorMessage(
+									error,
+									tI18n(
+										"users.UserActionDialogs.error_updating_user_roles_1b08245e",
+									),
+								),
 								{
 									description: getErrorDetail(error),
 								},
@@ -86,24 +98,35 @@ export const UserActionDialogs: FC<UserActionDialogsProps> = ({
 					isUpdatingRoles={updateUserRolesMutation.isPending}
 				/>
 			)}
-
 			{action.type === "delete" && (
 				<DeleteDialog
 					isOpen
 					confirmLoading={deleteUserMutation.isPending}
 					name={user.username}
-					entity="user"
+					entity={tI18n("users.UserActionDialogs.user_04f8996d")}
 					onCancel={onClose}
 					onConfirm={async () => {
 						try {
 							await deleteUserMutation.mutateAsync(user.id);
 							onClose();
-							toast.success(`User "${user.username}" deleted successfully.`);
+							toast.success(
+								tI18n(
+									"users.UserActionDialogs.user_value0_deleted_successfully_63216a8a",
+									{
+										value0: user.username,
+									},
+								),
+							);
 						} catch (error) {
 							toast.error(
 								getErrorMessage(
 									error,
-									`Error deleting user "${user.username}".`,
+									tI18n(
+										"users.UserActionDialogs.error_deleting_user_value0_63c93ea7",
+										{
+											value0: user.username,
+										},
+									),
 								),
 								{
 									description: getErrorDetail(error),
@@ -113,27 +136,38 @@ export const UserActionDialogs: FC<UserActionDialogsProps> = ({
 					}}
 				/>
 			)}
-
 			{action.type === "suspend" && (
 				<ConfirmDialog
 					type="delete"
 					hideCancel={false}
 					open
 					confirmLoading={suspendUserMutation.isPending}
-					title="Suspend user"
-					confirmText="Suspend"
+					title={tI18n("users.UserActionDialogs.suspend_user_8d42f0ff")}
+					confirmText={tI18n("users.UserActionDialogs.suspend_4948e134")}
 					onClose={onClose}
 					onConfirm={async () => {
 						try {
 							await suspendUserMutation.mutateAsync(user.id);
 							await invalidateUser(user);
 							onClose();
-							toast.success(`User "${user.username}" suspended successfully.`);
+							toast.success(
+								tI18n(
+									"users.UserActionDialogs.user_value0_suspended_successfully_080b822e",
+									{
+										value0: user.username,
+									},
+								),
+							);
 						} catch (error) {
 							toast.error(
 								getErrorMessage(
 									error,
-									`Error suspending user "${user.username}".`,
+									tI18n(
+										"users.UserActionDialogs.error_suspending_user_value0_cad9a133",
+										{
+											value0: user.username,
+										},
+									),
 								),
 								{
 									description: getErrorDetail(error),
@@ -143,32 +177,46 @@ export const UserActionDialogs: FC<UserActionDialogsProps> = ({
 					}}
 					description={
 						<>
-							Do you want to suspend the user <strong>{user.username}</strong>?
+							{tI18n(
+								"users.UserActionDialogs.do_you_want_to_suspend_the_user_b38b8a23",
+							)}
+							<strong>{user.username}</strong>?
 						</>
 					}
 				/>
 			)}
-
 			{action.type === "activate" && (
 				<ConfirmDialog
 					type="success"
 					hideCancel={false}
 					open
 					confirmLoading={activateUserMutation.isPending}
-					title="Activate user"
-					confirmText="Activate"
+					title={tI18n("users.UserActionDialogs.activate_user_53e63392")}
+					confirmText={tI18n("users.UserActionDialogs.activate_24433c70")}
 					onClose={onClose}
 					onConfirm={async () => {
 						try {
 							await activateUserMutation.mutateAsync(user.id);
 							await invalidateUser(user);
 							onClose();
-							toast.success(`User "${user.username}" activated successfully.`);
+							toast.success(
+								tI18n(
+									"users.UserActionDialogs.user_value0_activated_successfully_b3167e3a",
+									{
+										value0: user.username,
+									},
+								),
+							);
 						} catch (error) {
 							toast.error(
 								getErrorMessage(
 									error,
-									`Error activating user "${user.username}".`,
+									tI18n(
+										"users.UserActionDialogs.error_activating_user_value0_222859a9",
+										{
+											value0: user.username,
+										},
+									),
 								),
 								{
 									description: getErrorDetail(error),
@@ -178,12 +226,14 @@ export const UserActionDialogs: FC<UserActionDialogsProps> = ({
 					}}
 					description={
 						<>
-							Do you want to activate <strong>{user.username}</strong>?
+							{tI18n(
+								"users.UserActionDialogs.do_you_want_to_activate_418a8cb2",
+							)}
+							<strong>{user.username}</strong>?
 						</>
 					}
 				/>
 			)}
-
 			{action.type === "resetPassword" && (
 				<ResetPasswordAction
 					user={user}
@@ -198,13 +248,23 @@ export const UserActionDialogs: FC<UserActionDialogsProps> = ({
 							});
 							onClose();
 							toast.success(
-								`Password for "${user.username}" updated successfully.`,
+								tI18n(
+									"users.UserActionDialogs.password_for_value0_updated_successfully_0400eb8e",
+									{
+										value0: user.username,
+									},
+								),
 							);
 						} catch (error) {
 							toast.error(
 								getErrorMessage(
 									error,
-									`Error resetting password for "${user.username}".`,
+									tI18n(
+										"users.UserActionDialogs.error_resetting_password_for_value0_9d2d886f",
+										{
+											value0: user.username,
+										},
+									),
 								),
 							);
 						}

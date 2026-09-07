@@ -1,3 +1,4 @@
+import { i18n } from "#/i18n";
 import {
 	type AttachmentFailure,
 	classifyAttachmentFailureResponse,
@@ -57,7 +58,9 @@ export function getTextAttachmentErrorMessage(error: unknown): string | null {
 		return null;
 	}
 
-	return "Couldn't load preview. Select again to retry.";
+	return i18n.t(
+		"agents:AgentsPage.utils.fetchTextAttachment.couldn_t_load_preview_select_again_to_retry_9a3acbd5",
+	);
 }
 
 /**

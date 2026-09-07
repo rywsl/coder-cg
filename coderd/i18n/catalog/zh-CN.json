@@ -1,0 +1,1737 @@
+{
+	"messages": {
+		"\"organization\" must be provided.": "必须提供“组织”。",
+		"\"provisionerkey\" must be provided.": "必须提供“provisionerkey”。",
+		"\"task\" must be provided.": "必须提供“任务”。",
+		"\"user\" must be an existing uuid or username.": "“user”必须是现有的 UUID 或用户名。",
+		"\"user\" must be provided.": "必须提供“用户”。",
+		"\"workspaceproxy\" must be provided.": "必须提供“workspaceproxy”。",
+		"'Accept' header contains unsupported media type": "“Accept”标头包含不支持的媒体类型",
+		"'url' and 'id' cannot be provided together!": "“URL”和“id”不能同时提供！",
+		"'url' or 'id' must be provided!": "必须提供“URL”或“id”！",
+		"A database error occurred": "发生数据库错误",
+		"A key with this name already exists.": "具有此名称的密钥已存在。",
+		"A profile collection is already in progress. Try again later.": "个人资料收集工作已经在进行中。稍后再试。",
+		"A skill with that name already exists.": "具有该名称的技能已经存在。",
+		"A template with this name already exists in the organization.": "组织中已存在具有此名称的 Template。",
+		"A user with this username already exists.": "使用此用户名的用户已存在。",
+		"AI Gateway Proxy handler not mounted.": "AI 网关代理处理程序未安装。",
+		"AI Gateway Proxy is not enabled.": "AI网关代理未启用。",
+		"AI Gateway key invalid.": "AI网关密钥无效。",
+		"AI Gateway key required.": "需要 AI 网关密钥。",
+		"AI Gateway must be enabled for Coder Agents functionality. Please contact your deployment administrator.": "必须为 Coder Agents 功能启用 AI 网关。请联系您的部署管理员。",
+		"AI provider ID is required.": "需要 AI 提供商 ID。",
+		"AI provider not found.": "未找到 AI 提供商。",
+		"API key and external provisioner authentication provided, but only one is allowed": "提供 API 密钥和外部配置者身份验证，但只允许其中之一",
+		"API key and external proxy authentication provided, but only one is allowed": "API 提供密钥和外部代理认证，但只允许其中之一",
+		"API key and workspace agent token provided, but only one is allowed": "提供了 API 密钥和 Workspace Agent 令牌，但只允许使用一个",
+		"API key auth type requires api_key_header and api_key_value.": "API 密钥身份验证类型需要 api_key_header 和 api_key_value。",
+		"API key is required.": "需要 API 密钥。",
+		"API key must not contain leading or trailing whitespace.": "API 键不得包含前导或尾随空格。",
+		"API key or external provisioner authentication required, but none provided": "需要 API 密钥或外部配置者身份验证，但未提供",
+		"API key or external proxy authentication required, but none provided": "需要 API 密钥或外部代理身份验证，但未提供",
+		"API key or workspace agent token required, but none provided": "需要 API 密钥或 Workspace Agent 令牌，但未提供",
+		"API key too large.": "API 密钥太大。",
+		"Advanced template scheduling (and user quiet hours schedule) is an Enterprise feature. Contact sales!": "高级 Template 计划（和用户安静时间计划）是一项企业功能。联系销售！",
+		"Advanced template scheduling (and user quiet hours schedule) is not enabled.": "高级 Template 计划（和用户安静时间计划）未启用。",
+		"Advisor model settings moved to PUT /api/experimental/organizations/{organization}/chats/model-overrides/advisor.": "Advisor 模型设置已移至 PUT /api/experimental/organizations/{organization}/chats/model-overrides/advisor.",
+		"Agent doesn't exist with that id, or you do not have access to it.": "该 ID 不存在 Agent，或者您无权访问它。",
+		"Agent not found.": "未找到 Agent。",
+		"All workspaces must be deleted before a template can be removed.": "必须先删除所有 Workspaces，然后才能删除 Template。",
+		"An administrator has not enabled user personal model overrides.": "管理员尚未启用用户个人模型覆盖。",
+		"An administrator has not enabled user-controlled chat debug logging.": "管理员尚未启用用户控制的聊天调试日志记录。",
+		"An internal error occurred. Please try again or contact the system administrator.": "发生内部错误。请重试或联系系统管理员。",
+		"An internal server error occurred.": "发生内部服务器错误。",
+		"App ID does not match secret app ID.": "应用程序 ID 与密钥应用程序 ID 不匹配。",
+		"Archived template versions cannot be used to make a workspace.": "存档的 Template 版本不能用于制作 Workspace。",
+		"At least one field must be provided.": "必须至少提供一个字段。",
+		"At least one model price is required.": "至少需要一种模型的价格。",
+		"At least one price must be set. Use 0 to declare a model free of charge.": "必须至少设定一个价格。使用 0 来免费声明模型。",
+		"At least one tool result is required.": "至少需要一项工具结果。",
+		"Autostart is not allowed for workspaces using this template.": "使用此 Template 的 Workspaces 不允许自动启动。",
+		"Autostart is not supported for prebuilt workspaces": "预建 Workspaces 不支持自动启动",
+		"BYOK is disabled.": "BYOK 已禁用。",
+		"Bedrock providers do not accept api_keys; configure access credentials via settings.": "基岩提供商不接受 api_keys；通过设置配置访问凭据。",
+		"Bedrock settings are only valid for type=anthropic or type=bedrock.": "基岩设置仅对 type=anthropic 或 type=bedrock 有效。",
+		"Bring Your Own Key (BYOK) mode is not enabled.": "未启用自带密钥 (BYOK) 模式。",
+		"Cannot add the same user to a group twice!": "无法将同一用户两次添加到组中！",
+		"Cannot archive an active chat. Interrupt or wait for the chat to finish first.": "无法存档活动聊天。先打断或等待聊天结束。",
+		"Cannot archive template versions not associate with a template.": "无法归档不与 Template 关联的 Template 版本。",
+		"Cannot change your own chat sharing role.": "无法更改您自己的聊天共享角色。",
+		"Cannot clear the chat in its current state.": "无法清除当前状态下的聊天。",
+		"Cannot compact the chat in its current state.": "无法压缩当前状态下的聊天。",
+		"Cannot create a client secret for a public OAuth2 app.": "无法为公共 OAuth2 应用程序创建客户端密钥。",
+		"Cannot create skills for deleted users.": "无法为已删除的用户创建技能。",
+		"Cannot delete primary proxy": "无法删除主代理",
+		"Cannot edit messages in an archived chat.": "无法编辑已存档聊天中的消息。",
+		"Cannot fetch logs for task in current state.": "无法获取当前状态下任务的日志。",
+		"Cannot modify roles for OIDC users when role sync is enabled.": "启用角色同步后，无法修改 OIDC 用户的角色。",
+		"Cannot modify roles for OIDC users when role sync is enabled. This organization member's roles are managed by the identity provider. Have the user re-login to refresh their roles.": "启用角色同步后，无法修改 OIDC 用户的角色。该组织成员的角色由身份提供者管理。让用户重新登录以刷新其角色。",
+		"Cannot modify skills for deleted users.": "无法修改已删除用户的技能。",
+		"Cannot pin a child chat.": "无法固定儿童聊天。",
+		"Cannot pin an archived chat.": "无法固定已存档的聊天。",
+		"Cannot promote queued messages in an archived chat.": "无法在存档的聊天中升级排队的消息。",
+		"Cannot send messages to an archived chat.": "无法向已存档的聊天发送消息。",
+		"Cannot submit tool results to an archived chat.": "无法将工具结果提交到已存档的聊天。",
+		"Cannot update name of default primary proxy": "无法更新默认主代理的名称",
+		"Cannot update name of default primary proxy, did you mean to update the 'display name'?": "无法更新默认主代理的名称，您的意思是更新“显示名称”吗？",
+		"Cannot use \"me\" without a valid session.": "如果没有有效的会话，则无法使用“我”。",
+		"Cannot use both after_id and before_id in the same request.": "不能在同一请求中同时使用 after_id 和 before_id。",
+		"Chat ACLs can only be set on root chats.": "聊天 ACL 只能在根聊天上设置。",
+		"Chat archive state can only be changed on the root chat.": "聊天存档状态只能在根聊天上更改。",
+		"Chat attachment limit reached.": "已达到聊天附件限制。",
+		"Chat attachment unavailable.": "聊天附件不可用。",
+		"Chat debug logging is already forced on by deployment configuration.": "部署配置已强制启用聊天调试日志记录。",
+		"Chat has no queued messages to delete.": "Chat 没有要删除的排队消息。",
+		"Chat has no queued messages to promote.": "Chat 没有要推广的排队消息。",
+		"Chat is in an invalid state.": "聊天处于无效状态。",
+		"Chat is not in a state that accepts message edits.": "聊天未处于接受消息编辑的状态。",
+		"Chat is not in a state that accepts new messages.": "Chat 未处于接受新消息的状态。",
+		"Chat is not in an interruptible state.": "聊天不处于可中断状态。",
+		"Chat is not in an invalid state.": "聊天不处于无效状态。",
+		"Chat is not waiting for tool results.": "聊天并不等待工具结果。",
+		"Chat lifecycle hook dispatch failed.": "聊天生命周期挂钩调度失败。",
+		"Chat message not found.": "找不到聊天消息。",
+		"Chat model config already exists.": "聊天模型配置已存在。",
+		"Chat sharing is disabled for this deployment.": "此部署禁用聊天共享。",
+		"Chat streaming is not available.": "聊天流不可用。",
+		"Claim build failed permanently.": "声明构建永久失败。",
+		"Conflicting client credentials between Authorization header and request body": "授权标头和请求正文之间的客户端凭据冲突",
+		"Content is required.": "内容为必填项。",
+		"Context limit is required.": "需要上下文限制。",
+		"Context limit must be greater than zero.": "上下文限制必须大于零。",
+		"Copilot providers do not accept api_keys; they authenticate via request-time GitHub OAuth tokens.": "Copilot 提供商不接受 api_keys；他们通过请求时 GitHub OAuth 令牌进行身份验证。",
+		"Could not determine request Host.": "无法确定请求主机。",
+		"Custom autostop TTL is not allowed for workspaces using this template.": "使用此 Template 的 Workspaces 不允许自定义自动停止 TTL。",
+		"Custom headers auth type requires at least one custom header.": "自定义标头身份验证类型需要至少一个自定义标头。",
+		"Custom prompt exceeds maximum length.": "自定义提示超出最大长度。",
+		"Deadline extension is not supported for prebuilt workspaces": "预构建的 Workspaces 不支持截止日期延长",
+		"Default organization cannot be deleted.": "默认组织无法删除。",
+		"Deployment stats are still processing!": "部署统计数据仍在处理中！",
+		"DerpOnly cannot be true when DerpEnabled is false.": "当 DerpEnabled 为 false 时，DerpOnly 不能为 true。",
+		"Devcontainer ID is required.": "需要开发容器 ID。",
+		"Developer error: ParentChatID got set somehow in api.postChats. This should never happen.": "开发人员错误：ParentChatID 在 API.postChats 中以某种方式设置。这绝对不应该发生。",
+		"Device authenticated!": "设备已通过身份验证！",
+		"Device flow is not enabled for Github OAuth2.": "GitHub OAuth2 未启用设备流。",
+		"Display name must be 64 characters or less.": "显示名称不得超过 64 个字符。",
+		"Dormancy updates are not supported for prebuilt workspaces": "预构建的 Workspaces 不支持休眠更新",
+		"Duplicate dynamic tool name.": "动态工具名称重复。",
+		"Duration must be positive.": "持续时间必须为正。",
+		"Dynamic tool name must not be empty.": "动态工具名称不能为空。",
+		"Email cannot be set for service accounts.": "无法为服务账户设置电子邮件。",
+		"Entitlements updated": "权利已更新",
+		"Environment-injected user secrets bytes limit reached.": "已达到环境注入的用户机密字节限制。",
+		"Error decoding JWT claims.": "解码 JWT 声明时出错。",
+		"Error deleting organization.": "删除组织时出错。",
+		"Error deleting user chat compaction threshold.": "删除用户聊天压缩阈值时出错。",
+		"Error listing user chat compaction thresholds.": "列出用户聊天压缩阈值时出错。",
+		"Error reading user chat custom prompt.": "读取用户聊天自定义提示时出错。",
+		"Error reading user preference settings.": "读取用户首选项设置时出错。",
+		"Error reading user settings.": "读取用户设置时出错。",
+		"Error updating user chat compaction threshold.": "更新用户聊天压缩阈值时出错。",
+		"Error updating user chat custom prompt.": "更新用户聊天自定义提示时出错。",
+		"Error updating workspace time until shutdown.": "更新关机前的 Workspace 时间时出错。",
+		"Example not found.": "未找到示例。",
+		"Expanded .zip archive exceeds maximum size.": "扩展的 .zip 存档超出了最大大小。",
+		"External agent is authenticated with an instance ID.": "外部 Agent 使用实例 ID 进行身份验证。",
+		"External authentication is required to create a workspace with this template.": "使用此 Template 创建 Workspace 需要外部身份验证。",
+		"External provisioner daemons is an Enterprise feature. Contact sales!": "外部 Provisioner 守护进程是一项企业功能。联系销售！",
+		"Failed exchanging Oauth code.": "交换 OAuth 代码失败。",
+		"Failed to accept WebSocket.": "无法接受 WebSocket。",
+		"Failed to accept websocket connection.": "无法接受 WebSocket 连接。",
+		"Failed to accept websocket.": "无法接受 WebSocket。",
+		"Failed to authorize device.": "设备授权失败。",
+		"Failed to call count unread inbox notifications.": "无法调用计数未读收件箱通知。",
+		"Failed to clear chat context.": "无法清除聊天上下文。",
+		"Failed to compact chat.": "无法压缩聊天。",
+		"Failed to compose template.": "无法编写 Template。",
+		"Failed to connect to agent desktop.": "无法连接到 Agent 桌面。",
+		"Failed to count unread inbox notifications.": "无法统计未读收件箱通知。",
+		"Failed to create API key.": "无法创建 API 密钥。",
+		"Failed to create MCP server config.": "无法创建 MCP 服务器配置。",
+		"Failed to create agentapi client.": "无法创建 agentapi 客户端。",
+		"Failed to create chat file download URL.": "无法创建聊天文件下载 URL。",
+		"Failed to create chat message.": "创建聊天消息失败。",
+		"Failed to create chat model config.": "无法创建聊天模型配置。",
+		"Failed to create chat.": "无法创建聊天。",
+		"Failed to create external auth response.": "无法创建外部身份验证响应。",
+		"Failed to create external log source.": "创建外部日志源失败。",
+		"Failed to create key. Please retry.": "创建密钥失败。请重试。",
+		"Failed to create snapshot envelope.": "无法创建快照信封。",
+		"Failed to delete MCP server config.": "无法删除 MCP 服务器配置。",
+		"Failed to delete chat model config.": "删除聊天模型配置失败。",
+		"Failed to delete devcontainer from agent.": "无法从 Agent 中删除 devcontainer。",
+		"Failed to delete external auth link.": "无法删除外部身份验证链接。",
+		"Failed to delete key.": "删除密钥失败。",
+		"Failed to delete push notification subscription.": "无法删除推送通知订阅。",
+		"Failed to delete queued message.": "无法删除排队的消息。",
+		"Failed to delete task": "删除任务失败",
+		"Failed to delete user AI provider key.": "无法删除用户 AI 提供商密钥。",
+		"Failed to determine workspace from agent token.": "无法从 Agent 令牌确定 Workspace。",
+		"Failed to dial workspace agent.": "拨打 Workspace Agent 失败。",
+		"Failed to disconnect OAuth2 token.": "无法断开 OAuth2 令牌。",
+		"Failed to edit chat message.": "无法编辑聊天消息。",
+		"Failed to encrypt API key.": "无法加密 API 密钥。",
+		"Failed to exchange authorization code for token.": "无法将授权代码交换为令牌。",
+		"Failed to exchange device code.": "交换设备代码失败。",
+		"Failed to exchange token": "兑换Token失败",
+		"Failed to extract OIDC claims.": "无法提取 OIDC 声明。",
+		"Failed to fetch appearance config.": "无法获取外观配置。",
+		"Failed to fetch child chat diff statuses.": "无法获取子聊天差异状态。",
+		"Failed to fetch child chats.": "无法获取子聊天记录。",
+		"Failed to fetch containers from agent.": "无法从 Agent 获取容器。",
+		"Failed to fetch current health settings.": "无法获取当前的运行状况设置。",
+		"Failed to fetch current notifications settings.": "无法获取当前通知设置。",
+		"Failed to fetch current prebuilds settings.": "无法获取当前预构建设置。",
+		"Failed to fetch health settings.": "无法获取健康设置。",
+		"Failed to fetch task.": "获取任务失败。",
+		"Failed to finalize gzip archive.": "无法完成 gzip 存档。",
+		"Failed to finalize tar archive.": "无法完成 tar 存档。",
+		"Failed to find linked user.": "找不到链接的用户。",
+		"Failed to generate OAuth2 app authorization code": "生成 OAuth2 应用授权码失败",
+		"Failed to generate OAuth2 authorization code": "生成 OAuth2 授权码失败",
+		"Failed to generate OAuth2 client secret.": "无法生成 OAuth2 客户端密钥。",
+		"Failed to generate chat title.": "无法生成聊天标题。",
+		"Failed to generate token extra.": "无法生成额外令牌。",
+		"Failed to generate trial": "生成试用版失败",
+		"Failed to get AI provider.": "无法获取 AI 提供商。",
+		"Failed to get allowance": "未能获得津贴",
+		"Failed to get build.": "无法构建。",
+		"Failed to get chat auto-archive days.": "无法获取聊天自动存档天数。",
+		"Failed to get chat cost.": "获取聊天费用失败。",
+		"Failed to get chat debug retention days.": "无法获取聊天调试保留天数。",
+		"Failed to get chat diff.": "无法获取聊天差异。",
+		"Failed to get chat file.": "获取聊天文件失败。",
+		"Failed to get chat messages.": "获取聊天消息失败。",
+		"Failed to get chat model config.": "获取聊天模型配置失败。",
+		"Failed to get chat retention days.": "无法获取聊天保留天数。",
+		"Failed to get chat user prompts.": "无法获取聊天用户提示。",
+		"Failed to get chats by workspace.": "无法获取 Workspace 的聊天记录。",
+		"Failed to get consumed": "消费失败",
+		"Failed to get external auth link during deletion.": "删除期间无法获取外部身份验证链接。",
+		"Failed to get external auth link.": "无法获取外部身份验证链接。",
+		"Failed to get filtered inbox notifications.": "无法获取已过滤的收件箱通知。",
+		"Failed to get latest workspace app status.": "无法获取最新的 Workspace 应用程序状态。",
+		"Failed to get latest workspace build.": "无法获取最新的 Workspace 版本。",
+		"Failed to get messages from task app.": "无法从任务应用程序获取消息。",
+		"Failed to get metadata.": "获取元数据失败。",
+		"Failed to get notification by id.": "无法通过 id 获取通知。",
+		"Failed to get queued messages.": "无法获取排队消息。",
+		"Failed to get status from task app.": "无法从任务应用程序获取状态。",
+		"Failed to get template": "获取 Template 失败",
+		"Failed to get token configuration.": "无法获取令牌配置。",
+		"Failed to get user link.": "无法获取用户链接。",
+		"Failed to get user links.": "无法获取用户链接。",
+		"Failed to get user token.": "获取用户令牌失败。",
+		"Failed to get user tokens.": "无法获取用户令牌。",
+		"Failed to get user.": "获取用户失败。",
+		"Failed to get webpush subscriptions.": "无法获取 webpush 订阅。",
+		"Failed to get workspace agents.": "获取 Workspace Agents 失败。",
+		"Failed to get workspace app.": "无法获取 Workspace 应用程序。",
+		"Failed to get workspace resource.": "无法获取 Workspace 资源。",
+		"Failed to get workspace.": "获取 Workspace 失败。",
+		"Failed to insert external auth link.": "无法插入外部身份验证链接。",
+		"Failed to insert push notification subscription.": "无法插入推送通知订阅。",
+		"Failed to insert workspace app status.": "无法插入 Workspace 应用程序状态。",
+		"Failed to install license": "安装许可证失败",
+		"Failed to interrupt chat.": "无法中断聊天。",
+		"Failed to invalidate presets.": "无法使预设无效。",
+		"Failed to list AI provider keys.": "无法列出 AI 提供商密钥。",
+		"Failed to list AI providers.": "无法列出 AI 提供商。",
+		"Failed to list MCP server configs.": "无法列出 MCP 服务器配置。",
+		"Failed to list chats for agent.": "无法列出 Agent 的聊天记录。",
+		"Failed to list chats.": "无法列出聊天记录。",
+		"Failed to list child chats.": "无法列出儿童聊天记录。",
+		"Failed to list keys.": "无法列出密钥。",
+		"Failed to list user AI provider keys.": "无法列出用户 AI 提供商密钥。",
+		"Failed to load chat model availability.": "无法加载聊天模型可用性。",
+		"Failed to look up AI Gateway key.": "查找AI网关密钥失败。",
+		"Failed to mark all unread notifications as read.": "无法将所有未读通知标记为已读。",
+		"Failed to marshal dynamic tools.": "无法编组动态工具。",
+		"Failed to marshal health settings.": "无法整理健康设置。",
+		"Failed to marshal label filter.": "无法封送标签过滤器。",
+		"Failed to marshal labels.": "无法封送标签。",
+		"Failed to marshal notifications settings.": "无法整理通知设置。",
+		"Failed to marshal prebuilds settings.": "无法封送预构建设置。",
+		"Failed to obtain user information claims.": "获取用户信息声明失败。",
+		"Failed to open chat stream.": "无法打开聊天流。",
+		"Failed to open chat watch stream.": "无法打开聊天观看流。",
+		"Failed to parse access URL.": "无法解析访问 URL。",
+		"Failed to parse build number as integer.": "无法将内部版本号解析为整数。",
+		"Failed to parse request.": "无法解析请求。",
+		"Failed to parse secrets file.": "无法解析机密文件。",
+		"Failed to process OAuth login.": "无法处理 OAuth 登录。",
+		"Failed to promote queued message.": "无法提升排队消息。",
+		"Failed to publish workspace update.": "无法发布 Workspace 更新。",
+		"Failed to reach task app endpoint.": "无法到达任务应用程序端点。",
+		"Failed to reach the Coder license server.": "无法到达 Coder 许可证服务器。",
+		"Failed to read back chat after creation.": "创建后无法读回聊天内容。",
+		"Failed to read body, invalid json.": "无法读取正文，无效 JSON。",
+		"Failed to read file from request.": "无法从请求读取文件。",
+		"Failed to read request body.": "无法读取请求正文。",
+		"Failed to reconcile chat state.": "无法协调聊天状态。",
+		"Failed to recreate devcontainer from agent.": "无法从 Agent 重新创建 devcontainer。",
+		"Failed to refresh entitlements": "刷新权限失败",
+		"Failed to refresh external auth token.": "无法刷新外部身份验证令牌。",
+		"Failed to resolve chat model config.": "无法解析聊天模型配置。",
+		"Failed to resolve the workspace's template-declared external auth providers.": "无法解析 Workspace 的 Template 声明的外部身份验证提供商。",
+		"Failed to retrieve user notification preferences.": "无法检索用户通知首选项。",
+		"Failed to retrieve user notifications preferences.": "无法检索用户通知首选项。",
+		"Failed to save chat file.": "保存聊天文件失败。",
+		"Failed to send custom notification": "发送自定义通知失败",
+		"Failed to send test notification": "发送测试通知失败",
+		"Failed to start CPU profile.": "无法启动 CPU 配置文件。",
+		"Failed to start trace.": "无法启动跟踪。",
+		"Failed to start yamux over websocket.": "无法通过 WebSocket 启动 yamux。",
+		"Failed to store OAuth2 token.": "无法存储 OAuth2 令牌。",
+		"Failed to subscribe to agent for log streaming.": "订阅 Agent 日志流失败。",
+		"Failed to subscribe to chat events.": "订阅聊天事件失败。",
+		"Failed to subscribe to workspace for log streaming.": "订阅 Workspace 日志流失败。",
+		"Failed to sync replicas": "无法同步副本",
+		"Failed to test webpush subscription": "测试 webpush 订阅失败",
+		"Failed to unmarshal access token claims.": "无法解组访问令牌声明。",
+		"Failed to unmarshal health settings.": "无法解组运行状况设置。",
+		"Failed to unmarshal notifications settings.": "无法解组通知设置。",
+		"Failed to unmarshal prebuilds settings.": "无法解组预构建设置。",
+		"Failed to unmarshal user info claims.": "无法解组用户信息声明。",
+		"Failed to update MCP server config.": "无法更新 MCP 服务器配置。",
+		"Failed to update app status.": "无法更新应用程序状态。",
+		"Failed to update chat auto-archive days.": "无法更新聊天自动存档天数。",
+		"Failed to update chat debug retention days.": "无法更新聊天调试保留天数。",
+		"Failed to update chat labels.": "无法更新聊天标签。",
+		"Failed to update chat model ACL.": "无法更新聊天模型 ACL。",
+		"Failed to update chat model config.": "无法更新聊天模型配置。",
+		"Failed to update chat plan mode.": "无法更新聊天计划模式。",
+		"Failed to update chat retention days.": "无法更新聊天保留天数。",
+		"Failed to update chat title.": "无法更新聊天标题。",
+		"Failed to update chat workspace binding.": "无法更新聊天 Workspace 绑定。",
+		"Failed to update entitlements": "更新权限失败",
+		"Failed to update external auth link.": "无法更新外部身份验证链接。",
+		"Failed to update group.": "更新群组失败。",
+		"Failed to update health settings.": "无法更新健康设置。",
+		"Failed to update inbox notification read status.": "无法更新收件箱通知阅读状态。",
+		"Failed to update notifications settings.": "无法更新通知设置。",
+		"Failed to update prebuilds settings.": "无法更新预构建设置。",
+		"Failed to update role permissions": "更新角色权限失败",
+		"Failed to update task input.": "无法更新任务输入。",
+		"Failed to update user AI provider key.": "无法更新用户 AI 提供商密钥。",
+		"Failed to update user GitHub ID.": "无法更新用户 GitHub ID。",
+		"Failed to update user notifications preferences.": "无法更新用户通知首选项。",
+		"Failed to update workspace build state.": "无法更新 Workspace 构建状态。",
+		"Failed to upgrade connection to websocket.": "无法升级到 WebSocket 的连接。",
+		"Failed to upload logs": "日志上传失败",
+		"Failed to validate MCP server IDs.": "无法验证 MCP 服务器 ID。",
+		"Failed to validate create API key request.": "无法验证创建 API 密钥请求。",
+		"Failed to validate form values.": "无法验证表单值。",
+		"Failed to validate health settings.": "无法验证健康设置。",
+		"Failed to validate organization membership.": "无法验证组织成员身份。",
+		"Failed to validate token.": "无法验证令牌。",
+		"Failed to verify OIDC token.": "无法验证 OIDC 令牌。",
+		"Failed to verify access token.": "无法验证访问令牌。",
+		"Failed to verify hostname in URL.": "无法验证 URL 中的主机名。",
+		"Failed to verify redirect_uri query parameter.": "无法验证 redirect_uri 查询参数。",
+		"Failed to write CPU profile to archive.": "无法将 CPU 配置文件写入存档。",
+		"Failed to write trace to archive.": "无法将跟踪写入存档。",
+		"File content type does not match Content-Type header.": "文件内容类型与 Content-Type 标头不匹配。",
+		"File id must be a valid UUID.": "文件 ID 必须是有效的 UUID。",
+		"File id must be provided in url.": "必须在 URL 中提供文件 ID。",
+		"File not found.": "未找到文件。",
+		"File path delivery for user secrets is disabled by the deployment administrator. Clear file_path or use env_name instead.": "部署管理员禁用用户机密的文件路径传送。清除 file_path 或使用 env_name 代替。",
+		"File too large.": "文件太大。",
+		"Filename is required.": "文件名是必需的。",
+		"Forbidden": "禁止",
+		"Forbidden reading template of selected workspace.": "禁止读取所选 Workspace 的 Template。",
+		"Forbidden.": "禁止访问。",
+		"Git auth device flow not supported.": "Git 验证设备流不受支持。",
+		"Git auth provider does not support device flow.": "Git 身份验证提供商不支持设备流。",
+		"Github OAuth2 is not enabled.": "GitHub OAuth2 未启用。",
+		"Given tags are not acceptable to the service": "服务不接受给定的标签",
+		"Group names must be unique": "组名称必须是唯一的",
+		"Healthcheck timed out.": "健康检查超时。",
+		"Incompatible or unparsable version": "版本不兼容或无法解析",
+		"Incomplete .zip archive file.": ".zip 存档文件不完整。",
+		"Incorrect email or one-time passcode.": "电子邮件或一次性密码不正确。",
+		"Incorrect email or password.": "电子邮件或密码不正确。",
+		"Insufficient permissions to update appearance": "权限不足，无法更新外观",
+		"Insufficient permissions to update health settings.": "没有足够的权限来更新健康设置。",
+		"Internal error accepting websocket connection.": "接受 WebSocket 连接时发生内部错误。",
+		"Internal error bundling template.": "捆绑 Template 内部错误。",
+		"Internal error calculating workspace autostart schedule.": "计算 Workspace 自动启动计划时出现内部错误。",
+		"Internal error canceling workspace build.": "取消 Workspace 构建时发生内部错误。",
+		"Internal error checking file.": "内部错误检查文件。",
+		"Internal error checking template name.": "检查 Template 名称时出现内部错误。",
+		"Internal error checking workspace agent authorization.": "检查 Workspace Agent 授权时出现内部错误。",
+		"Internal error checking workspace tags": "检查 Workspace 标签的内部错误",
+		"Internal error converting AI provider.": "转换 AI 提供商时出现内部错误。",
+		"Internal error converting tasks.": "转换任务时出现内部错误。",
+		"Internal error converting template parameter insights.": "转换 Template 参数见解时出现内部错误。",
+		"Internal error converting template version parameter.": "转换 Template 版本参数时出现内部错误。",
+		"Internal error converting template version parameters.": "转换 Template 版本参数时出现内部错误。",
+		"Internal error converting workspace build.": "转换 Workspace 版本时出现内部错误。",
+		"Internal error converting workspace rows.": "转换 Workspace 行时出现内部错误。",
+		"Internal error converting workspace.": "转换 Workspace 时出现内部错误。",
+		"Internal error converting workspaces.": "转换 Workspaces 时出现内部错误。",
+		"Internal error creating AI provider.": "创建 AI 提供商时发生内部错误。",
+		"Internal error creating OAuth2 application.": "创建 OAuth2 应用程序时发生内部错误。",
+		"Internal error creating OAuth2 client secret.": "创建 OAuth2 客户端密钥时发生内部错误。",
+		"Internal error creating file.": "创建文件时发生内部错误。",
+		"Internal error creating provisioner daemon.": "创建 Provisioner 守护进程时发生内部错误。",
+		"Internal error creating secret.": "创建机密时发生内部错误。",
+		"Internal error creating task.": "创建任务时发生内部错误。",
+		"Internal error creating template version.": "创建 Template 版本时发生内部错误。",
+		"Internal error creating template.": "创建 Template 时发生内部错误。",
+		"Internal error creating user.": "创建用户时发生内部错误。",
+		"Internal error creating workspace build.": "创建 Workspace 版本时发生内部错误。",
+		"Internal error decoding snapshot data.": "解码快照数据时出现内部错误。",
+		"Internal error decoding task snapshot.": "解码任务快照内部错误。",
+		"Internal error deleting API key.": "删除 API 密钥时出现内部错误。",
+		"Internal error deleting OAuth2 application.": "删除 OAuth2 应用程序时发生内部错误。",
+		"Internal error deleting OAuth2 client secret.": "删除 OAuth2 客户端密钥时发生内部错误。",
+		"Internal error deleting app tokens.": "删除应用程序令牌时发生内部错误。",
+		"Internal error deleting devcontainer.": "删除 devcontainer 时发生内部错误。",
+		"Internal error deleting license": "删除许可证时发生内部错误",
+		"Internal error deleting organization.": "删除组织时发生内部错误。",
+		"Internal error deleting secret.": "删除机密时发生内部错误。",
+		"Internal error deleting template.": "删除 Template 时发生内部错误。",
+		"Internal error deleting user.": "删除用户时发生内部错误。",
+		"Internal error dialing workspace agent.": "拨打 Workspace Agent 时出现内部错误。",
+		"Internal error encoding advisor configuration.": "编码顾问配置内部错误。",
+		"Internal error encoding settings.": "内部错误编码设置。",
+		"Internal error expiring API key.": "内部错误导致 API 密钥过期。",
+		"Internal error fetching API key.": "获取 API 密钥时出现内部错误。",
+		"Internal error fetching API keys.": "获取 API 密钥时出现内部错误。",
+		"Internal error fetching DAUs.": "获取 DAU 时发生内部错误。",
+		"Internal error fetching MCP server config.": "获取 MCP 服务器配置时发生内部错误。",
+		"Internal error fetching OAuth2 app secret.": "获取 OAuth2 应用程序机密时发生内部错误。",
+		"Internal error fetching OAuth2 app.": "获取 OAuth2 应用程序时发生内部错误。",
+		"Internal error fetching acting user.": "获取执行用户时发生内部错误。",
+		"Internal error fetching advisor configuration.": "获取顾问程序配置时出现内部错误。",
+		"Internal error fetching authenticated Github user organizations.": "获取经过身份验证的 GitHub 用户组织时发生内部错误。",
+		"Internal error fetching authenticated Github user.": "获取经过身份验证的 GitHub 用户时出现内部错误。",
+		"Internal error fetching chat debug logging setting.": "获取聊天调试日志记录设置时出现内部错误。",
+		"Internal error fetching chat model config.": "获取聊天模型配置时出现内部错误。",
+		"Internal error fetching chat system prompt configuration.": "获取聊天系统提示配置时出现内部错误。",
+		"Internal error fetching chat workspace.": "获取聊天 Workspace 时出现内部错误。",
+		"Internal error fetching chat.": "获取聊天内容时出现内部错误。",
+		"Internal error fetching computer use provider.": "获取计算机使用提供商时发生内部错误。",
+		"Internal error fetching containers.": "获取容器时发生内部错误。",
+		"Internal error fetching debug run.": "获取调试运行时出现内部错误。",
+		"Internal error fetching debug runs.": "获取调试运行时出现内部错误。",
+		"Internal error fetching debug steps.": "获取调试步骤时出现内部错误。",
+		"Internal error fetching default organization. If you are encountering this error, you will have to restart the Coder deployment.": "获取默认组织时发生内部错误。如果遇到此错误，则必须重新启动 Coder 部署。",
+		"Internal error fetching example.": "获取示例时出现内部错误。",
+		"Internal error fetching examples.": "获取示例时发生内部错误。",
+		"Internal error fetching external auth link.": "获取外部身份验证链接时发生内部错误。",
+		"Internal error fetching file.": "获取文件时发生内部错误。",
+		"Internal error fetching git SSH key.": "获取 Git SSH 密钥时出现内部错误。",
+		"Internal error fetching group.": "获取组时发生内部错误。",
+		"Internal error fetching job resources.": "获取作业资源时发生内部错误。",
+		"Internal error fetching keys.": "获取密钥时发生内部错误。",
+		"Internal error fetching latest workspace build parameters.": "获取最新的 Workspace 构建参数时发生内部错误。",
+		"Internal error fetching latest workspace build.": "获取最新 Workspace 版本时出现内部错误。",
+		"Internal error fetching licenses.": "获取许可证时发生内部错误。",
+		"Internal error fetching listening ports.": "获取侦听端口时发生内部错误。",
+		"Internal error fetching model overrides.": "获取模型覆盖时出现内部错误。",
+		"Internal error fetching notification template.": "获取通知 Template 发生内部错误。",
+		"Internal error fetching organization member.": "获取组织成员时发生内部错误。",
+		"Internal error fetching organization model defaults.": "获取组织模型默认值时发生内部错误。",
+		"Internal error fetching organization.": "获取组织时发生内部错误。",
+		"Internal error fetching organizations.": "获取组织时发生内部错误。",
+		"Internal error fetching personal Github user.": "获取个人 GitHub 用户时发生内部错误。",
+		"Internal error fetching personal model override setting.": "获取个人模型覆盖设置时出现内部错误。",
+		"Internal error fetching plan mode instructions.": "获取计划模式指令时出现内部错误。",
+		"Internal error fetching previous workspace build": "获取先前的 Workspace 版本时发生内部错误",
+		"Internal error fetching provisioner daemons by organization.": "按组织获取 Provisioner 守护进程时发生内部错误。",
+		"Internal error fetching provisioner daemons.": "获取 Provisioner 守护进程时发生内部错误。",
+		"Internal error fetching provisioner job.": "获取 Provisioner 作业时发生内部错误。",
+		"Internal error fetching provisioner jobs.": "获取 Provisioner 作业时发生内部错误。",
+		"Internal error fetching provisioner logs.": "获取 Provisioner 日志时发生内部错误。",
+		"Internal error fetching provisioner resource.": "获取 Provisioner 资源时发生内部错误。",
+		"Internal error fetching provisioner state.": "获取 Provisioner 状态时发生内部错误。",
+		"Internal error fetching secret.": "获取机密时发生内部错误。",
+		"Internal error fetching session threads.": "获取会话线程时发生内部错误。",
+		"Internal error fetching session.": "获取会话时发生内部错误。",
+		"Internal error fetching task snapshot.": "获取任务快照时发生内部错误。",
+		"Internal error fetching task workspace before deleting task.": "删除任务之前获取任务 Workspace 发生内部错误。",
+		"Internal error fetching task workspace build job.": "获取任务 Workspace 构建作业时出现内部错误。",
+		"Internal error fetching task workspace build.": "获取任务 Workspace 构建时出现内部错误。",
+		"Internal error fetching task workspace.": "获取任务 Workspace 发生内部错误。",
+		"Internal error fetching task.": "获取任务时出现内部错误。",
+		"Internal error fetching tasks.": "获取任务时出现内部错误。",
+		"Internal error fetching template admins.": "获取 Template 管理员时出现内部错误。",
+		"Internal error fetching template by name.": "按名称获取 Template 时发生内部错误。",
+		"Internal error fetching template insights.": "获取 Template 见解时出现内部错误。",
+		"Internal error fetching template schedule options.": "获取 Template 计划选项时发生内部错误。",
+		"Internal error fetching template schedule.": "获取 Template 计划时出现内部错误。",
+		"Internal error fetching template version at after_id.": "在 after_id 获取 Template 版本时出现内部错误。",
+		"Internal error fetching template version data.": "获取 Template 版本数据时发生内部错误。",
+		"Internal error fetching template version job status.": "获取 Template 版本作业状态时出现内部错误。",
+		"Internal error fetching template version parameters.": "获取 Template 版本参数时出现内部错误。",
+		"Internal error fetching template version presets.": "获取 Template 版本预设时出现内部错误。",
+		"Internal error fetching template version variables.": "获取 Template 版本变量时出现内部错误。",
+		"Internal error fetching template version.": "获取 Template 版本时出现内部错误。",
+		"Internal error fetching template versions.": "获取 Template 版本时出现内部错误。",
+		"Internal error fetching template.": "获取 Template 时发生内部错误。",
+		"Internal error fetching templates in organization.": "在组织中获取 Templates 时发生内部错误。",
+		"Internal error fetching the latest workspace build.": "获取最新的 Workspace 版本时出现内部错误。",
+		"Internal error fetching the previous template version.": "获取先前的 Template 版本时出现内部错误。",
+		"Internal error fetching timings.": "获取计时的内部错误。",
+		"Internal error fetching user activity.": "获取用户活动时发生内部错误。",
+		"Internal error fetching user admins.": "获取用户管理员时发生内部错误。",
+		"Internal error fetching user chat debug logging setting.": "获取用户聊天调试日志记录设置时发生内部错误。",
+		"Internal error fetching user count.": "获取用户计数时发生内部错误。",
+		"Internal error fetching user latency.": "获取用户延迟时发生内部错误。",
+		"Internal error fetching user personal model overrides.": "获取用户个人模型覆盖时发生内部错误。",
+		"Internal error fetching user status counts over time.": "随着时间的推移，获取用户状态计数时出现内部错误。",
+		"Internal error fetching user's SSH key.": "获取用户的 SSH 密钥时发生内部错误。",
+		"Internal error fetching user's external auths.": "获取用户的外部身份验证时发生内部错误。",
+		"Internal error fetching user's organization memberships.": "获取用户的组织成员身份时发生内部错误。",
+		"Internal error fetching user's organizations.": "获取用户组织时发生内部错误。",
+		"Internal error fetching user's parameters.": "获取用户参数时发生内部错误。",
+		"Internal error fetching user.": "获取用户时发生内部错误。",
+		"Internal error fetching users.": "获取用户时发生内部错误。",
+		"Internal error fetching workspace TTL setting.": "获取 Workspace TTL 设置时出现内部错误。",
+		"Internal error fetching workspace agent log sources.": "获取 Workspace Agent 日志源时发生内部错误。",
+		"Internal error fetching workspace agent scripts.": "获取 Workspace Agent 脚本时出现内部错误。",
+		"Internal error fetching workspace agent.": "获取 Workspace Agent 时出现内部错误。",
+		"Internal error fetching workspace agents.": "获取 Workspace Agents 时出现内部错误。",
+		"Internal error fetching workspace app statuses.": "获取 Workspace 应用状态时出现内部错误。",
+		"Internal error fetching workspace applications.": "获取 Workspace 应用程序时发生内部错误。",
+		"Internal error fetching workspace apps.": "获取 Workspace 应用程序时出现内部错误。",
+		"Internal error fetching workspace build at \"after_id\".": "在“after_id”处获取 Workspace 版本时发生内部错误。",
+		"Internal error fetching workspace build parameters.": "获取 Workspace 构建参数时出现内部错误。",
+		"Internal error fetching workspace build.": "获取 Workspace 版本时出现内部错误。",
+		"Internal error fetching workspace by name.": "按名称获取 Workspace 时发生内部错误。",
+		"Internal error fetching workspace data.": "获取 Workspace 数据时发生内部错误。",
+		"Internal error fetching workspace metadata.": "获取 Workspace 元数据时发生内部错误。",
+		"Internal error fetching workspace resource.": "获取 Workspace 资源时发生内部错误。",
+		"Internal error fetching workspace resources.": "获取 Workspace 资源时发生内部错误。",
+		"Internal error fetching workspace template.": "获取 Workspace Template 时发生内部错误。",
+		"Internal error fetching workspace.": "获取 Workspace 时发生内部错误。",
+		"Internal error fetching workspaces by template id.": "通过 Template id 获取 Workspaces 时发生内部错误。",
+		"Internal error fetching workspaces.": "获取 Workspaces 时发生内部错误。",
+		"Internal error generating a new SSH keypair.": "生成新的 SSH 密钥对时发生内部错误。",
+		"Internal error generating state string.": "生成状态字符串的内部错误。",
+		"Internal error getting AI Gateway clients.": "获取 AI Gateway 客户端时发生内部错误。",
+		"Internal error getting AI Gateway models.": "获取 AI 网关模型时发生内部错误。",
+		"Internal error getting AI Gateway sessions.": "获取 AI 网关会话时发生内部错误。",
+		"Internal error getting OAuth2 client secrets.": "获取 OAuth2 客户端机密时发生内部错误。",
+		"Internal error getting file.": "获取文件时发生内部错误。",
+		"Internal error getting template schedule options.": "获取 Template 计划选项时发生内部错误。",
+		"Internal error getting workspace build data.": "获取 Workspace 构建数据时发生内部错误。",
+		"Internal error hashing new password.": "对新密码进行哈希处理时出现内部错误。",
+		"Internal error importing secrets.": "导入机密时出现内部错误。",
+		"Internal error inserting organization member.": "插入组织成员时发生内部错误。",
+		"Internal error inserting provisioner job.": "插入 Provisioner 作业时发生内部错误。",
+		"Internal error inserting template.": "插入 Template 时发生内部错误。",
+		"Internal error listing AI providers.": "列出 AI 提供商的内部错误。",
+		"Internal error listing examples.": "内部错误列出示例。",
+		"Internal error listing parameter schemas.": "列出参数架构的内部错误。",
+		"Internal error listing secrets.": "列出机密的内部错误。",
+		"Internal error loading AI provider keys.": "加载 AI 提供商密钥时出现内部错误。",
+		"Internal error loading module catalog.": "加载模块目录时发生内部错误。",
+		"Internal error marshaling trace metadata.": "整理跟踪元数据的内部错误。",
+		"Internal error parsing licenses.": "解析许可证时出现内部错误。",
+		"Internal error parsing task app URL.": "解析任务应用程序 URL 出现内部错误。",
+		"Internal error preparing follow-up workspace build parameters": "准备后续 Workspace 构建参数时出现内部错误",
+		"Internal error preparing sql filter.": "准备 SQL 过滤器时发生内部错误。",
+		"Internal error processing .zip archive.": "处理 .zip 存档时出现内部错误。",
+		"Internal error provisioner job.": "内部错误 Provisioner 作业。",
+		"Internal error queueing follow-up workspace build": "排队后续 Workspace 构建时出现内部错误",
+		"Internal error reading auth config from database": "从数据库读取身份验证配置时发生内部错误",
+		"Internal error reading job agent.": "读取作业 Agent 时出现内部错误。",
+		"Internal error reading workspace agent.": "读取 Workspace Agent 时出现内部错误。",
+		"Internal error recreating devcontainer.": "重新创建 devcontainer 时发生内部错误。",
+		"Internal error refreshing chat context.": "刷新聊天上下文时发生内部错误。",
+		"Internal error saving file.": "保存文件时发生内部错误。",
+		"Internal error setting up server-sent events.": "设置服务器发送的事件时发生内部错误。",
+		"Internal error setting up workspace event subscription": "设置 Workspace 事件订阅时出现内部错误",
+		"Internal error setting workspace as favorite": "内部错误将 Workspace 设置为收藏夹",
+		"Internal error signing state jwt.": "内部错误签名状态 JWT。",
+		"Internal error storing snapshot.": "存储快照时发生内部错误。",
+		"Internal error streaming agent reinitialization events.": "Agent 重新初始化事件流内部错误。",
+		"Internal error submitting tool results.": "提交工具结果时出现内部错误。",
+		"Internal error subscribing to template events.": "订阅 Template 事件时发生内部错误。",
+		"Internal error subscribing to workspace build events.": "订阅 Workspace 构建事件时发生内部错误。",
+		"Internal error subscribing to workspace events.": "订阅 Workspace 事件时发生内部错误。",
+		"Internal error unmarshalling job metadata.": "解组作业元数据时发生内部错误。",
+		"Internal error unmarshalling metadata.": "解组元数据时出现内部错误。",
+		"Internal error unmarshalling provisioner job.": "解组 Provisioner 作业时出现内部错误。",
+		"Internal error unsetting workspace as favorite": "内部错误取消将 Workspace 设置为收藏夹",
+		"Internal error unsetting workspace dormant status": "内部错误取消设置 Workspace 休眠状态",
+		"Internal error updating OAuth2 application.": "更新 OAuth2 应用程序时出现内部错误。",
+		"Internal error updating active template version.": "更新活动 Template 版本时出现内部错误。",
+		"Internal error updating advisor configuration.": "更新顾问程序配置时出现内部错误。",
+		"Internal error updating chat debug logging setting.": "更新聊天调试日志记录设置时出现内部错误。",
+		"Internal error updating chat system prompt configuration.": "更新聊天系统提示配置时出现内部错误。",
+		"Internal error updating computer use provider.": "更新计算机使用提供商时出现内部错误。",
+		"Internal error updating organization.": "更新组织内部错误。",
+		"Internal error updating personal model override setting.": "更新个人模型覆盖设置时出现内部错误。",
+		"Internal error updating plan mode instructions.": "更新计划模式指令时出现内部错误。",
+		"Internal error updating provisioner job.": "更新 Provisioner 作业时出现内部错误。",
+		"Internal error updating secret.": "更新机密时出现内部错误。",
+		"Internal error updating task.": "更新任务时出现内部错误。",
+		"Internal error updating user appearance settings.": "更新用户外观设置时出现内部错误。",
+		"Internal error updating user chat debug logging setting.": "更新用户聊天调试日志记录设置时发生内部错误。",
+		"Internal error updating user personal model override.": "更新用户个人模型覆盖时出现内部错误。",
+		"Internal error updating user preference settings.": "更新用户首选项设置时出现内部错误。",
+		"Internal error updating user's git SSH key.": "更新用户的 Git SSH 密钥时出现内部错误。",
+		"Internal error updating user's password.": "更新用户密码时发生内部错误。",
+		"Internal error updating user.": "更新用户时发生内部错误。",
+		"Internal error updating workspace TTL setting.": "更新 Workspace TTL 设置时出现内部错误。",
+		"Internal error updating workspace automatic updates setting": "更新 Workspace 自动更新设置时出现内部错误",
+		"Internal error updating workspace autostart schedule.": "更新 Workspace 自动启动计划时出现内部错误。",
+		"Internal error updating workspace locked status.": "更新 Workspace 锁定状态时出现内部错误。",
+		"Internal error updating workspace sharing settings.": "更新 Workspace 共享设置时出现内部错误。",
+		"Internal error updating workspace.": "更新 Workspace 时出现内部错误。",
+		"Internal error validating after_session_id cursor.": "验证 after_session_id 游标时出现内部错误。",
+		"Internal error validating model config override.": "验证模型配置覆盖时出现内部错误。",
+		"Internal error validating reasoning effort.": "验证推理工作的内部错误。",
+		"Internal error validating request body payload.": "验证请求正文负载时发生内部错误。",
+		"Internal error waiting for template import.": "等待 Template 导入时发生内部错误。",
+		"Internal error watching agent's containers.": "查看 Agent 容器时发生内部错误。",
+		"Internal error watching agent's git state.": "查看 Agent 的 Git 状态时出现内部错误。",
+		"Internal error with passwords.": "密码内部错误。",
+		"Internal error with workspace agent authorization context.": "Workspace Agent 授权上下文出现内部错误。",
+		"Internal error workspace build.": "内部错误 Workspace 构建。",
+		"Internal error.": "内部错误。",
+		"Internal server error": "服务器内部错误",
+		"Invalid .zip archive contents.": ".zip 存档内容无效。",
+		"Invalid AI Gateway clients search query.": "AI Gateway 客户端搜索查询无效。",
+		"Invalid AI Gateway models search query.": "AI Gateway 模型搜索查询无效。",
+		"Invalid AI model price source.": "AI 模型价格来源无效。",
+		"Invalid AI model prices.": "AI 模型价格无效。",
+		"Invalid AI provider ID.": "AI 提供商 ID 无效。",
+		"Invalid AI provider request.": "AI 提供商请求无效。",
+		"Invalid AI spend limit.": "AI 支出限制无效。",
+		"Invalid AWS identity.": "AWS 身份无效。",
+		"Invalid Autostart Schedule.": "自动启动计划无效。",
+		"Invalid Azure identity.": "Azure 标识无效。",
+		"Invalid GCP identity.": "GCP 身份无效。",
+		"Invalid MCP server config ID.": "MCP 服务器配置 ID 无效。",
+		"Invalid MCP server config.": "MCP 服务器配置无效。",
+		"Invalid OAuth2 client ID.": "OAuth2 客户端 ID 无效。",
+		"Invalid OAuth2 revocation URL.": "无效的 OAuth2 撤销 URL。",
+		"Invalid URL path.": "URL 路径无效。",
+		"Invalid URL.": "无效 URL。",
+		"Invalid Workspace Automatic Updates setting.": "Workspace 自动更新设置无效。",
+		"Invalid Workspace Time to Shutdown.": "Workspace 关闭时间无效。",
+		"Invalid after_id parameter.": "after_id 参数无效。",
+		"Invalid after_id query parameter.": "after_id 查询参数无效。",
+		"Invalid agent chat send shortcut.": "Agent 聊天发送快捷方式无效。",
+		"Invalid agentapi payload structure.": "agentapi 有效负载结构无效。",
+		"Invalid audit search query.": "审核搜索查询无效。",
+		"Invalid autostart schedule.": "自动启动计划无效。",
+		"Invalid before_id query parameter.": "before_id 查询参数无效。",
+		"Invalid busy_behavior value.": "busy_behavior 值无效。",
+		"Invalid chat message ID.": "聊天消息 ID 无效。",
+		"Invalid chat model config ID.": "聊天模型配置 ID 无效。",
+		"Invalid chat model override context.": "无效的聊天模型覆盖上下文。",
+		"Invalid chat personal model override context.": "无效的聊天个人模型覆盖上下文。",
+		"Invalid chat search query.": "聊天搜索查询无效。",
+		"Invalid client id": "无效的客户端 ID",
+		"Invalid client_type.": "无效 client_type。",
+		"Invalid code diff display mode.": "代码差异显示模式无效。",
+		"Invalid compression threshold.": "压缩阈值无效。",
+		"Invalid computer use provider.": "计算机使用提供商无效。",
+		"Invalid connection search query.": "连接搜索查询无效。",
+		"Invalid create template request.": "创建 Template 请求无效。",
+		"Invalid custom headers.": "自定义标头无效。",
+		"Invalid debug run ID.": "调试运行 ID 无效。",
+		"Invalid default_org_member_roles entry.": "default_org_member_roles 条目无效。",
+		"Invalid device code": "设备代码无效",
+		"Invalid duration parameter.": "持续时间参数无效。",
+		"Invalid external proxy token": "外部代理令牌无效",
+		"Invalid file ID.": "文件 ID 无效。",
+		"Invalid file.": "文件无效。",
+		"Invalid format parameter.": "格式参数无效。",
+		"Invalid group name.": "组名无效。",
+		"Invalid group search query.": "组搜索查询无效。",
+		"Invalid hostname in URL.": "URL 中的主机名无效。",
+		"Invalid input part.": "输入部分无效。",
+		"Invalid key ID.": "密钥 ID 无效。",
+		"Invalid key name.": "键名无效。",
+		"Invalid label format": "标签格式无效",
+		"Invalid labels.": "无效标签。",
+		"Invalid license": "许可证无效",
+		"Invalid limit parameter (0-2000).": "限制参数 (0-2000) 无效。",
+		"Invalid limit parameter (1-200).": "限制参数 (1-200) 无效。",
+		"Invalid limit query parameter.": "限制查询参数无效。",
+		"Invalid log level provided.": "提供的日志级别无效。",
+		"Invalid member search query.": "成员搜索查询无效。",
+		"Invalid model config ID.": "模型配置 ID 无效。",
+		"Invalid model config.": "模型配置无效。",
+		"Invalid model_config_id.": "无效 model_config_id。",
+		"Invalid model_config_id: model config not found or disabled.": "无效的 model_config_id：未找到或禁用模型配置。",
+		"Invalid model_config_id: provider credentials unavailable for this model.": "无效的 model_config_id：提供者凭据对此模型不可用。",
+		"Invalid model_config_id: provider is not enabled for this model.": "无效的 model_config_id：未为此模型启用提供商。",
+		"Invalid or missing OAuth2 state parameter.": "OAuth2 状态参数无效或缺失。",
+		"Invalid organization ID.": "组织 ID 无效。",
+		"Invalid organization member search query.": "组织成员搜索查询无效。",
+		"Invalid pagination cursor.": "分页光标无效。",
+		"Invalid pagination limit value.": "分页限制值无效。",
+		"Invalid password.": "密码无效。",
+		"Invalid personal model override mode.": "个人模型覆盖模式无效。",
+		"Invalid plan_mode value.": "plan_mode 值无效。",
+		"Invalid premium funnel event.": "高级渠道事件无效。",
+		"Invalid query parameters.": "查询参数无效。",
+		"Invalid query params": "无效的查询参数",
+		"Invalid queued message ID.": "排队消息 ID 无效。",
+		"Invalid reasoning_effort value.": "reasoning_effort 值无效。",
+		"Invalid redirect_uri query parameter.": "redirect_uri 查询参数无效。",
+		"Invalid redirect_uri.": "无效 redirect_uri。",
+		"Invalid request": "无效请求",
+		"Invalid request body": "请求正文无效",
+		"Invalid request to update MCP server config ACL.": "更新 MCP 服务器配置 ACL 的请求无效。",
+		"Invalid request to update chat ACL.": "更新聊天 ACL 的请求无效。",
+		"Invalid request to update chat model ACL.": "更新聊天模型 ACL 的请求无效。",
+		"Invalid request to update notification template method": "更新通知 Template 方法的请求无效",
+		"Invalid request to update template ACL": "更新 Template ACL 的请求无效",
+		"Invalid request to update template metadata!": "更新 Template 元数据的请求无效！",
+		"Invalid request to update workspace ACL": "更新 Workspace ACL 的请求无效",
+		"Invalid request, not allowed to assign organization member permissions for an organization role.": "请求无效，不允许为组织角色分配组织成员权限。",
+		"Invalid request, not allowed to assign site wide permissions for an organization role.": "请求无效，不允许为组织角色分配站点范围的权限。",
+		"Invalid request, not allowed to assign user permissions for an organization role.": "请求无效，不允许为组织角色分配用户权限。",
+		"Invalid role name": "角色名称无效",
+		"Invalid session search query.": "会话搜索查询无效。",
+		"Invalid shareable workspace owners value.": "可共享的 Workspace 所有者值无效。",
+		"Invalid shell tool display mode.": "shell 工具显示模式无效。",
+		"Invalid snapshot data.": "快照数据无效。",
+		"Invalid source for secondary user claims.": "次要用户声明的来源无效。",
+		"Invalid state provided.": "提供的状态无效。",
+		"Invalid task ID format.": "任务 ID 格式无效。",
+		"Invalid task app response.": "任务应用程序响应无效。",
+		"Invalid task search query.": "任务搜索查询无效。",
+		"Invalid template search query.": "Template 搜索查询无效。",
+		"Invalid thinking display mode.": "思维显示模式无效。",
+		"Invalid timezone.": "时区无效。",
+		"Invalid token format": "令牌格式无效",
+		"Invalid user UUID": "无效用户 UUID",
+		"Invalid user input": "用户输入无效",
+		"Invalid user search query.": "用户搜索查询无效。",
+		"Invalid user_id query parameter": "user_id 查询参数无效",
+		"Invalid user_id query parameter.": "user_id 查询参数无效。",
+		"Invalid webpush endpoint.": "Webpush 端点无效。",
+		"Invalid workspace search query.": "Workspace 搜索查询无效。",
+		"Job has already been marked as canceled!": "作业已被标记为已取消！",
+		"Job has already been marked as canceled.": "作业已被标记为已取消。",
+		"Job has already completed!": "工作已经完成了！",
+		"Job has already completed.": "工作已经完成。",
+		"Job has been marked as canceled.": "作业已被标记为已取消。",
+		"Job has been marked as canceled...": "作业已被标记为已取消...",
+		"Job hasn't completed!": "作业还没有完成！",
+		"Key name must be unique.": "键名必须是唯一的。",
+		"Legacy chat provider APIs were removed. Use AI provider APIs instead.": "旧版聊天提供商 API 已被删除。请改用 AI 提供商 API。",
+		"License ID must be an integer": "许可证 ID 必须是整数",
+		"License cannot be used on this deployment!": "许可证无法用于此部署！",
+		"Logged out!": "已退出！",
+		"Login type 'none' requires a service account.": "登录类型“无”需要服务账户。",
+		"Logs limit exceeded": "超出日志限制",
+		"MCP server OAuth2 authorization URL is not configured.": "MCP 服务器 OAuth2 授权 URL 未配置。",
+		"MCP server config already exists.": "MCP 服务器配置已存在。",
+		"MCP server config slug already exists.": "MCP 服务器配置段已存在。",
+		"MCP server configuration changed during authorization.": "MCP 服务器配置在授权期间发生更改。",
+		"MCP server does not use OAuth2 authentication.": "MCP 服务器不使用 OAuth2 身份验证。",
+		"MCP server initialization failed": "MCP 服务器初始化失败",
+		"MCP server is not enabled.": "MCP 服务器未启用。",
+		"Managing user_oidc MCP server configs requires deployment-level permissions.": "管理 user_oidc MCP 服务器配置需要部署级别权限。",
+		"Message is too long.": "消息太长。",
+		"Message must be less than 160 characters.": "消息必须少于 160 个字符。",
+		"Message queue is full.": "消息队列已满。",
+		"Method not allowed": "方法不允许",
+		"Missing OAuth2 client ID.": "缺少 OAuth2 客户端 ID。",
+		"Missing UUID in URL.": "URL 中缺少 UUID。",
+		"Missing authorization code.": "缺少授权码。",
+		"Missing base_template_id.": "缺少 base_template_id。",
+		"Missing client_id parameter": "缺少 client_id 参数",
+		"Missing feature query parameter.": "缺少功能查询参数。",
+		"Missing group name in URL": "URL 中缺少组名称",
+		"Missing organization query parameter.": "缺少组织查询参数。",
+		"Missing redirect_uri query parameter.": "缺少 redirect_uri 查询参数。",
+		"Missing required external proxy token": "缺少所需的外部代理令牌",
+		"Missing session_id path parameter.": "缺少 session_id 路径参数。",
+		"Missing values, this cannot be empty": "缺少值，不能为空",
+		"Model ACLs cannot be set here. Use the nested /acl endpoint after creating the model.": "此处无法设置模型 ACL。创建模型后使用嵌套的 /acl 端点。",
+		"Model ACLs cannot be updated here. Use the nested /acl endpoint.": "模型 ACL 无法在此处更新。使用嵌套的 /acl 端点。",
+		"Model config is disabled.": "模型配置已禁用。",
+		"Model is required.": "模型为必填项。",
+		"Must be 0 (disabled) or at least one minute.": "必须为 0（禁用）或至少一分钟。",
+		"Must be 64 characters or fewer, lowercase letters, numbers, and non-consecutive hyphens, cannot start or end with a hyphen.": "不得超过 64 个字符、小写字母、数字和非连续连字符，不能以连字符开头或结尾。",
+		"Must be a positive integer.": "必须是正整数。",
+		"Must be a valid boolean": "必须是有效的布尔值",
+		"Must be an integer": "必须是整数",
+		"Must be an integer greater than or equal to zero": "必须是大于或等于零的整数",
+		"Name is already used": "名称已被使用",
+		"Name is required": "姓名为必填项",
+		"Name must be at most 64 characters": "名称不得超过 64 个字符",
+		"New password cannot match old password.": "新密码不能与旧密码匹配。",
+		"No chat model is available in this organization.": "此组织中没有可用的聊天模型。",
+		"No email found in OIDC payload!": "在 OIDC 负载中找不到电子邮件！",
+		"No logs provided.": "没有提供日志。",
+		"No organization specified to place the user as a member of. It is required to specify at least one organization id to place the user in.": "没有指定将用户作为其成员的组织。需要指定至少一个组织 ID 来放置用户。",
+		"No update arguments provided. Nothing to do.": "没有提供更新参数。无事可做。",
+		"No value provided.": "没有提供任何值。",
+		"No workspace exists for this job.": "此作业不存在 Workspace。",
+		"Non-browser connections are disabled for your deployment.": "您的部署禁用非浏览器连接。",
+		"Not Found.": "未找到。",
+		"Nothing to clear.": "没什么好澄清的。",
+		"Nothing to compact.": "没有什么可以压缩的。",
+		"Notification template method unchanged.": "通知 Template 的方法不变。",
+		"OAuth2 application not found.": "OAuth2 应用程序未找到。",
+		"OAuth2 auth type requires either all of oauth2_client_id, oauth2_auth_url, and oauth2_token_url (manual configuration), or none of them (automatic discovery via RFC 7591).": "OAuth2 身份验证类型需要全部 oauth2_client_id、oauth2_auth_url 和 oauth2_token_url（手动配置），或者不需要其中任何一个（通过 RFC 7591 自动发现）。",
+		"OAuth2 auto-discovery failed. Provide oauth2_client_id, oauth2_auth_url, and oauth2_token_url manually, or ensure the MCP server supports RFC 9728 (Protected Resource Metadata) and RFC 7591 (Dynamic Client Registration).": "OAuth2 自动发现失败。手动提供 oauth2_client_id、oauth2_auth_url 和 oauth2_token_url，或确保 MCP 服务器支持RFC 9728（受保护的资源元数据）和RFC 7591（动态客户端注册）。",
+		"OAuth2 provider returned an error.": "OAuth2 提供商返回错误。",
+		"OIDC login is not permitted from this host.": "OIDC 不允许从此主机登录。",
+		"OIDC redirect_uri cookie does not match the current request host.": "OIDC redirect_uri cookie 与当前请求主机不匹配。",
+		"OIDC token missing 'sub' claim field or 'sub' claim field is empty.": "OIDC 令牌缺少“子”声明字段或“子”声明字段为空。",
+		"Old password is incorrect.": "旧密码不正确。",
+		"Old password is required.": "需要旧密码。",
+		"OnSuccess TemplateVersionPresetID requires TemplateVersionID.": "OnSuccess TemplateVersionPresetID 需要 TemplateVersionID。",
+		"OnSuccess cannot be set alongside DryRun.": "OnSuccess 不能与 DryRun 一起设置。",
+		"OnSuccess cannot be set alongside Orphan.": "OnSuccess 不能与 Orphan 一起设置。",
+		"OnSuccess cannot be set alongside ProvisionerState.": "OnSuccess 不能与 ProvisionerState 一起设置。",
+		"OnSuccess is only permitted when stopping a workspace.": "仅当停止 Workspace 时才允许 OnSuccess。",
+		"OnSuccess transition must be start.": "OnSuccess 转换必须启动。",
+		"One or more MCP server IDs are invalid or disabled.": "一个或多个 MCP 服务器 ID 无效或已禁用。",
+		"Only .tar files can be converted to .zip format": "仅 .tar 文件可以转换为 .zip 格式",
+		"Only http scheme is supported for direct agent-dial.": "直接 Agent 拨号仅支持 HTTP 方案。",
+		"Only owners can change the password of an owner.": "只有所有者才能更改所有者的密码。",
+		"Only the chat owner may clear the chat context.": "只有聊天所有者可以清除聊天上下文。",
+		"Only the chat owner may compact the chat.": "只有聊天所有者可以压缩聊天。",
+		"Only the chat owner may edit messages.": "只有聊天所有者可以编辑消息。",
+		"Only the chat owner may promote queued messages.": "只有聊天所有者可以推广排队的消息。",
+		"Only the chat owner may propose a title.": "只有聊天所有者可以提出标题。",
+		"Only the chat owner may send messages.": "只有聊天所有者可以发送消息。",
+		"Only the chat owner may submit tool results.": "只有聊天所有者可以提交工具结果。",
+		"Only user messages can be edited.": "只能编辑用户消息。",
+		"Only versions that have been built successfully can be promoted.": "只有已成功构建的版本才能升级。",
+		"OpenRouter-like provider configured as type openai does not support slash-namespaced models.": "配置为 openai 类型的类似 OpenRouter 的提供商不支持斜杠命名空间模型。",
+		"Organization already exists with that name.": "使用该名称的组织已存在。",
+		"Organization has been deleted.": "组织已被删除。",
+		"Organization not found.": "未找到组织。",
+		"Organization sync is enabled for OIDC users, meaning manual organization assignment is not allowed for this user. Have the user re-login to refresh their organizations.": "为 OIDC 用户启用组织同步，这意味着该用户不允许手动分配组织。让用户重新登录以刷新其组织。",
+		"Orphan is only permitted when deleting a workspace.": "仅当删除 Workspace 时才允许孤立。",
+		"PKCE challenge must be provided.": "必须提供 PKCE 质询。",
+		"Parameter \"client_id\" is required and cannot be empty": "参数“client_id”为必填项，不能为空",
+		"Parameter \"client_secret\" is required and cannot be empty": "参数“client_secret”为必填项，不能为空",
+		"Password authentication is disabled.": "密码验证已禁用。",
+		"Password based authentication is disabled! Unable to provision new users with password authentication.": "基于密码的身份验证已禁用！无法为新用户配置密码身份验证。",
+		"Password cannot be set for service accounts.": "无法为服务账户设置密码。",
+		"Password is invalid": "密码无效",
+		"Personal skill limit reached.": "个人技能达到极限。",
+		"Pin order must be non-negative.": "引脚顺序必须为非负数。",
+		"Plan mode instructions exceed maximum length.": "计划模式指令超出最大长度。",
+		"Port must be between 9 and 65535.": "端口必须介于 9 和 65535 之间。",
+		"Port protocol not allowed.": "端口协议不允许。",
+		"Port share not found.": "未找到端口共享。",
+		"Port sharing level not allowed.": "不允许端口共享级别。",
+		"Price is required. Use 'null' for a price that is not known.": "价格为必填项。对于未知的价格使用“null”。",
+		"Price must not be negative.": "价格不能为负数。",
+		"Provide either \"timezone\" or \"tz_offset\", not both.": "提供“时区”或“tz_offset”，而不是两者都提供。",
+		"ProvisionerState cannot be set alongside Orphan since state intent is unclear.": "由于状态意图不明确，因此 ProvisionerState 不能与 Orphan 一起设置。",
+		"Proxy has been deleted!": "代理已被删除！",
+		"Query param \"after\" must be an integer greater than or equal to zero.": "查询参数“after”必须是大于或等于零的整数。",
+		"Query param \"after\" must be an integer.": "查询参数“after”必须是整数。",
+		"Query param \"code_challenge\" is required and cannot be empty": "查询参数“code_challenge”为必填项，不能为空",
+		"Query param \"provider_name\" has invalid value: provider not found or unauthorized": "查询参数“provider_name”具有无效值：未找到提供商或未经授权",
+		"Query param \"started_before\" has invalid value: \"started_before\" must be after \"started_after\" if set": "查询参数“started_before”具有无效值：“started_before”必须位于“started_after”之后（如果设置）",
+		"Query parameter \"period_start\" must be before \"period_end\".": "查询参数“period_start”必须位于“period_end”之前。",
+		"Query parameter has invalid value.": "查询参数具有无效值。",
+		"Query parameters \"period_start\" and \"period_end\" must be provided together.": "查询参数“period_start”和“period_end”必须一起提供。",
+		"Query parameters have invalid values.": "查询参数具有无效值。",
+		"Query period must not exceed 31 days.": "查询期限不得超过31天。",
+		"Queued message not found.": "未找到排队消息。",
+		"Queued message promotion accepted.": "已接受排队消息升级。",
+		"Replica ID is invalid.": "副本 ID 无效。",
+		"Request body must be valid JSON.": "请求正文必须是有效的 JSON。",
+		"Request body too large.": "请求正文太大。",
+		"Reserved name": "保留名称",
+		"Reserved role name": "保留角色名称",
+		"Resource doesn't exist with that id.": "具有该 ID 的资源不存在。",
+		"Resource not found or you do not have access to this resource": "找不到资源或您无权访问该资源",
+		"Resource not found.": "未找到资源。",
+		"Route not found.": "未找到路由。",
+		"SCIM is disabled, please contact your administrator if you believe this is an error": "SCIM 已禁用，如果您认为这是一个错误，请联系您的管理员",
+		"Server instance is shutting down": "服务器实例正在关闭",
+		"Service accounts must use login type 'none'.": "服务账户必须使用登录类型“none”。",
+		"Session not found.": "未找到会话。",
+		"Skill name in path does not match frontmatter name.": "路径中的技能名称与 frontmatter 名称不匹配。",
+		"State mismatched.": "状态不匹配。",
+		"State must be one of: complete, failure, working, idle.": "状态必须是以下之一：完成、失败、工作、空闲。",
+		"State must be provided.": "必须提供状态。",
+		"Stored advisor configuration is invalid.": "存储的顾问程序配置无效。",
+		"Stored workspace TTL is invalid.": "存储的 Workspace TTL 无效。",
+		"Successfully deleted group!": "删除群组成功！",
+		"Successfully updated notification template method.": "已成功更新通知 Template 方法。",
+		"Successfully updated template ACL list.": "已成功更新 Template ACL 列表。",
+		"Swagger documentation is disabled.": "Swagger 文档已禁用。",
+		"System prompt exceeds maximum length.": "系统提示超出最大长度。",
+		"TTL updates are not supported for prebuilt workspaces": "预构建的 Workspaces 不支持 TTL 更新",
+		"Task app URL is not configured.": "未配置任务应用程序 URL。",
+		"Task app is not ready to accept input.": "任务应用程序尚未准备好接受输入。",
+		"Task app rejected the message.": "任务应用程序拒绝了该消息。",
+		"Task does not have a workspace app.": "任务没有 Workspace 应用程序。",
+		"Task does not have a workspace.": "任务没有 Workspace。",
+		"Task input is required.": "需要输入任务。",
+		"Task is paused.": "任务已暂停。",
+		"Task must be active.": "任务必须处于活动状态。",
+		"Task workspace is already running.": "任务 Workspace 已在运行。",
+		"Template does not exist.": "Template 不存在。",
+		"Template does not have a valid \"coder_ai_task\" resource.": "Template 没有有效的“coder_ai_task”资源。",
+		"Template has been deleted!": "Template 已被删除！",
+		"Template import failed.": "Template 导入失败。",
+		"Template import was canceled.": "Template 导入已取消。",
+		"Template or template versions not found.": "未找到 Template 或 Template 版本。",
+		"Template version does not exist": "Template 版本不存在",
+		"Template version import job hasn't completed!": "Template 版本导入作业尚未完成！",
+		"Template version is already part of a template": "Template 版本已经是 Template 的一部分",
+		"Template version is archived": "Template 版本已存档",
+		"Template version job has not finished": "Template 版本作业尚未完成",
+		"Template version not found or you do not have access to this resource": "Template 版本未找到或您无权访问此资源",
+		"Template version not found.": "未找到 Template 版本。",
+		"Text format is not supported with follow mode.": "跟随模式不支持文本格式。",
+		"The Bedrock external ID is server-generated and cannot be changed.": "Bedrock 外部 ID 由服务器生成，无法更改。",
+		"The Coder license server returned an invalid license.": "Coder 许可证服务器返回无效许可证。",
+		"The GitHub user ID is missing, this should never happen. Please report this error.": "GitHub 用户 ID 丢失，这种情况永远不应该发生。请报告此错误。",
+		"The PKCE code verifier is invalid": "PKCE 代码验证器无效",
+		"The access token audience does not match this resource": "访问令牌的受众与此资源不匹配",
+		"The access token has expired": "访问令牌已过期",
+		"The access token is invalid": "访问令牌无效",
+		"The application's registered callback URL is not usable": "应用程序注册的回调 URL 不可用",
+		"The authorization code is invalid or expired": "授权码无效或已过期",
+		"The client credentials are invalid": "客户端凭据无效",
+		"The code_verifier parameter must be 43 to 128 characters from the unreserved character set [A-Za-z0-9-._~] (RFC 7636 §4.1)": "code_verifier 参数必须是非保留字符集 [A-Za-z0-9-._~] 中的 43 到 128 个字符 (RFC 7636 §4.1)",
+		"The grant type is missing or unsupported": "授权类型缺失或不受支持",
+		"The initial user has already been created!": "初始用户已经创建！",
+		"The initial user has already been created.": "初始用户已经创建。",
+		"The initial user has not been created!": "初始用户尚未创建！",
+		"The name \"primary\" is reserved for the primary region.": "名称“primary”是为主要区域保留的。",
+		"The oauth2 method requested is not configured!": "请求的 OAuth2 方法未配置！",
+		"The provided template version doesn't belong to the specified template.": "提供的 Template 版本不属于指定的 Template。",
+		"The provided template version is archived.": "提供的 Template 版本已存档。",
+		"The provisioner query parameter must be specified.": "必须指定配置者查询参数。",
+		"The refresh token is invalid or expired": "刷新令牌无效或已过期",
+		"The request could not be answered": "请求无法得到答复",
+		"The request is missing required parameters or is otherwise malformed": "请求缺少必需的参数或格式错误",
+		"The request requires higher privileges than provided by the access token": "此请求所需权限高于访问令牌提供的权限",
+		"The requested scope could not be evaluated": "无法评估请求的范围",
+		"The resource parameter is invalid": "资源参数无效",
+		"There was an unknown error completing the healthcheck.": "完成运行状况检查时出现未知错误。",
+		"This account is already linked to a different identity provider subject.": "该账户已链接到不同的身份提供商主题。",
+		"This deployment already has a license.": "此部署已拥有许可证。",
+		"This username is already in use.": "该用户名已被使用。",
+		"This value is already in use and should be unique.": "该值已被使用并且应该是唯一的。",
+		"Timed out waiting for template import to complete.": "等待 Template 导入完成超时。",
+		"Title cannot be empty.": "标题不能为空。",
+		"Title generation timed out. Try again or rename manually.": "标题生成超时。再试一次或手动重命名。",
+		"Title generation was canceled.": "标题生成被取消。",
+		"Token audience validation failed": "令牌受众验证失败",
+		"Too many dynamic tools.": "动态工具太多。",
+		"URL is invalid.": "URL 无效。",
+		"Unable to create a Task with the provided name.": "无法使用提供的名称创建任务。",
+		"Unable to determine the details of the actor creating the account.": "无法确定创建账户的参与者的详细信息。",
+		"Unable to determine the details of the actor deleting the account.": "无法确定删除账户的行为者的详细信息。",
+		"Unable to issue a trial license.": "无法颁发试用许可证。",
+		"Unable to marshal announcement banners": "无法整理公告横幅",
+		"Unable to parse notification template UUID.": "无法解析通知 Template UUID。",
+		"Unable to set Codernauts enabled": "无法启用 Codernauts",
+		"Unable to set announcement banners": "无法设置公告横幅",
+		"Unable to set application name": "无法设置应用程序名称",
+		"Unable to set logo URL": "无法设置徽标 URL",
+		"Unable to update task input, task must be paused.": "无法更新任务输入，任务必须暂停。",
+		"Unauthorized": "未经授权",
+		"Unauthorized to create workspace.": "未经授权创建 Workspace。",
+		"Unauthorized to queue follow-up workspace build.": "未经授权对后续 Workspace 构建进行排队。",
+		"Unexpected field 'legacy_group_name_mapping'. Field not allowed, set to null or remove it.": "意外字段“legacy_group_name_mapping”。不允许的字段，设置为 null 或将其删除。",
+		"Unknown base template.": "未知碱基 Template。",
+		"Unknown license ID": "未知的许可证 ID",
+		"Unknown or unsupported API version": "未知或不受支持的 API 版本",
+		"Unknown premium funnel source.": "未知的优质渠道来源。",
+		"Unknown premium paywall variant.": "未知的高级付费专区变体。",
+		"Unsupported conversion format.": "不支持的转换格式。",
+		"Unsupported file type for dynamic template version tags": "动态 Template 版本标签不支持的文件类型",
+		"Unsupported file type.": "不支持的文件类型。",
+		"Unsupported font family.": "不受支持的字体系列。",
+		"Unsupported task snapshot format.": "不支持的任务快照格式。",
+		"Updated the active template version!": "更新了有效的 Template 版本！",
+		"User account must have password based authentication.": "用户账户必须具有基于密码的身份验证。",
+		"User already exists.": "用户已存在。",
+		"User has been deleted!": "用户已被删除！",
+		"User is already an organization member": "用户已经是组织成员",
+		"User is not a member of the referenced group.": "用户不是引用组的成员。",
+		"User is not an OIDC user.": "用户不是 OIDC 用户。",
+		"User secrets limit reached.": "已达到用户机密限制。",
+		"User secrets value-bytes limit reached.": "已达到用户机密值字节限制。",
+		"Users cannot set custom quiet hours schedule due to deployment configuration.": "由于部署配置，用户无法设置自定义安静时间计划。",
+		"Users without password login type cannot change their password.": "没有密码登录类型的用户无法更改密码。",
+		"Validation failed.": "验证失败。",
+		"Value must be at least one minute.": "值必须至少为一分钟。",
+		"Webpush subscription not found.": "未找到 Webpush 订阅。",
+		"Wildcard URL is invalid.": "通配符 URL 无效。",
+		"Workspace TTL must be non-negative.": "Workspace TTL 必须为非负数。",
+		"Workspace TTL must not be less than 1 minute.": "Workspace TTL 不得小于 1 分钟。",
+		"Workspace TTL must not exceed 30 days.": "Workspace TTL 不得超过 30 天。",
+		"Workspace agent not authorized.": "Workspace Agent 未授权。",
+		"Workspace agent token invalid.": "Workspace Agent 令牌无效。",
+		"Workspace does not belong to the specified organization.": "Workspace 不属于指定的组织。",
+		"Workspace does not belong to this chat's organization.": "Workspace 不属于此聊天的组织。",
+		"Workspace does not have an external agent.": "Workspace 没有外部 Agent。",
+		"Workspace identity not cached.": "Workspace 身份未缓存。",
+		"Workspace is not a prebuilt workspace waiting to be claimed.": "Workspace 不是等待领取的预建 Workspace。",
+		"Workspace not found or you do not have access to this resource": "Workspace 未找到或您无权访问此资源",
+		"Workspace renames are not enabled for this template.": "此 Template 未启用 Workspace 重命名。",
+		"Workspace resources can only be fetched for builds.": "Workspace 资源只能为构建获取。",
+		"Workspace sharing is disabled for this organization.": "Workspace 共享已为此组织禁用。",
+		"You are not a member of the specified organization.": "您不是指定组织的成员。",
+		"You are not authorized to create users.": "您无权创建用户。",
+		"You are not authorized to use this endpoint.": "您无权使用此端点。",
+		"You are not authorized to view this user's login type.": "您无权查看该用户的登录类型。",
+		"You are not authorized to watch all workspace builds.": "您无权观看所有 Workspace 版本。",
+		"You are signed out or your session has expired. Please sign in again to continue.": "您已注销或您的会话已过期。请重新登录以继续。",
+		"You can only favorite workspaces that you own.": "您只能收藏您拥有的 Workspaces。",
+		"You can only un-favorite workspaces that you own.": "您只能取消收藏您拥有的 Workspaces。",
+		"You cannot change your own organization roles.": "您无法更改自己的组织角色。",
+		"You cannot change your own roles.": "你无法改变自己的角色。",
+		"You cannot change your own workspace sharing role.": "您无法更改自己的 Workspace 共享角色。",
+		"You cannot delete a user that has workspaces. Delete their workspaces and try again!": "您无法删除具有 Workspaces 的用户。删除他们的 Workspaces 并重试！",
+		"You cannot delete yourself!": "你不能删除自己！",
+		"You cannot specify both an example_id and a file_id.": "您不能同时指定 example_id 和 file_id。",
+		"You cannot suspend yourself.": "你不能暂停自己。",
+		"You do not have permission to view the IDP claim field values": "您无权查看 IDP 声明字段值",
+		"You do not have permission to view the available IDP fields": "您无权查看可用的 IDP 字段",
+		"You must configure OIDC before creating OIDC users.": "创建 OIDC 用户之前，必须配置 OIDC。",
+		"You've been rate limited. Please try again later.": "您已受到速率限制。请稍后重试。",
+		"Your primary email must be verified on GitHub!": "您的主要电子邮件必须在 GitHub 上进行验证！",
+		"after_id must be less than before_id.": "after_id 必须小于 before_id。",
+		"agent name cannot be empty": "Agent 名称不能为空",
+		"aibridged handler not mounted": "aibridged 处理程序未安装",
+		"bad `since` format, must be RFC3339": "`since` 格式错误，必须是 RFC3339",
+		"cannot remove self from an organization": "无法将自己从组织中删除",
+		"claimField query parameter is required": "ClaimField 查询参数为必填项",
+		"deployment_default is not supported for root personal model overrides.": "根个人模型覆盖不支持 deployment_default。",
+		"environment variable already in use": "环境变量已在使用",
+		"failed to query job": "查询作业失败",
+		"failed to subscribe to job updates": "订阅职位更新失败",
+		"field is not allowed": "字段不允许",
+		"file path already in use": "文件路径已被使用",
+		"get provisioner daemon key": "获取 Provisioner 守护进程密钥",
+		"id_token not found in response payload. Ensure your OIDC callback is configured correctly!": "在响应负载中找不到 id_token。确保您的 OIDC 回调配置正确！",
+		"label key must not be empty": "标签键不能为空",
+		"model_config_id is required when mode is model.": "当mode为model时，需要model_config_id。",
+		"model_config_id must be empty unless mode is model.": "model_config_id 必须为空，除非模式是模型。",
+		"must be 43 to 128 characters from the unreserved character set [A-Za-z0-9-._~]": "必须是非保留字符集 [A-Za-z0-9-._~] 中的 43 到 128 个字符",
+		"must be 43 to 128 characters from the unreserved character set [A-Za-z0-9-._~] (RFC 7636 §4.1)": "必须是非保留字符集 [A-Za-z0-9-._~] 中的 43 到 128 个字符 (RFC 7636 §4.1)",
+		"must be always or never": "必须总是或从不",
+		"must be an absolute URI without fragment": "必须是绝对的 URI，不带片段",
+		"must be one of: auto, always_expanded, always_collapsed": "必须是以下之一：auto、always_expanded、always_collapsed",
+		"must be one of: auto, preview, always_expanded, always_collapsed": "必须是以下之一：自动、预览、always_expanded、always_collapsed",
+		"must be one of: enter, modifier_enter": "必须是以下之一：输入、modifier_enter",
+		"must be set when agent_id is set": "设置 agent_id 时必须设置",
+		"must be set when app_name is set": "设置 app_name 时必须设置",
+		"must not be empty": "不能为空",
+		"name already in use": "名称已被使用",
+		"organization_id is required.": "需要 organization_id。",
+		"provisioner daemon key and psk provided, but only one is allowed": "提供了 Provisioner 守护进程密钥和 psk，但只允许使用一个",
+		"provisioner daemon key invalid": "Provisioner 守护进程密钥无效",
+		"provisioner daemon key required": "需要 Provisioner 守护进程密钥",
+		"provisioner daemon psk invalid": "Provisioner 守护进程 psk 无效",
+		"reasoning_effort requires mode model.": "reasoning_effort 需要模式模型。",
+		"reasoning_effort requires model_config_id.": "reasoning_effort 需要 model_config_id。",
+		"starting_before query parameter should be any of 'all', 'read', 'unread'.": "starting_before 查询参数应为“全部”、“已读”、“未读”中的任意一个。",
+		"template not found": "Template 未找到",
+		"template version archived": "Template 版本已存档",
+		"threshold_percent is out of range.": "threshold_percent 超出范围。",
+		"user must be a member of this group": "用户必须是该组的成员",
+		"👋": "👋"
+	},
+	"templates": [
+		{
+			"source": "\"search\" cannot be combined with %s",
+			"translation": "“搜索”不能与 {{0}} 组合使用"
+		},
+		{
+			"source": "%q does not match regex %q",
+			"translation": "{{0}} 与正则表达式 {{1}} 不匹配"
+		},
+		{
+			"source": "%q is a reserved group and cannot be deleted!",
+			"translation": "{{0}}是保留组，不能删除！"
+		},
+		{
+			"source": "%q is a reserved group name",
+			"translation": "{{0}} 是保留组名"
+		},
+		{
+			"source": "%q is a reserved group name!",
+			"translation": "{{0}} 是保留组名！"
+		},
+		{
+			"source": "%q is already in use",
+			"translation": "{{0}} 已在使用中"
+		},
+		{
+			"source": "%q is not a built-in role.",
+			"translation": "{{0}} 不是内置角色。"
+		},
+		{
+			"source": "%q is not a valid app sharing level",
+			"translation": "{{0}} 不是有效的应用程序共享级别"
+		},
+		{
+			"source": "%q is not a valid display app",
+			"translation": "{{0}} 不是有效的显示应用程序"
+		},
+		{
+			"source": "%q is not a valid method; %s are the available options",
+			"translation": "{{0}} 不是有效方法； {{1}} 是可用选项"
+		},
+		{
+			"source": "%q is not a valid positive integer",
+			"translation": "{{0}} 不是有效的正整数"
+		},
+		{
+			"source": "%q is not a valid query param",
+			"translation": "{{0}} 不是有效的查询参数"
+		},
+		{
+			"source": "%q is not an open in setting",
+			"translation": "{{0}} 不是设置中的打开状态"
+		},
+		{
+			"source": "%s is a Premium feature. Contact sales!",
+			"translation": "{{0}} 是一项高级功能。联系销售！"
+		},
+		{
+			"source": "%s is currently at capacity. Please try again later.",
+			"translation": "{{0}} 目前已满。请稍后重试。"
+		},
+		{
+			"source": "%s/%s appears more than once.",
+			"translation": "{{0}}/{{1}} 出现多次。"
+		},
+		{
+			"source": "%v is not a valid UUID.",
+			"translation": "{{0}} 不是有效的 UUID。"
+		},
+		{
+			"source": "A group named %q already exists.",
+			"translation": "名为 {{0}} 的组已存在。"
+		},
+		{
+			"source": "A group with name %q already exists.",
+			"translation": "名称为 {{0}} 的组已存在。"
+		},
+		{
+			"source": "A template version with name %q already exists for this template.",
+			"translation": "此 Template 已存在名为 {{0}} 的 Template 版本。"
+		},
+		{
+			"source": "A token with name %q already exists.",
+			"translation": "名称为 {{0}} 的令牌已存在。"
+		},
+		{
+			"source": "AI provider %q already exists.",
+			"translation": "AI 提供商 {{0}} 已存在。"
+		},
+		{
+			"source": "Agent state is %q, it must be in the %q state.",
+			"translation": "Agent 状态是 {{0}}，它必须处于 {{1}} 状态。"
+		},
+		{
+			"source": "Agent state is %q, must be connected.",
+			"translation": "Agent 状态为 {{0}}，必须已连接。"
+		},
+		{
+			"source": "App URL %q has an invalid port %q.",
+			"translation": "应用程序 URL {{0}} 具有无效端口 {{1}}。"
+		},
+		{
+			"source": "Application port %d is not permitted. Coder reserves ports less than %d for internal use.",
+			"translation": "不允许应用程序端口 {{0}}。 Coder 保留小于 {{1}} 的端口供内部使用。"
+		},
+		{
+			"source": "Auto-archive days must be between 0 and %d.",
+			"translation": "自动存档天数必须介于 0 和 {{0}} 之间。"
+		},
+		{
+			"source": "Cannot %s a deleted workspace!",
+			"translation": "不能将 {{0}} 删除 Workspace！"
+		},
+		{
+			"source": "Cannot add or remove users from the %q group!",
+			"translation": "无法在 {{0}} 组中添加或删除用户！"
+		},
+		{
+			"source": "Cannot convert to login type %q.",
+			"translation": "无法转换为登录类型 {{0}}。"
+		},
+		{
+			"source": "Cannot delete reserved '%s' provisioner key",
+			"translation": "无法删除保留的“{{0}}”Provisioner 密钥"
+		},
+		{
+			"source": "Cannot rename the %q group!",
+			"translation": "无法重命名 {{0}} 组！"
+		},
+		{
+			"source": "Cannot update the Display Name for the %q group!",
+			"translation": "无法更新 {{0}} 组的显示名称！"
+		},
+		{
+			"source": "Chat debug retention days must be between 0 and %d.",
+			"translation": "聊天调试保留天数必须介于 0 和 {{0}} 之间。"
+		},
+		{
+			"source": "Chat is already %s.",
+			"translation": "聊天已经是 {{0}}。"
+		},
+		{
+			"source": "Cookie %q must be provided for the OIDC callback when CODER_OIDC_REDIRECT_ALLOWED_HOSTS is configured.",
+			"translation": "配置 CODER_OIDC_REDIRECT_ALLOWED_HOSTS 时，必须为 OIDC 回调提供 Cookie {{0}}。"
+		},
+		{
+			"source": "Cookie %q must be provided.",
+			"translation": "必须提供 Cookie {{0}}。"
+		},
+		{
+			"source": "Could not refresh expired %s token. Try re-authenticating to resolve this issue.",
+			"translation": "无法刷新过期的 {{0}} 令牌。尝试重新验证以解决此问题。"
+		},
+		{
+			"source": "Duration cannot exceed %s.",
+			"translation": "持续时间不能超过 {{0}}。"
+		},
+		{
+			"source": "Email in OIDC payload isn't a string. Got: %t",
+			"translation": "OIDC 有效负载中的电子邮件不是字符串。得到：{{0}}"
+		},
+		{
+			"source": "Endpoint only supports using \"resource_id\" field %d times, found %d usages. Remove %d objects with this field set.",
+			"translation": "Endpoint仅支持使用“resource_id”字段{{0}}次，发现{{1}}用法。删除设置了此字段的 {{2}} 对象。"
+		},
+		{
+			"source": "Entitlements already recently refreshed, please wait %d seconds to force a new refresh",
+			"translation": "权利最近已刷新，请等待 {{0}} 秒以强制进行新刷新"
+		},
+		{
+			"source": "External agent '%s' not found in workspace.",
+			"translation": "在 Workspace 中找不到外部 Agent“{{0}}”。"
+		},
+		{
+			"source": "Failed to %s chat.",
+			"translation": "与 {{0}} 聊天失败。"
+		},
+		{
+			"source": "Failed to collect %s profile.",
+			"translation": "无法收集 {{0}} 配置文件。"
+		},
+		{
+			"source": "Failed to retrieve %q notifications templates.",
+			"translation": "无法检索 {{0}} 通知 Templates。"
+		},
+		{
+			"source": "Failed to write %s profile to archive.",
+			"translation": "无法将 {{0}} 配置文件写入存档。"
+		},
+		{
+			"source": "ID %q must be a valid user UUID.",
+			"translation": "ID {{0}} 必须是有效用户 UUID。"
+		},
+		{
+			"source": "Incorrect login type, attempting to use %q but user is of login type %q",
+			"translation": "登录类型不正确，尝试使用 {{0}} 但用户的登录类型为 {{1}}"
+		},
+		{
+			"source": "Instance with id %q not found.",
+			"translation": "未找到 ID 为 {{0}} 的实例。"
+		},
+		{
+			"source": "Internal error clearing %s model override.",
+			"translation": "清除 {{0}} 模型覆盖时出现内部错误。"
+		},
+		{
+			"source": "Internal error fetching organization %q.",
+			"translation": "获取组织 {{0}} 时发生内部错误。"
+		},
+		{
+			"source": "Internal error fetching workspace by name %q.",
+			"translation": "按名称 {{0}} 获取 Workspace 时发生内部错误。"
+		},
+		{
+			"source": "Internal error updating %s model override.",
+			"translation": "更新 {{0}} 模型覆盖时出现内部错误。"
+		},
+		{
+			"source": "Internal error updating user's status to %q.",
+			"translation": "将用户状态更新为 {{0}} 时发生内部错误。"
+		},
+		{
+			"source": "Invalid CORS behavior %q. Must be one of [%s]",
+			"translation": "CORS 行为 {{0}} 无效。必须是 [{{1}}] 之一"
+		},
+		{
+			"source": "Invalid UUID %q.",
+			"translation": "UUID {{0}} 无效。"
+		},
+		{
+			"source": "Invalid boolean value %q for \"include_deleted\" query param.",
+			"translation": "“include_deleted”查询参数的布尔值 {{0}} 无效。"
+		},
+		{
+			"source": "Invalid color format: %q",
+			"translation": "无效的颜色格式：{{0}}"
+		},
+		{
+			"source": "Invalid expect_status %q. Only 'running' or 'pending' are allowed.",
+			"translation": "expect_status {{0}} 无效。只允许“正在运行”或“待处理”。"
+		},
+		{
+			"source": "Invalid feature: %q",
+			"translation": "无效功能：{{0}}"
+		},
+		{
+			"source": "Invalid format for tag %q. Key and value must be separated with =.",
+			"translation": "标签 {{0}} 的格式无效。键和值必须用 = 分隔。"
+		},
+		{
+			"source": "Invalid format option %q.",
+			"translation": "格式选项 {{0}} 无效。"
+		},
+		{
+			"source": "Invalid label filter: %q (expected format key:value, both must be non-empty)",
+			"translation": "无效标签过滤器：{{0}}（预期格式key:value，两者必须非空）"
+		},
+		{
+			"source": "Invalid provider id or name: must be a UUID or match %s.",
+			"translation": "提供者 ID 或名称无效：必须是 UUID 或与 {{0}} 匹配。"
+		},
+		{
+			"source": "Invalid toolset: %s",
+			"translation": "无效的工具集：{{0}}"
+		},
+		{
+			"source": "Invalid workspace ID %q: %s",
+			"translation": "无效的 Workspace ID {{0}}: {{1}}"
+		},
+		{
+			"source": "Job %q doesn't exist for version %q.",
+			"translation": "版本 {{1}} 的作业 {{0}} 不存在。"
+		},
+		{
+			"source": "Job ID %q must be a valid UUID.",
+			"translation": "作业 ID {{0}} 必须是有效的 UUID。"
+		},
+		{
+			"source": "Missing required parameter: %s",
+			"translation": "缺少必需参数：{{0}}"
+		},
+		{
+			"source": "Multiple agents found with instance ID %q. Set CODER_AGENT_NAME to one of: %s",
+			"translation": "找到多个实例 ID 为 {{0}} 的 Agents。将 CODER_AGENT_NAME 设置为以下之一： {{1}}"
+		},
+		{
+			"source": "Multiple external auth providers declared by this workspace's template match %q: %s.",
+			"translation": "此 Workspace 的 Template 声明的多个外部身份验证提供商与 {{0}}: {{1}} 匹配。"
+		},
+		{
+			"source": "Multiple roles with the name %s found",
+			"translation": "找到多个名为 {{0}} 的角色"
+		},
+		{
+			"source": "Must be less than %d.",
+			"translation": "必须小于 {{0}}。"
+		},
+		{
+			"source": "Must not exceed %d.",
+			"translation": "不得超过 {{0}}。"
+		},
+		{
+			"source": "Name cannot be reserved name '%s'",
+			"translation": "名称不能保留名称“{{0}}”"
+		},
+		{
+			"source": "No agent found with instance ID %q and name %q.",
+			"translation": "未找到实例 ID {{0}} 且名称为 {{1}} 的 Agent。"
+		},
+		{
+			"source": "No custom role with the name %s found",
+			"translation": "未找到名为 {{0}} 的自定义角色"
+		},
+		{
+			"source": "No matching external auth provider found in Coder for the url %q.",
+			"translation": "在 Coder 中找不到 URL {{0}} 的匹配外部身份验证提供商。"
+		},
+		{
+			"source": "No template version found by name %q.",
+			"translation": "未找到名为 {{0}} 的 Template 版本。"
+		},
+		{
+			"source": "Object %q id is not a valid uuid.",
+			"translation": "对象 {{0}} ID 不是有效的 UUID。"
+		},
+		{
+			"source": "Object's \"resource_type\" field must be defined for key %q.",
+			"translation": "必须为键 {{0}} 定义对象的“resource_type”字段。"
+		},
+		{
+			"source": "Organization already exists with the name %q.",
+			"translation": "组织已存在，名称为 {{0}}。"
+		},
+		{
+			"source": "Organization does not exist with the provided id %q.",
+			"translation": "所提供 ID 为 {{0}} 的组织不存在。"
+		},
+		{
+			"source": "Organization name %q is reserved.",
+			"translation": "组织名称 {{0}} 已保留。"
+		},
+		{
+			"source": "Password cannot be set for non-password (%q) authentication.",
+			"translation": "非密码（{{0}}）认证不能设置密码。"
+		},
+		{
+			"source": "Provider %q is not supported. Supported providers: %s.",
+			"translation": "不支持提供商 {{0}}。支持的提供商：{{1}}。"
+		},
+		{
+			"source": "Provider is required. Supported providers: %s.",
+			"translation": "需要提供者。支持的提供商：{{0}}。"
+		},
+		{
+			"source": "Provisioner job %q not found.",
+			"translation": "未找到 Provisioner 作业 {{0}}。"
+		},
+		{
+			"source": "Provisioner key with name '%s' already exists in organization",
+			"translation": "组织中已存在名称为“{{0}}”的 Provisioner 密钥"
+		},
+		{
+			"source": "Query element %q can only contain 1 ':'",
+			"translation": "查询元素 {{0}} 只能包含 1 个“:”"
+		},
+		{
+			"source": "Query element %q cannot start or end with ':'",
+			"translation": "查询元素 {{0}} 不能以“:”开头或结尾"
+		},
+		{
+			"source": "Query param %q has invalid value: %s",
+			"translation": "查询参数 {{0}} 具有无效值：{{1}}"
+		},
+		{
+			"source": "Query param %q has invalid values: %s",
+			"translation": "查询参数 {{0}} 具有无效值：{{1}}"
+		},
+		{
+			"source": "Query param %q is required and cannot be empty",
+			"translation": "查询参数 {{0}} 为必填项，不能为空"
+		},
+		{
+			"source": "Query param %q must be a valid 32-bit positive integer: %s",
+			"translation": "查询参数 {{0}} 必须是有效的 32 位正整数：{{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid 64-bit integer: %s",
+			"translation": "查询参数 {{0}} 必须是有效的 64 位整数：{{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid 64-bit positive integer: %s",
+			"translation": "查询参数 {{0}} 必须是有效的 64 位正整数：{{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid JSON object: %s",
+			"translation": "查询参数 {{0}} 必须是有效的 JSON 对象：{{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid boolean: %s",
+			"translation": "查询参数 {{0}} 必须是有效的布尔值：{{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid date format (%s): %s",
+			"translation": "查询参数 {{0}} 必须是有效的日期格式 ({{1}}): {{2}}"
+		},
+		{
+			"source": "Query param %q must be a valid duration (e.g., '24h', '30m', '1h30m'): %s",
+			"translation": "查询参数 {{0}} 必须是有效的持续时间（例如，'24h'、'30m'、'1h30m'）：{{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid integer: %s",
+			"translation": "查询参数 {{0}} 必须是有效整数：{{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid positive integer: %s",
+			"translation": "查询参数 {{0}} 必须是有效的正整数：{{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid string: %s",
+			"translation": "查询参数 {{0}} 必须是有效字符串：{{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid url: %s",
+			"translation": "查询参数 {{0}} 必须是有效的 URL: {{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid uuid",
+			"translation": "查询参数 {{0}} 必须是有效的 UUID"
+		},
+		{
+			"source": "Query param %q must be after than %q",
+			"translation": "查询参数 {{0}} 必须晚于 {{1}}"
+		},
+		{
+			"source": "Query param %q must exactly match %s",
+			"translation": "查询参数 {{0}} 必须与 {{1}} 完全匹配"
+		},
+		{
+			"source": "Query param %q must have the clock set to %02d:00:00, got %s",
+			"translation": "查询参数 {{0}} 必须将时钟设置为 {{1}}:00:00，得到 {{2}}"
+		},
+		{
+			"source": "Query param %q must have the clock set to 00:00:00, got %s",
+			"translation": "查询参数 {{0}} 必须将时钟设置为 00:00:00，得到 {{1}}"
+		},
+		{
+			"source": "Query param %q must not be in the future",
+			"translation": "查询参数 {{0}} 不得为将来的值"
+		},
+		{
+			"source": "Query param %q must not be zero",
+			"translation": "查询参数 {{0}} 不得为零"
+		},
+		{
+			"source": "Query param %q provided more than once, found %d times. Only provide 1 instance of this query param.",
+			"translation": "查询参数 {{0}} 提供了多次，找到了 {{1}} 次。仅提供此查询参数的 1 个实例。"
+		},
+		{
+			"source": "Query parameter \"period_start\" is older than the configured AI Gateway data retention window (%s).",
+			"translation": "查询参数“period_start”早于配置的 AI Gateway 数据保留窗口 ({{0}})。"
+		},
+		{
+			"source": "Record at \"after_id\" (%q) does not exist.",
+			"translation": "“after_id”({{0}}) 处的记录不存在。"
+		},
+		{
+			"source": "Record at \"after_id\" (%q) does not exists.",
+			"translation": "“after_id”({{0}}) 处的记录不存在。"
+		},
+		{
+			"source": "Resource found for id %q, but isn't registered on the latest history.",
+			"translation": "找到 ID {{0}} 的资源，但未在最新历史记录中注册。"
+		},
+		{
+			"source": "Retention days must be between 0 and %d.",
+			"translation": "保留天数必须介于 0 和 {{0}} 之间。"
+		},
+		{
+			"source": "Source %q is not supported. Supported sources: %s.",
+			"translation": "不支持源 {{0}}。支持的来源：{{1}}。"
+		},
+		{
+			"source": "Task is %s.",
+			"translation": "任务是{{0}}。"
+		},
+		{
+			"source": "Template %q doesn't exist.",
+			"translation": "Template {{0}} 不存在。"
+		},
+		{
+			"source": "Template %q has been deleted!",
+			"translation": "Template {{0}} 已被删除！"
+		},
+		{
+			"source": "Template %q has been deprecated, and cannot be used to create a new workspace.",
+			"translation": "Template {{0}} 已弃用，并且不能用于创建新的 Workspace。"
+		},
+		{
+			"source": "Template version %q does not exist.",
+			"translation": "Template 版本 {{0}} 不存在。"
+		},
+		{
+			"source": "Template version %q doesn't exist.",
+			"translation": "Template 版本 {{0}} 不存在。"
+		},
+		{
+			"source": "Template version %s is already part of a template",
+			"translation": "Template 版本 {{0}} 已经是 Template 的一部分"
+		},
+		{
+			"source": "Template version %s is archived.",
+			"translation": "Template 版本 {{0}} 已存档。"
+		},
+		{
+			"source": "Template version already %s",
+			"translation": "Template 版本已经 {{0}}"
+		},
+		{
+			"source": "Template with name %q already exists.",
+			"translation": "名为 {{0}} 的 Template 已存在。"
+		},
+		{
+			"source": "The grant type %q is not supported",
+			"translation": "不支持授权类型 {{0}}"
+		},
+		{
+			"source": "The template version references a Git auth provider %q that no longer exists.",
+			"translation": "Template 版本引用了不再存在的 Git 身份验证提供商 {{0}}。"
+		},
+		{
+			"source": "This workspace's template declares external auth provider(s) that this deployment no longer configures: %s.",
+			"translation": "此 Workspace 的 Template 声明此部署不再配置的外部身份验证提供商：{{0}}。"
+		},
+		{
+			"source": "Title must be at most %d characters.",
+			"translation": "标题不得超过 {{0}} 个字符。"
+		},
+		{
+			"source": "Too many workspace IDs, maximum is %d.",
+			"translation": "Workspace ID 太多，最多为 {{0}}。"
+		},
+		{
+			"source": "Unauthorized access to use the template %q.",
+			"translation": "未经授权访问使用 Template {{0}}。"
+		},
+		{
+			"source": "Unknown login type %q.",
+			"translation": "未知的登录类型 {{0}}。"
+		},
+		{
+			"source": "Unknown os/arch: %s/%s",
+			"translation": "未知 os/arch：{{0}}/{{1}}"
+		},
+		{
+			"source": "Unknown profile type: %q.",
+			"translation": "未知的配置文件类型：{{0}}。"
+		},
+		{
+			"source": "Unknown provisioner type %q",
+			"translation": "未知的配置者类型 {{0}}"
+		},
+		{
+			"source": "Unsupported content type header %q.",
+			"translation": "不支持的内容类型标头 {{0}}。"
+		},
+		{
+			"source": "Unsupported login type %q for manually creating new users.",
+			"translation": "不支持手动创建新用户的登录类型 {{0}}。"
+		},
+		{
+			"source": "User is not active (status = %q). Contact an admin to reactivate your account.",
+			"translation": "用户未激活（状态 = {{0}}）。请联系管理员重新激活您的账户。"
+		},
+		{
+			"source": "User must be a member of organization %q",
+			"translation": "用户必须是组织 {{0}} 的成员"
+		},
+		{
+			"source": "Validation failed for tag %q with value: \"%v\"",
+			"translation": "标签 {{0}} 的值 \"{{1}}\" 验证失败"
+		},
+		{
+			"source": "Workspace %q Build %d does not exist.",
+			"translation": "Workspace {{0}} 构建的 {{1}} 不存在。"
+		},
+		{
+			"source": "Workspace %q already exists.",
+			"translation": "Workspace {{0}} 已存在。"
+		},
+		{
+			"source": "Workspace %q is deleted and cannot be updated.",
+			"translation": "Workspace {{0}} 已删除且无法更新。"
+		},
+		{
+			"source": "Workspace %q was deleted, you can view this workspace by specifying '?include_deleted=true' and trying again.",
+			"translation": "Workspace {{0}} 已被删除，您可以通过指定“?include_deleted=true”并重试来查看此 Workspace。"
+		},
+		{
+			"source": "Workspace proxy with name %q already exists.",
+			"translation": "Workspace 名为 {{0}} 的代理已存在。"
+		},
+		{
+			"source": "You aren't allowed to create provisioner daemons with scope %q",
+			"translation": "不允许您创建范围为 {{0}} 的 Provisioner 守护进程"
+		},
+		{
+			"source": "You cannot suspend a user with the %q role. You must remove the role first.",
+			"translation": "您无法暂停具有 {{0}} 角色的用户。您必须先删除该角色。"
+		},
+		{
+			"source": "You've been rate limited for sending more than %v requests in %v.",
+			"translation": "您在 {{1}} 中发送超过 {{0}} 请求时受到速率限制。"
+		},
+		{
+			"source": "Your account is %s. Contact an admin to reactivate your account.",
+			"translation": "您的账户是 {{0}}。请联系管理员重新激活您的账户。"
+		},
+		{
+			"source": "agent name %q does not match regex %q",
+			"translation": "Agent 名称 {{0}} 与正则表达式 {{1}} 不匹配"
+		},
+		{
+			"source": "duplicate entries for ID %s",
+			"translation": "ID {{0}} 的重复条目"
+		},
+		{
+			"source": "failed to validate group IDs: %v",
+			"translation": "验证组 ID 失败：{{0}}"
+		},
+		{
+			"source": "failed to validate user IDs: %v",
+			"translation": "验证用户 ID 失败：{{0}}"
+		},
+		{
+			"source": "group with ID %v does not exist",
+			"translation": "ID 为 {{0}} 的组不存在"
+		},
+		{
+			"source": "group_ids has %d entries, maximum is %d.",
+			"translation": "group_ids 有 {{0}} 条目，最大为 {{1}}。"
+		},
+		{
+			"source": "invalid value %q, must be one of [%s]",
+			"translation": "无效值 {{0}}，必须是 [{{1}}] 之一"
+		},
+		{
+			"source": "label key %q contains invalid characters; must match %s",
+			"translation": "标签键 {{0}} 包含无效字符；必须匹配 {{1}}"
+		},
+		{
+			"source": "label key %q exceeds maximum length of %d bytes",
+			"translation": "标签键 {{0}} 超过 {{1}} 字节的最大长度"
+		},
+		{
+			"source": "label value for key %q exceeds maximum length of %d bytes",
+			"translation": "键 {{0}} 的标签值超过 {{1}} 字节的最大长度"
+		},
+		{
+			"source": "label value for key %q must not be empty",
+			"translation": "键 {{0}} 的标签值不得为空"
+		},
+		{
+			"source": "max_output_tokens %d must be non-negative.",
+			"translation": "max_output_tokens {{0}} 必须为非负数。"
+		},
+		{
+			"source": "max_uses_per_run %d must be non-negative.",
+			"translation": "max_uses_per_run {{0}} 必须为非负数。"
+		},
+		{
+			"source": "must be one of %v",
+			"translation": "必须是 {{0}} 之一"
+		},
+		{
+			"source": "too many labels (%d); maximum is %d",
+			"translation": "标签太多（{{0}}）；最大值为 {{1}}"
+		},
+		{
+			"source": "unable to auth: please provide the %s header",
+			"translation": "无法验证：请提供 {{0}} 标头"
+		},
+		{
+			"source": "user with ID %v does not exist",
+			"translation": "ID 为 {{0}} 的用户不存在"
+		},
+		{
+			"source": "user_ids has %d entries, maximum is %d.",
+			"translation": "user_ids 有 {{0}} 条目，最大为 {{1}}。"
+		}
+	]
+}

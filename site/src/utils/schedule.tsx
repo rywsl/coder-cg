@@ -1,5 +1,5 @@
 import cronParser from "cron-parser";
-import cronstrue from "cronstrue";
+import cronstrue from "cronstrue/i18n";
 import dayjs, { type Dayjs } from "dayjs";
 import duration from "dayjs/plugin/duration";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -10,6 +10,8 @@ import { Link as RouterLink } from "react-router";
 import type { Template, Workspace } from "#/api/typesGenerated";
 import { HelpPopoverTitle } from "#/components/HelpPopover/HelpPopover";
 import { Link } from "#/components/Link/Link";
+import { i18n } from "#/i18n";
+import { currentLocale } from "#/i18n/locale";
 import type { WorkspaceActivityStatus } from "#/modules/workspaces/activity";
 import { isWorkspaceOn } from "./workspace";
 
@@ -59,13 +61,14 @@ export const autostartDisplay = (schedule: string | undefined): string => {
 		return (
 			cronstrue
 				.toString(stripTimezone(schedule), {
+					locale: currentLocale() === "zh-CN" ? "zh_CN" : "en",
 					throwExceptionOnParseError: false,
 				})
 				// We don't want to keep the At because it is on the label
-				.replace("At", "")
+				.replace(currentLocale() === "zh-CN" ? /^在/ : "At", "")
 		);
 	}
-	return "Manual";
+	return i18n.t("pages:schedule.manual_b0b9fe24");
 };
 
 const isShuttingDown = (workspace: Workspace, deadline?: Dayjs): boolean => {
@@ -107,16 +110,21 @@ export const autostopDisplay = (
 			const maxDeadline = dayjs(workspace.latest_build.max_deadline);
 			if (hasMaxDeadline && maxDeadline.isBefore(now.add(2, "hour"))) {
 				return {
-					message: "Required to stop soon",
+					message: i18n.t("pages:schedule.required_to_stop_soon_424e7fd3"),
 					tooltip: (
 						<>
-							<HelpPopoverTitle>Upcoming stop required</HelpPopoverTitle>
-							This workspace will be required to stop by{" "}
+							<HelpPopoverTitle>
+								{i18n.t("pages:schedule.upcoming_stop_required_69160888")}
+							</HelpPopoverTitle>
+							{i18n.t(
+								"pages:schedule.this_workspace_will_be_required_to_stop_by_0f5607b6",
+							)}{" "}
 							{dayjs(workspace.latest_build.max_deadline).format(
 								"MMMM D [at] h:mm A",
 							)}
-							. You can restart your workspace before then to avoid
-							interruption.
+							{i18n.t(
+								"pages:schedule.you_can_restart_your_workspace_before_then_to_av_1784720d",
+							)}
 						</>
 					),
 					danger: true,
@@ -126,33 +134,44 @@ export const autostopDisplay = (
 
 		if (isShuttingDown(workspace, deadline)) {
 			return {
-				message: "Workspace is shutting down",
+				message: i18n.t("pages:schedule.workspace_is_shutting_down_361cba69"),
 			};
 		}
 		let title = (
-			<HelpPopoverTitle>Template Autostop requirement</HelpPopoverTitle>
+			<HelpPopoverTitle>
+				{i18n.t("pages:schedule.template_autostop_requirement_8bc5771a")}
+			</HelpPopoverTitle>
 		);
 		let reason: ReactNode = ` because the ${template.display_name} template has an autostop requirement.`;
 		if (template.autostop_requirement && template.allow_user_autostop) {
-			title = <HelpPopoverTitle>Autostop schedule</HelpPopoverTitle>;
+			title = (
+				<HelpPopoverTitle>
+					{i18n.t("pages:schedule.autostop_schedule_a7778164")}
+				</HelpPopoverTitle>
+			);
 			reason = (
 				<span data-pixel="ignore">
 					{" "}
-					because this workspace has enabled autostop. You can disable autostop
-					from this workspace&apos;s{" "}
+					{i18n.t(
+						"pages:schedule.because_this_workspace_has_enabled_autostop_you__7b608106",
+					)}{" "}
 					<Link asChild showExternalIcon={false} size="sm" className="p-0">
-						<RouterLink to="settings/schedule">schedule settings</RouterLink>
+						<RouterLink to="settings/schedule">
+							{i18n.t("pages:schedule.schedule_settings_2972bc7b")}
+						</RouterLink>
 					</Link>
 					.
 				</span>
 			);
 		}
 		return {
-			message: `Stop ${deadline.fromNow()}`,
+			message: i18n.t("pages:schedule.stop_value0_ef47536e", {
+				value0: deadline.fromNow(),
+			}),
 			tooltip: (
 				<span data-pixel="ignore">
 					{title}
-					This workspace will be stopped on{" "}
+					{i18n.t("pages:schedule.this_workspace_will_be_stopped_on_9d765e99")}{" "}
 					{deadline.format("MMMM D [at] h:mm A")}
 					{reason}
 				</span>
@@ -164,14 +183,16 @@ export const autostopDisplay = (
 		// If the workspace is not on, and the ttl is 0 or undefined, then the
 		// workspace is set to manually shutdown.
 		return {
-			message: "Manual",
+			message: i18n.t("pages:schedule.manual_b0b9fe24"),
 		};
 	}
 	// The workspace has a ttl set, but is either in an unknown state or is
 	// not running. Therefore, we derive from workspace.ttl.
 	const duration = dayjs.duration(ttl, "milliseconds");
 	return {
-		message: `Stop ${duration.humanize()} after start`,
+		message: i18n.t("pages:schedule.stop_value0_after_start_d4b3b7f6", {
+			value0: duration.humanize(),
+		}),
 	};
 };
 

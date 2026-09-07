@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { WorkspaceResource } from "#/api/typesGenerated";
 import { ExternalImage } from "#/components/ExternalImage/ExternalImage";
 import {
@@ -22,13 +23,18 @@ export const ResourcesSidebar: FC<ResourcesSidebarProps> = ({
 	isSelected,
 	resources,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<Sidebar>
-			<SidebarCaption>Resources</SidebarCaption>
+			<SidebarCaption>
+				{tI18n("WorkspacePage.ResourcesSidebar.resources_e89b30aa")}
+			</SidebarCaption>
 			{failed && (
 				<p className="m-0 py-4 text-sm font-normal text-content-secondary leading-normal">
-					Your workspace build failed, so the necessary resources couldn&apos;t
-					be created.
+					{tI18n(
+						"WorkspacePage.ResourcesSidebar.your_workspace_build_failed_so_the_necessary_res_5700d562",
+					)}
 				</p>
 			)}
 			{resources.length === 0 &&

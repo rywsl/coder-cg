@@ -6,11 +6,15 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "#/components/Chart/Chart";
+import { i18n } from "#/i18n";
+import { currentIntlLocale } from "#/i18n/locale";
 import { formatDate } from "#/utils/time";
 
 const chartConfig = {
 	amount: {
-		label: "Active Users",
+		label: i18n.t(
+			"templates:TemplatePage.TemplateInsightsPage.ActiveUserChart.active_users_5639b9f1",
+		),
 		color: "hsl(var(--highlight-purple))",
 	},
 } satisfies ChartConfig;
@@ -54,7 +58,7 @@ export const ActiveUserChart: FC<ActiveUserChartProps> = ({ data }) => {
 					axisLine={false}
 					tickMargin={12}
 					tickFormatter={(value: number) => {
-						return value === 0 ? "" : value.toLocaleString();
+						return value === 0 ? "" : value.toLocaleString(currentIntlLocale());
 					}}
 				/>
 				<ChartTooltip
@@ -69,7 +73,7 @@ export const ActiveUserChart: FC<ActiveUserChartProps> = ({ data }) => {
 							}}
 							formatter={(_v, _n, item) => {
 								const date = new Date(item.payload.date);
-								return date.toLocaleString(undefined, {
+								return date.toLocaleString(currentIntlLocale(), {
 									month: "long",
 									day: "2-digit",
 								});

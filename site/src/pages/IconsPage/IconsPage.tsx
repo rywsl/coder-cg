@@ -1,5 +1,6 @@
 import { SearchIcon, XIcon } from "lucide-react";
 import { type FC, type ReactNode, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import uFuzzy from "ufuzzy";
 import { Button } from "#/components/Button/Button";
 import { CopyableValue } from "#/components/CopyableValue/CopyableValue";
@@ -40,6 +41,8 @@ const fuzzyFinder = new uFuzzy({
 });
 
 const IconsPage: FC = () => {
+	const { t: tI18n } = useTranslation("pages");
+
 	const { externalImages } = useAppearance();
 	const [searchInputText, setSearchInputText] = useState("");
 	const searchText = searchInputText.trim();
@@ -82,36 +85,39 @@ const IconsPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Icons")}</title>
+			<title>{pageTitle(tI18n("IconsPage.IconsPage.icons_eae96e02"))}</title>
 			<Margins>
 				<PageHeader
 					actions={
 						<Tooltip>
 							<TooltipTrigger asChild>
 								<Link href="https://github.com/coder/coder/tree/main/site/static/icon">
-									Suggest an icon
+									{tI18n("IconsPage.IconsPage.suggest_an_icon_51b7ba8f")}
 								</Link>
 							</TooltipTrigger>
 							<TooltipContent side="bottom" align="end" className="max-w-xs">
-								You can suggest a new icon by submitting a Pull Request to our
-								public GitHub repository. Just keep in mind that it should be
-								relevant to many Coder users, and redistributable under a
-								permissive license.
+								{tI18n(
+									"IconsPage.IconsPage.you_can_suggest_a_new_icon_by_submitting_a_pull__7f217a72",
+								)}
 							</TooltipContent>
 						</Tooltip>
 					}
 				>
-					<PageHeaderTitle>Icons</PageHeaderTitle>
+					<PageHeaderTitle>
+						{tI18n("IconsPage.IconsPage.icons_eae96e02")}
+					</PageHeaderTitle>
 					<PageHeaderSubtitle>
-						All of the icons included with Coder
+						{tI18n(
+							"IconsPage.IconsPage.all_of_the_icons_included_with_coder_c8e40dbe",
+						)}
 					</PageHeaderSubtitle>
 				</PageHeader>
 				<div className="relative max-w-xs">
 					<SearchIcon className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-icon-xs text-content-secondary" />
 					<Input
-						aria-label="Filter"
+						aria-label={tI18n("IconsPage.IconsPage.filter_638e249f")}
 						name="query"
-						placeholder="Search…"
+						placeholder={tI18n("IconsPage.IconsPage.search_7336265a")}
 						value={searchInputText}
 						onChange={(event) => setSearchInputText(event.target.value)}
 						className="pl-9 pr-10"
@@ -128,14 +134,20 @@ const IconsPage: FC = () => {
 									<XIcon className="size-icon-xs" />
 								</Button>
 							</TooltipTrigger>
-							<TooltipContent side="bottom">Clear filter</TooltipContent>
+							<TooltipContent side="bottom">
+								{tI18n("IconsPage.IconsPage.clear_filter_ba59e2d4")}
+							</TooltipContent>
 						</Tooltip>
 					)}
 				</div>
 
 				<div className="flex flex-row gap-2 justify-center flex-wrap max-w-full mt-8">
 					{searchedIcons.length === 0 && (
-						<EmptyState message="No results matched your search" />
+						<EmptyState
+							message={tI18n(
+								"IconsPage.IconsPage.no_results_matched_your_search_c229583b",
+							)}
+						/>
 					)}
 					{searchedIcons.map((icon) => (
 						<CopyableValue key={icon.url} value={icon.url}>

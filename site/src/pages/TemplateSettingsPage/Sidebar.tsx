@@ -1,26 +1,29 @@
+import { useTranslation } from "react-i18next";
 import {
 	Sidebar as BaseSidebar,
 	SettingsSidebarNavItem,
 } from "#/components/Sidebar/Sidebar";
 
 export const Sidebar: React.FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<BaseSidebar>
 			<div className="flex flex-col gap-1">
 				<SettingsSidebarNavItem end href="">
-					General
+					{tI18n("TemplateSettingsPage.Sidebar.general_c910d474")}
 				</SettingsSidebarNavItem>
 				<SettingsSidebarNavItem href="permissions">
-					Permissions
+					{tI18n("TemplateSettingsPage.Sidebar.permissions_abccc78c")}
 				</SettingsSidebarNavItem>
 				<SettingsSidebarNavItem href="variables">
-					Variables
+					{tI18n("TemplateSettingsPage.Sidebar.variables_02db55ba")}
 				</SettingsSidebarNavItem>
 				<SettingsSidebarNavItem href="parameters">
-					Parameters
+					{tI18n("TemplateSettingsPage.Sidebar.parameters_e68b36b1")}
 				</SettingsSidebarNavItem>
 				<SettingsSidebarNavItem href="schedule">
-					Schedule
+					{tI18n("TemplateSettingsPage.Sidebar.schedule_f4830a1d")}
 				</SettingsSidebarNavItem>
 			</div>
 		</BaseSidebar>

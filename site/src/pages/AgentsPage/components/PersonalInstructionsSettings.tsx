@@ -2,6 +2,7 @@ import { cn } from "cn";
 import { useFormik } from "formik";
 import type { FC } from "react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import TextareaAutosize from "react-textarea-autosize";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Alert, AlertDescription } from "#/components/Alert/Alert";
@@ -38,6 +39,8 @@ export const PersonalInstructionsSettings: FC<
 	isSaveUserPromptError,
 	isAnyPromptSaving,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [isUserPromptOverflowing, setIsUserPromptOverflowing] = useState(false);
 	const { isSavedVisible, showSavedState } = useTemporarySavedState();
 
@@ -66,10 +69,14 @@ export const PersonalInstructionsSettings: FC<
 	return (
 		<form className="flex flex-col gap-2" onSubmit={form.handleSubmit}>
 			<h3 className="m-0 text-sm font-semibold text-content-primary">
-				Personal instructions
+				{tI18n(
+					"AgentsPage.components.PersonalInstructionsSettings.personal_instructions_5061e60c",
+				)}
 			</h3>
 			<p className="m-0 text-xs text-content-secondary">
-				Applied to all your conversations. Only visible to you.
+				{tI18n(
+					"AgentsPage.components.PersonalInstructionsSettings.applied_to_all_your_conversations_only_visible_t_fa0a3077",
+				)}
 			</p>
 			<TextareaAutosize
 				className={cn(
@@ -77,7 +84,9 @@ export const PersonalInstructionsSettings: FC<
 					isUserPromptOverflowing && "overflow-y-auto scrollbar-thin",
 				)}
 				name="custom_prompt"
-				placeholder="Additional behavior, style, and tone preferences"
+				placeholder={tI18n(
+					"AgentsPage.components.PersonalInstructionsSettings.additional_behavior_style_and_tone_preferences_81856d5d",
+				)}
 				value={form.values.custom_prompt}
 				onChange={form.handleChange}
 				onHeightChange={(height) => setIsUserPromptOverflowing(height >= 240)}
@@ -87,9 +96,23 @@ export const PersonalInstructionsSettings: FC<
 			{userInvisibleCharCount > 0 && (
 				<Alert severity="warning">
 					<AlertDescription>
-						This text contains {userInvisibleCharCount} invisible Unicode{" "}
-						{userInvisibleCharCount !== 1 ? "characters" : "character"} that
-						could hide content. These will be stripped on save.
+						{tI18n(
+							"AgentsPage.components.PersonalInstructionsSettings.this_text_contains_51d7632d",
+						)}
+						{userInvisibleCharCount}
+						{tI18n(
+							"AgentsPage.components.PersonalInstructionsSettings.invisible_unicode_8dedc14d",
+						)}{" "}
+						{userInvisibleCharCount !== 1
+							? tI18n(
+									"AgentsPage.components.PersonalInstructionsSettings.characters_25d939ff",
+								)
+							: tI18n(
+									"AgentsPage.components.PersonalInstructionsSettings.character_4bcef3de",
+								)}
+						{tI18n(
+							"AgentsPage.components.PersonalInstructionsSettings.that_could_hide_content_these_will_be_stripped_o_c3bb6f1f",
+						)}
 					</AlertDescription>
 				</Alert>
 			)}
@@ -106,7 +129,9 @@ export const PersonalInstructionsSettings: FC<
 								onClick={() => form.setFieldValue("custom_prompt", "")}
 								disabled={isAnyPromptSaving || !form.values.custom_prompt}
 							>
-								Clear
+								{tI18n(
+									"AgentsPage.components.PersonalInstructionsSettings.clear_83b12c22",
+								)}
 							</Button>
 							<Button
 								size="xs"
@@ -114,14 +139,18 @@ export const PersonalInstructionsSettings: FC<
 								disabled={isAnyPromptSaving || !form.dirty}
 							>
 								{isSavingUserPrompt && <Spinner loading className="size-4" />}
-								Save
+								{tI18n(
+									"AgentsPage.components.PersonalInstructionsSettings.save_1509f561",
+								)}
 							</Button>
 						</>
 					))}
 			</div>
 			{isSaveUserPromptError && (
 				<p className="m-0 text-xs text-content-destructive">
-					Failed to save personal instructions.
+					{tI18n(
+						"AgentsPage.components.PersonalInstructionsSettings.failed_to_save_personal_instructions_6e9691a6",
+					)}
 				</p>
 			)}
 		</form>

@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { pageTitle } from "#/utils/page";
 import { MCPServerForm } from "../components/MCPServerForm";
@@ -36,9 +37,18 @@ const UpdateMCPServerPageView: FC<UpdateMCPServerPageViewProps> = ({
 	onToggleEnabled,
 	onCancel,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<>
-			<title>{pageTitle(server.display_name, "AI Settings")}</title>
+			<title>
+				{pageTitle(
+					server.display_name,
+					tI18n(
+						"AISettingsPage.MCPServersPage.UpdateMCPServerPage.UpdateMCPServerPageView.ai_settings_a8e5e2c6",
+					),
+				)}
+			</title>
 			<MCPServerForm
 				key={server.id}
 				server={server}

@@ -1,4 +1,5 @@
 import { MessageScroller } from "@shadcn/react/message-scroller";
+import { useTranslation } from "react-i18next";
 import { ChatStatusCallout } from "./ChatStatusCallout";
 import type { LiveStatusModel } from "./liveStatusModel";
 
@@ -13,13 +14,19 @@ export const LiveStreamTailContent = ({
 	isTranscriptEmpty,
 	liveStatus,
 }: LiveStreamTailContentProps) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	if (!isTranscriptEmpty || liveStatus.phase !== "idle") {
 		return null;
 	}
 
 	return (
 		<div className="py-12 text-center text-content-secondary">
-			<p className="text-sm">Start a conversation with your agent.</p>
+			<p className="text-sm">
+				{tI18n(
+					"AgentsPage.components.ChatConversation.LiveStreamTail.start_a_conversation_with_your_agent_90d0ee53",
+				)}
+			</p>
 		</div>
 	);
 };

@@ -8,6 +8,7 @@ import {
 	XIcon,
 } from "lucide-react";
 import { type FC, type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "#/components/Button/Button";
 
 const alertVariants = cva(
@@ -82,6 +83,8 @@ export const Alert: FC<AlertProps> = ({
 	className,
 	...props
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const [open, setOpen] = useState(true);
 
 	if (!open) {
@@ -122,7 +125,7 @@ export const Alert: FC<AlertProps> = ({
 						onDismiss?.();
 					}}
 					data-testid="dismiss-banner-btn"
-					aria-label="Dismiss"
+					aria-label={tI18n("Alert.Alert.dismiss_48845bff")}
 				>
 					<XIcon className="p-0! size-icon-lg" />
 				</Button>

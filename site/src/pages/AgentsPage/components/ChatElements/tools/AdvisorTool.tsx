@@ -1,5 +1,6 @@
 import { TriangleAlertIcon } from "lucide-react";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollArea } from "#/components/ScrollArea/ScrollArea";
 import { Response } from "../Response";
 import { ToolCall } from "./ToolCall";
@@ -26,6 +27,8 @@ export const AdvisorTool: React.FC<AdvisorToolProps> = ({
 	errorMessage,
 	modelIntent,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const questionText = question.trim() || "No question provided.";
 	const adviceText = advice?.trim() ?? "";
 	const effectiveErrorMessage =
@@ -36,14 +39,22 @@ export const AdvisorTool: React.FC<AdvisorToolProps> = ({
 
 	const intent = formatModelIntentLabel(modelIntent);
 	const label = showLimitReached
-		? "Advisor limit reached"
+		? tI18n(
+				"AgentsPage.components.ChatElements.tools.AdvisorTool.advisor_limit_reached_4db0991d",
+			)
 		: intent && !showError
 			? intent
 			: isRunning
-				? "Consulting the advisor"
+				? tI18n(
+						"AgentsPage.components.ChatElements.tools.AdvisorTool.consulting_the_advisor_d4648159",
+					)
 				: showError
-					? "Failed to consult the advisor"
-					: "Consulted the advisor";
+					? tI18n(
+							"AgentsPage.components.ChatElements.tools.AdvisorTool.failed_to_consult_the_advisor_3e68670e",
+						)
+					: tI18n(
+							"AgentsPage.components.ChatElements.tools.AdvisorTool.consulted_the_advisor_6699030c",
+						);
 
 	return (
 		<ToolCall.Root
@@ -68,7 +79,9 @@ export const AdvisorTool: React.FC<AdvisorToolProps> = ({
 					className="mt-1.5 rounded-md border border-solid border-border-default"
 					viewportClassName="max-h-64"
 					viewportTabIndex={0}
-					viewportAriaLabel="Advisor response"
+					viewportAriaLabel={tI18n(
+						"AgentsPage.components.ChatElements.tools.AdvisorTool.advisor_response_504fdec8",
+					)}
 					scrollBarClassName="w-1.5"
 				>
 					<div className="space-y-2 px-3 py-2">
@@ -79,7 +92,9 @@ export const AdvisorTool: React.FC<AdvisorToolProps> = ({
 							{showError ? (
 								<div role="alert" className="text-sm">
 									<p className="m-0 font-medium text-content-primary">
-										Advisor request failed.
+										{tI18n(
+											"AgentsPage.components.ChatElements.tools.AdvisorTool.advisor_request_failed_5ea8b26c",
+										)}
 									</p>
 									<p className="m-0 text-content-secondary wrap-anywhere">
 										{effectiveErrorMessage}
@@ -88,10 +103,14 @@ export const AdvisorTool: React.FC<AdvisorToolProps> = ({
 							) : showLimitReached ? (
 								<div role="status" className="text-sm">
 									<p className="m-0 font-medium text-content-primary">
-										Advisor limit reached.
+										{tI18n(
+											"AgentsPage.components.ChatElements.tools.AdvisorTool.advisor_limit_reached_2219b33b",
+										)}
 									</p>
 									<p className="m-0 text-content-secondary">
-										You have reached the advisor limit for this conversation.
+										{tI18n(
+											"AgentsPage.components.ChatElements.tools.AdvisorTool.you_have_reached_the_advisor_limit_for_this_conv_8c41fc38",
+										)}
 									</p>
 								</div>
 							) : isRunning && adviceText.length === 0 ? (
@@ -99,14 +118,19 @@ export const AdvisorTool: React.FC<AdvisorToolProps> = ({
 									role="status"
 									className="text-[13px] text-content-secondary"
 								>
-									Reviewing context and preparing guidance.
+									{tI18n(
+										"AgentsPage.components.ChatElements.tools.AdvisorTool.reviewing_context_and_preparing_guidance_a22f1cc6",
+									)}
 								</div>
 							) : (
 								<Response
 									streaming={isRunning}
 									className="text-[13px] leading-5"
 								>
-									{adviceText || "Advisor returned no guidance."}
+									{adviceText ||
+										tI18n(
+											"AgentsPage.components.ChatElements.tools.AdvisorTool.advisor_returned_no_guidance_4e5b7146",
+										)}
 								</Response>
 							)}
 						</div>

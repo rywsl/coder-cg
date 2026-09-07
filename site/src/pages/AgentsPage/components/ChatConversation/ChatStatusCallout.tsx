@@ -1,4 +1,5 @@
 import { type FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, AlertDescription, AlertTitle } from "#/components/Alert/Alert";
 import { Link } from "#/components/Link/Link";
 import { getProviderStatusURL } from "./chatStatusHelpers";
@@ -53,18 +54,25 @@ const StatusCountdown: FC<{
 	deadline: string;
 	label: string;
 }> = ({ deadline, label }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const seconds = useDeadlineCountdown(deadline);
 	if (seconds <= 0) {
 		return null;
 	}
 	return (
 		<span>
-			{label} {seconds}s
+			{label} {seconds}
+			{tI18n(
+				"AgentsPage.components.ChatConversation.ChatStatusCallout.s_043a7187",
+			)}
 		</span>
 	);
 };
 
 const StatusAlert: FC<{ status: RetryOrFailedStatus }> = ({ status }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const statusURL = getProviderStatusURL(status.kind, status.provider);
 	const severity =
 		status.phase === "failed"
@@ -78,12 +86,21 @@ const StatusAlert: FC<{ status: RetryOrFailedStatus }> = ({ status }) => {
 			<StatusCountdown
 				key="countdown"
 				deadline={status.retryingAt}
-				label="Retrying in"
+				label={tI18n(
+					"AgentsPage.components.ChatConversation.ChatStatusCallout.retrying_in_05a4cf0e",
+				)}
 			/>,
 		);
 	}
 	if (status.phase === "retrying") {
-		metadataItems.push(<span key="attempt">Attempt {status.attempt}</span>);
+		metadataItems.push(
+			<span key="attempt">
+				{tI18n(
+					"AgentsPage.components.ChatConversation.ChatStatusCallout.attempt_51c78c77",
+				)}
+				{status.attempt}
+			</span>,
+		);
 	}
 	if (status.phase === "failed" && status.statusCode != null) {
 		metadataItems.push(<span key="code">HTTP {status.statusCode}</span>);
@@ -106,7 +123,9 @@ const StatusAlert: FC<{ status: RetryOrFailedStatus }> = ({ status }) => {
 					{status.message}{" "}
 					{statusURL && (
 						<Link href={statusURL} target="_blank" rel="noreferrer">
-							Status
+							{tI18n(
+								"AgentsPage.components.ChatConversation.ChatStatusCallout.status_920e413c",
+							)}
 						</Link>
 					)}
 				</span>
@@ -127,6 +146,8 @@ const StatusAlert: FC<{ status: RetryOrFailedStatus }> = ({ status }) => {
 };
 
 const ReconnectingAlert: FC<{ status: ReconnectingStatus }> = ({ status }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<Alert
 			severity="info"
@@ -134,9 +155,16 @@ const ReconnectingAlert: FC<{ status: ReconnectingStatus }> = ({ status }) => {
 				<div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-content-secondary">
 					<StatusCountdown
 						deadline={status.retryingAt}
-						label="Reconnecting in"
+						label={tI18n(
+							"AgentsPage.components.ChatConversation.ChatStatusCallout.reconnecting_in_dafe64c3",
+						)}
 					/>
-					<span>Attempt {status.attempt}</span>
+					<span>
+						{tI18n(
+							"AgentsPage.components.ChatConversation.ChatStatusCallout.attempt_51c78c77",
+						)}
+						{status.attempt}
+					</span>
 				</div>
 			}
 		>

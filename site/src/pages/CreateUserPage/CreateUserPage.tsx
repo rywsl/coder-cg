@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -12,6 +13,8 @@ import { pageTitle } from "#/utils/page";
 import { CreateUserForm } from "./CreateUserForm";
 
 const CreateUserPage: FC = () => {
+	const { t: tI18n } = useTranslation("users");
+
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 	const createUserMutation = useMutation(createUser(queryClient));
@@ -22,8 +25,9 @@ const CreateUserPage: FC = () => {
 
 	return (
 		<Margins>
-			<title>{pageTitle("Create User")}</title>
-
+			<title>
+				{pageTitle(tI18n("CreateUserPage.CreateUserPage.create_user_80532ec0"))}
+			</title>
 			<CreateUserForm
 				error={createUserMutation.error}
 				isLoading={createUserMutation.isPending}
@@ -50,13 +54,33 @@ const CreateUserPage: FC = () => {
 						? "service account"
 						: "user";
 					toast.promise(mutation, {
-						loading: `Creating ${requestedAccount} "${user.username}"...`,
+						loading: tI18n(
+							"CreateUserPage.CreateUserPage.creating_value0_value1_ff433be5",
+							{
+								value0: requestedAccount,
+								value1: user.username,
+							},
+						),
 						success: (created) =>
-							`${created.is_service_account ? "Service account" : "User"} "${created.username}" created successfully.`,
+							tI18n(
+								"CreateUserPage.CreateUserPage.value0_value1_created_successfully_7ddb8d99",
+								{
+									value0: created.is_service_account
+										? "Service account"
+										: "User",
+									value1: created.username,
+								},
+							),
 						error: (e) => ({
 							message: getErrorMessage(
 								e,
-								`Failed to create ${requestedAccount} "${user.username}".`,
+								tI18n(
+									"CreateUserPage.CreateUserPage.failed_to_create_value0_value1_ba742d6c",
+									{
+										value0: requestedAccount,
+										value1: user.username,
+									},
+								),
 							),
 							description: getErrorDetail(e),
 						}),

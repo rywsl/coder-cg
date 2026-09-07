@@ -1,15 +1,22 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { Template } from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 import type { TemplateAutostopRequirementDaysValue } from "#/utils/schedule";
 
 const autostopRequirementDescriptions = {
-	off: "Workspaces are not required to stop periodically.",
-	daily:
-		"Workspaces are required to be automatically stopped daily in the user's quiet hours and timezone.",
-	saturday:
-		"Workspaces are required to be automatically stopped every Saturday in the user's quiet hours and timezone.",
-	sunday:
-		"Workspaces are required to be automatically stopped every Sunday in the user's quiet hours and timezone.",
+	off: i18n.t(
+		"templates:TemplateSettingsPage.TemplateSchedulePage.AutostopRequirementHelperText.workspaces_are_not_required_to_stop_periodically_7982b248",
+	),
+	daily: i18n.t(
+		"templates:TemplateSettingsPage.TemplateSchedulePage.AutostopRequirementHelperText.workspaces_are_required_to_be_automatically_stop_716bcd99",
+	),
+	saturday: i18n.t(
+		"templates:TemplateSettingsPage.TemplateSchedulePage.AutostopRequirementHelperText.workspaces_are_required_to_be_automatically_stop_ced12b70",
+	),
+	sunday: i18n.t(
+		"templates:TemplateSettingsPage.TemplateSchedulePage.AutostopRequirementHelperText.workspaces_are_required_to_be_automatically_stop_556ff9b0",
+	),
 };
 
 export const convertAutostopRequirementDaysValue = (
@@ -49,12 +56,15 @@ interface AutostopRequirementWeeksHelperTextProps {
 export const AutostopRequirementWeeksHelperText: FC<
 	AutostopRequirementWeeksHelperTextProps
 > = ({ days, weeks }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	// Disabled
 	if (days !== "saturday" && days !== "sunday") {
 		return (
 			<span>
-				Weeks between required stops cannot be set unless days between required
-				stops is Saturday or Sunday.
+				{tI18n(
+					"TemplateSettingsPage.TemplateSchedulePage.AutostopRequirementHelperText.weeks_between_required_stops_cannot_be_set_unles_ae2ca2f8",
+				)}
 			</span>
 		);
 	}
@@ -62,16 +72,22 @@ export const AutostopRequirementWeeksHelperText: FC<
 	if (weeks <= 1) {
 		return (
 			<span>
-				Workspaces are required to be automatically stopped every week on the
-				specified day in the user&apos;s quiet hours and timezone.
+				{tI18n(
+					"TemplateSettingsPage.TemplateSchedulePage.AutostopRequirementHelperText.workspaces_are_required_to_be_automatically_stop_29bbb6d6",
+				)}
 			</span>
 		);
 	}
 
 	return (
 		<span>
-			Workspaces are required to be automatically stopped every {weeks} weeks on
-			the specified day in the user&apos;s quiet hours and timezone.
+			{tI18n(
+				"TemplateSettingsPage.TemplateSchedulePage.AutostopRequirementHelperText.workspaces_are_required_to_be_automatically_stop_4b78f718",
+			)}
+			{weeks}
+			{tI18n(
+				"TemplateSettingsPage.TemplateSchedulePage.AutostopRequirementHelperText.weeks_on_the_specified_day_in_the_user_s_quiet_h_e35d73a1",
+			)}
 		</span>
 	);
 };

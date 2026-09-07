@@ -6,15 +6,20 @@ import {
 	useId,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import type { TemplateVersionVariable } from "#/api/typesGenerated";
 import { FormField } from "#/components/FormField/FormField";
 import { Label } from "#/components/Label/Label";
 import { RadioGroup, RadioGroupItem } from "#/components/RadioGroup/RadioGroup";
 
 export const SensitiveVariableHelperText: FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<span>
-			This variable is sensitive. The previous value will be used if empty.
+			{tI18n(
+				"TemplateSettingsPage.TemplateVariablesPage.TemplateVariableField.this_variable_is_sensitive_the_previous_value_wi_9cb87581",
+			)}
 		</span>
 	);
 };
@@ -40,6 +45,8 @@ export const TemplateVariableField: FC<TemplateVariableFieldProps> = ({
 	name,
 	onBlur,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const id = useId();
 	const [variableValue, setVariableValue] = useState(initialValue);
 
@@ -63,13 +70,17 @@ export const TemplateVariableField: FC<TemplateVariableFieldProps> = ({
 					<div className="flex items-center gap-2">
 						<RadioGroupItem id={trueId} value="true" />
 						<Label htmlFor={trueId} className="font-normal cursor-pointer">
-							True
+							{tI18n(
+								"TemplateSettingsPage.TemplateVariablesPage.TemplateVariableField.true_3cbc87c7",
+							)}
 						</Label>
 					</div>
 					<div className="flex items-center gap-2">
 						<RadioGroupItem id={falseId} value="false" />
 						<Label htmlFor={falseId} className="font-normal cursor-pointer">
-							False
+							{tI18n(
+								"TemplateSettingsPage.TemplateVariablesPage.TemplateVariableField.false_60a33e6c",
+							)}
 						</Label>
 					</div>
 				</RadioGroup>

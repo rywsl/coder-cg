@@ -5,8 +5,10 @@ import {
 	useReducer,
 	useRef,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { useQueries, useQuery } from "react-query";
 import { useDebouncedFunction, useDebouncedValue } from "#/hooks/debounce";
+import { i18n } from "#/i18n";
 import {
 	chipToken,
 	collectValueSuggestions,
@@ -126,21 +128,43 @@ const deriveStatusMessage = ({
 }: StatusMessageInput): string => {
 	if (activeCategoryLabel !== undefined) {
 		if (activeOptionsLoading) {
-			return `Loading ${activeCategoryLabel} options`;
+			return i18n.t(
+				"components:Filter.FilterCombobox.useFilterCombobox.loading_value0_options_a6575326",
+				{
+					value0: activeCategoryLabel,
+				},
+			);
 		}
 		if (activeOptionsError) {
-			return `Couldn't load ${activeCategoryLabel} options`;
+			return i18n.t(
+				"components:Filter.FilterCombobox.useFilterCombobox.couldn_t_load_value0_options_0174e866",
+				{
+					value0: activeCategoryLabel,
+				},
+			);
 		}
 		if (activeOptionsEmpty) {
-			return `No ${activeCategoryLabel} matches`;
+			return i18n.t(
+				"components:Filter.FilterCombobox.useFilterCombobox.no_value0_matches_b6c97919",
+				{
+					value0: activeCategoryLabel,
+				},
+			);
 		}
-		return `Filtering by ${activeCategoryLabel}`;
+		return i18n.t(
+			"components:Filter.FilterCombobox.useFilterCombobox.filtering_by_value0_f4ffcd7e",
+			{
+				value0: activeCategoryLabel,
+			},
+		);
 	}
 	if (typeaheadError) {
 		return typeaheadErrorLabel;
 	}
 	if (typeaheadEmpty) {
-		return "No filters found";
+		return i18n.t(
+			"components:Filter.FilterCombobox.useFilterCombobox.no_filters_found_43863a1c",
+		);
 	}
 	return "";
 };
@@ -167,6 +191,8 @@ export const useFilterCombobox = ({
 	getSearchResults,
 	onSearchResultSelect,
 }: UseFilterComboboxOptions) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const chipKeys = useMemo(
 		() => categories.flatMap((category) => category.chipKeys ?? [category.key]),
 		[categories],
@@ -396,11 +422,17 @@ export const useFilterCombobox = ({
 	// of blaming suggestions for a preview outage.
 	const typeaheadErrorLabel =
 		suggestionsError && previewError
-			? "Couldn't load results."
+			? tI18n(
+					"Filter.FilterCombobox.useFilterCombobox.couldn_t_load_results_973d2a38",
+				)
 			: previewError
-				? "Couldn't load workspace previews."
+				? tI18n(
+						"Filter.FilterCombobox.useFilterCombobox.couldn_t_load_workspace_previews_b36ab7fe",
+					)
 				: suggestionsError
-					? "Couldn't load suggestions."
+					? tI18n(
+							"Filter.FilterCombobox.useFilterCombobox.couldn_t_load_suggestions_6a76c6ce",
+						)
 					: "";
 
 	const activeOptionsEmpty =

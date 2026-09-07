@@ -1,6 +1,7 @@
 import type { FileDiffMetadata } from "@pierre/diffs";
 import { FileDiff } from "@pierre/diffs/react";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { ScrollArea } from "#/components/ScrollArea/ScrollArea";
 import { useTheme } from "#/theme/context";
@@ -30,6 +31,8 @@ export const EditFilesTool: React.FC<{
 	errorMessage?: string;
 	codeDiffDisplayMode?: TypesGen.AgentDisplayMode;
 }> = ({ files, diffs, status, isError, errorMessage, codeDiffDisplayMode }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const theme = useTheme();
 	const isDark = theme.palette.mode === "dark";
 	const isRunning = status === "running";
@@ -60,7 +63,12 @@ export const EditFilesTool: React.FC<{
 			className="w-full"
 			status={status}
 			isError={isError}
-			errorMessage={errorMessage || "Failed to edit files"}
+			errorMessage={
+				errorMessage ||
+				tI18n(
+					"AgentsPage.components.ChatElements.tools.EditFilesTool.failed_to_edit_files_69d115fa",
+				)
+			}
 			hasContent={hasDiffs || Boolean(errorDetail)}
 			defaultView={displayState}
 		>
@@ -84,7 +92,12 @@ export const EditFilesTool: React.FC<{
 										: "max-h-64"
 								}
 								viewportTabIndex={0}
-								viewportAriaLabel={`Diff of ${files[i].path}`}
+								viewportAriaLabel={tI18n(
+									"AgentsPage.components.ChatElements.tools.EditFilesTool.diff_of_value0_2fc4d190",
+									{
+										value0: files[i].path,
+									},
+								)}
 								scrollBarClassName="w-1.5"
 							>
 								<FileDiff

@@ -6,6 +6,7 @@ import {
 	UserIcon,
 } from "lucide-react";
 import { type FC, useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router";
 import {
@@ -43,6 +44,8 @@ export const WorkspacesFilter: FC<WorkspaceFilterProps> = ({
 	filter,
 	error,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const { showOrganizations, entitlements } = useDashboard();
 	const { permissions, user: me } = useAuthenticated();
 	// TODO(DEVEX-421 follow-up): `viewDeploymentConfig` is the wrong capability
@@ -59,7 +62,7 @@ export const WorkspacesFilter: FC<WorkspaceFilterProps> = ({
 		const next: FilterCategory[] = [
 			{
 				key: "status",
-				label: "Status",
+				label: tI18n("WorkspacesPage.filter.WorkspacesFilter.status_920e413c"),
 				icon: <CircleDotIcon />,
 				getOptions: getStatusFilterOptions,
 			},
@@ -71,7 +74,9 @@ export const WorkspacesFilter: FC<WorkspaceFilterProps> = ({
 			},
 			{
 				key: "attributes",
-				label: "Attributes",
+				label: tI18n(
+					"WorkspacesPage.filter.WorkspacesFilter.attributes_4b0ed88f",
+				),
 				icon: <SlidersHorizontalIcon />,
 				// Boolean workspace filters live under their own keys, so the
 				// category owns them for chip parsing.
@@ -84,7 +89,9 @@ export const WorkspacesFilter: FC<WorkspaceFilterProps> = ({
 		if (showOrganizations) {
 			next.push({
 				key: "organization",
-				label: "Organization",
+				label: tI18n(
+					"WorkspacesPage.filter.WorkspacesFilter.organization_d764d425",
+				),
 				icon: <Building2Icon />,
 				getOptions: (query) => getOrganizationFilterOptions(query, queryClient),
 			});
@@ -95,7 +102,7 @@ export const WorkspacesFilter: FC<WorkspaceFilterProps> = ({
 		// Users who cannot list others only see themselves.
 		next.push({
 			key: "owner",
-			label: "Owner",
+			label: tI18n("WorkspacesPage.filter.WorkspacesFilter.owner_4b1b8aa3"),
 			aliases: ["user"],
 			icon: <UserIcon />,
 			getOptions: canListUsers
@@ -151,14 +158,18 @@ export const WorkspacesFilter: FC<WorkspaceFilterProps> = ({
 				value={filter.query}
 				onChange={filter.update}
 				categories={categories}
-				placeholder="Search and filter workspaces…"
+				placeholder={tI18n(
+					"WorkspacesPage.filter.WorkspacesFilter.search_and_filter_workspaces_d8922d05",
+				)}
 				className="max-w-lg"
 				errorMessage={
 					showValidationError ? getValidationErrorMessage(error) : undefined
 				}
 				getSearchResults={getSearchResults}
 				onSearchResultSelect={onSearchResultSelect}
-				searchResultsLabel="Jump to workspace"
+				searchResultsLabel={tI18n(
+					"WorkspacesPage.filter.WorkspacesFilter.jump_to_workspace_4a2a404a",
+				)}
 			/>
 		</div>
 	);

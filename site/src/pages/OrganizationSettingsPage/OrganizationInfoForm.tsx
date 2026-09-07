@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { useFormik } from "formik";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { isApiValidationError } from "#/api/errors";
 import type {
@@ -20,6 +21,7 @@ import { IconField } from "#/components/IconField/IconField";
 import { Label } from "#/components/Label/Label";
 import { Spinner } from "#/components/Spinner/Spinner";
 import { Textarea } from "#/components/Textarea/Textarea";
+import { i18n } from "#/i18n";
 import {
 	displayNameValidator,
 	getFormHelpers,
@@ -28,11 +30,24 @@ import {
 } from "#/utils/formUtils";
 
 const MAX_DESCRIPTION_CHAR_LIMIT = 128;
-const MAX_DESCRIPTION_MESSAGE = `Please enter a description that is no longer than ${MAX_DESCRIPTION_CHAR_LIMIT} characters.`;
+const MAX_DESCRIPTION_MESSAGE = i18n.t(
+	"administration:OrganizationSettingsPage.OrganizationInfoForm.please_enter_a_description_that_is_no_longer_tha_41a269dc",
+	{
+		value0: MAX_DESCRIPTION_CHAR_LIMIT,
+	},
+);
 
 const validationSchema = Yup.object({
-	name: nameValidator("Name"),
-	display_name: displayNameValidator("Display name"),
+	name: nameValidator(
+		i18n.t(
+			"administration:OrganizationSettingsPage.OrganizationInfoForm.name_dcd1d522",
+		),
+	),
+	display_name: displayNameValidator(
+		i18n.t(
+			"administration:OrganizationSettingsPage.OrganizationInfoForm.display_name_2b7f6a84",
+		),
+	),
 	description: Yup.string().max(
 		MAX_DESCRIPTION_CHAR_LIMIT,
 		MAX_DESCRIPTION_MESSAGE,
@@ -50,6 +65,8 @@ export const OrganizationInfoForm: FC<OrganizationInfoFormProps> = ({
 	error,
 	onSubmit,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const form = useFormik<UpdateOrganizationRequest>({
 		initialValues: {
 			name: organization.name,
@@ -75,14 +92,19 @@ export const OrganizationInfoForm: FC<OrganizationInfoFormProps> = ({
 					<ErrorAlert error={error} />
 				</div>
 			)}
-
 			<VerticalForm
 				onSubmit={form.handleSubmit}
-				aria-label="Organization settings form"
+				aria-label={tI18n(
+					"OrganizationSettingsPage.OrganizationInfoForm.organization_settings_form_c66805d0",
+				)}
 			>
 				<FormSection
-					title="Info"
-					description="The name and description of the organization."
+					title={tI18n(
+						"OrganizationSettingsPage.OrganizationInfoForm.info_170322a3",
+					)}
+					description={tI18n(
+						"OrganizationSettingsPage.OrganizationInfoForm.the_name_and_description_of_the_organization_5a9809f4",
+					)}
 				>
 					<fieldset
 						disabled={form.isSubmitting}
@@ -91,16 +113,24 @@ export const OrganizationInfoForm: FC<OrganizationInfoFormProps> = ({
 						<FormFields>
 							<FormField
 								field={getFieldHelpers("name")}
-								label="Slug"
+								label={tI18n(
+									"OrganizationSettingsPage.OrganizationInfoForm.slug_d15387ec",
+								)}
 								onChange={onChangeTrimmed(form)}
 								autoFocus
 							/>
 							<FormField
 								field={getFieldHelpers("display_name")}
-								label="Display name"
+								label={tI18n(
+									"OrganizationSettingsPage.OrganizationInfoForm.display_name_2b7f6a84",
+								)}
 							/>
 							<div className="flex flex-col gap-2">
-								<Label htmlFor={descriptionField.id}>Description</Label>
+								<Label htmlFor={descriptionField.id}>
+									{tI18n(
+										"OrganizationSettingsPage.OrganizationInfoForm.description_526e0087",
+									)}
+								</Label>
 								<Textarea
 									id={descriptionField.id}
 									name={descriptionField.name}
@@ -151,7 +181,9 @@ export const OrganizationInfoForm: FC<OrganizationInfoFormProps> = ({
 				<FormFooter>
 					<Button type="submit" disabled={form.isSubmitting}>
 						<Spinner loading={form.isSubmitting} />
-						Save
+						{tI18n(
+							"OrganizationSettingsPage.OrganizationInfoForm.save_1509f561",
+						)}
 					</Button>
 				</FormFooter>
 			</VerticalForm>

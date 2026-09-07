@@ -1,5 +1,6 @@
 import type { FC, FormEvent } from "react";
 import { useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { ChatModel, UserChatProviderConfig } from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
 import { Badge } from "#/components/Badge/Badge";
@@ -8,6 +9,7 @@ import { ConfirmDialog } from "#/components/Dialog/ConfirmDialog/ConfirmDialog";
 import { EmptyState } from "#/components/EmptyState/EmptyState";
 import { Input } from "#/components/Input/Input";
 import { Loader } from "#/components/Loader/Loader";
+import { i18n } from "#/i18n";
 import { passwordManagerIgnoreProps } from "#/utils/formUtils";
 import { SectionHeader } from "./components/SectionHeader";
 
@@ -24,31 +26,45 @@ const getProviderStatus = (
 ): ProviderStatus => {
 	if (!provider.byok_enabled) {
 		return {
-			label: "User keys disabled",
+			label: i18n.t(
+				"agents:AgentsPage.AgentSettingsAPIKeysPageView.user_keys_disabled_fcffb3cd",
+			),
 			variant: "default",
-			note: "Personal API keys are disabled by your admin.",
+			note: i18n.t(
+				"agents:AgentsPage.AgentSettingsAPIKeysPageView.personal_api_keys_are_disabled_by_your_admin_0d1580d5",
+			),
 		};
 	}
 
 	if (provider.has_user_api_key) {
 		return {
-			label: "Key saved",
+			label: i18n.t(
+				"agents:AgentsPage.AgentSettingsAPIKeysPageView.key_saved_a45a97cb",
+			),
 			variant: "green",
 		};
 	}
 
 	if (provider.has_central_api_key_fallback) {
 		return {
-			label: "Shared key",
+			label: i18n.t(
+				"agents:AgentsPage.AgentSettingsAPIKeysPageView.shared_key_cd0ab13a",
+			),
 			variant: "default",
-			note: "The shared deployment key is being used. Add a personal key to use your own.",
+			note: i18n.t(
+				"agents:AgentsPage.AgentSettingsAPIKeysPageView.the_shared_deployment_key_is_being_used_add_a_pe_18173e30",
+			),
 		};
 	}
 
 	return {
-		label: "No key",
+		label: i18n.t(
+			"agents:AgentsPage.AgentSettingsAPIKeysPageView.no_key_e867868d",
+		),
 		variant: "warning",
-		note: "You must add a personal API key to use this provider.",
+		note: i18n.t(
+			"agents:AgentsPage.AgentSettingsAPIKeysPageView.you_must_add_a_personal_api_key_to_use_this_prov_1e680364",
+		),
 	};
 };
 
@@ -73,6 +89,8 @@ const ProviderKeyPanel: FC<ProviderKeyPanelProps> = ({
 	onSave,
 	onRemove,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const apiKeyInputId = useId();
 	const [apiKey, setApiKey] = useState(
 		provider.has_user_api_key ? API_KEY_PLACEHOLDER : "",
@@ -120,8 +138,12 @@ const ProviderKeyPanel: FC<ProviderKeyPanelProps> = ({
 	};
 
 	const deleteDescription = provider.has_central_api_key_fallback
-		? "This will remove your personal API key. Requests will fall back to the shared deployment key for this provider."
-		: "This will remove your personal API key. You will need to add a new key before you can use this provider again.";
+		? tI18n(
+				"AgentsPage.AgentSettingsAPIKeysPageView.this_will_remove_your_personal_api_key_requests__ee78be33",
+			)
+		: tI18n(
+				"AgentsPage.AgentSettingsAPIKeysPageView.this_will_remove_your_personal_api_key_you_will__ed2e5378",
+			);
 
 	return (
 		<article className="rounded-lg border border-solid border-border p-6">
@@ -138,13 +160,12 @@ const ProviderKeyPanel: FC<ProviderKeyPanelProps> = ({
 					{status.label}
 				</Badge>
 			</div>
-
 			<form className="mt-6 flex flex-col gap-3" onSubmit={handleSave}>
 				<label
 					htmlFor={apiKeyInputId}
 					className="text-sm font-medium text-content-primary"
 				>
-					API Key
+					{tI18n("AgentsPage.AgentSettingsAPIKeysPageView.api_key_23189d55")}
 				</label>
 				<div className="flex flex-col gap-3 lg:flex-row lg:items-start">
 					<div className="flex flex-col gap-1.5 lg:flex-1">
@@ -154,7 +175,9 @@ const ProviderKeyPanel: FC<ProviderKeyPanelProps> = ({
 							type="password"
 							{...passwordManagerIgnoreProps}
 							className="h-9 font-mono text-[13px]"
-							placeholder="sk-..."
+							placeholder={tI18n(
+								"AgentsPage.AgentSettingsAPIKeysPageView.sk_6946d3ff",
+							)}
 							value={apiKey}
 							onFocus={handleApiKeyFocus}
 							onChange={(event) => {
@@ -165,13 +188,15 @@ const ProviderKeyPanel: FC<ProviderKeyPanelProps> = ({
 						/>
 						{hasAPIKeyWhitespace && (
 							<p className="m-0 text-xs text-content-destructive">
-								API key must not contain leading or trailing whitespace.
+								{tI18n(
+									"AgentsPage.AgentSettingsAPIKeysPageView.api_key_must_not_contain_leading_or_trailing_whi_dc243daa",
+								)}
 							</p>
 						)}
 					</div>
 					<div className="flex items-center gap-2">
 						<Button type="submit" size="sm" disabled={saveDisabled}>
-							Save
+							{tI18n("AgentsPage.AgentSettingsAPIKeysPageView.save_1509f561")}
 						</Button>
 						{provider.has_user_api_key && (
 							<Button
@@ -181,25 +206,32 @@ const ProviderKeyPanel: FC<ProviderKeyPanelProps> = ({
 								onClick={() => setIsDeleteDialogOpen(true)}
 								disabled={removeDisabled}
 							>
-								Remove
+								{tI18n(
+									"AgentsPage.AgentSettingsAPIKeysPageView.remove_c3812fc4",
+								)}
 							</Button>
 						)}
 					</div>
 				</div>
 			</form>
-
 			<div className="mt-6 flex flex-col gap-2">
 				<p className="m-0 text-sm font-medium text-content-primary">
-					Enabled models
+					{tI18n(
+						"AgentsPage.AgentSettingsAPIKeysPageView.enabled_models_f45b18a6",
+					)}
 				</p>
 				{areModelsUnavailable && enabledModels.length > 0 && (
 					<p className="m-0 text-sm text-content-secondary">
-						Some enabled model badges are temporarily unavailable.
+						{tI18n(
+							"AgentsPage.AgentSettingsAPIKeysPageView.some_enabled_model_badges_are_temporarily_unavai_3e51a5d1",
+						)}
 					</p>
 				)}
 				{isModelsLoading ? (
 					<p className="m-0 text-sm text-content-secondary">
-						Loading models...
+						{tI18n(
+							"AgentsPage.AgentSettingsAPIKeysPageView.loading_models_80243524",
+						)}
 					</p>
 				) : enabledModels.length > 0 ? (
 					<div className="flex flex-wrap gap-2">
@@ -211,22 +243,29 @@ const ProviderKeyPanel: FC<ProviderKeyPanelProps> = ({
 					</div>
 				) : areModelsUnavailable ? (
 					<p className="m-0 text-sm text-content-secondary">
-						Enabled model badges are temporarily unavailable.
+						{tI18n(
+							"AgentsPage.AgentSettingsAPIKeysPageView.enabled_model_badges_are_temporarily_unavailable_f3ff2533",
+						)}
 					</p>
 				) : (
 					<p className="m-0 text-sm text-content-secondary">
-						No enabled models configured.
+						{tI18n(
+							"AgentsPage.AgentSettingsAPIKeysPageView.no_enabled_models_configured_3d9fa1df",
+						)}
 					</p>
 				)}
 			</div>
-
 			<ConfirmDialog
 				open={isDeleteDialogOpen}
 				onClose={() => setIsDeleteDialogOpen(false)}
 				onConfirm={handleRemoveKey}
-				title="Remove API key?"
+				title={tI18n(
+					"AgentsPage.AgentSettingsAPIKeysPageView.remove_api_key_61ca1388",
+				)}
 				description={deleteDescription}
-				confirmText="Remove"
+				confirmText={tI18n(
+					"AgentsPage.AgentSettingsAPIKeysPageView.remove_c3812fc4",
+				)}
 				confirmLoading={isRemoving}
 				type="delete"
 			/>
@@ -264,12 +303,18 @@ export const AgentSettingsAPIKeysPageView: FC<
 	onSave,
 	onRemove,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<div>
 			<section className="flex flex-col gap-8">
 				<SectionHeader
-					label="Secrets (API keys)"
-					description="Add a personal API key for each provider. Your personal key takes precedence over the shared deployment key when both are available."
+					label={tI18n(
+						"AgentsPage.AgentSettingsAPIKeysPageView.secrets_api_keys_b80cf3b4",
+					)}
+					description={tI18n(
+						"AgentsPage.AgentSettingsAPIKeysPageView.add_a_personal_api_key_for_each_provider_your_pe_53b2406c",
+					)}
 				/>
 				<div>
 					{error ? (
@@ -278,8 +323,12 @@ export const AgentSettingsAPIKeysPageView: FC<
 						<Loader />
 					) : providerItems.length === 0 ? (
 						<EmptyState
-							message="No providers allow personal API keys."
-							description="Ask your administrator to enable personal API keys for at least one provider."
+							message={tI18n(
+								"AgentsPage.AgentSettingsAPIKeysPageView.no_providers_allow_personal_api_keys_1e9a5939",
+							)}
+							description={tI18n(
+								"AgentsPage.AgentSettingsAPIKeysPageView.ask_your_administrator_to_enable_personal_api_ke_4cf659fb",
+							)}
 						/>
 					) : (
 						<div className="flex flex-col gap-4">

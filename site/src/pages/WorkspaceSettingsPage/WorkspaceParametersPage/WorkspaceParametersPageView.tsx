@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { useFormik } from "formik";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	PreviewParameter,
 	Workspace,
@@ -52,6 +53,8 @@ export const WorkspaceParametersPageView: FC<
 	onCancel,
 	templateVersionId,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const form = useFormik({
 		onSubmit,
 		initialValues: {
@@ -144,43 +147,76 @@ export const WorkspaceParametersPageView: FC<
 		<>
 			{disabled && (
 				<Alert severity="warning" className="mb-8" prominent>
-					The template for this workspace requires automatic updates. Update the
-					workspace to edit parameters.
+					{tI18n(
+						"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.the_template_for_this_workspace_requires_automat_c80f1153",
+					)}
 				</Alert>
 			)}
-
 			{hasIncompatibleParameters && (
 				<Alert severity="error" prominent>
 					<p className="text-lg leading-normal font-bold m-0">
-						Workspace update blocked
+						{tI18n(
+							"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.workspace_update_blocked_2db85b3a",
+						)}
 					</p>
 					<p className="mb-0">
-						The new template version includes parameter changes that are
-						incompatible with this workspace's existing parameter values. This
-						may be caused by:
+						{tI18n(
+							"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.the_new_template_version_includes_parameter_chan_8c22138c",
+						)}
 					</p>
 					<ul className="mb-0 pl-4 space-y-1">
 						<li>
-							New <strong>required</strong> parameters that cannot be provided
-							after workspace creation
+							{tI18n(
+								"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.new_277e39a2",
+							)}
+							<strong>
+								{tI18n(
+									"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.required_d0a36305",
+								)}
+							</strong>
+							{tI18n(
+								"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.parameters_that_cannot_be_provided_after_workspa_f4f75427",
+							)}
 						</li>
 						<li>
-							Changes to <strong>valid options or validations</strong> for
-							existing parameters
+							{tI18n(
+								"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.changes_to_e6694ea7",
+							)}
+							<strong>
+								{tI18n(
+									"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.valid_options_or_validations_d9ce5f5a",
+								)}
+							</strong>
+							{tI18n(
+								"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.for_existing_parameters_db963f73",
+							)}
 						</li>
-						<li>Logic changes that conflict with previously selected values</li>
+						<li>
+							{tI18n(
+								"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.logic_changes_that_conflict_with_previously_sele_4f020521",
+							)}
+						</li>
 					</ul>
 					<p className="mb-0">
-						Please contact the <strong>template administrator</strong> to review
-						the changes and ensure compatibility for existing workspaces.
+						{tI18n(
+							"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.please_contact_the_5a1f1f34",
+						)}
+						<strong>
+							{tI18n(
+								"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.template_administrator_bdc00e1f",
+							)}
+						</strong>
+						{tI18n(
+							"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.to_review_the_changes_and_ensure_compatibility_f_a78ca067",
+						)}
 					</p>
 					<p className="mb-0">
-						Consider supplying defaults for new parameters or validating
-						conditional logic against prior workspace states.
+						{tI18n(
+							"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.consider_supplying_defaults_for_new_parameters_o_80b9952c",
+						)}
 					</p>
 				</Alert>
 			)}
-
 			{diagnostics && diagnostics.length > 0 && (
 				<div className="flex flex-col gap-4 mb-8">
 					{diagnostics.map((diagnostic, index) => (
@@ -203,16 +239,18 @@ export const WorkspaceParametersPageView: FC<
 					))}
 				</div>
 			)}
-
 			{(templateVersionId || workspace.latest_build.template_version_id) && (
 				<div className="flex flex-col gap-2">
-					<Label className="text-sm text-content-secondary">Version ID</Label>
+					<Label className="text-sm text-content-secondary">
+						{tI18n(
+							"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.version_id_727fd609",
+						)}
+					</Label>
 					<p className="m-0 text-xs font-medium font-mono">
 						{templateVersionId ?? workspace.latest_build.template_version_id}
 					</p>
 				</div>
 			)}
-
 			<form
 				onSubmit={form.handleSubmit}
 				className="flex flex-col gap-8"
@@ -221,16 +259,23 @@ export const WorkspaceParametersPageView: FC<
 				{parameters.length > 0 && (
 					<section className="flex flex-col gap-9">
 						<hgroup>
-							<h2 className="text-xl font-medium mb-0">Parameters</h2>
+							<h2 className="text-xl font-medium mb-0">
+								{tI18n(
+									"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.parameters_e68b36b1",
+								)}
+							</h2>
 							<p className="text-sm text-content-secondary m-0">
-								These are the settings used by your template. Immutable
-								parameters cannot be modified once the workspace is created.
+								{tI18n(
+									"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.these_are_the_settings_used_by_your_template_imm_7a61d218",
+								)}
 								<Link
 									href={docs(
 										"/admin/templates/extending-templates/dynamic-parameters",
 									)}
 								>
-									View docs
+									{tI18n(
+										"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.view_docs_61479fda",
+									)}
 								</Link>
 							</p>
 						</hgroup>
@@ -276,7 +321,9 @@ export const WorkspaceParametersPageView: FC<
 
 				<div className="flex justify-end gap-2">
 					<Button onClick={onCancel} variant="outline" disabled={isSubmitting}>
-						Cancel
+						{tI18n(
+							"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPageView.cancel_19766ed6",
+						)}
 					</Button>
 					<Button
 						type="submit"

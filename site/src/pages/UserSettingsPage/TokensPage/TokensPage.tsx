@@ -1,5 +1,6 @@
 import { PlusIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import type { APIKeyWithOwner } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
@@ -15,6 +16,8 @@ import { TokensPageView } from "./TokensPageView";
 const cliCreateCommand = "coder tokens create";
 
 const TokensPage: FC = () => {
+	const { t: tI18n } = useTranslation("users");
+
 	const [tokenToDelete, setTokenToDelete] = useState<
 		APIKeyWithOwner | undefined
 	>(undefined);
@@ -39,19 +42,24 @@ const TokensPage: FC = () => {
 					<Button asChild variant="outline">
 						<RouterLink to="new">
 							<PlusIcon />
-							Create token
+							{tI18n(
+								"UserSettingsPage.TokensPage.TokensPage.create_token_5d8e8e30",
+							)}
 						</RouterLink>
 					</Button>
 				}
 			>
-				<SettingsHeaderTitle>Tokens</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n("UserSettingsPage.TokensPage.TokensPage.tokens_a039dfb9")}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Tokens are used to authenticate with the Coder API. You can create a
-					token with the Coder CLI using the{" "}
+					{tI18n(
+						"UserSettingsPage.TokensPage.TokensPage.tokens_are_used_to_authenticate_with_the_coder_a_74508652",
+					)}{" "}
 					<code className="bg-surface-secondary text-content-primary text-xs px-1 py-0.5 rounded-sm">
 						{cliCreateCommand}
 					</code>{" "}
-					command.
+					{tI18n("UserSettingsPage.TokensPage.TokensPage.command_4c331678")}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
 			<TokensPageView

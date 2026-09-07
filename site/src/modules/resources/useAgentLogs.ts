@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { watchWorkspaceAgentLogs } from "#/api/api";
 import type { WorkspaceAgentLog } from "#/api/typesGenerated";
@@ -11,6 +12,8 @@ type UseAgentLogsOptions = Readonly<{
 export function useAgentLogs(
 	options: UseAgentLogsOptions,
 ): readonly WorkspaceAgentLog[] {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const { agentId, enabled = true } = options;
 	const [logs, setLogs] = useState<readonly WorkspaceAgentLog[]>([]);
 
@@ -59,9 +62,19 @@ export function useAgentLogs(
 
 		socket.addEventListener("error", (error) => {
 			console.error("Error in agent log socket: ", error);
-			toast.error(`Unable to watch "${agentId}" agent logs.`, {
-				description: "Please try refreshing the browser.",
-			});
+			toast.error(
+				tI18n(
+					"resources.useAgentLogs.unable_to_watch_value0_agent_logs_df7bf674",
+					{
+						value0: agentId,
+					},
+				),
+				{
+					description: tI18n(
+						"resources.useAgentLogs.please_try_refreshing_the_browser_42e5cd4f",
+					),
+				},
+			);
 			socket.close();
 		});
 

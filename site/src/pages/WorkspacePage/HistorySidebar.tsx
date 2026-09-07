@@ -1,5 +1,6 @@
 import { ArrowDownIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useInfiniteQuery } from "react-query";
 import { infiniteWorkspaceBuilds } from "#/api/queries/workspaceBuilds";
 import type { Workspace } from "#/api/typesGenerated";
@@ -22,6 +23,8 @@ interface HistorySidebarProps {
 }
 
 export const HistorySidebar: FC<HistorySidebarProps> = ({ workspace }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const buildsQuery = useInfiniteQuery({
 		...infiniteWorkspaceBuilds(workspace?.id ?? ""),
 		enabled: workspace !== undefined,
@@ -30,7 +33,9 @@ export const HistorySidebar: FC<HistorySidebarProps> = ({ workspace }) => {
 
 	return (
 		<Sidebar>
-			<SidebarCaption>History</SidebarCaption>
+			<SidebarCaption>
+				{tI18n("WorkspacePage.HistorySidebar.history_0e769600")}
+			</SidebarCaption>
 			<ScrollArea>
 				<div className="flex flex-col gap-px">
 					{builds
@@ -59,7 +64,9 @@ export const HistorySidebar: FC<HistorySidebarProps> = ({ workspace }) => {
 								<Spinner loading={buildsQuery.isFetchingNextPage}>
 									<ArrowDownIcon />
 								</Spinner>
-								Show more builds
+								{tI18n(
+									"WorkspacePage.HistorySidebar.show_more_builds_5d655082",
+								)}
 							</Button>
 						</div>
 					)}

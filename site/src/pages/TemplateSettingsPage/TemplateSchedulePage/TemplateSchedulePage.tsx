@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
@@ -12,6 +13,8 @@ import { useTemplateSettings } from "../TemplateSettingsLayout";
 import { TemplateSchedulePageView } from "./TemplateSchedulePageView";
 
 const TemplateSchedulePage: FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const getLink = useLinks();
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
@@ -34,7 +37,12 @@ const TemplateSchedulePage: FC = () => {
 				queryKey: templateByNameKey(organizationName, templateName),
 			});
 			toast.success(
-				`Template "${template.name}" schedule updated successfully.`,
+				tI18n(
+					"TemplateSettingsPage.TemplateSchedulePage.TemplateSchedulePage.template_value0_schedule_updated_successfully_f7e3a81a",
+					{
+						value0: template.name,
+					},
+				),
 			);
 			// clear browser storage of workspaces impending deletion
 			localStorage.removeItem("dismissedWorkspaceList"); // workspaces page
@@ -44,8 +52,14 @@ const TemplateSchedulePage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle(template.name, "Schedule")}</title>
-
+			<title>
+				{pageTitle(
+					template.name,
+					tI18n(
+						"TemplateSettingsPage.TemplateSchedulePage.TemplateSchedulePage.schedule_f4830a1d",
+					),
+				)}
+			</title>
 			<TemplateSchedulePageView
 				allowAdvancedScheduling={allowAdvancedScheduling}
 				isSubmitting={isSubmitting}

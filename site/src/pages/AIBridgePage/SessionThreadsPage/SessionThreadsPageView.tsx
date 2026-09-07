@@ -1,5 +1,6 @@
 import { ArrowLeftIcon, InfoIcon } from "lucide-react";
 import type { FC, PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	AIBridgeSessionThreadsResponse,
 	AIBridgeThread,
@@ -18,25 +19,30 @@ import { SessionSummaryTable } from "./SessionSummaryTable";
 import { SessionTimeline } from "./SessionTimeline/SessionTimeline";
 import { SessionTimelineSkeleton } from "./SessionTimeline/SessionTimelineSkeleton";
 
-const SessionSummaryTooltip: FC<PropsWithChildren> = ({ children }) => (
-	<TooltipProvider>
-		<Tooltip>
-			<TooltipTrigger asChild>
-				<div className="shrink-0 flex items-center">{children}</div>
-			</TooltipTrigger>
-			<TooltipContent
-				side="top"
-				align="start"
-				className="max-w-xs flex flex-col gap-1 text-sm font-normal p-3"
-			>
-				<p className="m-0 leading-snug">
-					A session is a set of threads or interceptions logically grouped by a
-					session key issued by the client.
-				</p>
-			</TooltipContent>
-		</Tooltip>
-	</TooltipProvider>
-);
+const SessionSummaryTooltip: FC<PropsWithChildren> = ({ children }) => {
+	const { t: tI18n } = useTranslation("agents");
+
+	return (
+		<TooltipProvider>
+			<Tooltip>
+				<TooltipTrigger asChild>
+					<div className="shrink-0 flex items-center">{children}</div>
+				</TooltipTrigger>
+				<TooltipContent
+					side="top"
+					align="start"
+					className="max-w-xs flex flex-col gap-1 text-sm font-normal p-3"
+				>
+					<p className="m-0 leading-snug">
+						{tI18n(
+							"AIBridgePage.SessionThreadsPage.SessionThreadsPageView.a_session_is_a_set_of_threads_or_interceptions_l_15ac67c3",
+						)}
+					</p>
+				</TooltipContent>
+			</Tooltip>
+		</TooltipProvider>
+	);
+};
 
 interface SessionThreadsPageViewProps {
 	session: AIBridgeSessionThreadsResponse | undefined;
@@ -61,6 +67,8 @@ export const SessionThreadsPageView: FC<SessionThreadsPageViewProps> = ({
 	isAISessionsEntitled,
 	onBackClicked,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	if (!isAISessionsEntitled) {
 		return (
 			<PremiumPaywallAIGovernance
@@ -91,19 +99,25 @@ export const SessionThreadsPageView: FC<SessionThreadsPageViewProps> = ({
 					asChild
 					variant="outline"
 					size="lg"
-					title="Back to AI Gateway sessions list"
+					title={tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionThreadsPageView.back_to_ai_gateway_sessions_list_c4c99ff4",
+					)}
 					onClick={onBackClicked}
 				>
 					<span>
 						<ArrowLeftIcon />
-						Back
+						{tI18n(
+							"AIBridgePage.SessionThreadsPage.SessionThreadsPageView.back_76900f1b",
+						)}
 					</span>
 				</Button>
 			</nav>
 			<div className="flex flex-col md:flex-row md:items-start gap-6">
 				<aside className="md:w-80 md:shrink-0 px-3 py-2.5 border border-solid rounded-md flex flex-col gap-1">
 					<h2 className="text-sm font-semibold flex items-center m-0">
-						Session summary
+						{tI18n(
+							"AIBridgePage.SessionThreadsPage.SessionThreadsPageView.session_summary_17fabea8",
+						)}
 						<SessionSummaryTooltip>
 							<InfoIcon className="ml-2 text-content-secondary size-icon-xs" />
 						</SessionSummaryTooltip>

@@ -1,9 +1,11 @@
 import { useFormik } from "formik";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import type * as TypesGen from "#/api/typesGenerated";
 import { DefaultChatAutoArchiveDays } from "#/api/typesGenerated";
 import { useTemporarySavedState } from "#/components/TemporarySavedState/TemporarySavedState";
+import { i18n } from "#/i18n";
 import { DaysField, LifecycleSettingLayout } from "./LifecycleSettingLayout";
 
 interface MutationCallbacks {
@@ -34,10 +36,28 @@ const validationSchema = Yup.object({
 		is: true,
 		then: (schema) =>
 			schema
-				.integer("Auto-archive days must be a whole number.")
-				.min(DAYS_MIN, "Auto-archive period must be at least 1 day.")
-				.max(DAYS_MAX, "Must not exceed 3650 days (~10 years).")
-				.required("Auto-archive days is required."),
+				.integer(
+					i18n.t(
+						"agents:AISettingsPage.LifecyclePage.components.AutoArchiveSettings.auto_archive_days_must_be_a_whole_number_9f2d68cf",
+					),
+				)
+				.min(
+					DAYS_MIN,
+					i18n.t(
+						"agents:AISettingsPage.LifecyclePage.components.AutoArchiveSettings.auto_archive_period_must_be_at_least_1_day_675161ec",
+					),
+				)
+				.max(
+					DAYS_MAX,
+					i18n.t(
+						"agents:AISettingsPage.LifecyclePage.components.AutoArchiveSettings.must_not_exceed_3650_days_10_years_24a2a467",
+					),
+				)
+				.required(
+					i18n.t(
+						"agents:AISettingsPage.LifecyclePage.components.AutoArchiveSettings.auto_archive_days_is_required_871e88bb",
+					),
+				),
 	}),
 });
 
@@ -49,6 +69,8 @@ export const AutoArchiveSettings: FC<AutoArchiveSettingsProps> = ({
 	isSavingAutoArchiveDays,
 	isSaveAutoArchiveDaysError,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { isSavedVisible, showSavedState } = useTemporarySavedState();
 	const serverAutoArchiveDays =
 		autoArchiveDaysData?.auto_archive_days ?? DefaultChatAutoArchiveDays;
@@ -82,11 +104,17 @@ export const AutoArchiveSettings: FC<AutoArchiveSettingsProps> = ({
 
 	return (
 		<LifecycleSettingLayout
-			title="Auto-archive inactive conversations"
-			description="Inactive conversations are automatically archived after this period. Pinned conversations are exempt."
+			title={tI18n(
+				"AISettingsPage.LifecyclePage.components.AutoArchiveSettings.auto_archive_inactive_conversations_16a7724a",
+			)}
+			description={tI18n(
+				"AISettingsPage.LifecyclePage.components.AutoArchiveSettings.inactive_conversations_are_automatically_archive_e4c83cf1",
+			)}
 			checked={form.values.enabled}
 			onCheckedChange={(checked) => void form.setFieldValue("enabled", checked)}
-			switchLabel="Enable auto-archive"
+			switchLabel={tI18n(
+				"AISettingsPage.LifecyclePage.components.AutoArchiveSettings.enable_auto_archive_564827d8",
+			)}
 			disabled={isSavingAutoArchiveDays || isAutoArchiveDaysLoading}
 			showSave={form.dirty}
 			isSaving={isSavingAutoArchiveDays}
@@ -102,10 +130,18 @@ export const AutoArchiveSettings: FC<AutoArchiveSettingsProps> = ({
 							<p className="m-0">{fieldError}</p>
 						)}
 						{isSaveAutoArchiveDaysError && (
-							<p className="m-0">Failed to save auto-archive setting.</p>
+							<p className="m-0">
+								{tI18n(
+									"AISettingsPage.LifecyclePage.components.AutoArchiveSettings.failed_to_save_auto_archive_setting_43ad188b",
+								)}
+							</p>
 						)}
 						{isAutoArchiveDaysLoadError && (
-							<p className="m-0">Failed to load auto-archive setting.</p>
+							<p className="m-0">
+								{tI18n(
+									"AISettingsPage.LifecyclePage.components.AutoArchiveSettings.failed_to_load_auto_archive_setting_a2c6ea44",
+								)}
+							</p>
 						)}
 					</>
 				) : undefined
@@ -116,7 +152,9 @@ export const AutoArchiveSettings: FC<AutoArchiveSettingsProps> = ({
 				value={form.values.auto_archive_days}
 				onChange={form.handleChange}
 				onBlur={form.handleBlur}
-				label="Auto-archive period in days"
+				label={tI18n(
+					"AISettingsPage.LifecyclePage.components.AutoArchiveSettings.auto_archive_period_in_days_5140bc90",
+				)}
 				disabled={
 					!form.values.enabled ||
 					isSavingAutoArchiveDays ||

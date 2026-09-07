@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import type dayjs from "dayjs";
 import type { FC, HTMLAttributes } from "react";
+import { i18n } from "#/i18n";
 import { isAfter, subtractTime, timeFrom } from "#/utils/time";
 
 interface LastSeenProps
@@ -18,7 +19,10 @@ const displayFor = (
 	if (isAfter(at, subtractTime(now, 1, "hour"))) {
 		// Since the agent reports on a 10m interval,
 		// the last_used_at can be inaccurate when recent.
-		return { message: "Now", color: "text-content-success" };
+		return {
+			message: i18n.t("components:LastSeen.LastSeen.now_fe18013d"),
+			color: "text-content-success",
+		};
 	}
 	if (isAfter(at, subtractTime(now, 3, "day"))) {
 		return { message: timeFrom(at, now), color: "text-content-primary" };
@@ -29,7 +33,10 @@ const displayFor = (
 	if (isAfter(at, subtractTime(now, 100, "year"))) {
 		return { message: timeFrom(at, now), color: "text-content-destructive" };
 	}
-	return { message: "Never", color: "text-content-secondary" };
+	return {
+		message: i18n.t("components:LastSeen.LastSeen.never_6300ef80"),
+		color: "text-content-secondary",
+	};
 };
 
 export const LastSeen: FC<LastSeenProps> = ({

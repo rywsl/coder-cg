@@ -1,4 +1,5 @@
 import { createContext, type FC, Suspense, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { Outlet, useParams } from "react-router";
 import { organizationsPermissions } from "#/api/queries/organizations";
@@ -47,6 +48,8 @@ export const useOrganizationSettings = (): OrganizationSettingsValue => {
 };
 
 const OrganizationSettingsLayout: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { organizations } = useDashboard();
 	const { organization: orgName } = useParams() as {
 		organization?: string;
@@ -95,12 +98,18 @@ const OrganizationSettingsLayout: FC = () => {
 				<Breadcrumb>
 					<BreadcrumbList>
 						<BreadcrumbItem>
-							<BreadcrumbPage>Admin Settings</BreadcrumbPage>
+							<BreadcrumbPage>
+								{tI18n(
+									"management.OrganizationSettingsLayout.admin_settings_bf478a00",
+								)}
+							</BreadcrumbPage>
 						</BreadcrumbItem>
 						<BreadcrumbSeparator />
 						<BreadcrumbItem>
 							<BreadcrumbPage className="flex items-center gap-2">
-								Organizations
+								{tI18n(
+									"management.OrganizationSettingsLayout.organizations_2730183d",
+								)}
 							</BreadcrumbPage>
 						</BreadcrumbItem>
 						{organization && (

@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
 import { Button } from "#/components/Button/Button";
@@ -35,6 +36,8 @@ export const AdminPersonalModelOverridesSettings: FC<
 	isSavingAdminSetting,
 	isSaveAdminSettingError,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const hasLoadedAdminSettings = adminSettings !== undefined;
 	const hasAdminSettingsError = adminSettingsError != null;
 	const isDisabled = isSavingAdminSetting || !hasLoadedAdminSettings;
@@ -43,7 +46,9 @@ export const AdminPersonalModelOverridesSettings: FC<
 	return (
 		<div
 			role="group"
-			aria-label="Allow personal model overrides"
+			aria-label={tI18n(
+				"AISettingsPage.CoderAgentsPage.components.AdminPersonalModelOverridesSettings.allow_personal_model_overrides_6deaadae",
+			)}
 			className="flex flex-col"
 		>
 			<div className="flex min-h-8 items-start gap-2 font-sans text-sm font-normal leading-6 text-content-primary">
@@ -52,15 +57,23 @@ export const AdminPersonalModelOverridesSettings: FC<
 					onCheckedChange={(checked) => {
 						onSaveAdminSetting({ allow_users: checked });
 					}}
-					aria-label="Allow personal model overrides"
+					aria-label={tI18n(
+						"AISettingsPage.CoderAgentsPage.components.AdminPersonalModelOverridesSettings.allow_personal_model_overrides_6deaadae",
+					)}
 					type="button"
 					disabled={isDisabled}
 					className="mt-0.5"
 				/>
 				<div className="flex min-w-0 flex-col">
-					<span>Allow personal model overrides</span>
+					<span>
+						{tI18n(
+							"AISettingsPage.CoderAgentsPage.components.AdminPersonalModelOverridesSettings.allow_personal_model_overrides_6deaadae",
+						)}
+					</span>
 					<span className="text-content-secondary">
-						Saved user preferences are preserved but ignored while disabled.
+						{tI18n(
+							"AISettingsPage.CoderAgentsPage.components.AdminPersonalModelOverridesSettings.saved_user_preferences_are_preserved_but_ignored_513d58ec",
+						)}
 					</span>
 				</div>
 			</div>
@@ -76,19 +89,25 @@ export const AdminPersonalModelOverridesSettings: FC<
 							variant="outline"
 							className="w-fit"
 						>
-							Retry
+							{tI18n(
+								"AISettingsPage.CoderAgentsPage.components.AdminPersonalModelOverridesSettings.retry_942087cc",
+							)}
 						</Button>
 					)}
 				</div>
 			)}
 			{!hasAdminSettingsError && !hasLoadedAdminSettings && (
 				<p className="m-0 mt-4 text-xs text-content-secondary">
-					Loading personal model override settings...
+					{tI18n(
+						"AISettingsPage.CoderAgentsPage.components.AdminPersonalModelOverridesSettings.loading_personal_model_override_settings_d31eeed6",
+					)}
 				</p>
 			)}
 			{isSaveAdminSettingError && (
 				<p className="m-0 mt-4 text-xs text-content-destructive">
-					Failed to save personal model override settings.
+					{tI18n(
+						"AISettingsPage.CoderAgentsPage.components.AdminPersonalModelOverridesSettings.failed_to_save_personal_model_override_settings_e4e7d94e",
+					)}
 				</p>
 			)}
 		</div>

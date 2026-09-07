@@ -1,4 +1,5 @@
 import { type FC, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { Navigate, useLocation } from "react-router";
 import { buildInfo } from "#/api/queries/buildInfo";
@@ -11,6 +12,8 @@ import { sendDeploymentEvent } from "#/utils/telemetry";
 import { LoginPageView } from "./LoginPageView";
 
 const LoginPage: FC = () => {
+	const { t: tI18n } = useTranslation("auth");
+
 	const routerLocation = useLocation();
 	const {
 		isLoading,
@@ -65,7 +68,10 @@ const LoginPage: FC = () => {
 
 	return (
 		<>
-			<title>Sign in to {applicationName}</title>
+			<title>
+				{tI18n("LoginPage.LoginPage.sign_in_to_f5e5226a")}
+				{applicationName}
+			</title>
 			<LoginPageView
 				authMethods={authMethodsQuery.data}
 				error={signInError ?? redirectError}

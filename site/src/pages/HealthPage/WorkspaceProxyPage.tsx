@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { GlobeIcon, HashIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useOutletContext } from "react-router";
 import type { HealthcheckReport } from "#/api/typesGenerated";
 import { Alert } from "#/components/Alert/Alert";
@@ -24,22 +25,28 @@ import {
 import { MuteWarningsButton } from "./MuteWarningsButton";
 
 const WorkspaceProxyPage: FC = () => {
+	const { t: tI18n } = useTranslation("pages");
+
 	const healthStatus = useOutletContext<HealthcheckReport>();
 	const { workspace_proxy } = healthStatus;
 	const { regions } = workspace_proxy.workspace_proxies;
 
 	return (
 		<>
-			<title>{pageTitle("Workspace Proxy - Health")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n(
+						"HealthPage.WorkspaceProxyPage.workspace_proxy_health_08279469",
+					),
+				)}
+			</title>
 			<Header>
 				<HeaderTitle>
 					<HealthyDot severity={workspace_proxy.severity} />
-					Workspace Proxy
+					{tI18n("HealthPage.WorkspaceProxyPage.workspace_proxy_588f1002")}
 				</HeaderTitle>
 				<MuteWarningsButton healthcheck="WorkspaceProxy" />
 			</Header>
-
 			<Main>
 				{workspace_proxy.error && (
 					<Alert severity="error" prominent>
@@ -98,7 +105,9 @@ const WorkspaceProxyPage: FC = () => {
 												</Pill>
 											</TooltipTrigger>
 											<TooltipContent side="bottom">
-												Wildcard Hostname
+												{tI18n(
+													"HealthPage.WorkspaceProxyPage.wildcard_hostname_f01935a3",
+												)}
 											</TooltipContent>
 										</Tooltip>
 									)}
@@ -109,30 +118,45 @@ const WorkspaceProxyPage: FC = () => {
 													{region.version}
 												</Pill>
 											</TooltipTrigger>
-											<TooltipContent side="bottom">Version</TooltipContent>
+											<TooltipContent side="bottom">
+												{tI18n(
+													"HealthPage.WorkspaceProxyPage.version_dd167905",
+												)}
+											</TooltipContent>
 										</Tooltip>
 									)}
 									{region.derp_enabled && (
 										<BooleanPill value={region.derp_enabled}>
-											DERP Enabled
+											{tI18n(
+												"HealthPage.WorkspaceProxyPage.derp_enabled_5fb1b915",
+											)}
 										</BooleanPill>
 									)}
 									{region.derp_only && (
 										<BooleanPill value={region.derp_only}>
-											DERP Only
+											{tI18n(
+												"HealthPage.WorkspaceProxyPage.derp_only_80f1d3d1",
+											)}
 										</BooleanPill>
 									)}
 									{region.deleted && (
-										<BooleanPill value={region.deleted}>Deleted</BooleanPill>
+										<BooleanPill value={region.deleted}>
+											{tI18n("HealthPage.WorkspaceProxyPage.deleted_b48ff39c")}
+										</BooleanPill>
 									)}
 								</div>
 							</header>
-
 							<div className="border-0 border-t border-solid border-border flex items-center justify-between py-3 px-6 text-xs text-content-secondary">
 								{region.status?.status === "unregistered" ? (
-									<span>Has not connected yet</span>
+									<span>
+										{tI18n(
+											"HealthPage.WorkspaceProxyPage.has_not_connected_yet_7b9f79c6",
+										)}
+									</span>
 								) : warnings.length === 0 && errors.length === 0 ? (
-									<span>OK</span>
+									<span>
+										{tI18n("HealthPage.WorkspaceProxyPage.ok_565339bc")}
+									</span>
 								) : (
 									<div className="flex flex-col">
 										{[...errors, ...warnings].map((msg) => (

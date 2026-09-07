@@ -8,6 +8,7 @@ import {
 	TrashIcon,
 } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { Link as RouterLink, useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -60,6 +61,8 @@ const TemplateMenu: FC<TemplateMenuProps> = ({
 	fileId,
 	onDelete,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const dialogState = useDeletionDialogState(
 		templateId,
 		onDelete,
@@ -90,9 +93,14 @@ const TemplateMenu: FC<TemplateMenuProps> = ({
 			window.URL.revokeObjectURL(url);
 		} catch (error) {
 			console.error("Failed to export template:", error);
-			toast.error("Failed to export template.", {
-				description: getErrorDetail(error),
-			});
+			toast.error(
+				tI18n(
+					"TemplatePage.TemplatePageHeader.failed_to_export_template_6ff60f15",
+				),
+				{
+					description: getErrorDetail(error),
+				},
+			);
 		}
 	};
 
@@ -100,41 +108,49 @@ const TemplateMenu: FC<TemplateMenuProps> = ({
 		<>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
-					<ShadcnButton size="icon-lg" variant="subtle" aria-label="Open menu">
+					<ShadcnButton
+						size="icon-lg"
+						variant="subtle"
+						aria-label={tI18n(
+							"TemplatePage.TemplatePageHeader.open_menu_b40b3713",
+						)}
+					>
 						<EllipsisVerticalIcon aria-hidden="true" />
-						<span className="sr-only">Open menu</span>
+						<span className="sr-only">
+							{tI18n("TemplatePage.TemplatePageHeader.open_menu_b40b3713")}
+						</span>
 					</ShadcnButton>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end">
 					<DropdownMenuItem asChild>
 						<RouterLink to={`${templateLink}/settings`}>
 							<SettingsIcon className="size-icon-sm" />
-							Settings
+							{tI18n("TemplatePage.TemplatePageHeader.settings_74a883a0")}
 						</RouterLink>
 					</DropdownMenuItem>
 
 					<DropdownMenuItem asChild>
 						<RouterLink to={`${templateLink}/versions/${templateVersion}/edit`}>
 							<EditIcon />
-							Edit files
+							{tI18n("TemplatePage.TemplatePageHeader.edit_files_562123f8")}
 						</RouterLink>
 					</DropdownMenuItem>
 
 					<DropdownMenuItem asChild>
 						<RouterLink to={`/templates/new?fromTemplate=${templateId}`}>
 							<CopyIcon className="size-icon-sm" />
-							Duplicate&hellip;
+							{tI18n("TemplatePage.TemplatePageHeader.duplicate_5d202208")}
 						</RouterLink>
 					</DropdownMenuItem>
 
 					<DropdownMenuItem onClick={() => handleExport()}>
 						<DownloadIcon className="size-icon-sm" />
-						Export as TAR
+						{tI18n("TemplatePage.TemplatePageHeader.export_as_tar_41900c57")}
 					</DropdownMenuItem>
 
 					<DropdownMenuItem onClick={() => handleExport("zip")}>
 						<DownloadIcon className="size-icon-sm" />
-						Export as ZIP
+						{tI18n("TemplatePage.TemplatePageHeader.export_as_zip_b1ceca2a")}
 					</DropdownMenuItem>
 					<DropdownMenuSeparator />
 					<DropdownMenuItem
@@ -142,11 +158,10 @@ const TemplateMenu: FC<TemplateMenuProps> = ({
 						onClick={dialogState.openDeleteConfirmation}
 					>
 						<TrashIcon />
-						Delete&hellip;
+						{tI18n("TemplatePage.TemplatePageHeader.delete_9ce78fe3")}
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
-
 			{safeToDeleteTemplate ? (
 				<DeleteDialog
 					isOpen={dialogState.isDeleteDialogOpen}
@@ -158,11 +173,15 @@ const TemplateMenu: FC<TemplateMenuProps> = ({
 			) : (
 				<ConfirmDialog
 					type="info"
-					title="Unable to delete"
+					title={tI18n(
+						"TemplatePage.TemplatePageHeader.unable_to_delete_7947dd5a",
+					)}
 					hideCancel={false}
 					open={dialogState.isDeleteDialogOpen}
 					onClose={dialogState.cancelDeleteConfirmation}
-					confirmText="See workspaces"
+					confirmText={tI18n(
+						"TemplatePage.TemplatePageHeader.see_workspaces_d10011e1",
+					)}
 					confirmLoading={workspaceCountQuery.status !== "success"}
 					onConfirm={() => {
 						navigate({
@@ -174,21 +193,33 @@ const TemplateMenu: FC<TemplateMenuProps> = ({
 						<>
 							{workspaceCountQuery.isSuccess && (
 								<>
-									This template is used by{" "}
+									{tI18n(
+										"TemplatePage.TemplatePageHeader.this_template_is_used_by_b6bed58d",
+									)}{" "}
 									<strong>
-										{workspaceCountQuery.data} workspace
-										{workspaceCountQuery.data === 1 ? "" : "s"}
+										{workspaceCountQuery.data}
+										{tI18n(
+											"TemplatePage.TemplatePageHeader.workspace_4be0369b",
+										)}
+										{workspaceCountQuery.data === 1
+											? ""
+											: tI18n("TemplatePage.TemplatePageHeader.s_043a7187")}
 									</strong>
-									. Please delete all related workspaces before deleting this
-									template.
+									{tI18n(
+										"TemplatePage.TemplatePageHeader.please_delete_all_related_workspaces_before_dele_38081dca",
+									)}
 								</>
 							)}
 
 							{workspaceCountQuery.isLoading &&
-								"Loading information about workspaces used by this template."}
+								tI18n(
+									"TemplatePage.TemplatePageHeader.loading_information_about_workspaces_used_by_thi_2612fd65",
+								)}
 
 							{workspaceCountQuery.isError &&
-								"Unable to determine workspaces used by this template."}
+								tI18n(
+									"TemplatePage.TemplatePageHeader.unable_to_determine_workspaces_used_by_this_temp_1f1ff23c",
+								)}
 						</>
 					}
 				/>
@@ -212,6 +243,8 @@ export const TemplatePageHeader: FC<TemplatePageHeaderProps> = ({
 	workspacePermissions,
 	onDeleteTemplate,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const getLink = useLinks();
 	const templateLink = getLink(
 		linkToTemplate(template.organization_name, template.name),
@@ -227,7 +260,9 @@ export const TemplatePageHeader: FC<TemplatePageHeaderProps> = ({
 								<Button asChild>
 									<RouterLink to={`${templateLink}/workspace`}>
 										<PlusIcon />
-										Create Workspace
+										{tI18n(
+											"TemplatePage.TemplatePageHeader.create_workspace_c63c14cf",
+										)}
 									</RouterLink>
 								</Button>
 							)}

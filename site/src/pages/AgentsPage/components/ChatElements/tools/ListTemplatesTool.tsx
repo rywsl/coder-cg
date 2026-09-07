@@ -1,5 +1,6 @@
 import { ExternalLinkIcon } from "lucide-react";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { ToolCall } from "./ToolCall";
 import { asRecord, asString, type ToolStatus } from "./utils";
@@ -15,22 +16,38 @@ export const ListTemplatesTool: React.FC<{
 	isError: boolean;
 	errorMessage?: string;
 }> = ({ templates, count, status, isError, errorMessage }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const hasContent = templates.length > 0;
 	const isRunning = status === "running";
 
 	const label =
 		isRunning || count === 0
-			? "Listing templates…"
+			? tI18n(
+					"AgentsPage.components.ChatElements.tools.ListTemplatesTool.listing_templates_22595816",
+				)
 			: count === 1
-				? "Listed 1 template"
-				: `Listed ${count} templates`;
+				? tI18n(
+						"AgentsPage.components.ChatElements.tools.ListTemplatesTool.listed_1_template_19a9a163",
+					)
+				: tI18n(
+						"AgentsPage.components.ChatElements.tools.ListTemplatesTool.listed_value0_templates_219fa462",
+						{
+							value0: count,
+						},
+					);
 
 	return (
 		<ToolCall.Root
 			className="w-full"
 			status={status}
 			isError={isError}
-			errorMessage={errorMessage || "Failed to list templates"}
+			errorMessage={
+				errorMessage ||
+				tI18n(
+					"AgentsPage.components.ChatElements.tools.ListTemplatesTool.failed_to_list_templates_05046944",
+				)
+			}
 			hasContent={hasContent}
 		>
 			<ToolCall.Header iconName="list_templates" label={label} />

@@ -24,6 +24,7 @@ import (
 	"github.com/coder/coder/v2/coderd/database/dbtime"
 	"github.com/coder/coder/v2/coderd/httpapi"
 	"github.com/coder/coder/v2/coderd/httpmw/loggermw"
+	"github.com/coder/coder/v2/coderd/i18n"
 	"github.com/coder/coder/v2/coderd/promoauth"
 	"github.com/coder/coder/v2/coderd/rbac"
 	"github.com/coder/coder/v2/coderd/rbac/rolestore"
@@ -858,14 +859,18 @@ func buildWWWAuthenticateHeader(accessURL *url.URL, r *http.Request, code int, r
 	case http.StatusUnauthorized:
 		switch {
 		case strings.Contains(response.Message, "expired") || strings.Contains(response.Detail, "expired"):
-			return fmt.Sprintf(`Bearer realm="coder", error="invalid_token", error_description="The access token has expired", resource_metadata=%q`, resourceMetadata)
+			description := i18n.Translate(i18n.FromContext(r.Context()), "The access token has expired")
+			return fmt.Sprintf(`Bearer realm="coder", error="invalid_token", error_description=%q, resource_metadata=%q`, description, resourceMetadata)
 		case strings.Contains(response.Message, "audience") || strings.Contains(response.Message, "mismatch"):
-			return fmt.Sprintf(`Bearer realm="coder", error="invalid_token", error_description="The access token audience does not match this resource", resource_metadata=%q`, resourceMetadata)
+			description := i18n.Translate(i18n.FromContext(r.Context()), "The access token audience does not match this resource")
+			return fmt.Sprintf(`Bearer realm="coder", error="invalid_token", error_description=%q, resource_metadata=%q`, description, resourceMetadata)
 		default:
-			return fmt.Sprintf(`Bearer realm="coder", error="invalid_token", error_description="The access token is invalid", resource_metadata=%q`, resourceMetadata)
+			description := i18n.Translate(i18n.FromContext(r.Context()), "The access token is invalid")
+			return fmt.Sprintf(`Bearer realm="coder", error="invalid_token", error_description=%q, resource_metadata=%q`, description, resourceMetadata)
 		}
 	case http.StatusForbidden:
-		return fmt.Sprintf(`Bearer realm="coder", error="insufficient_scope", error_description="The request requires higher privileges than provided by the access token", resource_metadata=%q`, resourceMetadata)
+		description := i18n.Translate(i18n.FromContext(r.Context()), "The request requires higher privileges than provided by the access token")
+		return fmt.Sprintf(`Bearer realm="coder", error="insufficient_scope", error_description=%q, resource_metadata=%q`, description, resourceMetadata)
 	default:
 		return fmt.Sprintf(`Bearer realm="coder", resource_metadata=%q`, resourceMetadata)
 	}

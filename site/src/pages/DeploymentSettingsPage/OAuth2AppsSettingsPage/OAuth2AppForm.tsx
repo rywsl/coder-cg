@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import { TriangleAlertIcon } from "lucide-react";
 import { type FC, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import * as Yup from "yup";
 import type * as TypesGen from "#/api/typesGenerated";
@@ -13,6 +14,7 @@ import { IconField } from "#/components/IconField/IconField";
 import { Label } from "#/components/Label/Label";
 import { Spinner } from "#/components/Spinner/Spinner";
 import { useUnsavedChangesPrompt } from "#/hooks/useUnsavedChangesPrompt";
+import { i18n } from "#/i18n";
 import {
 	getFormHelpers,
 	iconValidator,
@@ -51,12 +53,24 @@ const isHttpUrl = (value: string | undefined): boolean => {
 };
 
 const validationSchema = Yup.object({
-	name: nameValidator("Name"),
+	name: nameValidator(
+		i18n.t(
+			"administration:DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppForm.name_dcd1d522",
+		),
+	),
 	callback_url: Yup.string()
 		.trim()
-		.required("Please enter a callback URL.")
-		.test("http-url", "Callback URL must be a valid URL.", (value) =>
-			isHttpUrl(value),
+		.required(
+			i18n.t(
+				"administration:DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppForm.please_enter_a_callback_url_5d0860a1",
+			),
+		)
+		.test(
+			"http-url",
+			i18n.t(
+				"administration:DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppForm.callback_url_must_be_a_valid_url_8528ba3a",
+			),
+			(value) => isHttpUrl(value),
 		),
 	icon: iconValidator,
 });
@@ -70,6 +84,8 @@ export const OAuth2AppForm: FC<OAuth2AppFormProps> = ({
 	disabled,
 	onIconChange,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const didSubmit = useRef(false);
 	const form = useFormik<OAuth2AppFormValues>({
 		initialValues: {
@@ -121,8 +137,12 @@ export const OAuth2AppForm: FC<OAuth2AppFormProps> = ({
 				{Boolean(error) && <ErrorAlert error={error} />}
 				<FormField
 					field={getFieldHelpers("name")}
-					label="Name"
-					description="The name of your Coder app."
+					label={tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppForm.name_dcd1d522",
+					)}
+					description={tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppForm.the_name_of_your_coder_app_f93f1d8b",
+					)}
 					disabled={formDisabled}
 					onChange={onChangeTrimmed(form)}
 					autoFocus
@@ -130,15 +150,25 @@ export const OAuth2AppForm: FC<OAuth2AppFormProps> = ({
 				/>
 				<FormField
 					field={getFieldHelpers("callback_url")}
-					label="Callback URL"
-					description="The full URL to redirect to after a user authorizes an installation."
+					label={tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppForm.callback_url_dc297ae9",
+					)}
+					description={tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppForm.the_full_url_to_redirect_to_after_a_user_authori_219106ef",
+					)}
 					disabled={formDisabled}
 					required
 				/>
 				<div className="flex flex-col gap-2">
-					<Label htmlFor="icon">Icon</Label>
+					<Label htmlFor="icon">
+						{tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppForm.icon_a35abcd6",
+						)}
+					</Label>
 					<div className="text-xs text-content-secondary">
-						Optional. URL or emoji shown for this application.
+						{tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppForm.optional_url_or_emoji_shown_for_this_application_362364f8",
+						)}
 					</div>
 					<IconField
 						id="icon"
@@ -163,11 +193,21 @@ export const OAuth2AppForm: FC<OAuth2AppFormProps> = ({
 
 				<div className="flex justify-end gap-4">
 					<Button variant="outline" asChild>
-						<Link to={BACK_HREF}>Cancel</Link>
+						<Link to={BACK_HREF}>
+							{tI18n(
+								"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppForm.cancel_19766ed6",
+							)}
+						</Link>
 					</Button>
 					<Button disabled={submitDisabled} type="submit">
 						<Spinner loading={isUpdating} />
-						{app ? "Update application" : "Create application"}
+						{app
+							? tI18n(
+									"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppForm.update_application_c24f1ba4",
+								)
+							: tI18n(
+									"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppForm.create_application_b92a5b32",
+								)}
 					</Button>
 				</div>
 			</FormFields>
@@ -177,13 +217,19 @@ export const OAuth2AppForm: FC<OAuth2AppFormProps> = ({
 				open={unsavedChanges.isOpen}
 				onClose={unsavedChanges.onCancel}
 				onConfirm={unsavedChanges.onConfirm}
-				title="Unsaved changes"
-				confirmText="Confirm"
+				title={tI18n(
+					"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppForm.unsaved_changes_a710c2b9",
+				)}
+				confirmText={tI18n(
+					"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppForm.confirm_eebdd24a",
+				)}
 				description={
 					<div className="flex items-start gap-3">
 						<TriangleAlertIcon className="size-icon-sm mt-1 shrink-0" />
 						<p className="m-0">
-							Your updates haven't been saved. Leave anyway?
+							{tI18n(
+								"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppForm.your_updates_haven_t_been_saved_leave_anyway_0230d6de",
+							)}
 						</p>
 					</div>
 				}

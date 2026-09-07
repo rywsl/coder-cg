@@ -1,6 +1,9 @@
 import { cn } from "cn";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
+import { i18n } from "#/i18n";
+import { currentIntlLocale } from "#/i18n/locale";
 
 type SeatUsageBarCardProps = {
 	title: string;
@@ -15,13 +18,19 @@ export const SeatUsageBarCard: FC<SeatUsageBarCardProps> = ({
 	limit,
 	allowUnlimited = false,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const isUnlimited = allowUnlimited && limit === undefined;
 
 	if (!isUnlimited && (limit === undefined || limit < 0)) {
 		return (
 			<section className="border border-solid rounded">
 				<div className="p-4">
-					<ErrorAlert error="Invalid license usage limits" />
+					<ErrorAlert
+						error={tI18n(
+							"DeploymentSettingsPage.LicensesSettingsPage.SeatUsageBarCard.invalid_license_usage_limits_dcc0f71b",
+						)}
+					/>
 				</div>
 			</section>
 		);
@@ -38,10 +47,14 @@ export const SeatUsageBarCard: FC<SeatUsageBarCardProps> = ({
 			: 0;
 
 	const activeLabel =
-		actual === undefined ? "—" : activeNum.toLocaleString("en-US");
+		actual === undefined
+			? i18n.t("common:notAvailable")
+			: activeNum.toLocaleString(currentIntlLocale());
 	const limitLabel = isUnlimited
-		? "Unlimited"
-		: meteredLimit.toLocaleString("en-US");
+		? tI18n(
+				"DeploymentSettingsPage.LicensesSettingsPage.SeatUsageBarCard.unlimited_11dde17d",
+			)
+		: meteredLimit.toLocaleString(currentIntlLocale());
 
 	return (
 		<section className={cn("border border-solid rounded")}>
@@ -64,7 +77,11 @@ export const SeatUsageBarCard: FC<SeatUsageBarCardProps> = ({
 
 					<div className="flex items-start justify-between text-sm font-medium whitespace-nowrap">
 						<p className="m-0 text-content-primary">
-							<span className="text-content-secondary">Active: </span>
+							<span className="text-content-secondary">
+								{tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.SeatUsageBarCard.active_de2433e0",
+								)}
+							</span>
 							<span
 								className={cn({
 									"text-content-destructive": isExceeded,
@@ -74,7 +91,10 @@ export const SeatUsageBarCard: FC<SeatUsageBarCardProps> = ({
 							</span>
 						</p>
 						<p className="m-0 text-content-secondary">
-							Limit: <span className="text-content-primary">{limitLabel}</span>
+							{tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.SeatUsageBarCard.limit_cded0737",
+							)}
+							<span className="text-content-primary">{limitLabel}</span>
 						</p>
 					</div>
 				</div>

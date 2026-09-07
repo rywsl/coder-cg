@@ -1,4 +1,5 @@
 import type * as TypesGen from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 import { normalizeProvider } from "#/modules/aiModels/helpers";
 import type { ModelSelectorOption } from "../components/ChatElements";
 import {
@@ -328,15 +329,23 @@ export const getModelSelectorPlaceholder = (
 	catalog?: TypesGen.OrganizationChatModelsResponse | null,
 ): string => {
 	if (modelOptions.length > 0) {
-		return "Select model";
+		return i18n.t("agents:AgentsPage.utils.modelOptions.select_model_1d446005");
 	}
 	if (isModelCatalogLoading) {
-		return "Loading models...";
+		return i18n.t(
+			"agents:AgentsPage.utils.modelOptions.loading_models_80243524",
+		);
 	}
 	if (hasConfiguredModels) {
 		return hasUserFixableProviders(catalog)
-			? "Configure API Keys"
-			: "No Models Available";
+			? i18n.t(
+					"agents:AgentsPage.utils.modelOptions.configure_api_keys_38d1e0d2",
+				)
+			: i18n.t(
+					"agents:AgentsPage.utils.modelOptions.no_models_available_906fca33",
+				);
 	}
-	return "No Models Configured";
+	return i18n.t(
+		"agents:AgentsPage.utils.modelOptions.no_models_configured_ecb45f6c",
+	);
 };

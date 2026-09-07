@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { useFormik } from "formik";
 import { type FC, useId } from "react";
+import { useTranslation } from "react-i18next";
 import { getErrorMessage } from "#/api/errors";
 import type {
 	AdvisorConfig,
@@ -8,6 +9,7 @@ import type {
 } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
 import { useTemporarySavedState } from "#/components/TemporarySavedState/TemporarySavedState";
+import { i18n } from "#/i18n";
 import { AgentSettingLayout } from "#/pages/AISettingsPage/CoderAgentsPage/components/AgentSettingLayout";
 
 interface MutationCallbacks {
@@ -65,11 +67,13 @@ const isNonNegativeIntegerString = (value: string): boolean => {
 const validateAdvisorConfig = (values: AdvisorSettingsFormValues) => {
 	const errors: Partial<Record<keyof AdvisorSettingsFormValues, string>> = {};
 	if (!isNonNegativeIntegerString(values.max_uses_per_run))
-		errors.max_uses_per_run =
-			"Max uses per turn must be a non-negative integer.";
+		errors.max_uses_per_run = i18n.t(
+			"agents:AgentsPage.components.AdvisorSettings.max_uses_per_turn_must_be_a_non_negative_integer_1a45f3d1",
+		);
 	if (!isNonNegativeIntegerString(values.max_output_tokens))
-		errors.max_output_tokens =
-			"Max output tokens must be a non-negative integer.";
+		errors.max_output_tokens = i18n.t(
+			"agents:AgentsPage.components.AdvisorSettings.max_output_tokens_must_be_a_non_negative_integer_9442b6cb",
+		);
 	return errors;
 };
 
@@ -83,6 +87,8 @@ export const AdvisorSettings: FC<AdvisorSettingsProps> = ({
 	isSaveAdvisorConfigError,
 	saveAdvisorConfigError,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const maxUsesId = useId();
 	const maxOutputTokensId = useId();
 	const { isSavedVisible, showSavedState } = useTemporarySavedState();
@@ -115,8 +121,10 @@ export const AdvisorSettings: FC<AdvisorSettingsProps> = ({
 	const canSave = hasLoadedAdvisorConfig && form.dirty && form.isValid;
 	return (
 		<AgentSettingLayout
-			title="Advisor"
-			description="Cap advisor usage per turn. Configure its model in Organization settings above. Set limits to 0 for unlimited."
+			title={tI18n("AgentsPage.components.AdvisorSettings.advisor_28da8c1f")}
+			description={tI18n(
+				"AgentsPage.components.AdvisorSettings.cap_advisor_usage_per_turn_configure_its_model_i_ec11c4aa",
+			)}
 			showSave={canSave}
 			isSaving={isSavingAdvisorConfig}
 			isSavedVisible={isSavedVisible}
@@ -127,19 +135,29 @@ export const AdvisorSettings: FC<AdvisorSettingsProps> = ({
 					<p className="m-0">
 						{getErrorMessage(
 							saveAdvisorConfigError,
-							"Failed to save advisor settings.",
+							tI18n(
+								"AgentsPage.components.AdvisorSettings.failed_to_save_advisor_settings_ec20d6a8",
+							),
 						)}
 					</p>
 				) : isAdvisorConfigLoadError ? (
-					<p className="m-0">Failed to load advisor settings.</p>
+					<p className="m-0">
+						{tI18n(
+							"AgentsPage.components.AdvisorSettings.failed_to_load_advisor_settings_1988d3bf",
+						)}
+					</p>
 				) : undefined
 			}
 		>
 			<CompactIntegerField
 				id={maxUsesId}
 				name="max_uses_per_run"
-				label="Uses / turn"
-				ariaLabel="Uses / turn"
+				label={tI18n(
+					"AgentsPage.components.AdvisorSettings.uses_turn_694034f9",
+				)}
+				ariaLabel={tI18n(
+					"AgentsPage.components.AdvisorSettings.uses_turn_694034f9",
+				)}
 				value={form.values.max_uses_per_run}
 				onChange={(value) => void form.setFieldValue("max_uses_per_run", value)}
 				onBlur={form.handleBlur}
@@ -150,8 +168,12 @@ export const AdvisorSettings: FC<AdvisorSettingsProps> = ({
 			<CompactIntegerField
 				id={maxOutputTokensId}
 				name="max_output_tokens"
-				label="Max tokens"
-				ariaLabel="Max tokens"
+				label={tI18n(
+					"AgentsPage.components.AdvisorSettings.max_tokens_409e75c0",
+				)}
+				ariaLabel={tI18n(
+					"AgentsPage.components.AdvisorSettings.max_tokens_409e75c0",
+				)}
 				value={form.values.max_output_tokens}
 				onChange={(value) =>
 					void form.setFieldValue("max_output_tokens", value)
@@ -171,7 +193,7 @@ export const AdvisorSettings: FC<AdvisorSettingsProps> = ({
 				disabled={isFormDisabled}
 				className="h-10"
 			>
-				Clear
+				{tI18n("AgentsPage.components.AdvisorSettings.clear_83b12c22")}
 			</Button>
 		</AgentSettingLayout>
 	);

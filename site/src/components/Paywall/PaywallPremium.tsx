@@ -1,6 +1,8 @@
 import { cn } from "cn";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Supergraphic } from "#/components/Supergraphic/Supergraphic";
+import { i18n } from "#/i18n";
 import {
 	PaywallCTALink,
 	PaywallFeature,
@@ -14,7 +16,9 @@ import {
 	PREMIUM_PAGE_PATH,
 } from "./Paywall";
 
-const DEFAULT_HERO_SUBTITLE = "Start an unlimited 30-day trial today";
+const DEFAULT_HERO_SUBTITLE = i18n.t(
+	"components:Paywall.PaywallPremium.start_an_unlimited_30_day_trial_today_d4b369bb",
+);
 
 const PaywallPremiumHeader: FC<React.ComponentProps<"div">> = ({
 	children,
@@ -59,6 +63,8 @@ const PaywallPremium = ({
 	onCTAClick,
 	...props
 }: PaywallProps) => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<div
 			className={cn(
@@ -77,15 +83,16 @@ const PaywallPremium = ({
 						className="mt-6 mx-0"
 						onClick={onCTAClick}
 					>
-						Start trial for free
+						{tI18n("Paywall.PaywallPremium.start_trial_for_free_1386ba3c")}
 					</PaywallCTALink>
 				) : (
 					<PaywallGuidance className="mt-6 mx-0">
-						Contact your deployment administrator for Premium.
+						{tI18n(
+							"Paywall.PaywallPremium.contact_your_deployment_administrator_for_premiu_e349ee15",
+						)}
 					</PaywallGuidance>
 				)}
 			</PaywallPremiumHeader>
-
 			<PaywallPremiumContent>
 				<div className="flex-1">
 					<h3 className="m-0 font-semibold text-base leading-relaxed text-content-primary">

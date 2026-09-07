@@ -1,4 +1,5 @@
 import type { ComponentProps, FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { Template, UpdateTemplateMeta } from "#/api/typesGenerated";
 import {
 	SettingsHeader,
@@ -32,15 +33,22 @@ export const TemplateSettingsPageView: FC<TemplateSettingsPageViewProps> = ({
 	advancedSchedulingEnabled,
 	sharedPortControlsEnabled,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<div className="flex flex-col gap-12">
 			<SettingsHeader>
-				<SettingsHeaderTitle>General</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsPageView.general_c910d474",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Update template metadata and workspace policies.
+					{tI18n(
+						"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsPageView.update_template_metadata_and_workspace_policies_3e01219a",
+					)}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			<TemplateSettingsForm
 				initialTouched={initialTouched}
 				isSubmitting={isSubmitting}

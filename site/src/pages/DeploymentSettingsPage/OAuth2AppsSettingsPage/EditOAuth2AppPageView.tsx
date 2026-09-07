@@ -1,6 +1,7 @@
 import { isAxiosError } from "axios";
 import { ArrowLeftIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
 	Link,
@@ -42,6 +43,8 @@ import { OAuth2AppForm } from "./OAuth2AppForm";
 const BACK_HREF = "/deployment/oauth2-provider/apps";
 
 export const EditOAuth2AppPageView: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { appId } = useParams<{ appId: string }>();
 	const { permissions } = useAuthenticated();
 	const queryClient = useQueryClient();
@@ -72,7 +75,17 @@ export const EditOAuth2AppPageView: FC = () => {
 
 	const app = appQuery.data;
 	const title = (
-		<title>{pageTitle(app?.name ?? "Loading...", "OAuth2 applications")}</title>
+		<title>
+			{pageTitle(
+				app?.name ??
+					tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.loading_47d2a515",
+					),
+				tI18n(
+					"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.oauth2_applications_5e9425a3",
+				),
+			)}
+		</title>
 	);
 
 	if (!appId) {
@@ -102,13 +115,19 @@ export const EditOAuth2AppPageView: FC = () => {
 					<p className="text-content-secondary m-0">
 						{getErrorMessage(
 							appQuery.error,
-							"Failed to load OAuth2 application.",
+							tI18n(
+								"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.failed_to_load_oauth2_application_8ba4283e",
+							),
 						)}
 					</p>
 					<Button variant="subtle" asChild className="-ml-3">
 						<Link to={BACK_HREF}>
 							<ArrowLeftIcon />
-							<span>Back to applications</span>
+							<span>
+								{tI18n(
+									"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.back_to_applications_494219fd",
+								)}
+							</span>
 						</Link>
 					</Button>
 				</div>
@@ -132,12 +151,15 @@ export const EditOAuth2AppPageView: FC = () => {
 	return (
 		<>
 			{title}
-
 			<div className="flex justify-between items-center">
 				<Button variant="subtle" asChild className="-ml-3">
 					<Link to={BACK_HREF}>
 						<ArrowLeftIcon />
-						<span>Back to applications</span>
+						<span>
+							{tI18n(
+								"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.back_to_applications_494219fd",
+							)}
+						</span>
 					</Link>
 				</Button>
 				{canDeleteApp && (
@@ -147,11 +169,14 @@ export const EditOAuth2AppPageView: FC = () => {
 						disabled={isMutating}
 						onClick={() => setDeleteDialogOpen(true)}
 					>
-						<span>Delete</span>
+						<span>
+							{tI18n(
+								"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.delete_e2d0a549",
+							)}
+						</span>
 					</Button>
 				)}
 			</div>
-
 			<div className="flex flex-col gap-6 pt-6">
 				<div className="flex items-center gap-4 min-w-0">
 					<Avatar
@@ -166,23 +191,38 @@ export const EditOAuth2AppPageView: FC = () => {
 				</div>
 
 				<p className="text-sm text-content-secondary m-0">
-					Configure this application to use Coder as an OAuth2 provider.
+					{tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.configure_this_application_to_use_coder_as_an_oa_c5ba2a63",
+					)}
 				</p>
 
 				{searchParams.has("created") && (
 					<Alert severity="info" dismissible>
-						Your OAuth2 application has been created. Generate a client secret
-						below to start using your application.
+						{tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.your_oauth2_application_has_been_created_generat_1f0b2afb",
+						)}
 					</Alert>
 				)}
 
 				<dl className="m-0 flex flex-col gap-1.5">
-					<EndpointField label="Client ID" value={app.id} />
 					<EndpointField
-						label="Authorization URL"
+						label={tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.client_id_8726db01",
+						)}
+						value={app.id}
+					/>
+					<EndpointField
+						label={tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.authorization_url_c70b5f2b",
+						)}
 						value={app.endpoints.authorization}
 					/>
-					<EndpointField label="Token URL" value={app.endpoints.token} />
+					<EndpointField
+						label={tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.token_url_431e0036",
+						)}
+						value={app.endpoints.token}
+					/>
 				</dl>
 
 				{secretsQuery.error ? (
@@ -190,7 +230,11 @@ export const EditOAuth2AppPageView: FC = () => {
 				) : undefined}
 
 				<div className="border border-solid p-6 rounded-lg flex flex-col gap-4">
-					<h2 className="m-0 text-xl font-semibold">Settings</h2>
+					<h2 className="m-0 text-xl font-semibold">
+						{tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.settings_74a883a0",
+						)}
+					</h2>
 					<OAuth2AppForm
 						key={app.id}
 						app={app}
@@ -201,13 +245,23 @@ export const EditOAuth2AppPageView: FC = () => {
 									req,
 								});
 								toast.success(
-									`Successfully updated the OAuth2 application "${updated.name}".`,
+									tI18n(
+										"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.successfully_updated_the_oauth2_application_valu_c11a8e6e",
+										{
+											value0: updated.name,
+										},
+									),
 								);
 							} catch (error) {
 								toast.error(
 									getErrorMessage(
 										error,
-										`Failed to update "${req.name}" OAuth2 application.`,
+										tI18n(
+											"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.failed_to_update_value0_oauth2_application_1ae1acd5",
+											{
+												value0: req.name,
+											},
+										),
 									),
 									{ description: getErrorDetail(error) },
 								);
@@ -223,7 +277,11 @@ export const EditOAuth2AppPageView: FC = () => {
 				{canViewAppSecrets && (
 					<div className="border border-solid p-6 rounded-lg flex flex-col gap-4">
 						<div className="flex flex-row gap-4 items-center justify-between">
-							<h2 className="m-0 text-xl font-semibold">Client secrets</h2>
+							<h2 className="m-0 text-xl font-semibold">
+								{tI18n(
+									"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.client_secrets_422a9c2f",
+								)}
+							</h2>
 							<Button
 								disabled={postSecretMutation.isPending || isMutating}
 								type="button"
@@ -232,14 +290,18 @@ export const EditOAuth2AppPageView: FC = () => {
 										onSuccess: (secret) => {
 											setFullNewSecret(secret);
 											toast.success(
-												"Successfully generated OAuth2 client secret.",
+												tI18n(
+													"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.successfully_generated_oauth2_client_secret_ec910c5d",
+												),
 											);
 										},
 										onError: (error) => {
 											toast.error(
 												getErrorMessage(
 													error,
-													"Failed to generate OAuth2 client secret.",
+													tI18n(
+														"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.failed_to_generate_oauth2_client_secret_264f5ed9",
+													),
 												),
 												{ description: getErrorDetail(error) },
 											);
@@ -248,15 +310,29 @@ export const EditOAuth2AppPageView: FC = () => {
 								}}
 							>
 								<Spinner loading={postSecretMutation.isPending} />
-								Generate secret
+								{tI18n(
+									"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.generate_secret_f8450ed3",
+								)}
 							</Button>
 						</div>
 
-						<Table aria-label="OAuth2 client secrets">
+						<Table
+							aria-label={tI18n(
+								"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.oauth2_client_secrets_01cdf474",
+							)}
+						>
 							<TableHeader>
 								<TableRow>
-									<TableHead className="w-[80%]">Secret</TableHead>
-									<TableHead className="w-[20%]">Last used</TableHead>
+									<TableHead className="w-[80%]">
+										{tI18n(
+											"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.secret_7e32a729",
+										)}
+									</TableHead>
+									<TableHead className="w-[20%]">
+										{tI18n(
+											"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.last_used_830ec7f8",
+										)}
+									</TableHead>
 									<TableHead className="w-[1%]" />
 								</TableRow>
 							</TableHeader>
@@ -265,7 +341,11 @@ export const EditOAuth2AppPageView: FC = () => {
 								{!secretsQuery.isLoading &&
 									!secretsQuery.error &&
 									(!secretsQuery.data || secretsQuery.data.length === 0) && (
-										<TableEmpty message="No client secrets have been generated." />
+										<TableEmpty
+											message={tI18n(
+												"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.no_client_secrets_have_been_generated_91a5d15c",
+											)}
+										/>
 									)}
 								{!secretsQuery.isLoading &&
 									secretsQuery.data?.map((secret) => (
@@ -282,14 +362,18 @@ export const EditOAuth2AppPageView: FC = () => {
 																setFullNewSecret(undefined);
 															}
 															toast.success(
-																"Successfully deleted an OAuth2 client secret.",
+																tI18n(
+																	"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.successfully_deleted_an_oauth2_client_secret_12f74607",
+																),
 															);
 														},
 														onError: (error) => {
 															toast.error(
 																getErrorMessage(
 																	error,
-																	"Failed to delete OAuth2 client secret.",
+																	tI18n(
+																		"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.failed_to_delete_oauth2_client_secret_5f7a1cce",
+																	),
 																),
 																{ description: getErrorDetail(error) },
 															);
@@ -304,20 +388,24 @@ export const EditOAuth2AppPageView: FC = () => {
 					</div>
 				)}
 			</div>
-
 			{fullNewSecret && (
 				<ConfirmDialog
 					hideCancel
 					open={Boolean(fullNewSecret)}
 					onConfirm={() => setFullNewSecret(undefined)}
 					onClose={() => setFullNewSecret(undefined)}
-					title="OAuth2 client secret"
-					confirmText="OK"
+					title={tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.oauth2_client_secret_8a7ee191",
+					)}
+					confirmText={tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.ok_565339bc",
+					)}
 					description={
 						<>
 							<p>
-								Your new client secret is displayed below. Make sure to copy it
-								now; you will not be able to see it again.
+								{tI18n(
+									"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.your_new_client_secret_is_displayed_below_make_s_170bac03",
+								)}
 							</p>
 							<CodeExample
 								code={fullNewSecret.client_secret_full}
@@ -327,21 +415,31 @@ export const EditOAuth2AppPageView: FC = () => {
 					}
 				/>
 			)}
-
 			<DeleteDialog
 				key={app.name}
 				isOpen={deleteDialogOpen}
-				title="Delete OAuth2 application"
-				entity="OAuth2 application"
+				title={tI18n(
+					"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.delete_oauth2_application_0ad9069d",
+				)}
+				entity={tI18n(
+					"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.oauth2_application_d3cbb4c5",
+				)}
 				name={app.name}
-				info="Deleting this OAuth2 application will immediately invalidate all active sessions and API keys associated with it. Users currently authenticated through this application will be logged out and need to re-authenticate."
+				info={tI18n(
+					"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.deleting_this_oauth2_application_will_immediatel_50f80c6c",
+				)}
 				confirmLoading={deleteAppMutation.isPending}
 				onCancel={() => setDeleteDialogOpen(false)}
 				onConfirm={() => {
 					deleteAppMutation.mutate(appId, {
 						onSuccess: () => {
 							toast.success(
-								`You have successfully deleted the "${app.name}" OAuth2 application.`,
+								tI18n(
+									"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.you_have_successfully_deleted_the_value0_oauth2__17403654",
+									{
+										value0: app.name,
+									},
+								),
 							);
 							setDeleteDialogOpen(false);
 							void navigate(BACK_HREF, { replace: true });
@@ -350,7 +448,12 @@ export const EditOAuth2AppPageView: FC = () => {
 							toast.error(
 								getErrorMessage(
 									error,
-									`Failed to delete "${app.name}" OAuth2 application.`,
+									tI18n(
+										"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.failed_to_delete_value0_oauth2_application_1a7fb6fa",
+										{
+											value0: app.name,
+										},
+									),
 								),
 								{ description: getErrorDetail(error) },
 							);
@@ -368,6 +471,8 @@ type EndpointFieldProps = {
 };
 
 const EndpointField: FC<EndpointFieldProps> = ({ label, value }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<div className="flex items-center gap-2">
 			<dt className="text-sm">{label}</dt>
@@ -378,7 +483,12 @@ const EndpointField: FC<EndpointFieldProps> = ({ label, value }) => {
 					</code>
 					<CopyButton
 						text={value}
-						label={`Copy ${label}`}
+						label={tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.copy_value0_a9a564b7",
+							{
+								value0: label,
+							},
+						)}
 						size="icon"
 						variant="subtle"
 					/>
@@ -399,13 +509,19 @@ const OAuth2SecretRow: FC<OAuth2SecretRowProps> = ({
 	onDelete,
 	isDeleting,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const [showDelete, setShowDelete] = useState(false);
 
 	return (
 		<TableRow data-testid={`secret-${secret.id}`}>
 			<TableCell>*****{secret.client_secret_truncated}</TableCell>
 			<TableCell data-pixel="ignore">
-				{secret.last_used_at ? createDayString(secret.last_used_at) : "Never"}
+				{secret.last_used_at
+					? createDayString(secret.last_used_at)
+					: tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.never_6300ef80",
+						)}
 			</TableCell>
 			<TableCell>
 				<ConfirmDialog
@@ -417,19 +533,29 @@ const OAuth2SecretRow: FC<OAuth2SecretRowProps> = ({
 						setShowDelete(false);
 					}}
 					onClose={() => setShowDelete(false)}
-					title="Delete OAuth2 client secret"
+					title={tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.delete_oauth2_client_secret_921bd4de",
+					)}
 					confirmLoading={isDeleting}
-					confirmText="Delete"
+					confirmText={tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.delete_e2d0a549",
+					)}
 					description={
 						<>
-							Deleting <strong>*****{secret.client_secret_truncated}</strong> is
-							irreversible and will revoke all the tokens generated by it. Are
-							you sure you want to proceed?
+							{tI18n(
+								"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.deleting_8c4133b4",
+							)}
+							<strong>*****{secret.client_secret_truncated}</strong>
+							{tI18n(
+								"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.is_irreversible_and_will_revoke_all_the_tokens_g_b425bd46",
+							)}
 						</>
 					}
 				/>
 				<Button variant="destructive" onClick={() => setShowDelete(true)}>
-					Delete secret
+					{tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.EditOAuth2AppPageView.delete_secret_1a48c8c8",
+					)}
 				</Button>
 			</TableCell>
 		</TableRow>

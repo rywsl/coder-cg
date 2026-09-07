@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { AssignableRoles } from "#/api/typesGenerated";
 import {
 	Dialog,
@@ -59,6 +60,8 @@ const ActiveDefaultRolesDialog: FC<ActiveProps> = ({
 	onConfirm,
 	isUpdating,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const [selected, setSelected] = useState<Set<string>>(
 		() => new Set(currentRoles),
 	);
@@ -74,12 +77,15 @@ const ActiveDefaultRolesDialog: FC<ActiveProps> = ({
 		>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Edit default roles</DialogTitle>
+					<DialogTitle>
+						{tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.DefaultRolesDialog.edit_default_roles_6b1ab2b8",
+						)}
+					</DialogTitle>
 					<DialogDescription>
-						These roles are granted to every member of this organization,
-						current and future. Removing a role removes it from all members that
-						are not assigned that role directly. Without Organization Workspace
-						Access, members cannot create or use workspaces.
+						{tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.DefaultRolesDialog.these_roles_are_granted_to_every_member_of_this__8bde8419",
+						)}
 					</DialogDescription>
 				</DialogHeader>
 				<RoleSelector

@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { hasApiFieldErrors, isApiError } from "#/api/errors";
 import type { UpdateUserProfileRequest } from "#/api/typesGenerated";
@@ -10,6 +11,7 @@ import { FormField } from "#/components/FormField/FormField";
 import { FullPageForm } from "#/components/FullPageForm/FullPageForm";
 import { IconField } from "#/components/IconField/IconField";
 import { Spinner } from "#/components/Spinner/Spinner";
+import { i18n } from "#/i18n";
 import {
 	displayNameValidator,
 	getFormHelpers,
@@ -18,8 +20,12 @@ import {
 } from "#/utils/formUtils";
 
 const validationSchema = Yup.object({
-	username: nameValidator("Username"),
-	name: displayNameValidator("Full name"),
+	username: nameValidator(
+		i18n.t("users:EditUserPage.EditUserForm.username_e3b89e9d"),
+	),
+	name: displayNameValidator(
+		i18n.t("users:EditUserPage.EditUserForm.full_name_f13a64ba"),
+	),
 	avatar_url: Yup.string(),
 });
 
@@ -41,6 +47,8 @@ export const EditUserForm: FC<EditUserFormProps> = ({
 	onSubmit,
 	onCancel,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	const form = useFormik<UpdateUserProfileRequest>({
 		initialValues,
 		validationSchema,
@@ -51,7 +59,7 @@ export const EditUserForm: FC<EditUserFormProps> = ({
 	const getFieldHelpers = getFormHelpers(form, error);
 
 	return (
-		<FullPageForm title="Edit user">
+		<FullPageForm title={tI18n("EditUserPage.EditUserForm.edit_user_05b88d18")}>
 			{isApiError(error) && !hasApiFieldErrors(error) && (
 				<ErrorAlert error={error} className="mb-8" />
 			)}
@@ -59,7 +67,7 @@ export const EditUserForm: FC<EditUserFormProps> = ({
 				<div className="flex flex-col gap-6">
 					<FormField
 						field={getFieldHelpers("username")}
-						label="Username"
+						label={tI18n("EditUserPage.EditUserForm.username_e3b89e9d")}
 						id="username"
 						name="username"
 						value={form.values.username}
@@ -73,9 +81,9 @@ export const EditUserForm: FC<EditUserFormProps> = ({
 						field={getFieldHelpers("name")}
 						label={
 							<>
-								Full name{" "}
+								{tI18n("EditUserPage.EditUserForm.full_name_f13a64ba")}{" "}
 								<span className="font-normal text-content-secondary">
-									(optional)
+									{tI18n("EditUserPage.EditUserForm.optional_0059798b")}
 								</span>
 							</>
 						}
@@ -90,7 +98,7 @@ export const EditUserForm: FC<EditUserFormProps> = ({
 					{canEditAvatar && (
 						<IconField
 							{...getFieldHelpers("avatar_url")}
-							label="Avatar URL"
+							label={tI18n("EditUserPage.EditUserForm.avatar_url_18a20f99")}
 							onChange={onChangeTrimmed(form)}
 							onPickEmoji={(value) => form.setFieldValue("avatar_url", value)}
 							fullWidth
@@ -100,11 +108,11 @@ export const EditUserForm: FC<EditUserFormProps> = ({
 
 				<FormFooter className="mt-8">
 					<Button onClick={onCancel} variant="outline">
-						Cancel
+						{tI18n("EditUserPage.EditUserForm.cancel_19766ed6")}
 					</Button>
 					<Button type="submit" disabled={isLoading}>
 						<Spinner loading={isLoading} />
-						Save
+						{tI18n("EditUserPage.EditUserForm.save_1509f561")}
 					</Button>
 				</FormFooter>
 			</form>

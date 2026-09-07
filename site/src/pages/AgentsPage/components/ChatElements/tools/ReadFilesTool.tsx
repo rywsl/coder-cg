@@ -1,4 +1,5 @@
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { MergedTool } from "../../ChatConversation/types";
 import { getReadFileToolData, ReadFileTool } from "./ReadFileTool";
 import { ToolCall } from "./ToolCall";
@@ -25,6 +26,8 @@ export const ReadFilesTool: FC<{
 	expanded?: boolean;
 	onExpandedChange?: (expanded: boolean) => void;
 }> = ({ tools, expanded, onExpandedChange }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [expandedFileIDs, setExpandedFileIDs] = useState<ReadonlySet<string>>(
 		new Set(),
 	);
@@ -33,8 +36,18 @@ export const ReadFilesTool: FC<{
 	const isError = tools.some((tool) => tool.isError);
 	const hasContent = items.length > 0;
 	const label = isRunning
-		? `Reading ${tools.length} files…`
-		: `Read ${tools.length} files`;
+		? tI18n(
+				"AgentsPage.components.ChatElements.tools.ReadFilesTool.reading_value0_files_c367aa5b",
+				{
+					value0: tools.length,
+				},
+			)
+		: tI18n(
+				"AgentsPage.components.ChatElements.tools.ReadFilesTool.read_value0_files_59b9bd8d",
+				{
+					value0: tools.length,
+				},
+			);
 	const errorMessage = items.find((item) => item.errorMessage)?.errorMessage;
 
 	return (
@@ -43,7 +56,12 @@ export const ReadFilesTool: FC<{
 				className="w-full"
 				status={isRunning ? "running" : isError ? "error" : "completed"}
 				isError={isError}
-				errorMessage={errorMessage || "Failed to read one or more files"}
+				errorMessage={
+					errorMessage ||
+					tI18n(
+						"AgentsPage.components.ChatElements.tools.ReadFilesTool.failed_to_read_one_or_more_files_3a35bf78",
+					)
+				}
 				hasContent={hasContent}
 				expanded={expanded}
 				onExpandedChange={onExpandedChange}

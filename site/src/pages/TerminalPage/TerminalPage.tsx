@@ -6,6 +6,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { useNavigate, useParams, useSearchParams } from "react-router";
 import { deploymentConfig } from "#/api/queries/deployment";
@@ -32,6 +33,8 @@ import { getMatchingAgentOrFirst } from "#/utils/workspace";
 import { TerminalCommandConsentDialog } from "./TerminalCommandConsentDialog";
 
 const TerminalPage: FC = () => {
+	const { t: tI18n } = useTranslation("pages");
+
 	// Maybe one day we'll support a light themed terminal, but terminal coloring
 	// is notably a pain because of assumptions certain programs might make about
 	// your background color.
@@ -136,9 +139,16 @@ const TerminalPage: FC = () => {
 	);
 	const terminalErrorMessage =
 		workspace.error instanceof Error
-			? `Unable to fetch workspace: ${workspace.error.message}`
+			? tI18n(
+					"TerminalPage.TerminalPage.unable_to_fetch_workspace_value0_70a19834",
+					{
+						value0: workspace.error.message,
+					},
+				)
 			: !workspace.isLoading && !workspaceAgent
-				? "Unable to fetch workspace agent: no agent found with ID, is the workspace started?"
+				? tI18n(
+						"TerminalPage.TerminalPage.unable_to_fetch_workspace_agent_no_agent_found_w_80fe465b",
+					)
 				: undefined;
 
 	// Updates the reconnection token into the URL if necessary.
@@ -162,12 +172,14 @@ const TerminalPage: FC = () => {
 			{workspace.data && (
 				<title>
 					{pageTitle(
-						"Terminal",
-						`${workspace.data.owner_name}/${workspace.data.name}`,
+						tI18n("TerminalPage.TerminalPage.terminal_e0926fda"),
+						tI18n("TerminalPage.TerminalPage.value0_value1_68ee1a5b", {
+							value0: workspace.data.owner_name,
+							value1: workspace.data.name,
+						}),
 					)}
 				</title>
 			)}
-
 			<div className="flex flex-col h-screen" data-status={connectionStatus}>
 				<WorkspaceTerminalAlerts
 					agent={workspaceAgent}
@@ -201,13 +213,13 @@ const TerminalPage: FC = () => {
 					testId="terminal"
 				/>
 			</div>
-
 			{latency && isDebugging && (
 				<span className="absolute bottom-6 right-6 text-content-disabled text-sm">
-					Latency: {latency.latencyMS.toFixed(0)}ms{" "}
+					{tI18n("TerminalPage.TerminalPage.latency_4774635c")}
+					{latency.latencyMS.toFixed(0)}
+					{tI18n("TerminalPage.TerminalPage.ms_f785c3ce")}{" "}
 				</span>
 			)}
-
 			{command && !appSlug && (
 				<TerminalCommandConsentDialog
 					open={!commandConfirmed}

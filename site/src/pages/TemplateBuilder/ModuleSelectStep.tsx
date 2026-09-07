@@ -1,5 +1,6 @@
 import { PackageIcon, SearchIcon } from "lucide-react";
 import { type FC, type PropsWithChildren, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { templateBuilderModules } from "#/api/queries/templateBuilder";
 import type {
@@ -61,12 +62,16 @@ const ModuleName: FC<PropsWithChildren> = ({ children }) => {
 };
 
 const ConflictWarning: FC<ModuleConflict> = ({ moduleA, moduleB }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<div>
-			<ModuleName>{moduleA.display_name}</ModuleName> and{" "}
-			<ModuleName>{moduleB.display_name}</ModuleName> are conflicting modules.
-			You can still continue, but you need to remove one of the conflicting
-			modules before publishing the template.
+			<ModuleName>{moduleA.display_name}</ModuleName>
+			{tI18n("TemplateBuilder.ModuleSelectStep.and_2e5f7696")}{" "}
+			<ModuleName>{moduleB.display_name}</ModuleName>
+			{tI18n(
+				"TemplateBuilder.ModuleSelectStep.are_conflicting_modules_you_can_still_continue_b_a0ca95ae",
+			)}
 		</div>
 	);
 };
@@ -97,6 +102,8 @@ export const ModuleSelectStep: FC<ModuleSelectStepProps> = ({
 	selectedModuleIds,
 	onChangeModules,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const { data, error, isLoading } = useQuery(templateBuilderModules(baseId));
 	const [moduleSearchText, setModuleSearchText] = useState("");
 	const modules = data?.modules ?? [];
@@ -204,19 +211,22 @@ export const ModuleSelectStep: FC<ModuleSelectStepProps> = ({
 
 	return (
 		<div>
-			<TemplateBuilderTitle>Select modules</TemplateBuilderTitle>
+			<TemplateBuilderTitle>
+				{tI18n("TemplateBuilder.ModuleSelectStep.select_modules_7aaaaa6c")}
+			</TemplateBuilderTitle>
 			<TemplateBuilderSubtitle>
-				Add pre-built tools and integrations. Module versions are pinned at
-				selection.
+				{tI18n(
+					"TemplateBuilder.ModuleSelectStep.add_pre_built_tools_and_integrations_module_vers_5b765e12",
+				)}
 			</TemplateBuilderSubtitle>
-
 			<SearchField
 				value={moduleSearchText}
 				onChange={setModuleSearchText}
-				placeholder="Search modules..."
+				placeholder={tI18n(
+					"TemplateBuilder.ModuleSelectStep.search_modules_6919d5ac",
+				)}
 				className="my-4"
 			/>
-
 			<Tabs
 				value={selectedFilterTab}
 				onValueChange={setSelectedFilterTab}
@@ -231,7 +241,6 @@ export const ModuleSelectStep: FC<ModuleSelectStepProps> = ({
 					))}
 				</TabsList>
 			</Tabs>
-
 			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 				{visibleModules.length ? (
 					visibleModules.map((m) => (
@@ -250,16 +259,23 @@ export const ModuleSelectStep: FC<ModuleSelectStepProps> = ({
 						<SearchIcon />
 						<p className="m-0 text-xs font-normal">
 							{doesBaseTemplateHaveModules
-								? "No module matched your search"
-								: "No modules available for this base template"}
+								? tI18n(
+										"TemplateBuilder.ModuleSelectStep.no_module_matched_your_search_be27e8af",
+									)
+								: tI18n(
+										"TemplateBuilder.ModuleSelectStep.no_modules_available_for_this_base_template_67f50d26",
+									)}
 						</p>
 					</div>
 				)}
 			</div>
-
 			{conflicts.length > 0 && (
 				<Alert severity="warning" prominent className="mt-6">
-					<AlertTitle>Conflicting modules selected</AlertTitle>
+					<AlertTitle>
+						{tI18n(
+							"TemplateBuilder.ModuleSelectStep.conflicting_modules_selected_d0375d1d",
+						)}
+					</AlertTitle>
 					<AlertDescription>
 						{conflicts.map(({ moduleA, moduleB }) => (
 							<ConflictWarning

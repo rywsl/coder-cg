@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { CircleCheckIcon, KeyIcon } from "lucide-react";
 import { type FC, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation } from "react-query";
 import { API } from "#/api/api";
 import { getErrorMessage } from "#/api/errors";
@@ -104,18 +105,26 @@ export const useSingleSignOnSection = () => {
 };
 
 const SSOEmptyState: FC = () => {
+	const { t: tI18n } = useTranslation("users");
+
 	return (
 		<EmptyState
 			className="rounded-lg border border-solid border-border min-h-0"
-			message="No SSO Providers"
-			description="No SSO providers are configured with this Coder deployment."
+			message={tI18n(
+				"UserSettingsPage.SecurityPage.SingleSignOnSection.no_sso_providers_e2ff9e2e",
+			)}
+			description={tI18n(
+				"UserSettingsPage.SecurityPage.SingleSignOnSection.no_sso_providers_are_configured_with_this_coder__fd9c3e22",
+			)}
 			cta={
 				<Link
 					href={docs("/admin/users/oidc-auth")}
 					target="_blank"
 					rel="noreferrer"
 				>
-					Learn how to add a provider
+					{tI18n(
+						"UserSettingsPage.SecurityPage.SingleSignOnSection.learn_how_to_add_a_provider_6d2be3d4",
+					)}
 				</Link>
 			}
 		/>
@@ -137,19 +146,24 @@ export const SingleSignOnSection: FC<SingleSignOnSectionProps> = ({
 	isConfirming,
 	error,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	const noSsoEnabled = !authMethods.github.enabled && !authMethods.oidc.enabled;
 
 	return (
 		<div id="sso-section" data-testid="sso-section">
 			<SettingsHeader>
 				<SettingsHeaderTitle hierarchy="secondary">
-					Single Sign On
+					{tI18n(
+						"UserSettingsPage.SecurityPage.SingleSignOnSection.single_sign_on_7f90d139",
+					)}
 				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Authenticate in Coder using one-click.
+					{tI18n(
+						"UserSettingsPage.SecurityPage.SingleSignOnSection.authenticate_in_coder_using_one_click_a12ef92c",
+					)}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			<div className="grid gap-4">
 				{userLoginType.login_type === "password" ? (
 					<>
@@ -162,7 +176,9 @@ export const SingleSignOnSection: FC<SingleSignOnSectionProps> = ({
 								onClick={() => openConfirmation("github")}
 							>
 								<ExternalImage src="/icon/github.svg" />
-								GitHub
+								{tI18n(
+									"UserSettingsPage.SecurityPage.SingleSignOnSection.github_f911e414",
+								)}
 							</Button>
 						)}
 
@@ -185,7 +201,9 @@ export const SingleSignOnSection: FC<SingleSignOnSectionProps> = ({
 					<div className="bg-surface-secondary rounded-md border border-border border-solid p-4 flex gap-4 items-center text-sm">
 						<CircleCheckIcon className="text-content-success size-icon-xs" />
 						<span>
-							Authenticated with{" "}
+							{tI18n(
+								"UserSettingsPage.SecurityPage.SingleSignOnSection.authenticated_with_5834c255",
+							)}{" "}
 							<strong>
 								{userLoginType.login_type === "github"
 									? "GitHub"
@@ -202,7 +220,6 @@ export const SingleSignOnSection: FC<SingleSignOnSectionProps> = ({
 					</div>
 				)}
 			</div>
-
 			<ConfirmLoginTypeChangeModal
 				open={isConfirming}
 				error={error}
@@ -219,13 +236,17 @@ interface OIDCIconProps {
 }
 
 const OIDCIcon: FC<OIDCIconProps> = ({ oidcAuth }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	if (!oidcAuth.iconUrl) {
 		return <KeyIcon />;
 	}
 
 	return (
 		<ExternalImage
-			alt="Open ID Connect icon"
+			alt={tI18n(
+				"UserSettingsPage.SecurityPage.SingleSignOnSection.open_id_connect_icon_d93d912e",
+			)}
 			src={oidcAuth.iconUrl}
 			className="size-4"
 		/>
@@ -251,12 +272,19 @@ const ConfirmLoginTypeChangeModal: FC<ConfirmLoginTypeChangeModalProps> = ({
 	onClose,
 	onConfirm,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	const [password, setPassword] = useState("");
 	const passwordId = useId();
 	const errorId = useId();
 	const hasError = Boolean(error);
 	const errorMessage = error
-		? getErrorMessage(error, "Your password is incorrect")
+		? getErrorMessage(
+				error,
+				tI18n(
+					"UserSettingsPage.SecurityPage.SingleSignOnSection.your_password_is_incorrect_4e39789b",
+				),
+			)
 		: undefined;
 
 	const handleConfirm = () => {
@@ -271,18 +299,29 @@ const ConfirmLoginTypeChangeModal: FC<ConfirmLoginTypeChangeModalProps> = ({
 			}}
 			onConfirm={handleConfirm}
 			hideCancel={false}
-			cancelText="Cancel"
-			confirmText="Update"
-			title="Change login type"
+			cancelText={tI18n(
+				"UserSettingsPage.SecurityPage.SingleSignOnSection.cancel_19766ed6",
+			)}
+			confirmText={tI18n(
+				"UserSettingsPage.SecurityPage.SingleSignOnSection.update_c1c1009d",
+			)}
+			title={tI18n(
+				"UserSettingsPage.SecurityPage.SingleSignOnSection.change_login_type_5e39a450",
+			)}
 			confirmLoading={loading}
 			description={
 				<div className="flex flex-col gap-8">
 					<p>
-						After changing your login type, you will not be able to change it
-						again. Are you sure you want to proceed and change your login type?
+						{tI18n(
+							"UserSettingsPage.SecurityPage.SingleSignOnSection.after_changing_your_login_type_you_will_not_be_a_75d09927",
+						)}
 					</p>
 					<div className="flex flex-col gap-2 text-left">
-						<Label htmlFor={passwordId}>Confirm your password</Label>
+						<Label htmlFor={passwordId}>
+							{tI18n(
+								"UserSettingsPage.SecurityPage.SingleSignOnSection.confirm_your_password_bfd8c343",
+							)}
+						</Label>
 						<Input
 							autoFocus
 							onKeyDown={(event) => {

@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import type { AuditLog } from "#/api/typesGenerated";
 import { Link } from "#/components/Link/Link";
@@ -66,19 +67,38 @@ export const AuditLogDescription: FC<AuditLogDescriptionProps> = ({
 };
 
 function AppSessionAuditLogDescription({ auditLog }: AuditLogDescriptionProps) {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { connection_type, workspace_owner, workspace_name } =
 		auditLog.additional_fields;
 
 	return (
 		<>
-			{connection_type} session to {workspace_owner}'s{" "}
+			{connection_type}
+			{tI18n(
+				"AuditPage.AuditLogRow.AuditLogDescription.AuditLogDescription.session_to_add0c80c",
+			)}
+			{workspace_owner}
+			{tI18n(
+				"AuditPage.AuditLogRow.AuditLogDescription.AuditLogDescription.s_edc00d4d",
+			)}{" "}
 			<Link asChild showExternalIcon={false} className="text-base px-0">
 				<RouterLink to={`${auditLog.resource_link}`}>
 					<strong>{workspace_name}</strong>
 				</RouterLink>
 			</Link>{" "}
-			workspace{" "}
-			<strong>{auditLog.action === "disconnect" ? "closed" : "opened"}</strong>
+			{tI18n(
+				"AuditPage.AuditLogRow.AuditLogDescription.AuditLogDescription.workspace_21a3230e",
+			)}{" "}
+			<strong>
+				{auditLog.action === "disconnect"
+					? tI18n(
+							"AuditPage.AuditLogRow.AuditLogDescription.AuditLogDescription.closed_c3eefb58",
+						)
+					: tI18n(
+							"AuditPage.AuditLogRow.AuditLogDescription.AuditLogDescription.opened_50236627",
+						)}
+			</strong>
 		</>
 	);
 }

@@ -1,4 +1,5 @@
 import type { FC, PropsWithChildren, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import type { TemplateBuilderModuleVariable } from "#/api/typesGenerated";
 import { FormField } from "#/components/FormField/FormField";
 import { Label } from "#/components/Label/Label";
@@ -117,6 +118,8 @@ const SelectField: FC<SelectFieldDefinition> = ({
 	placeholder,
 	options,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const descriptionId = `${id}-description`;
 	return (
 		// All fields span 2 columns, except for dropdowns which can only be 1 column (50% width)
@@ -144,7 +147,12 @@ const SelectField: FC<SelectFieldDefinition> = ({
 					id={id}
 					aria-describedby={description ? descriptionId : undefined}
 				>
-					<SelectValue placeholder={placeholder ?? "Select..."} />
+					<SelectValue
+						placeholder={
+							placeholder ??
+							tI18n("TemplateBuilder.ConfigurationField.select_1339bddc")
+						}
+					/>
 				</SelectTrigger>
 				<SelectContent>
 					{options.map((option) => (
@@ -344,10 +352,14 @@ export const ConfigurationFieldContainer: FC<PropsWithChildren> = ({
 };
 
 const OptionalIndicator: FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<>
 			{" "}
-			<span className="text-content-secondary">(optional)</span>
+			<span className="text-content-secondary">
+				{tI18n("TemplateBuilder.ConfigurationField.optional_0059798b")}
+			</span>
 		</>
 	);
 };

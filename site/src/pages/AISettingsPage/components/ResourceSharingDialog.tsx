@@ -1,6 +1,7 @@
 import isEqual from "lodash/isEqual";
 import { Trash2Icon, UserPlusIcon } from "lucide-react";
 import { type FC, type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
 import { AvatarData } from "#/components/Avatar/AvatarData";
 import { Button } from "#/components/Button/Button";
@@ -134,30 +135,39 @@ const PrincipalRow: FC<PrincipalRowProps> = ({
 	roleLabel,
 	isSaving,
 	onRemove,
-}) => (
-	<TableRow>
-		<TableCell>
-			<AvatarData
-				title={principal.name}
-				subtitle={principal.subtitle}
-				src={principal.avatarUrl}
-			/>
-		</TableCell>
-		<TableCell>{roleLabel}</TableCell>
-		<TableCell>
-			<Button
-				variant="subtle"
-				size="icon"
-				type="button"
-				disabled={isSaving}
-				aria-label={`Remove ${principal.name}`}
-				onClick={onRemove}
-			>
-				<Trash2Icon />
-			</Button>
-		</TableCell>
-	</TableRow>
-);
+}) => {
+	const { t: tI18n } = useTranslation("agents");
+
+	return (
+		<TableRow>
+			<TableCell>
+				<AvatarData
+					title={principal.name}
+					subtitle={principal.subtitle}
+					src={principal.avatarUrl}
+				/>
+			</TableCell>
+			<TableCell>{roleLabel}</TableCell>
+			<TableCell>
+				<Button
+					variant="subtle"
+					size="icon"
+					type="button"
+					disabled={isSaving}
+					aria-label={tI18n(
+						"AISettingsPage.components.ResourceSharingDialog.remove_value0_e224cf24",
+						{
+							value0: principal.name,
+						},
+					)}
+					onClick={onRemove}
+				>
+					<Trash2Icon />
+				</Button>
+			</TableCell>
+		</TableRow>
+	);
+};
 
 type SharingDialogEditorProps<Role extends string, Option> = Pick<
 	ResourceSharingDialogProps<Role, Option>,
@@ -226,6 +236,8 @@ const LoadedSharingDialogEditor = <Role extends string, Option>({
 }: SharingDialogEditorProps<Role, Option> & {
 	data: SharingDialogData<Role>;
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [initialACL] = useState(data.acl);
 	const [draft, setDraft] = useState(data.acl);
 	const [principals, setPrincipals] = useState(data.principals);
@@ -307,7 +319,9 @@ const LoadedSharingDialogEditor = <Role extends string, Option>({
 					</div>
 					<Button type="submit" disabled={!selectedOption || isSaving}>
 						<UserPlusIcon className="size-icon-sm" />
-						Add member
+						{tI18n(
+							"AISettingsPage.components.ResourceSharingDialog.add_member_17108415",
+						)}
 					</Button>
 				</form>
 
@@ -315,15 +329,25 @@ const LoadedSharingDialogEditor = <Role extends string, Option>({
 					<div className="rounded-md border border-solid border-border px-6 py-10 text-center">
 						<p className="m-0 text-sm font-medium">{emptyTitle}</p>
 						<p className="m-0 mt-2 text-sm text-content-secondary">
-							Add a member or group using the controls above.
+							{tI18n(
+								"AISettingsPage.components.ResourceSharingDialog.add_a_member_or_group_using_the_controls_above_694a1dc1",
+							)}
 						</p>
 					</div>
 				) : (
 					<Table aria-label={tableLabel}>
 						<TableHeader>
 							<TableRow>
-								<TableHead>Member</TableHead>
-								<TableHead className="w-24">Role</TableHead>
+								<TableHead>
+									{tI18n(
+										"AISettingsPage.components.ResourceSharingDialog.member_7c968fb7",
+									)}
+								</TableHead>
+								<TableHead className="w-24">
+									{tI18n(
+										"AISettingsPage.components.ResourceSharingDialog.role_14736a2e",
+									)}
+								</TableHead>
 								<TableHead className="w-16" />
 							</TableRow>
 						</TableHeader>
@@ -335,7 +359,9 @@ const LoadedSharingDialogEditor = <Role extends string, Option>({
 										principals.groups[groupId] ?? {
 											id: groupId,
 											name: groupId,
-											subtitle: "Group",
+											subtitle: tI18n(
+												"AISettingsPage.components.ResourceSharingDialog.group_34ca0e76",
+											),
 										}
 									}
 									roleLabel={roleLabel}
@@ -350,7 +376,9 @@ const LoadedSharingDialogEditor = <Role extends string, Option>({
 										principals.users[userId] ?? {
 											id: userId,
 											name: userId,
-											subtitle: "User",
+											subtitle: tI18n(
+												"AISettingsPage.components.ResourceSharingDialog.user_b512d97e",
+											),
 										}
 									}
 									roleLabel={roleLabel}
@@ -362,7 +390,6 @@ const LoadedSharingDialogEditor = <Role extends string, Option>({
 					</Table>
 				)}
 			</div>
-
 			<DialogFooter>
 				<DialogActions
 					confirmText={confirmText}

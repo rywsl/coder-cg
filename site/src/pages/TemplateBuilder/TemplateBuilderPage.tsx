@@ -1,4 +1,5 @@
 import { type FC, useCallback, useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery } from "react-query";
 import { Navigate, useNavigate, useSearchParams } from "react-router";
 import { deploymentConfig } from "#/api/queries/deployment";
@@ -24,6 +25,8 @@ import {
 } from "./wizardState";
 
 const TemplateBuilderPage: FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const navigate = useNavigate();
 	const getLink = useLinks();
 	const { permissions } = useAuthenticated();
@@ -137,7 +140,11 @@ const TemplateBuilderPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Create Template")}</title>
+			<title>
+				{pageTitle(
+					tI18n("TemplateBuilder.TemplateBuilderPage.create_template_b79296f1"),
+				)}
+			</title>
 			<TemplateBuilderPageView
 				error={error}
 				basesData={basesQuery.data}

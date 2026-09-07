@@ -1,8 +1,10 @@
 import { useFormik } from "formik";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import type * as TypesGen from "#/api/typesGenerated";
 import { useTemporarySavedState } from "#/components/TemporarySavedState/TemporarySavedState";
+import { i18n } from "#/i18n";
 import { DaysField, LifecycleSettingLayout } from "./LifecycleSettingLayout";
 
 interface MutationCallbacks {
@@ -34,10 +36,28 @@ const validationSchema = Yup.object({
 		is: true,
 		then: (schema) =>
 			schema
-				.integer("Retention days must be a whole number.")
-				.min(DAYS_MIN, "Retention period must be at least 1 day.")
-				.max(DAYS_MAX, "Must not exceed 3650 days (~10 years).")
-				.required("Retention days is required."),
+				.integer(
+					i18n.t(
+						"agents:AISettingsPage.LifecyclePage.components.RetentionPeriodSettings.retention_days_must_be_a_whole_number_e4c7dda5",
+					),
+				)
+				.min(
+					DAYS_MIN,
+					i18n.t(
+						"agents:AISettingsPage.LifecyclePage.components.RetentionPeriodSettings.retention_period_must_be_at_least_1_day_3c742f9f",
+					),
+				)
+				.max(
+					DAYS_MAX,
+					i18n.t(
+						"agents:AISettingsPage.LifecyclePage.components.RetentionPeriodSettings.must_not_exceed_3650_days_10_years_24a2a467",
+					),
+				)
+				.required(
+					i18n.t(
+						"agents:AISettingsPage.LifecyclePage.components.RetentionPeriodSettings.retention_days_is_required_54e4b62f",
+					),
+				),
 	}),
 });
 
@@ -49,6 +69,8 @@ export const RetentionPeriodSettings: FC<RetentionPeriodSettingsProps> = ({
 	isSavingRetentionDays,
 	isSaveRetentionDaysError,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { isSavedVisible, showSavedState } = useTemporarySavedState();
 	const serverRetentionDays =
 		retentionDaysData?.retention_days ?? DEFAULT_RETENTION_DAYS;
@@ -82,11 +104,17 @@ export const RetentionPeriodSettings: FC<RetentionPeriodSettingsProps> = ({
 
 	return (
 		<LifecycleSettingLayout
-			title="Conversation retention period"
-			description="Archived conversations and orphaned files older than this are automatically deleted."
+			title={tI18n(
+				"AISettingsPage.LifecyclePage.components.RetentionPeriodSettings.conversation_retention_period_f5a5632b",
+			)}
+			description={tI18n(
+				"AISettingsPage.LifecyclePage.components.RetentionPeriodSettings.archived_conversations_and_orphaned_files_older__75aa6cd5",
+			)}
 			checked={form.values.enabled}
 			onCheckedChange={(checked) => void form.setFieldValue("enabled", checked)}
-			switchLabel="Enable conversation retention"
+			switchLabel={tI18n(
+				"AISettingsPage.LifecyclePage.components.RetentionPeriodSettings.enable_conversation_retention_62a8a6e9",
+			)}
 			disabled={isSavingRetentionDays || isRetentionDaysLoading}
 			showSave={form.dirty}
 			isSaving={isSavingRetentionDays}
@@ -101,12 +129,16 @@ export const RetentionPeriodSettings: FC<RetentionPeriodSettingsProps> = ({
 						)}
 						{isSaveRetentionDaysError && (
 							<p className="m-0">
-								Failed to save conversation retention setting.
+								{tI18n(
+									"AISettingsPage.LifecyclePage.components.RetentionPeriodSettings.failed_to_save_conversation_retention_setting_d8ae5eab",
+								)}
 							</p>
 						)}
 						{isRetentionDaysLoadError && (
 							<p className="m-0">
-								Failed to load conversation retention setting.
+								{tI18n(
+									"AISettingsPage.LifecyclePage.components.RetentionPeriodSettings.failed_to_load_conversation_retention_setting_4a2b8aa8",
+								)}
 							</p>
 						)}
 					</>
@@ -118,7 +150,9 @@ export const RetentionPeriodSettings: FC<RetentionPeriodSettingsProps> = ({
 				value={form.values.retention_days}
 				onChange={form.handleChange}
 				onBlur={form.handleBlur}
-				label="Conversation retention period in days"
+				label={tI18n(
+					"AISettingsPage.LifecyclePage.components.RetentionPeriodSettings.conversation_retention_period_in_days_e8fc415f",
+				)}
 				disabled={
 					!form.values.enabled ||
 					isSavingRetentionDays ||

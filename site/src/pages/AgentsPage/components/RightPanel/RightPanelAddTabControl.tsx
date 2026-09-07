@@ -6,6 +6,7 @@ import {
 	SquareTerminalIcon,
 } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	Workspace,
 	WorkspaceAgent,
@@ -80,6 +81,8 @@ export const RightPanelAddTabControl: FC<{
 	onOpenCommandApp,
 	onOpenPort,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [open, setOpen] = useState(false);
 	// agent-browser already has the built-in Browser tab.
 	const userApps =
@@ -96,8 +99,12 @@ export const RightPanelAddTabControl: FC<{
 				size="icon"
 				onClick={onNewTerminal}
 				disabled={!canCreateTerminal}
-				aria-label="New terminal tab"
-				title="New terminal tab"
+				aria-label={tI18n(
+					"AgentsPage.components.RightPanel.RightPanelAddTabControl.new_terminal_tab_6b72c64f",
+				)}
+				title={tI18n(
+					"AgentsPage.components.RightPanel.RightPanelAddTabControl.new_terminal_tab_6b72c64f",
+				)}
 				className="size-6 rounded-none border-0 bg-transparent p-0 text-content-secondary hover:bg-surface-secondary hover:text-content-primary border-r border-solid border-border-default"
 			>
 				<PlusIcon className="size-3.5" />
@@ -107,7 +114,9 @@ export const RightPanelAddTabControl: FC<{
 					<Button
 						variant="subtle"
 						size="icon"
-						aria-label="Add panel"
+						aria-label={tI18n(
+							"AgentsPage.components.RightPanel.RightPanelAddTabControl.add_panel_790646a3",
+						)}
 						className="size-6 rounded-none border-0 bg-transparent p-0 text-content-secondary hover:bg-surface-secondary hover:text-content-primary"
 					>
 						<ChevronDownIcon
@@ -128,7 +137,9 @@ export const RightPanelAddTabControl: FC<{
 						disabled={!canCreateTerminal}
 					>
 						<SquareTerminalIcon />
-						New Terminal
+						{tI18n(
+							"AgentsPage.components.RightPanel.RightPanelAddTabControl.new_terminal_981ace96",
+						)}
 					</DropdownMenuItem>
 
 					{workspace && agent && userApps.length > 0 && (

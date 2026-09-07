@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { ChevronRightIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { ChatModel } from "#/api/typesGenerated";
 import { Avatar } from "#/components/Avatar/Avatar";
 import { Badge } from "#/components/Badge/Badge";
@@ -11,6 +12,7 @@ import {
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
 import { useClickableTableRow } from "#/hooks/useClickableTableRow";
+import { currentIntlLocale } from "#/i18n/locale";
 import { ProviderIcon } from "#/pages/AISettingsPage/ProvidersPage/components/ProviderIcon";
 
 type ModelRowProps = {
@@ -26,7 +28,7 @@ const formatContextLimit = (contextLimit: number): string => {
 	if (!Number.isFinite(contextLimit)) {
 		return "N/A";
 	}
-	return `${contextLimit.toLocaleString("en-US")} tokens`;
+	return `${contextLimit.toLocaleString(currentIntlLocale())} tokens`;
 };
 
 export const ModelRow: FC<ModelRowProps> = ({
@@ -37,6 +39,8 @@ export const ModelRow: FC<ModelRowProps> = ({
 	providerEnabled,
 	onClick,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const clickableProps = useClickableTableRow({ onClick });
 	const displayName = model.display_name || model.model;
 	// Models whose provider is missing or disabled cannot be used, so the
@@ -81,12 +85,16 @@ export const ModelRow: FC<ModelRowProps> = ({
 						</span>
 						{model.is_default && (
 							<Badge variant="default" className="shrink-0">
-								Default
+								{tI18n(
+									"AISettingsPage.ModelsPage.components.ModelRow.default_21b111cb",
+								)}
 							</Badge>
 						)}
 						{!model.enabled && (
 							<Badge variant="default" className="shrink-0">
-								Disabled
+								{tI18n(
+									"AISettingsPage.ModelsPage.components.ModelRow.disabled_75081b59",
+								)}
 							</Badge>
 						)}
 						{providerNotice && (
@@ -100,7 +108,11 @@ export const ModelRow: FC<ModelRowProps> = ({
 										onKeyDown={stopPropagation}
 										onKeyUp={stopPropagation}
 									>
-										<button type="button">Unavailable</button>
+										<button type="button">
+											{tI18n(
+												"AISettingsPage.ModelsPage.components.ModelRow.unavailable_ca184496",
+											)}
+										</button>
 									</Badge>
 								</TooltipTrigger>
 								<TooltipContent side="bottom" className="max-w-[240px]">
@@ -126,7 +138,9 @@ export const ModelRow: FC<ModelRowProps> = ({
 					</span>
 				) : (
 					<span className="truncate text-sm font-medium leading-6 text-content-secondary">
-						Unset
+						{tI18n(
+							"AISettingsPage.ModelsPage.components.ModelRow.unset_8d2dd4e8",
+						)}
 					</span>
 				)}
 			</TableCell>

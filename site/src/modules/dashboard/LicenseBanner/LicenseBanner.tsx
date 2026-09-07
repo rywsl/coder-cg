@@ -8,6 +8,7 @@ import {
 	LicenseManagedAgentLimitExceededWarningText,
 	LicenseTelemetryRequiredErrorText,
 } from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 import { useDashboard } from "#/modules/dashboard/useDashboard";
 import { docs } from "#/utils/docs";
 import {
@@ -22,8 +23,9 @@ const aiGovernanceNearLimitWarningPrefix =
 	LicenseAIGovernance90PercentWarningText.split("%d%%")[0];
 const agentRuntimeSoftLimitWarningPrefix =
 	LicenseAgentRuntimeHoursSoftLimitWarningText.split("%d")[0];
-const AI_GOVERNANCE_NEAR_LIMIT_FALLBACK_MESSAGE =
-	"You are approaching your AI Governance add-on seat limit.";
+const AI_GOVERNANCE_NEAR_LIMIT_FALLBACK_MESSAGE = i18n.t(
+	"dashboard:dashboard.LicenseBanner.LicenseBanner.you_are_approaching_your_ai_governance_add_on_se_d12af59c",
+);
 
 const isAIGovernanceWarning = (message: string): boolean =>
 	message.startsWith(aiGovernanceNearLimitWarningPrefix) ||
@@ -137,7 +139,9 @@ const messageLink = (message: string): LicenseBannerLink | undefined => {
 	if (message === LicenseManagedAgentLimitExceededWarningText) {
 		return {
 			href: docs("/ai-coder/ai-governance"),
-			label: "View AI Governance",
+			label: i18n.t(
+				"dashboard:dashboard.LicenseBanner.LicenseBanner.view_ai_governance_460f855d",
+			),
 			showExternalIcon: true,
 			target: "_blank",
 		};
@@ -145,7 +149,9 @@ const messageLink = (message: string): LicenseBannerLink | undefined => {
 	if (message === LicenseTelemetryRequiredErrorText) {
 		return {
 			href: "mailto:sales@coder.com",
-			label: "Contact sales@coder.com if you need an exception.",
+			label: i18n.t(
+				"dashboard:dashboard.LicenseBanner.LicenseBanner.contact_sales_coder_com_if_you_need_an_exception_11434c92",
+			),
 			showExternalIcon: false,
 		};
 	}
@@ -156,7 +162,9 @@ const messageLink = (message: string): LicenseBannerLink | undefined => {
 	}
 	return {
 		href: "mailto:sales@coder.com",
-		label: "Contact sales@coder.com.",
+		label: i18n.t(
+			"dashboard:dashboard.LicenseBanner.LicenseBanner.contact_sales_coder_com_ac64331a",
+		),
 		showExternalIcon: false,
 	};
 };

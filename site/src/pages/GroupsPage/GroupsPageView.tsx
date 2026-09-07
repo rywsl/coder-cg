@@ -1,5 +1,6 @@
 import { ChevronRightIcon, PlusIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { Link as RouterLink, useNavigate } from "react-router";
 import {
@@ -100,6 +101,8 @@ export const GroupsPageView: FC<GroupsPageViewProps> = ({
 	groupsQuery,
 	permissions,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<>
 			<SettingsHeader
@@ -109,29 +112,40 @@ export const GroupsPageView: FC<GroupsPageViewProps> = ({
 						<Button asChild>
 							<RouterLink to="create">
 								<PlusIcon />
-								New group
+								{tI18n("GroupsPage.GroupsPageView.new_group_df796c65")}
 							</RouterLink>
 						</Button>
 					)
 				}
 			>
-				<SettingsHeaderTitle>Groups</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n("GroupsPage.GroupsPageView.groups_39bbb719")}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Manage groups for this{" "}
-					{showOrganizations ? "organization" : "deployment"}.{" "}
-					<SettingsHeaderDocsLink href={docs("/admin/users/groups-roles")} />
+					{tI18n("GroupsPage.GroupsPageView.manage_groups_for_this_821d0cf5")}{" "}
+					{showOrganizations
+						? tI18n("GroupsPage.GroupsPageView.organization_af3a1bb3")
+						: tI18n("GroupsPage.GroupsPageView.deployment_aee50b18")}
+					. <SettingsHeaderDocsLink href={docs("/admin/users/groups-roles")} />
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			{!groupsEnabled ? (
 				<PremiumPaywall
 					source="groups"
-					message="Groups"
-					description="Run isolated business units on one deployment, each with its own users, templates, provisioners, and infrastructure."
+					message={tI18n("GroupsPage.GroupsPageView.groups_39bbb719")}
+					description={tI18n(
+						"GroupsPage.GroupsPageView.run_isolated_business_units_on_one_deployment_ea_3b4f63c9",
+					)}
 					features={[
-						"Isolate provisioners & infrastructure",
-						"Sync org membership from your IdP",
-						"Manage orgs at scale via Terraform",
+						tI18n(
+							"GroupsPage.GroupsPageView.isolate_provisioners_infrastructure_b9bf8bb0",
+						),
+						tI18n(
+							"GroupsPage.GroupsPageView.sync_org_membership_from_your_idp_48008951",
+						),
+						tI18n(
+							"GroupsPage.GroupsPageView.manage_orgs_at_scale_via_terraform_5dea644c",
+						),
 					]}
 					canViewPremium={permissions.viewAllLicenses}
 				/>
@@ -140,28 +154,35 @@ export const GroupsPageView: FC<GroupsPageViewProps> = ({
 					<GroupsFilter {...filterProps} />
 
 					<PaginationContainer query={groupsQuery} paginationUnitLabel="groups">
-						<Table aria-label="Groups">
+						<Table
+							aria-label={tI18n("GroupsPage.GroupsPageView.groups_39bbb719")}
+						>
 							<TableHeader>
 								<TableRow>
-									<TableHead className="w-2/5">Name</TableHead>
+									<TableHead className="w-2/5">
+										{tI18n("GroupsPage.GroupsPageView.name_dcd1d522")}
+									</TableHead>
 									<TableHead className={showAIBudget ? "w-1/5" : "w-3/5"}>
-										Users
+										{tI18n("GroupsPage.GroupsPageView.users_6b0cc904")}
 									</TableHead>
 									{showAIBudget && (
 										<TableHead className="w-2/5">
 											<div className="flex items-center gap-1">
-												AI spend
+												{tI18n("GroupsPage.GroupsPageView.ai_spend_aa5699b0")}
 												{spendError ? (
 													<StatusIconTooltip
 														kind="warning"
-														message="AI spend couldn't be loaded, so budgets aren't shown."
+														message={tI18n(
+															"GroupsPage.GroupsPageView.ai_spend_couldn_t_be_loaded_so_budgets_aren_t_sh_ab1deeeb",
+														)}
 													/>
 												) : (
 													<StatusIconTooltip
 														message={
 															<>
-																Approximate AI spend compared to the group's AI
-																budget for the active period.{" "}
+																{tI18n(
+																	"GroupsPage.GroupsPageView.approximate_ai_spend_compared_to_the_group_s_ai__15f47d8b",
+																)}{" "}
 																<SpendEstimateDocsLink />
 															</>
 														}
@@ -202,6 +223,8 @@ const GroupsTableBody: FC<GroupsTableBodyProps> = ({
 	showAIBudget,
 	filterUsed,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	if (groups === undefined) {
 		return <TableLoader showAIBudget={showAIBudget} />;
 	}
@@ -213,8 +236,12 @@ const GroupsTableBody: FC<GroupsTableBodyProps> = ({
 				<TableRow>
 					<TableCell colSpan={999}>
 						<EmptyState
-							message="No groups match your search"
-							description="Try a different search term."
+							message={tI18n(
+								"GroupsPage.GroupsPageView.no_groups_match_your_search_912c257c",
+							)}
+							description={tI18n(
+								"GroupsPage.GroupsPageView.try_a_different_search_term_36b89662",
+							)}
 						/>
 					</TableCell>
 				</TableRow>
@@ -222,18 +249,22 @@ const GroupsTableBody: FC<GroupsTableBodyProps> = ({
 		}
 		return (
 			<TableEmpty
-				message="No groups yet"
+				message={tI18n("GroupsPage.GroupsPageView.no_groups_yet_07514d06")}
 				description={
 					canCreateGroup
-						? "Create your first group"
-						: "You don't have permission to create a group"
+						? tI18n(
+								"GroupsPage.GroupsPageView.create_your_first_group_0a185439",
+							)
+						: tI18n(
+								"GroupsPage.GroupsPageView.you_don_t_have_permission_to_create_a_group_67edd33f",
+							)
 				}
 				cta={
 					canCreateGroup && (
 						<Button asChild>
 							<RouterLink to="create">
 								<PlusIcon />
-								New group
+								{tI18n("GroupsPage.GroupsPageView.new_group_df796c65")}
 							</RouterLink>
 						</Button>
 					)
@@ -256,6 +287,8 @@ interface GroupRowProps {
 }
 
 const GroupRow: FC<GroupRowProps> = ({ group, showAIBudget }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const navigate = useNavigate();
 	const rowProps = useClickableTableRow({
 		onClick: () => navigate(group.name),
@@ -291,10 +324,11 @@ const GroupRow: FC<GroupRowProps> = ({ group, showAIBudget }) => {
 						/>
 					}
 					title={group.display_name || group.name}
-					subtitle={`${group.total_member_count} members`}
+					subtitle={tI18n("GroupsPage.GroupsPageView.value0_members_251dc659", {
+						value0: group.total_member_count,
+					})}
 				/>
 			</TableCell>
-
 			<TableCell>
 				{group.total_member_count === 0 || membersQuery.isError ? (
 					EM_DASH
@@ -321,7 +355,6 @@ const GroupRow: FC<GroupRowProps> = ({ group, showAIBudget }) => {
 					</div>
 				)}
 			</TableCell>
-
 			{showAIBudget && (
 				<TableCell>
 					{group.spend ? (
@@ -334,7 +367,6 @@ const GroupRow: FC<GroupRowProps> = ({ group, showAIBudget }) => {
 					)}
 				</TableCell>
 			)}
-
 			<TableCell>
 				<div className="flex">
 					<ChevronRightIcon className="size-icon-sm" />

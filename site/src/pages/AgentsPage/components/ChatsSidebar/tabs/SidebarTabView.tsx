@@ -17,6 +17,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "#/components/Button/Button";
 
 /** A single tab definition for the sidebar panel. */
@@ -160,6 +161,8 @@ export const SidebarTabView: FC<SidebarTabViewProps> = ({
 	onActiveTabChange,
 	addTabControl,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const tabIdPrefix = useId();
 	const {
 		ref: tabScrollRef,
@@ -186,7 +189,9 @@ export const SidebarTabView: FC<SidebarTabViewProps> = ({
 							variant="subtle"
 							size="icon"
 							onClick={onClose}
-							aria-label="Close panel"
+							aria-label={tI18n(
+								"AgentsPage.components.ChatsSidebar.tabs.SidebarTabView.close_panel_a600b900",
+							)}
 							className="size-7 shrink-0 lg:hidden"
 						>
 							<ArrowLeftIcon />
@@ -204,14 +209,24 @@ export const SidebarTabView: FC<SidebarTabViewProps> = ({
 						variant="subtle"
 						size="icon"
 						onClick={onToggleExpanded}
-						aria-label={isExpanded ? "Collapse panel" : "Expand panel"}
+						aria-label={
+							isExpanded
+								? tI18n(
+										"AgentsPage.components.ChatsSidebar.tabs.SidebarTabView.collapse_panel_8ad80bc1",
+									)
+								: tI18n(
+										"AgentsPage.components.ChatsSidebar.tabs.SidebarTabView.expand_panel_4a74667f",
+									)
+						}
 						className="hidden size-7 shrink-0 text-content-secondary hover:text-content-primary lg:inline-flex"
 					>
 						{isExpanded ? <MinimizeIcon /> : <MaximizeIcon />}
 					</Button>
 				</div>
 				<div className="flex flex-1 items-center justify-center p-6 text-center text-xs text-content-secondary">
-					No panels available.
+					{tI18n(
+						"AgentsPage.components.ChatsSidebar.tabs.SidebarTabView.no_panels_available_8c9b2f6e",
+					)}
 				</div>
 			</div>
 		);
@@ -228,7 +243,9 @@ export const SidebarTabView: FC<SidebarTabViewProps> = ({
 						variant="subtle"
 						size="icon"
 						onClick={onClose}
-						aria-label="Close panel"
+						aria-label={tI18n(
+							"AgentsPage.components.ChatsSidebar.tabs.SidebarTabView.close_panel_a600b900",
+						)}
 						className="size-7 shrink-0 lg:hidden"
 					>
 						<ArrowLeftIcon />
@@ -239,7 +256,9 @@ export const SidebarTabView: FC<SidebarTabViewProps> = ({
 						variant="subtle"
 						size="icon"
 						onClick={onToggleSidebarCollapsed}
-						aria-label="Expand sidebar"
+						aria-label={tI18n(
+							"AgentsPage.components.ChatsSidebar.tabs.SidebarTabView.expand_sidebar_37a5d648",
+						)}
 						className="mr-1 size-7 shrink-0"
 					>
 						<PanelLeftIcon />
@@ -248,7 +267,9 @@ export const SidebarTabView: FC<SidebarTabViewProps> = ({
 				<div className="relative min-w-0 flex-1">
 					{canScrollLeft && (
 						<ScrollChevronButton
-							ariaLabel="Scroll tabs left"
+							ariaLabel={tI18n(
+								"AgentsPage.components.ChatsSidebar.tabs.SidebarTabView.scroll_tabs_left_7a08c90e",
+							)}
 							direction="left"
 							onClick={scrollTabsLeft}
 						/>
@@ -310,7 +331,12 @@ export const SidebarTabView: FC<SidebarTabViewProps> = ({
 											event.stopPropagation();
 											onClose();
 										}}
-										aria-label={`Close ${tab.label} tab`}
+										aria-label={tI18n(
+											"AgentsPage.components.ChatsSidebar.tabs.SidebarTabView.close_value0_tab_d9f193b5",
+											{
+												value0: tab.label,
+											},
+										)}
 										className={cn(
 											"size-6 rounded-l-none rounded-r-md bg-surface-primary p-0 text-content-secondary hover:text-content-primary [&>svg]:size-3",
 											isActive &&
@@ -326,7 +352,9 @@ export const SidebarTabView: FC<SidebarTabViewProps> = ({
 					</div>
 					{canScrollRight && (
 						<ScrollChevronButton
-							ariaLabel="Scroll tabs right"
+							ariaLabel={tI18n(
+								"AgentsPage.components.ChatsSidebar.tabs.SidebarTabView.scroll_tabs_right_449e09ff",
+							)}
 							direction="right"
 							onClick={scrollTabsRight}
 						/>
@@ -343,7 +371,15 @@ export const SidebarTabView: FC<SidebarTabViewProps> = ({
 					variant="subtle"
 					size="icon"
 					onClick={onToggleExpanded}
-					aria-label={isExpanded ? "Collapse panel" : "Expand panel"}
+					aria-label={
+						isExpanded
+							? tI18n(
+									"AgentsPage.components.ChatsSidebar.tabs.SidebarTabView.collapse_panel_8ad80bc1",
+								)
+							: tI18n(
+									"AgentsPage.components.ChatsSidebar.tabs.SidebarTabView.expand_panel_4a74667f",
+								)
+					}
 					className="hidden size-7 shrink-0 self-start text-content-secondary hover:text-content-primary lg:inline-flex"
 				>
 					{isExpanded ? <MinimizeIcon /> : <MaximizeIcon />}

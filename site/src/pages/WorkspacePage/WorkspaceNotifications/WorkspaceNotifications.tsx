@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { InfoIcon, TriangleAlertIcon } from "lucide-react";
 import { type FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { workspaceResolveAutostart } from "#/api/queries/workspaceQuota";
 import type {
 	Template,
@@ -43,6 +44,8 @@ export const WorkspaceNotifications: FC<WorkspaceNotificationsProps> = ({
 	onUpdateWorkspace,
 	onActivateWorkspace,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const notifications: NotificationItem[] = [];
 
 	// Outdated
@@ -60,21 +63,28 @@ export const WorkspaceNotifications: FC<WorkspaceNotificationsProps> = ({
 	if (workspace.outdated && latestVersion) {
 		const actions = (
 			<NotificationActionButton onClick={onUpdateWorkspace}>
-				Update
+				{tI18n(
+					"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.update_c1c1009d",
+				)}
 			</NotificationActionButton>
 		);
 		if (requiresManualUpdate) {
 			notifications.push({
-				title: "Autostart has been disabled for your workspace.",
+				title: tI18n(
+					"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.autostart_has_been_disabled_for_your_workspace_89971730",
+				),
 				severity: "warning",
-				detail:
-					"Autostart is unable to automatically update your workspace. Manually update your workspace to reenable Autostart.",
+				detail: tI18n(
+					"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.autostart_is_unable_to_automatically_update_your_fa2675b2",
+				),
 
 				actions,
 			});
 		} else {
 			notifications.push({
-				title: "An update is available for your workspace",
+				title: tI18n(
+					"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.an_update_is_available_for_your_workspace_870d6c03",
+				),
 				severity: "info",
 				detail: (
 					<TemplateUpdateMessage>{latestVersion.message}</TemplateUpdateMessage>
@@ -95,36 +105,49 @@ export const WorkspaceNotifications: FC<WorkspaceNotificationsProps> = ({
 			// Restarting won't fix a broken startup script, so omit the Restart
 			// button and guide the user to their template admin instead.
 			notifications.push({
-				title: "A startup script has failed",
+				title: tI18n(
+					"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.a_startup_script_has_failed_4c1d3704",
+				),
 				severity: "warning",
-				detail:
-					"The workspace agent is running but a startup script exited with an error.",
+				detail: tI18n(
+					"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.the_workspace_agent_is_running_but_a_startup_scr_8e3f1049",
+				),
 				actions: troubleshootingURL ? (
 					<NotificationActionButton
 						onClick={() => window.open(troubleshootingURL, "_blank")}
 					>
-						Troubleshooting
+						{tI18n(
+							"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.troubleshooting_c3af076f",
+						)}
 					</NotificationActionButton>
 				) : undefined,
 			});
 		} else {
 			const hasActions = permissions.updateWorkspace || troubleshootingURL;
 			notifications.push({
-				title: "One or more workspace agents need attention",
+				title: tI18n(
+					"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.one_or_more_workspace_agents_need_attention_436c9ece",
+				),
 				severity: "warning",
-				detail: "Expand an agent's logs to view per-agent health details.",
+				detail: tI18n(
+					"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.expand_an_agent_s_logs_to_view_per_agent_health__598391cc",
+				),
 				actions: hasActions ? (
 					<>
 						{permissions.updateWorkspace && (
 							<NotificationActionButton onClick={onRestartWorkspace}>
-								Restart
+								{tI18n(
+									"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.restart_6b983a81",
+								)}
 							</NotificationActionButton>
 						)}
 						{troubleshootingURL && (
 							<NotificationActionButton
 								onClick={() => window.open(troubleshootingURL, "_blank")}
 							>
-								Troubleshooting
+								{tI18n(
+									"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.troubleshooting_c3af076f",
+								)}
 							</NotificationActionButton>
 						)}
 					</>
@@ -149,28 +172,48 @@ export const WorkspaceNotifications: FC<WorkspaceNotificationsProps> = ({
 		};
 		const actions = (
 			<NotificationActionButton onClick={onActivateWorkspace}>
-				Activate
+				{tI18n(
+					"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.activate_24433c70",
+				)}
 			</NotificationActionButton>
 		);
 		notifications.push({
 			actions,
-			title: "Workspace is dormant",
+			title: tI18n(
+				"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.workspace_is_dormant_92f03ac0",
+			),
 			severity: "warning",
 			detail: workspace.deleting_at ? (
 				<>
-					This workspace has not been used for{" "}
-					{dayjs(workspace.last_used_at).fromNow(true)} and was marked dormant
-					on {formatDateTime(workspace.dormant_at, false)}. It is scheduled to
-					be deleted on {formatDateTime(workspace.deleting_at, true)}. To keep
-					it you must activate the workspace.
+					{tI18n(
+						"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.this_workspace_has_not_been_used_for_ac55990c",
+					)}{" "}
+					{dayjs(workspace.last_used_at).fromNow(true)}
+					{tI18n(
+						"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.and_was_marked_dormant_on_a8bc8a38",
+					)}
+					{formatDateTime(workspace.dormant_at, false)}
+					{tI18n(
+						"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.it_is_scheduled_to_be_deleted_on_cdd98e41",
+					)}
+					{formatDateTime(workspace.deleting_at, true)}
+					{tI18n(
+						"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.to_keep_it_you_must_activate_the_workspace_9951b971",
+					)}
 				</>
 			) : (
 				<>
-					This workspace has not been used for{" "}
-					{dayjs(workspace.last_used_at).fromNow(true)} and was marked dormant
-					on {formatDateTime(workspace.dormant_at, false)}. It is not scheduled
-					for auto-deletion but will become a candidate if auto-deletion is
-					enabled on this template. To keep it you must activate the workspace.
+					{tI18n(
+						"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.this_workspace_has_not_been_used_for_ac55990c",
+					)}{" "}
+					{dayjs(workspace.last_used_at).fromNow(true)}
+					{tI18n(
+						"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.and_was_marked_dormant_on_a8bc8a38",
+					)}
+					{formatDateTime(workspace.dormant_at, false)}
+					{tI18n(
+						"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.it_is_not_scheduled_for_auto_deletion_but_will_b_680b2960",
+					)}
 				</>
 			),
 		});
@@ -215,15 +258,19 @@ export const WorkspaceNotifications: FC<WorkspaceNotificationsProps> = ({
 
 	if (showAlertPendingInQueue) {
 		notifications.push({
-			title: "Workspace build is pending",
+			title: tI18n(
+				"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.workspace_build_is_pending_965cf1fd",
+			),
 			severity: "info",
 			detail: (
 				<>
-					This workspace build job is waiting for a provisioner to become
-					available. If you have been waiting for an extended period of time,
-					please contact your administrator for assistance.
+					{tI18n(
+						"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.this_workspace_build_job_is_waiting_for_a_provis_462d45a7",
+					)}
 					<span className="block mt-3">
-						Position in queue:{" "}
+						{tI18n(
+							"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.position_in_queue_7f05c4b1",
+						)}{" "}
 						<strong>{workspace.latest_build.job.queue_position}</strong>
 					</span>
 				</>
@@ -234,7 +281,9 @@ export const WorkspaceNotifications: FC<WorkspaceNotificationsProps> = ({
 	// Deprecated
 	if (template.deprecated) {
 		notifications.push({
-			title: "This workspace uses a deprecated template",
+			title: tI18n(
+				"WorkspacePage.WorkspaceNotifications.WorkspaceNotifications.this_workspace_uses_a_deprecated_template_d634763c",
+			),
 			severity: "warning",
 			detail: (
 				<MemoizedInlineMarkdown>

@@ -1,5 +1,6 @@
 import { InfoIcon } from "lucide-react";
 import type { ComponentProps, FC, PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
 import type { AIBridgeSession } from "#/api/typesGenerated";
 import {
 	PaginationContainer,
@@ -37,21 +38,26 @@ interface ListSessionsPageViewProps {
 	onSessionRowClick?: (sessionId: string) => void;
 }
 
-const ThreadTooltip: FC<PropsWithChildren> = ({ children }) => (
-	<TooltipProvider>
-		<Tooltip>
-			<TooltipTrigger asChild>{children}</TooltipTrigger>
-			<TooltipContent
-				side="top"
-				align="end"
-				className="max-w-xs text-sm font-normal"
-			>
-				A thread is a multi-part interaction between human and agent involving
-				an initial human prompt and a subsequent agentic loop.
-			</TooltipContent>
-		</Tooltip>
-	</TooltipProvider>
-);
+const ThreadTooltip: FC<PropsWithChildren> = ({ children }) => {
+	const { t: tI18n } = useTranslation("agents");
+
+	return (
+		<TooltipProvider>
+			<Tooltip>
+				<TooltipTrigger asChild>{children}</TooltipTrigger>
+				<TooltipContent
+					side="top"
+					align="end"
+					className="max-w-xs text-sm font-normal"
+				>
+					{tI18n(
+						"AIBridgePage.ListSessionsPage.ListSessionsPageView.a_thread_is_a_multi_part_interaction_between_hum_a35cc1d8",
+					)}
+				</TooltipContent>
+			</Tooltip>
+		</TooltipProvider>
+	);
+};
 
 export const ListSessionsPageView: FC<ListSessionsPageViewProps> = ({
 	isLoading,
@@ -63,6 +69,8 @@ export const ListSessionsPageView: FC<ListSessionsPageViewProps> = ({
 	filterProps,
 	onSessionRowClick,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	if (!isAISessionsEntitled) {
 		return (
 			<PremiumPaywallAIGovernance
@@ -81,25 +89,53 @@ export const ListSessionsPageView: FC<ListSessionsPageViewProps> = ({
 	return (
 		<>
 			<ListSessionsFilter {...filterProps} />
-
 			<PaginationContainer query={sessionsQuery} paginationUnitLabel="sessions">
 				<Table className="text-sm font-normal">
 					<TableHeader>
 						<TableRow>
-							<TableHead className="text-nowrap">Last Prompt</TableHead>
-							<TableHead className="text-nowrap">User</TableHead>
-							<TableHead className="text-nowrap">Provider</TableHead>
-							<TableHead className="text-nowrap">Client</TableHead>
-							<TableHead className="text-nowrap">In/Out Tokens</TableHead>
-							<TableHead className="text-nowrap">Network Requests</TableHead>
+							<TableHead className="text-nowrap">
+								{tI18n(
+									"AIBridgePage.ListSessionsPage.ListSessionsPageView.last_prompt_2cf8a798",
+								)}
+							</TableHead>
+							<TableHead className="text-nowrap">
+								{tI18n(
+									"AIBridgePage.ListSessionsPage.ListSessionsPageView.user_b512d97e",
+								)}
+							</TableHead>
+							<TableHead className="text-nowrap">
+								{tI18n(
+									"AIBridgePage.ListSessionsPage.ListSessionsPageView.provider_472590ae",
+								)}
+							</TableHead>
+							<TableHead className="text-nowrap">
+								{tI18n(
+									"AIBridgePage.ListSessionsPage.ListSessionsPageView.client_0c77fe09",
+								)}
+							</TableHead>
+							<TableHead className="text-nowrap">
+								{tI18n(
+									"AIBridgePage.ListSessionsPage.ListSessionsPageView.in_out_tokens_ba5f636c",
+								)}
+							</TableHead>
+							<TableHead className="text-nowrap">
+								{tI18n(
+									"AIBridgePage.ListSessionsPage.ListSessionsPageView.network_requests_0b9921c8",
+								)}
+							</TableHead>
 							<TableHead className="flex items-center flex-nowrap gap-1">
-								Threads
+								{tI18n(
+									"AIBridgePage.ListSessionsPage.ListSessionsPageView.threads_3e42e385",
+								)}
 								<ThreadTooltip>
 									<InfoIcon className="size-icon-xs" />
 								</ThreadTooltip>
 							</TableHead>
 							<TableHead className="text-nowrap">
-								Last Prompt At [UTC{utcOffset}]
+								{tI18n(
+									"AIBridgePage.ListSessionsPage.ListSessionsPageView.last_prompt_at_utc_e7f08c95",
+								)}
+								{utcOffset}]
 							</TableHead>
 						</TableRow>
 					</TableHeader>
@@ -107,7 +143,11 @@ export const ListSessionsPageView: FC<ListSessionsPageViewProps> = ({
 						{isLoading || isFetching ? (
 							<TableLoader />
 						) : sessions?.length === 0 ? (
-							<TableEmpty message="No session logs available" />
+							<TableEmpty
+								message={tI18n(
+									"AIBridgePage.ListSessionsPage.ListSessionsPageView.no_session_logs_available_50487da8",
+								)}
+							/>
 						) : (
 							sessions?.map((session) => (
 								<ListSessionsRow

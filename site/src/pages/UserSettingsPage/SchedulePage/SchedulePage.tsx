@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import {
@@ -17,6 +18,8 @@ import { useAuthenticated } from "#/hooks/useAuthenticated";
 import { ScheduleForm } from "./ScheduleForm";
 
 const SchedulePage: FC = () => {
+	const { t: tI18n } = useTranslation("users");
+
 	const { user: me } = useAuthenticated();
 	const queryClient = useQueryClient();
 
@@ -44,10 +47,15 @@ const SchedulePage: FC = () => {
 	return (
 		<>
 			<SettingsHeader>
-				<SettingsHeaderTitle>Quiet hours</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"UserSettingsPage.SchedulePage.SchedulePage.quiet_hours_bf0671dd",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Workspaces may be automatically updated during your quiet hours, as
-					configured by your administrators.
+					{tI18n(
+						"UserSettingsPage.SchedulePage.SchedulePage.workspaces_may_be_automatically_updated_during_y_2ee81f31",
+					)}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
 			<ScheduleForm
@@ -57,7 +65,11 @@ const SchedulePage: FC = () => {
 				onSubmit={(values) => {
 					onSubmit(values, {
 						onSuccess: () => {
-							toast.success("Schedule updated successfully.");
+							toast.success(
+								tI18n(
+									"UserSettingsPage.SchedulePage.SchedulePage.schedule_updated_successfully_5ae2e998",
+								),
+							);
 						},
 					});
 				}}

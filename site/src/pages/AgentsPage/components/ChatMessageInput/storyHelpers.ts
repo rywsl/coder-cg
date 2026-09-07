@@ -1,5 +1,6 @@
 import { expect, waitFor, within } from "storybook/test";
 import type { UserSkillMetadata } from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 import { MOCK_TIMESTAMP } from "#/testHelpers/chatEntities";
 
 export const MockSkill: UserSkillMetadata = {
@@ -15,13 +16,17 @@ export const MockSkills: UserSkillMetadata[] = [
 		...MockSkill,
 		id: "skill-reviewer",
 		name: "reviewer",
-		description: "Review changed files and suggest fixes.",
+		description: i18n.t(
+			"agents:AgentsPage.components.ChatMessageInput.storyHelpers.review_changed_files_and_suggest_fixes_8523e9b5",
+		),
 	},
 	{
 		...MockSkill,
 		id: "skill-docs",
 		name: "docs",
-		description: "Draft docs for user-facing behavior.",
+		description: i18n.t(
+			"agents:AgentsPage.components.ChatMessageInput.storyHelpers.draft_docs_for_user_facing_behavior_920aff4f",
+		),
 	},
 	{ ...MockSkill, id: "skill-plan", name: "plan" },
 ];

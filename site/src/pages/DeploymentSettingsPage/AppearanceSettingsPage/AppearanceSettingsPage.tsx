@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import { getErrorDetail, getErrorMessage } from "#/api/errors";
@@ -18,6 +19,8 @@ import { AppearanceSettingsPageView } from "./AppearanceSettingsPageView";
 // exception because the Service Banner is visual, and configuring it from
 // the command line would be a significantly worse user experience.
 const AppearanceSettingsPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { appearance, entitlements } = useDashboard();
 	const queryClient = useQueryClient();
 	const updateAppearanceMutation = useMutation(updateAppearance(queryClient));
@@ -36,12 +39,18 @@ const AppearanceSettingsPage: FC = () => {
 		});
 
 		toast.promise(mutation, {
-			loading: "Updating appearance settings...",
-			success: "Appearance settings updated successfully.",
+			loading: tI18n(
+				"DeploymentSettingsPage.AppearanceSettingsPage.AppearanceSettingsPage.updating_appearance_settings_234d4bdb",
+			),
+			success: tI18n(
+				"DeploymentSettingsPage.AppearanceSettingsPage.AppearanceSettingsPage.appearance_settings_updated_successfully_2b373752",
+			),
 			error: (error) => ({
 				message: getErrorMessage(
 					error,
-					"Failed to update appearance settings.",
+					tI18n(
+						"DeploymentSettingsPage.AppearanceSettingsPage.AppearanceSettingsPage.failed_to_update_appearance_settings_3c2325a3",
+					),
 				),
 				description: getErrorDetail(error),
 			}),
@@ -50,8 +59,13 @@ const AppearanceSettingsPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Appearance Settings")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n(
+						"DeploymentSettingsPage.AppearanceSettingsPage.AppearanceSettingsPage.appearance_settings_a6887bd9",
+					),
+				)}
+			</title>
 			<RequirePermission isFeatureVisible={canEditAppearance}>
 				<AppearanceSettingsPageView
 					appearance={appearance}

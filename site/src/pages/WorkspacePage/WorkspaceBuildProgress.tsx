@@ -2,6 +2,7 @@ import dayjs, { type Dayjs } from "dayjs";
 import duration from "dayjs/plugin/duration";
 import capitalize from "lodash/capitalize";
 import { type FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	Template,
 	TransitionStats,
@@ -70,6 +71,8 @@ export const WorkspaceBuildProgress: FC<WorkspaceBuildProgressProps> = ({
 	workspace,
 	transitionStats,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const job = workspace.latest_build.job;
 	const [progressValue, setProgressValue] = useState<number | undefined>(0);
 	const [progressText, setProgressText] = useState<string | undefined>(
@@ -130,7 +133,8 @@ export const WorkspaceBuildProgress: FC<WorkspaceBuildProgressProps> = ({
 			/>
 			<div className="flex mt-2.5 justify-between">
 				<div className="block text-xs font-semibold text-content-secondary">
-					{capitalize(workspace.latest_build.status)} workspace...
+					{capitalize(workspace.latest_build.status)}
+					{tI18n("WorkspacePage.WorkspaceBuildProgress.workspace_db407a49")}
 				</div>
 				<div
 					className="block text-xs font-semibold text-content-secondary"

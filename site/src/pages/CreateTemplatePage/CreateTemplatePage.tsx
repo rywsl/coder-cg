@@ -1,4 +1,5 @@
 import { type FC, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation } from "react-query";
 import { useNavigate, useSearchParams } from "react-router";
 import { createTemplate } from "#/api/queries/templates";
@@ -13,6 +14,8 @@ import type { CreateTemplatePageViewProps } from "./types";
 import { UploadTemplateView } from "./UploadTemplateView";
 
 const CreateTemplatePage: FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const navigate = useNavigate();
 	const getLink = useLinks();
 	const [searchParams] = useSearchParams();
@@ -83,9 +86,18 @@ const CreateTemplatePage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Create Template")}</title>
-
-			<FullPageHorizontalForm title="Create Template">
+			<title>
+				{pageTitle(
+					tI18n(
+						"CreateTemplatePage.CreateTemplatePage.create_template_b79296f1",
+					),
+				)}
+			</title>
+			<FullPageHorizontalForm
+				title={tI18n(
+					"CreateTemplatePage.CreateTemplatePage.create_template_b79296f1",
+				)}
+			>
 				{searchParams.has("fromTemplate") ? (
 					<DuplicateTemplateView {...pageViewProps} />
 				) : searchParams.has("exampleId") ? (
@@ -94,7 +106,6 @@ const CreateTemplatePage: FC = () => {
 					<UploadTemplateView {...pageViewProps} />
 				)}
 			</FullPageHorizontalForm>
-
 			<BuildLogsDrawer
 				error={createTemplateMutation.error}
 				open={isBuildLogsOpen}

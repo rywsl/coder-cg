@@ -5,17 +5,25 @@ import type { FC } from "react";
 import { type LinkProps, Link as RouterLink } from "react-router";
 import { Button } from "#/components/Button/Button";
 import { Supergraphic } from "#/components/Supergraphic/Supergraphic";
+import { i18n } from "#/i18n";
 
 export const PREMIUM_FEATURES = [
-	"High availability & workspace proxies",
-	"Multi-org & role-based access control",
-	"24x7 global support with SLA",
-	"Unlimited Git & external auth integrations",
+	i18n.t(
+		"components:Paywall.Paywall.high_availability_workspace_proxies_7f66cc1c",
+	),
+	i18n.t(
+		"components:Paywall.Paywall.multi_org_role_based_access_control_15ad953f",
+	),
+	i18n.t("components:Paywall.Paywall.24x7_global_support_with_sla_ede4f1cd"),
+	i18n.t(
+		"components:Paywall.Paywall.unlimited_git_external_auth_integrations_522013a4",
+	),
 ];
 
 export const PREMIUM_PAGE_PATH = "/deployment/premium";
-export const PREMIUM_DEFAULT_DESCRIPTION =
-	"You need a Premium license to use this feature.";
+export const PREMIUM_DEFAULT_DESCRIPTION = i18n.t(
+	"components:Paywall.Paywall.you_need_a_premium_license_to_use_this_feature_96d5bfce",
+);
 export const PREMIUM_DEFAULT_HERO = "Get access with a Coder trial";
 
 export type PaywallProps = React.ComponentProps<"div"> & {

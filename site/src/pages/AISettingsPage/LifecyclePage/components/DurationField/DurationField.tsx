@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import dayjs from "dayjs";
 import { type FC, type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Input } from "#/components/Input/Input";
 import {
 	Select,
@@ -51,6 +52,8 @@ export const DurationField: FC<DurationFieldProps> = ({
 	helperText,
 	className,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [unit, setUnit] = useState<TimeUnit>(() => suggestedTimeUnit(valueMs));
 	const [text, setText] = useState(() => toDisplayValue(valueMs, unit));
 
@@ -109,17 +112,26 @@ export const DurationField: FC<DurationFieldProps> = ({
 				>
 					<SelectTrigger
 						className="h-10 w-[120px] flex-none gap-2 rounded-md border-border-default px-3 shadow-none"
-						aria-label="Time unit"
+						aria-label={tI18n(
+							"AISettingsPage.LifecyclePage.components.DurationField.DurationField.time_unit_f3598339",
+						)}
 					>
 						<SelectValue />
 					</SelectTrigger>
 					<SelectContent>
-						<SelectItem value="hours">Hours</SelectItem>
-						<SelectItem value="days">Days</SelectItem>
+						<SelectItem value="hours">
+							{tI18n(
+								"AISettingsPage.LifecyclePage.components.DurationField.DurationField.hours_21e84929",
+							)}
+						</SelectItem>
+						<SelectItem value="days">
+							{tI18n(
+								"AISettingsPage.LifecyclePage.components.DurationField.DurationField.days_e08c0aa8",
+							)}
+						</SelectItem>
 					</SelectContent>
 				</Select>
 			</div>
-
 			{helperText && (
 				<p
 					className={cn(

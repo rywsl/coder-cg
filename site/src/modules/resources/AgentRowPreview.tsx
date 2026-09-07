@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { SquareTerminalIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { WorkspaceAgent } from "#/api/typesGenerated";
 import { ExternalImage } from "#/components/ExternalImage/ExternalImage";
 import { DisplayAppNameMap } from "./AppLink/AppLink";
@@ -20,6 +21,8 @@ export const AgentRowPreview: FC<AgentRowPreviewProps> = ({
 	agent,
 	alignValues,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<div
 			key={agent.id}
@@ -36,7 +39,7 @@ export const AgentRowPreview: FC<AgentRowPreviewProps> = ({
 							alignValues && "sm:min-w-[240px]",
 						)}
 					>
-						<span>Agent:</span>
+						<span>{tI18n("resources.AgentRowPreview.agent_687ebf2c")}</span>
 						<span className="text-content-primary">{agent.name}</span>
 					</div>
 
@@ -46,14 +49,14 @@ export const AgentRowPreview: FC<AgentRowPreviewProps> = ({
 							alignValues && "sm:min-w-[100px]",
 						)}
 					>
-						<span>OS:</span>
+						<span>{tI18n("resources.AgentRowPreview.os_049f4de9")}</span>
 						<span className="font-normal text-sm capitalize text-content-primary">
 							{agent.operating_system}
 						</span>
 					</div>
 
 					<div className="flex flex-row items-center gap-2 max-md:w-fit max-md:flex-col max-md:items-start max-md:gap-2">
-						<span>Apps:</span>
+						<span>{tI18n("resources.AgentRowPreview.apps_368a9c19")}</span>
 						<div className="flex flex-row items-center gap-1 flex-wrap">
 							{/* We display all modules returned in agent.apps */}
 							{agent.apps.map((app) => (
@@ -101,7 +104,9 @@ export const AgentRowPreview: FC<AgentRowPreviewProps> = ({
 								)
 							)}
 							{agent.apps.length === 0 && agent.display_apps.length === 0 && (
-								<span className="text-content-primary">None</span>
+								<span className="text-content-primary">
+									{tI18n("resources.AgentRowPreview.none_dc937b59")}
+								</span>
 							)}
 						</div>
 					</div>

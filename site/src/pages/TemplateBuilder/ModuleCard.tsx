@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { BadgeCheckIcon, CheckIcon } from "lucide-react";
 import { useId } from "react";
+import { useTranslation } from "react-i18next";
 import { Avatar } from "#/components/Avatar/Avatar";
 import { Link } from "#/components/Link/Link";
 
@@ -23,6 +24,8 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
 	selected = false,
 	onSelect,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const nameId = useId();
 	return (
 		<div
@@ -60,7 +63,6 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
 					)}
 				</div>
 			</div>
-
 			<div>
 				<h3 id={nameId} className="text-sm font-bold text-content-primary">
 					{name}
@@ -81,7 +83,7 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
 						target="_blank"
 						className="text-xs font-normal"
 					>
-						View details
+						{tI18n("TemplateBuilder.ModuleCard.view_details_d1bf045b")}
 					</Link>
 				</div>
 			</div>

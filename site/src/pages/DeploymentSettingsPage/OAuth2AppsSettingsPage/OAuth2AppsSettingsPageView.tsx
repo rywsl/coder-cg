@@ -1,5 +1,6 @@
 import { ChevronRightIcon, PlusIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router";
 import type * as TypesGen from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
@@ -78,8 +79,16 @@ type OAuth2AppsSettingsProps = {
  * update error wins the alert because it reports the action the admin just took.
  */
 const SettingsTabBody: FC<{ settings: SettingsTab }> = ({ settings }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	if (settings.isLoading) {
-		return <Loader label="Loading settings" />;
+		return (
+			<Loader
+				label={tI18n(
+					"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppsSettingsPageView.loading_settings_509c3e50",
+				)}
+			/>
+		);
 	}
 
 	if (settings.dynamicClientRegistrationEnabled === undefined) {
@@ -89,13 +98,16 @@ const SettingsTabBody: FC<{ settings: SettingsTab }> = ({ settings }) => {
 					<ErrorAlert error={settings.loadError} />
 				) : (
 					<p className="text-sm text-content-secondary m-0">
-						Coder did not return a value for Dynamic Client Registration. This
-						can happen while the browser is offline. Retry, or check the setting
-						with <code className="text-xs">coder oauth2-provider dcr</code>.
+						{tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppsSettingsPageView.coder_did_not_return_a_value_for_dynamic_client__7dc6a44a",
+						)}
+						<code className="text-xs">coder oauth2-provider dcr</code>.
 					</p>
 				)}
 				<Button variant="outline" size="sm" onClick={settings.onRetry}>
-					Retry
+					{tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppsSettingsPageView.retry_942087cc",
+					)}
 				</Button>
 			</div>
 		);
@@ -115,14 +127,22 @@ const SettingsTabBody: FC<{ settings: SettingsTab }> = ({ settings }) => {
 	);
 };
 
-const AddApplicationButton: FC = () => (
-	<Button variant="outline" asChild>
-		<Link to="/deployment/oauth2-provider/apps/add">
-			<PlusIcon />
-			<span>Add application</span>
-		</Link>
-	</Button>
-);
+const AddApplicationButton: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
+	return (
+		<Button variant="outline" asChild>
+			<Link to="/deployment/oauth2-provider/apps/add">
+				<PlusIcon />
+				<span>
+					{tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppsSettingsPageView.add_application_78a2823b",
+					)}
+				</span>
+			</Link>
+		</Button>
+	);
+};
 
 const OAuth2AppsSettingsPageView: FC<OAuth2AppsSettingsProps> = ({
 	apps,
@@ -131,6 +151,8 @@ const OAuth2AppsSettingsPageView: FC<OAuth2AppsSettingsProps> = ({
 	canCreateApp,
 	settings,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const tabState = useSearchParamsKey({
 		key: "tab",
 		defaultValue: "applications",
@@ -147,15 +169,25 @@ const OAuth2AppsSettingsPageView: FC<OAuth2AppsSettingsProps> = ({
 					activeTab === "applications" && <AddApplicationButton />
 				}
 			>
-				<SettingsHeaderTitle>OAuth2 applications</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppsSettingsPageView.oauth2_applications_5e9425a3",
+					)}
+				</SettingsHeaderTitle>
 				{/*
 				 * The second clause describes the settings tab, which is absent for a
 				 * viewer who cannot read deployment config. Promising it to someone
 				 * with no control for it on the page sends them looking for one.
 				 */}
 				<SettingsHeaderDescription>
-					Register applications to use Coder as an OAuth2 provider
-					{settings && ", and configure how this deployment behaves as one"}.{" "}
+					{tI18n(
+						"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppsSettingsPageView.register_applications_to_use_coder_as_an_oauth2__23f14c41",
+					)}
+					{settings &&
+						tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppsSettingsPageView.and_configure_how_this_deployment_behaves_as_one_0c3f4296",
+						)}
+					.{" "}
 					<SettingsHeaderDocsLink
 						href={docs(
 							"/admin/integrations/oauth2-provider#dynamic-client-registration",
@@ -163,11 +195,20 @@ const OAuth2AppsSettingsPageView: FC<OAuth2AppsSettingsProps> = ({
 					/>
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			<Tabs value={activeTab} onValueChange={tabState.setValue}>
 				<TabsList>
-					<TabsTrigger value="applications">Applications</TabsTrigger>
-					{settings && <TabsTrigger value="settings">Settings</TabsTrigger>}
+					<TabsTrigger value="applications">
+						{tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppsSettingsPageView.applications_98e33b0f",
+						)}
+					</TabsTrigger>
+					{settings && (
+						<TabsTrigger value="settings">
+							{tI18n(
+								"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppsSettingsPageView.settings_74a883a0",
+							)}
+						</TabsTrigger>
+					)}
 				</TabsList>
 
 				<TabsContent value="applications" className="pt-6">
@@ -181,13 +222,30 @@ const OAuth2AppsSettingsPageView: FC<OAuth2AppsSettingsProps> = ({
 							<ErrorAlert error={appsError} />
 						</div>
 					)}
-					<Table className="table-fixed" aria-label="OAuth2 applications">
+					<Table
+						className="table-fixed"
+						aria-label={tI18n(
+							"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppsSettingsPageView.oauth2_applications_5e9425a3",
+						)}
+					>
 						<TableHeader>
 							<TableRow>
-								<TableHead className="w-1/3">Name</TableHead>
-								<TableHead className="w-1/3">Callback URL</TableHead>
+								<TableHead className="w-1/3">
+									{tI18n(
+										"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppsSettingsPageView.name_dcd1d522",
+									)}
+								</TableHead>
+								<TableHead className="w-1/3">
+									{tI18n(
+										"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppsSettingsPageView.callback_url_dc297ae9",
+									)}
+								</TableHead>
 								<TableHead className="w-12">
-									<span className="sr-only">Open</span>
+									<span className="sr-only">
+										{tI18n(
+											"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppsSettingsPageView.open_ed077f3d",
+										)}
+									</span>
 								</TableHead>
 							</TableRow>
 						</TableHeader>
@@ -196,8 +254,12 @@ const OAuth2AppsSettingsPageView: FC<OAuth2AppsSettingsProps> = ({
 								<TableLoader />
 							) : !appsError && (!apps || apps.length === 0) ? (
 								<TableEmpty
-									message="No OAuth2 applications configured"
-									description="Add an application to use Coder as an OAuth2 provider."
+									message={tI18n(
+										"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppsSettingsPageView.no_oauth2_applications_configured_b89436a3",
+									)}
+									description={tI18n(
+										"DeploymentSettingsPage.OAuth2AppsSettingsPage.OAuth2AppsSettingsPageView.add_an_application_to_use_coder_as_an_oauth2_pro_6cf4fa2e",
+									)}
 									cta={canCreateApp ? <AddApplicationButton /> : undefined}
 								/>
 							) : (

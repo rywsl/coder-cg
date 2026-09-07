@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
 import type { ProviderState } from "#/modules/aiModels/providerStates";
@@ -34,6 +35,8 @@ type UpdateModelPageViewProps =
 	  };
 
 const UpdateModelPageView: FC<UpdateModelPageViewProps> = (props) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	if (props.state === "error") {
 		return (
 			<div className="flex flex-col items-start gap-4">
@@ -68,7 +71,12 @@ const UpdateModelPageView: FC<UpdateModelPageViewProps> = (props) => {
 	return (
 		<>
 			<title>
-				{pageTitle(model.display_name || model.model, "AI Settings")}
+				{pageTitle(
+					model.display_name || model.model,
+					tI18n(
+						"AISettingsPage.ModelsPage.UpdateModelPage.UpdateModelPageView.ai_settings_a8e5e2c6",
+					),
+				)}
 			</title>
 			{refetchError != null && <ErrorAlert error={refetchError} />}
 			<ModelForm

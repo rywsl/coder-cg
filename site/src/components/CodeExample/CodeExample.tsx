@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "#/components/Button/Button";
 import {
 	Tooltip,
@@ -33,6 +34,8 @@ export const CodeExample: FC<CodeExampleProps> = ({
 	redactReplacement = "********",
 	showRevealButton,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const [showFullValue, setShowFullValue] = useState(false);
 
 	const displayValue = secret
@@ -42,8 +45,8 @@ export const CodeExample: FC<CodeExampleProps> = ({
 			: code;
 
 	const showButtonLabel = showFullValue
-		? "Hide sensitive data"
-		: "Show sensitive data";
+		? tI18n("CodeExample.CodeExample.hide_sensitive_data_a39274fb")
+		: tI18n("CodeExample.CodeExample.show_sensitive_data_b236a8c3");
 	const icon = showFullValue ? (
 		<EyeOffIcon className="size-4" />
 	) : (
@@ -85,7 +88,6 @@ export const CodeExample: FC<CodeExampleProps> = ({
 					displayValue
 				)}
 			</code>
-
 			<div className="flex items-center gap-1 select-none">
 				{showRevealButton && redactPattern && !secret && (
 					<Tooltip>
@@ -102,7 +104,10 @@ export const CodeExample: FC<CodeExampleProps> = ({
 						<TooltipContent>{showButtonLabel}</TooltipContent>
 					</Tooltip>
 				)}
-				<CopyButton text={code} label="Copy code" />
+				<CopyButton
+					text={code}
+					label={tI18n("CodeExample.CodeExample.copy_code_49a0053f")}
+				/>
 			</div>
 		</div>
 	);

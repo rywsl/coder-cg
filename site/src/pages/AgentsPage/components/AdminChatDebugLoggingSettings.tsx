@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Switch } from "#/components/Switch/Switch";
 
@@ -22,12 +23,18 @@ export const AdminChatDebugLoggingSettings: FC<
 	isSavingAdminSetting,
 	isSaveAdminSettingError,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const forcedByDeployment = adminSettings?.forced_by_deployment ?? false;
 	const adminAllowsUsers = adminSettings?.allow_users ?? false;
 
 	const description = forcedByDeployment
-		? "Debug logging is already enabled deployment-wide, so this per-user setting has no effect right now."
-		: "Lets users turn on debug logging for their own chats from their General settings. When on, Coder saves each chat turn along with the raw API requests and responses sent to the model provider.";
+		? tI18n(
+				"AgentsPage.components.AdminChatDebugLoggingSettings.debug_logging_is_already_enabled_deployment_wide_353e4d40",
+			)
+		: tI18n(
+				"AgentsPage.components.AdminChatDebugLoggingSettings.lets_users_turn_on_debug_logging_for_their_own_c_c1cf66df",
+			);
 
 	return (
 		<div className="flex items-start gap-3">
@@ -36,7 +43,9 @@ export const AdminChatDebugLoggingSettings: FC<
 				onCheckedChange={(checked) =>
 					onSaveAdminSetting({ allow_users: checked })
 				}
-				aria-label="Allow users to enable chat debug logging"
+				aria-label={tI18n(
+					"AgentsPage.components.AdminChatDebugLoggingSettings.allow_users_to_enable_chat_debug_logging_885baec9",
+				)}
 				disabled={
 					forcedByDeployment || isSavingAdminSetting || isLoadingAdminSetting
 				}
@@ -44,14 +53,18 @@ export const AdminChatDebugLoggingSettings: FC<
 			/>
 			<div className="flex max-w-[980px] flex-1 flex-col">
 				<h3 className="m-0 text-sm font-normal leading-6 text-content-primary">
-					Let users record chat debug logs
+					{tI18n(
+						"AgentsPage.components.AdminChatDebugLoggingSettings.let_users_record_chat_debug_logs_39d8b511",
+					)}
 				</h3>
 				<p className="mt-1 mb-0 text-sm font-normal leading-6 text-content-secondary">
 					{description}
 				</p>
 				{isSaveAdminSettingError && (
 					<p className="m-0 mt-2 text-xs text-content-destructive">
-						Failed to save the admin debug logging setting.
+						{tI18n(
+							"AgentsPage.components.AdminChatDebugLoggingSettings.failed_to_save_the_admin_debug_logging_setting_02c03d5c",
+						)}
 					</p>
 				)}
 			</div>

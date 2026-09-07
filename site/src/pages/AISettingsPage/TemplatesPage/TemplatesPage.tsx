@@ -1,4 +1,5 @@
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useSearchParams } from "react-router";
 import { toast } from "sonner";
@@ -14,6 +15,8 @@ import { pageTitle } from "#/utils/page";
 import { TemplatesPageView } from "./TemplatesPageView";
 
 const TemplatesPage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { permissions } = useAuthenticated();
 	const { organizations } = useDashboard();
 	const queryClient = useQueryClient();
@@ -66,7 +69,20 @@ const TemplatesPage: FC = () => {
 			});
 		} catch (error) {
 			toast.error(
-				`${template.display_name || template.name} in ${template.organization_display_name || template.organization_name}: ${getErrorMessage(error, "Failed to update whether Coder Agents can create workspaces.")}`,
+				tI18n(
+					"AISettingsPage.TemplatesPage.TemplatesPage.value0_in_value1_value2_3bf30ed9",
+					{
+						value0: template.display_name || template.name,
+						value1:
+							template.organization_display_name || template.organization_name,
+						value2: getErrorMessage(
+							error,
+							tI18n(
+								"AISettingsPage.TemplatesPage.TemplatesPage.failed_to_update_whether_coder_agents_can_create_7267745e",
+							),
+						),
+					},
+				),
 				{
 					description: getErrorDetail(error),
 					duration: Number.POSITIVE_INFINITY,
@@ -83,8 +99,14 @@ const TemplatesPage: FC = () => {
 
 	return (
 		<RequirePermission isFeatureVisible={canManageTemplates}>
-			<title>{pageTitle("Templates", "AI Settings")}</title>
-
+			<title>
+				{pageTitle(
+					"Templates",
+					tI18n(
+						"AISettingsPage.TemplatesPage.TemplatesPage.ai_settings_a8e5e2c6",
+					),
+				)}
+			</title>
 			<TemplatesPageView
 				filterState={filterState}
 				templates={authorizedTemplates}

@@ -1,5 +1,6 @@
 import { EllipsisVerticalIcon, UserPlusIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	Group,
 	ReducedUser,
@@ -62,6 +63,8 @@ const AddTemplateUserOrGroup: FC<AddTemplateUserOrGroupProps> = ({
 	templateACL,
 	onSubmit,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const [selectedOption, setSelectedOption] =
 		useState<UserOrGroupAutocompleteValue>(null);
 	const [selectedRole, setSelectedRole] = useState<TemplateRole>("use");
@@ -112,8 +115,16 @@ const AddTemplateUserOrGroup: FC<AddTemplateUserOrGroupProps> = ({
 						<SelectValue />
 					</SelectTrigger>
 					<SelectContent>
-						<SelectItem value="use">Use</SelectItem>
-						<SelectItem value="admin">Admin</SelectItem>
+						<SelectItem value="use">
+							{tI18n(
+								"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPageView.use_c36d819e",
+							)}
+						</SelectItem>
+						<SelectItem value="admin">
+							{tI18n(
+								"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPageView.admin_c1c224b0",
+							)}
+						</SelectItem>
 					</SelectContent>
 				</Select>
 
@@ -124,7 +135,9 @@ const AddTemplateUserOrGroup: FC<AddTemplateUserOrGroupProps> = ({
 					<Spinner loading={isLoading}>
 						<UserPlusIcon className="size-icon-sm" />
 					</Spinner>
-					Add
+					{tI18n(
+						"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPageView.add_9fd728c6",
+					)}
 				</Button>
 			</div>
 		</form>
@@ -142,6 +155,8 @@ const RoleSelect: FC<RoleSelectProps> = ({
 	disabled,
 	onValueChange,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<Select
 			value={value}
@@ -155,19 +170,30 @@ const RoleSelect: FC<RoleSelectProps> = ({
 			</SelectTrigger>
 			<SelectContent>
 				<SelectItem value="use" className="w-[250px] flex-col items-start py-2">
-					<div className="text-content-primary">Use</div>
+					<div className="text-content-primary">
+						{tI18n(
+							"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPageView.use_c36d819e",
+						)}
+					</div>
 					<div className="text-xs leading-[140%] text-content-secondary">
-						Can read and use this template to create workspaces.
+						{tI18n(
+							"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPageView.can_read_and_use_this_template_to_create_workspa_7efeb28c",
+						)}
 					</div>
 				</SelectItem>
 				<SelectItem
 					value="admin"
 					className="w-[250px] flex-col items-start py-2"
 				>
-					<div className="text-content-primary">Admin</div>
+					<div className="text-content-primary">
+						{tI18n(
+							"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPageView.admin_c1c224b0",
+						)}
+					</div>
 					<div className="text-xs leading-[140%] text-content-secondary">
-						Can modify all aspects of this template including permissions,
-						metadata, and template versions.
+						{tI18n(
+							"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPageView.can_modify_all_aspects_of_this_template_includin_e02f02ed",
+						)}
 					</div>
 				</SelectItem>
 			</SelectContent>
@@ -220,6 +246,8 @@ export const TemplatePermissionsPageView: FC<
 	onUpdateGroup,
 	onRemoveGroup,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<div className="flex flex-col gap-12">
 			<div className="flex flex-col gap-2.5">
@@ -238,8 +266,16 @@ export const TemplatePermissionsPageView: FC<
 				<Table>
 					<TableHeader>
 						<TableRow>
-							<TableHead className="w-[60%]">Member</TableHead>
-							<TableHead className="w-[40%]">Role</TableHead>
+							<TableHead className="w-[60%]">
+								{tI18n(
+									"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPageView.member_7c968fb7",
+								)}
+							</TableHead>
+							<TableHead className="w-[40%]">
+								{tI18n(
+									"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPageView.role_14736a2e",
+								)}
+							</TableHead>
 							<TableHead className="w-[1%]" />
 						</TableRow>
 					</TableHeader>
@@ -282,6 +318,8 @@ const MembersTableBody: FC<MembersTableBodyProps> = ({
 	onUpdateGroup,
 	onRemoveGroup,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	if (!templateACL) {
 		return <TableLoader />;
 	}
@@ -291,8 +329,12 @@ const MembersTableBody: FC<MembersTableBodyProps> = ({
 	if (isEmpty) {
 		return (
 			<TableEmpty
-				message="No members yet"
-				description="Add a member using the controls above"
+				message={tI18n(
+					"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPageView.no_members_yet_669a52e9",
+				)}
+				description={tI18n(
+					"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPageView.add_a_member_using_the_controls_above_2559665e",
+				)}
 			/>
 		);
 	}
@@ -335,10 +377,16 @@ const MembersTableBody: FC<MembersTableBodyProps> = ({
 									<Button
 										size="icon-lg"
 										variant="subtle"
-										aria-label="Open menu"
+										aria-label={tI18n(
+											"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPageView.open_menu_b40b3713",
+										)}
 									>
 										<EllipsisVerticalIcon aria-hidden="true" />
-										<span className="sr-only">Open menu</span>
+										<span className="sr-only">
+											{tI18n(
+												"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPageView.open_menu_b40b3713",
+											)}
+										</span>
 									</Button>
 								</DropdownMenuTrigger>
 								<DropdownMenuContent align="end">
@@ -346,7 +394,9 @@ const MembersTableBody: FC<MembersTableBodyProps> = ({
 										className="text-content-destructive focus:text-content-destructive"
 										onClick={() => onRemoveGroup(group)}
 									>
-										Remove
+										{tI18n(
+											"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPageView.remove_c3812fc4",
+										)}
 									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>
@@ -354,7 +404,6 @@ const MembersTableBody: FC<MembersTableBodyProps> = ({
 					</TableCell>
 				</TableRow>
 			))}
-
 			{templateACL.users.map((user) => (
 				<TableRow key={user.id}>
 					<TableCell>
@@ -385,10 +434,16 @@ const MembersTableBody: FC<MembersTableBodyProps> = ({
 									<Button
 										size="icon-lg"
 										variant="subtle"
-										aria-label="Open menu"
+										aria-label={tI18n(
+											"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPageView.open_menu_b40b3713",
+										)}
 									>
 										<EllipsisVerticalIcon aria-hidden="true" />
-										<span className="sr-only">Open menu</span>
+										<span className="sr-only">
+											{tI18n(
+												"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPageView.open_menu_b40b3713",
+											)}
+										</span>
 									</Button>
 								</DropdownMenuTrigger>
 								<DropdownMenuContent align="end">
@@ -396,7 +451,9 @@ const MembersTableBody: FC<MembersTableBodyProps> = ({
 										className="text-content-destructive focus:text-content-destructive"
 										onClick={() => onRemoveUser(user)}
 									>
-										Remove
+										{tI18n(
+											"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPageView.remove_c3812fc4",
+										)}
 									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>

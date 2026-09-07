@@ -1,5 +1,6 @@
 import type React from "react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ImageLightbox } from "../../ImageLightbox";
 import { ToolCall } from "./ToolCall";
 import type { ToolStatus } from "./utils";
@@ -19,6 +20,8 @@ export const ComputerTool: React.FC<{
 	isError: boolean;
 	errorMessage?: string;
 }> = ({ imageData, mimeType, text, status, isError, errorMessage }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [showLightbox, setShowLightbox] = useState(false);
 	const isRunning = status === "running";
 	const hasImage = imageData.length > 0;
@@ -31,13 +34,26 @@ export const ComputerTool: React.FC<{
 			className="w-full"
 			status={status}
 			isError={isError}
-			errorMessage={errorMessage || "Failed to take screenshot"}
+			errorMessage={
+				errorMessage ||
+				tI18n(
+					"AgentsPage.components.ChatElements.tools.ComputerTool.failed_to_take_screenshot_79251e55",
+				)
+			}
 			hasContent={hasContent}
 			defaultExpanded={hasImage}
 		>
 			<ToolCall.Header
 				iconName="computer"
-				label={isRunning ? "Taking screenshot…" : "Screenshot"}
+				label={
+					isRunning
+						? tI18n(
+								"AgentsPage.components.ChatElements.tools.ComputerTool.taking_screenshot_b293685b",
+							)
+						: tI18n(
+								"AgentsPage.components.ChatElements.tools.ComputerTool.screenshot_029320ad",
+							)
+				}
 			/>
 			<ToolCall.Content>
 				{hasImage ? (
@@ -50,7 +66,9 @@ export const ComputerTool: React.FC<{
 							>
 								<img
 									src={imageSrc}
-									alt="Screenshot from computer tool"
+									alt={tI18n(
+										"AgentsPage.components.ChatElements.tools.ComputerTool.screenshot_from_computer_tool_2c980043",
+									)}
 									className="max-h-96 w-auto object-contain"
 								/>
 							</button>

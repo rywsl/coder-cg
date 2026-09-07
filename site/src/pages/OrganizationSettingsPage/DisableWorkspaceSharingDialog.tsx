@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { API } from "#/api/api";
 import type { ShareableWorkspaceOwners } from "#/api/typesGenerated";
@@ -33,6 +34,8 @@ export const DisableWorkspaceSharingDialog: FC<
 	onCancel,
 	isLoading,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	// Fetch the count of shared workspaces in this organization.
 	const sharedWorkspacesQuery = useQuery({
 		queryKey: ["workspaces", organizationId, "shared", "count"],
@@ -56,42 +59,84 @@ export const DisableWorkspaceSharingDialog: FC<
 				<DialogHeader>
 					<DialogTitle>
 						{isRestrictingToServiceAccounts
-							? "Restrict sharing to service accounts"
-							: "Disable workspace sharing"}
+							? tI18n(
+									"OrganizationSettingsPage.DisableWorkspaceSharingDialog.restrict_sharing_to_service_accounts_77249135",
+								)
+							: tI18n(
+									"OrganizationSettingsPage.DisableWorkspaceSharingDialog.disable_workspace_sharing_0a74542e",
+								)}
 					</DialogTitle>
 					<DialogDescription asChild>
 						<div className="flex flex-col gap-4">
 							<p>
 								{isRestrictingToServiceAccounts
-									? "Restricting workspace sharing to service accounts only will immediately unshare any workspaces currently shared by non-service accounts."
-									: "Disabling workspace sharing will immediately remove all existing workspace sharing permissions for all users in this organization."}
+									? tI18n(
+											"OrganizationSettingsPage.DisableWorkspaceSharingDialog.restricting_workspace_sharing_to_service_account_f8d50470",
+										)
+									: tI18n(
+											"OrganizationSettingsPage.DisableWorkspaceSharingDialog.disabling_workspace_sharing_will_immediately_rem_b0328bde",
+										)}
 							</p>
 							{isLoadingCount ? (
 								<Skeleton className="h-6 w-4/5" />
 							) : sharedCount > 0 ? (
 								<p className="text-content-danger font-medium m-0">
-									This action will affect{" "}
+									{tI18n(
+										"OrganizationSettingsPage.DisableWorkspaceSharingDialog.this_action_will_affect_8874be80",
+									)}{" "}
 									<strong className="text-content-primary">
-										{sharedCount} workspace{sharedCount !== 1 ? "s" : ""}
+										{sharedCount}
+										{tI18n(
+											"OrganizationSettingsPage.DisableWorkspaceSharingDialog.workspace_4be0369b",
+										)}
+										{sharedCount !== 1
+											? tI18n(
+													"OrganizationSettingsPage.DisableWorkspaceSharingDialog.s_043a7187",
+												)
+											: ""}
 									</strong>{" "}
-									that {sharedCount !== 1 ? "are" : "is"} currently shared.
+									{tI18n(
+										"OrganizationSettingsPage.DisableWorkspaceSharingDialog.that_a0496121",
+									)}
+									{sharedCount !== 1
+										? tI18n(
+												"OrganizationSettingsPage.DisableWorkspaceSharingDialog.are_ba78973d",
+											)
+										: tI18n(
+												"OrganizationSettingsPage.DisableWorkspaceSharingDialog.is_fa51fd49",
+											)}
+									{tI18n(
+										"OrganizationSettingsPage.DisableWorkspaceSharingDialog.currently_shared_eceeff13",
+									)}
 								</p>
 							) : (
 								<p className="text-content-secondary m-0">
-									No workspaces are currently shared in this organization.
+									{tI18n(
+										"OrganizationSettingsPage.DisableWorkspaceSharingDialog.no_workspaces_are_currently_shared_in_this_organ_972db800",
+									)}
 								</p>
 							)}
 							<p>
-								Re-enabling workspace sharing will{" "}
-								<strong className="text-content-primary">not restore</strong>{" "}
-								these permissions.
+								{tI18n(
+									"OrganizationSettingsPage.DisableWorkspaceSharingDialog.re_enabling_workspace_sharing_will_84041437",
+								)}{" "}
+								<strong className="text-content-primary">
+									{tI18n(
+										"OrganizationSettingsPage.DisableWorkspaceSharingDialog.not_restore_d455f0f6",
+									)}
+								</strong>{" "}
+								{tI18n(
+									"OrganizationSettingsPage.DisableWorkspaceSharingDialog.these_permissions_7d675017",
+								)}
 							</p>
 						</div>
 					</DialogDescription>
 				</DialogHeader>
 				<DialogFooter>
 					<Button variant="outline" onClick={onCancel} disabled={isLoading}>
-						Cancel
+						{tI18n(
+							"OrganizationSettingsPage.DisableWorkspaceSharingDialog.cancel_19766ed6",
+						)}
 					</Button>
 					<Button
 						variant="destructive"
@@ -100,8 +145,12 @@ export const DisableWorkspaceSharingDialog: FC<
 					>
 						<Spinner loading={isLoading} />
 						{isRestrictingToServiceAccounts
-							? "Restrict sharing"
-							: "Disable sharing"}
+							? tI18n(
+									"OrganizationSettingsPage.DisableWorkspaceSharingDialog.restrict_sharing_aacb9d73",
+								)
+							: tI18n(
+									"OrganizationSettingsPage.DisableWorkspaceSharingDialog.disable_sharing_7b1511aa",
+								)}
 					</Button>
 				</DialogFooter>
 			</DialogContent>

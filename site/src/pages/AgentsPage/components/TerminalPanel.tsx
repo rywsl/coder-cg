@@ -1,4 +1,5 @@
 import { type FC, useEffect, useEffectEvent, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { deploymentConfig } from "#/api/queries/deployment";
 import { appearanceSettings } from "#/api/queries/users";
@@ -53,6 +54,8 @@ export const TerminalPanel: FC<TerminalPanelProps> = ({
 	workspace,
 	workspaceAgent,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { proxy } = useProxy();
 	const { metadata } = useEmbeddedMetadata();
 	const terminalRef = useRef<WorkspaceTerminalHandle>(null);
@@ -147,7 +150,9 @@ export const TerminalPanel: FC<TerminalPanelProps> = ({
 		return (
 			<div className="flex h-full min-h-0 flex-col">
 				<div className="flex min-h-0 flex-1 items-center justify-center px-6 text-center text-xs text-content-secondary">
-					Terminal will be available once the workspace agent is ready.
+					{tI18n(
+						"AgentsPage.components.TerminalPanel.terminal_will_be_available_once_the_workspace_ag_341c3585",
+					)}
 				</div>
 			</div>
 		);

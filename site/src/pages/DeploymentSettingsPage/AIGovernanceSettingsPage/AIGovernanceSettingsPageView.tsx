@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { SerpentOption } from "#/api/typesGenerated";
 import { Alert, AlertDescription, AlertTitle } from "#/components/Alert/Alert";
 import { Link } from "#/components/Link/Link";
@@ -22,19 +23,28 @@ type AIGovernanceSettingsPageViewProps = {
 export const AIGovernanceSettingsPageView: FC<
 	AIGovernanceSettingsPageViewProps
 > = ({ options, featureAIBridgeEntitled, featureAIBridgeEnabled }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<div className="flex flex-col gap-12">
 			<SettingsHeader>
-				<SettingsHeaderTitle>AI Governance</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"DeploymentSettingsPage.AIGovernanceSettingsPage.AIGovernanceSettingsPageView.ai_governance_2ab040bd",
+					)}
+				</SettingsHeaderTitle>
 			</SettingsHeader>
-
 			<div>
 				<SettingsHeader>
 					<SettingsHeaderTitle hierarchy="secondary" level="h2">
-						AI Gateway
+						{tI18n(
+							"DeploymentSettingsPage.AIGovernanceSettingsPage.AIGovernanceSettingsPageView.ai_gateway_47219de2",
+						)}
 					</SettingsHeaderTitle>
 					<SettingsHeaderDescription>
-						Monitor and manage AI requests across your deployment.{" "}
+						{tI18n(
+							"DeploymentSettingsPage.AIGovernanceSettingsPage.AIGovernanceSettingsPageView.monitor_and_manage_ai_requests_across_your_deplo_dcb8de0a",
+						)}{" "}
 						<SettingsHeaderDocsLink href={docs("/ai-coder/ai-governance")} />
 					</SettingsHeaderDescription>
 				</SettingsHeader>
@@ -44,15 +54,22 @@ export const AIGovernanceSettingsPageView: FC<
 						{!featureAIBridgeEnabled && (
 							<Alert className="mb-12" severity="warning" prominent>
 								<AlertTitle>
-									AI Gateway is included in your license, but not set up yet.
+									{tI18n(
+										"DeploymentSettingsPage.AIGovernanceSettingsPage.AIGovernanceSettingsPageView.ai_gateway_is_included_in_your_license_but_not_s_b8958a5e",
+									)}
 								</AlertTitle>
 								<AlertDescription>
-									You have access to AI Governance, but it still needs to be
-									setup. Check out the{" "}
+									{tI18n(
+										"DeploymentSettingsPage.AIGovernanceSettingsPage.AIGovernanceSettingsPageView.you_have_access_to_ai_governance_but_it_still_ne_eee315ab",
+									)}{" "}
 									<Link href={docs("/ai-coder/ai-gateway")} target="_blank">
-										AI Gateway
+										{tI18n(
+											"DeploymentSettingsPage.AIGovernanceSettingsPage.AIGovernanceSettingsPageView.ai_gateway_47219de2",
+										)}
 									</Link>{" "}
-									documentation to get started.
+									{tI18n(
+										"DeploymentSettingsPage.AIGovernanceSettingsPage.AIGovernanceSettingsPageView.documentation_to_get_started_82f67848",
+									)}
 								</AlertDescription>
 							</Alert>
 						)}

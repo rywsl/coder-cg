@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+import { i18n } from "#/i18n";
 /**
  * A date-and-time range picker with quick picks. The calendar and time fields stay
  * hidden until "Custom range" is chosen.
@@ -43,8 +45,12 @@ interface DateTimeRangePickerProps {
 	size?: ButtonProps["size"];
 }
 
-const INVALID_TIME_MESSAGE = "Enter a valid time, e.g. 09:30:00";
-const RANGE_ORDER_MESSAGE = "End must be after start";
+const INVALID_TIME_MESSAGE = i18n.t(
+	"components:DateTimeRangePicker.DateTimeRangePicker.enter_a_valid_time_e_g_09_30_00_581b7de5",
+);
+const RANGE_ORDER_MESSAGE = i18n.t(
+	"components:DateTimeRangePicker.DateTimeRangePicker.end_must_be_after_start_4c8159fd",
+);
 // How long the floating error stays visible before fading, mirroring
 // toast behavior. The invalid field styling and disabled Apply remain
 // until the input is corrected.
@@ -77,6 +83,8 @@ export const DateTimeRangePicker: FC<DateTimeRangePickerProps> = ({
 	presets,
 	size = "sm",
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const currentTime = now ?? new Date();
 	const quickPresets = presets ?? DEFAULT_QUICK_PRESETS;
 	const [open, setOpen] = useState(false);
@@ -229,7 +237,9 @@ export const DateTimeRangePicker: FC<DateTimeRangePickerProps> = ({
 					    user expands the custom range panel. */}
 					<div
 						role="radiogroup"
-						aria-label="Time range"
+						aria-label={tI18n(
+							"DateTimeRangePicker.DateTimeRangePicker.time_range_58acc510",
+						)}
 						onKeyDown={handleQuickPickKeyDown}
 						className={cn(
 							"flex flex-col gap-0.5 p-2 text-sm",
@@ -246,7 +256,9 @@ export const DateTimeRangePicker: FC<DateTimeRangePickerProps> = ({
 							/>
 						))}
 						<QuickPickButton
-							label="Custom range"
+							label={tI18n(
+								"DateTimeRangePicker.DateTimeRangePicker.custom_range_add9164a",
+							)}
 							selected={customExpanded}
 							tabIndex={selectedQuickPickIndex === quickPresets.length ? 0 : -1}
 							onClick={() => setCustomExpanded(true)}
@@ -282,7 +294,9 @@ export const DateTimeRangePicker: FC<DateTimeRangePickerProps> = ({
 							<div className="flex flex-col gap-2 border-t border-border-default px-3 py-3">
 								<TimeRow
 									id={fromTimeId}
-									label="From"
+									label={tI18n(
+										"DateTimeRangePicker.DateTimeRangePicker.from_21819769",
+									)}
 									time={timeFields.from}
 									meridiem={timeFields.fromMeridiem}
 									invalid={fromTimeError !== null}
@@ -309,7 +323,9 @@ export const DateTimeRangePicker: FC<DateTimeRangePickerProps> = ({
 								/>
 								<TimeRow
 									id={toTimeId}
-									label="To"
+									label={tI18n(
+										"DateTimeRangePicker.DateTimeRangePicker.to_f4b06ef6",
+									)}
 									time={timeFields.to}
 									meridiem={timeFields.toMeridiem}
 									invalid={toTimeError !== null}
@@ -340,10 +356,14 @@ export const DateTimeRangePicker: FC<DateTimeRangePickerProps> = ({
 									size="sm"
 									onClick={() => setOpen(false)}
 								>
-									Cancel
+									{tI18n(
+										"DateTimeRangePicker.DateTimeRangePicker.cancel_19766ed6",
+									)}
 								</Button>
 								<Button size="sm" onClick={apply} disabled={!canApply}>
-									Apply
+									{tI18n(
+										"DateTimeRangePicker.DateTimeRangePicker.apply_31e392d1",
+									)}
 								</Button>
 							</div>
 						</div>
@@ -408,42 +428,58 @@ const TimeRow: FC<TimeRowProps> = ({
 	onTimeChange,
 	onBlur,
 	onMeridiemChange,
-}) => (
-	<div className="flex items-center gap-2">
-		<Label
-			htmlFor={id}
-			className="w-10 shrink-0 text-sm text-content-secondary"
-		>
-			{label}
-		</Label>
-		<Input
-			id={id}
-			value={time}
-			placeholder="12:00:00"
-			aria-invalid={invalid}
-			aria-describedby={describedBy}
-			className={cn(
-				"h-8 w-28 tabular-nums",
-				invalid && "border-border-destructive",
-			)}
-			onChange={(event) => onTimeChange(event.target.value)}
-			onBlur={onBlur}
-		/>
-		<Select
-			value={meridiem}
-			onValueChange={(next) => {
-				if (next === "AM" || next === "PM") {
-					onMeridiemChange(next);
-				}
-			}}
-		>
-			<SelectTrigger aria-label={`${label} AM or PM`} className="h-8 w-18">
-				<SelectValue />
-			</SelectTrigger>
-			<SelectContent>
-				<SelectItem value="AM">AM</SelectItem>
-				<SelectItem value="PM">PM</SelectItem>
-			</SelectContent>
-		</Select>
-	</div>
-);
+}) => {
+	const { t: tI18n } = useTranslation("components");
+
+	return (
+		<div className="flex items-center gap-2">
+			<Label
+				htmlFor={id}
+				className="w-10 shrink-0 text-sm text-content-secondary"
+			>
+				{label}
+			</Label>
+			<Input
+				id={id}
+				value={time}
+				placeholder="12:00:00"
+				aria-invalid={invalid}
+				aria-describedby={describedBy}
+				className={cn(
+					"h-8 w-28 tabular-nums",
+					invalid && "border-border-destructive",
+				)}
+				onChange={(event) => onTimeChange(event.target.value)}
+				onBlur={onBlur}
+			/>
+			<Select
+				value={meridiem}
+				onValueChange={(next) => {
+					if (next === "AM" || next === "PM") {
+						onMeridiemChange(next);
+					}
+				}}
+			>
+				<SelectTrigger
+					aria-label={tI18n(
+						"DateTimeRangePicker.DateTimeRangePicker.value0_am_or_pm_49669bfd",
+						{
+							value0: label,
+						},
+					)}
+					className="h-8 w-18"
+				>
+					<SelectValue />
+				</SelectTrigger>
+				<SelectContent>
+					<SelectItem value="AM">
+						{tI18n("DateTimeRangePicker.DateTimeRangePicker.am_c8f48a68")}
+					</SelectItem>
+					<SelectItem value="PM">
+						{tI18n("DateTimeRangePicker.DateTimeRangePicker.pm_6b987654")}
+					</SelectItem>
+				</SelectContent>
+			</Select>
+		</div>
+	);
+};

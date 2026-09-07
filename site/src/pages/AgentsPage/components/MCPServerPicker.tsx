@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { ChevronDownIcon, LockIcon, ServerIcon } from "lucide-react";
 import { type FC, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { mcpServerOAuth2ConnectPath } from "#/api/api";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
@@ -55,8 +56,16 @@ const MCPIcon: FC<{ iconUrl: string; name: string; className?: string }> = ({
 	name,
 	className,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const icon = iconUrl ? (
-		<ExternalImage src={iconUrl} alt={`${name} icon`} className="size-3/5" />
+		<ExternalImage
+			src={iconUrl}
+			alt={tI18n("AgentsPage.components.MCPServerPicker.value0_icon_43d0d0a9", {
+				value0: name,
+			})}
+			className="size-3/5"
+		/>
 	) : (
 		<ServerIcon className="size-3/5 text-content-secondary" />
 	);
@@ -216,6 +225,8 @@ export const MCPServerPicker: FC<MCPServerPickerProps> = ({
 	onAuthComplete,
 	disabled = false,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [open, setOpen] = useState(false);
 	const [connectingServerId, setConnectingServerId] = useState<string | null>(
 		null,
@@ -298,7 +309,9 @@ export const MCPServerPicker: FC<MCPServerPickerProps> = ({
 				<button
 					type="button"
 					disabled={disabled}
-					aria-label="MCP servers"
+					aria-label={tI18n(
+						"AgentsPage.components.MCPServerPicker.mcp_servers_22a7559f",
+					)}
 					className="group flex h-8 w-full cursor-pointer items-center gap-1.5 border-none bg-transparent px-1 text-xs text-content-secondary shadow-none transition-colors hover:text-content-primary disabled:cursor-not-allowed disabled:opacity-50"
 				>
 					<span>MCP</span>
@@ -344,12 +357,19 @@ export const MCPServerPicker: FC<MCPServerPickerProps> = ({
 														handleConnect(server);
 													}}
 													disabled={disabled || connectingServerId !== null}
-													aria-label={`Authenticate with ${server.display_name}`}
+													aria-label={tI18n(
+														"AgentsPage.components.MCPServerPicker.authenticate_with_value0_d13bd5b1",
+														{
+															value0: server.display_name,
+														},
+													)}
 												>
 													{isConnecting ? (
 														<Spinner loading className="h-2.5 w-2.5" />
 													) : null}
-													Auth
+													{tI18n(
+														"AgentsPage.components.MCPServerPicker.auth_8eb3ea9b",
+													)}
 												</Button>
 											) : (
 												<Switch
@@ -358,7 +378,19 @@ export const MCPServerPicker: FC<MCPServerPickerProps> = ({
 														handleToggle(server.id, checked)
 													}
 													disabled={disabled || isForceOn}
-													aria-label={`${isSelected ? "Disable" : "Enable"} ${server.display_name}`}
+													aria-label={tI18n(
+														"AgentsPage.components.MCPServerPicker.value0_value1_ecbddc5e",
+														{
+															value0: isSelected
+																? tI18n(
+																		"AgentsPage.components.MCPServerPicker.disable_b7e3e4aa",
+																	)
+																: tI18n(
+																		"AgentsPage.components.MCPServerPicker.enable_5342e09f",
+																	),
+															value1: server.display_name,
+														},
+													)}
 												/>
 											)}
 										</div>
@@ -382,8 +414,12 @@ export const MCPServerPicker: FC<MCPServerPickerProps> = ({
 										{server.auth_type !== "none" && (
 											<span className="block text-content-secondary leading-tight">
 												{server.auth_connected
-													? "Authenticated"
-													: "Not authenticated"}
+													? tI18n(
+															"AgentsPage.components.MCPServerPicker.authenticated_6ab694cf",
+														)
+													: tI18n(
+															"AgentsPage.components.MCPServerPicker.not_authenticated_76d1efbe",
+														)}
 											</span>
 										)}
 									</TooltipContent>

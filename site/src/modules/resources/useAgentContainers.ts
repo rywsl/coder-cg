@@ -1,4 +1,5 @@
 import { useEffect, useEffectEvent } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import { watchAgentContainers } from "#/api/api";
@@ -15,6 +16,8 @@ import type {
 export function useAgentContainers(
 	agent: WorkspaceAgent,
 ): readonly WorkspaceAgentDevcontainer[] | undefined {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const queryClient = useQueryClient();
 	const queryKey = workspaceAgentContainersKey(agent.id);
 
@@ -42,9 +45,16 @@ export function useAgentContainers(
 
 		socket.addEventListener("message", (event) => {
 			if (event.parseError) {
-				toast.error("Failed to update containers.", {
-					description: "Please try refreshing the page.",
-				});
+				toast.error(
+					tI18n(
+						"resources.useAgentContainers.failed_to_update_containers_eaecc1d1",
+					),
+					{
+						description: tI18n(
+							"resources.useAgentContainers.please_try_refreshing_the_page_ed111497",
+						),
+					},
+				);
 				return;
 			}
 
@@ -52,9 +62,16 @@ export function useAgentContainers(
 		});
 
 		socket.addEventListener("error", () => {
-			toast.error("Failed to load containers.", {
-				description: "Please try refreshing the page.",
-			});
+			toast.error(
+				tI18n(
+					"resources.useAgentContainers.failed_to_load_containers_30d0849a",
+				),
+				{
+					description: tI18n(
+						"resources.useAgentContainers.please_try_refreshing_the_page_ed111497",
+					),
+				},
+			);
 		});
 
 		return () => socket.close();

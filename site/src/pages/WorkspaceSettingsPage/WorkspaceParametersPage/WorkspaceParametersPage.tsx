@@ -1,6 +1,7 @@
 import { CircleHelpIcon } from "lucide-react";
 import type { FC } from "react";
 import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery } from "react-query";
 import { useNavigate, useSearchParams } from "react-router";
 import { API } from "#/api/api";
@@ -33,6 +34,8 @@ import { useWorkspaceSettings } from "../useWorkspaceSettings";
 import { WorkspaceParametersPageView } from "./WorkspaceParametersPageView";
 
 const WorkspaceParametersPage: FC = () => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const { permissions, workspace } = useWorkspaceSettings();
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
@@ -258,19 +261,33 @@ const WorkspaceParametersPage: FC = () => {
 		latestResponse.id < initId ||
 		(ws.current && ws.current.readyState === WebSocket.CONNECTING);
 
-	let submitLabel = "Update and start";
+	let submitLabel = tI18n(
+		"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPage.update_and_start_2503b010",
+	);
 	if (restartWithParameters.isPending) {
-		submitLabel = "Stopping workspace";
+		submitLabel = tI18n(
+			"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPage.stopping_workspace_2001edfd",
+		);
 	} else if (startWithParameters.isPending) {
-		submitLabel = "Starting workspace";
+		submitLabel = tI18n(
+			"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPage.starting_workspace_7212fa79",
+		);
 	} else if (workspace.latest_build.status === "running") {
-		submitLabel = "Update and restart";
+		submitLabel = tI18n(
+			"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPage.update_and_restart_853c6a3c",
+		);
 	}
 
 	return (
 		<div className="flex flex-col gap-12">
-			<title>{pageTitle(workspace.name, "Parameters")}</title>
-
+			<title>
+				{pageTitle(
+					workspace.name,
+					tI18n(
+						"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPage.parameters_e68b36b1",
+					),
+				)}
+			</title>
 			<SettingsHeader>
 				<SettingsHeaderTitle
 					tooltip={
@@ -280,31 +297,35 @@ const WorkspaceParametersPage: FC = () => {
 									<CircleHelpIcon className="size-icon-xs text-content-secondary" />
 								</TooltipTrigger>
 								<TooltipContent className="max-w-xs text-sm">
-									Dynamic Parameters enhances Coder's existing parameter system
-									with real-time validation, conditional parameter behavior, and
-									richer input types.
+									{tI18n(
+										"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPage.dynamic_parameters_enhances_coder_s_existing_par_58661a17",
+									)}
 									<br />
 									<Link
 										href={docs(
 											"/admin/templates/extending-templates/dynamic-parameters",
 										)}
 									>
-										View docs
+										{tI18n(
+											"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPage.view_docs_61479fda",
+										)}
 									</Link>
 								</TooltipContent>
 							</Tooltip>
 						</TooltipProvider>
 					}
 				>
-					Parameters
+					{tI18n(
+						"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPage.parameters_e68b36b1",
+					)}
 				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Update the build parameters for this workspace.
+					{tI18n(
+						"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPage.update_the_build_parameters_for_this_workspace_1eb58734",
+					)}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			{Boolean(error) && <ErrorAlert error={error} />}
-
 			{isLoading ? (
 				<Loader />
 			) : sortedParams.length > 0 ? (
@@ -328,19 +349,22 @@ const WorkspaceParametersPage: FC = () => {
 			) : (
 				<EmptyState
 					className="border border-border border-solid rounded-md"
-					message="This workspace has no parameters"
+					message={tI18n(
+						"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPage.this_workspace_has_no_parameters_31548265",
+					)}
 					cta={
 						<Link
 							href={docs(
 								"/admin/templates/extending-templates/dynamic-parameters",
 							)}
 						>
-							Learn more about parameters
+							{tI18n(
+								"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPage.learn_more_about_parameters_aeea0d60",
+							)}
 						</Link>
 					}
 				/>
 			)}
-
 			<ConfirmDialog
 				type="info"
 				hideCancel={false}
@@ -350,12 +374,23 @@ const WorkspaceParametersPage: FC = () => {
 					setConfirmingRestart({ open: false });
 				}}
 				onClose={() => setConfirmingRestart({ open: false })}
-				title="Restart your workspace?"
-				confirmText="Restart"
+				title={tI18n(
+					"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPage.restart_your_workspace_914f3b52",
+				)}
+				confirmText={tI18n(
+					"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPage.restart_6b983a81",
+				)}
 				description={
 					<>
-						Restarting your workspace will stop all running processes and{" "}
-						<strong>delete non-persistent data</strong>.
+						{tI18n(
+							"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPage.restarting_your_workspace_will_stop_all_running__66ce2826",
+						)}{" "}
+						<strong>
+							{tI18n(
+								"WorkspaceSettingsPage.WorkspaceParametersPage.WorkspaceParametersPage.delete_non_persistent_data_4a841ebd",
+							)}
+						</strong>
+						.
 					</>
 				}
 			/>

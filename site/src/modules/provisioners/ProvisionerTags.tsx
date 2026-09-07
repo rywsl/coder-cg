@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import type { FC, HTMLProps } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "#/components/Badge/Badge";
 
 export const ProvisionerTags: FC<HTMLProps<HTMLDivElement>> = ({
@@ -20,10 +21,16 @@ type ProvisionerTagProps = {
 };
 
 export const ProvisionerTag: FC<ProvisionerTagProps> = ({ label, value }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<Badge className="whitespace-nowrap">
 			[{label}
-			{value && `=${value}`}]
+			{value &&
+				tI18n("provisioners.ProvisionerTags.value0_f4793e38", {
+					value0: value,
+				})}
+			]
 		</Badge>
 	);
 };

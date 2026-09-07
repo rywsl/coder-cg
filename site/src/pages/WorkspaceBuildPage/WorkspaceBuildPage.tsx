@@ -1,6 +1,7 @@
 import { isAxiosError } from "axios";
 import dayjs from "dayjs";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { keepPreviousData, useQuery } from "react-query";
 import { useParams } from "react-router";
 import { API } from "#/api/api";
@@ -12,6 +13,8 @@ import { pageTitle } from "#/utils/page";
 import { WorkspaceBuildPageView } from "./WorkspaceBuildPageView";
 
 const WorkspaceBuildPage: FC = () => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const params = useParams() as {
 		username: string;
 		workspace: string;
@@ -79,10 +82,17 @@ const WorkspaceBuildPage: FC = () => {
 		<>
 			{build && (
 				<title>
-					{pageTitle(`Build #${build.build_number} · ${build.workspace_name}`)}
+					{pageTitle(
+						tI18n(
+							"WorkspaceBuildPage.WorkspaceBuildPage.build_value0_value1_15602863",
+							{
+								value0: build.build_number,
+								value1: build.workspace_name,
+							},
+						),
+					)}
 				</title>
 			)}
-
 			<WorkspaceBuildPageView
 				logs={logs}
 				build={build}

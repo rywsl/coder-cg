@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { UsersIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { Group } from "#/api/typesGenerated";
 import { Avatar } from "#/components/Avatar/Avatar";
 import {
@@ -15,10 +16,12 @@ type GroupsCellProps = {
 };
 
 export const UserGroupsCell: FC<GroupsCellProps> = ({ userGroups }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<TableCell>
 			{userGroups === undefined ? (
-				<span>No groups</span>
+				<span>{tI18n("users.UserGroupsCell.no_groups_c3389e53")}</span>
 			) : (
 				<Popover>
 					<PopoverTrigger asChild>
@@ -27,8 +30,17 @@ export const UserGroupsCell: FC<GroupsCellProps> = ({ userGroups }) => {
 							className="cursor-pointer bg-transparent border-0 p-0 text-inherit leading-none"
 							aria-label={
 								userGroups.length === 0
-									? "No groups"
-									: `View ${userGroups.length} group${userGroups.length !== 1 ? "s" : ""}`
+									? tI18n("users.UserGroupsCell.no_groups_c3389e53")
+									: tI18n(
+											"users.UserGroupsCell.view_value0_group_value1_42c3c02f",
+											{
+												value0: userGroups.length,
+												value1:
+													userGroups.length !== 1
+														? tI18n("users.UserGroupsCell.s_043a7187")
+														: "",
+											},
+										)
 							}
 						>
 							<div className="flex flex-row gap-2 items-center">
@@ -40,7 +52,10 @@ export const UserGroupsCell: FC<GroupsCellProps> = ({ userGroups }) => {
 								/>
 
 								<span>
-									{userGroups.length} Group{userGroups.length !== 1 && "s"}
+									{userGroups.length}
+									{tI18n("users.UserGroupsCell.group_099a614d")}
+									{userGroups.length !== 1 &&
+										tI18n("users.UserGroupsCell.s_043a7187")}
 								</span>
 							</div>
 						</button>
@@ -65,9 +80,10 @@ export const UserGroupsCell: FC<GroupsCellProps> = ({ userGroups }) => {
 											src={group.avatar_url}
 											fallback={groupName}
 										/>
-
 										<span className="m-0 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap leading-none">
-											{groupName || <em>N/A</em>}
+											{groupName || (
+												<em>{tI18n("users.UserGroupsCell.n_a_e2f79e5b")}</em>
+											)}
 										</span>
 									</li>
 								);

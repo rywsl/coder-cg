@@ -9,6 +9,7 @@ import {
 	XIcon,
 } from "lucide-react";
 import { type FC, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation } from "react-query";
 import * as Yup from "yup";
 import {
@@ -75,6 +76,8 @@ export const PortForwardButton: FC<PortForwardButtonProps> = ({
 	template,
 	agent,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const { entitlements } = useDashboard();
 
 	const { listeningPorts, sharedPorts, refetchSharedPorts } = usePortsData(
@@ -92,7 +95,7 @@ export const PortForwardButton: FC<PortForwardButtonProps> = ({
 							{listeningPorts?.length}
 						</span>
 					</Spinner>
-					Open ports
+					{tI18n("resources.PortForwardButton.open_ports_ea2d982b")}
 					<ChevronDownIcon />
 				</Button>
 			</PopoverTrigger>
@@ -164,6 +167,8 @@ export const PortForwardPopoverView: FC<PortForwardPopoverViewProps> = ({
 	portSharingControlsEnabled,
 	refetchSharedPorts,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [listeningPortProtocol, setListeningPortProtocol] = useState(
 		getWorkspaceListeningPortsProtocol(workspace.id),
 	);
@@ -233,27 +238,37 @@ export const PortForwardPopoverView: FC<PortForwardPopoverViewProps> = ({
 
 	const renderShareLevelOptions = () => (
 		<>
-			<SelectItem value="organization">Organization</SelectItem>
+			<SelectItem value="organization">
+				{tI18n("resources.PortForwardButton.organization_d764d425")}
+			</SelectItem>
 			{canSharePortsAuthenticated ? (
-				<SelectItem value="authenticated">Authenticated</SelectItem>
+				<SelectItem value="authenticated">
+					{tI18n("resources.PortForwardButton.authenticated_6ab694cf")}
+				</SelectItem>
 			) : (
 				<SelectItem
 					value="authenticated"
 					disabled
-					title="This workspace template does not allow sharing ports outside of its organization."
+					title={tI18n(
+						"resources.PortForwardButton.this_workspace_template_does_not_allow_sharing_p_f2ae63aa",
+					)}
 				>
-					Authenticated
+					{tI18n("resources.PortForwardButton.authenticated_6ab694cf")}
 				</SelectItem>
 			)}
 			{canSharePortsPublic ? (
-				<SelectItem value="public">Public</SelectItem>
+				<SelectItem value="public">
+					{tI18n("resources.PortForwardButton.public_591935b1")}
+				</SelectItem>
 			) : (
 				<SelectItem
 					value="public"
 					disabled
-					title="This workspace template does not allow sharing ports publicly."
+					title={tI18n(
+						"resources.PortForwardButton.this_workspace_template_does_not_allow_sharing_p_5fab79f4",
+					)}
 				>
-					Public
+					{tI18n("resources.PortForwardButton.public_591935b1")}
 				</SelectItem>
 			)}
 		</>
@@ -264,17 +279,20 @@ export const PortForwardPopoverView: FC<PortForwardPopoverViewProps> = ({
 			<div className="max-h-80 overflow-y-auto">
 				<div className="flex flex-col p-5">
 					<div className="flex flex-row justify-between items-start">
-						<HelpPopoverTitle>Listening Ports</HelpPopoverTitle>
+						<HelpPopoverTitle>
+							{tI18n("resources.PortForwardButton.listening_ports_c60e103d")}
+						</HelpPopoverTitle>
 						<HelpPopoverLink
 							href={docs("/admin/networking/port-forwarding#dashboard")}
 						>
-							Learn more
+							{tI18n("resources.PortForwardButton.learn_more_1445799c")}
 						</HelpPopoverLink>
 					</div>
 					<div className="flex flex-col gap-1">
 						<HelpPopoverText>
-							The listening ports are exclusively accessible to you. Selecting
-							HTTP/S will change the protocol for all listening ports.
+							{tI18n(
+								"resources.PortForwardButton.the_listening_ports_are_exclusively_accessible_t_e526f657",
+							)}
 						</HelpPopoverText>
 						<div className="flex flex-row gap-2 pb-2">
 							<Select
@@ -288,7 +306,9 @@ export const PortForwardPopoverView: FC<PortForwardPopoverViewProps> = ({
 								}}
 							>
 								<SelectTrigger
-									aria-label="Listening port protocol"
+									aria-label={tI18n(
+										"resources.PortForwardButton.listening_port_protocol_8d6e694b",
+									)}
 									className="h-[34px] min-w-[100px] mt-2 w-auto"
 								>
 									<SelectValue />
@@ -316,10 +336,14 @@ export const PortForwardPopoverView: FC<PortForwardPopoverViewProps> = ({
 								}}
 							>
 								<input
-									aria-label="Port number"
+									aria-label={tI18n(
+										"resources.PortForwardButton.port_number_9bfd43e6",
+									)}
 									name="portNumber"
 									type="number"
-									placeholder="Connect to port..."
+									placeholder={tI18n(
+										"resources.PortForwardButton.connect_to_port_e0c6792e",
+									)}
 									min={9}
 									max={65535}
 									required
@@ -329,17 +353,27 @@ export const PortForwardPopoverView: FC<PortForwardPopoverViewProps> = ({
 									<TooltipTrigger asChild>
 										<Button type="submit" size="icon" variant="subtle">
 											<ExternalLinkIcon />
-											<span className="sr-only">Connect to port</span>
+											<span className="sr-only">
+												{tI18n(
+													"resources.PortForwardButton.connect_to_port_353257b1",
+												)}
+											</span>
 										</Button>
 									</TooltipTrigger>
-									<TooltipContent disablePortal>Connect to port</TooltipContent>
+									<TooltipContent disablePortal>
+										{tI18n(
+											"resources.PortForwardButton.connect_to_port_353257b1",
+										)}
+									</TooltipContent>
 								</Tooltip>
 							</form>
 						</div>
 					</div>
 					{filteredListeningPorts.length === 0 && (
 						<HelpPopoverText className="text-content-secondary pt-5 pb-2.5 text-center">
-							No open ports were detected.
+							{tI18n(
+								"resources.PortForwardButton.no_open_ports_were_detected_d03cfb22",
+							)}
 						</HelpPopoverText>
 					)}
 					{filteredListeningPorts.map((port) => {
@@ -394,11 +428,17 @@ export const PortForwardPopoverView: FC<PortForwardPopoverViewProps> = ({
 													}}
 												>
 													<ShareIcon />
-													<span className="sr-only">Share</span>
+													<span className="sr-only">
+														{tI18n(
+															"resources.PortForwardButton.share_29887a5f",
+														)}
+													</span>
 												</Button>
 											</TooltipTrigger>
 											<TooltipContent disablePortal>
-												Share this port
+												{tI18n(
+													"resources.PortForwardButton.share_this_port_a9622137",
+												)}
 											</TooltipContent>
 										</Tooltip>
 									)}
@@ -409,11 +449,17 @@ export const PortForwardPopoverView: FC<PortForwardPopoverViewProps> = ({
 				</div>
 			</div>
 			<div className="p-5 border-0 border-t border-solid border-border">
-				<HelpPopoverTitle>Shared Ports</HelpPopoverTitle>
+				<HelpPopoverTitle>
+					{tI18n("resources.PortForwardButton.shared_ports_c27e1fcc")}
+				</HelpPopoverTitle>
 				<HelpPopoverText>
 					{canSharePorts
-						? "Ports can be shared with organization members, other Coder users, or with the public."
-						: "This workspace template does not allow sharing ports. Contact a template administrator to enable port sharing."}
+						? tI18n(
+								"resources.PortForwardButton.ports_can_be_shared_with_organization_members_ot_9650a671",
+							)
+						: tI18n(
+								"resources.PortForwardButton.this_workspace_template_does_not_allow_sharing_p_59911159",
+							)}
 				</HelpPopoverText>
 				{canSharePorts && (
 					<div>
@@ -462,7 +508,12 @@ export const PortForwardPopoverView: FC<PortForwardPopoverViewProps> = ({
 										}}
 									>
 										<SelectTrigger
-											aria-label={`Protocol for port ${share.port}`}
+											aria-label={tI18n(
+												"resources.PortForwardButton.protocol_for_port_value0_d0809284",
+												{
+													value0: share.port,
+												},
+											)}
 											className="h-8 min-w-22.5 w-auto border-0 shadow-none focus:ring-0"
 										>
 											<SelectValue />
@@ -472,7 +523,6 @@ export const PortForwardPopoverView: FC<PortForwardPopoverViewProps> = ({
 											<SelectItem value="https">HTTPS</SelectItem>
 										</SelectContent>
 									</Select>
-
 									<div className="flex flex-row justify-end">
 										<Select
 											value={share.share_level}
@@ -489,7 +539,12 @@ export const PortForwardPopoverView: FC<PortForwardPopoverViewProps> = ({
 											}}
 										>
 											<SelectTrigger
-												aria-label={`Sharing level for port ${share.port}`}
+												aria-label={tI18n(
+													"resources.PortForwardButton.sharing_level_for_port_value0_e3ac5d18",
+													{
+														value0: share.port,
+													},
+												)}
 												className="h-8 min-w-35 w-auto border-0 shadow-none focus:ring-0"
 											>
 												<SelectValue />
@@ -499,7 +554,9 @@ export const PortForwardPopoverView: FC<PortForwardPopoverViewProps> = ({
 										<Button
 											size="icon"
 											variant="subtle"
-											aria-label="Delete shared port"
+											aria-label={tI18n(
+												"resources.PortForwardButton.delete_shared_port_54b98dc2",
+											)}
 											onClick={() => {
 												deleteSharedPortMutation.mutate({
 													agent_name: agent.name,
@@ -517,14 +574,16 @@ export const PortForwardPopoverView: FC<PortForwardPopoverViewProps> = ({
 							<div className="mt-4 flex flex-col gap-4 justify-end">
 								<FormField
 									field={getFieldHelpers("port")}
-									label="Port"
+									label={tI18n("resources.PortForwardButton.port_72e9a59f")}
 									disabled={isSubmitting}
 									type="number"
 									min={9}
 									max={65535}
 								/>
 								<div className="flex flex-col gap-2">
-									<Label htmlFor={protocolFieldId}>Protocol</Label>
+									<Label htmlFor={protocolFieldId}>
+										{tI18n("resources.PortForwardButton.protocol_cf088334")}
+									</Label>
 									<Select
 										value={form.values.protocol}
 										onValueChange={(value) => {
@@ -553,7 +612,11 @@ export const PortForwardPopoverView: FC<PortForwardPopoverViewProps> = ({
 									</Select>
 								</div>
 								<div className="flex flex-col gap-2">
-									<Label htmlFor={shareLevelFieldId}>Sharing Level</Label>
+									<Label htmlFor={shareLevelFieldId}>
+										{tI18n(
+											"resources.PortForwardButton.sharing_level_b01766a2",
+										)}
+									</Label>
 									<Select
 										value={form.values.share_level}
 										onValueChange={(value) => {
@@ -566,7 +629,9 @@ export const PortForwardPopoverView: FC<PortForwardPopoverViewProps> = ({
 									>
 										<SelectTrigger
 											id={shareLevelFieldId}
-											aria-label="Sharing Level"
+											aria-label={tI18n(
+												"resources.PortForwardButton.sharing_level_b01766a2",
+											)}
 											aria-invalid={shareLevelField.error}
 											className={
 												shareLevelField.error
@@ -581,7 +646,7 @@ export const PortForwardPopoverView: FC<PortForwardPopoverViewProps> = ({
 								</div>
 								<Button type="submit" disabled={!form.isValid || isSubmitting}>
 									<Spinner loading={isSubmitting} />
-									Share Port
+									{tI18n("resources.PortForwardButton.share_port_7ee2362a")}
 								</Button>
 							</div>
 						</form>

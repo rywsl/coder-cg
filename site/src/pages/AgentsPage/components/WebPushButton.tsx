@@ -1,5 +1,6 @@
 import { BellIcon, BellOffIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { getErrorMessage } from "#/api/errors";
 import { Button } from "#/components/Button/Button";
@@ -20,6 +21,8 @@ export const WebPushButton: FC<WebPushButtonProps> = ({
 	webPush,
 	onToggle,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const internalWebPush = useWebpushNotifications();
 	const webPushState = webPush ?? internalWebPush;
 
@@ -41,7 +44,17 @@ export const WebPushButton: FC<WebPushButtonProps> = ({
 			}
 		} catch (error) {
 			const action = webPushState.subscribed ? "disable" : "enable";
-			toast.error(getErrorMessage(error, `Failed to ${action} notifications.`));
+			toast.error(
+				getErrorMessage(
+					error,
+					tI18n(
+						"AgentsPage.components.WebPushButton.failed_to_value0_notifications_ed6c5fe0",
+						{
+							value0: action,
+						},
+					),
+				),
+			);
 		}
 	};
 
@@ -55,8 +68,12 @@ export const WebPushButton: FC<WebPushButtonProps> = ({
 					onClick={handleClick}
 					aria-label={
 						webPushState.subscribed
-							? "Disable notifications"
-							: "Enable notifications"
+							? tI18n(
+									"AgentsPage.components.WebPushButton.disable_notifications_b54b597f",
+								)
+							: tI18n(
+									"AgentsPage.components.WebPushButton.enable_notifications_682be64a",
+								)
 					}
 					className="size-7 text-content-secondary hover:text-content-primary"
 				>
@@ -71,8 +88,12 @@ export const WebPushButton: FC<WebPushButtonProps> = ({
 			</TooltipTrigger>
 			<TooltipContent>
 				{webPushState.subscribed
-					? "Disable notifications"
-					: "Enable notifications"}
+					? tI18n(
+							"AgentsPage.components.WebPushButton.disable_notifications_b54b597f",
+						)
+					: tI18n(
+							"AgentsPage.components.WebPushButton.enable_notifications_682be64a",
+						)}
 			</TooltipContent>
 		</Tooltip>
 	);

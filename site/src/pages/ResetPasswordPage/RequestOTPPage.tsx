@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation } from "react-query";
 import { Link as RouterLink, useSearchParams } from "react-router";
 import * as Yup from "yup";
@@ -10,11 +11,14 @@ import { ProductLogo } from "#/components/Icons/ProductLogo";
 import { Input } from "#/components/Input/Input";
 import { Label } from "#/components/Label/Label";
 import { Spinner } from "#/components/Spinner/Spinner";
+import { i18n } from "#/i18n";
 import { getApplicationName } from "#/utils/appearance";
 import { getFormHelpers, onChangeTrimmed } from "#/utils/formUtils";
 import { pageTitle } from "#/utils/page";
 
 const RequestOTPPage: FC = () => {
+	const { t: tI18n } = useTranslation("pages");
+
 	const applicationName = getApplicationName();
 	const requestOTPMutation = useMutation(requestOneTimePassword());
 	const [searchParams] = useSearchParams();
@@ -22,8 +26,12 @@ const RequestOTPPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Reset Password", applicationName)}</title>
-
+			<title>
+				{pageTitle(
+					tI18n("ResetPasswordPage.RequestOTPPage.reset_password_4e70f1fd"),
+					applicationName,
+				)}
+			</title>
 			<main className="p-6 flex items-center justify-center flex-col min-h-full text-center">
 				<div>
 					<ProductLogo />
@@ -57,8 +65,16 @@ type RequestOTPProps = {
 const validationSchema = Yup.object({
 	email: Yup.string()
 		.trim()
-		.email("Please enter a valid email address.")
-		.required("Please enter an email address."),
+		.email(
+			i18n.t(
+				"pages:ResetPasswordPage.RequestOTPPage.please_enter_a_valid_email_address_958e4ccf",
+			),
+		)
+		.required(
+			i18n.t(
+				"pages:ResetPasswordPage.RequestOTPPage.please_enter_an_email_address_201953c9",
+			),
+		),
 });
 
 const RequestOTP: FC<RequestOTPProps> = ({
@@ -67,6 +83,8 @@ const RequestOTP: FC<RequestOTPProps> = ({
 	isRequesting,
 	initialEmail,
 }) => {
+	const { t: tI18n } = useTranslation("pages");
+
 	const form = useFormik({
 		initialValues: { email: initialEmail },
 		validationSchema,
@@ -82,7 +100,9 @@ const RequestOTP: FC<RequestOTPProps> = ({
 		<div className="w-full max-w-xs flex flex-col items-center">
 			<div>
 				<h1 className="m-0 mb-6 text-xl font-semibold leading-7">
-					Enter your email to reset the password
+					{tI18n(
+						"ResetPasswordPage.RequestOTPPage.enter_your_email_to_reset_the_password_52e1bb6c",
+					)}
 				</h1>
 				{error ? <ErrorAlert error={error} className="mb-6" /> : null}
 				<form
@@ -92,7 +112,7 @@ const RequestOTP: FC<RequestOTPProps> = ({
 					<fieldset disabled={isRequesting} className="flex flex-col gap-5">
 						<div className="flex flex-col items-start gap-2">
 							<Label htmlFor={emailField.id}>
-								Email{" "}
+								{tI18n("ResetPasswordPage.RequestOTPPage.email_969ccbd3")}{" "}
 								<span className="text-xs text-content-destructive font-bold">
 									*
 								</span>
@@ -122,10 +142,14 @@ const RequestOTP: FC<RequestOTPProps> = ({
 								className="w-full"
 							>
 								<Spinner loading={isRequesting} />
-								Reset password
+								{tI18n(
+									"ResetPasswordPage.RequestOTPPage.reset_password_e0edfeb3",
+								)}
 							</Button>
 							<Button asChild size="lg" variant="outline" className="w-full">
-								<RouterLink to="/login">Cancel</RouterLink>
+								<RouterLink to="/login">
+									{tI18n("ResetPasswordPage.RequestOTPPage.cancel_19766ed6")}
+								</RouterLink>
 							</Button>
 						</div>
 					</fieldset>
@@ -136,22 +160,29 @@ const RequestOTP: FC<RequestOTPProps> = ({
 };
 
 const RequestOTPSuccess: FC<{ email: string }> = ({ email }) => {
+	const { t: tI18n } = useTranslation("pages");
+
 	return (
 		<div className="w-full max-w-[380px] flex flex-col items-center font-medium text-sm leading-6">
 			<div>
 				<p className="m-0 mb-14">
-					If the account{" "}
+					{tI18n("ResetPasswordPage.RequestOTPPage.if_the_account_6af800ac")}{" "}
 					<span className="font-semibold text-content-secondary">{email}</span>{" "}
-					exists, you will get an email with instructions on resetting your
-					password.
+					{tI18n(
+						"ResetPasswordPage.RequestOTPPage.exists_you_will_get_an_email_with_instructions_o_6734de58",
+					)}
 				</p>
 
 				<p className="m-0 text-xs leading-4 text-content-secondary mb-12">
-					Contact your deployment administrator if you encounter issues.
+					{tI18n(
+						"ResetPasswordPage.RequestOTPPage.contact_your_deployment_administrator_if_you_enc_20edca3f",
+					)}
 				</p>
 
 				<Button asChild variant="default">
-					<RouterLink to="/login">Back to login</RouterLink>
+					<RouterLink to="/login">
+						{tI18n("ResetPasswordPage.RequestOTPPage.back_to_login_3e3806ff")}
+					</RouterLink>
 				</Button>
 			</div>
 		</div>

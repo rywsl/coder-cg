@@ -1,4 +1,5 @@
 import type { FC, FormEventHandler, JSX, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "#/components/Button/Button";
 
 interface FieldsetProps {
@@ -20,6 +21,8 @@ export const Fieldset: FC<FieldsetProps> = ({
 	onSubmit,
 	isSubmitting,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<form
 			className="mt-8 overflow-hidden rounded-lg border border-solid border-border"
@@ -36,7 +39,7 @@ export const Fieldset: FC<FieldsetProps> = ({
 				<div className="text-content-secondary">{validation}</div>
 				{button || (
 					<Button type="submit" disabled={isSubmitting}>
-						Submit
+						{tI18n("DeploymentSettingsPage.Fieldset.submit_155f816c")}
 					</Button>
 				)}
 			</footer>

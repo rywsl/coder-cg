@@ -1,6 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 import type { FC, PropsWithChildren, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "#/components/Link/Link";
 
 type SettingsHeaderProps = Readonly<
@@ -35,11 +36,15 @@ export const SettingsHeaderDocsLink: FC<SettingsHeaderDocsLinkProps> = ({
 	context,
 	children = "View docs",
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<Link href={href} target="_blank" rel="noreferrer">
 			{children}
 			{context && <span className="sr-only"> {context}</span>}
-			<span className="sr-only"> (opens in new tab)</span>
+			<span className="sr-only">
+				{tI18n("SettingsHeader.SettingsHeader.opens_in_new_tab_541f18a6")}
+			</span>
 		</Link>
 	);
 };

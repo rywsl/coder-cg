@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import { PlusIcon, TrashIcon, TriangleAlertIcon } from "lucide-react";
 import { type FC, type KeyboardEventHandler, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import type {
 	Organization,
@@ -30,6 +31,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { i18n } from "#/i18n";
 import { ExportPolicyButton } from "./ExportPolicyButton";
 import { IdpMappingTable } from "./IdpMappingTable";
 import { IdpPillList } from "./IdpPillList";
@@ -41,7 +43,9 @@ const roleSyncValidationSchema = Yup.object({
 	mapping: Yup.object()
 		.test(
 			"valid-mapping",
-			"Invalid role sync settings mapping structure",
+			i18n.t(
+				"administration:OrganizationSettingsPage.IdpSyncPage.IdpRoleSyncForm.invalid_role_sync_settings_mapping_structure_80aea2b4",
+			),
 			(value) => {
 				if (!value) return true;
 				return Object.entries(value).every(
@@ -76,6 +80,8 @@ export const IdpRoleSyncForm: FC<IdpRoleSyncFormProps> = ({
 	onSubmit,
 	onSyncFieldChange,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const form = useFormik<RoleSyncSettings>({
 		initialValues: {
 			field: roleSyncSettings?.field ?? "",
@@ -135,7 +141,9 @@ export const IdpRoleSyncForm: FC<IdpRoleSyncFormProps> = ({
 				</div>
 				<div className="grid items-center gap-1">
 					<Label className="text-sm" htmlFor={`${id}-sync-field`}>
-						Role sync field
+						{tI18n(
+							"OrganizationSettingsPage.IdpSyncPage.IdpRoleSyncForm.role_sync_field_e896a659",
+						)}
 					</Label>
 					<div className="flex flex-row items-center gap-5">
 						<div className="flex flex-row gap-2">
@@ -158,12 +166,16 @@ export const IdpRoleSyncForm: FC<IdpRoleSyncFormProps> = ({
 								}}
 							>
 								<Spinner loading={form.isSubmitting} />
-								Save
+								{tI18n(
+									"OrganizationSettingsPage.IdpSyncPage.IdpRoleSyncForm.save_1509f561",
+								)}
 							</Button>
 						</div>
 					</div>
 					<p className="text-content-secondary text-2xs m-0">
-						If empty, role sync is deactivated
+						{tI18n(
+							"OrganizationSettingsPage.IdpSyncPage.IdpRoleSyncForm.if_empty_role_sync_is_deactivated_7ecbe6e4",
+						)}
 					</p>
 				</div>
 				{form.errors.field && (
@@ -174,7 +186,9 @@ export const IdpRoleSyncForm: FC<IdpRoleSyncFormProps> = ({
 				<div className="flex flex-row gap-2 justify-between items-start">
 					<div className="grid items-center gap-1 w-72">
 						<Label className="text-sm" htmlFor={`${id}-idp-role-name`}>
-							IdP role name
+							{tI18n(
+								"OrganizationSettingsPage.IdpSyncPage.IdpRoleSyncForm.idp_role_name_9bca2a07",
+							)}
 						</Label>
 						{claimFieldValues ? (
 							<Combobox
@@ -191,14 +205,18 @@ export const IdpRoleSyncForm: FC<IdpRoleSyncFormProps> = ({
 												? { label: idpRoleName, value: idpRoleName }
 												: undefined
 										}
-										placeholder="Select IdP role"
+										placeholder={tI18n(
+											"OrganizationSettingsPage.IdpSyncPage.IdpRoleSyncForm.select_idp_role_386cda47",
+										)}
 									/>
 								</ComboboxTrigger>
 								<ComboboxContent className="w-72">
 									<ComboboxInput
 										value={comboInputValue}
 										onValueChange={setComboInputValue}
-										placeholder="Search..."
+										placeholder={tI18n(
+											"OrganizationSettingsPage.IdpSyncPage.IdpRoleSyncForm.search_7f553822",
+										)}
 										onKeyDown={handleKeyDown}
 									/>
 									<ComboboxList>
@@ -233,7 +251,9 @@ export const IdpRoleSyncForm: FC<IdpRoleSyncFormProps> = ({
 					</div>
 					<div className="grid items-center gap-1 flex-1">
 						<Label className="text-sm" htmlFor={`${id}-coder-role`}>
-							Coder role
+							{tI18n(
+								"OrganizationSettingsPage.IdpSyncPage.IdpRoleSyncForm.coder_role_7337dae7",
+							)}
 						</Label>
 						<MultiSelectCombobox
 							inputProps={{
@@ -247,10 +267,14 @@ export const IdpRoleSyncForm: FC<IdpRoleSyncFormProps> = ({
 								value: role.name,
 							}))}
 							hidePlaceholderWhenSelected
-							placeholder="Select role"
+							placeholder={tI18n(
+								"OrganizationSettingsPage.IdpSyncPage.IdpRoleSyncForm.select_role_ba07cd15",
+							)}
 							emptyIndicator={
 								<p className="text-center text-md text-content-primary">
-									All roles selected
+									{tI18n(
+										"OrganizationSettingsPage.IdpSyncPage.IdpRoleSyncForm.all_roles_selected_3f8e4132",
+									)}
 								</p>
 							}
 						/>
@@ -278,7 +302,9 @@ export const IdpRoleSyncForm: FC<IdpRoleSyncFormProps> = ({
 							<Spinner loading={form.isSubmitting}>
 								<PlusIcon />
 							</Spinner>
-							Add IdP role
+							{tI18n(
+								"OrganizationSettingsPage.IdpSyncPage.IdpRoleSyncForm.add_idp_role_451a5bf8",
+							)}
 						</Button>
 					</div>
 				</div>
@@ -321,6 +347,8 @@ const RoleRow: FC<RoleRowProps> = ({
 	coderRoles,
 	onDelete,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<TableRow data-testid={`role-${idpRole}`}>
 			<TableCell>
@@ -337,29 +365,33 @@ const RoleRow: FC<RoleRowProps> = ({
 								sideOffset={8}
 								className="p-2 text-xs text-content-secondary max-w-sm"
 							>
-								This value has not be seen in the specified claim field before.
-								You might want to check your IdP configuration and ensure that
-								this value is not misspelled.
+								{tI18n(
+									"OrganizationSettingsPage.IdpSyncPage.IdpRoleSyncForm.this_value_has_not_be_seen_in_the_specified_clai_69d1ded4",
+								)}
 							</TooltipContent>
 						</Tooltip>
 					)}
 				</div>
 			</TableCell>
-
 			<TableCell>
 				<IdpPillList roles={coderRoles} />
 			</TableCell>
-
 			<TableCell>
 				<Button
 					variant="outline"
 					size="icon"
 					className="text-content-primary"
-					aria-label="delete"
+					aria-label={tI18n(
+						"OrganizationSettingsPage.IdpSyncPage.IdpRoleSyncForm.delete_61975955",
+					)}
 					onClick={() => onDelete(idpRole)}
 				>
 					<TrashIcon />
-					<span className="sr-only">Delete IdP mapping</span>
+					<span className="sr-only">
+						{tI18n(
+							"OrganizationSettingsPage.IdpSyncPage.IdpRoleSyncForm.delete_idp_mapping_8c31481a",
+						)}
+					</span>
 				</Button>
 			</TableCell>
 		</TableRow>

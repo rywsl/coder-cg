@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { ChevronRightIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import type {
 	ProvisionerDaemon,
@@ -43,6 +44,8 @@ export const ProvisionerRow: FC<ProvisionerRowProps> = ({
 	buildVersion,
 	defaultIsOpen = false,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const [isOpen, setIsOpen] = useState(defaultIsOpen);
 
 	return (
@@ -63,7 +66,17 @@ export const ProvisionerRow: FC<ProvisionerRowProps> = ({
 						<ChevronRightIcon
 							className={cn("mr-4 transition-transform", isOpen && "rotate-90")}
 						/>
-						<span className="sr-only">({isOpen ? "Hide" : "Show more"})</span>
+						<span className="sr-only">
+							(
+							{isOpen
+								? tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerRow.hide_ac20a57b",
+									)
+								: tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerRow.show_more_f5c9bd13",
+									)}
+							)
+						</span>
 						{provisioner.name}
 					</Button>
 				</TableCell>
@@ -100,11 +113,12 @@ export const ProvisionerRow: FC<ProvisionerRowProps> = ({
 							{relativeTime(new Date(provisioner.last_seen_at))}
 						</span>
 					) : (
-						"Never"
+						tI18n(
+							"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerRow.never_6300ef80",
+						)
 					)}
 				</TableCell>
 			</TableRow>
-
 			{isOpen && (
 				<TableRow>
 					<TableCell colSpan={999} className="p-4 border-t-0">
@@ -115,20 +129,40 @@ export const ProvisionerRow: FC<ProvisionerRowProps> = ({
 								"[&_dd]:text-content-primary [&_dd]:font-mono [&_dd]:leading-[22px] [&_dt]:font-medium",
 							])}
 						>
-							<dt>Last seen:</dt>
+							<dt>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerRow.last_seen_8063520b",
+								)}
+							</dt>
 							<dd data-pixel="ignore">{provisioner.last_seen_at}</dd>
 
-							<dt>Creation time:</dt>
+							<dt>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerRow.creation_time_e087974b",
+								)}
+							</dt>
 							<dd data-pixel="ignore">{provisioner.created_at}</dd>
 
-							<dt>Version:</dt>
+							<dt>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerRow.version_4c5726ee",
+								)}
+							</dt>
 							<dd>
 								{provisioner.version === buildVersion
-									? "up to date"
-									: "outdated"}
+									? tI18n(
+											"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerRow.up_to_date_bef6a4bb",
+										)
+									: tI18n(
+											"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerRow.outdated_ee3cadee",
+										)}
 							</dd>
 
-							<dt>Tags:</dt>
+							<dt>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerRow.tags_865658f8",
+								)}
+							</dt>
 							<dd>
 								<ProvisionerTags>
 									{Object.entries(provisioner.tags).map(([key, value]) => (
@@ -141,10 +175,18 @@ export const ProvisionerRow: FC<ProvisionerRowProps> = ({
 
 							{provisioner.current_job && (
 								<>
-									<dt>Current job:</dt>
+									<dt>
+										{tI18n(
+											"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerRow.current_job_361d5179",
+										)}
+									</dt>
 									<dd>{provisioner.current_job.id}</dd>
 
-									<dt>Current job status:</dt>
+									<dt>
+										{tI18n(
+											"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerRow.current_job_status_06d77c09",
+										)}
+									</dt>
 									<dd>
 										<JobStatusIndicator
 											status={provisioner.current_job.status}
@@ -155,19 +197,29 @@ export const ProvisionerRow: FC<ProvisionerRowProps> = ({
 
 							{provisioner.previous_job && (
 								<>
-									<dt>Previous job:</dt>
+									<dt>
+										{tI18n(
+											"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerRow.previous_job_a61d4dfd",
+										)}
+									</dt>
 									<dd className="flex items-center gap-2">
 										<span>{provisioner.previous_job.id}</span>
 										<Button size="xs" variant="outline" asChild>
 											<RouterLink
 												to={`../provisioner-jobs?${new URLSearchParams({ ids: provisioner.previous_job.id })}`}
 											>
-												View job
+												{tI18n(
+													"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerRow.view_job_59012f37",
+												)}
 											</RouterLink>
 										</Button>
 									</dd>
 
-									<dt>Previous job status:</dt>
+									<dt>
+										{tI18n(
+											"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerRow.previous_job_status_77be65b0",
+										)}
+									</dt>
 									<dd>
 										<JobStatusIndicator
 											status={provisioner.previous_job.status}

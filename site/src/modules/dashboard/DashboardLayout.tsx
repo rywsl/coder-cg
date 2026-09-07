@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import { type FC, type HTMLAttributes, Suspense } from "react";
+import { useTranslation } from "react-i18next";
 import { Outlet } from "react-router";
 import { Loader } from "#/components/Loader/Loader";
 import { useAuthenticated } from "#/hooks/useAuthenticated";
@@ -11,6 +12,8 @@ import { UpdateCheckNotice } from "./UpdateCheckNotice/UpdateCheckNotice";
 import { useUpdateCheck } from "./useUpdateCheck";
 
 export const DashboardLayout: FC = () => {
+	const { t: tI18n } = useTranslation("dashboard");
+
 	const { permissions } = useAuthenticated();
 	const updateCheck = useUpdateCheck(permissions.viewDeploymentConfig);
 	const canViewDeployment = Boolean(permissions.viewDeploymentConfig);
@@ -19,7 +22,6 @@ export const DashboardLayout: FC = () => {
 		<>
 			{canViewDeployment && <LicenseBanner />}
 			<AnnouncementBanners />
-
 			<div className="flex flex-col min-h-screen justify-between">
 				{/* biome-ignore lint/a11y/useValidAnchor: Skip links use fragment anchors by design. */}
 				<a
@@ -31,7 +33,7 @@ export const DashboardLayout: FC = () => {
 					}}
 					className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:z-50 focus-visible:p-4 focus-visible:bg-surface-primary focus-visible:text-content-primary"
 				>
-					Skip to main content
+					{tI18n("dashboard.DashboardLayout.skip_to_main_content_c887f134")}
 				</a>
 				<Navbar />
 

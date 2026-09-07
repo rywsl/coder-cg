@@ -1,4 +1,5 @@
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { ToolCall } from "./ToolCall";
 import type { ToolStatus } from "./utils";
 
@@ -12,19 +13,35 @@ export const ReadTemplateTool: React.FC<{
 	isError: boolean;
 	errorMessage?: string;
 }> = ({ templateName, status, isError, errorMessage }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const isRunning = status === "running";
 
 	const label = isRunning
-		? "Reading template…"
+		? tI18n(
+				"AgentsPage.components.ChatElements.tools.ReadTemplateTool.reading_template_4bbfee20",
+			)
 		: templateName
-			? `Read template ${templateName}`
-			: "Read template";
+			? tI18n(
+					"AgentsPage.components.ChatElements.tools.ReadTemplateTool.read_template_value0_a7dfc289",
+					{
+						value0: templateName,
+					},
+				)
+			: tI18n(
+					"AgentsPage.components.ChatElements.tools.ReadTemplateTool.read_template_4783232c",
+				);
 
 	return (
 		<ToolCall.Root
 			status={status}
 			isError={isError}
-			errorMessage={errorMessage || "Failed to read template"}
+			errorMessage={
+				errorMessage ||
+				tI18n(
+					"AgentsPage.components.ChatElements.tools.ReadTemplateTool.failed_to_read_template_15dfbf50",
+				)
+			}
 			hasContent={false}
 		>
 			<ToolCall.Header iconName="read_template" label={label} />

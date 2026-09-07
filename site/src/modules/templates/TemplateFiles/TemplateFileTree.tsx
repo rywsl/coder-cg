@@ -7,6 +7,7 @@ import {
 	Trash2Icon,
 } from "lucide-react";
 import { type FC, type JSX, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "#/components/Button/Button";
 import {
 	Collapsible,
@@ -259,6 +260,8 @@ interface MoreMenuProps {
 }
 
 const MoreMenu: FC<MoreMenuProps> = ({ onRename, onDelete }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	if (!onRename && !onDelete) {
 		return null;
 	}
@@ -279,14 +282,18 @@ const MoreMenu: FC<MoreMenuProps> = ({ onRename, onDelete }) => {
 					onClick={(e) => e.stopPropagation()}
 				>
 					<EllipsisIcon className="size-4" />
-					<span className="sr-only">File actions</span>
+					<span className="sr-only">
+						{tI18n(
+							"templates.TemplateFiles.TemplateFileTree.file_actions_fb3d7e2c",
+						)}
+					</span>
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end">
 				{onRename && (
 					<DropdownMenuItem onClick={onRename}>
 						<PencilIcon />
-						Rename
+						{tI18n("templates.TemplateFiles.TemplateFileTree.rename_3064d79a")}
 					</DropdownMenuItem>
 				)}
 				{onDelete && (
@@ -295,7 +302,7 @@ const MoreMenu: FC<MoreMenuProps> = ({ onRename, onDelete }) => {
 						onClick={onDelete}
 					>
 						<Trash2Icon />
-						Delete&hellip;
+						{tI18n("templates.TemplateFiles.TemplateFileTree.delete_9ce78fe3")}
 					</DropdownMenuItem>
 				)}
 			</DropdownMenuContent>

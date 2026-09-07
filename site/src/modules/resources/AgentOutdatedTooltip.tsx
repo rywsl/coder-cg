@@ -1,5 +1,6 @@
 import { RotateCcwIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { WorkspaceAgent } from "#/api/typesGenerated";
 import {
 	HelpPopover,
@@ -25,12 +26,14 @@ export const AgentOutdatedTooltip: FC<AgentOutdatedTooltipProps> = ({
 	status,
 	onUpdate,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [isOpen, setIsOpen] = useState(false);
 
 	const title =
 		status === agentVersionStatus.Outdated
-			? "Agent Outdated"
-			: "Agent Deprecated";
+			? tI18n("resources.AgentOutdatedTooltip.agent_outdated_d83cd971")
+			: tI18n("resources.AgentOutdatedTooltip.agent_deprecated_6f0745d6");
 	const opener =
 		status === agentVersionStatus.Outdated
 			? "This agent is an older version than the Coder server."
@@ -41,7 +44,9 @@ export const AgentOutdatedTooltip: FC<AgentOutdatedTooltipProps> = ({
 		<HelpPopover open={isOpen} onOpenChange={setIsOpen}>
 			<HelpPopoverTrigger asChild>
 				<span role="status" className="cursor-pointer">
-					{status === agentVersionStatus.Outdated ? "Outdated" : "Deprecated"}
+					{status === agentVersionStatus.Outdated
+						? tI18n("resources.AgentOutdatedTooltip.outdated_c759f42e")
+						: tI18n("resources.AgentOutdatedTooltip.deprecated_6b2e8f83")}
 				</span>
 			</HelpPopoverTrigger>
 			<HelpPopoverContent>
@@ -53,14 +58,14 @@ export const AgentOutdatedTooltip: FC<AgentOutdatedTooltipProps> = ({
 
 					<div className="flex flex-col gap-1">
 						<span className="font-semibold text-content-primary">
-							Agent version
+							{tI18n("resources.AgentOutdatedTooltip.agent_version_4ab6ac4a")}
 						</span>
 						<span>{agent.version}</span>
 					</div>
 
 					<div className="flex flex-col gap-1">
 						<span className="font-semibold text-content-primary">
-							Server version
+							{tI18n("resources.AgentOutdatedTooltip.server_version_3f34bb23")}
 						</span>
 						<span>{serverVersion}</span>
 					</div>
@@ -72,9 +77,13 @@ export const AgentOutdatedTooltip: FC<AgentOutdatedTooltipProps> = ({
 								onUpdate();
 								setIsOpen(false);
 							}}
-							ariaLabel="Update workspace"
+							ariaLabel={tI18n(
+								"resources.AgentOutdatedTooltip.update_workspace_397e1c3f",
+							)}
 						>
-							Update workspace
+							{tI18n(
+								"resources.AgentOutdatedTooltip.update_workspace_397e1c3f",
+							)}
 						</HelpPopoverAction>
 					</HelpPopoverLinksGroup>
 				</div>

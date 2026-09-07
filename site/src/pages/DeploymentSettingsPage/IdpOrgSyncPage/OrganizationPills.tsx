@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "#/components/Badge/Badge";
 import {
 	Tooltip,
@@ -14,6 +15,8 @@ interface OrganizationPillsProps {
 export const OrganizationPills: FC<OrganizationPillsProps> = ({
 	organizations,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const orgs = organizations.map((org) => ({
 		name: org,
 		isUUID: isUUID(org),
@@ -29,9 +32,12 @@ export const OrganizationPills: FC<OrganizationPillsProps> = ({
 					{orgs[0].name}
 				</Badge>
 			) : (
-				<p>None</p>
+				<p>
+					{tI18n(
+						"DeploymentSettingsPage.IdpOrgSyncPage.OrganizationPills.none_dc937b59",
+					)}
+				</p>
 			)}
-
 			{orgs.length > 1 && <OverflowPillList organizations={orgs.slice(1)} />}
 		</div>
 	);

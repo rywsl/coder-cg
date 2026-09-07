@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { ProvisionerDaemon } from "#/api/typesGenerated";
 import { ChevronDownIcon } from "#/components/AnimatedIcons/ChevronDown";
 import { FormSection, VerticalForm } from "#/components/Form/Form";
@@ -21,12 +22,18 @@ export const ProvisionerTagsPopover: FC<ProvisionerTagsPopoverProps> = ({
 	tags,
 	onTagsChange,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
 				<TopbarButton color="neutral" size="icon">
 					<ChevronDownIcon className="size-icon-xs" />
-					<span className="sr-only">Expand provisioner tags</span>
+					<span className="sr-only">
+						{tI18n(
+							"TemplateVersionEditorPage.ProvisionerTagsPopover.expand_provisioner_tags_f11a0d4c",
+						)}
+					</span>
 				</TopbarButton>
 			</PopoverTrigger>
 			<PopoverContent
@@ -42,11 +49,14 @@ export const ProvisionerTagsPopover: FC<ProvisionerTagsPopoverProps> = ({
 								// direction ("horizontal") which adds lg:flex-row.
 								root: "flex-col lg:flex-col gap-4 lg:gap-4",
 							}}
-							title="Provisioner Tags"
+							title={tI18n(
+								"TemplateVersionEditorPage.ProvisionerTagsPopover.provisioner_tags_3d69e439",
+							)}
 							description={
 								<>
-									Tags are a way to control which provisioner daemons complete
-									which build jobs.&nbsp;
+									{tI18n(
+										"TemplateVersionEditorPage.ProvisionerTagsPopover.tags_are_a_way_to_control_which_provisioner_daem_45f8d89d",
+									)}
 									<Link
 										href={docs("/admin/provisioners")}
 										target="_blank"
@@ -54,7 +64,9 @@ export const ProvisionerTagsPopover: FC<ProvisionerTagsPopoverProps> = ({
 										className="p-0"
 										showExternalIcon={false}
 									>
-										Learn more...
+										{tI18n(
+											"TemplateVersionEditorPage.ProvisionerTagsPopover.learn_more_0bfa7ffe",
+										)}
 									</Link>
 								</>
 							}

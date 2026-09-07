@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
 	Navigate,
@@ -28,6 +29,8 @@ import {
 import UpdateMCPServerPageView from "./UpdateMCPServerPageView";
 
 const UpdateMCPServerPage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { permissions } = useAuthenticated();
 	const { organizations } = useDashboard();
 	const { serverId } = useParams<{ serverId: string }>();
@@ -127,12 +130,30 @@ const UpdateMCPServerPage: FC = () => {
 						<Navigate to={listPath} replace />
 					) : serverQuery.isLoading ? (
 						<>
-							<title>{pageTitle("Loading...", "AI Settings")}</title>
+							<title>
+								{pageTitle(
+									tI18n(
+										"AISettingsPage.MCPServersPage.UpdateMCPServerPage.UpdateMCPServerPage.loading_47d2a515",
+									),
+									tI18n(
+										"AISettingsPage.MCPServersPage.UpdateMCPServerPage.UpdateMCPServerPage.ai_settings_a8e5e2c6",
+									),
+								)}
+							</title>
 							<Loader fullscreen />
 						</>
 					) : serverQuery.isLoadingError && !notFound ? (
 						<>
-							<title>{pageTitle("MCP servers", "AI Settings")}</title>
+							<title>
+								{pageTitle(
+									tI18n(
+										"AISettingsPage.MCPServersPage.UpdateMCPServerPage.UpdateMCPServerPage.mcp_servers_22a7559f",
+									),
+									tI18n(
+										"AISettingsPage.MCPServersPage.UpdateMCPServerPage.UpdateMCPServerPage.ai_settings_a8e5e2c6",
+									),
+								)}
+							</title>
 							<div className="mb-4">
 								<ErrorAlert error={serverQuery.error} />
 							</div>
@@ -165,14 +186,21 @@ const UpdateMCPServerPage: FC = () => {
 														req,
 													});
 													toast.success(
-														`MCP server "${updated.display_name}" updated.`,
+														tI18n(
+															"AISettingsPage.MCPServersPage.UpdateMCPServerPage.UpdateMCPServerPage.mcp_server_value0_updated_194ea8ce",
+															{
+																value0: updated.display_name,
+															},
+														),
 													);
 													await navigate(listPath);
 												} catch (error) {
 													toast.error(
 														getErrorMessage(
 															error,
-															"Failed to update MCP server.",
+															tI18n(
+																"AISettingsPage.MCPServersPage.UpdateMCPServerPage.UpdateMCPServerPage.failed_to_update_mcp_server_f5f3d958",
+															),
 														),
 													);
 												}
@@ -185,14 +213,21 @@ const UpdateMCPServerPage: FC = () => {
 												try {
 													await deleteMutation.mutateAsync(id);
 													toast.success(
-														`MCP server "${server.display_name}" deleted.`,
+														tI18n(
+															"AISettingsPage.MCPServersPage.UpdateMCPServerPage.UpdateMCPServerPage.mcp_server_value0_deleted_8e8b3c10",
+															{
+																value0: server.display_name,
+															},
+														),
 													);
 													await navigate(listPath, { replace: true });
 												} catch (error) {
 													toast.error(
 														getErrorMessage(
 															error,
-															"Failed to delete MCP server.",
+															tI18n(
+																"AISettingsPage.MCPServersPage.UpdateMCPServerPage.UpdateMCPServerPage.failed_to_delete_mcp_server_5a77a092",
+															),
 														),
 													);
 												}
@@ -207,14 +242,25 @@ const UpdateMCPServerPage: FC = () => {
 													{
 														onSuccess: () => {
 															toast.success(
-																`MCP server "${server.display_name}" ${enabled ? "enabled" : "disabled"}.`,
+																tI18n(
+																	"AISettingsPage.MCPServersPage.UpdateMCPServerPage.UpdateMCPServerPage.mcp_server_value0_value1_d62ccb64",
+																	{
+																		value0: server.display_name,
+																		value1: enabled ? "enabled" : "disabled",
+																	},
+																),
 															);
 														},
 														onError: (error) => {
 															toast.error(
 																getErrorMessage(
 																	error,
-																	`Failed to ${enabled ? "enable" : "disable"} MCP server.`,
+																	tI18n(
+																		"AISettingsPage.MCPServersPage.UpdateMCPServerPage.UpdateMCPServerPage.failed_to_value0_mcp_server_3f978f99",
+																		{
+																			value0: enabled ? "enable" : "disable",
+																		},
+																	),
 																),
 															);
 														},

@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { CheckIcon } from "lucide-react";
 import { Select as SelectPrimitive } from "radix-ui";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import * as Yup from "yup";
 import { hasApiFieldErrors, isApiError } from "#/api/errors";
@@ -22,6 +23,7 @@ import {
 	SelectValue,
 } from "#/components/Select/Select";
 import { Spinner } from "#/components/Spinner/Spinner";
+import { i18n } from "#/i18n";
 import { RoleSelector } from "#/modules/roles/RoleSelector";
 import {
 	displayNameValidator,
@@ -32,43 +34,75 @@ import {
 
 const loginTypeOptions = {
 	password: {
-		label: "Password",
-		description: "Use an email address and password to log in.",
+		label: i18n.t("users:CreateUserPage.CreateUserForm.password_e7cf3ef4"),
+		description: i18n.t(
+			"users:CreateUserPage.CreateUserForm.use_an_email_address_and_password_to_log_in_4c06b097",
+		),
 	},
 	oidc: {
-		label: "OpenID Connect",
-		description: "Use an OpenID Connect provider for authentication.",
+		label: i18n.t(
+			"users:CreateUserPage.CreateUserForm.openid_connect_50a8a027",
+		),
+		description: i18n.t(
+			"users:CreateUserPage.CreateUserForm.use_an_openid_connect_provider_for_authenticatio_31dc0ef9",
+		),
 	},
 	github: {
 		label: "GitHub",
-		description: "Use GitHub OAuth for authentication.",
+		description: i18n.t(
+			"users:CreateUserPage.CreateUserForm.use_github_oauth_for_authentication_2e13bec9",
+		),
 	},
 	none: {
-		label: "Service account",
-		description:
-			"Cannot log in interactively. Intended for automated pipelines, bots, and other non-human access.",
+		label: i18n.t(
+			"users:CreateUserPage.CreateUserForm.service_account_ce5e9df4",
+		),
+		description: i18n.t(
+			"users:CreateUserPage.CreateUserForm.cannot_log_in_interactively_intended_for_automat_bd346869",
+		),
 	},
 } as const;
 
 const validationSchema = Yup.object({
-	username: nameValidator("Username"),
-	name: displayNameValidator("Full name"),
+	username: nameValidator(
+		i18n.t("users:CreateUserPage.CreateUserForm.username_e3b89e9d"),
+	),
+	name: displayNameValidator(
+		i18n.t("users:CreateUserPage.CreateUserForm.full_name_f13a64ba"),
+	),
 	email: Yup.string()
 		.trim()
 		.when("service_account", {
 			is: false,
 			then: (schema) =>
 				schema
-					.email("Please enter a valid email address.")
-					.required("Please enter an email address."),
+					.email(
+						i18n.t(
+							"users:CreateUserPage.CreateUserForm.please_enter_a_valid_email_address_958e4ccf",
+						),
+					)
+					.required(
+						i18n.t(
+							"users:CreateUserPage.CreateUserForm.please_enter_an_email_address_201953c9",
+						),
+					),
 			otherwise: (schema) => schema.optional(),
 		}),
 	login_type: Yup.string()
 		.oneOf(Object.keys(loginTypeOptions))
-		.required("Please select a login type."),
+		.required(
+			i18n.t(
+				"users:CreateUserPage.CreateUserForm.please_select_a_login_type_fd105d1a",
+			),
+		),
 	password: Yup.string().when("login_type", {
 		is: "password",
-		then: (schema) => schema.required("Please enter a password."),
+		then: (schema) =>
+			schema.required(
+				i18n.t(
+					"users:CreateUserPage.CreateUserForm.please_enter_a_password_6c1a47f3",
+				),
+			),
 		otherwise: (schema) => schema,
 	}),
 });
@@ -113,6 +147,8 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({
 	rolesLoading,
 	rolesError,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	const availableLoginTypes = [
 		authMethods?.password.enabled && "password",
 		authMethods?.oidc.enabled && "oidc",
@@ -177,11 +213,16 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({
 	const isServiceAccount = form.values.login_type === "none";
 	const isPasswordLogin = form.values.login_type === "password";
 	const loginTypeField = getFieldHelpers("login_type", {
-		helperText: "Authentication method for this user.",
+		helperText: tI18n(
+			"CreateUserPage.CreateUserForm.authentication_method_for_this_user_e37f4b1c",
+		),
 	});
 
 	return (
-		<FullPageForm title="Create user" size="condensed">
+		<FullPageForm
+			title={tI18n("CreateUserPage.CreateUserForm.create_user_f06da128")}
+			size="condensed"
+		>
 			{isApiError(error) && !hasApiFieldErrors(error) && (
 				<ErrorAlert error={error} className="mb-8" />
 			)}
@@ -193,7 +234,9 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({
 				<div className="flex flex-col gap-6">
 					{showOrganizations && (
 						<div className="flex flex-col gap-2 max-w-sm">
-							<Label htmlFor="organization">Organization</Label>
+							<Label htmlFor="organization">
+								{tI18n("CreateUserPage.CreateUserForm.organization_d764d425")}
+							</Label>
 							<OrganizationAutocomplete
 								id="organization"
 								required
@@ -209,7 +252,9 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({
 
 					{/* Login type — "none" is presented as "Service account" */}
 					<div className="flex flex-col gap-2 max-w-sm">
-						<Label htmlFor="login_type">Login type</Label>
+						<Label htmlFor="login_type">
+							{tI18n("CreateUserPage.CreateUserForm.login_type_bbb78c64")}
+						</Label>
 						<Select
 							value={form.values.login_type}
 							onValueChange={async (value) => {
@@ -239,7 +284,11 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({
 									loginTypeField.error && "border-border-destructive",
 								)}
 							>
-								<SelectValue placeholder="Select a login type…" />
+								<SelectValue
+									placeholder={tI18n(
+										"CreateUserPage.CreateUserForm.select_a_login_type_3d7ec715",
+									)}
+								/>
 							</SelectTrigger>
 
 							<SelectContent className="max-w-sm">
@@ -281,7 +330,7 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({
 
 					<FormField
 						field={getFieldHelpers("username")}
-						label="Username"
+						label={tI18n("CreateUserPage.CreateUserForm.username_e3b89e9d")}
 						id="username"
 						name="username"
 						value={form.values.username}
@@ -296,9 +345,9 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({
 						field={getFieldHelpers("name")}
 						label={
 							<>
-								Full name{" "}
+								{tI18n("CreateUserPage.CreateUserForm.full_name_f13a64ba")}{" "}
 								<span className="font-normal text-content-secondary">
-									(optional)
+									{tI18n("CreateUserPage.CreateUserForm.optional_0059798b")}
 								</span>
 							</>
 						}
@@ -315,7 +364,7 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({
 							field={getFieldHelpers("email")}
 							label={
 								<>
-									Email{" "}
+									{tI18n("CreateUserPage.CreateUserForm.email_969ccbd3")}{" "}
 									<span className="text-xs font-bold text-content-destructive">
 										*
 									</span>
@@ -334,7 +383,7 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({
 					{isPasswordLogin && (
 						<FormField
 							field={getFieldHelpers("password")}
-							label="Password"
+							label={tI18n("CreateUserPage.CreateUserForm.password_e7cf3ef4")}
 							id="password"
 							name="password"
 							value={form.values.password}
@@ -357,11 +406,11 @@ export const CreateUserForm: FC<CreateUserFormProps> = ({
 
 				<FormFooter className="mt-8">
 					<Button onClick={onCancel} variant="outline">
-						Cancel
+						{tI18n("CreateUserPage.CreateUserForm.cancel_19766ed6")}
 					</Button>
 					<Button type="submit" disabled={isLoading}>
 						<Spinner loading={isLoading} />
-						Save
+						{tI18n("CreateUserPage.CreateUserForm.save_1509f561")}
 					</Button>
 				</FormFooter>
 			</form>

@@ -1,4 +1,5 @@
 import { type FC, Fragment, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQueries, useQueryClient } from "react-query";
 import { useSearchParams } from "react-router";
 import { toast } from "sonner";
@@ -37,6 +38,8 @@ import type { Permissions } from "#/modules/permissions";
 import { pageTitle } from "#/utils/page";
 
 const NotificationsPage: FC = () => {
+	const { t: tI18n } = useTranslation("users");
+
 	const { user, permissions } = useAuthenticated();
 	const [
 		disabledPreferences,
@@ -81,12 +84,21 @@ const NotificationsPage: FC = () => {
 		disableMutation
 			.mutateAsync(disabledId)
 			.then(() => {
-				toast.success("Notification has been disabled.");
+				toast.success(
+					tI18n(
+						"UserSettingsPage.NotificationsPage.NotificationsPage.notification_has_been_disabled_b84e023f",
+					),
+				);
 			})
 			.catch((error) => {
-				toast.error("Error disabling notification.", {
-					description: getErrorDetail(error),
-				});
+				toast.error(
+					tI18n(
+						"UserSettingsPage.NotificationsPage.NotificationsPage.error_disabling_notification_f72356fe",
+					),
+					{
+						description: getErrorDetail(error),
+					},
+				);
 			});
 	}, [searchParams.delete, disabledId, disableMutation]);
 
@@ -103,15 +115,25 @@ const NotificationsPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Notifications Settings")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n(
+						"UserSettingsPage.NotificationsPage.NotificationsPage.notifications_settings_9de63927",
+					),
+				)}
+			</title>
 			<SettingsHeader>
-				<SettingsHeaderTitle>Notifications</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"UserSettingsPage.NotificationsPage.NotificationsPage.notifications_78801183",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Control which notifications you receive.
+					{tI18n(
+						"UserSettingsPage.NotificationsPage.NotificationsPage.control_which_notifications_you_receive_5db0dbc4",
+					)}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			{ready ? (
 				<div className="flex flex-col gap-8">
 					{Object.entries(allTemplatesByGroup).map(([group, templates]) => {
@@ -146,12 +168,16 @@ const NotificationsPage: FC = () => {
 														{
 															onSuccess: () => {
 																toast.success(
-																	"Notification preferences updated.",
+																	tI18n(
+																		"UserSettingsPage.NotificationsPage.NotificationsPage.notification_preferences_updated_d9eea3de",
+																	),
 																);
 															},
 															onError: (error) => {
 																toast.error(
-																	"Error updating notification preferences.",
+																	tI18n(
+																		"UserSettingsPage.NotificationsPage.NotificationsPage.error_updating_notification_preferences_3f32641a",
+																	),
 																	{
 																		description: getErrorDetail(error),
 																	},
@@ -196,12 +222,16 @@ const NotificationsPage: FC = () => {
 																	{
 																		onSuccess: () => {
 																			toast.success(
-																				"Notification preferences updated.",
+																				tI18n(
+																					"UserSettingsPage.NotificationsPage.NotificationsPage.notification_preferences_updated_d9eea3de",
+																				),
 																			);
 																		},
 																		onError: (error) => {
 																			toast.error(
-																				"Error updating notification preferences.",
+																				tI18n(
+																					"UserSettingsPage.NotificationsPage.NotificationsPage.error_updating_notification_preferences_3f32641a",
+																				),
 																				{
 																					description: getErrorDetail(error),
 																				},
@@ -227,7 +257,10 @@ const NotificationsPage: FC = () => {
 															/>
 														</TooltipTrigger>
 														<TooltipContent side="bottom">
-															Delivery via {label}
+															{tI18n(
+																"UserSettingsPage.NotificationsPage.NotificationsPage.delivery_via_6357fef5",
+															)}
+															{label}
 														</TooltipContent>
 													</Tooltip>
 												</div>

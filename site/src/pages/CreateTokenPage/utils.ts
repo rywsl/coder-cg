@@ -1,3 +1,4 @@
+import { i18n } from "#/i18n";
 export const NANO_HOUR = 3600000000000;
 
 export interface CreateTokenData {
@@ -12,25 +13,25 @@ export interface LifetimeDay {
 
 export const lifetimeDayPresets: LifetimeDay[] = [
 	{
-		label: "7 days",
+		label: i18n.t("pages:CreateTokenPage.utils.7_days_7f920bb6"),
 		value: 7,
 	},
 	{
-		label: "30 days",
+		label: i18n.t("pages:CreateTokenPage.utils.30_days_ffd72805"),
 		value: 30,
 	},
 	{
-		label: "60 days",
+		label: i18n.t("pages:CreateTokenPage.utils.60_days_600a4e11"),
 		value: 60,
 	},
 	{
-		label: "90 days",
+		label: i18n.t("pages:CreateTokenPage.utils.90_days_38825b0f"),
 		value: 90,
 	},
 ];
 
 export const customLifetimeDay: LifetimeDay = {
-	label: "Custom",
+	label: i18n.t("pages:CreateTokenPage.utils.custom_494ca78f"),
 	value: "custom",
 };
 

@@ -1,4 +1,5 @@
 import { createContext, type FC, Suspense, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { Outlet, useParams } from "react-router";
 import { checkAuthorization } from "#/api/queries/authCheck";
@@ -33,6 +34,8 @@ export function useTemplateSettings() {
 }
 
 export const TemplateSettingsLayout: FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const { showOrganizations } = useDashboard();
 	const { organization: organizationName = "default", template: templateName } =
 		useParams() as { organization?: string; template: string };
@@ -72,14 +75,22 @@ export const TemplateSettingsLayout: FC = () => {
 	return (
 		<>
 			<title>
-				{pageTitle(template?.display_name ?? templateName, "Template Settings")}
+				{pageTitle(
+					template?.display_name ?? templateName,
+					tI18n(
+						"TemplateSettingsPage.TemplateSettingsLayout.template_settings_4cb79836",
+					),
+				)}
 			</title>
-
 			<div>
 				<Breadcrumb>
 					<BreadcrumbList>
 						<BreadcrumbItem>
-							<BreadcrumbPage>Template Settings</BreadcrumbPage>
+							<BreadcrumbPage>
+								{tI18n(
+									"TemplateSettingsPage.TemplateSettingsLayout.template_settings_4cb79836",
+								)}
+							</BreadcrumbPage>
 						</BreadcrumbItem>
 						{template && (
 							<>

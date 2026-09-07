@@ -1,6 +1,7 @@
 import sortBy from "lodash/sortBy";
 import uniqBy from "lodash/uniqBy";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	AgentConnectionTiming,
 	AgentScriptTiming,
@@ -54,6 +55,8 @@ export const WorkspaceTimings: FC<WorkspaceTimingsProps> = ({
 	agentConnectionTimings = [],
 	defaultIsOpen = false,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [view, setView] = useState<TimingView>({ name: "default" });
 	const [isOpen, setIsOpen] = useState(defaultIsOpen);
 
@@ -116,7 +119,11 @@ export const WorkspaceTimings: FC<WorkspaceTimingsProps> = ({
 						className="after:content-[''] after:absolute after:inset-0"
 					>
 						<ChevronDownIcon open={isOpen} />
-						<span>Build timeline</span>
+						<span>
+							{tI18n(
+								"workspaces.WorkspaceTiming.WorkspaceTimings.build_timeline_3ee1c92b",
+							)}
+						</span>
 					</Button>
 				</CollapsibleTrigger>
 				<span className="ml-auto text-sm text-content-secondary pr-2">

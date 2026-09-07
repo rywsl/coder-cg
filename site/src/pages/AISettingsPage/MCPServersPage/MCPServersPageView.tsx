@@ -1,5 +1,6 @@
 import { PlusIcon, SearchIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import type * as TypesGen from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
@@ -51,6 +52,8 @@ const MCPServersPageView: FC<MCPServersPageViewProps> = ({
 	canOpenServer,
 	onSelectOrganization,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const navigate = useNavigate();
 	const [searchQuery, setSearchQuery] = useState("");
 	const normalizedQuery = searchQuery.trim().toLowerCase();
@@ -67,10 +70,15 @@ const MCPServersPageView: FC<MCPServersPageViewProps> = ({
 	// other creation targets and the currently selected organization.
 	const addButtonLabel =
 		addOrganization && addOrganization.id !== organization.id
-			? `Add server to ${getOrganizationLabel(addOrganization, [
-					...addOrganizations,
-					organization,
-				])}`
+			? tI18n(
+					"AISettingsPage.MCPServersPage.MCPServersPageView.add_server_to_value0_8aae4cf2",
+					{
+						value0: getOrganizationLabel(addOrganization, [
+							...addOrganizations,
+							organization,
+						]),
+					},
+				)
 			: undefined;
 	const goToAddServer = () => {
 		if (addOrganization) {
@@ -90,15 +98,24 @@ const MCPServersPageView: FC<MCPServersPageViewProps> = ({
 							title={addButtonLabel}
 						>
 							<PlusIcon />
-							<span>Add server</span>
+							<span>
+								{tI18n(
+									"AISettingsPage.MCPServersPage.MCPServersPageView.add_server_1099b2a9",
+								)}
+							</span>
 						</Button>
 					)
 				}
 			>
-				<SettingsHeaderTitle>MCP servers</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"AISettingsPage.MCPServersPage.MCPServersPageView.mcp_servers_22a7559f",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Configure external MCP servers that provide additional tools for Coder
-					Agents.
+					{tI18n(
+						"AISettingsPage.MCPServersPage.MCPServersPageView.configure_external_mcp_servers_that_provide_addi_e28c14ac",
+					)}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
 			<div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center">
@@ -109,8 +126,12 @@ const MCPServersPageView: FC<MCPServersPageViewProps> = ({
 						</InputGroupAddon>
 						<InputGroupInput
 							type="search"
-							placeholder="Search servers..."
-							aria-label="Search servers"
+							placeholder={tI18n(
+								"AISettingsPage.MCPServersPage.MCPServersPageView.search_servers_10ae62d6",
+							)}
+							aria-label={tI18n(
+								"AISettingsPage.MCPServersPage.MCPServersPageView.search_servers_3d7d709f",
+							)}
 							value={searchQuery}
 							onChange={(event) => setSearchQuery(event.target.value)}
 						/>
@@ -130,14 +151,35 @@ const MCPServersPageView: FC<MCPServersPageViewProps> = ({
 					<ErrorAlert error={error} />
 				</div>
 			)}
-			<Table className="table-fixed min-w-[640px]" aria-label="MCP servers">
+			<Table
+				className="table-fixed min-w-[640px]"
+				aria-label={tI18n(
+					"AISettingsPage.MCPServersPage.MCPServersPageView.mcp_servers_22a7559f",
+				)}
+			>
 				<TableHeader>
 					<TableRow>
-						<TableHead className="w-1/2">Name</TableHead>
-						<TableHead className="w-1/5">Auth Method</TableHead>
-						<TableHead className="w-1/5">Availability</TableHead>
+						<TableHead className="w-1/2">
+							{tI18n(
+								"AISettingsPage.MCPServersPage.MCPServersPageView.name_dcd1d522",
+							)}
+						</TableHead>
+						<TableHead className="w-1/5">
+							{tI18n(
+								"AISettingsPage.MCPServersPage.MCPServersPageView.auth_method_b765e993",
+							)}
+						</TableHead>
+						<TableHead className="w-1/5">
+							{tI18n(
+								"AISettingsPage.MCPServersPage.MCPServersPageView.availability_12f67f85",
+							)}
+						</TableHead>
 						<TableHead className="w-12">
-							<span className="sr-only">Open server</span>
+							<span className="sr-only">
+								{tI18n(
+									"AISettingsPage.MCPServersPage.MCPServersPageView.open_server_52017467",
+								)}
+							</span>
 						</TableHead>
 					</TableRow>
 				</TableHeader>
@@ -146,8 +188,12 @@ const MCPServersPageView: FC<MCPServersPageViewProps> = ({
 						<TableLoader />
 					) : !error && servers.length === 0 ? (
 						<TableEmpty
-							message="No MCP servers configured"
-							description="Add a server to give agents access to external tools."
+							message={tI18n(
+								"AISettingsPage.MCPServersPage.MCPServersPageView.no_mcp_servers_configured_013e6b9d",
+							)}
+							description={tI18n(
+								"AISettingsPage.MCPServersPage.MCPServersPageView.add_a_server_to_give_agents_access_to_external_t_98da1e5c",
+							)}
 							cta={
 								addOrganization ? (
 									<Button
@@ -157,15 +203,23 @@ const MCPServersPageView: FC<MCPServersPageViewProps> = ({
 										title={addButtonLabel}
 									>
 										<PlusIcon />
-										<span>Add server</span>
+										<span>
+											{tI18n(
+												"AISettingsPage.MCPServersPage.MCPServersPageView.add_server_1099b2a9",
+											)}
+										</span>
 									</Button>
 								) : undefined
 							}
 						/>
 					) : servers.length > 0 && filteredServers.length === 0 ? (
 						<TableEmpty
-							message="No servers match your search"
-							description="Try a different search term."
+							message={tI18n(
+								"AISettingsPage.MCPServersPage.MCPServersPageView.no_servers_match_your_search_c7e9efb1",
+							)}
+							description={tI18n(
+								"AISettingsPage.MCPServersPage.MCPServersPageView.try_a_different_search_term_36b89662",
+							)}
 						/>
 					) : (
 						filteredServers.map((server) => (

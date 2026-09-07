@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import { type FC, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, type Location } from "react-router";
 import { CHAT_SEARCH_LIMIT } from "#/api/queries/chats";
 import type { Chat } from "#/api/typesGenerated";
@@ -48,6 +49,8 @@ export const ChatSearchResults: FC<ChatSearchResultsProps> = ({
 	isRefreshing,
 	onDismiss,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	if (error) {
 		return (
 			<div className="min-h-[260px]">
@@ -75,14 +78,24 @@ export const ChatSearchResults: FC<ChatSearchResultsProps> = ({
 	const resultSummary =
 		resultCount === CHAT_SEARCH_LIMIT ? (
 			<>
-				Showing first{" "}
+				{tI18n(
+					"AgentsPage.components.ChatsSidebar.dialogs.ChatSearchResults.showing_first_3fdf87fc",
+				)}{" "}
 				<span className="text-content-primary">{CHAT_SEARCH_LIMIT}</span>{" "}
-				results.
+				{tI18n(
+					"AgentsPage.components.ChatsSidebar.dialogs.ChatSearchResults.results_62b25d84",
+				)}
 			</>
 		) : (
 			<>
 				<span className="text-content-primary">{resultCount}</span>{" "}
-				{resultCount === 1 ? "result" : "results"}
+				{resultCount === 1
+					? tI18n(
+							"AgentsPage.components.ChatsSidebar.dialogs.ChatSearchResults.result_f6a214f7",
+						)
+					: tI18n(
+							"AgentsPage.components.ChatsSidebar.dialogs.ChatSearchResults.results_c099142b",
+						)}
 			</>
 		);
 
@@ -96,7 +109,9 @@ export const ChatSearchResults: FC<ChatSearchResultsProps> = ({
 							loading
 							size="sm"
 							className="ml-1.5 inline-block align-text-bottom text-content-secondary"
-							aria-label="Searching chats"
+							aria-label={tI18n(
+								"AgentsPage.components.ChatsSidebar.dialogs.ChatSearchResults.searching_chats_3ecba541",
+							)}
 						/>
 					)}
 				</p>
@@ -135,6 +150,8 @@ const DefaultView: FC<DefaultViewProps> = ({
 	selectedChatIndex,
 	onDismiss,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const visibleRecentChats = recentChats.slice(0, RECENT_CHATS_COUNT);
 
 	return (
@@ -143,13 +160,17 @@ const DefaultView: FC<DefaultViewProps> = ({
 				{visibleRecentChats.length > 0 && (
 					<div>
 						<h3 className="m-0 mb-3 text-sm font-medium text-content-secondary">
-							Recent chats
+							{tI18n(
+								"AgentsPage.components.ChatsSidebar.dialogs.ChatSearchResults.recent_chats_2ccfecbc",
+							)}
 						</h3>
 						<ScrollArea {...SCROLL_AREA_PROPS}>
 							<div
 								id={listboxId}
 								role="listbox"
-								aria-label="Recent chats"
+								aria-label={tI18n(
+									"AgentsPage.components.ChatsSidebar.dialogs.ChatSearchResults.recent_chats_2ccfecbc",
+								)}
 								className="space-y-1"
 							>
 								{visibleRecentChats.map((chat, index) => (
@@ -194,6 +215,8 @@ const ChatSearchResultsList: FC<ChatSearchResultsListProps> = ({
 	showLoading,
 	onDismiss,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	if (showLoading) {
 		return <ChatSearchResultsSkeleton />;
 	}
@@ -202,12 +225,15 @@ const ChatSearchResultsList: FC<ChatSearchResultsListProps> = ({
 		return (
 			<div className="flex h-[300px] items-center justify-center px-6 text-center">
 				<p className="text-sm text-content-secondary">
-					No matching chats.
+					{tI18n(
+						"AgentsPage.components.ChatsSidebar.dialogs.ChatSearchResults.no_matching_chats_5e89d879",
+					)}
 					{hasSearchText && (
 						<>
 							{" "}
-							Message content is indexed periodically, so very recent messages
-							may not be searchable yet.
+							{tI18n(
+								"AgentsPage.components.ChatsSidebar.dialogs.ChatSearchResults.message_content_is_indexed_periodically_so_very__e0a62a4e",
+							)}
 						</>
 					)}
 				</p>
@@ -219,7 +245,9 @@ const ChatSearchResultsList: FC<ChatSearchResultsListProps> = ({
 		<div
 			id={listboxId}
 			role="listbox"
-			aria-label="Chat search results"
+			aria-label={tI18n(
+				"AgentsPage.components.ChatsSidebar.dialogs.ChatSearchResults.chat_search_results_9d33c4ae",
+			)}
 			className="space-y-1"
 		>
 			{chats?.map((chat, index) => (

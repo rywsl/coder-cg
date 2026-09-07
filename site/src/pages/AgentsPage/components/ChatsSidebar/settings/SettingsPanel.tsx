@@ -11,6 +11,7 @@ import {
 	UserIcon,
 } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, type Location } from "react-router";
 import { Button } from "#/components/Button/Button";
 import { SettingsNavItem } from "./SettingsNavItem";
@@ -34,6 +35,8 @@ export const SettingsPanel: FC<SettingsPanelProps> = ({
 	location,
 	onCollapse,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<div
 			className={cn(
@@ -46,13 +49,17 @@ export const SettingsPanel: FC<SettingsPanelProps> = ({
 			<div className="border-b border-border-default px-2 pb-2 pt-3 sm:py-2">
 				<div className="relative flex items-center">
 					<span className="pointer-events-none absolute inset-0 flex items-center justify-center text-sm font-medium text-content-primary">
-						Settings
+						{tI18n(
+							"AgentsPage.components.ChatsSidebar.settings.SettingsPanel.settings_74a883a0",
+						)}
 					</span>
 					<Button
 						asChild
 						variant="subtle"
 						size="icon"
-						aria-label="Back to agents"
+						aria-label={tI18n(
+							"AgentsPage.components.ChatsSidebar.settings.SettingsPanel.back_to_agents_7da2164b",
+						)}
 						className="relative z-10 size-7 min-w-0 text-content-secondary hover:text-content-primary"
 					>
 						<Link to={(location.state as { from?: string })?.from || "/agents"}>
@@ -65,7 +72,9 @@ export const SettingsPanel: FC<SettingsPanelProps> = ({
 							variant="subtle"
 							size="icon"
 							onClick={onCollapse}
-							aria-label="Collapse sidebar"
+							aria-label={tI18n(
+								"AgentsPage.components.ChatsSidebar.settings.SettingsPanel.collapse_sidebar_aab31cde",
+							)}
 							className="relative z-10 hidden size-7 min-w-0 text-content-secondary hover:text-content-primary sm:inline-flex"
 						>
 							<PanelLeftCloseIcon />
@@ -76,7 +85,9 @@ export const SettingsPanel: FC<SettingsPanelProps> = ({
 			<nav className="flex flex-col gap-0.5 px-2 py-2">
 				<SettingsNavItem
 					icon={UserIcon}
-					label="General"
+					label={tI18n(
+						"AgentsPage.components.ChatsSidebar.settings.SettingsPanel.general_c910d474",
+					)}
 					active={!settingsSection || settingsSection === "general"}
 					to="/agents/settings/general"
 					state={location.state}
@@ -84,7 +95,9 @@ export const SettingsPanel: FC<SettingsPanelProps> = ({
 				{isPersonalModelOverridesEnabled && (
 					<SettingsNavItem
 						icon={BotIcon}
-						label="Agents"
+						label={tI18n(
+							"AgentsPage.components.ChatsSidebar.settings.SettingsPanel.agents_279b44d2",
+						)}
 						active={settingsSection === "user-agents"}
 						to="/agents/settings/user-agents"
 						state={location.state}
@@ -92,14 +105,18 @@ export const SettingsPanel: FC<SettingsPanelProps> = ({
 				)}
 				<SettingsNavItem
 					icon={ReceiptTextIcon}
-					label="Personal skills"
+					label={tI18n(
+						"AgentsPage.components.ChatsSidebar.settings.SettingsPanel.personal_skills_4907a3e2",
+					)}
 					active={settingsSection === "personal-skills"}
 					to="/agents/settings/personal-skills"
 					state={location.state}
 				/>
 				<SettingsNavItem
 					icon={ShrinkIcon}
-					label="Compaction"
+					label={tI18n(
+						"AgentsPage.components.ChatsSidebar.settings.SettingsPanel.compaction_a0ade140",
+					)}
 					active={settingsSection === "compaction"}
 					to="/agents/settings/compaction"
 					state={location.state}
@@ -107,7 +124,9 @@ export const SettingsPanel: FC<SettingsPanelProps> = ({
 				{showApiKeysItem && (
 					<SettingsNavItem
 						icon={KeyIcon}
-						label="Secrets (API keys)"
+						label={tI18n(
+							"AgentsPage.components.ChatsSidebar.settings.SettingsPanel.secrets_api_keys_b80cf3b4",
+						)}
 						active={settingsSection === "api-keys"}
 						to="/agents/settings/api-keys"
 						state={location.state}
@@ -116,7 +135,9 @@ export const SettingsPanel: FC<SettingsPanelProps> = ({
 				{canManageAgentSettings && (
 					<SettingsNavItem
 						icon={Settings2Icon}
-						label="Manage agents"
+						label={tI18n(
+							"AgentsPage.components.ChatsSidebar.settings.SettingsPanel.manage_agents_d2bfb8aa",
+						)}
 						active={false}
 						to="/ai/settings/coder-agents"
 						trailingIcon={ArrowUpRightIcon}

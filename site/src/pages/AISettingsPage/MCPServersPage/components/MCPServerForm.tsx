@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import { type FC, type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { useUnsavedChangesPrompt } from "#/hooks/useUnsavedChangesPrompt";
 import { MCPServerFormDialogs } from "./MCPServerFormDialogs";
@@ -67,6 +68,8 @@ export const MCPServerForm: FC<MCPServerFormProps> = ({
 	onToggleEnabled,
 	onCancel,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const isEditing = server !== undefined;
 
 	const [showDetails, setShowDetails] = useState(false);
@@ -107,7 +110,9 @@ export const MCPServerForm: FC<MCPServerFormProps> = ({
 	);
 	const title = isEditing
 		? form.values.displayName || "Edit server"
-		: "Add server";
+		: tI18n(
+				"AISettingsPage.MCPServersPage.components.MCPServerForm.add_server_1099b2a9",
+			);
 
 	return (
 		<>

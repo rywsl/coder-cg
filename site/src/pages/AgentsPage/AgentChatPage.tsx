@@ -10,6 +10,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { QueryClient } from "react-query";
 import {
@@ -826,6 +827,8 @@ type _UncoveredAgentFields = Omit<
 const _agentFieldGuard: Record<keyof _UncoveredAgentFields, true> = {};
 
 const AgentChatPage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { agentId } = useParams<{ agentId: string }>();
 	const {
 		chatErrorReasons,
@@ -1206,7 +1209,12 @@ const AgentChatPage: FC = () => {
 		...updateChatWorkspaceBase,
 		onError: (error, variables, context) => {
 			updateChatWorkspaceBase.onError(error, variables, context);
-			toast.error(getErrorMessage(error, "Failed to update workspace."));
+			toast.error(
+				getErrorMessage(
+					error,
+					tI18n("AgentsPage.AgentChatPage.failed_to_update_workspace_def40bab"),
+				),
+			);
 		},
 	});
 
@@ -1218,7 +1226,12 @@ const AgentChatPage: FC = () => {
 		...updateChatPlanModeBase,
 		onError: (error, variables, context) => {
 			updateChatPlanModeBase.onError(error, variables, context);
-			toast.error(getErrorMessage(error, "Failed to update plan mode."));
+			toast.error(
+				getErrorMessage(
+					error,
+					tI18n("AgentsPage.AgentChatPage.failed_to_update_plan_mode_8f2faf06"),
+				),
+			);
 		},
 	});
 	const setCachedChatPlanMode = (
@@ -1436,7 +1449,10 @@ const AgentChatPage: FC = () => {
 				: "generic";
 		const reason: ChatDetailError = {
 			kind,
-			message: getErrorMessage(error, "An unexpected error occurred."),
+			message: getErrorMessage(
+				error,
+				tI18n("AgentsPage.AgentChatPage.an_unexpected_error_occurred_7053d12a"),
+			),
 			...(detail ? { detail } : {}),
 		};
 		store.setStreamError(reason);
@@ -1696,7 +1712,12 @@ const AgentChatPage: FC = () => {
 		if (builtInCommandResolution === "pending" && builtInCommand) {
 			const triggerText = chatSlashCommandTriggerText(builtInCommand);
 			toast.info(
-				`Checking whether ${triggerText} is available. Try again in a moment.`,
+				tI18n(
+					"AgentsPage.AgentChatPage.checking_whether_value0_is_available_try_again_i_5c80a1f0",
+					{
+						value0: triggerText,
+					},
+				),
 			);
 			throw new BuiltInCommandPendingError();
 		}
@@ -1714,7 +1735,14 @@ const AgentChatPage: FC = () => {
 						await compact();
 					} catch (error) {
 						restoreOptimisticRequestSnapshot(store, previousSnapshot);
-						toast.error(getErrorMessage(error, "Failed to compact chat."));
+						toast.error(
+							getErrorMessage(
+								error,
+								tI18n(
+									"AgentsPage.AgentChatPage.failed_to_compact_chat_5588755b",
+								),
+							),
+						);
 						throw error;
 					}
 					return;
@@ -1723,7 +1751,12 @@ const AgentChatPage: FC = () => {
 					try {
 						await clearChatContext();
 					} catch (error) {
-						toast.error(getErrorMessage(error, "Failed to clear chat."));
+						toast.error(
+							getErrorMessage(
+								error,
+								tI18n("AgentsPage.AgentChatPage.failed_to_clear_chat_fd47750f"),
+							),
+						);
 						throw error;
 					}
 					return;

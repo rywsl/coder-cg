@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { UseMutateFunction } from "react-query";
 import type * as TypesGen from "#/api/typesGenerated";
 import {
@@ -100,12 +101,20 @@ export const LifecyclePageView: FC<LifecyclePageViewProps> = ({
 	isSavingDebugLogging,
 	isSaveDebugLoggingError,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<div className="flex max-w-[1100px] flex-col gap-4">
 			<SettingsHeader>
-				<SettingsHeaderTitle>Lifecycle</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"AISettingsPage.LifecyclePage.LifecyclePageView.lifecycle_46459b1f",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Control workspace lifecycle and conversation retention.
+					{tI18n(
+						"AISettingsPage.LifecyclePage.LifecyclePageView.control_workspace_lifecycle_and_conversation_ret_e4251442",
+					)}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
 			<div className="flex flex-col gap-8">

@@ -2,6 +2,7 @@ import { cn } from "cn";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import { type FC, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQueries, useQuery } from "react-query";
 import { toast } from "sonner";
 import { getErrorDetail } from "#/api/errors";
@@ -13,6 +14,7 @@ import {
 	type ConfirmDialogProps,
 } from "#/components/Dialog/ConfirmDialog/ConfirmDialog";
 import { Skeleton } from "#/components/Skeleton/Skeleton";
+import { currentIntlLocale } from "#/i18n/locale";
 import { getWorkspaceAgents } from "#/utils/workspace";
 
 type DownloadLogsDialogProps = Pick<
@@ -34,6 +36,8 @@ export const DownloadLogsDialog: FC<DownloadLogsDialogProps> = ({
 	onClose,
 	download = saveAs,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const buildLogsQuery = useQuery({
 		...buildLogs(workspace),
 		enabled: open,
@@ -102,9 +106,13 @@ export const DownloadLogsDialog: FC<DownloadLogsDialogProps> = ({
 			open={open}
 			onClose={onClose}
 			hideCancel={false}
-			title="Download logs"
+			title={tI18n(
+				"workspaces.WorkspaceMoreActions.DownloadLogsDialog.download_logs_9af63d68",
+			)}
 			confirmLoading={isDownloading}
-			confirmText="Download"
+			confirmText={tI18n(
+				"workspaces.WorkspaceMoreActions.DownloadLogsDialog.download_d6eafe82",
+			)}
 			disabled={
 				isDownloading ||
 				// If a workspace isn't healthy, let the user download as many logs as
@@ -130,23 +138,33 @@ export const DownloadLogsDialog: FC<DownloadLogsDialogProps> = ({
 					}, 200);
 				} catch (error) {
 					setIsDownloading(false);
-					toast.error(`Error downloading workspace "${workspace.name}" logs.`, {
-						description: getErrorDetail(error),
-					});
+					toast.error(
+						tI18n(
+							"workspaces.WorkspaceMoreActions.DownloadLogsDialog.error_downloading_workspace_value0_logs_d1ffe842",
+							{
+								value0: workspace.name,
+							},
+						),
+						{
+							description: getErrorDetail(error),
+						},
+					);
 					console.error(error);
 				}
 			}}
 			description={
 				<div className="flex flex-col gap-4 pb-4">
 					<p>
-						Downloading logs will create a zip file containing all logs from all
-						jobs in this workspace. This may take a while.
+						{tI18n(
+							"workspaces.WorkspaceMoreActions.DownloadLogsDialog.downloading_logs_will_create_a_zip_file_containi_e86f727f",
+						)}
 					</p>
 
 					{!isWorkspaceHealthy && isLoadingFiles && (
 						<Alert severity="warning" prominent>
-							Your workspace is unhealthy. Some logs may be unavailable for
-							download.
+							{tI18n(
+								"workspaces.WorkspaceMoreActions.DownloadLogsDialog.your_workspace_is_unhealthy_some_logs_may_be_una_65e6701c",
+							)}
 						</Alert>
 					)}
 
@@ -172,6 +190,8 @@ type DownloadingItemProps = Readonly<{
 }>;
 
 const DownloadingItem: FC<DownloadingItemProps> = ({ file, giveUpTimeMs }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [isWaiting, setIsWaiting] = useState(true);
 
 	useEffect(() => {
@@ -204,7 +224,6 @@ const DownloadingItem: FC<DownloadingItemProps> = ({ file, giveUpTimeMs }) => {
 				</span>
 				<span className="shrink-0">.{fileExtension}</span>
 			</span>
-
 			<span className="shrink-0 text-sm whitespace-nowrap">
 				{file.blob ? (
 					humanBlobSize(file.blob.size)
@@ -217,7 +236,9 @@ const DownloadingItem: FC<DownloadingItemProps> = ({ file, giveUpTimeMs }) => {
 							"text-content-disabled",
 						)}
 					>
-						Not available
+						{tI18n(
+							"workspaces.WorkspaceMoreActions.DownloadLogsDialog.not_available_67a926f7",
+						)}
 					</p>
 				)}
 			</span>
@@ -237,7 +258,7 @@ export function humanBlobSize(size: number) {
 	const finalUnit = BLOB_SIZE_UNITS[i];
 
 	// Round to 2 decimals and omit trailing zeros for whole numbers.
-	const formattedSize = new Intl.NumberFormat("en-US", {
+	const formattedSize = new Intl.NumberFormat(currentIntlLocale(), {
 		maximumFractionDigits: 2,
 	}).format(sizeInUnits);
 	return `${formattedSize} ${finalUnit}`;

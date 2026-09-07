@@ -1,28 +1,23 @@
+import { currentIntlLocale } from "#/i18n/locale";
 export const MICROS_PER_DOLLAR = 1_000_000;
 
-const usdCurrencyFormatter = new Intl.NumberFormat("en-US", {
-	style: "currency",
-	currency: "USD",
-	minimumFractionDigits: 2,
-	maximumFractionDigits: 2,
-	signDisplay: "auto",
-});
-
-const usdSubCentCurrencyFormatter = new Intl.NumberFormat("en-US", {
-	style: "currency",
-	currency: "USD",
-	minimumFractionDigits: 4,
-	maximumFractionDigits: 4,
-	signDisplay: "auto",
-});
+const formatUSD = (
+	value: number,
+	minimumFractionDigits: number,
+	maximumFractionDigits: number,
+): string =>
+	new Intl.NumberFormat(currentIntlLocale(), {
+		style: "currency",
+		currency: "USD",
+		minimumFractionDigits,
+		maximumFractionDigits,
+		signDisplay: "auto",
+	}).format(value);
 
 /** Drops the cents when the amount is a whole dollar, used for budget displays. */
-export const usdBudgetFormatter = new Intl.NumberFormat("en-US", {
-	style: "currency",
-	currency: "USD",
-	minimumFractionDigits: 0,
-	maximumFractionDigits: 2,
-});
+export const usdBudgetFormatter = {
+	format: (value: number): string => formatUSD(value, 0, 2),
+};
 
 export function microsToDollars(micros: number): number {
 	return micros / MICROS_PER_DOLLAR;
@@ -59,8 +54,8 @@ export function formatCostMicros(micros: number | string): string {
 			return `-$${dollars.toFixed(4)}`;
 		}
 
-		return usdSubCentCurrencyFormatter.format(dollars);
+		return formatUSD(dollars, 4, 4);
 	}
 
-	return usdCurrencyFormatter.format(microsToDollars(microsValue));
+	return formatUSD(microsToDollars(microsValue), 2, 2);
 }

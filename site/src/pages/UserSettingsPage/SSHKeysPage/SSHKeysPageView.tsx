@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { GitSSHKey } from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
 import { Button } from "#/components/Button/Button";
@@ -18,6 +19,8 @@ export const SSHKeysPageView: FC<SSHKeysPageViewProps> = ({
 	sshKey,
 	onRegenerateClick,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	if (isLoading) {
 		return (
 			<div className="p-8">
@@ -31,13 +34,12 @@ export const SSHKeysPageView: FC<SSHKeysPageViewProps> = ({
 			{/* Regenerating the key is not an option if getSSHKey fails.
         Only one of the error messages will exist at a single time */}
 			{Boolean(getSSHKeyError) && <ErrorAlert error={getSSHKeyError} />}
-
 			{sshKey && (
 				<>
 					<p className="m-0 text-sm text-content-secondary">
-						The following public key is used to authenticate Git in workspaces.
-						You may add it to Git services (such as GitHub) that you need to
-						access from your workspace. Coder configures authentication via{" "}
+						{tI18n(
+							"UserSettingsPage.SSHKeysPage.SSHKeysPageView.the_following_public_key_is_used_to_authenticate_a5d6183d",
+						)}{" "}
 						<code className="rounded-sm border border-border bg-surface-secondary px-1 py-0.5 text-xs text-content-primary">
 							$GIT_SSH_COMMAND
 						</code>
@@ -50,7 +52,9 @@ export const SSHKeysPageView: FC<SSHKeysPageViewProps> = ({
 							data-testid="regenerate"
 							variant="outline"
 						>
-							Regenerate&hellip;
+							{tI18n(
+								"UserSettingsPage.SSHKeysPage.SSHKeysPageView.regenerate_37eb952e",
+							)}
 						</Button>
 					</div>
 				</>

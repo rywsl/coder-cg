@@ -1,5 +1,6 @@
 import { TriangleAlertIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
 import { ConfirmDialog } from "#/components/Dialog/ConfirmDialog/ConfirmDialog";
@@ -44,14 +45,22 @@ export const ModelFormDialogs: FC<{
 	currentDefaultModel,
 	onConfirmReplaceDefault,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<>
 			{editingModel && onDeleteModel && (
 				<ConfirmDialog
 					type="delete"
-					title="Delete model"
-					confirmText="Delete model"
-					description="Are you sure you want to delete this model? This action is irreversible."
+					title={tI18n(
+						"AISettingsPage.ModelsPage.components.ModelFormDialogs.delete_model_b7828ba0",
+					)}
+					confirmText={tI18n(
+						"AISettingsPage.ModelsPage.components.ModelFormDialogs.delete_model_b7828ba0",
+					)}
+					description={tI18n(
+						"AISettingsPage.ModelsPage.components.ModelFormDialogs.are_you_sure_you_want_to_delete_this_model_this__60ab67cb",
+					)}
 					confirmLoading={isDeleting}
 					open={confirmingDelete}
 					onClose={() => setConfirmingDelete(false)}
@@ -67,10 +76,18 @@ export const ModelFormDialogs: FC<{
 			>
 				<DialogContent className="border-border-warning">
 					<DialogHeader>
-						<DialogTitle>Unsaved changes</DialogTitle>
+						<DialogTitle>
+							{tI18n(
+								"AISettingsPage.ModelsPage.components.ModelFormDialogs.unsaved_changes_a710c2b9",
+							)}
+						</DialogTitle>
 						<DialogDescription className="flex items-start gap-3">
 							<TriangleAlertIcon className="size-icon-sm mt-1 shrink-0 text-content-primary" />
-							<span>Your updates haven't been saved. Leave anyway?</span>
+							<span>
+								{tI18n(
+									"AISettingsPage.ModelsPage.components.ModelFormDialogs.your_updates_haven_t_been_saved_leave_anyway_0230d6de",
+								)}
+							</span>
 						</DialogDescription>
 					</DialogHeader>
 					<DialogFooter>
@@ -79,10 +96,14 @@ export const ModelFormDialogs: FC<{
 							type="button"
 							onClick={unsavedChanges.onCancel}
 						>
-							Cancel
+							{tI18n(
+								"AISettingsPage.ModelsPage.components.ModelFormDialogs.cancel_19766ed6",
+							)}
 						</Button>
 						<Button type="button" onClick={unsavedChanges.onConfirm}>
-							Confirm
+							{tI18n(
+								"AISettingsPage.ModelsPage.components.ModelFormDialogs.confirm_eebdd24a",
+							)}
 						</Button>
 					</DialogFooter>
 				</DialogContent>
@@ -93,7 +114,11 @@ export const ModelFormDialogs: FC<{
 			>
 				<DialogContent className="border-border-warning">
 					<DialogHeader>
-						<DialogTitle>Replace default model</DialogTitle>
+						<DialogTitle>
+							{tI18n(
+								"AISettingsPage.ModelsPage.components.ModelFormDialogs.replace_default_model_259a3b74",
+							)}
+						</DialogTitle>
 						<DialogDescription className="flex items-center gap-2">
 							<TriangleAlertIcon className="size-icon-sm shrink-0 text-content-primary" />
 							<span>
@@ -101,7 +126,9 @@ export const ModelFormDialogs: FC<{
 									{currentDefaultModel?.display_name ||
 										currentDefaultModel?.model}
 								</strong>{" "}
-								is currently the default. Replace it?
+								{tI18n(
+									"AISettingsPage.ModelsPage.components.ModelFormDialogs.is_currently_the_default_replace_it_4f6d113d",
+								)}
 							</span>
 						</DialogDescription>
 					</DialogHeader>
@@ -111,10 +138,14 @@ export const ModelFormDialogs: FC<{
 							type="button"
 							onClick={() => setConfirmingReplaceDefault(false)}
 						>
-							Cancel
+							{tI18n(
+								"AISettingsPage.ModelsPage.components.ModelFormDialogs.cancel_19766ed6",
+							)}
 						</Button>
 						<Button type="button" onClick={onConfirmReplaceDefault}>
-							Confirm
+							{tI18n(
+								"AISettingsPage.ModelsPage.components.ModelFormDialogs.confirm_eebdd24a",
+							)}
 						</Button>
 					</DialogFooter>
 				</DialogContent>

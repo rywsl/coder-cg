@@ -1,5 +1,6 @@
 import { BlocksIcon, HistoryIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Alert, AlertDescription, AlertTitle } from "#/components/Alert/Alert";
 import { SidebarIconButton } from "#/components/FullPageLayout/Sidebar";
@@ -64,6 +65,8 @@ export const Workspace: FC<WorkspaceProps> = ({
 	handleRetry,
 	handleDebug,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const getLink = useLinks();
 	const createWorkspaceLink = `${getLink(
 		linkToTemplate(workspace.organization_name, workspace.template_name),
@@ -121,7 +124,6 @@ export const Workspace: FC<WorkspaceProps> = ({
 				handleDormantActivate={handleDormantActivate}
 				handleToggleFavorite={handleToggleFavorite}
 			/>
-
 			<div className="flex flex-1 min-h-0">
 				<div className="flex">
 					<div className="flex flex-col h-full overflow-y-auto border-solid border-0 border-r border-r-border">
@@ -132,7 +134,9 @@ export const Workspace: FC<WorkspaceProps> = ({
 							}}
 						>
 							<BlocksIcon className="size-icon-sm" />
-							<span className="sr-only">Resources</span>
+							<span className="sr-only">
+								{tI18n("WorkspacePage.Workspace.resources_e89b30aa")}
+							</span>
 						</SidebarIconButton>
 						<SidebarIconButton
 							isActive={sidebarOption.value === "history"}
@@ -141,7 +145,9 @@ export const Workspace: FC<WorkspaceProps> = ({
 							}}
 						>
 							<HistoryIcon className="size-icon-sm" />
-							<span className="sr-only">History</span>
+							<span className="sr-only">
+								{tI18n("WorkspacePage.Workspace.history_0e769600")}
+							</span>
 						</SidebarIconButton>
 					</div>
 
@@ -190,7 +196,11 @@ export const Workspace: FC<WorkspaceProps> = ({
 
 							{workspace.latest_build.job.error && (
 								<Alert severity="error" prominent>
-									<AlertTitle>Workspace build failed</AlertTitle>
+									<AlertTitle>
+										{tI18n(
+											"WorkspacePage.Workspace.workspace_build_failed_891d2461",
+										)}
+									</AlertTitle>
 									<AlertDescription>
 										{workspace.latest_build.job.error}
 									</AlertDescription>
@@ -234,7 +244,9 @@ export const Workspace: FC<WorkspaceProps> = ({
 										<div className="flex justify-center items-center w-full h-full">
 											<div>
 												<h4 className="text-base font-medium">
-													No agents are currently assigned to this resource.
+													{tI18n(
+														"WorkspacePage.Workspace.no_agents_are_currently_assigned_to_this_resourc_6ca7f15a",
+													)}
 												</h4>
 											</div>
 										</div>

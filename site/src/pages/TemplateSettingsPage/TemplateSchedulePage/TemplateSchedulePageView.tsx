@@ -1,4 +1,5 @@
 import type { ComponentProps, FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { Template, UpdateTemplateMeta } from "#/api/typesGenerated";
 import {
 	SettingsHeader,
@@ -28,15 +29,22 @@ export const TemplateSchedulePageView: FC<TemplateSchedulePageViewProps> = ({
 	submitError,
 	initialTouched,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<div className="flex flex-col gap-12">
 			<SettingsHeader>
-				<SettingsHeaderTitle>Schedule</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"TemplateSettingsPage.TemplateSchedulePage.TemplateSchedulePageView.schedule_f4830a1d",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Configure workspace schedule defaults for this template.
+					{tI18n(
+						"TemplateSettingsPage.TemplateSchedulePage.TemplateSchedulePageView.configure_workspace_schedule_defaults_for_this_t_2cb3eb77",
+					)}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			<TemplateScheduleForm
 				allowAdvancedScheduling={allowAdvancedScheduling}
 				initialTouched={initialTouched}

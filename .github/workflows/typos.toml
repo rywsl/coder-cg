@@ -1,5 +1,9 @@
 [default]
-extend-ignore-identifiers-re = ["gho_.*"]
+extend-ignore-identifiers-re = [
+	"gho_.*",
+	# Generated i18n keys end with a stable eight-character content hash.
+	".*_[0-9a-f]{8}",
+]
 extend-ignore-re = ["(#|//)\\s*spellchecker:ignore-next-line\\n.*"]
 
 [default.extend-identifiers]

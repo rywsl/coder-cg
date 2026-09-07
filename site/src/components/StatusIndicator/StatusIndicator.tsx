@@ -1,6 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 import { createContext, type FC, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Tooltip,
 	TooltipContent,
@@ -107,50 +108,64 @@ interface StatusHealthyIndicatorProps {
 export const StatusHealthyIndicator: FC<StatusHealthyIndicatorProps> = ({
 	derpOnly,
 }: StatusHealthyIndicatorProps) => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<StatusIndicator variant="success">
 			<StatusIndicatorDot />
-			{derpOnly ? "Healthy (DERP only)" : "Healthy"}
+			{derpOnly
+				? tI18n("StatusIndicator.StatusIndicator.healthy_derp_only_5cb8279a")
+				: tI18n("StatusIndicator.StatusIndicator.healthy_7f1e323b")}
 		</StatusIndicator>
 	);
 };
 
 export const StatusNotHealthyIndicator: FC = () => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<StatusIndicator variant="failed">
 			<StatusIndicatorDot />
-			Unhealthy
+			{tI18n("StatusIndicator.StatusIndicator.unhealthy_317b1fbc")}
 		</StatusIndicator>
 	);
 };
 
 export const StatusNotRegisteredIndicator: FC = () => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<Tooltip>
 			<TooltipTrigger asChild>
 				<StatusIndicator variant="warning">
 					<StatusIndicatorDot />
-					Never seen
+					{tI18n("StatusIndicator.StatusIndicator.never_seen_5b9c95c2")}
 				</StatusIndicator>
 			</TooltipTrigger>
 			<TooltipContent>
-				Workspace Proxy has never come online and needs to be started.
+				{tI18n(
+					"StatusIndicator.StatusIndicator.workspace_proxy_has_never_come_online_and_needs__10df83c0",
+				)}
 			</TooltipContent>
 		</Tooltip>
 	);
 };
 
 export const StatusNotReachableIndicator: FC = () => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<Tooltip>
 			<TooltipTrigger asChild>
 				<StatusIndicator variant="warning">
 					<StatusIndicatorDot />
-					Not reachable
+					{tI18n("StatusIndicator.StatusIndicator.not_reachable_5ad99230")}
 				</StatusIndicator>
 			</TooltipTrigger>
 			<TooltipContent>
-				Workspace Proxy not responding to http(s) requests.
+				{tI18n(
+					"StatusIndicator.StatusIndicator.workspace_proxy_not_responding_to_http_s_request_42d029d4",
+				)}
 			</TooltipContent>
 		</Tooltip>
 	);

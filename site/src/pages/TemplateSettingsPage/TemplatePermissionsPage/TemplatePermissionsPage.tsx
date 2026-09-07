@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import { getErrorDetail, getErrorMessage } from "#/api/errors";
@@ -22,6 +23,8 @@ import { useTemplateSettings } from "../TemplateSettingsLayout";
 import { TemplatePermissionsPageView } from "./TemplatePermissionsPageView";
 
 const TemplatePermissionsPage: FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const { permissions: authPermissions } = useAuthenticated();
 	const { template, permissions } = useTemplateSettings();
 	const { template_rbac: isTemplateRBACEnabled } = useFeatureVisibility();
@@ -38,13 +41,25 @@ const TemplatePermissionsPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle(template.name, "Permissions")}</title>
-
+			<title>
+				{pageTitle(
+					template.name,
+					tI18n(
+						"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPage.permissions_abccc78c",
+					),
+				)}
+			</title>
 			<div className="flex flex-col gap-12">
 				<SettingsHeader>
-					<SettingsHeaderTitle>Permissions</SettingsHeaderTitle>
+					<SettingsHeaderTitle>
+						{tI18n(
+							"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPage.permissions_abccc78c",
+						)}
+					</SettingsHeaderTitle>
 					<SettingsHeaderDescription>
-						Manage which members and groups can use this template.{" "}
+						{tI18n(
+							"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPage.manage_which_members_and_groups_can_use_this_tem_3ba9a607",
+						)}{" "}
 						<SettingsHeaderDocsLink
 							href={docs("/admin/templates/template-permissions")}
 						/>
@@ -54,12 +69,22 @@ const TemplatePermissionsPage: FC = () => {
 				{!isTemplateRBACEnabled ? (
 					<PremiumPaywall
 						source="template_permissions"
-						message="Template permissions"
-						description="Restrict template access by user or group."
+						message={tI18n(
+							"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPage.template_permissions_c09a9049",
+						)}
+						description={tI18n(
+							"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPage.restrict_template_access_by_user_or_group_915c58fd",
+						)}
 						features={[
-							"Choose Use or Admin-level access",
-							"Prevent unauthorized template use",
-							"Let teams self-serve templates without admin bottlenecks",
+							tI18n(
+								"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPage.choose_use_or_admin_level_access_76e80c68",
+							),
+							tI18n(
+								"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPage.prevent_unauthorized_template_use_a1d6c048",
+							),
+							tI18n(
+								"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPage.let_teams_self_serve_templates_without_admin_bot_ad94d1ee",
+							),
 						]}
 						canViewPremium={authPermissions.viewAllLicenses}
 					/>
@@ -87,14 +112,25 @@ const TemplatePermissionsPage: FC = () => {
 								{
 									onSuccess: () => {
 										toast.success(
-											`Role for "${user.username}" updated to "${role}" successfully.`,
+											tI18n(
+												"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPage.role_for_value0_updated_to_value1_successfully_6c424737",
+												{
+													value0: user.username,
+													value1: role,
+												},
+											),
 										);
 									},
 									onError: (error) => {
 										toast.error(
 											getErrorMessage(
 												error,
-												`Failed to update role for "${user.username}".`,
+												tI18n(
+													"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPage.failed_to_update_role_for_value0_93a20247",
+													{
+														value0: user.username,
+													},
+												),
 											),
 											{
 												description: getErrorDetail(error),
@@ -119,14 +155,24 @@ const TemplatePermissionsPage: FC = () => {
 								{
 									onSuccess: () => {
 										toast.success(
-											`User "${user.username}" removed successfully.`,
+											tI18n(
+												"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPage.user_value0_removed_successfully_eae0bc24",
+												{
+													value0: user.username,
+												},
+											),
 										);
 									},
 									onError: (error) => {
 										toast.error(
 											getErrorMessage(
 												error,
-												`Failed to remove user "${user.username}".`,
+												tI18n(
+													"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPage.failed_to_remove_user_value0_51b0d1c5",
+													{
+														value0: user.username,
+													},
+												),
 											),
 											{
 												description: getErrorDetail(error),
@@ -155,14 +201,25 @@ const TemplatePermissionsPage: FC = () => {
 								{
 									onSuccess: () => {
 										toast.success(
-											`Role for "${group.display_name || group.name}" updated to "${role}" successfully.`,
+											tI18n(
+												"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPage.role_for_value0_updated_to_value1_successfully_6c424737",
+												{
+													value0: group.display_name || group.name,
+													value1: role,
+												},
+											),
 										);
 									},
 									onError: (error) => {
 										toast.error(
 											getErrorMessage(
 												error,
-												`Failed to update role for "${group.display_name || group.name}".`,
+												tI18n(
+													"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPage.failed_to_update_role_for_value0_93a20247",
+													{
+														value0: group.display_name || group.name,
+													},
+												),
 											),
 											{
 												description: getErrorDetail(error),
@@ -187,14 +244,24 @@ const TemplatePermissionsPage: FC = () => {
 								{
 									onSuccess: () => {
 										toast.success(
-											`Group "${group.display_name || group.name}" removed successfully.`,
+											tI18n(
+												"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPage.group_value0_removed_successfully_2b8bc601",
+												{
+													value0: group.display_name || group.name,
+												},
+											),
 										);
 									},
 									onError: (error) => {
 										toast.error(
 											getErrorMessage(
 												error,
-												`Failed to remove group "${group.display_name || group.name}".`,
+												tI18n(
+													"TemplateSettingsPage.TemplatePermissionsPage.TemplatePermissionsPage.failed_to_remove_group_value0_94317567",
+													{
+														value0: group.display_name || group.name,
+													},
+												),
 											),
 											{
 												description: getErrorDetail(error),

@@ -1,4 +1,5 @@
 import { type FC, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import { Outlet, useBlocker, useParams, useSearchParams } from "react-router";
 import { getErrorMessage } from "#/api/errors";
@@ -89,6 +90,8 @@ const applyEmbedTheme = (theme: ConcreteThemeName) => {
 };
 
 const AgentEmbedPage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { agentId } = useParams<{ agentId: string }>();
 	if (!agentId) {
 		throw new Error("AgentEmbedPage requires an agentId route parameter.");
@@ -301,16 +304,22 @@ const AgentEmbedPage: FC = () => {
 			<div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-surface-primary px-6 text-center">
 				<div className="space-y-2">
 					<h1 className="text-xl font-semibold text-content-primary">
-						Unable to start embedded agent.
+						{tI18n(
+							"AgentsPage.AgentEmbedPage.unable_to_start_embedded_agent_1c8c155d",
+						)}
 					</h1>
 					<p className="max-w-md text-sm text-content-secondary">
 						{getErrorMessage(
 							embedSessionMutation.error,
-							"We couldn't exchange the VS Code bootstrap token for a session.",
+							tI18n(
+								"AgentsPage.AgentEmbedPage.we_couldn_t_exchange_the_vs_code_bootstrap_token_274001e1",
+							),
 						)}
 					</p>
 				</div>
-				<Button onClick={handleBootstrapRetry}>Try again</Button>
+				<Button onClick={handleBootstrapRetry}>
+					{tI18n("AgentsPage.AgentEmbedPage.try_again_d8b8392e")}
+				</Button>
 			</div>
 		);
 	}
@@ -318,9 +327,15 @@ const AgentEmbedPage: FC = () => {
 	if (embedSessionMutation.isPending) {
 		return (
 			<div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-surface-primary px-6 text-center">
-				<Loader label="Signing in to embedded agent" />
+				<Loader
+					label={tI18n(
+						"AgentsPage.AgentEmbedPage.signing_in_to_embedded_agent_12301480",
+					)}
+				/>
 				<p className="max-w-md text-sm text-content-secondary">
-					Signing in to the embedded agent…
+					{tI18n(
+						"AgentsPage.AgentEmbedPage.signing_in_to_the_embedded_agent_8b64f5a9",
+					)}
 				</p>
 			</div>
 		);
@@ -330,9 +345,17 @@ const AgentEmbedPage: FC = () => {
 	// postMessage from the parent frame.
 	return (
 		<div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-surface-primary px-6 text-center">
-			<Loader label="Waiting for VS Code authentication" />
+			<Loader
+				label={tI18n(
+					"AgentsPage.AgentEmbedPage.waiting_for_vs_code_authentication_fc58b923",
+				)}
+			/>
 			<p className="max-w-md text-sm text-content-secondary">
-				{auth.isLoading ? "Loading…" : "Waiting for VS Code authentication…"}
+				{auth.isLoading
+					? tI18n("AgentsPage.AgentEmbedPage.loading_ba3bbbe1")
+					: tI18n(
+							"AgentsPage.AgentEmbedPage.waiting_for_vs_code_authentication_a0f64d0f",
+						)}
 			</p>
 		</div>
 	);

@@ -1,6 +1,7 @@
 import { saveAs } from "file-saver";
 import { DownloadIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { getErrorDetail } from "#/api/errors";
 import type { OrganizationSyncSettings } from "#/api/typesGenerated";
@@ -15,6 +16,8 @@ export const ExportPolicyButton: FC<ExportPolicyButtonProps> = ({
 	syncSettings,
 	download = saveAs,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const [isDownloading, setIsDownloading] = useState(false);
 
 	const canCreatePolicyJson =
@@ -34,9 +37,14 @@ export const ExportPolicyButton: FC<ExportPolicyButtonProps> = ({
 						download(file, "organizations_policy.json");
 					} catch (error) {
 						console.error(error);
-						toast.error("Failed to export organizations policy JSON.", {
-							description: getErrorDetail(error),
-						});
+						toast.error(
+							tI18n(
+								"DeploymentSettingsPage.IdpOrgSyncPage.ExportPolicyButton.failed_to_export_organizations_policy_json_498f8c68",
+							),
+							{
+								description: getErrorDetail(error),
+							},
+						);
 					} finally {
 						setIsDownloading(false);
 					}
@@ -44,7 +52,9 @@ export const ExportPolicyButton: FC<ExportPolicyButtonProps> = ({
 			}}
 		>
 			<DownloadIcon />
-			Export Policy
+			{tI18n(
+				"DeploymentSettingsPage.IdpOrgSyncPage.ExportPolicyButton.export_policy_3839bc7e",
+			)}
 		</Button>
 	);
 };

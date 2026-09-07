@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { TriangleAlertIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	WorkspaceAgent,
 	WorkspaceAgentDevcontainer,
@@ -56,6 +57,8 @@ const AgentWarningTooltip: FC<AgentWarningTooltipProps> = ({
 	troubleshootingURL,
 	variant = "warning",
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<HelpPopover>
 			<HelpPopoverTrigger asChild role="status" aria-label={ariaLabel}>
@@ -82,7 +85,7 @@ const AgentWarningTooltip: FC<AgentWarningTooltipProps> = ({
 								className="p-0 mt-2"
 								showExternalIcon={false}
 							>
-								Troubleshoot
+								{tI18n("resources.AgentStatus.troubleshoot_29f172d0")}
 							</Link>
 						</>
 					)}
@@ -93,27 +96,33 @@ const AgentWarningTooltip: FC<AgentWarningTooltipProps> = ({
 };
 
 const ReadyLifecycle: FC = () => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<div
 			role="status"
 			data-testid="agent-status-ready"
-			aria-label="Ready"
+			aria-label={tI18n("resources.AgentStatus.ready_5fa7aac5")}
 			className={cn(statusDotBaseClassName, statusDotConnectedClassName)}
 		/>
 	);
 };
 
 const StartingLifecycle: FC = () => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<Tooltip>
 			<TooltipTrigger asChild>
 				<div
 					role="status"
-					aria-label="Starting..."
+					aria-label={tI18n("resources.AgentStatus.starting_82b93630")}
 					className={cn(statusDotBaseClassName, statusDotConnectingClassName)}
 				/>
 			</TooltipTrigger>
-			<TooltipContent side="bottom">Starting...</TooltipContent>
+			<TooltipContent side="bottom">
+				{tI18n("resources.AgentStatus.starting_82b93630")}
+			</TooltipContent>
 		</Tooltip>
 	);
 };
@@ -133,50 +142,68 @@ interface DevcontainerStatusProps {
 }
 
 const ShuttingDownLifecycle: FC = () => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<Tooltip>
 			<TooltipTrigger asChild>
 				<div
 					role="status"
-					aria-label="Stopping..."
+					aria-label={tI18n("resources.AgentStatus.stopping_6f68db10")}
 					className={cn(statusDotBaseClassName, statusDotConnectingClassName)}
 				/>
 			</TooltipTrigger>
-			<TooltipContent side="bottom">Stopping...</TooltipContent>
+			<TooltipContent side="bottom">
+				{tI18n("resources.AgentStatus.stopping_6f68db10")}
+			</TooltipContent>
 		</Tooltip>
 	);
 };
 
-const ShutdownTimeoutLifecycle: FC<AgentStatusProps> = ({ agent }) => (
-	<AgentWarningTooltip
-		ariaLabel="Shutdown script timeout"
-		title={agentScriptMessages.shutdown_timeout.title}
-		detail={agentScriptMessages.shutdown_timeout.detail}
-		troubleshootingURL={agent.troubleshooting_url}
-	/>
-);
+const ShutdownTimeoutLifecycle: FC<AgentStatusProps> = ({ agent }) => {
+	const { t: tI18n } = useTranslation("workspaces");
 
-const ShutdownErrorLifecycle: FC<AgentStatusProps> = ({ agent }) => (
-	<AgentWarningTooltip
-		ariaLabel="Shutdown script failed"
-		title={agentScriptMessages.shutdown_error.title}
-		detail={agentScriptMessages.shutdown_error.detail}
-		troubleshootingURL={agent.troubleshooting_url}
-		variant="warning"
-	/>
-);
+	return (
+		<AgentWarningTooltip
+			ariaLabel={tI18n(
+				"resources.AgentStatus.shutdown_script_timeout_8d818e9d",
+			)}
+			title={agentScriptMessages.shutdown_timeout.title}
+			detail={agentScriptMessages.shutdown_timeout.detail}
+			troubleshootingURL={agent.troubleshooting_url}
+		/>
+	);
+};
+
+const ShutdownErrorLifecycle: FC<AgentStatusProps> = ({ agent }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
+	return (
+		<AgentWarningTooltip
+			ariaLabel={tI18n("resources.AgentStatus.shutdown_script_failed_7ab20100")}
+			title={agentScriptMessages.shutdown_error.title}
+			detail={agentScriptMessages.shutdown_error.detail}
+			troubleshootingURL={agent.troubleshooting_url}
+			variant="warning"
+		/>
+	);
+};
 
 const OffLifecycle: FC = () => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<Tooltip>
 			<TooltipTrigger asChild>
 				<div
 					role="status"
-					aria-label="Stopped"
+					aria-label={tI18n("resources.AgentStatus.stopped_1a4f630a")}
 					className={cn(statusDotBaseClassName, statusDotDisconnectedClassName)}
 				/>
 			</TooltipTrigger>
-			<TooltipContent side="bottom">Stopped</TooltipContent>
+			<TooltipContent side="bottom">
+				{tI18n("resources.AgentStatus.stopped_1a4f630a")}
+			</TooltipContent>
 		</Tooltip>
 	);
 };
@@ -214,43 +241,55 @@ const ConnectedStatus: FC<AgentStatusProps> = ({ agent }) => {
 };
 
 const DisconnectedStatus: FC = () => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<Tooltip>
 			<TooltipTrigger asChild>
 				<div
 					role="status"
-					aria-label="Disconnected"
+					aria-label={tI18n("resources.AgentStatus.disconnected_04dfac36")}
 					className={cn(statusDotBaseClassName, statusDotDisconnectedClassName)}
 				/>
 			</TooltipTrigger>
-			<TooltipContent side="bottom">Disconnected</TooltipContent>
+			<TooltipContent side="bottom">
+				{tI18n("resources.AgentStatus.disconnected_04dfac36")}
+			</TooltipContent>
 		</Tooltip>
 	);
 };
 
 const ConnectingStatus: FC = () => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<Tooltip>
 			<TooltipTrigger asChild>
 				<div
 					role="status"
-					aria-label="Connecting..."
+					aria-label={tI18n("resources.AgentStatus.connecting_5f04ae9e")}
 					className={cn(statusDotBaseClassName, statusDotConnectingClassName)}
 				/>
 			</TooltipTrigger>
-			<TooltipContent side="bottom">Connecting...</TooltipContent>
+			<TooltipContent side="bottom">
+				{tI18n("resources.AgentStatus.connecting_5f04ae9e")}
+			</TooltipContent>
 		</Tooltip>
 	);
 };
 
-const TimeoutStatus: FC<AgentStatusProps> = ({ agent }) => (
-	<AgentWarningTooltip
-		ariaLabel="Timeout"
-		title={agentConnectionMessages.timeout.title}
-		detail={agentConnectionMessages.timeout.detail}
-		troubleshootingURL={agent.troubleshooting_url}
-	/>
-);
+const TimeoutStatus: FC<AgentStatusProps> = ({ agent }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
+	return (
+		<AgentWarningTooltip
+			ariaLabel={tI18n("resources.AgentStatus.timeout_70594d93")}
+			title={agentConnectionMessages.timeout.title}
+			detail={agentConnectionMessages.timeout.detail}
+			troubleshootingURL={agent.troubleshooting_url}
+		/>
+	);
+};
 
 export const AgentStatus: FC<AgentStatusProps> = ({ agent }) => {
 	if (agent.status === "connected") {
@@ -281,15 +320,23 @@ const SubAgentStatus: FC<SubAgentStatusProps> = ({ agent }) => {
 	return <ConnectingStatus />;
 };
 
-const DevcontainerStartError: FC<AgentStatusProps> = ({ agent }) => (
-	<AgentWarningTooltip
-		ariaLabel="Start error"
-		title="Error starting the devcontainer agent"
-		detail="Something went wrong during the devcontainer agent startup."
-		troubleshootingURL={agent.troubleshooting_url}
-		variant="error"
-	/>
-);
+const DevcontainerStartError: FC<AgentStatusProps> = ({ agent }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
+	return (
+		<AgentWarningTooltip
+			ariaLabel={tI18n("resources.AgentStatus.start_error_43f6ce77")}
+			title={tI18n(
+				"resources.AgentStatus.error_starting_the_devcontainer_agent_f439470d",
+			)}
+			detail={tI18n(
+				"resources.AgentStatus.something_went_wrong_during_the_devcontainer_age_42eeca80",
+			)}
+			troubleshootingURL={agent.troubleshooting_url}
+			variant="error"
+		/>
+	);
+};
 
 export const DevcontainerStatus: FC<DevcontainerStatusProps> = ({
 	devcontainer,

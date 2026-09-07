@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import type { TemplateExample } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
@@ -46,8 +47,16 @@ export const EmptyTemplates: FC<EmptyTemplatesProps> = ({
 	examples,
 	isUsingFilter,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	if (isUsingFilter) {
-		return <TableEmpty message="No results matched your search" />;
+		return (
+			<TableEmpty
+				message={tI18n(
+					"TemplatesPage.EmptyTemplates.no_results_matched_your_search_c229583b",
+				)}
+			/>
+		);
 	}
 
 	const featuredExamples = findFeaturedExamples(examples);
@@ -55,11 +64,14 @@ export const EmptyTemplates: FC<EmptyTemplatesProps> = ({
 	if (canCreateTemplates) {
 		return (
 			<TableEmpty
-				message="Create your first template"
+				message={tI18n(
+					"TemplatesPage.EmptyTemplates.create_your_first_template_805e8f3e",
+				)}
 				description={
 					<>
-						Templates are written in Terraform and describe the infrastructure
-						for workspaces. You can start using a starter template below or{" "}
+						{tI18n(
+							"TemplatesPage.EmptyTemplates.templates_are_written_in_terraform_and_describe__e7622c26",
+						)}{" "}
 						<Link
 							href={docs("/admin/templates/creating-templates")}
 							target="_blank"
@@ -67,7 +79,7 @@ export const EmptyTemplates: FC<EmptyTemplatesProps> = ({
 							showExternalIcon={false}
 							className="p-0 text-xs"
 						>
-							create your own
+							{tI18n("TemplatesPage.EmptyTemplates.create_your_own_e1fa9c04")}
 						</Link>
 						.
 					</>
@@ -91,7 +103,9 @@ export const EmptyTemplates: FC<EmptyTemplatesProps> = ({
 										: "/starter-templates"
 								}
 							>
-								View all starter templates
+								{tI18n(
+									"TemplatesPage.EmptyTemplates.view_all_starter_templates_fc3ad991",
+								)}
 							</RouterLink>
 						</Button>
 					</div>
@@ -102,8 +116,10 @@ export const EmptyTemplates: FC<EmptyTemplatesProps> = ({
 
 	return (
 		<TableEmpty
-			message="Create a Template"
-			description="Contact your Coder administrator to create a template. You can share the code below."
+			message={tI18n("TemplatesPage.EmptyTemplates.create_a_template_c0794aff")}
+			description={tI18n(
+				"TemplatesPage.EmptyTemplates.contact_your_coder_administrator_to_create_a_tem_45f484f3",
+			)}
 			cta={<CodeExample secret={false} code="coder templates init" />}
 		/>
 	);

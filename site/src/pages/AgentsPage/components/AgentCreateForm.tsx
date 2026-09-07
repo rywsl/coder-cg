@@ -1,4 +1,5 @@
 import { type FC, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { toast } from "sonner";
 import { isApiError } from "#/api/errors";
@@ -157,6 +158,8 @@ export const AgentCreateForm: FC<AgentCreateFormProps> = ({
 	workspacesError,
 	isWorkspacesLoading,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { organizations, showOrganizations } = useDashboard();
 	const {
 		initialInputValue,
@@ -552,7 +555,13 @@ export const AgentCreateForm: FC<AgentCreateFormProps> = ({
 		}
 		if (skippedErrors > 0) {
 			toast.warning(
-				`${skippedErrors} attachment${skippedErrors > 1 ? "s" : ""} could not be sent (upload failed)`,
+				tI18n(
+					"AgentsPage.components.AgentCreateForm.value0_attachment_value1_could_not_be_sent_uploa_f4ca1f59",
+					{
+						value0: skippedErrors,
+						value1: skippedErrors > 1 ? "s" : "",
+					},
+				),
 			);
 		}
 		const fileArg = fileIds.length > 0 ? fileIds : undefined;
@@ -637,7 +646,9 @@ export const AgentCreateForm: FC<AgentCreateFormProps> = ({
 					<AgentChatInput
 						onSend={handleSendWithAttachments}
 						sendShortcut={sendShortcut}
-						placeholder="Ask Coder to build, fix bugs, or explore your project..."
+						placeholder={tI18n(
+							"AgentsPage.components.AgentCreateForm.ask_coder_to_build_fix_bugs_or_explore_your_proj_bc5883d6",
+						)}
 						isDisabled={
 							isCreating ||
 							isForbidden ||
@@ -704,11 +715,17 @@ export const AgentCreateForm: FC<AgentCreateFormProps> = ({
 			</div>
 			<ConfirmDialog
 				open={pendingOrgChange !== null}
-				title="Change organization?"
-				description="Changing organization will remove your current attachments."
+				title={tI18n(
+					"AgentsPage.components.AgentCreateForm.change_organization_9985a592",
+				)}
+				description={tI18n(
+					"AgentsPage.components.AgentCreateForm.changing_organization_will_remove_your_current_a_8049d6cf",
+				)}
 				type="info"
 				hideCancel={false}
-				confirmText="Continue"
+				confirmText={tI18n(
+					"AgentsPage.components.AgentCreateForm.continue_31fbef16",
+				)}
 				onConfirm={() => {
 					if (!pendingOrgChange) {
 						return;

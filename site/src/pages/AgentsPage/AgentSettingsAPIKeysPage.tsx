@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import { getErrorDetail, getErrorMessage } from "#/api/errors";
@@ -21,6 +22,8 @@ const incrementResetToken = (
 });
 
 const AgentSettingsAPIKeysPage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const queryClient = useQueryClient();
 	const { organizations } = useDashboard();
 	const organizationModels = useOrganizationChatModels(
@@ -40,12 +43,22 @@ const AgentSettingsAPIKeysPage: FC = () => {
 			setProviderPanelResetTokens((current) =>
 				incrementResetToken(current, variables.providerConfigId),
 			);
-			toast.success("API key saved.");
+			toast.success(
+				tI18n("AgentsPage.AgentSettingsAPIKeysPage.api_key_saved_9aa6f707"),
+			);
 		},
 		onError: (mutationError) => {
-			toast.error(getErrorMessage(mutationError, "Error saving API key."), {
-				description: getErrorDetail(mutationError),
-			});
+			toast.error(
+				getErrorMessage(
+					mutationError,
+					tI18n(
+						"AgentsPage.AgentSettingsAPIKeysPage.error_saving_api_key_eabd44d4",
+					),
+				),
+				{
+					description: getErrorDetail(mutationError),
+				},
+			);
 		},
 	});
 
@@ -57,12 +70,22 @@ const AgentSettingsAPIKeysPage: FC = () => {
 			setProviderPanelResetTokens((current) =>
 				incrementResetToken(current, variables),
 			);
-			toast.success("API key removed.");
+			toast.success(
+				tI18n("AgentsPage.AgentSettingsAPIKeysPage.api_key_removed_bcec69c0"),
+			);
 		},
 		onError: (mutationError) => {
-			toast.error(getErrorMessage(mutationError, "Error removing API key."), {
-				description: getErrorDetail(mutationError),
-			});
+			toast.error(
+				getErrorMessage(
+					mutationError,
+					tI18n(
+						"AgentsPage.AgentSettingsAPIKeysPage.error_removing_api_key_7690c078",
+					),
+				),
+				{
+					description: getErrorDetail(mutationError),
+				},
+			);
 		},
 	});
 

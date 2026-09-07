@@ -6,12 +6,14 @@ import {
 	FileTextIcon,
 } from "lucide-react";
 import { type FC, type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Spinner } from "#/components/Spinner/Spinner";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { i18n } from "#/i18n";
 import { useLatestAbortController } from "../../hooks/useLatestAbortController";
 import {
 	type AttachmentFailure,
@@ -166,6 +168,8 @@ const DownloadOverlay: FC<{
 	downloadName: string;
 	mediaType: string;
 }> = ({ href, displayName, downloadName, mediaType }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<a
 			href={href}
@@ -178,7 +182,12 @@ const DownloadOverlay: FC<{
 					mediaType,
 				});
 			}}
-			aria-label={`Download ${displayName}`}
+			aria-label={tI18n(
+				"AgentsPage.components.ChatConversation.AttachmentBlocks.download_value0_a4924ba4",
+				{
+					value0: displayName,
+				},
+			)}
 			className="invisible absolute right-1 top-1 flex size-6 items-center justify-center rounded bg-surface-primary/80 text-content-secondary opacity-0 shadow-xs backdrop-blur-xs transition-opacity hover:text-content-primary group-hover/attachment:visible group-hover/attachment:opacity-100 group-focus-within/attachment:visible group-focus-within/attachment:opacity-100 [@media(hover:none)]:visible [@media(hover:none)]:opacity-100 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-content-link"
 		>
 			<DownloadIcon aria-hidden="true" className="size-3.5" />
@@ -216,13 +225,21 @@ type AttachmentFailureLabels = {
 };
 
 const imageAttachmentFailureLabels: AttachmentFailureLabels = {
-	expired: "Image expired",
-	failed: "Image failed to load",
+	expired: i18n.t(
+		"agents:AgentsPage.components.ChatConversation.AttachmentBlocks.image_expired_97840108",
+	),
+	failed: i18n.t(
+		"agents:AgentsPage.components.ChatConversation.AttachmentBlocks.image_failed_to_load_d4719771",
+	),
 };
 
 const textAttachmentFailureLabels: AttachmentFailureLabels = {
-	expired: "Attachment expired",
-	failed: "Attachment failed to load",
+	expired: i18n.t(
+		"agents:AgentsPage.components.ChatConversation.AttachmentBlocks.attachment_expired_91865418",
+	),
+	failed: i18n.t(
+		"agents:AgentsPage.components.ChatConversation.AttachmentBlocks.attachment_failed_to_load_21b655a6",
+	),
 };
 
 const AttachmentFallbackTile: FC<{
@@ -279,13 +296,22 @@ const InlineTextAttachmentButton: FC<{
 	isPlaceholder?: boolean;
 	icon?: ReactNode;
 }> = ({ content, fileName, onPreview, isPlaceholder, icon }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<button
 			type="button"
 			aria-label={
 				fileName && fileName !== "Pasted text"
-					? `View ${fileName}`
-					: "View text attachment"
+					? tI18n(
+							"AgentsPage.components.ChatConversation.AttachmentBlocks.view_value0_09d06f15",
+							{
+								value0: fileName,
+							},
+						)
+					: tI18n(
+							"AgentsPage.components.ChatConversation.AttachmentBlocks.view_text_attachment_2debd0af",
+						)
 			}
 			className="inline-flex h-16 max-w-sm items-center gap-2 rounded-md border-0 bg-surface-tertiary px-3 py-2 text-left transition-colors hover:bg-surface-quaternary focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-content-link"
 			onClick={(event) => {
@@ -328,6 +354,8 @@ const RemoteTextAttachmentButton: FC<{
 	onPreview,
 	showStatus = false,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { hasExpired, markExpired } = useFileProbes();
 	const isKnownExpired = hasExpired(fileId);
 	const [content, setContent] = useState<string | null>(null);
@@ -437,7 +465,9 @@ const RemoteTextAttachmentButton: FC<{
 					aria-live="polite"
 					className="text-xs text-content-secondary"
 				>
-					Loading attachment preview…
+					{tI18n(
+						"AgentsPage.components.ChatConversation.AttachmentBlocks.loading_attachment_preview_78018b4e",
+					)}
 				</span>
 			) : null}
 		</div>
@@ -450,6 +480,8 @@ const RemoteImageBlock: FC<{
 	displayName: string;
 	onImageClick?: (src: string) => void;
 }> = ({ fileId, href, displayName, onImageClick }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const {
 		hasExpired,
 		markExpired,
@@ -487,7 +519,12 @@ const RemoteImageBlock: FC<{
 	return (
 		<button
 			type="button"
-			aria-label={`View ${displayName}`}
+			aria-label={tI18n(
+				"AgentsPage.components.ChatConversation.AttachmentBlocks.view_value0_09d06f15",
+				{
+					value0: displayName,
+				},
+			)}
 			className="inline-block rounded-md border-0 bg-transparent p-0"
 			onClick={(event) => {
 				event.stopPropagation();
@@ -558,6 +595,8 @@ const FileCard: FC<{
 	block: FileAttachmentBlock;
 	href: string;
 }> = ({ block, href }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const displayName = getAttachmentDisplayName(block);
 	const downloadName = getAttachmentDownloadName(block);
 	const badgeLabel = getAttachmentBadgeLabel(block);
@@ -574,7 +613,12 @@ const FileCard: FC<{
 					mediaType: block.media_type,
 				});
 			}}
-			aria-label={`Download ${displayName}`}
+			aria-label={tI18n(
+				"AgentsPage.components.ChatConversation.AttachmentBlocks.download_value0_a4924ba4",
+				{
+					value0: displayName,
+				},
+			)}
 			className="inline-flex h-16 max-w-sm items-center gap-3 rounded-md border border-solid border-border-default bg-surface-tertiary px-3 py-2 no-underline transition-colors hover:bg-surface-quaternary"
 		>
 			<div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-surface-secondary">
@@ -593,7 +637,11 @@ const FileCard: FC<{
 				<div className="truncate text-sm text-content-primary">
 					{displayName}
 				</div>
-				<div className="text-xs text-content-secondary">Download file</div>
+				<div className="text-xs text-content-secondary">
+					{tI18n(
+						"AgentsPage.components.ChatConversation.AttachmentBlocks.download_file_9de4149f",
+					)}
+				</div>
 			</div>
 			<DownloadIcon
 				aria-hidden="true"

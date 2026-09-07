@@ -1,4 +1,6 @@
 import type React from "react";
+import { useTranslation } from "react-i18next";
+import { i18n } from "#/i18n";
 import { getPathBasename } from "../../../utils/path";
 import { asRecord, asString, humanizeMCPToolName, parseArgs } from "./utils";
 
@@ -10,6 +12,8 @@ type ToolLabelProps = {
 };
 
 const ProcessSignalLabel: React.FC<ToolLabelProps> = ({ args, result }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const parsed = parseArgs(args);
 	const parsedResult = asRecord(result);
 	const signal = parsed ? asString(parsed.signal) : "";
@@ -34,7 +38,11 @@ const ProcessSignalLabel: React.FC<ToolLabelProps> = ({ args, result }) => {
 		const verb = isKill ? "Killed" : "Terminated";
 		return (
 			<span className="truncate text-[13px]">
-				{verb} process{suffix}
+				{verb}
+				{tI18n(
+					"AgentsPage.components.ChatElements.tools.ToolLabel.process_83328e26",
+				)}
+				{suffix}
 			</span>
 		);
 	}
@@ -42,12 +50,21 @@ const ProcessSignalLabel: React.FC<ToolLabelProps> = ({ args, result }) => {
 	const failedVerb = isKill ? "kill" : isTerminate ? "terminate" : "signal";
 	return (
 		<span className="truncate text-[13px]">
-			Failed to {failedVerb} process{suffix}
+			{tI18n(
+				"AgentsPage.components.ChatElements.tools.ToolLabel.failed_to_e1e1ad89",
+			)}
+			{failedVerb}
+			{tI18n(
+				"AgentsPage.components.ChatElements.tools.ToolLabel.process_83328e26",
+			)}
+			{suffix}
 		</span>
 	);
 };
 
 const AttachFileLabel: React.FC<ToolLabelProps> = ({ args, result }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const parsed = parseArgs(args);
 	const parsedResult = asRecord(result);
 	const resultName = parsedResult ? asString(parsedResult.name) : "";
@@ -56,7 +73,14 @@ const AttachFileLabel: React.FC<ToolLabelProps> = ({ args, result }) => {
 	const attachedName =
 		resultName || argName || getPathBasename(argPath) || "file";
 	return (
-		<span className="truncate text-[13px]">{`Attached ${attachedName}`}</span>
+		<span className="truncate text-[13px]">
+			{tI18n(
+				"AgentsPage.components.ChatElements.tools.ToolLabel.attached_value0_8d8cac16",
+				{
+					value0: attachedName,
+				},
+			)}
+		</span>
 	);
 };
 
@@ -65,12 +89,18 @@ export const genericToolLabels: Partial<
 > = {
 	process_signal: ProcessSignalLabel,
 	process_list: () => (
-		<span className="truncate text-[13px]">Listing processes</span>
+		<span className="truncate text-[13px]">
+			{i18n.t(
+				"agents:AgentsPage.components.ChatElements.tools.ToolLabel.listing_processes_f1834a77",
+			)}
+		</span>
 	),
 	attach_file: AttachFileLabel,
 	advisor: () => (
 		<span className="truncate text-[13px] leading-4 text-content-secondary">
-			Advisor
+			{i18n.t(
+				"agents:AgentsPage.components.ChatElements.tools.ToolLabel.advisor_28da8c1f",
+			)}
 		</span>
 	),
 };

@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { ArrowRightIcon, PlusIcon, TriangleAlertIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink, useNavigate } from "react-router";
 import { hasError, isApiValidationError } from "#/api/errors";
 import type {
@@ -60,23 +61,35 @@ import { type TemplateFilterState, TemplatesFilter } from "./TemplatesFilter";
 const ClassicParameterFlowAlert: FC<{ templateCount: number }> = ({
 	templateCount,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<Alert severity="warning" prominent className="mt-6">
 			<AlertTitle>
 				{templateCount === 1
-					? "1 template still uses classic parameters"
-					: `${templateCount} templates still use classic parameters`}
+					? tI18n(
+							"TemplatesPage.TemplatesPageView.1_template_still_uses_classic_parameters_fe34d2de",
+						)
+					: tI18n(
+							"TemplatesPage.TemplatesPageView.value0_templates_still_use_classic_parameters_de9d39dc",
+							{
+								value0: templateCount,
+							},
+						)}
 			</AlertTitle>
 			<AlertDescription>
-				Classic parameters are deprecated. Switch to dynamic parameters for
-				real-time validation, conditional parameters, and richer input types.{" "}
+				{tI18n(
+					"TemplatesPage.TemplatesPageView.classic_parameters_are_deprecated_switch_to_dyna_9f7cbdf2",
+				)}{" "}
 				<Link
 					href={docs("/admin/templates/extending-templates/dynamic-parameters")}
 					target="_blank"
 					rel="noreferrer"
 				>
-					View docs
-					<span className="sr-only"> (opens in new tab)</span>
+					{tI18n("TemplatesPage.TemplatesPageView.view_docs_61479fda")}
+					<span className="sr-only">
+						{tI18n("TemplatesPage.TemplatesPageView.opens_in_new_tab_541f18a6")}
+					</span>
 				</Link>
 			</AlertDescription>
 		</Alert>
@@ -84,18 +97,23 @@ const ClassicParameterFlowAlert: FC<{ templateCount: number }> = ({
 };
 
 const TemplateHelpPopover: FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<HelpPopover>
 			<HelpPopoverIconTrigger />
 			<HelpPopoverContent>
-				<HelpPopoverTitle>What is a template?</HelpPopoverTitle>
+				<HelpPopoverTitle>
+					{tI18n("TemplatesPage.TemplatesPageView.what_is_a_template_00a8b592")}
+				</HelpPopoverTitle>
 				<HelpPopoverText>
-					With templates you can create a common configuration for your
-					workspaces using Terraform.
+					{tI18n(
+						"TemplatesPage.TemplatesPageView.with_templates_you_can_create_a_common_configura_f5e85c91",
+					)}
 				</HelpPopoverText>
 				<HelpPopoverLinksGroup>
 					<HelpPopoverLink href={docs("/admin/templates")}>
-						Manage templates
+						{tI18n("TemplatesPage.TemplatesPageView.manage_templates_cb930c76")}
 					</HelpPopoverLink>
 				</HelpPopoverLinksGroup>
 			</HelpPopoverContent>
@@ -114,6 +132,8 @@ const TemplateActions: FC<TemplateActionsProps> = ({
 	workspacePermissions,
 	templatePageLink,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	if (template.deleted) {
 		return null;
 	}
@@ -134,14 +154,19 @@ const TemplateActions: FC<TemplateActionsProps> = ({
 			variant="outline"
 			size="sm"
 			className="transition-none group-hover:border-border-secondary"
-			title={`Create a workspace using the ${template.display_name} template`}
+			title={tI18n(
+				"TemplatesPage.TemplatesPageView.create_a_workspace_using_the_value0_template_4b56eaa3",
+				{
+					value0: template.display_name,
+				},
+			)}
 			onClick={(e) => {
 				e.stopPropagation();
 			}}
 		>
 			<RouterLink to={`${templatePageLink}/workspace`}>
 				<ArrowRightIcon />
-				Create Workspace
+				{tI18n("TemplatesPage.TemplatesPageView.create_workspace_c63c14cf")}
 			</RouterLink>
 		</Button>
 	);
@@ -160,6 +185,8 @@ const TemplateRow: FC<TemplateRowProps> = ({
 	template,
 	workspacePermissions,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const getLink = useLinks();
 	const templatePageLink = getLink(
 		linkToTemplate(template.organization_name, template.name),
@@ -193,7 +220,7 @@ const TemplateRow: FC<TemplateRowProps> = ({
 									className="border-0 shadow-none"
 								>
 									<TriangleAlertIcon aria-hidden="true" />
-									Deprecated
+									{tI18n("TemplatesPage.TemplatesPageView.deprecated_6b2e8f83")}
 								</Badge>
 							)}
 						</span>
@@ -209,27 +236,28 @@ const TemplateRow: FC<TemplateRowProps> = ({
 					}
 				/>
 			</TableCell>
-
 			<TableCell className="text-content-secondary">
 				{showOrganizations ? (
 					<AvatarData
 						title={template.organization_display_name}
-						subtitle={`Used by ${developerCount}`}
+						subtitle={tI18n(
+							"TemplatesPage.TemplatesPageView.used_by_value0_2401cb33",
+							{
+								value0: developerCount,
+							},
+						)}
 						avatar={<Avatar variant="icon" src={template.organization_icon} />}
 					/>
 				) : (
 					developerCount
 				)}
 			</TableCell>
-
 			<TableCell className="text-content-secondary">
 				{formatTemplateBuildTime(template.build_time_stats.start.P50)}
 			</TableCell>
-
 			<TableCell data-pixel="ignore" className="text-content-secondary">
 				{createDayString(template.updated_at)}
 			</TableCell>
-
 			<TableCell className="whitespace-nowrap">
 				<TemplateActions
 					template={template}
@@ -264,6 +292,8 @@ export const TemplatesPageView: FC<TemplatesPageViewProps> = ({
 	templateUpdatePermissions,
 	workspacePermissions,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const isLoading = !templates;
 	const isEmpty = !isLoading && templates.length === 0;
 	const classicParameterFlowTemplateCount =
@@ -281,7 +311,6 @@ export const TemplatesPageView: FC<TemplatesPageViewProps> = ({
 					templateCount={classicParameterFlowTemplateCount}
 				/>
 			)}
-
 			<PageHeader
 				actions={
 					canCreateTemplates && (
@@ -294,7 +323,7 @@ export const TemplatesPageView: FC<TemplatesPageViewProps> = ({
 								}
 							>
 								<PlusIcon />
-								New template
+								{tI18n("TemplatesPage.TemplatesPageView.new_template_30d87ec4")}
 							</RouterLink>
 						</Button>
 					)
@@ -302,15 +331,16 @@ export const TemplatesPageView: FC<TemplatesPageViewProps> = ({
 			>
 				<PageHeaderTitle>
 					<div className="flex flex-row gap-2 items-center">
-						Templates
+						{tI18n("TemplatesPage.TemplatesPageView.templates_56b564b7")}
 						<TemplateHelpPopover />
 					</div>
 				</PageHeaderTitle>
 				<PageHeaderSubtitle>
-					Select a template to create a workspace.
+					{tI18n(
+						"TemplatesPage.TemplatesPageView.select_a_template_to_create_a_workspace_8b30fe76",
+					)}
 				</PageHeaderSubtitle>
 			</PageHeader>
-
 			<TemplatesFilter
 				filter={filterState.filter}
 				error={error}
@@ -320,16 +350,23 @@ export const TemplatesPageView: FC<TemplatesPageViewProps> = ({
 			{hasError(error) && !isApiValidationError(error) && (
 				<ErrorAlert error={error} />
 			)}
-
 			<Table>
 				<TableHeader>
 					<TableRow>
-						<TableHead className="w-[35%]">Name</TableHead>
-						<TableHead className="w-[15%]">
-							{showOrganizations ? "Organization" : "Used by"}
+						<TableHead className="w-[35%]">
+							{tI18n("TemplatesPage.TemplatesPageView.name_dcd1d522")}
 						</TableHead>
-						<TableHead className="w-[10%]">Build time</TableHead>
-						<TableHead className="w-[15%]">Last updated</TableHead>
+						<TableHead className="w-[15%]">
+							{showOrganizations
+								? tI18n("TemplatesPage.TemplatesPageView.organization_d764d425")
+								: tI18n("TemplatesPage.TemplatesPageView.used_by_681bf81a")}
+						</TableHead>
+						<TableHead className="w-[10%]">
+							{tI18n("TemplatesPage.TemplatesPageView.build_time_8e28a482")}
+						</TableHead>
+						<TableHead className="w-[15%]">
+							{tI18n("TemplatesPage.TemplatesPageView.last_updated_382ac5f3")}
+						</TableHead>
 						<TableHead className="w-[1%]" />
 					</TableRow>
 				</TableHeader>

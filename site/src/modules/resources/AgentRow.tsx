@@ -15,6 +15,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import AutoSizer from "react-virtualized-auto-sizer";
 import type { VariableSizeList as List, ListOnScrollProps } from "react-window";
 import type {
@@ -152,6 +153,8 @@ export const AgentRow: FC<AgentRowProps> = ({
 	onUpdateAgent,
 	initialMetadata,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const { browser_only, workspace_external_agent } = useFeatureVisibility();
 	const appSections = organizeAgentApps(agent.apps);
 	const hasAppsToDisplay =
@@ -345,7 +348,7 @@ export const AgentRow: FC<AgentRowProps> = ({
 		error: boolean;
 	}[] = [
 		{
-			title: "All Logs",
+			title: tI18n("resources.AgentRow.all_logs_03f1acb9"),
 			value: "all",
 			startIcon: <PackageIcon className="size-icon-xs shrink-0" />,
 			error: false,
@@ -441,7 +444,7 @@ export const AgentRow: FC<AgentRowProps> = ({
 							size="sm"
 							onClick={() => setShowParentApps((show) => !show)}
 						>
-							Show parent apps
+							{tI18n("resources.AgentRow.show_parent_apps_4e390a6f")}
 							<ChevronDownIcon open={showParentApps} />
 						</Button>
 					)}
@@ -463,11 +466,12 @@ export const AgentRow: FC<AgentRowProps> = ({
 					)}
 				</div>
 			</header>
-
 			<div className="flex flex-col gap-8 p-8">
 				{workspace.latest_app_status?.agent_id === agent.id && (
 					<section>
-						<h3 className="sr-only">App statuses</h3>
+						<h3 className="sr-only">
+							{tI18n("resources.AgentRow.app_statuses_be84f42f")}
+						</h3>
 						<AppStatuses workspace={workspace} agent={agent} />
 					</section>
 				)}
@@ -541,7 +545,6 @@ export const AgentRow: FC<AgentRowProps> = ({
 
 				<AgentMetadata initialMetadata={initialMetadata} agent={agent} />
 			</div>
-
 			<section className="border-0 border-t border-solid border-border">
 				<Collapsible open={shouldExpandLogs} onOpenChange={setShowLogs}>
 					<div className="px-4 py-2 relative">
@@ -551,7 +554,7 @@ export const AgentRow: FC<AgentRowProps> = ({
 								className="after:content-[''] after:absolute after:inset-0"
 							>
 								<ChevronDownIcon open={showLogs} />
-								<span>Logs</span>
+								<span>{tI18n("resources.AgentRow.logs_ea2100dc")}</span>
 								{agent.lifecycle_state === "starting" &&
 									runningScriptsCount > 0 &&
 									connectivityIssues.length === 0 && (
@@ -657,7 +660,9 @@ export const AgentRow: FC<AgentRowProps> = ({
 																			? "active"
 																			: "inactive"
 																	}
-																	aria-label="More log tabs"
+																	aria-label={tI18n(
+																		"resources.AgentRow.more_log_tabs_d8489df3",
+																	)}
 																	className={cn(
 																		"cursor-pointer -mb-px",
 																		"inline-flex items-center justify-center",
@@ -666,7 +671,11 @@ export const AgentRow: FC<AgentRowProps> = ({
 																	)}
 																>
 																	<EllipsisIcon className="size-icon-sm" />
-																	<span className="sr-only">More log tabs</span>
+																	<span className="sr-only">
+																		{tI18n(
+																			"resources.AgentRow.more_log_tabs_d8489df3",
+																		)}
+																	</span>
 																</button>
 															</DropdownMenuTrigger>
 															<DropdownMenuContent
@@ -731,8 +740,10 @@ export const AgentRow: FC<AgentRowProps> = ({
 														</TooltipTrigger>
 														<TooltipContent>
 															{showCopiedSuccess
-																? "Copied!"
-																: "Copy selected logs"}
+																? tI18n("resources.AgentRow.copied_ea61bc15")
+																: tI18n(
+																		"resources.AgentRow.copy_selected_logs_4d24981a",
+																	)}
 														</TooltipContent>
 													</Tooltip>
 												</TooltipProvider>

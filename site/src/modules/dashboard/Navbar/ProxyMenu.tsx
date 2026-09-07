@@ -1,5 +1,6 @@
 import { RadioIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { toast } from "sonner";
 import type * as TypesGen from "#/api/typesGenerated";
@@ -28,6 +29,8 @@ interface ProxyMenuProps {
 }
 
 export const ProxyMenu: FC<ProxyMenuProps> = ({ proxyContextValue }) => {
+	const { t: tI18n } = useTranslation("dashboard");
+
 	const [open, setOpen] = useState(false);
 	const [refetchDate, setRefetchDate] = useState<Date>();
 	const selectedProxy = proxyContextValue.proxy.proxy;
@@ -77,7 +80,9 @@ export const ProxyMenu: FC<ProxyMenuProps> = ({ proxyContextValue }) => {
 			<DropdownMenuTrigger asChild>
 				<Button variant="outline" size="lg">
 					<span className="sr-only">
-						Latency for {selectedProxy?.display_name ?? "your region"}
+						{tI18n("dashboard.Navbar.ProxyMenu.latency_for_82129a3e")}
+						{selectedProxy?.display_name ??
+							tI18n("dashboard.Navbar.ProxyMenu.your_region_927d4d96")}
 					</span>
 
 					{selectedProxy ? (
@@ -102,7 +107,7 @@ export const ProxyMenu: FC<ProxyMenuProps> = ({ proxyContextValue }) => {
 							/>
 						</>
 					) : (
-						"Select Proxy"
+						tI18n("dashboard.Navbar.ProxyMenu.select_proxy_02b1bace")
 					)}
 
 					<ChevronDownIcon className="text-content-primary" />
@@ -115,15 +120,25 @@ export const ProxyMenu: FC<ProxyMenuProps> = ({ proxyContextValue }) => {
 						className="flex flex-col gap-1 items-start data-disabled:opacity-100"
 					>
 						<div className="text-content-primary font-semibold text-left">
-							Select a region nearest to you
+							{tI18n(
+								"dashboard.Navbar.ProxyMenu.select_a_region_nearest_to_you_5f2d9fac",
+							)}
 						</div>
 						<div className="text-xs text-content-secondary leading-relaxed">
-							Workspace proxies improve terminal and web app connections.{" "}
-							<Abbr title="Command-Line Interface" pronunciation="initialism">
+							{tI18n(
+								"dashboard.Navbar.ProxyMenu.workspace_proxies_improve_terminal_and_web_app_c_6f88285e",
+							)}{" "}
+							<Abbr
+								title={tI18n(
+									"dashboard.Navbar.ProxyMenu.command_line_interface_db96c4f5",
+								)}
+								pronunciation="initialism"
+							>
 								CLI
 							</Abbr>{" "}
-							connections are unaffected. If no region is selected, the primary
-							region will be used.
+							{tI18n(
+								"dashboard.Navbar.ProxyMenu.connections_are_unaffected_if_no_region_is_selec_2c8404d5",
+							)}
 						</div>
 					</DropdownMenuItem>
 				)}
@@ -144,10 +159,16 @@ export const ProxyMenu: FC<ProxyMenuProps> = ({ proxyContextValue }) => {
 											e.preventDefault();
 											if (!proxy.healthy) {
 												toast.error(
-													`Failed to select proxy "${proxy.display_name}".`,
+													tI18n(
+														"dashboard.Navbar.ProxyMenu.failed_to_select_proxy_value0_d7077442",
+														{
+															value0: proxy.display_name,
+														},
+													),
 													{
-														description:
-															"Please select a healthy workspace proxy.",
+														description: tI18n(
+															"dashboard.Navbar.ProxyMenu.please_select_a_healthy_workspace_proxy_25ba0ed8",
+														),
 													},
 												);
 												closeMenu();
@@ -187,7 +208,9 @@ export const ProxyMenu: FC<ProxyMenuProps> = ({ proxyContextValue }) => {
 				{Boolean(permissions.editWorkspaceProxies) && (
 					<DropdownMenuItem asChild>
 						<Link to="/deployment/workspace-proxies">
-							<span>Proxy settings</span>
+							<span>
+								{tI18n("dashboard.Navbar.ProxyMenu.proxy_settings_4529dd70")}
+							</span>
 						</Link>
 					</DropdownMenuItem>
 				)}
@@ -199,7 +222,7 @@ export const ProxyMenu: FC<ProxyMenuProps> = ({ proxyContextValue }) => {
 						setRefetchDate(refetchDate);
 					}}
 				>
-					Refresh latencies
+					{tI18n("dashboard.Navbar.ProxyMenu.refresh_latencies_ba8f2209")}
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>

@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -24,6 +25,8 @@ import { pageTitle } from "#/utils/page";
 import { PremiumPageView } from "./PremiumPageView";
 
 const PremiumPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { entitlements } = useDashboard();
 	const { permissions } = useAuthenticated();
 	const queryClient = useQueryClient();
@@ -47,15 +50,27 @@ const PremiumPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Start a Coder trial")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n(
+						"DeploymentSettingsPage.PremiumPage.PremiumPage.start_a_coder_trial_1a559a1b",
+					),
+				)}
+			</title>
 			<SettingsHeader>
-				<SettingsHeaderTitle>Start a Coder trial</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"DeploymentSettingsPage.PremiumPage.PremiumPage.start_a_coder_trial_1a559a1b",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					For enterprises ready to achieve world-class security, scalability,
-					and developer experience.{" "}
+					{tI18n(
+						"DeploymentSettingsPage.PremiumPage.PremiumPage.for_enterprises_ready_to_achieve_world_class_sec_1c78a2c5",
+					)}{" "}
 					<SettingsHeaderDocsLink href={docs(DATABASE_DOCS_LINK)}>
-						Review Coder system requirements
+						{tI18n(
+							"DeploymentSettingsPage.PremiumPage.PremiumPage.review_coder_system_requirements_49510d3b",
+						)}
 					</SettingsHeaderDocsLink>
 				</SettingsHeaderDescription>
 				<Link
@@ -65,10 +80,11 @@ const PremiumPage: FC = () => {
 					size="sm"
 					className="w-fit"
 				>
-					Learn more
+					{tI18n(
+						"DeploymentSettingsPage.PremiumPage.PremiumPage.learn_more_1445799c",
+					)}
 				</Link>
 			</SettingsHeader>
-
 			<PremiumPageView
 				hasLicense={hasLicense}
 				isTrial={isTrial}
@@ -84,7 +100,12 @@ const PremiumPage: FC = () => {
 						},
 						onError: (error) => {
 							toast.error(
-								getErrorMessage(error, "Failed to request a trial license."),
+								getErrorMessage(
+									error,
+									tI18n(
+										"DeploymentSettingsPage.PremiumPage.PremiumPage.failed_to_request_a_trial_license_419f8a71",
+									),
+								),
 								{ description: getErrorDetail(error) },
 							);
 						},

@@ -1,4 +1,5 @@
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import type { ConnectionLog } from "#/api/typesGenerated";
 import { Link } from "#/components/Link/Link";
@@ -11,6 +12,8 @@ interface ConnectionLogDescriptionProps {
 export const ConnectionLogDescription: FC<ConnectionLogDescriptionProps> = ({
 	connectionLog,
 }) => {
+	const { t: tI18n } = useTranslation("pages");
+
 	const { type, workspace_owner_username, workspace_name, web_info } =
 		connectionLog;
 
@@ -26,7 +29,10 @@ export const ConnectionLogDescription: FC<ConnectionLogDescriptionProps> = ({
 
 			const target: ReactNode = isPortForward ? (
 				<>
-					port <strong>{slug_or_port}</strong>
+					{tI18n(
+						"ConnectionLogPage.ConnectionLogRow.ConnectionLogDescription.ConnectionLogDescription.port_7c065190",
+					)}
+					<strong>{slug_or_port}</strong>
 				</>
 			) : (
 				<strong>{slug_or_port}</strong>
@@ -36,14 +42,20 @@ export const ConnectionLogDescription: FC<ConnectionLogDescriptionProps> = ({
 				if (status_code === 303) {
 					return (
 						<>
-							was redirected attempting to {presentAction} {target}
+							{tI18n(
+								"ConnectionLogPage.ConnectionLogRow.ConnectionLogDescription.ConnectionLogDescription.was_redirected_attempting_to_679dbe34",
+							)}
+							{presentAction} {target}
 						</>
 					);
 				}
 				if ((status_code ?? 0) >= 400) {
 					return (
 						<>
-							unsuccessfully attempted to {presentAction} {target}
+							{tI18n(
+								"ConnectionLogPage.ConnectionLogRow.ConnectionLogDescription.ConnectionLogDescription.unsuccessfully_attempted_to_74b09bdf",
+							)}
+							{presentAction} {target}
 						</>
 					);
 				}
@@ -60,14 +72,33 @@ export const ConnectionLogDescription: FC<ConnectionLogDescriptionProps> = ({
 
 			return (
 				<span>
-					{user ? user.username : "Unauthenticated user"} {actionText} in{" "}
-					{isOwnWorkspace ? "their" : `${workspace_owner_username}'s`}{" "}
+					{user
+						? user.username
+						: tI18n(
+								"ConnectionLogPage.ConnectionLogRow.ConnectionLogDescription.ConnectionLogDescription.unauthenticated_user_4f793385",
+							)}{" "}
+					{actionText}
+					{tI18n(
+						"ConnectionLogPage.ConnectionLogRow.ConnectionLogDescription.ConnectionLogDescription.in_8f6b9ac6",
+					)}{" "}
+					{isOwnWorkspace
+						? tI18n(
+								"ConnectionLogPage.ConnectionLogRow.ConnectionLogDescription.ConnectionLogDescription.their_fd963e4f",
+							)
+						: tI18n(
+								"ConnectionLogPage.ConnectionLogRow.ConnectionLogDescription.ConnectionLogDescription.value0_s_db9a5fb7",
+								{
+									value0: workspace_owner_username,
+								},
+							)}{" "}
 					<Link asChild showExternalIcon={false} className="text-base">
 						<RouterLink to={`/@${workspace_owner_username}/${workspace_name}`}>
 							<strong>{workspace_name}</strong>
 						</RouterLink>
 					</Link>{" "}
-					workspace
+					{tI18n(
+						"ConnectionLogPage.ConnectionLogRow.ConnectionLogDescription.ConnectionLogDescription.workspace_21a3230e",
+					)}
 				</span>
 			);
 		}
@@ -79,13 +110,22 @@ export const ConnectionLogDescription: FC<ConnectionLogDescriptionProps> = ({
 			const friendlyType = connectionTypeToFriendlyName(type);
 			return (
 				<span>
-					{friendlyType} session to {workspace_owner_username}'s{" "}
+					{friendlyType}
+					{tI18n(
+						"ConnectionLogPage.ConnectionLogRow.ConnectionLogDescription.ConnectionLogDescription.session_to_add0c80c",
+					)}
+					{workspace_owner_username}
+					{tI18n(
+						"ConnectionLogPage.ConnectionLogRow.ConnectionLogDescription.ConnectionLogDescription.s_edc00d4d",
+					)}{" "}
 					<Link asChild showExternalIcon={false} className="text-base">
 						<RouterLink to={`/@${workspace_owner_username}/${workspace_name}`}>
 							<strong>{workspace_name}</strong>
 						</RouterLink>
 					</Link>{" "}
-					workspace{" "}
+					{tI18n(
+						"ConnectionLogPage.ConnectionLogRow.ConnectionLogDescription.ConnectionLogDescription.workspace_21a3230e",
+					)}{" "}
 				</span>
 			);
 		}
@@ -102,13 +142,24 @@ export const ConnectionLogDescription: FC<ConnectionLogDescriptionProps> = ({
 			return (
 				<span>
 					{actor} {action}{" "}
-					{isOwnWorkspace ? "their" : `${workspace_owner_username}'s`}{" "}
+					{isOwnWorkspace
+						? tI18n(
+								"ConnectionLogPage.ConnectionLogRow.ConnectionLogDescription.ConnectionLogDescription.their_fd963e4f",
+							)
+						: tI18n(
+								"ConnectionLogPage.ConnectionLogRow.ConnectionLogDescription.ConnectionLogDescription.value0_s_db9a5fb7",
+								{
+									value0: workspace_owner_username,
+								},
+							)}{" "}
 					<Link asChild showExternalIcon={false} className="text-base">
 						<RouterLink to={`/@${workspace_owner_username}/${workspace_name}`}>
 							<strong>{workspace_name}</strong>
 						</RouterLink>
 					</Link>{" "}
-					workspace
+					{tI18n(
+						"ConnectionLogPage.ConnectionLogRow.ConnectionLogDescription.ConnectionLogDescription.workspace_21a3230e",
+					)}
 				</span>
 			);
 		}

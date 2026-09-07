@@ -22,6 +22,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import { Link } from "react-router";
 import { toast } from "sonner";
@@ -58,6 +59,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { i18n } from "#/i18n";
 import { countInvisibleCharacters } from "#/utils/invisibleUnicode";
 import { isBelowMdViewport, isMobileViewport } from "#/utils/mobile";
 import { chatWidthClass, useChatFullWidth } from "../hooks/useChatFullWidth";
@@ -262,6 +264,8 @@ const ToolBadge: FC<{
 	className,
 	disableTooltip,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const badgeCls = cn(
 		"inline-flex shrink-0 items-center gap-1 rounded-full bg-surface-secondary px-2 py-0.5 text-xs font-medium text-content-secondary",
 		className,
@@ -271,11 +275,13 @@ const ToolBadge: FC<{
 		return (
 			<span data-testid="planning-badge" className={badgeCls}>
 				<PencilIcon className="size-3" />
-				Planning
+				{tI18n("AgentsPage.components.AgentChatInput.planning_21cc3050")}
 				{onRemovePlanning && (
 					<BadgeDismissButton
 						onClick={onRemovePlanning}
-						ariaLabel="Disable plan mode"
+						ariaLabel={tI18n(
+							"AgentsPage.components.AgentChatInput.disable_plan_mode_86371e6e",
+						)}
 						isDisabled={isDisabled}
 					/>
 				)}
@@ -305,7 +311,12 @@ const ToolBadge: FC<{
 						{onRemoveWorkspace && (
 							<BadgeDismissButton
 								onClick={onRemoveWorkspace}
-								ariaLabel={`Remove workspace ${badge.name}`}
+								ariaLabel={tI18n(
+									"AgentsPage.components.AgentChatInput.remove_workspace_value0_71507d25",
+									{
+										value0: badge.name,
+									},
+								)}
 							/>
 						)}
 					</span>
@@ -328,7 +339,12 @@ const ToolBadge: FC<{
 				{onRemoveWorkspace && (
 					<BadgeDismissButton
 						onClick={onRemoveWorkspace}
-						ariaLabel={`Remove workspace ${badge.name}`}
+						ariaLabel={tI18n(
+							"AgentsPage.components.AgentChatInput.remove_workspace_value0_71507d25",
+							{
+								value0: badge.name,
+							},
+						)}
 					/>
 				)}
 			</span>
@@ -351,7 +367,12 @@ const ToolBadge: FC<{
 			{!isForceOn && onRemoveMcp && (
 				<BadgeDismissButton
 					onClick={() => onRemoveMcp(badge.server.id)}
-					ariaLabel={`Remove ${badge.server.display_name}`}
+					ariaLabel={tI18n(
+						"AgentsPage.components.AgentChatInput.remove_value0_e224cf24",
+						{
+							value0: badge.server.display_name,
+						},
+					)}
 				/>
 			)}
 		</span>
@@ -361,7 +382,9 @@ const ToolBadge: FC<{
 export const AgentChatInput: FC<AgentChatInputProps> = ({
 	onSend,
 	sendShortcut = DEFAULT_AGENT_CHAT_SEND_SHORTCUT,
-	placeholder = "Type a message...",
+	placeholder = i18n.t(
+		"agents:AgentsPage.components.AgentChatInput.type_a_message_69518e68",
+	),
 	isDisabled,
 	isLoading,
 	inputRef,
@@ -421,6 +444,8 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 	aiGatewayDisabled,
 	slashCommands,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [chatFullWidth] = useChatFullWidth();
 	const showAgentSetupNotice =
 		aiGatewayDisabled ||
@@ -556,15 +581,40 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 			onSuccess: (response) => {
 				setMcpDisconnectTarget(null);
 				if (response.token_revocation_error) {
-					toast.warning(`Disconnected ${name}.`, {
-						description: response.token_revocation_error,
-					});
+					toast.warning(
+						tI18n(
+							"AgentsPage.components.AgentChatInput.disconnected_value0_d9d45b7e",
+							{
+								value0: name,
+							},
+						),
+						{
+							description: response.token_revocation_error,
+						},
+					);
 				} else {
-					toast.success(`Disconnected ${name}.`);
+					toast.success(
+						tI18n(
+							"AgentsPage.components.AgentChatInput.disconnected_value0_d9d45b7e",
+							{
+								value0: name,
+							},
+						),
+					);
 				}
 			},
 			onError: (error) => {
-				toast.error(getErrorMessage(error, `Failed to disconnect ${name}.`));
+				toast.error(
+					getErrorMessage(
+						error,
+						tI18n(
+							"AgentsPage.components.AgentChatInput.failed_to_disconnect_value0_5edddab6",
+							{
+								value0: name,
+							},
+						),
+					),
+				);
 			},
 		});
 	};
@@ -1059,11 +1109,13 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 		applyCycleValue(nextPrompt);
 	};
 
-	const sendButtonLabel = isEditingHistoryMessage ? "Save Edit" : "Send";
+	const sendButtonLabel = isEditingHistoryMessage
+		? tI18n("AgentsPage.components.AgentChatInput.save_edit_3e66f99d")
+		: tI18n("AgentsPage.components.AgentChatInput.send_f6f4688f");
 	const sendShortcutLabel =
 		sendShortcut === MODIFIER_AGENT_CHAT_SEND_SHORTCUT
-			? "Cmd/Ctrl+Enter"
-			: "Enter";
+			? tI18n("AgentsPage.components.AgentChatInput.cmd_ctrl_enter_6e751187")
+			: tI18n("AgentsPage.components.AgentChatInput.enter_dc8659db");
 	const sendButtonKeyShortcuts =
 		sendShortcut === MODIFIER_AGENT_CHAT_SEND_SHORTCUT
 			? "Control+Enter Meta+Enter"
@@ -1127,14 +1179,17 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 					<div className="flex items-center justify-between border-b border-border-default/70 px-3 py-1.5">
 						<span className="flex items-center gap-1.5 text-xs font-medium text-content-warning">
 							<PencilIcon className="size-3.5" />
-							Editing will delete all subsequent messages and restart the
-							conversation here.
+							{tI18n(
+								"AgentsPage.components.AgentChatInput.editing_will_delete_all_subsequent_messages_and__1f5a7810",
+							)}
 						</span>
 						<Button
 							type="button"
 							variant="subtle"
 							size="icon"
-							aria-label="Cancel editing"
+							aria-label={tI18n(
+								"AgentsPage.components.AgentChatInput.cancel_editing_d07a5a69",
+							)}
 							onClick={onCancelHistoryEdit}
 							disabled={isLoading}
 							className="size-6 rounded text-content-warning hover:text-content-primary"
@@ -1159,7 +1214,9 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 					ref={internalRef}
 					onFilePaste={onAttach ? handleFilePaste : undefined}
 					onPaste={resetPromptCycle}
-					aria-label="Chat message"
+					aria-label={tI18n(
+						"AgentsPage.components.AgentChatInput.chat_message_f6820511",
+					)}
 					className="min-h-[60px] sm:min-h-24 w-full resize-none bg-transparent px-3 py-2 font-sans text-[13px] leading-relaxed text-content-primary placeholder:text-content-secondary disabled:cursor-not-allowed disabled:opacity-70"
 					placeholder={placeholder}
 					initialValue={initialValue}
@@ -1189,9 +1246,19 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 					<div className="px-3 pb-1">
 						<Alert severity="warning">
 							<AlertDescription>
-								This message contains {invisibleCharCount} invisible Unicode
-								character{invisibleCharCount !== 1 ? "s" : ""} that could hide
-								content. Review carefully before sending.
+								{tI18n(
+									"AgentsPage.components.AgentChatInput.this_message_contains_3130ff36",
+								)}
+								{invisibleCharCount}
+								{tI18n(
+									"AgentsPage.components.AgentChatInput.invisible_unicode_character_87628d4e",
+								)}
+								{invisibleCharCount !== 1
+									? tI18n("AgentsPage.components.AgentChatInput.s_043a7187")
+									: ""}
+								{tI18n(
+									"AgentsPage.components.AgentChatInput.that_could_hide_content_review_carefully_before__568b55d8",
+								)}
 							</AlertDescription>
 						</Alert>
 					</div>
@@ -1231,7 +1298,9 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 										!showAgentSetupNotice &&
 										!canUseWorkspacePicker
 									}
-									aria-label="More options"
+									aria-label={tI18n(
+										"AgentsPage.components.AgentChatInput.more_options_bc79cdff",
+									)}
 								>
 									<PlusIcon />
 								</Button>
@@ -1249,7 +1318,11 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 											className="flex h-8 w-full cursor-pointer items-center gap-1.5 border-none bg-transparent px-1 text-xs text-content-secondary shadow-none transition-colors hover:text-content-primary"
 										>
 											<ArrowLeftIcon className="size-3.5 shrink-0" />
-											<span>Back</span>
+											<span>
+												{tI18n(
+													"AgentsPage.components.AgentChatInput.back_76900f1b",
+												)}
+											</span>
 										</button>
 										<Separator className="my-1" />
 										<WorkspacePickerList
@@ -1275,7 +1348,9 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 												className="group flex h-8 w-full cursor-pointer items-center gap-1.5 border-none bg-transparent px-1 text-xs text-content-secondary shadow-none transition-colors hover:text-content-primary"
 											>
 												<PaperclipIcon className="size-3.5 shrink-0" />
-												Attach file
+												{tI18n(
+													"AgentsPage.components.AgentChatInput.attach_file_87fbe4fb",
+												)}
 											</button>
 										)}
 										{onPlanModeToggle && (
@@ -1288,7 +1363,11 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 												className="group flex h-8 w-full cursor-pointer items-center gap-1.5 border-none bg-transparent px-1 text-xs text-content-secondary shadow-none transition-colors hover:text-content-primary disabled:cursor-not-allowed disabled:opacity-50"
 											>
 												<PencilIcon className="size-3.5 shrink-0" />
-												<span>Plan first</span>
+												<span>
+													{tI18n(
+														"AgentsPage.components.AgentChatInput.plan_first_810bcb5b",
+													)}
+												</span>
 												{planModeEnabled && (
 													<CheckIcon className="ml-auto size-icon-sm shrink-0" />
 												)}
@@ -1304,7 +1383,11 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 													className="group flex h-8 w-full cursor-pointer items-center gap-1.5 border-none bg-transparent px-1 text-xs text-content-secondary shadow-none transition-colors hover:text-content-primary disabled:cursor-not-allowed disabled:opacity-50"
 												>
 													<MonitorIcon className="size-3.5 shrink-0" />
-													<span>Attach workspace</span>
+													<span>
+														{tI18n(
+															"AgentsPage.components.AgentChatInput.attach_workspace_84e20f9e",
+														)}
+													</span>
 													<ChevronRightIcon className="ml-auto size-icon-sm" />
 												</button>
 											) : (
@@ -1319,7 +1402,11 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 															className="group flex h-8 w-full cursor-pointer items-center gap-1.5 border-none bg-transparent px-1 text-xs text-content-secondary shadow-none transition-colors hover:text-content-primary disabled:cursor-not-allowed disabled:opacity-50"
 														>
 															<MonitorIcon className="size-3.5 shrink-0" />
-															<span>Attach workspace</span>
+															<span>
+																{tI18n(
+																	"AgentsPage.components.AgentChatInput.attach_workspace_84e20f9e",
+																)}
+															</span>
 															<ChevronRightIcon
 																className={cn(
 																	"ml-auto size-icon-sm transition-transform",
@@ -1390,7 +1477,9 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 																	{isConnecting ? (
 																		<Spinner loading className="h-2.5 w-2.5" />
 																	) : null}
-																	Auth
+																	{tI18n(
+																		"AgentsPage.components.AgentChatInput.auth_8eb3ea9b",
+																	)}
 																</Button>
 															) : (
 																<>
@@ -1404,7 +1493,12 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 																				setMcpDisconnectTarget(server);
 																			}}
 																			disabled={isDisabled}
-																			aria-label={`Disconnect ${server.display_name}`}
+																			aria-label={tI18n(
+																				"AgentsPage.components.AgentChatInput.disconnect_value0_d416c090",
+																				{
+																					value0: server.display_name,
+																				},
+																			)}
 																		>
 																			<UnlinkIcon />
 																		</Button>
@@ -1416,7 +1510,19 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 																			handleMcpToggle(server.id, checked)
 																		}
 																		disabled={isDisabled || isForceOn}
-																		aria-label={`${isSelected ? "Disable" : "Enable"} ${server.display_name}`}
+																		aria-label={tI18n(
+																			"AgentsPage.components.AgentChatInput.value0_value1_ecbddc5e",
+																			{
+																				value0: isSelected
+																					? tI18n(
+																							"AgentsPage.components.AgentChatInput.disable_b7e3e4aa",
+																						)
+																					: tI18n(
+																							"AgentsPage.components.AgentChatInput.enable_5342e09f",
+																						),
+																				value1: server.display_name,
+																			},
+																		)}
 																	/>
 																</>
 															)}
@@ -1452,11 +1558,15 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 								className="hidden shrink-0 items-center gap-1 rounded-full bg-surface-secondary px-2 py-0.5 text-xs font-medium text-content-secondary sm:inline-flex"
 							>
 								<PencilIcon className="size-3" />
-								Planning
+								{tI18n(
+									"AgentsPage.components.AgentChatInput.planning_21cc3050",
+								)}
 								{onPlanModeToggle && (
 									<BadgeDismissButton
 										onClick={handleDisablePlanMode}
-										ariaLabel="Disable plan mode"
+										ariaLabel={tI18n(
+											"AgentsPage.components.AgentChatInput.disable_plan_mode_86371e6e",
+										)}
 										isDisabled={isDisabled}
 									/>
 								)}
@@ -1522,7 +1632,18 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 											"inline-flex shrink-0 cursor-pointer items-center gap-1 rounded-full border-0 bg-surface-secondary px-2 py-0.5 text-xs font-medium text-content-secondary transition-colors hover:bg-surface-tertiary hover:text-content-primary",
 											overflowCount === 0 && "invisible",
 										)}
-										aria-label={`${overflowCount} more item${overflowCount !== 1 ? "s" : ""}`}
+										aria-label={tI18n(
+											"AgentsPage.components.AgentChatInput.value0_more_item_value1_3b9fa9b5",
+											{
+												value0: overflowCount,
+												value1:
+													overflowCount !== 1
+														? tI18n(
+																"AgentsPage.components.AgentChatInput.s_043a7187",
+															)
+														: "",
+											},
+										)}
 										aria-hidden={overflowCount === 0}
 									>
 										+{overflowCount}
@@ -1613,7 +1734,13 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 									}
 									disabled={isDisabled}
 									aria-label={
-										speech.isRecording ? "Cancel voice input" : "Voice input"
+										speech.isRecording
+											? tI18n(
+													"AgentsPage.components.AgentChatInput.cancel_voice_input_a25b089a",
+												)
+											: tI18n(
+													"AgentsPage.components.AgentChatInput.voice_input_8748f239",
+												)
 									}
 								>
 									{speech.isRecording ? (
@@ -1628,8 +1755,12 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 										role="alert"
 									>
 										{speech.error === "not-allowed"
-											? "Mic access denied"
-											: "Voice input failed"}
+											? tI18n(
+													"AgentsPage.components.AgentChatInput.mic_access_denied_1d1ebd15",
+												)
+											: tI18n(
+													"AgentsPage.components.AgentChatInput.voice_input_failed_df4db1d5",
+												)}
 									</span>
 								)}
 							</>
@@ -1662,11 +1793,21 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 										disabled={isInterruptPending}
 									>
 										<SquareIcon className="fill-current" />
-										<span className="sr-only">Stop</span>
+										<span className="sr-only">
+											{tI18n(
+												"AgentsPage.components.AgentChatInput.stop_cae7d57b",
+											)}
+										</span>
 									</Button>
 								</TooltipTrigger>
 								<TooltipContent side="top">
-									{isInterruptPending ? "Interrupting…" : "Stop"}
+									{isInterruptPending
+										? tI18n(
+												"AgentsPage.components.AgentChatInput.interrupting_3b4ddf08",
+											)
+										: tI18n(
+												"AgentsPage.components.AgentChatInput.stop_cae7d57b",
+											)}
 								</TooltipContent>
 							</Tooltip>
 						)}
@@ -1675,7 +1816,9 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 							// pending interruption is also announced through a live
 							// region and a tooltip.
 							<span role="status" className="sr-only">
-								Interrupting. Waiting for the agent to stop.
+								{tI18n(
+									"AgentsPage.components.AgentChatInput.interrupting_waiting_for_the_agent_to_stop_04c0a5df",
+								)}
 							</span>
 						)}
 						{!isStreaming && (
@@ -1700,15 +1843,25 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 										)}
 										<span className="sr-only">
 											{speech.isRecording
-												? "Accept voice input"
+												? tI18n(
+														"AgentsPage.components.AgentChatInput.accept_voice_input_68802a55",
+													)
 												: sendButtonLabel}
 										</span>
 									</Button>
 								</TooltipTrigger>
 								<TooltipContent side="top">
 									{speech.isRecording
-										? "Accept voice input"
-										: `${sendButtonLabel}: ${sendShortcutLabel}`}
+										? tI18n(
+												"AgentsPage.components.AgentChatInput.accept_voice_input_68802a55",
+											)
+										: tI18n(
+												"AgentsPage.components.AgentChatInput.value0_value1_e8fa6bec",
+												{
+													value0: sendButtonLabel,
+													value1: sendShortcutLabel,
+												},
+											)}
 								</TooltipContent>
 							</Tooltip>
 						)}
@@ -1741,10 +1894,21 @@ export const AgentChatInput: FC<AgentChatInputProps> = ({
 			)}
 			<ConfirmDialog
 				open={mcpDisconnectTarget !== null}
-				title={`Disconnect ${mcpDisconnectTarget?.display_name ?? "MCP server"}?`}
-				description="This removes your credentials for this MCP server from Coder. You can authenticate again later."
+				title={tI18n(
+					"AgentsPage.components.AgentChatInput.disconnect_value0_3253879e",
+					{
+						value0:
+							mcpDisconnectTarget?.display_name ??
+							tI18n("AgentsPage.components.AgentChatInput.mcp_server_d938c816"),
+					},
+				)}
+				description={tI18n(
+					"AgentsPage.components.AgentChatInput.this_removes_your_credentials_for_this_mcp_serve_475967d7",
+				)}
 				type="delete"
-				confirmText="Disconnect"
+				confirmText={tI18n(
+					"AgentsPage.components.AgentChatInput.disconnect_acfc5be7",
+				)}
 				confirmLoading={mcpDisconnectMutation.isPending}
 				onConfirm={handleMcpDisconnectConfirm}
 				onClose={() => setMcpDisconnectTarget(null)}
@@ -1778,11 +1942,22 @@ const WorkspacePickerList: FC<WorkspacePickerListProps> = ({
 	chatOrganizationId,
 	onSelect,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<Command loop>
-			<CommandInput placeholder="Search workspaces..." className="text-xs" />
+			<CommandInput
+				placeholder={tI18n(
+					"AgentsPage.components.AgentChatInput.search_workspaces_5c192a3e",
+				)}
+				className="text-xs"
+			/>
 			<CommandList>
-				<CommandEmpty className="text-xs">No workspaces found</CommandEmpty>
+				<CommandEmpty className="text-xs">
+					{tI18n(
+						"AgentsPage.components.AgentChatInput.no_workspaces_found_1507d637",
+					)}
+				</CommandEmpty>
 				<CommandGroup>
 					{workspaceOptions?.map((workspace) => {
 						const isCrossOrg =
@@ -1821,7 +1996,9 @@ const WorkspacePickerList: FC<WorkspacePickerListProps> = ({
 										<div>{item}</div>
 									</TooltipTrigger>
 									<TooltipContent side="top">
-										Chat and workspace must be in the same organization
+										{tI18n(
+											"AgentsPage.components.AgentChatInput.chat_and_workspace_must_be_in_the_same_organizat_fe057b4d",
+										)}
 									</TooltipContent>
 								</Tooltip>
 							);

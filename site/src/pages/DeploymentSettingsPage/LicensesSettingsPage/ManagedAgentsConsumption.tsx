@@ -2,6 +2,7 @@ import { cn } from "cn";
 import dayjs from "dayjs";
 import { ChevronRightIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { Feature } from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
 import { Button } from "#/components/Button/Button";
@@ -11,6 +12,7 @@ import {
 	CollapsibleTrigger,
 } from "#/components/Collapsible/Collapsible";
 import { Link } from "#/components/Link/Link";
+import { currentIntlLocale } from "#/i18n/locale";
 import { docs } from "#/utils/docs";
 
 interface ManagedAgentsConsumptionProps {
@@ -20,17 +22,31 @@ interface ManagedAgentsConsumptionProps {
 export const ManagedAgentsConsumption: FC<ManagedAgentsConsumptionProps> = ({
 	managedAgentFeature,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	// If no feature is provided or it's disabled, show disabled state
 	if (!managedAgentFeature?.enabled) {
 		return (
 			<div className="min-h-60 flex items-center justify-center rounded-lg border border-solid p-12">
 				<div className="flex flex-col gap-4 items-center justify-center">
 					<div className="flex flex-col gap-2 items-center justify-center">
-						<span className="text-base">Agent Workspace Builds Disabled</span>
+						<span className="text-base">
+							{tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.agent_workspace_builds_disabled_60182a1c",
+							)}
+						</span>
 						<span className="text-content-secondary text-center max-w-[464px] mt-2">
-							Agent Workspace Builds are not included in your current license.
-							Contact <Link href="mailto:sales@coder.com">sales</Link> to
-							upgrade your license and unlock this feature.
+							{tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.agent_workspace_builds_are_not_included_in_your__66cd4378",
+							)}
+							<Link href="mailto:sales@coder.com">
+								{tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.sales_e04eb290",
+								)}
+							</Link>
+							{tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.to_upgrade_your_license_and_unlock_this_feature_c4ce1cc5",
+							)}
 						</span>
 					</div>
 				</div>
@@ -44,21 +60,45 @@ export const ManagedAgentsConsumption: FC<ManagedAgentsConsumptionProps> = ({
 	const endDate = managedAgentFeature.usage_period?.end;
 
 	if (usage === undefined || usage < 0) {
-		return <ErrorAlert error="Invalid usage data" />;
+		return (
+			<ErrorAlert
+				error={tI18n(
+					"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.invalid_usage_data_d7e597fe",
+				)}
+			/>
+		);
 	}
 
 	if (included === undefined || included < 0) {
-		return <ErrorAlert error="Invalid license usage limits" />;
+		return (
+			<ErrorAlert
+				error={tI18n(
+					"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.invalid_license_usage_limits_dcc0f71b",
+				)}
+			/>
+		);
 	}
 
 	if (!startDate || !endDate) {
-		return <ErrorAlert error="Missing license usage period" />;
+		return (
+			<ErrorAlert
+				error={tI18n(
+					"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.missing_license_usage_period_2b89bf84",
+				)}
+			/>
+		);
 	}
 
 	const start = dayjs(startDate);
 	const end = dayjs(endDate);
 	if (!start.isValid() || !end.isValid() || !start.isBefore(end)) {
-		return <ErrorAlert error="Invalid license usage period" />;
+		return (
+			<ErrorAlert
+				error={tI18n(
+					"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.invalid_license_usage_period_d0597685",
+				)}
+			/>
+		);
 	}
 
 	const usagePercentage = Math.min((usage / included) * 100, 100);
@@ -68,7 +108,11 @@ export const ManagedAgentsConsumption: FC<ManagedAgentsConsumptionProps> = ({
 			<div className="p-4">
 				<Collapsible>
 					<header className="flex flex-col gap-2 items-start">
-						<h3 className="text-md m-0 font-medium">Agent Workspace Builds</h3>
+						<h3 className="text-md m-0 font-medium">
+							{tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.agent_workspace_builds_1c7057cf",
+							)}
+						</h3>
 
 						<CollapsibleTrigger asChild>
 							<Button
@@ -79,7 +123,9 @@ export const ManagedAgentsConsumption: FC<ManagedAgentsConsumptionProps> = ({
                 `}
 							>
 								<ChevronRightIcon />
-								Learn more
+								{tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.learn_more_1445799c",
+								)}
 							</Button>
 						</CollapsibleTrigger>
 					</header>
@@ -92,10 +138,9 @@ export const ManagedAgentsConsumption: FC<ManagedAgentsConsumptionProps> = ({
             `}
 					>
 						<p>
-							Agent Workspace Builds are measured when you start an ephemeral
-							workspace, purely for running an agentic workload. Workspaces used
-							by developers for day-to-day development do not count, even if AI
-							tooling is involved.
+							{tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.agent_workspace_builds_are_measured_when_you_sta_7955747b",
+							)}
 						</p>
 						<p>
 							<Link
@@ -103,40 +148,52 @@ export const ManagedAgentsConsumption: FC<ManagedAgentsConsumptionProps> = ({
 								target="_blank"
 								rel="noreferrer"
 							>
-								Coder Agents
+								{tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.coder_agents_19b8e154",
+								)}
 							</Link>{" "}
-							workspaces count towards your Agent Workspace Builds limit.
-							Additional protocols and APIs may be supported as standards
-							emerge.
+							{tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.workspaces_count_towards_your_agent_workspace_bu_cdd9d6a8",
+							)}
 							<Link
 								href={docs("/ai-coder/ai-governance")}
 								target="_blank"
 								rel="noreferrer"
 							>
-								View docs
+								{tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.view_docs_61479fda",
+								)}
 							</Link>
 						</p>
 						<ul>
 							<li className="flex items-center gap-2">
 								<div className="rounded-[2px] bg-highlight-green size-3 inline-block">
-									<span className="sr-only">Legend for started workspaces</span>
+									<span className="sr-only">
+										{tI18n(
+											"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.legend_for_started_workspaces_b171f4f6",
+										)}
+									</span>
 								</div>
-								Amount of started workspaces with an AI agent.
+								{tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.amount_of_started_workspaces_with_an_ai_agent_8f34a51f",
+								)}
 							</li>
 							<li className="flex items-center gap-2">
 								<div className="rounded-[2px] bg-highlight-orange size-3 inline-block">
 									<span className="sr-only">
-										Legend for usage exceeding included allowance
+										{tI18n(
+											"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.legend_for_usage_exceeding_included_allowance_e4dc9ac9",
+										)}
 									</span>
 								</div>
-								Usage has exceeded included allowance from your current license
-								plan.
+								{tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.usage_has_exceeded_included_allowance_from_your__2ba08578",
+								)}
 							</li>
 						</ul>
 					</CollapsibleContent>
 				</Collapsible>
 			</div>
-
 			<div className="p-6 border-0 border-t border-solid">
 				<div className="flex justify-between text-sm text-content-secondary mb-4">
 					<span>
@@ -159,25 +216,49 @@ export const ManagedAgentsConsumption: FC<ManagedAgentsConsumptionProps> = ({
 
 				<div className="relative hidden lg:flex justify-between mt-4 text-sm">
 					<div className="flex flex-col items-start">
-						<span className="text-content-secondary">Actual:</span>
-						<span className="font-medium">{usage.toLocaleString()}</span>
+						<span className="text-content-secondary">
+							{tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.actual_9c723441",
+							)}
+						</span>
+						<span className="font-medium">
+							{usage.toLocaleString(currentIntlLocale())}
+						</span>
 					</div>
 
 					<div className="flex flex-col items-end">
-						<span className="text-content-secondary">Included:</span>
-						<span className="font-medium">{included.toLocaleString()}</span>
+						<span className="text-content-secondary">
+							{tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.included_194beab0",
+							)}
+						</span>
+						<span className="font-medium">
+							{included.toLocaleString(currentIntlLocale())}
+						</span>
 					</div>
 				</div>
 
 				<div className="flex lg:hidden flex-col gap-3 mt-4 text-sm">
 					<div className="flex justify-between">
 						<div className="flex flex-col items-start">
-							<span className="text-content-secondary">Actual:</span>
-							<span className="font-medium">{usage.toLocaleString()}</span>
+							<span className="text-content-secondary">
+								{tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.actual_9c723441",
+								)}
+							</span>
+							<span className="font-medium">
+								{usage.toLocaleString(currentIntlLocale())}
+							</span>
 						</div>
 						<div className="flex flex-col items-end">
-							<span className="text-content-secondary">Included:</span>
-							<span className="font-medium">{included.toLocaleString()}</span>
+							<span className="text-content-secondary">
+								{tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.ManagedAgentsConsumption.included_194beab0",
+								)}
+							</span>
+							<span className="font-medium">
+								{included.toLocaleString(currentIntlLocale())}
+							</span>
 						</div>
 					</div>
 				</div>

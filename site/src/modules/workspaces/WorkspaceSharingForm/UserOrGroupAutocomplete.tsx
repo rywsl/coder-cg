@@ -1,5 +1,6 @@
 import { CheckIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { keepPreviousData, useQuery } from "react-query";
 import { groupsByOrganization } from "#/api/queries/groups";
 import { organizationMembers } from "#/api/queries/organizations";
@@ -39,6 +40,8 @@ export const UserOrGroupAutocomplete: FC<UserOrGroupAutocompleteProps> = ({
 	exclude,
 	className = "w-80",
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [inputValue, setInputValue] = useState("");
 	const [open, setOpen] = useState(false);
 
@@ -132,8 +135,12 @@ export const UserOrGroupAutocomplete: FC<UserOrGroupAutocompleteProps> = ({
 			inputValue={inputValue}
 			onInputChange={setInputValue}
 			loading={membersQuery.isFetching || groupsQuery.isFetching}
-			placeholder="Search for user or group"
-			noOptionsText="No users or groups found"
+			placeholder={tI18n(
+				"workspaces.WorkspaceSharingForm.UserOrGroupAutocomplete.search_for_user_or_group_0aa07b31",
+			)}
+			noOptionsText={tI18n(
+				"workspaces.WorkspaceSharingForm.UserOrGroupAutocomplete.no_users_or_groups_found_02da3b9f",
+			)}
 			className={className}
 			id="workspace-user-or-group-autocomplete"
 		/>

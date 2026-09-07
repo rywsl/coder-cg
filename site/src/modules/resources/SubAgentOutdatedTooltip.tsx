@@ -1,5 +1,6 @@
 import { RotateCcwIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	WorkspaceAgent,
 	WorkspaceAgentDevcontainer,
@@ -25,6 +26,8 @@ export const SubAgentOutdatedTooltip: FC<SubAgentOutdatedTooltipProps> = ({
 	agent,
 	onUpdate,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	if (!devcontainer.agent || devcontainer.agent.id !== agent.id) {
 		return null;
 	}
@@ -36,17 +39,21 @@ export const SubAgentOutdatedTooltip: FC<SubAgentOutdatedTooltipProps> = ({
 		<HelpPopover>
 			<HelpPopoverTrigger className="px-0 py-1 bg-transparent text-inherit border-none opacity-50 hover:opacity-100">
 				<span role="status" className="cursor-pointer">
-					Outdated
+					{tI18n("resources.SubAgentOutdatedTooltip.outdated_c759f42e")}
 				</span>
 			</HelpPopoverTrigger>
 			<HelpPopoverContent>
 				<div className="flex flex-col gap-2">
 					<div>
-						<HelpPopoverTitle>Dev Container Outdated</HelpPopoverTitle>
+						<HelpPopoverTitle>
+							{tI18n(
+								"resources.SubAgentOutdatedTooltip.dev_container_outdated_9b22108e",
+							)}
+						</HelpPopoverTitle>
 						<HelpPopoverText>
-							This Dev Container is outdated. This can happen if you modify your
-							devcontainer.json file after the Dev Container has been created.
-							To fix this, you can rebuild the Dev Container.
+							{tI18n(
+								"resources.SubAgentOutdatedTooltip.this_dev_container_is_outdated_this_can_happen_i_982e2de3",
+							)}
 						</HelpPopoverText>
 					</div>
 
@@ -54,9 +61,13 @@ export const SubAgentOutdatedTooltip: FC<SubAgentOutdatedTooltipProps> = ({
 						<HelpPopoverAction
 							icon={RotateCcwIcon}
 							onClick={onUpdate}
-							ariaLabel="Rebuild Dev Container"
+							ariaLabel={tI18n(
+								"resources.SubAgentOutdatedTooltip.rebuild_dev_container_1d25dd70",
+							)}
 						>
-							Rebuild Dev Container
+							{tI18n(
+								"resources.SubAgentOutdatedTooltip.rebuild_dev_container_1d25dd70",
+							)}
 						</HelpPopoverAction>
 					</HelpPopoverLinksGroup>
 				</div>

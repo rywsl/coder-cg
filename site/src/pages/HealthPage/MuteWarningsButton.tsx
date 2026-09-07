@@ -1,4 +1,5 @@
 import { BellIcon, BellOffIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import { healthSettings, updateHealthSettings } from "#/api/queries/debug";
@@ -8,6 +9,8 @@ import { Skeleton } from "#/components/Skeleton/Skeleton";
 import { Spinner } from "#/components/Spinner/Spinner";
 
 export const MuteWarningsButton = (props: { healthcheck: HealthSection }) => {
+	const { t: tI18n } = useTranslation("pages");
+
 	const queryClient = useQueryClient();
 	const healthSettingsQuery = useQuery(healthSettings());
 	// Separate mutation instances so unmuting isn't stuck pending while
@@ -36,13 +39,17 @@ export const MuteWarningsButton = (props: { healthcheck: HealthSection }) => {
 					await unmuteMutation.mutateAsync({
 						dismissed_healthchecks: updatedSettings,
 					});
-					toast.success("Warnings unmuted successfully.");
+					toast.success(
+						tI18n(
+							"HealthPage.MuteWarningsButton.warnings_unmuted_successfully_a13c21cc",
+						),
+					);
 				}}
 			>
 				<Spinner loading={unmuteMutation.isPending}>
 					<BellOffIcon />
 				</Spinner>
-				Unmute warnings
+				{tI18n("HealthPage.MuteWarningsButton.unmute_warnings_c5a83100")}
 			</Button>
 		);
 	}
@@ -56,13 +63,17 @@ export const MuteWarningsButton = (props: { healthcheck: HealthSection }) => {
 				await muteMutation.mutateAsync({
 					dismissed_healthchecks: updatedSettings,
 				});
-				toast.success("Warnings muted successfully.");
+				toast.success(
+					tI18n(
+						"HealthPage.MuteWarningsButton.warnings_muted_successfully_b1a2e081",
+					),
+				);
 			}}
 		>
 			<Spinner loading={muteMutation.isPending}>
 				<BellIcon />
 			</Spinner>
-			Mute warnings
+			{tI18n("HealthPage.MuteWarningsButton.mute_warnings_6e566786")}
 		</Button>
 	);
 };

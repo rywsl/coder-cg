@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import type { FC } from "react";
 import type { Workspace, WorkspaceAgent } from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 import {
 	type DisplayWorkspaceStatusType,
 	getDisplayWorkspaceStatus,
@@ -58,7 +59,17 @@ export function getWorkspaceStatus(
 
 	const effectiveType = workspace.health.healthy ? type : "warning";
 	const statusLabel = workspace.health.healthy
-		? `Workspace ${text.toLowerCase()}`
-		: `Workspace ${text.toLowerCase()} (unhealthy)`;
+		? i18n.t(
+				"agents:AgentsPage.components.StatusIcon.workspace_value0_1a86d83e",
+				{
+					value0: text.toLowerCase(),
+				},
+			)
+		: i18n.t(
+				"agents:AgentsPage.components.StatusIcon.workspace_value0_unhealthy_ddea792f",
+				{
+					value0: text.toLowerCase(),
+				},
+			);
 	return { effectiveType, statusLabel };
 }

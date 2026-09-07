@@ -7,6 +7,7 @@ import {
 	useMemo,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import { getErrorDetail } from "#/api/errors";
@@ -53,7 +54,7 @@ import {
 import { Label } from "#/components/Label/Label";
 import { Separator } from "#/components/Separator/Separator";
 import { Spinner } from "#/components/Spinner/Spinner";
-import { aiBudgetRangeError, maxAIBudgetDollars } from "#/modules/groups";
+import { getAIBudgetRangeError, maxAIBudgetDollars } from "#/modules/groups";
 import {
 	dollarsToMicros,
 	formatBudgetUSD,
@@ -80,6 +81,8 @@ export const UserAIBudgetOverrideDialog: FC<
 	effectiveGroupId,
 	canUpdate,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const queryClient = useQueryClient();
 	const budgetOverrideQuery = useQuery({
 		...userAIBudgetOverride(user.id),
@@ -124,7 +127,9 @@ export const UserAIBudgetOverrideDialog: FC<
 		body = (
 			<div className="flex items-center gap-2 text-sm text-content-secondary">
 				<Spinner loading />
-				Loading AI budget...
+				{tI18n(
+					"GroupsPage.UserAIBudgetOverrideDialog.loading_ai_budget_cb897adb",
+				)}
 			</div>
 		);
 	} else if (canUpdate) {
@@ -156,7 +161,7 @@ export const UserAIBudgetOverrideDialog: FC<
 			<DialogContent className="max-w-md gap-5 border-border-default bg-surface-primary p-8 text-content-primary">
 				<div className="flex items-start justify-between gap-4">
 					<DialogTitle className="font-semibold text-content-primary">
-						AI Budget
+						{tI18n("GroupsPage.UserAIBudgetOverrideDialog.ai_budget_80023e3e")}
 					</DialogTitle>
 					<AvatarData
 						avatar={
@@ -167,7 +172,13 @@ export const UserAIBudgetOverrideDialog: FC<
 							/>
 						}
 						title={user.username}
-						subtitle={user.is_service_account ? "Service Account" : user.email}
+						subtitle={
+							user.is_service_account
+								? tI18n(
+										"GroupsPage.UserAIBudgetOverrideDialog.service_account_562c51b8",
+									)
+								: user.email
+						}
 					/>
 				</div>
 
@@ -193,14 +204,23 @@ const BudgetSummary: FC<BudgetProps> = ({
 	groupBudget,
 	userGroups,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	if (!override) {
 		return (
 			<>
-				{user.username}'s monthly limit is{" "}
+				{user.username}
+				{tI18n(
+					"GroupsPage.UserAIBudgetOverrideDialog.s_monthly_limit_is_1cbf5cb2",
+				)}{" "}
 				<Bold>
-					{groupBudget ? formatUSD(groupBudget.spend_limit_micros) : "uncapped"}
+					{groupBudget
+						? formatUSD(groupBudget.spend_limit_micros)
+						: tI18n("GroupsPage.UserAIBudgetOverrideDialog.uncapped_57afc575")}
 				</Bold>
-				, charged to <Bold>{groupDisplayName(currentGroup)}</Bold> group.
+				{tI18n("GroupsPage.UserAIBudgetOverrideDialog.charged_to_de170e1d")}
+				<Bold>{groupDisplayName(currentGroup)}</Bold>
+				{tI18n("GroupsPage.UserAIBudgetOverrideDialog.group_e694e2ce")}
 			</>
 		);
 	}
@@ -208,15 +228,24 @@ const BudgetSummary: FC<BudgetProps> = ({
 	const overrideGroup = findGroup(currentGroup, userGroups, override.group_id);
 	return (
 		<>
-			{user.username}'s <Bold>custom</Bold> monthly limit is{" "}
-			<Bold>{formatUSD(override.spend_limit_micros)}</Bold>, charged to{" "}
+			{user.username}
+			{tI18n("GroupsPage.UserAIBudgetOverrideDialog.s_b8071bd7")}
+			<Bold>
+				{tI18n("GroupsPage.UserAIBudgetOverrideDialog.custom_6cdfd271")}
+			</Bold>
+			{tI18n("GroupsPage.UserAIBudgetOverrideDialog.monthly_limit_is_44c5f226")}{" "}
+			<Bold>{formatUSD(override.spend_limit_micros)}</Bold>
+			{tI18n("GroupsPage.UserAIBudgetOverrideDialog.charged_to_70b3653c")}{" "}
 			{overrideGroup ? (
 				<>
-					<Bold>{groupDisplayName(overrideGroup)}</Bold> group.
+					<Bold>{groupDisplayName(overrideGroup)}</Bold>
+					{tI18n("GroupsPage.UserAIBudgetOverrideDialog.group_e694e2ce")}
 				</>
 			) : (
 				// The group is unresolvable here, so it can't be named.
-				<Bold>their group.</Bold>
+				<Bold>
+					{tI18n("GroupsPage.UserAIBudgetOverrideDialog.their_group_68bad251")}
+				</Bold>
 			)}
 		</>
 	);
@@ -227,12 +256,18 @@ const BudgetSummary: FC<BudgetProps> = ({
  * updating both the user and the group it charges, so group admins can read a
  * member's budget without being able to change it.
  */
-const ReadOnlyBudget: FC<BudgetProps> = (props) => (
-	<p className="m-0 text-sm text-content-secondary">
-		<BudgetSummary {...props} /> To update this limit, contact a Coder
-		administrator.
-	</p>
-);
+const ReadOnlyBudget: FC<BudgetProps> = (props) => {
+	const { t: tI18n } = useTranslation("administration");
+
+	return (
+		<p className="m-0 text-sm text-content-secondary">
+			<BudgetSummary {...props} />
+			{tI18n(
+				"GroupsPage.UserAIBudgetOverrideDialog.to_update_this_limit_contact_a_coder_administrat_695582f1",
+			)}
+		</p>
+	);
+};
 
 interface OverrideFormProps extends BudgetProps {
 	// Group marked "(default)" in the picker; null marks none.
@@ -256,6 +291,8 @@ const OverrideForm: FC<OverrideFormProps> = ({
 	onRemove,
 	onClose,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const budgetId = useId();
 	const groupId = useId();
 	const overrideId = useId();
@@ -318,10 +355,28 @@ const OverrideForm: FC<OverrideFormProps> = ({
 				});
 
 		toast.promise(mutation, {
-			loading: `${removing ? "Removing" : "Updating"} AI budget override for "${user.username}"...`,
-			success: `AI budget override for "${user.username}" ${removing ? "removed" : "updated"} successfully.`,
+			loading: tI18n(
+				"GroupsPage.UserAIBudgetOverrideDialog.value0_ai_budget_override_for_value1_e9059840",
+				{
+					value0: removing ? "Removing" : "Updating",
+					value1: user.username,
+				},
+			),
+			success: tI18n(
+				"GroupsPage.UserAIBudgetOverrideDialog.ai_budget_override_for_value0_value1_successfull_cf56c638",
+				{
+					value0: user.username,
+					value1: removing ? "removed" : "updated",
+				},
+			),
 			error: (error) => ({
-				message: `Failed to ${removing ? "remove" : "update"} AI budget override for "${user.username}".`,
+				message: tI18n(
+					"GroupsPage.UserAIBudgetOverrideDialog.failed_to_value0_ai_budget_override_for_value1_69ccb246",
+					{
+						value0: removing ? "remove" : "update",
+						value1: user.username,
+					},
+				),
 				description: getErrorDetail(error),
 			}),
 		});
@@ -344,9 +399,7 @@ const OverrideForm: FC<OverrideFormProps> = ({
 					userGroups={userGroups}
 				/>
 			</p>
-
 			<Separator />
-
 			<label
 				htmlFor={overrideId}
 				className="flex cursor-pointer items-start gap-3"
@@ -359,18 +412,25 @@ const OverrideForm: FC<OverrideFormProps> = ({
 				/>
 				<div className="flex flex-col gap-1">
 					<span className="text-sm font-medium text-content-primary">
-						Override group budget
+						{tI18n(
+							"GroupsPage.UserAIBudgetOverrideDialog.override_group_budget_dc12c8b6",
+						)}
 					</span>
 					<span className="text-sm text-content-secondary">
-						Set a personal limit for this member.
+						{tI18n(
+							"GroupsPage.UserAIBudgetOverrideDialog.set_a_personal_limit_for_this_member_5cee351c",
+						)}
 					</span>
 				</div>
 			</label>
-
 			{overrideEnabled && (
 				<>
 					<div className="flex flex-col gap-2">
-						<Label htmlFor={budgetId}>Custom monthly budget</Label>
+						<Label htmlFor={budgetId}>
+							{tI18n(
+								"GroupsPage.UserAIBudgetOverrideDialog.custom_monthly_budget_8fab023e",
+							)}
+						</Label>
 						<InputGroup
 							className={cn(budgetInvalid && "border-border-destructive")}
 						>
@@ -389,7 +449,7 @@ const OverrideForm: FC<OverrideFormProps> = ({
 								}
 							/>
 							<InputGroupAddon align="inline-end" className="pr-3">
-								USD
+								{tI18n("GroupsPage.UserAIBudgetOverrideDialog.usd_a26cdf3a")}
 							</InputGroupAddon>
 						</InputGroup>
 						{budgetInvalid && (
@@ -397,19 +457,25 @@ const OverrideForm: FC<OverrideFormProps> = ({
 								id={`${budgetId}-error`}
 								className="m-0 text-sm text-content-destructive"
 							>
-								{aiBudgetRangeError}
+								{getAIBudgetRangeError()}
 							</p>
 						)}
 					</div>
 
 					{budgetDisablesAI && (
 						<Alert severity="info">
-							A $0 limit disables AI access for this member.
+							{tI18n(
+								"GroupsPage.UserAIBudgetOverrideDialog.a_0_limit_disables_ai_access_for_this_member_b3b463e9",
+							)}
 						</Alert>
 					)}
 
 					<div className="flex flex-col gap-2">
-						<Label htmlFor={groupId}>Budget assigned to</Label>
+						<Label htmlFor={groupId}>
+							{tI18n(
+								"GroupsPage.UserAIBudgetOverrideDialog.budget_assigned_to_8b2b8674",
+							)}
+						</Label>
 						<Combobox
 							value={selectedGroupId}
 							onValueChange={(value) => {
@@ -434,14 +500,20 @@ const OverrideForm: FC<OverrideFormProps> = ({
 											),
 										}
 									}
-									placeholder="Select a group"
+									placeholder={tI18n(
+										"GroupsPage.UserAIBudgetOverrideDialog.select_a_group_e1bf7d9a",
+									)}
 								/>
 							</ComboboxTrigger>
 							<ComboboxContent
 								align="start"
 								className="w-(--radix-popover-trigger-width)"
 							>
-								<ComboboxInput placeholder="Search..." />
+								<ComboboxInput
+									placeholder={tI18n(
+										"GroupsPage.UserAIBudgetOverrideDialog.search_7f553822",
+									)}
+								/>
 								<ComboboxList>
 									{groupOptions.map((group) => (
 										<ComboboxItem
@@ -459,21 +531,24 @@ const OverrideForm: FC<OverrideFormProps> = ({
 										</ComboboxItem>
 									))}
 								</ComboboxList>
-								<ComboboxEmpty>No groups found</ComboboxEmpty>
+								<ComboboxEmpty>
+									{tI18n(
+										"GroupsPage.UserAIBudgetOverrideDialog.no_groups_found_463d5fb4",
+									)}
+								</ComboboxEmpty>
 							</ComboboxContent>
 						</Combobox>
 					</div>
 				</>
 			)}
-
 			{showFooter && (
 				<DialogFooter className="mt-4 flex-row justify-end gap-3">
 					<Button variant="outline" onClick={onClose} disabled={isSubmitting}>
-						Cancel
+						{tI18n("GroupsPage.UserAIBudgetOverrideDialog.cancel_19766ed6")}
 					</Button>
 					<Button type="submit" disabled={!canSubmit}>
 						<Spinner loading={isSubmitting} />
-						Update
+						{tI18n("GroupsPage.UserAIBudgetOverrideDialog.update_c1c1009d")}
 					</Button>
 				</DialogFooter>
 			)}

@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { WorkspaceResource } from "#/api/typesGenerated";
 import { Alert, AlertDescription, AlertTitle } from "#/components/Alert/Alert";
 import { Link } from "#/components/Link/Link";
@@ -14,6 +15,8 @@ interface WildcardHostnameWarningProps {
 export const WildcardHostnameWarning: FC<WildcardHostnameWarningProps> = ({
 	resources,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const { proxy } = useProxy();
 	const { permissions } = useAuthenticated();
 
@@ -46,26 +49,39 @@ export const WildcardHostnameWarning: FC<WildcardHostnameWarningProps> = ({
 					: undefined
 			}
 		>
-			<AlertTitle>Some workspace applications will not work</AlertTitle>
+			<AlertTitle>
+				{tI18n(
+					"resources.WildcardHostnameWarning.some_workspace_applications_will_not_work_764fe964",
+				)}
+			</AlertTitle>
 			<AlertDescription>
 				<div>
 					{hasResources
-						? "This template contains coder_app resources with"
-						: "One or more apps in this workspace have"}{" "}
+						? tI18n(
+								"resources.WildcardHostnameWarning.this_template_contains_coder_app_resources_with_5128716b",
+							)
+						: tI18n(
+								"resources.WildcardHostnameWarning.one_or_more_apps_in_this_workspace_have_fd711f21",
+							)}{" "}
 					<code className="py-px px-1 bg-surface-tertiary rounded-sm text-content-primary">
 						subdomain = true
 					</code>
 					{canEditDeploymentConfig ? (
 						<>
-							, but subdomain applications are not configured. Users won't be
-							able to access these applications until you configure the{" "}
+							{tI18n(
+								"resources.WildcardHostnameWarning.but_subdomain_applications_are_not_configured_us_3cc93122",
+							)}{" "}
 							<code className="py-px px-1 bg-surface-tertiary rounded-sm text-content-primary">
 								--wildcard-access-url
 							</code>{" "}
-							flag when starting the Coder server.
+							{tI18n(
+								"resources.WildcardHostnameWarning.flag_when_starting_the_coder_server_cb2c744c",
+							)}
 						</>
 					) : (
-						", which requires a Coder deployment with a Wildcard Access URL configured. Please contact your administrator."
+						tI18n(
+							"resources.WildcardHostnameWarning.which_requires_a_coder_deployment_with_a_wildcar_871d6cb6",
+						)
 					)}
 				</div>
 				<div className="pt-2">
@@ -74,7 +90,9 @@ export const WildcardHostnameWarning: FC<WildcardHostnameWarningProps> = ({
 						target="_blank"
 					>
 						<span className="font-semibold">
-							Learn more about wildcard access URL
+							{tI18n(
+								"resources.WildcardHostnameWarning.learn_more_about_wildcard_access_url_7114e668",
+							)}
 						</span>
 					</Link>
 				</div>

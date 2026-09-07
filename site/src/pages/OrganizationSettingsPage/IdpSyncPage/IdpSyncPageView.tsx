@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
 import type {
 	Group,
@@ -49,6 +50,8 @@ const IdpSyncPageView: FC<IdpSyncPageViewProps> = ({
 	onSubmitGroupSyncSettings,
 	onSubmitRoleSyncSettings,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const [_, setSearchParams] = useSearchParams();
 	const groupMappingCount = groupSyncSettings?.mapping
 		? Object.entries(groupSyncSettings.mapping).length
@@ -74,8 +77,16 @@ const IdpSyncPageView: FC<IdpSyncPageViewProps> = ({
 				}}
 			>
 				<TabsList>
-					<TabsTrigger value="groups">Group sync settings</TabsTrigger>
-					<TabsTrigger value="roles">Role sync settings</TabsTrigger>
+					<TabsTrigger value="groups">
+						{tI18n(
+							"OrganizationSettingsPage.IdpSyncPage.IdpSyncPageView.group_sync_settings_bd08e5c8",
+						)}
+					</TabsTrigger>
+					<TabsTrigger value="roles">
+						{tI18n(
+							"OrganizationSettingsPage.IdpSyncPage.IdpSyncPageView.role_sync_settings_4d06808c",
+						)}
+					</TabsTrigger>
 				</TabsList>
 				<TabsContent value="groups">
 					<IdpGroupSyncForm

@@ -1,5 +1,6 @@
 import { ExternalLinkIcon } from "lucide-react";
 import { type FC, type ReactNode, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import type { UseQueryResult } from "react-query";
 import { Link as RouterLink, useNavigate } from "react-router";
 import type { Template } from "#/api/typesGenerated";
@@ -32,6 +33,8 @@ export const WorkspacesButton: FC<WorkspacesButtonProps> = ({
 	templatesFetchStatus,
 	templates,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const navigate = useNavigate();
 	const getLink = useLinks();
 
@@ -68,8 +71,12 @@ export const WorkspacesButton: FC<WorkspacesButtonProps> = ({
 				className="w-[320px] max-w-[320px] overflow-hidden"
 			>
 				<ComboboxInput
-					placeholder="Type/select a workspace template"
-					aria-label="Template select for workspace"
+					placeholder={tI18n(
+						"WorkspacesPage.WorkspacesButton.type_select_a_workspace_template_b982e548",
+					)}
+					aria-label={tI18n(
+						"WorkspacesPage.WorkspacesButton.template_select_for_workspace_72d55597",
+					)}
 				/>
 				<ComboboxList
 					// Cap the list to the popover's available height minus the search
@@ -100,7 +107,9 @@ export const WorkspacesButton: FC<WorkspacesButtonProps> = ({
 								/>
 								<div className="flex min-w-0 flex-1 flex-col overflow-hidden leading-[140%]">
 									<span className="truncate text-content-primary">
-										{template.display_name || template.name || "[Unnamed]"}
+										{template.display_name ||
+											template.name ||
+											tI18n("WorkspacesPage.WorkspacesButton.unnamed_1c562bcd")}
 									</span>
 									<span className="truncate text-xs font-normal text-content-secondary">
 										{activeDeveloperLabel(template.active_user_count)}
@@ -113,13 +122,23 @@ export const WorkspacesButton: FC<WorkspacesButtonProps> = ({
 				{templatesFetchStatus !== "pending" &&
 					(templates?.length === 0 ? (
 						<ComboboxEmpty>
-							No templates yet.{" "}
+							{tI18n(
+								"WorkspacesPage.WorkspacesButton.no_templates_yet_faeba14b",
+							)}{" "}
 							<Link asChild showExternalIcon={false}>
-								<RouterLink to="/templates">Create one now.</RouterLink>
+								<RouterLink to="/templates">
+									{tI18n(
+										"WorkspacesPage.WorkspacesButton.create_one_now_f9fed17b",
+									)}
+								</RouterLink>
 							</Link>
 						</ComboboxEmpty>
 					) : (
-						<ComboboxEmpty>No templates found</ComboboxEmpty>
+						<ComboboxEmpty>
+							{tI18n(
+								"WorkspacesPage.WorkspacesButton.no_templates_found_186e4883",
+							)}
+						</ComboboxEmpty>
 					))}
 				<div className="shrink-0 border-0 border-t border-solid border-border py-1">
 					<RouterLink
@@ -127,7 +146,11 @@ export const WorkspacesButton: FC<WorkspacesButtonProps> = ({
 						className="flex items-center gap-3 rounded-sm px-4 py-2 text-sm text-content-link no-underline outline-hidden hover:bg-surface-secondary hover:no-underline focus:bg-surface-secondary"
 					>
 						<ExternalLinkIcon className="size-icon-xs" />
-						<span>See all templates</span>
+						<span>
+							{tI18n(
+								"WorkspacesPage.WorkspacesButton.see_all_templates_b852c331",
+							)}
+						</span>
 					</RouterLink>
 				</div>
 			</ComboboxContent>

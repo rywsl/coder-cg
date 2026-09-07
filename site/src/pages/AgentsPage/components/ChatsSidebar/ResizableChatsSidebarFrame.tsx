@@ -8,6 +8,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	clampLeftSidebarWidth,
 	getLeftSidebarMaxWidth,
@@ -26,6 +27,8 @@ export const ResizableChatsSidebarFrame = ({
 	children,
 	className,
 }: ResizableChatsSidebarFrameProps) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [width, setWidth] = useState(loadPersistedLeftSidebarWidth);
 	const maxWidth = getLeftSidebarMaxWidth();
 	const isDragging = useRef(false);
@@ -119,7 +122,9 @@ export const ResizableChatsSidebarFrame = ({
 			<div
 				role="separator"
 				aria-orientation="vertical"
-				aria-label="Resize agents sidebar"
+				aria-label={tI18n(
+					"AgentsPage.components.ChatsSidebar.ResizableChatsSidebarFrame.resize_agents_sidebar_96d5947d",
+				)}
 				aria-valuemin={LEFT_SIDEBAR_MIN_WIDTH}
 				aria-valuemax={maxWidth}
 				aria-valuenow={width}

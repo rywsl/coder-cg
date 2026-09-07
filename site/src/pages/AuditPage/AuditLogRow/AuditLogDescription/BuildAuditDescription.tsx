@@ -1,4 +1,5 @@
 import { type FC, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import type { AuditLog } from "#/api/typesGenerated";
 import { Link } from "#/components/Link/Link";
@@ -11,6 +12,8 @@ interface BuildAuditDescriptionProps {
 export const BuildAuditDescription: FC<BuildAuditDescriptionProps> = ({
 	auditLog,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const workspaceName = auditLog.additional_fields?.workspace_name?.trim();
 	// workspaces can be started/stopped/deleted by a user, or kicked off automatically by Coder
 	const user =
@@ -36,7 +39,10 @@ export const BuildAuditDescription: FC<BuildAuditDescriptionProps> = ({
 
 	return (
 		<span>
-			{user} <strong>{action}</strong> workspace{" "}
+			{user} <strong>{action}</strong>
+			{tI18n(
+				"AuditPage.AuditLogRow.AuditLogDescription.BuildAuditDescription.workspace_4be0369b",
+			)}{" "}
 			{auditLog.resource_link ? (
 				<Link asChild showExternalIcon={false} className="text-base px-0">
 					<RouterLink to={auditLog.resource_link}>

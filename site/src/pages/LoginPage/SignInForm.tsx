@@ -1,4 +1,5 @@
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import type { AuthMethods } from "#/api/typesGenerated";
 import { Alert } from "#/components/Alert/Alert";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
@@ -23,6 +24,8 @@ export const SignInForm: FC<SignInFormProps> = ({
 	message,
 	onSubmit,
 }) => {
+	const { t: tI18n } = useTranslation("auth");
+
 	const oAuthEnabled = Boolean(
 		authMethods?.github.enabled || authMethods?.oidc.enabled,
 	);
@@ -34,19 +37,16 @@ export const SignInForm: FC<SignInFormProps> = ({
 			<h1 className="text-3xl font-semibold m-0 mb-8 leading-none">
 				{applicationName}
 			</h1>
-
 			{Boolean(error) && (
 				<div className="mb-8">
 					<ErrorAlert error={error} showDebugDetail={false} />
 				</div>
 			)}
-
 			{message && (
 				<div className="mb-8">
 					<Alert severity="info">{message}</Alert>
 				</div>
 			)}
-
 			{oAuthEnabled && (
 				<OAuthSignInForm
 					isSigningIn={isSigningIn}
@@ -54,17 +54,15 @@ export const SignInForm: FC<SignInFormProps> = ({
 					authMethods={authMethods}
 				/>
 			)}
-
 			{passwordEnabled && oAuthEnabled && (
 				<div className="py-6 flex items-center gap-4">
 					<div className="w-full h-px bg-border" />
 					<div className="shrink-0 text-content-secondary uppercase text-xs tracking-widest">
-						or
+						{tI18n("LoginPage.SignInForm.or_7175517a")}
 					</div>
 					<div className="w-full h-px bg-border" />
 				</div>
 			)}
-
 			{passwordEnabled && (
 				<PasswordSignInForm
 					onSubmit={onSubmit}
@@ -72,10 +70,11 @@ export const SignInForm: FC<SignInFormProps> = ({
 					isSigningIn={isSigningIn}
 				/>
 			)}
-
 			{!passwordEnabled && !oAuthEnabled && (
 				<Alert severity="error" prominent>
-					No authentication methods configured!
+					{tI18n(
+						"LoginPage.SignInForm.no_authentication_methods_configured_64866f76",
+					)}
 				</Alert>
 			)}
 		</div>

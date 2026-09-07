@@ -215,6 +215,27 @@ export default defineConfig({
 						configDir: path.join(import.meta.dirname, ".storybook"),
 					}),
 					{
+						name: "storybook-test-unicode-paths",
+						enforce: "post",
+						transform(code, id) {
+							if (!id.includes(".stories.")) {
+								return;
+							}
+
+							// Storybook compares the browser module URL to Vitest's
+							// filesystem path. Decode non-ASCII workspace paths first.
+							const comparison = "convertToFilePath(import.meta.url).includes(";
+							if (!code.includes(comparison)) {
+								return;
+							}
+
+							return code.replace(
+								comparison,
+								"decodeURIComponent(convertToFilePath(import.meta.url)).includes(",
+							);
+						},
+					},
+					{
 						name: "storybook-test-setup",
 						// Return 502 for API routes. The proxy is disabled
 						// during tests (see above), so without this vite
@@ -250,7 +271,7 @@ export default defineConfig({
 					// Cap concurrent browser iframes. The default
 					// (os.availableParallelism, 96 on dev workspaces)
 					// overwhelms vite's transform pipeline on cold cache.
-					maxWorkers: 4,
+					maxWorkers: 2,
 				},
 			},
 		],

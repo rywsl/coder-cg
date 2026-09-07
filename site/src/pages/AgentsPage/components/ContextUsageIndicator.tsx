@@ -8,6 +8,7 @@ import {
 	ZapIcon,
 } from "lucide-react";
 import { type FC, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	ChatContext,
 	ChatContextResource,
@@ -28,6 +29,8 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { i18n } from "#/i18n";
+import { currentIntlLocale } from "#/i18n/locale";
 import { formatKiB } from "#/utils/fileSize";
 import { isMobileViewport } from "#/utils/mobile";
 import { getPathBasename, getPathDirname } from "../utils/path";
@@ -77,17 +80,25 @@ type ContextIssueItem = {
 
 // Human-readable label per resource kind, used in the issues list.
 const RESOURCE_KIND_LABELS: Record<ChatContextResourceKind, string> = {
-	instruction_file: "file",
-	skill: "skill",
-	mcp_config: "MCP config",
-	mcp_server: "MCP server",
+	instruction_file: i18n.t(
+		"agents:AgentsPage.components.ContextUsageIndicator.file_3b9c358f",
+	),
+	skill: i18n.t(
+		"agents:AgentsPage.components.ContextUsageIndicator.skill_9c53c074",
+	),
+	mcp_config: i18n.t(
+		"agents:AgentsPage.components.ContextUsageIndicator.mcp_config_ad5f8c57",
+	),
+	mcp_server: i18n.t(
+		"agents:AgentsPage.components.ContextUsageIndicator.mcp_server_d938c816",
+	),
 };
 
 const hasFiniteTokenValue = (value: number | undefined): value is number =>
 	typeof value === "number" && Number.isFinite(value) && value >= 0;
 
 const formatTokenCount = (value: number | undefined): string =>
-	hasFiniteTokenValue(value) ? value.toLocaleString() : "--";
+	hasFiniteTokenValue(value) ? value.toLocaleString(currentIntlLocale()) : "--";
 
 const formatTokenCountCompact = (value: number | undefined): string => {
 	if (!hasFiniteTokenValue(value)) {
@@ -121,12 +132,17 @@ const sumResourceBytes = (
 
 // Dimmed "(N.N KiB)" size suffix for a section header, omitted when the
 // section has no measurable size.
-const SectionSize: FC<{ bytes: number }> = ({ bytes }) =>
-	bytes > 0 ? (
+const SectionSize: FC<{ bytes: number }> = ({ bytes }) => {
+	const { t: tI18n } = useTranslation("agents");
+
+	return bytes > 0 ? (
 		<span className="ml-1 font-normal text-content-secondary">
-			{`(${formatKiB(bytes)})`}
+			{tI18n("AgentsPage.components.ContextUsageIndicator.value0_9ab75be0", {
+				value0: formatKiB(bytes),
+			})}
 		</span>
 	) : null;
+};
 
 const getIndicatorToneClassName = (percentUsed: number | null): string => {
 	if (percentUsed === null) {
@@ -225,6 +241,8 @@ export const ContextUsageIndicator: FC<{
 	onRefreshContext?: () => void;
 	isRefreshingContext?: boolean;
 }> = ({ usage, onRefreshContext, isRefreshingContext }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [open, setOpen] = useState(false);
 	const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -384,23 +402,54 @@ export const ContextUsageIndicator: FC<{
 	].filter((note) => note !== "");
 	const statusNote = statusNotes.length > 0 ? ` ${statusNotes.join(" ")}` : "";
 	const ariaLabel = hasPercent
-		? `Context usage ${percentLabel}. ${formatTokenCount(usedTokens)} of ${formatTokenCount(contextLimitTokens)} tokens used.${statusNote}`
+		? tI18n(
+				"AgentsPage.components.ContextUsageIndicator.context_usage_value0_value1_of_value2_tokens_use_df924795",
+				{
+					value0: percentLabel,
+					value1: formatTokenCount(usedTokens),
+					value2: formatTokenCount(contextLimitTokens),
+					value3: statusNote,
+				},
+			)
 		: statusNote !== ""
-			? `Context usage.${statusNote}`
-			: "Context usage";
+			? tI18n(
+					"AgentsPage.components.ContextUsageIndicator.context_usage_value0_6ec07e68",
+					{
+						value0: statusNote,
+					},
+				)
+			: tI18n(
+					"AgentsPage.components.ContextUsageIndicator.context_usage_36416faf",
+				);
 
 	const panelContent = (
 		<div className="text-xs text-content-primary">
 			{hasPercent
-				? `${percentLabel} - ${formatTokenCountCompact(usedTokens)} / ${formatTokenCountCompact(contextLimitTokens)} context used`
+				? tI18n(
+						"AgentsPage.components.ContextUsageIndicator.value0_value1_value2_context_used_5051e7e8",
+						{
+							value0: percentLabel,
+							value1: formatTokenCountCompact(usedTokens),
+							value2: formatTokenCountCompact(contextLimitTokens),
+						},
+					)
 				: hasReportedUsage
-					? "Context usage unavailable"
-					: "Context usage will appear after sending a message."}
+					? tI18n(
+							"AgentsPage.components.ContextUsageIndicator.context_usage_unavailable_d89296f1",
+						)
+					: tI18n(
+							"AgentsPage.components.ContextUsageIndicator.context_usage_will_appear_after_sending_a_messag_ae7240e0",
+						)}
 			{hasPercent &&
 				usage?.compressionThreshold !== undefined &&
 				usage.compressionThreshold > 0 && (
 					<div className="mt-1 text-content-secondary">
-						{`Compacts at ${usage.compressionThreshold}%`}
+						{tI18n(
+							"AgentsPage.components.ContextUsageIndicator.compacts_at_value0_db635df2",
+							{
+								value0: usage.compressionThreshold,
+							},
+						)}
 					</div>
 				)}
 			{hasContextList && (
@@ -408,7 +457,11 @@ export const ContextUsageIndicator: FC<{
 					{fileItems.length > 0 && (
 						<div className="flex flex-col gap-1">
 							<span className="font-medium text-content-primary">
-								<span>Context files</span>
+								<span>
+									{tI18n(
+										"AgentsPage.components.ContextUsageIndicator.context_files_c95542be",
+									)}
+								</span>
 								<SectionSize bytes={fileBytes} />
 							</span>
 							{fileGroups.map((group) => (
@@ -439,7 +492,11 @@ export const ContextUsageIndicator: FC<{
 					{skillItems.length > 0 && (
 						<div className="flex flex-col gap-1">
 							<span className="font-medium text-content-primary">
-								<span>Skills</span>
+								<span>
+									{tI18n(
+										"AgentsPage.components.ContextUsageIndicator.skills_66d0f523",
+									)}
+								</span>
 								<SectionSize bytes={skillBytes} />
 							</span>
 							<TooltipProvider delayDuration={300}>
@@ -547,7 +604,9 @@ export const ContextUsageIndicator: FC<{
 						<div className="flex flex-col gap-1">
 							<span className="flex items-center gap-1.5 font-medium text-content-warning">
 								<TriangleAlertIcon className="size-3 shrink-0" />
-								Issues
+								{tI18n(
+									"AgentsPage.components.ContextUsageIndicator.issues_666067dd",
+								)}
 							</span>
 							{issueItems.map((issue) => (
 								<div
@@ -577,19 +636,25 @@ export const ContextUsageIndicator: FC<{
 					{hasContextError ? (
 						<span className="flex items-center gap-1.5 font-medium text-content-destructive">
 							<TriangleAlertIcon className="size-3 shrink-0" />
-							Context error
+							{tI18n(
+								"AgentsPage.components.ContextUsageIndicator.context_error_0b60d4d8",
+							)}
 						</span>
 					) : (
 						<span className="flex items-center gap-1.5 font-medium text-content-warning">
 							<TriangleAlertIcon className="size-3 shrink-0" />
-							Context changed
+							{tI18n(
+								"AgentsPage.components.ContextUsageIndicator.context_changed_1e9a22fe",
+							)}
 						</span>
 					)}
 					{hasContextError ? (
 						<span className="text-content-secondary">{contextError}</span>
 					) : (
 						<span className="text-content-secondary">
-							The workspace context changed since this chat was pinned.
+							{tI18n(
+								"AgentsPage.components.ContextUsageIndicator.the_workspace_context_changed_since_this_chat_wa_fa9b38d8",
+							)}
 						</span>
 					)}
 					{onRefreshContext && (
@@ -600,7 +665,9 @@ export const ContextUsageIndicator: FC<{
 								onClick={() => onRefreshContext()}
 							>
 								<Spinner size="sm" loading={isRefreshingContext} />
-								Refresh context
+								{tI18n(
+									"AgentsPage.components.ContextUsageIndicator.refresh_context_f79efc38",
+								)}
 							</Button>
 						</div>
 					)}

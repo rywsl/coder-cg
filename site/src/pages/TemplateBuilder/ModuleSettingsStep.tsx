@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { templateBuilderModules } from "#/api/queries/templateBuilder";
 import type {
@@ -6,6 +7,7 @@ import type {
 	TemplateBuilderModulesResponse,
 	TemplateBuilderModuleVariable,
 } from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 import {
 	TemplateBuilderSubtitle,
 	TemplateBuilderTitle,
@@ -59,7 +61,13 @@ function variableToField(
 		required: variable.required,
 		placeholder:
 			defaultPlaceholder(variable.default) ??
-			(variable.required ? "Required" : "Optional"),
+			(variable.required
+				? i18n.t(
+						"templates:TemplateBuilder.ModuleSettingsStep.required_4850b174",
+					)
+				: i18n.t(
+						"templates:TemplateBuilder.ModuleSettingsStep.optional_59be7133",
+					)),
 		field: {
 			name: variable.name,
 			id,
@@ -111,6 +119,8 @@ export const ModuleSettingsStep: FC<ModuleSettingsStepProps> = ({
 	onRemoveModule,
 	registerModuleRef,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const { data } = useQuery(templateBuilderModules(baseId));
 	const modules = data?.modules ?? [];
 
@@ -125,11 +135,14 @@ export const ModuleSettingsStep: FC<ModuleSettingsStepProps> = ({
 
 	return (
 		<>
-			<TemplateBuilderTitle>Configure modules</TemplateBuilderTitle>
+			<TemplateBuilderTitle>
+				{tI18n("TemplateBuilder.ModuleSettingsStep.configure_modules_f495d2d0")}
+			</TemplateBuilderTitle>
 			<TemplateBuilderSubtitle>
-				Set values for module variables.
+				{tI18n(
+					"TemplateBuilder.ModuleSettingsStep.set_values_for_module_variables_802eec58",
+				)}
 			</TemplateBuilderSubtitle>
-
 			<div className="flex flex-col gap-6">
 				{selectedModules.map((mod) => {
 					const configurableVars = mod.variables.filter((v) => !v.sensitive);

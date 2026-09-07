@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { UseMutateFunction } from "react-query";
 import type * as TypesGen from "#/api/typesGenerated";
 import { ChatFullWidthSettings } from "./components/ChatFullWidthSettings";
@@ -45,11 +46,17 @@ export const AgentSettingsGeneralPageView: FC<
 	isSavingUserDebugLogging,
 	isSaveUserDebugLoggingError,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<div className="flex flex-col gap-8">
 			<SectionHeader
-				label="General"
-				description="Personal preferences for your chat experience."
+				label={tI18n(
+					"AgentsPage.AgentSettingsGeneralPageView.general_c910d474",
+				)}
+				description={tI18n(
+					"AgentsPage.AgentSettingsGeneralPageView.personal_preferences_for_your_chat_experience_9d0c6fe4",
+				)}
 			/>
 			<PersonalInstructionsSettings
 				userPromptData={userPromptData}

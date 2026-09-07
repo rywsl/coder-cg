@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { API } from "#/api/api";
 import { MaxChatFileSizeBytes } from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 import { generateUUID } from "#/utils/random";
 import type { UploadState } from "../components/AgentChatInput";
 import {
@@ -29,10 +30,12 @@ import { resizeImageToMaxBytes } from "../utils/resizeImage";
 
 const maxTextPreviewSize = 1024 * 1024;
 
-const pendingDraftWarning =
-	"This file is attached for now, but it could not be saved as a draft. If you leave this chat before it uploads or sends, it may be lost.";
-const uploadedDraftWarning =
-	"This file is usable in this session, but it could not be saved as a draft.";
+const pendingDraftWarning = i18n.t(
+	"agents:AgentsPage.hooks.useChatDraftAttachments.this_file_is_attached_for_now_but_it_could_not_b_bc710f00",
+);
+const uploadedDraftWarning = i18n.t(
+	"agents:AgentsPage.hooks.useChatDraftAttachments.this_file_is_usable_in_this_session_but_it_could_24738b71",
+);
 
 type DraftUploadStatus = UploadState["status"];
 

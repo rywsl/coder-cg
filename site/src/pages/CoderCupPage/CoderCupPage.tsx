@@ -1,12 +1,14 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { LunarLander } from "./LunarLander";
 
 const CoderCupPage: FC = () => {
+	const { t: tI18n } = useTranslation("pages");
+
 	return (
 		<div className="relative w-screen h-screen bg-black overflow-hidden">
-			<title>Codernauts</title>
-
+			<title>{tI18n("CoderCupPage.CoderCupPage.codernauts_99dc05b5")}</title>
 			{/* Coder logo - links back to the main app */}
 			<Link
 				to="/workspaces"
@@ -18,11 +20,12 @@ const CoderCupPage: FC = () => {
 					viewBox="0 0 120 60"
 					xmlns="http://www.w3.org/2000/svg"
 				>
-					<title>Coder logo</title>
+					<title>
+						{tI18n("CoderCupPage.CoderCupPage.coder_logo_16bd2c06")}
+					</title>
 					<path d="M34.5381 0C54.5335 6.29882e-05 65.7432 10.1355 66.122 25.0544L48.853 25.6216C48.3984 17.3514 41.544 11.9189 34.5381 12.0809C24.919 12.2836 17.7989 19.1351 17.7988 29.9999C17.7988 40.8648 24.919 47.5951 34.5381 47.5951C41.544 47.5945 48.2468 42.4055 49.0043 34.1352L66.2733 34.5408C65.8189 49.7027 53.9276 60 34.5381 60C15.1484 60 0 48.2433 0 29.9999C7.1014e-05 11.6757 14.5426 0 34.5381 0ZM120 1.7728V58.5299H74.5559V1.7728H120Z" />
 				</svg>
 			</Link>
-
 			<LunarLander />
 		</div>
 	);

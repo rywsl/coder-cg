@@ -1,5 +1,6 @@
 import { File as FileViewer } from "@pierre/diffs/react";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollArea } from "#/components/ScrollArea/ScrollArea";
 import { useTheme } from "#/theme/context";
 import { getPathBasename } from "../../../utils/path";
@@ -16,6 +17,8 @@ const ReadFileContent: React.FC<{
 	path: string;
 	content: string;
 }> = ({ path, content }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const theme = useTheme();
 	const isDark = theme.palette.mode === "dark";
 
@@ -24,7 +27,12 @@ const ReadFileContent: React.FC<{
 			className="mt-1.5 rounded-md border border-solid border-border-default text-2xs"
 			viewportClassName="max-h-64"
 			viewportTabIndex={0}
-			viewportAriaLabel={`Contents of ${path}`}
+			viewportAriaLabel={tI18n(
+				"AgentsPage.components.ChatElements.tools.ReadFileTool.contents_of_value0_7ecb1ed5",
+				{
+					value0: path,
+				},
+			)}
 			orientation="both"
 			scrollBarClassName="w-1.5"
 			horizontalScrollBarClassName="h-1.5"
@@ -82,17 +90,36 @@ export const ReadFileTool: React.FC<{
 	expanded,
 	onExpandedChange,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const hasContent = content.length > 0 || isError;
 	const isRunning = status === "running";
 	const filename = getPathBasename(path);
-	const label = isRunning ? `Reading ${filename}…` : `Read ${filename}`;
+	const label = isRunning
+		? tI18n(
+				"AgentsPage.components.ChatElements.tools.ReadFileTool.reading_value0_135641cc",
+				{
+					value0: filename,
+				},
+			)
+		: tI18n(
+				"AgentsPage.components.ChatElements.tools.ReadFileTool.read_value0_c148405e",
+				{
+					value0: filename,
+				},
+			);
 
 	return (
 		<ToolCall.Root
 			className="w-full"
 			status={status}
 			isError={isError}
-			errorMessage={errorMessage || "Failed to read file"}
+			errorMessage={
+				errorMessage ||
+				tI18n(
+					"AgentsPage.components.ChatElements.tools.ReadFileTool.failed_to_read_file_ea7d976c",
+				)
+			}
 			hasContent={hasContent}
 			expanded={expanded}
 			onExpandedChange={onExpandedChange}
@@ -101,7 +128,10 @@ export const ReadFileTool: React.FC<{
 			<ToolCall.Content>
 				{isError && (
 					<div className="mt-1 text-xs text-content-destructive">
-						{errorMessage || "Failed to read file"}
+						{errorMessage ||
+							tI18n(
+								"AgentsPage.components.ChatElements.tools.ReadFileTool.failed_to_read_file_ea7d976c",
+							)}
 					</div>
 				)}
 				{content.length > 0 && (

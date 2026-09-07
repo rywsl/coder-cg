@@ -7,6 +7,7 @@ import {
 	useLayoutEffect,
 	useRef,
 } from "react";
+import { useTranslation } from "react-i18next";
 import type { ProvisionerJobLog, WorkspaceBuild } from "#/api/typesGenerated";
 import type { Line } from "#/components/Logs/LogLine";
 import { DEFAULT_LOG_LINE_SIDE_PADDING, Logs } from "#/components/Logs/Logs";
@@ -56,6 +57,8 @@ export const WorkspaceBuildLogs: FC<WorkspaceBuildLogsProps> = ({
 	className,
 	...attrs
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const groupedLogsByStage = groupLogsByStage(logs);
 
 	const ref = useRef<HTMLDivElement>(null);
@@ -100,7 +103,10 @@ export const WorkspaceBuildLogs: FC<WorkspaceBuildLogsProps> = ({
 							<div>{stage}</div>
 							{shouldDisplayDuration && (
 								<div className="ml-auto text-xs text-content-secondary">
-									{duration} seconds
+									{duration}
+									{tI18n(
+										"workspaces.WorkspaceBuildLogs.WorkspaceBuildLogs.seconds_3489b524",
+									)}
 								</div>
 							)}
 						</div>

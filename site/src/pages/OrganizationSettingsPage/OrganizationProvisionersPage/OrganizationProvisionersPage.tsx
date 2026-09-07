@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { useParams, useSearchParams } from "react-router";
 import { buildInfo } from "#/api/queries/buildInfo";
@@ -13,6 +14,8 @@ import { pageTitle } from "#/utils/page";
 import { OrganizationProvisionersPageView } from "./OrganizationProvisionersPageView";
 
 const OrganizationProvisionersPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { permissions } = useAuthenticated();
 	const { organization: organizationName } = useParams() as {
 		organization: string;
@@ -36,13 +39,21 @@ const OrganizationProvisionersPage: FC = () => {
 	});
 
 	if (!organization) {
-		return <EmptyState message="Organization not found" />;
+		return (
+			<EmptyState
+				message={tI18n(
+					"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPage.organization_not_found_00c50f7a",
+				)}
+			/>
+		);
 	}
 
 	const title = (
 		<title>
 			{pageTitle(
-				"Provisioners",
+				tI18n(
+					"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPage.provisioners_82d4a12e",
+				),
 				organization.display_name || organization.name,
 			)}
 		</title>

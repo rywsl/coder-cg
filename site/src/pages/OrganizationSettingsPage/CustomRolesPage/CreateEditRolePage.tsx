@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link, useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
@@ -19,6 +20,8 @@ import { pageTitle } from "#/utils/page";
 import { CreateEditRolePageView } from "./CreateEditRolePageView";
 
 const CreateEditRolePage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 	const { organization: organizationName, roleName } = useParams();
@@ -35,7 +38,13 @@ const CreateEditRolePage: FC = () => {
 	);
 
 	if (!organizationName) {
-		return <EmptyState message="Organization not found" />;
+		return (
+			<EmptyState
+				message={tI18n(
+					"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePage.organization_not_found_00c50f7a",
+				)}
+			/>
+		);
 	}
 
 	const rolesHref = `/organizations/${organizationName}/roles`;
@@ -49,7 +58,13 @@ const CreateEditRolePage: FC = () => {
 	}
 
 	if (!organizationPermissions) {
-		return <ErrorAlert error="Failed to load organization permissions" />;
+		return (
+			<ErrorAlert
+				error={tI18n(
+					"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePage.failed_to_load_organization_permissions_f4f874a8",
+				)}
+			/>
+		);
 	}
 
 	const role = roleName
@@ -59,10 +74,16 @@ const CreateEditRolePage: FC = () => {
 	if (roleName && !role) {
 		return (
 			<EmptyState
-				message="Role not found"
+				message={tI18n(
+					"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePage.role_not_found_8ea4417f",
+				)}
 				cta={
 					<Button variant="outline" asChild>
-						<Link to={rolesHref}>Back to roles</Link>
+						<Link to={rolesHref}>
+							{tI18n(
+								"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePage.back_to_roles_094ed2c4",
+							)}
+						</Link>
 					</Button>
 				}
 			/>
@@ -81,12 +102,30 @@ const CreateEditRolePage: FC = () => {
 			},
 		});
 		toast.promise(mutation, {
-			loading: `${isEditing ? "Updating" : "Creating"} custom role "${data.name}"...`,
-			success: `Custom role "${data.name}" ${isEditing ? "updated" : "created"} successfully.`,
+			loading: tI18n(
+				"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePage.value0_custom_role_value1_298d91a3",
+				{
+					value0: isEditing ? "Updating" : "Creating",
+					value1: data.name,
+				},
+			),
+			success: tI18n(
+				"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePage.custom_role_value0_value1_successfully_500133fb",
+				{
+					value0: data.name,
+					value1: isEditing ? "updated" : "created",
+				},
+			),
 			error: (error) => ({
 				message: getErrorMessage(
 					error,
-					`Failed to ${isEditing ? "update" : "create"} custom role "${data.name}".`,
+					tI18n(
+						"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePage.failed_to_value0_custom_role_value1_f1da4475",
+						{
+							value0: isEditing ? "update" : "create",
+							value1: data.name,
+						},
+					),
 				),
 				description: getErrorDetail(error),
 			}),
@@ -103,11 +142,16 @@ const CreateEditRolePage: FC = () => {
 		>
 			<title>
 				{pageTitle(
-					isEditing ? "Edit Custom Role" : "New Custom Role",
+					isEditing
+						? tI18n(
+								"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePage.edit_custom_role_0cb81d2b",
+							)
+						: tI18n(
+								"OrganizationSettingsPage.CustomRolesPage.CreateEditRolePage.new_custom_role_64946125",
+							),
 					isEditing ? role.display_name || role.name : undefined,
 				)}
 			</title>
-
 			<CreateEditRolePageView
 				role={role}
 				onSubmit={handleSubmit}

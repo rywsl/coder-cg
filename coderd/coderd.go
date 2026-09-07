@@ -72,6 +72,7 @@ import (
 	"github.com/coder/coder/v2/coderd/httpapi"
 	"github.com/coder/coder/v2/coderd/httpmw"
 	"github.com/coder/coder/v2/coderd/httpmw/loggermw"
+	"github.com/coder/coder/v2/coderd/i18n"
 	"github.com/coder/coder/v2/coderd/idpsync"
 	"github.com/coder/coder/v2/coderd/metricscache"
 	"github.com/coder/coder/v2/coderd/notifications"
@@ -1150,6 +1151,7 @@ func New(options *Options) *API {
 		httpmw.WithProfilingLabels,
 		tracing.StatusWriterMiddleware,
 		options.DeploymentValues.HTTPCookies.Middleware,
+		i18n.Middleware,
 		tracing.Middleware(api.TracerProvider, tracing.DefaultRoutePatterns, "coderd"),
 		httpmw.AttachRequestID,
 		httpmw.ExtractRealIP(api.RealIPConfig),

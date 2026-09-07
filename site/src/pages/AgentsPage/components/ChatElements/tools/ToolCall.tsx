@@ -14,6 +14,7 @@ import {
 	useId,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Tooltip,
 	TooltipContent,
@@ -60,6 +61,8 @@ const PolicyProvider: FC<{ hookRewritten: boolean; children: ReactNode }> = ({
 	hookRewritten,
 	children,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const badgeId = useId();
 	return (
 		<ToolPolicyContext.Provider value={{ hookRewritten }}>
@@ -70,7 +73,9 @@ const PolicyProvider: FC<{ hookRewritten: boolean; children: ReactNode }> = ({
 						className="mb-0.5 flex w-fit items-center gap-1 rounded border border-solid border-border-default px-1 text-[11px] leading-4 text-content-secondary"
 					>
 						<ShieldIcon aria-hidden className="size-3 shrink-0" />
-						Modified by policy
+						{tI18n(
+							"AgentsPage.components.ChatElements.tools.ToolCall.modified_by_policy_2eae04b6",
+						)}
 					</span>
 					{children}
 				</div>
@@ -209,13 +214,20 @@ const HeaderButton: FC<ToolCallHeaderButtonProps> = ({
 	className,
 	alwaysButton = false,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { ariaLabel, collapsible, expanded, onToggle } = useToolCallContext();
 	const { hookRewritten } = useContext(ToolPolicyContext);
 	const resolvedAriaLabel =
 		typeof ariaLabel === "function" ? ariaLabel(expanded) : ariaLabel;
 	const buttonAriaLabel =
 		resolvedAriaLabel && hookRewritten
-			? `${resolvedAriaLabel}, modified by policy`
+			? tI18n(
+					"AgentsPage.components.ChatElements.tools.ToolCall.value0_modified_by_policy_e943c135",
+					{
+						value0: resolvedAriaLabel,
+					},
+				)
 			: resolvedAriaLabel;
 	if (!collapsible && !alwaysButton) {
 		return (
@@ -307,13 +319,17 @@ type ToolCallStatusProps = {
 };
 
 const Status: FC<ToolCallStatusProps> = ({ className }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { active, errorMessage, failed } = useToolCallContext();
 	const message = errorMessage || "Tool call failed";
 	return (
 		<>
 			{active && (
 				<LoaderIcon
-					aria-label="Tool call running"
+					aria-label={tI18n(
+						"AgentsPage.components.ChatElements.tools.ToolCall.tool_call_running_4cbd61a0",
+					)}
 					role="img"
 					className={cn(
 						"size-3.5 shrink-0 animate-spin motion-reduce:animate-none text-current",

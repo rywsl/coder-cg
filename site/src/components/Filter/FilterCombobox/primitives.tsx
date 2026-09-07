@@ -11,6 +11,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "#/components/Badge/Badge";
 import { InputGroup } from "#/components/InputGroup/InputGroup";
 import {
@@ -342,6 +343,8 @@ export const FilterComboboxChip: FC<FilterComboboxChipProps> = ({
 	removeLabel,
 	...props
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const { onRemoveValue } = useFilterComboboxState();
 	const childText =
 		typeof children === "string" || typeof children === "number"
@@ -349,7 +352,12 @@ export const FilterComboboxChip: FC<FilterComboboxChipProps> = ({
 			: undefined;
 	const removeValue = value ?? childText;
 	const resolvedRemoveLabel =
-		removeLabel ?? (removeValue ? `Remove ${removeValue}` : "Remove filter");
+		removeLabel ??
+		(removeValue
+			? tI18n("Filter.FilterCombobox.primitives.remove_value0_e224cf24", {
+					value0: removeValue,
+				})
+			: tI18n("Filter.FilterCombobox.primitives.remove_filter_23c5cdc6"));
 
 	return (
 		<Badge

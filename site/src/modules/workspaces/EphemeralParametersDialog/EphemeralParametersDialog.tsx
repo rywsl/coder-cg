@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import type { TemplateVersionParameter } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
@@ -30,6 +31,8 @@ export const EphemeralParametersDialog: FC<EphemeralParametersDialogProps> = ({
 	workspaceName,
 	templateVersionId,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const navigate = useNavigate();
 
 	const handleGoToParameters = () => {
@@ -43,13 +46,21 @@ export const EphemeralParametersDialog: FC<EphemeralParametersDialogProps> = ({
 		<Dialog open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Ephemeral Parameters Detected</DialogTitle>
+					<DialogTitle>
+						{tI18n(
+							"workspaces.EphemeralParametersDialog.EphemeralParametersDialog.ephemeral_parameters_detected_b2f94cbb",
+						)}
+					</DialogTitle>
 					<DialogDescription>
-						This workspace template has{" "}
+						{tI18n(
+							"workspaces.EphemeralParametersDialog.EphemeralParametersDialog.this_workspace_template_has_2dc1735e",
+						)}{" "}
 						<strong className="text-content-primary">
 							{ephemeralParameters.length}
 						</strong>{" "}
-						ephemeral parameters that will be reset to their default values
+						{tI18n(
+							"workspaces.EphemeralParametersDialog.EphemeralParametersDialog.ephemeral_parameters_that_will_be_reset_to_their_b25fa9a2",
+						)}
 					</DialogDescription>
 					<DialogDescription>
 						<ul className="list-none pl-6 space-y-2">
@@ -68,19 +79,24 @@ export const EphemeralParametersDialog: FC<EphemeralParametersDialogProps> = ({
 						</ul>
 					</DialogDescription>
 					<DialogDescription>
-						Would you like to go to the workspace parameters page to review and
-						update these parameters before continuing?
+						{tI18n(
+							"workspaces.EphemeralParametersDialog.EphemeralParametersDialog.would_you_like_to_go_to_the_workspace_parameters_eafe61e8",
+						)}
 					</DialogDescription>
 				</DialogHeader>
 				<DialogFooter>
 					<Button onClick={onContinue} variant="outline">
-						Continue
+						{tI18n(
+							"workspaces.EphemeralParametersDialog.EphemeralParametersDialog.continue_31fbef16",
+						)}
 					</Button>
 					<Button
 						data-testid="workspace-parameters"
 						onClick={handleGoToParameters}
 					>
-						Go to workspace parameters
+						{tI18n(
+							"workspaces.EphemeralParametersDialog.EphemeralParametersDialog.go_to_workspace_parameters_1986a430",
+						)}
 					</Button>
 				</DialogFooter>
 			</DialogContent>

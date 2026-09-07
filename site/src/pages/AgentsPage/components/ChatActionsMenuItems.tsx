@@ -8,6 +8,7 @@ import {
 	Trash2Icon,
 } from "lucide-react";
 import { type FC, useId } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import type {
 	ContextMenuItem,
@@ -98,6 +99,8 @@ export const ChatActionsMenuItems: FC<ChatActionsMenuItemsProps> = ({
 	Item,
 	Separator,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const showSubagentsToggle = Boolean(onToggleSubagents) && subagentCount > 0;
 	const showPinAction =
 		!isArchived && !isChildChat && Boolean(onPinAgent && onUnpinAgent);
@@ -111,8 +114,15 @@ export const ChatActionsMenuItems: FC<ChatActionsMenuItemsProps> = ({
 		<Item onSelect={onToggleSubagents}>
 			<BotIcon className="size-3.5" />
 			{isSubagentsExpanded
-				? "Hide subagents"
-				: `Show subagents (${subagentCount})`}
+				? tI18n(
+						"AgentsPage.components.ChatActionsMenuItems.hide_subagents_cd4a549a",
+					)
+				: tI18n(
+						"AgentsPage.components.ChatActionsMenuItems.show_subagents_value0_f851202b",
+						{
+							value0: subagentCount,
+						},
+					)}
 		</Item>
 	) : null;
 
@@ -123,12 +133,16 @@ export const ChatActionsMenuItems: FC<ChatActionsMenuItemsProps> = ({
 					{isPinned ? (
 						<>
 							<PinOffIcon className="size-3.5" />
-							Unpin agent
+							{tI18n(
+								"AgentsPage.components.ChatActionsMenuItems.unpin_agent_69571f4d",
+							)}
 						</>
 					) : (
 						<>
 							<PinIcon className="size-3.5" />
-							Pin agent
+							{tI18n(
+								"AgentsPage.components.ChatActionsMenuItems.pin_agent_1cc8db8b",
+							)}
 						</>
 					)}
 				</Item>
@@ -138,7 +152,9 @@ export const ChatActionsMenuItems: FC<ChatActionsMenuItemsProps> = ({
 					<>
 						<Item disabled={isArchiving} onSelect={onUnarchiveAgent}>
 							<ArchiveRestoreIcon className="size-3.5" />
-							Unarchive agent
+							{tI18n(
+								"AgentsPage.components.ChatActionsMenuItems.unarchive_agent_b652e167",
+							)}
 						</Item>
 						{subagentToggle}
 					</>
@@ -148,7 +164,9 @@ export const ChatActionsMenuItems: FC<ChatActionsMenuItemsProps> = ({
 					{onOpenRenameDialog && (
 						<Item onSelect={onOpenRenameDialog}>
 							<SquarePenIcon className="size-3.5" />
-							Rename chat
+							{tI18n(
+								"AgentsPage.components.ChatActionsMenuItems.rename_chat_26076241",
+							)}
 						</Item>
 					)}
 					{subagentToggle}
@@ -164,7 +182,9 @@ export const ChatActionsMenuItems: FC<ChatActionsMenuItemsProps> = ({
 								onSelect={onArchiveAgent}
 							>
 								<ArchiveIcon className="size-3.5" />
-								Archive agent
+								{tI18n(
+									"AgentsPage.components.ChatActionsMenuItems.archive_agent_0246898e",
+								)}
 							</Item>
 							{hasWorkspace && (
 								<Item
@@ -174,7 +194,9 @@ export const ChatActionsMenuItems: FC<ChatActionsMenuItemsProps> = ({
 									onSelect={onArchiveAndDeleteWorkspace}
 								>
 									<Trash2Icon className="size-3.5" />
-									Archive & delete workspace
+									{tI18n(
+										"AgentsPage.components.ChatActionsMenuItems.archive_delete_workspace_20504a2a",
+									)}
 								</Item>
 							)}
 							{isArchiveBlocked && (
@@ -182,7 +204,9 @@ export const ChatActionsMenuItems: FC<ChatActionsMenuItemsProps> = ({
 									id={archiveBlockedHintId}
 									className="max-w-56 px-2 py-1.5 text-xs text-content-secondary"
 								>
-									Interrupt or wait for the agent to finish first.
+									{tI18n(
+										"AgentsPage.components.ChatActionsMenuItems.interrupt_or_wait_for_the_agent_to_finish_first_b529b3df",
+									)}
 								</div>
 							)}
 						</>

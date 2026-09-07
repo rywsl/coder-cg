@@ -10,6 +10,7 @@ import {
 	TriangleAlertIcon,
 } from "lucide-react";
 import { type FC, useId, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import type {
 	NullHCLString,
@@ -107,6 +108,8 @@ const ParameterLabel: FC<ParameterLabelProps> = ({
 	autofill,
 	id,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const displayName = parameter.display_name
 		? parameter.display_name
 		: parameter.name;
@@ -119,11 +122,12 @@ const ParameterLabel: FC<ParameterLabelProps> = ({
 			{parameter.icon && (
 				<ExternalImage
 					className="size-5 mt-0.5 object-contain"
-					alt="Parameter icon"
+					alt={tI18n(
+						"workspaces.DynamicParameter.DynamicParameter.parameter_icon_5a1687a5",
+					)}
 					src={parameter.icon}
 				/>
 			)}
-
 			<div className="flex flex-col w-full gap-1">
 				<Label
 					htmlFor={id}
@@ -142,13 +146,16 @@ const ParameterLabel: FC<ParameterLabelProps> = ({
 									<span className="flex items-center">
 										<Badge size="sm" variant="warning">
 											<TriangleAlertIcon />
-											Immutable
+											{tI18n(
+												"workspaces.DynamicParameter.DynamicParameter.immutable_1e408dc2",
+											)}
 										</Badge>
 									</span>
 								</TooltipTrigger>
 								<TooltipContent className="max-w-xs">
-									This value cannot be modified after the workspace has been
-									created.
+									{tI18n(
+										"workspaces.DynamicParameter.DynamicParameter.this_value_cannot_be_modified_after_the_workspac_3a2f85ea",
+									)}
 								</TooltipContent>
 							</Tooltip>
 						</TooltipProvider>
@@ -160,13 +167,16 @@ const ParameterLabel: FC<ParameterLabelProps> = ({
 									<span className="flex items-center">
 										<Badge size="sm" variant="green">
 											<HourglassIcon />
-											Ephemeral
+											{tI18n(
+												"workspaces.DynamicParameter.DynamicParameter.ephemeral_fc48cf36",
+											)}
 										</Badge>
 									</span>
 								</TooltipTrigger>
 								<TooltipContent className="max-w-xs">
-									This parameter is ephemeral and will reset to the template
-									default on workspace restart.
+									{tI18n(
+										"workspaces.DynamicParameter.DynamicParameter.this_parameter_is_ephemeral_and_will_reset_to_th_fbe3a286",
+									)}
 								</TooltipContent>
 							</Tooltip>
 						</TooltipProvider>
@@ -178,12 +188,16 @@ const ParameterLabel: FC<ParameterLabelProps> = ({
 									<span className="flex items-center">
 										<Badge size="sm">
 											<SettingsIcon />
-											Preset
+											{tI18n(
+												"workspaces.DynamicParameter.DynamicParameter.preset_7252e7ce",
+											)}
 										</Badge>
 									</span>
 								</TooltipTrigger>
 								<TooltipContent className="max-w-xs">
-									Preset parameters cannot be modified.
+									{tI18n(
+										"workspaces.DynamicParameter.DynamicParameter.preset_parameters_cannot_be_modified_bb25b279",
+									)}
 								</TooltipContent>
 							</Tooltip>
 						</TooltipProvider>
@@ -195,12 +209,16 @@ const ParameterLabel: FC<ParameterLabelProps> = ({
 									<span className="flex items-center">
 										<Badge size="sm">
 											<LinkIcon />
-											URL Autofill
+											{tI18n(
+												"workspaces.DynamicParameter.DynamicParameter.url_autofill_f5de17ed",
+											)}
 										</Badge>
 									</span>
 								</TooltipTrigger>
 								<TooltipContent className="max-w-xs">
-									Autofilled from the URL.
+									{tI18n(
+										"workspaces.DynamicParameter.DynamicParameter.autofilled_from_the_url_dba2ea57",
+									)}
 								</TooltipContent>
 							</Tooltip>
 						</TooltipProvider>
@@ -211,12 +229,17 @@ const ParameterLabel: FC<ParameterLabelProps> = ({
 								<TooltipTrigger asChild>
 									<span className="flex items-center">
 										<Badge size="sm" variant="destructive">
-											Required
+											{tI18n(
+												"workspaces.DynamicParameter.DynamicParameter.required_4850b174",
+											)}
 										</Badge>
 									</span>
 								</TooltipTrigger>
 								<TooltipContent className="max-w-xs">
-									{hasRequiredDiagnostic.summary || "Required parameter"}
+									{hasRequiredDiagnostic.summary ||
+										tI18n(
+											"workspaces.DynamicParameter.DynamicParameter.required_parameter_a0bd6e69",
+										)}
 								</TooltipContent>
 							</Tooltip>
 						</TooltipProvider>
@@ -250,6 +273,8 @@ const ParameterField: FC<ParameterFieldProps> = ({
 	disabled,
 	id,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	if (value === undefined && parameter.value.valid) {
 		value = parameter.value.value;
 	}
@@ -341,7 +366,12 @@ const ParameterField: FC<ParameterFieldProps> = ({
 				>
 					<SelectTrigger>
 						<SelectValue
-							placeholder={parameter.styling?.placeholder || "Select option"}
+							placeholder={
+								parameter.styling?.placeholder ||
+								tI18n(
+									"workspaces.DynamicParameter.DynamicParameter.select_option_02fa0b89",
+								)
+							}
 						/>
 					</SelectTrigger>
 					<SelectContent>
@@ -395,10 +425,17 @@ const ParameterField: FC<ParameterFieldProps> = ({
 						onChange(JSON.stringify(values));
 					}}
 					hidePlaceholderWhenSelected
-					placeholder={parameter.styling?.placeholder || "Select option"}
+					placeholder={
+						parameter.styling?.placeholder ||
+						tI18n(
+							"workspaces.DynamicParameter.DynamicParameter.select_option_02fa0b89",
+						)
+					}
 					emptyIndicator={
 						<p className="text-center text-md text-content-primary">
-							No results found
+							{tI18n(
+								"workspaces.DynamicParameter.DynamicParameter.no_results_found_7d7e3605",
+							)}
 						</p>
 					}
 					disabled={disabled}
@@ -498,6 +535,8 @@ const MaskableInput: FC<MaskableInputProps> = ({
 	type,
 	...inputProps
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [showMaskedInput, setShowMaskedInput] = useState(false);
 
 	return (
@@ -519,7 +558,15 @@ const MaskableInput: FC<MaskableInputProps> = ({
 					type="button"
 					variant="subtle"
 					size="icon"
-					aria-label={showMaskedInput ? "Hide value" : "Show value"}
+					aria-label={
+						showMaskedInput
+							? tI18n(
+									"workspaces.DynamicParameter.DynamicParameter.hide_value_381d9c18",
+								)
+							: tI18n(
+									"workspaces.DynamicParameter.DynamicParameter.show_value_fad206e2",
+								)
+					}
 					aria-pressed={showMaskedInput}
 					onClick={() => setShowMaskedInput((value) => !value)}
 					disabled={disabled}
@@ -544,6 +591,8 @@ const MaskableTextArea: FC<MaskableInputProps> = ({
 	placeholder,
 	required,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 	const [showMaskedInput, setShowMaskedInput] = useState(false);
 
@@ -573,7 +622,15 @@ const MaskableTextArea: FC<MaskableInputProps> = ({
 					type="button"
 					variant="subtle"
 					size="icon"
-					aria-label={showMaskedInput ? "Hide value" : "Show value"}
+					aria-label={
+						showMaskedInput
+							? tI18n(
+									"workspaces.DynamicParameter.DynamicParameter.hide_value_381d9c18",
+								)
+							: tI18n(
+									"workspaces.DynamicParameter.DynamicParameter.show_value_fad206e2",
+								)
+					}
 					aria-pressed={showMaskedInput}
 					onClick={() => setShowMaskedInput((value) => !value)}
 					disabled={disabled}
@@ -750,6 +807,8 @@ export const useValidationSchemaForDynamicParameters = (
 	parameters?: PreviewParameter[],
 	lastBuildParameters?: WorkspaceBuildParameter[],
 ): Yup.AnySchema => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	if (!parameters) {
 		return Yup.object();
 	}
@@ -834,7 +893,12 @@ export const useValidationSchemaForDynamicParameters = (
 													if (Number(lastBuildParameter.value) > Number(val)) {
 														return ctx.createError({
 															path: ctx.path,
-															message: `Value must only ever increase (last value was ${lastBuildParameter.value})`,
+															message: tI18n(
+																"workspaces.DynamicParameter.DynamicParameter.value_must_only_ever_increase_last_value_was_val_d2df2265",
+																{
+																	value0: lastBuildParameter.value,
+																},
+															),
 														});
 													}
 													break;
@@ -842,7 +906,12 @@ export const useValidationSchemaForDynamicParameters = (
 													if (Number(lastBuildParameter.value) < Number(val)) {
 														return ctx.createError({
 															path: ctx.path,
-															message: `Value must only ever decrease (last value was ${lastBuildParameter.value})`,
+															message: tI18n(
+																"workspaces.DynamicParameter.DynamicParameter.value_must_only_ever_decrease_last_value_was_val_0037f4cf",
+																{
+																	value0: lastBuildParameter.value,
+																},
+															),
 														});
 													}
 													break;

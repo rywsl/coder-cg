@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { DERPRegion, WorkspaceAgent } from "#/api/typesGenerated";
 import {
 	HelpPopover,
@@ -34,6 +35,8 @@ interface AgentLatencyProps {
 }
 
 export const AgentLatency: FC<AgentLatencyProps> = ({ agent }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const latency = getDisplayLatency(agent);
 
 	if (!latency || !agent.latency) {
@@ -45,17 +48,21 @@ export const AgentLatency: FC<AgentLatencyProps> = ({ agent }) => {
 			<HelpPopoverTrigger asChild>
 				<span
 					role="presentation"
-					aria-label="latency"
+					aria-label={tI18n("resources.AgentLatency.latency_3fdb7e87")}
 					className={cn("cursor-pointer", latency.color)}
 				>
-					{Math.round(latency.latency_ms)}ms
+					{Math.round(latency.latency_ms)}
+					{tI18n("resources.AgentLatency.ms_f785c3ce")}
 				</span>
 			</HelpPopoverTrigger>
 			<HelpPopoverContent>
-				<HelpPopoverTitle>Latency</HelpPopoverTitle>
+				<HelpPopoverTitle>
+					{tI18n("resources.AgentLatency.latency_e0e7d293")}
+				</HelpPopoverTitle>
 				<HelpPopoverText>
-					This is the latency overhead on non peer to peer connections. The
-					first row is the preferred relay.
+					{tI18n(
+						"resources.AgentLatency.this_is_the_latency_overhead_on_non_peer_to_peer_514e91f9",
+					)}
 				</HelpPopoverText>
 				<div className="flex-col gap-1 mt-4">
 					{Object.entries(agent.latency)
@@ -69,7 +76,8 @@ export const AgentLatency: FC<AgentLatencyProps> = ({ agent }) => {
 								key={regionName}
 							>
 								<strong>{regionName}</strong>
-								{Math.round(region.latency_ms)}ms
+								{Math.round(region.latency_ms)}
+								{tI18n("resources.AgentLatency.ms_f785c3ce")}
 							</div>
 						))}
 				</div>

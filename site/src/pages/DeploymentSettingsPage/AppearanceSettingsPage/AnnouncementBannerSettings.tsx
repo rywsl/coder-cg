@@ -1,5 +1,6 @@
 import { PlusIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { BannerConfig } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
 import { ConfirmDialog } from "#/components/Dialog/ConfirmDialog/ConfirmDialog";
@@ -30,12 +31,18 @@ type NewBannerButtonProps = {
 	onClick: () => void;
 };
 
-const NewBannerButton: FC<NewBannerButtonProps> = ({ onClick }) => (
-	<Button onClick={onClick} variant="outline">
-		<PlusIcon />
-		New announcement
-	</Button>
-);
+const NewBannerButton: FC<NewBannerButtonProps> = ({ onClick }) => {
+	const { t: tI18n } = useTranslation("administration");
+
+	return (
+		<Button onClick={onClick} variant="outline">
+			<PlusIcon />
+			{tI18n(
+				"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerSettings.new_announcement_93bff012",
+			)}
+		</Button>
+	);
+};
 
 interface AnnouncementBannersettingsProps {
 	isEntitled: boolean;
@@ -52,6 +59,8 @@ type EditingBanner = {
 export const AnnouncementBannerSettings: FC<
 	AnnouncementBannersettingsProps
 > = ({ isEntitled, announcementBanners, onSubmit }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const [banners, setBanners] = useState(announcementBanners);
 	const [editingBanner, setEditingBanner] = useState<EditingBanner | null>(
 		null,
@@ -88,37 +97,67 @@ export const AnnouncementBannerSettings: FC<
 					}
 				>
 					<SettingsHeaderTitle hierarchy="secondary" level="h2">
-						Announcement Banners
+						{tI18n(
+							"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerSettings.announcement_banners_aa164e15",
+						)}
 					</SettingsHeaderTitle>
 					<SettingsHeaderDescription>
-						Display message banners to all users.
+						{tI18n(
+							"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerSettings.display_message_banners_to_all_users_1928dc5a",
+						)}
 						{!isEntitled && (
 							<>
 								{" "}
-								Your license does not include Service Banners.{" "}
+								{tI18n(
+									"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerSettings.your_license_does_not_include_service_banners_3dbb17e4",
+								)}{" "}
 								<Link href="mailto:sales@coder.com" showExternalIcon={false}>
-									Contact sales
+									{tI18n(
+										"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerSettings.contact_sales_604abea3",
+									)}
 								</Link>{" "}
-								to learn more.
+								{tI18n(
+									"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerSettings.to_learn_more_f4ee0f23",
+								)}
 							</>
 						)}
 					</SettingsHeaderDescription>
 				</SettingsHeader>
 
-				<Table aria-label="Announcement banners">
+				<Table
+					aria-label={tI18n(
+						"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerSettings.announcement_banners_1efdc71c",
+					)}
+				>
 					<TableHeader>
 						<TableRow>
-							<TableHead className="w-[1%] pl-5">Enabled</TableHead>
-							<TableHead>Message</TableHead>
-							<TableHead className="w-[2%]">Color</TableHead>
+							<TableHead className="w-[1%] pl-5">
+								{tI18n(
+									"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerSettings.enabled_92c1cdfd",
+								)}
+							</TableHead>
+							<TableHead>
+								{tI18n(
+									"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerSettings.message_2f77668a",
+								)}
+							</TableHead>
+							<TableHead className="w-[2%]">
+								{tI18n(
+									"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerSettings.color_6b73191a",
+								)}
+							</TableHead>
 							<TableHead className="w-[1%]" />
 						</TableRow>
 					</TableHeader>
 					<TableBody>
 						{!isEntitled || banners.length < 1 ? (
 							<TableEmpty
-								message="No announcement banners"
-								description="Create a banner to display a message to all users."
+								message={tI18n(
+									"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerSettings.no_announcement_banners_e1ca4de0",
+								)}
+								description={tI18n(
+									"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerSettings.create_a_banner_to_display_a_message_to_all_user_f7cc929e",
+								)}
 								cta={
 									isEntitled ? (
 										<NewBannerButton onClick={openCreateDialog} />
@@ -144,7 +183,6 @@ export const AnnouncementBannerSettings: FC<
 					</TableBody>
 				</Table>
 			</div>
-
 			{editingBanner && (
 				<AnnouncementBannerDialog
 					banner={editingBanner.banner}
@@ -163,12 +201,13 @@ export const AnnouncementBannerSettings: FC<
 					}}
 				/>
 			)}
-
 			{deletingBanner && (
 				<ConfirmDialog
 					type="delete"
 					open
-					title="Delete this banner?"
+					title={tI18n(
+						"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerSettings.delete_this_banner_23ed05d9",
+					)}
 					description={deletingBanner.message}
 					onClose={() => setDeletingBannerId(null)}
 					onConfirm={async () => {

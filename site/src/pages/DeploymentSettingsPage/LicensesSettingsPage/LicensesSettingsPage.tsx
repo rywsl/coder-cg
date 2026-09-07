@@ -1,4 +1,5 @@
 import { type FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useSearchParams } from "react-router";
 import { toast } from "sonner";
@@ -12,6 +13,8 @@ import { pageTitle } from "#/utils/page";
 import LicensesSettingsPageView from "./LicensesSettingsPageView";
 
 const LicensesSettingsPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const queryClient = useQueryClient();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const success = searchParams.get("success");
@@ -31,7 +34,9 @@ const LicensesSettingsPage: FC = () => {
 			toast.error(
 				getErrorMessage(
 					entitlementsQuery.error,
-					"Failed to fetch entitlements.",
+					tI18n(
+						"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPage.failed_to_fetch_entitlements_e415ee6b",
+					),
 				),
 				{
 					description: getErrorDetail(entitlementsQuery.error),
@@ -44,13 +49,22 @@ const LicensesSettingsPage: FC = () => {
 		useMutation({
 			mutationFn: API.removeLicense,
 			onSuccess: () => {
-				toast.success("Successfully removed license.");
+				toast.success(
+					tI18n(
+						"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPage.successfully_removed_license_0bf2f28b",
+					),
+				);
 				void queryClient.invalidateQueries({ queryKey: licensesKey });
 			},
 			onError: (error) => {
-				toast.error("Failed to remove license.", {
-					description: getErrorDetail(error),
-				});
+				toast.error(
+					tI18n(
+						"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPage.failed_to_remove_license_b48f8f20",
+					),
+					{
+						description: getErrorDetail(error),
+					},
+				);
 			},
 		});
 
@@ -74,8 +88,13 @@ const LicensesSettingsPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("License Settings")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n(
+						"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPage.license_settings_13bb208a",
+					),
+				)}
+			</title>
 			<LicensesSettingsPageView
 				showConfetti={confettiOn}
 				isLoading={isLoading}
@@ -101,11 +120,23 @@ const LicensesSettingsPage: FC = () => {
 				refreshEntitlements={async () => {
 					try {
 						await refreshEntitlementsMutation.mutateAsync();
-						toast.success("Successfully removed license.");
+						toast.success(
+							tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPage.successfully_removed_license_0bf2f28b",
+							),
+						);
 					} catch (error) {
-						toast.error(getErrorMessage(error, "Failed to remove license."), {
-							description: getErrorDetail(error),
-						});
+						toast.error(
+							getErrorMessage(
+								error,
+								tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPage.failed_to_remove_license_b48f8f20",
+								),
+							),
+							{
+								description: getErrorDetail(error),
+							},
+						);
 					}
 				}}
 			/>

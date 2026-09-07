@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate, useSearchParams } from "react-router";
 import { toast } from "sonner";
@@ -19,6 +20,8 @@ import {
 import AddModelPageView from "./AddModelPageView";
 
 const AddModelPage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 	const [searchParams] = useSearchParams();
@@ -41,7 +44,16 @@ const AddModelPage: FC = () => {
 	if (requestedOrganizationDenied) {
 		return (
 			<>
-				<title>{pageTitle("Add model", "AI Settings")}</title>
+				<title>
+					{pageTitle(
+						tI18n(
+							"AISettingsPage.ModelsPage.AddModelPage.AddModelPage.add_model_b2609f7d",
+						),
+						tI18n(
+							"AISettingsPage.ModelsPage.AddModelPage.AddModelPage.ai_settings_a8e5e2c6",
+						),
+					)}
+				</title>
 				<RequirePermission isFeatureVisible={false} />
 			</>
 		);
@@ -57,8 +69,16 @@ const AddModelPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Add model", "AI Settings")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n(
+						"AISettingsPage.ModelsPage.AddModelPage.AddModelPage.add_model_b2609f7d",
+					),
+					tI18n(
+						"AISettingsPage.ModelsPage.AddModelPage.AddModelPage.ai_settings_a8e5e2c6",
+					),
+				)}
+			</title>
 			<RequirePermission
 				isFeatureVisible={permissions?.createChatModelConfigs ?? false}
 			>
@@ -85,11 +105,23 @@ const AddModelPage: FC = () => {
 								req,
 							});
 							toast.success(
-								`Model "${created.display_name || created.model}" added.`,
+								tI18n(
+									"AISettingsPage.ModelsPage.AddModelPage.AddModelPage.model_value0_added_33b13ef2",
+									{
+										value0: created.display_name || created.model,
+									},
+								),
 							);
 							await navigate(organizationModelPath(organization, created.id));
 						} catch (error) {
-							toast.error(getErrorMessage(error, "Failed to add model."));
+							toast.error(
+								getErrorMessage(
+									error,
+									tI18n(
+										"AISettingsPage.ModelsPage.AddModelPage.AddModelPage.failed_to_add_model_eecfabf2",
+									),
+								),
+							);
 						}
 					}}
 				/>

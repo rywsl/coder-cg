@@ -1,5 +1,6 @@
 import { CircleAlertIcon, RotateCcwIcon } from "lucide-react";
 import { type FC, type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { toast } from "sonner";
 import { getErrorDetail, getErrorMessage } from "#/api/errors";
@@ -32,6 +33,8 @@ export const WorkspaceOutdatedTooltip: FC<WorkspaceOutdatedTooltipProps> = ({
 	workspace,
 	children,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [isOpen, setIsOpen] = useState(false);
 
 	// Stop activation from bubbling to a parent `useClickableTableRow` row,
@@ -64,7 +67,11 @@ export const WorkspaceOutdatedTooltip: FC<WorkspaceOutdatedTooltipProps> = ({
 					onKeyUp={stopPropagation}
 				>
 					<CircleAlertIcon className="text-content-secondary" />
-					<span className="sr-only">Outdated info</span>
+					<span className="sr-only">
+						{tI18n(
+							"workspaces.WorkspaceOutdatedTooltip.WorkspaceOutdatedTooltip.outdated_info_0740ff9f",
+						)}
+					</span>
 				</HelpPopoverIconTrigger>
 			)}
 			<WorkspaceOutdatedTooltipContent isOpen={isOpen} workspace={workspace} />
@@ -78,6 +85,8 @@ const WorkspaceOutdatedTooltipContent: FC<TooltipContentProps> = ({
 	workspace,
 	isOpen,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const getLink = useLinks();
 	const { data: activeVersion } = useQuery({
 		...templateVersion(workspace.template_active_version_id),
@@ -88,7 +97,15 @@ const WorkspaceOutdatedTooltipContent: FC<TooltipContentProps> = ({
 		latestVersion: activeVersion,
 		onError: (error) => {
 			toast.error(
-				getErrorMessage(error, `Error updating workspace "${workspace.name}".`),
+				getErrorMessage(
+					error,
+					tI18n(
+						"workspaces.WorkspaceOutdatedTooltip.WorkspaceOutdatedTooltip.error_updating_workspace_value0_5d8f4fb2",
+						{
+							value0: workspace.name,
+						},
+					),
+				),
 				{
 					description: getErrorDetail(error),
 				},
@@ -103,15 +120,23 @@ const WorkspaceOutdatedTooltipContent: FC<TooltipContentProps> = ({
 	return (
 		<>
 			<HelpPopoverContent disablePortal={false}>
-				<HelpPopoverTitle>Outdated</HelpPopoverTitle>
+				<HelpPopoverTitle>
+					{tI18n(
+						"workspaces.WorkspaceOutdatedTooltip.WorkspaceOutdatedTooltip.outdated_c759f42e",
+					)}
+				</HelpPopoverTitle>
 				<HelpPopoverText className="text-xs font-normal">
-					This workspace version is outdated and a newer version is available.
+					{tI18n(
+						"workspaces.WorkspaceOutdatedTooltip.WorkspaceOutdatedTooltip.this_workspace_version_is_outdated_and_a_newer_v_e48d03ce",
+					)}
 				</HelpPopoverText>
 
 				<div className="flex flex-col gap-2 py-2 text-xs font-normal">
 					<div className="leading-[1.6]">
 						<div className="text-content-primary text-sm font-semibold">
-							New version
+							{tI18n(
+								"workspaces.WorkspaceOutdatedTooltip.WorkspaceOutdatedTooltip.new_version_7246e01b",
+							)}
 						</div>
 						<div>
 							{activeVersion ? (
@@ -133,11 +158,16 @@ const WorkspaceOutdatedTooltipContent: FC<TooltipContentProps> = ({
 
 					<div className="leading-[1.6]">
 						<div className="text-content-primary text-sm font-semibold">
-							Message
+							{tI18n(
+								"workspaces.WorkspaceOutdatedTooltip.WorkspaceOutdatedTooltip.message_2f77668a",
+							)}
 						</div>
 						<div>
 							{activeVersion ? (
-								activeVersion.message || "No message"
+								activeVersion.message ||
+								tI18n(
+									"workspaces.WorkspaceOutdatedTooltip.WorkspaceOutdatedTooltip.no_message_f4e72a06",
+								)
 							) : (
 								<Skeleton variant="text" height={20} width={150} />
 							)}
@@ -150,7 +180,9 @@ const WorkspaceOutdatedTooltipContent: FC<TooltipContentProps> = ({
 						icon={RotateCcwIcon}
 						onClick={updateWorkspace.update}
 					>
-						Update
+						{tI18n(
+							"workspaces.WorkspaceOutdatedTooltip.WorkspaceOutdatedTooltip.update_c1c1009d",
+						)}
 					</HelpPopoverAction>
 				</HelpPopoverLinksGroup>
 			</HelpPopoverContent>

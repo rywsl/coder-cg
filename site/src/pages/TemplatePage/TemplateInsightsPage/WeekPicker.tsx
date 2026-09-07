@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { ChevronDownIcon } from "#/components/AnimatedIcons/ChevronDown";
 import { Button } from "#/components/Button/Button";
 import type { DateRangeValue } from "#/components/DateRangePicker/DateRangePicker";
@@ -22,6 +23,8 @@ interface WeekPickerProps {
 }
 
 export const WeekPicker: FC<WeekPickerProps> = ({ value, onChange }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const numberOfWeeks = dayjs(value.endDate).diff(
 		dayjs(value.startDate),
 		"week",
@@ -31,7 +34,9 @@ export const WeekPicker: FC<WeekPickerProps> = ({ value, onChange }) => {
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button variant="outline">
-					Last {numberOfWeeks} weeks
+					{tI18n("TemplatePage.TemplateInsightsPage.WeekPicker.last_69862ac1")}
+					{numberOfWeeks}
+					{tI18n("TemplatePage.TemplateInsightsPage.WeekPicker.weeks_8941244d")}
 					<ChevronDownIcon />
 				</Button>
 			</DropdownMenuTrigger>
@@ -42,7 +47,13 @@ export const WeekPicker: FC<WeekPickerProps> = ({ value, onChange }) => {
 				>
 					{numberOfWeeksOptions.map((option) => (
 						<DropdownMenuRadioItem key={option} value={String(option)}>
-							Last {option} weeks
+							{tI18n(
+								"TemplatePage.TemplateInsightsPage.WeekPicker.last_69862ac1",
+							)}
+							{option}
+							{tI18n(
+								"TemplatePage.TemplateInsightsPage.WeekPicker.weeks_8941244d",
+							)}
 						</DropdownMenuRadioItem>
 					))}
 				</DropdownMenuRadioGroup>

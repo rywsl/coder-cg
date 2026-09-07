@@ -1,6 +1,7 @@
 import { toast } from "sonner";
 import { getErrorMessage, isApiErrorResponse } from "#/api/errors";
 import { ChatAttachmentMediaTypes } from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 import { decodeDataURL } from "./dataUrls";
 
 const undisplayableAttachmentDetail = "File exists but could not be displayed.";
@@ -110,18 +111,43 @@ const shareFileViaSheet = (file: File, fileName: string): Promise<void> =>
 		if (error instanceof DOMException && error.name === "NotAllowedError") {
 			// Fetching may outlast transient user activation. The toast action
 			// supplies a fresh gesture for the retry.
-			toast.error(`Couldn't download ${fileName}`, {
-				description: "The file is ready to save.",
-				action: {
-					label: "Save",
-					onClick: () => void shareFileViaSheet(file, fileName),
+			toast.error(
+				i18n.t(
+					"agents:AgentsPage.utils.chatAttachments.couldn_t_download_value0_7210249d",
+					{
+						value0: fileName,
+					},
+				),
+				{
+					description: i18n.t(
+						"agents:AgentsPage.utils.chatAttachments.the_file_is_ready_to_save_63eb1971",
+					),
+					action: {
+						label: i18n.t(
+							"agents:AgentsPage.utils.chatAttachments.save_1509f561",
+						),
+						onClick: () => void shareFileViaSheet(file, fileName),
+					},
 				},
-			});
+			);
 			return;
 		}
-		toast.error(`Couldn't download ${fileName}`, {
-			description: getErrorMessage(error, "Sharing failed."),
-		});
+		toast.error(
+			i18n.t(
+				"agents:AgentsPage.utils.chatAttachments.couldn_t_download_value0_7210249d",
+				{
+					value0: fileName,
+				},
+			),
+			{
+				description: getErrorMessage(
+					error,
+					i18n.t(
+						"agents:AgentsPage.utils.chatAttachments.sharing_failed_154f8e85",
+					),
+				),
+			},
+		);
 	});
 
 const shareAttachmentFile = async (
@@ -131,9 +157,19 @@ const shareAttachmentFile = async (
 	if (target.href.startsWith("data:")) {
 		const decoded = fileFromDataURL(target);
 		if (!decoded) {
-			toast.error(`Couldn't download ${target.fileName}`, {
-				description: "The attachment data could not be decoded.",
-			});
+			toast.error(
+				i18n.t(
+					"agents:AgentsPage.utils.chatAttachments.couldn_t_download_value0_7210249d",
+					{
+						value0: target.fileName,
+					},
+				),
+				{
+					description: i18n.t(
+						"agents:AgentsPage.utils.chatAttachments.the_attachment_data_could_not_be_decoded_f549fbc4",
+					),
+				},
+			);
 			return;
 		}
 		file = decoded;
@@ -152,9 +188,22 @@ const shareAttachmentFile = async (
 				type: blob.type || target.mediaType || "application/octet-stream",
 			});
 		} catch (error) {
-			toast.error(`Couldn't download ${target.fileName}`, {
-				description: getErrorMessage(error, "The file could not be fetched."),
-			});
+			toast.error(
+				i18n.t(
+					"agents:AgentsPage.utils.chatAttachments.couldn_t_download_value0_7210249d",
+					{
+						value0: target.fileName,
+					},
+				),
+				{
+					description: getErrorMessage(
+						error,
+						i18n.t(
+							"agents:AgentsPage.utils.chatAttachments.the_file_could_not_be_fetched_de1c867c",
+						),
+					),
+				},
+			);
 			return;
 		}
 	}

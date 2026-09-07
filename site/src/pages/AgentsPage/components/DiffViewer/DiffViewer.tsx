@@ -20,8 +20,10 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
 import { Skeleton } from "#/components/Skeleton/Skeleton";
+import { i18n } from "#/i18n";
 import { useTheme } from "#/theme/context";
 import { countChangedLines } from "../../utils/countChangedLines";
 import { changeColor, changeLabel } from "../../utils/diffColors";
@@ -394,8 +396,16 @@ const DIFF_SKELETON_FILES = [
 ] as const;
 
 function DiffViewerSkeleton() {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
-		<div role="status" aria-label="Loading diff" aria-busy>
+		<div
+			role="status"
+			aria-label={tI18n(
+				"AgentsPage.components.DiffViewer.DiffViewer.loading_diff_793544c4",
+			)}
+			aria-busy
+		>
 			{DIFF_SKELETON_FILES.map((groups, fileIndex) => (
 				<SkeletonFile key={fileIndex} groups={groups} />
 			))}
@@ -408,7 +418,9 @@ export const DiffViewer: FC<DiffViewerProps> = ({
 	isExpanded,
 	isLoading,
 	error,
-	emptyMessage = "No file changes to display.",
+	emptyMessage = i18n.t(
+		"agents:AgentsPage.components.DiffViewer.DiffViewer.no_file_changes_to_display_6e35b0fb",
+	),
 	diffStyle,
 	onLineNumberClick,
 	onLineSelected,

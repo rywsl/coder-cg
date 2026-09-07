@@ -1,4 +1,5 @@
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useLocation, useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -24,6 +25,8 @@ import { buildAgentChatPath } from "./utils/navigation";
 const lastModelConfigIDStorageKey = "agents.last-model-config-id";
 
 const AgentCreatePage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const queryClient = useQueryClient();
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -91,7 +94,17 @@ const AgentCreatePage: FC = () => {
 			}
 		} catch (error) {
 			const action = webPush.subscribed ? "disable" : "enable";
-			toast.error(getErrorMessage(error, `Failed to ${action} notifications.`));
+			toast.error(
+				getErrorMessage(
+					error,
+					tI18n(
+						"AgentsPage.AgentCreatePage.failed_to_value0_notifications_ed6c5fe0",
+						{
+							value0: action,
+						},
+					),
+				),
+			);
 		}
 	};
 

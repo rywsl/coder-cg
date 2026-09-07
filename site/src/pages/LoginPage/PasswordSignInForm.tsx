@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import * as Yup from "yup";
 import { Button } from "#/components/Button/Button";
@@ -20,11 +21,21 @@ export const PasswordSignInForm: FC<PasswordSignInFormProps> = ({
 	isSigningIn,
 	autoFocus,
 }) => {
+	const { t: tI18n } = useTranslation("auth");
+
 	const validationSchema = Yup.object({
 		email: Yup.string()
 			.trim()
-			.email("Please enter a valid email address.")
-			.required("Please enter an email address."),
+			.email(
+				tI18n(
+					"LoginPage.PasswordSignInForm.please_enter_a_valid_email_address_958e4ccf",
+				),
+			)
+			.required(
+				tI18n(
+					"LoginPage.PasswordSignInForm.please_enter_an_email_address_201953c9",
+				),
+			),
 		password: Yup.string(),
 	});
 
@@ -47,7 +58,7 @@ export const PasswordSignInForm: FC<PasswordSignInFormProps> = ({
 		<form onSubmit={form.handleSubmit} className="flex flex-col gap-5">
 			<div className="flex flex-col items-start gap-2">
 				<Label htmlFor={emailField.id}>
-					Email{" "}
+					{tI18n("LoginPage.PasswordSignInForm.email_969ccbd3")}{" "}
 					<span className="text-xs text-content-destructive font-bold">*</span>
 				</Label>
 				<Input
@@ -71,10 +82,9 @@ export const PasswordSignInForm: FC<PasswordSignInFormProps> = ({
 					</span>
 				)}
 			</div>
-
 			<div className="flex flex-col items-start gap-2">
 				<Label htmlFor={passwordField.id}>
-					Password{" "}
+					{tI18n("LoginPage.PasswordSignInForm.password_e7cf3ef4")}{" "}
 					<span className="text-xs text-content-destructive font-bold">*</span>
 				</Label>
 				<Input
@@ -97,12 +107,10 @@ export const PasswordSignInForm: FC<PasswordSignInFormProps> = ({
 					</span>
 				)}
 			</div>
-
 			<Button size="lg" disabled={isSigningIn} className="w-full" type="submit">
 				<Spinner loading={isSigningIn} />
-				Sign In
+				{tI18n("LoginPage.PasswordSignInForm.sign_in_bcc0bcc9")}
 			</Button>
-
 			<Link
 				asChild
 				size="sm"
@@ -117,7 +125,7 @@ export const PasswordSignInForm: FC<PasswordSignInFormProps> = ({
 					}
 					className="mx-auto"
 				>
-					Forgot password?
+					{tI18n("LoginPage.PasswordSignInForm.forgot_password_30c1d8d3")}
 				</RouterLink>
 			</Link>
 		</form>

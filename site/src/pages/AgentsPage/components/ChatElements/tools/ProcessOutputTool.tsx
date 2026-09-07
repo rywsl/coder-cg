@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { OctagonXIcon } from "lucide-react";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { CopyButton } from "#/components/CopyButton/CopyButton";
 import { ScrollArea } from "#/components/ScrollArea/ScrollArea";
@@ -9,6 +10,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { i18n } from "#/i18n";
 import {
 	type AgentDisplayState,
 	resolveAgentDisplayState,
@@ -57,10 +59,17 @@ const getProcessOutputLabel = ({
 		return intent;
 	}
 	if (!trimmedCommand) {
-		return "Process output";
+		return i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.ProcessOutputTool.process_output_83b5f836",
+		);
 	}
 	if (isRunning) {
-		return `Checking ${trimmedCommand}`;
+		return i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.ProcessOutputTool.checking_value0_45df8f77",
+			{
+				value0: trimmedCommand,
+			},
+		);
 	}
 	return `${isFailed ? "Failed" : "Checked"} ${trimmedCommand}`;
 };
@@ -77,6 +86,8 @@ export const ProcessOutputTool: React.FC<ProcessOutputToolProps> = ({
 	killedBySignal,
 	shellToolDisplayMode,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const autoDisplayState: AgentDisplayState =
 		output.length > 0 ? "preview" : "collapsed";
 	const defaultView = resolveAgentDisplayState(
@@ -97,11 +108,22 @@ export const ProcessOutputTool: React.FC<ProcessOutputToolProps> = ({
 			className="group/proc w-full"
 			status={status}
 			isError={isError}
-			errorMessage={errorMessage || "Failed to read process output"}
+			errorMessage={
+				errorMessage ||
+				tI18n(
+					"AgentsPage.components.ChatElements.tools.ProcessOutputTool.failed_to_read_process_output_6df9635d",
+				)
+			}
 			hasContent={hasOutput}
 			defaultView={defaultView}
 			ariaLabel={(expanded) =>
-				expanded ? "Collapse process output" : "Expand process output"
+				expanded
+					? tI18n(
+							"AgentsPage.components.ChatElements.tools.ProcessOutputTool.collapse_process_output_4557f046",
+						)
+					: tI18n(
+							"AgentsPage.components.ChatElements.tools.ProcessOutputTool.expand_process_output_62342001",
+						)
 			}
 		>
 			<ToolCall.HeaderLayout>
@@ -138,13 +160,18 @@ export const ProcessOutputTool: React.FC<ProcessOutputToolProps> = ({
 						)}
 						{isFailed && (
 							<span className="rounded px-1.5 py-0.5 font-mono text-2xs leading-none bg-surface-red text-content-destructive">
-								exit {exitCode}
+								{tI18n(
+									"AgentsPage.components.ChatElements.tools.ProcessOutputTool.exit_1d8dd282",
+								)}
+								{exitCode}
 							</span>
 						)}
 						{hasOutput && (
 							<CopyButton
 								text={output}
-								label="Copy output"
+								label={tI18n(
+									"AgentsPage.components.ChatElements.tools.ProcessOutputTool.copy_output_8577c32c",
+								)}
 								className="-my-0.5 size-6 p-0 opacity-0 transition-opacity hover:bg-surface-tertiary group-hover/proc:opacity-100 focus-visible:opacity-100"
 							/>
 						)}
@@ -156,7 +183,9 @@ export const ProcessOutputTool: React.FC<ProcessOutputToolProps> = ({
 					className="mt-2 rounded-xl bg-surface-secondary/60 text-2xs"
 					viewportClassName="max-h-64"
 					viewportTabIndex={0}
-					viewportAriaLabel="Process output"
+					viewportAriaLabel={tI18n(
+						"AgentsPage.components.ChatElements.tools.ProcessOutputTool.process_output_83b5f836",
+					)}
 					scrollBarClassName="w-1.5"
 				>
 					<pre

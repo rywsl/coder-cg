@@ -1,5 +1,6 @@
 import { ChevronRightIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import {
 	Area,
@@ -23,12 +24,16 @@ import {
 } from "#/components/Collapsible/Collapsible";
 import { Link } from "#/components/Link/Link";
 import { Spinner } from "#/components/Spinner/Spinner";
+import { i18n } from "#/i18n";
+import { currentIntlLocale } from "#/i18n/locale";
 import { docs } from "#/utils/docs";
 import { formatDate } from "#/utils/time";
 
 const chartConfig = {
 	users: {
-		label: "Users",
+		label: i18n.t(
+			"administration:DeploymentSettingsPage.LicensesSettingsPage.LicenseSeatConsumptionChart.users_6b0cc904",
+		),
 		color: "hsl(var(--highlight-purple))",
 	},
 } satisfies ChartConfig;
@@ -46,13 +51,17 @@ type LicenseSeatConsumptionChartProps = {
 export const LicenseSeatConsumptionChart: FC<
 	LicenseSeatConsumptionChartProps
 > = ({ data, limit }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<section className="border border-solid rounded">
 			<div className="p-4">
 				<Collapsible>
 					<header className="flex flex-col gap-2 items-start">
 						<h3 className="text-md m-0 font-medium">
-							License seat consumption
+							{tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.LicenseSeatConsumptionChart.license_seat_consumption_be53b906",
+							)}
 						</h3>
 
 						<CollapsibleTrigger asChild>
@@ -64,7 +73,9 @@ export const LicenseSeatConsumptionChart: FC<
 								`}
 							>
 								<ChevronRightIcon />
-								How we calculate license seat consumption
+								{tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.LicenseSeatConsumptionChart.how_we_calculate_license_seat_consumption_44d69f0f",
+								)}
 							</Button>
 						</CollapsibleTrigger>
 					</header>
@@ -77,41 +88,57 @@ export const LicenseSeatConsumptionChart: FC<
 						`}
 					>
 						<p>
-							Licenses are consumed based on the status of user accounts. Only
-							Active user accounts are consuming license seats.
+							{tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.LicenseSeatConsumptionChart.licenses_are_consumed_based_on_the_status_of_use_1fcda647",
+							)}
 						</p>
 						<ul>
 							<li className="flex items-center gap-2">
 								<div className="rounded-[2px] bg-highlight-green size-3 inline-block">
 									<span className="sr-only">
-										Legend for active users in the chart
+										{tI18n(
+											"DeploymentSettingsPage.LicensesSettingsPage.LicenseSeatConsumptionChart.legend_for_active_users_in_the_chart_feaf5ce0",
+										)}
 									</span>
 								</div>
-								The user was active at least once during the last 90 days.
+								{tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.LicenseSeatConsumptionChart.the_user_was_active_at_least_once_during_the_las_3188a3ff",
+								)}
 							</li>
 							<li className="flex items-center gap-2">
 								<div className="size-3 inline-flex items-center justify-center">
 									<span className="sr-only">
-										Legend for license seat limit in the chart
+										{tI18n(
+											"DeploymentSettingsPage.LicensesSettingsPage.LicenseSeatConsumptionChart.legend_for_license_seat_limit_in_the_chart_a6f0c03b",
+										)}
 									</span>
 									<div className="w-full border-dashed border-content-disabled" />
 								</div>
-								Current license seat limit, or the maximum number of allowed
-								Active accounts.
+								{tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.LicenseSeatConsumptionChart.current_license_seat_limit_or_the_maximum_number_7097c8ad",
+								)}
 							</li>
 						</ul>
 						<div>
-							You might also check:
+							{tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.LicenseSeatConsumptionChart.you_might_also_check_a85d9355",
+							)}
 							<ul>
 								<li>
 									<Link asChild>
-										<RouterLink to="/audit">Activity Audit</RouterLink>
+										<RouterLink to="/audit">
+											{tI18n(
+												"DeploymentSettingsPage.LicensesSettingsPage.LicenseSeatConsumptionChart.activity_audit_11dfc62e",
+											)}
+										</RouterLink>
 									</Link>
 								</li>
 								<li>
 									<Link asChild>
 										<RouterLink to="/deployment/overview">
-											Daily user activity
+											{tI18n(
+												"DeploymentSettingsPage.LicensesSettingsPage.LicenseSeatConsumptionChart.daily_user_activity_575872d0",
+											)}
 										</RouterLink>
 									</Link>
 								</li>
@@ -121,7 +148,9 @@ export const LicenseSeatConsumptionChart: FC<
 										target="_blank"
 										rel="noreferrer"
 									>
-										More details on user account statuses
+										{tI18n(
+											"DeploymentSettingsPage.LicensesSettingsPage.LicenseSeatConsumptionChart.more_details_on_user_account_statuses_7237ff90",
+										)}
 									</Link>
 								</li>
 							</ul>
@@ -129,7 +158,6 @@ export const LicenseSeatConsumptionChart: FC<
 					</CollapsibleContent>
 				</Collapsible>
 			</div>
-
 			<div className="p-6 border-0 border-t border-solid">
 				<div className="h-64">
 					{data ? (
@@ -172,7 +200,9 @@ export const LicenseSeatConsumptionChart: FC<
 										axisLine={false}
 										tickMargin={12}
 										tickFormatter={(value: number) => {
-											return value === 0 ? "" : value.toLocaleString();
+											return value === 0
+												? ""
+												: value.toLocaleString(currentIntlLocale());
 										}}
 									/>
 									<ChartTooltip
@@ -187,7 +217,7 @@ export const LicenseSeatConsumptionChart: FC<
 												}}
 												formatter={(_v, _n, item) => {
 													const date = new Date(item.payload.date);
-													return date.toLocaleString(undefined, {
+													return date.toLocaleString(currentIntlLocale(), {
 														month: "long",
 														day: "2-digit",
 													});
@@ -242,7 +272,9 @@ export const LicenseSeatConsumptionChart: FC<
 									text-content-secondary text-sm font-medium
 								`}
 							>
-								No data available
+								{tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.LicenseSeatConsumptionChart.no_data_available_d2d2d48c",
+								)}
 							</div>
 						)
 					) : (

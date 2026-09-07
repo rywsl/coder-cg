@@ -1,8 +1,10 @@
 import { File as FileViewer } from "@pierre/diffs/react";
 import { cn } from "cn";
 import { type ComponentPropsWithRef, type FC, memo } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { ScrollArea } from "#/components/ScrollArea/ScrollArea";
+import { i18n } from "#/i18n";
 import { useTheme } from "#/theme/context";
 import { AdvisorTool, type AdvisorToolResultType } from "./AdvisorTool";
 import {
@@ -300,6 +302,8 @@ const ReadSkillRenderer: FC<ToolRendererProps> = ({
 	result,
 	isError,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const parsedArgs = parseArgs(args);
 	const skillName = parsedArgs ? asString(parsedArgs.name) : "";
 	const rec = asRecord(result);
@@ -307,7 +311,18 @@ const ReadSkillRenderer: FC<ToolRendererProps> = ({
 
 	return (
 		<ReadSkillTool
-			label={skillName ? `skill ${skillName}` : "skill"}
+			label={
+				skillName
+					? tI18n(
+							"AgentsPage.components.ChatElements.tools.Tool.skill_value0_44d40a3c",
+							{
+								value0: skillName,
+							},
+						)
+					: tI18n(
+							"AgentsPage.components.ChatElements.tools.Tool.skill_9c53c074",
+						)
+			}
 			body={body}
 			status={status}
 			isError={isError}
@@ -856,35 +871,44 @@ type ToolFileViewerProps = {
 	options: ComponentPropsWithRef<typeof FileViewer>["options"];
 };
 
-const ToolFileViewer: FC<ToolFileViewerProps> = ({ label, file, options }) => (
-	<>
-		{label && (
-			<div className="mt-2 text-2xs font-medium text-content-secondary">
-				{label}
-			</div>
-		)}
-		<ScrollArea
-			className="mt-1.5 rounded-md border border-solid border-border-default text-2xs"
-			viewportClassName="max-h-64"
-			viewportTabIndex={0}
-			viewportAriaLabel={`Contents of ${file.name}`}
-			orientation="both"
-			scrollBarClassName="w-1.5"
-			horizontalScrollBarClassName="h-1.5"
-		>
-			<FileViewer
-				file={file}
-				options={options}
-				style={DIFFS_FONT_STYLE}
-				renderCustomHeader={
-					options?.disableFileHeader
-						? undefined
-						: (file) => <DiffFileHeader file={file} />
-				}
-			/>
-		</ScrollArea>
-	</>
-);
+const ToolFileViewer: FC<ToolFileViewerProps> = ({ label, file, options }) => {
+	const { t: tI18n } = useTranslation("agents");
+
+	return (
+		<>
+			{label && (
+				<div className="mt-2 text-2xs font-medium text-content-secondary">
+					{label}
+				</div>
+			)}
+			<ScrollArea
+				className="mt-1.5 rounded-md border border-solid border-border-default text-2xs"
+				viewportClassName="max-h-64"
+				viewportTabIndex={0}
+				viewportAriaLabel={tI18n(
+					"AgentsPage.components.ChatElements.tools.Tool.contents_of_value0_7ecb1ed5",
+					{
+						value0: file.name,
+					},
+				)}
+				orientation="both"
+				scrollBarClassName="w-1.5"
+				horizontalScrollBarClassName="h-1.5"
+			>
+				<FileViewer
+					file={file}
+					options={options}
+					style={DIFFS_FONT_STYLE}
+					renderCustomHeader={
+						options?.disableFileHeader
+							? undefined
+							: (file) => <DiffFileHeader file={file} />
+					}
+				/>
+			</ScrollArea>
+		</>
+	);
+};
 
 type GenericToolContentProps = {
 	toolInput: string | null;
@@ -901,6 +925,8 @@ const GenericToolContent: FC<GenericToolContentProps> = ({
 	isDark,
 	resultOutput,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const output = fileContent
 		? {
 				file: { name: fileContent.path, contents: fileContent.content },
@@ -917,14 +943,22 @@ const GenericToolContent: FC<GenericToolContentProps> = ({
 		<>
 			{toolInput && (
 				<ToolFileViewer
-					label="Input"
+					label={tI18n(
+						"AgentsPage.components.ChatElements.tools.Tool.input_36ecb4f8",
+					)}
 					file={{ name: "input.json", contents: toolInput }}
 					options={getFileViewerOptionsNoHeader(isDark)}
 				/>
 			)}
 			{output && (
 				<ToolFileViewer
-					label={toolInput ? "Output" : undefined}
+					label={
+						toolInput
+							? tI18n(
+									"AgentsPage.components.ChatElements.tools.Tool.output_b2439bcb",
+								)
+							: undefined
+					}
 					file={output.file}
 					options={output.options}
 				/>
@@ -941,7 +975,12 @@ const getGenericToolErrorMessage = ({
 	mcpSlug?: string;
 }): string => {
 	const displayName = humanizeMCPToolName(mcpSlug ?? "", name);
-	return `${displayName} failed`;
+	return i18n.t(
+		"agents:AgentsPage.components.ChatElements.tools.Tool.value0_failed_4006e2a3",
+		{
+			value0: displayName,
+		},
+	);
 };
 
 const GenericToolRenderer: FC<ToolRendererProps> = ({

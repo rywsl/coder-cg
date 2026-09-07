@@ -1,15 +1,23 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useDeploymentConfig } from "#/modules/management/DeploymentConfigProvider";
 import { pageTitle } from "#/utils/page";
 import { NetworkSettingsPageView } from "./NetworkSettingsPageView";
 
 const NetworkSettingsPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { deploymentConfig } = useDeploymentConfig();
 
 	return (
 		<>
-			<title>{pageTitle("Network Settings")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n(
+						"DeploymentSettingsPage.NetworkSettingsPage.NetworkSettingsPage.network_settings_a47d5574",
+					),
+				)}
+			</title>
 			<NetworkSettingsPageView options={deploymentConfig.options} />
 		</>
 	);

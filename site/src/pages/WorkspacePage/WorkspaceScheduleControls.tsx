@@ -2,6 +2,7 @@ import { cn } from "cn";
 import dayjs, { type Dayjs } from "dayjs";
 import { ClockIcon, MinusIcon, PlusIcon } from "lucide-react";
 import { type FC, type ReactNode, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import { Link as RouterLink } from "react-router";
 import { toast } from "sonner";
@@ -40,9 +41,16 @@ const WorkspaceScheduleContainer: FC<WorkspaceScheduleContainerProps> = ({
 	children,
 	onClickIcon,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const icon = (
 		<TopbarIcon>
-			<ClockIcon aria-label="Schedule" className="size-icon-sm" />
+			<ClockIcon
+				aria-label={tI18n(
+					"WorkspacePage.WorkspaceScheduleControls.schedule_f4830a1d",
+				)}
+				className="size-icon-sm"
+			/>
 		</TopbarIcon>
 	);
 
@@ -66,7 +74,9 @@ const WorkspaceScheduleContainer: FC<WorkspaceScheduleContainerProps> = ({
 						icon
 					)}
 				</TooltipTrigger>
-				<TooltipContent side="bottom">Schedule</TooltipContent>
+				<TooltipContent side="bottom">
+					{tI18n("WorkspacePage.WorkspaceScheduleControls.schedule_f4830a1d")}
+				</TooltipContent>
 			</Tooltip>
 			{children}
 		</TopbarData>
@@ -84,6 +94,8 @@ export const WorkspaceScheduleControls: FC<WorkspaceScheduleControlsProps> = ({
 	template,
 	canUpdateSchedule,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	if (!shouldDisplayScheduleControls(workspace)) {
 		return null;
 	}
@@ -102,7 +114,10 @@ export const WorkspaceScheduleControls: FC<WorkspaceScheduleControlsProps> = ({
 			) : (
 				<WorkspaceScheduleContainer>
 					<ScheduleSettingsLink>
-						Starts at {autostartDisplay(workspace.autostart_schedule)}
+						{tI18n(
+							"WorkspacePage.WorkspaceScheduleControls.starts_at_f2daa026",
+						)}
+						{autostartDisplay(workspace.autostart_schedule)}
 					</ScheduleSettingsLink>
 				</WorkspaceScheduleContainer>
 			)}
@@ -121,6 +136,8 @@ const AutostopDisplay: FC<AutostopDisplayProps> = ({
 	template,
 	canUpdateSchedule,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const queryClient = useQueryClient();
 	const deadline = getDeadline(workspace);
 	const maxDeadlineDecrease = getMaxDeadlineChange(deadline, getMinDeadline());
@@ -150,7 +167,12 @@ const AutostopDisplay: FC<AutostopDisplayProps> = ({
 		...updateDeadline(workspace),
 		onSuccess: (_, updatedDeadline) => {
 			toast.success(
-				`Shutdown time for "${workspace.name}" updated successfully.`,
+				tI18n(
+					"WorkspacePage.WorkspaceScheduleControls.shutdown_time_for_value0_updated_successfully_04ccefeb",
+					{
+						value0: workspace.name,
+					},
+				),
 			);
 			lastStableDeadline.current = updatedDeadline;
 		},
@@ -158,7 +180,12 @@ const AutostopDisplay: FC<AutostopDisplayProps> = ({
 			toast.error(
 				getErrorMessage(
 					error,
-					`Failed to update shutdown time for "${workspace.name}". Please try again.`,
+					tI18n(
+						"WorkspacePage.WorkspaceScheduleControls.failed_to_update_shutdown_time_for_value0_please_2d82dd21",
+						{
+							value0: workspace.name,
+						},
+					),
 				),
 				{
 					description: getErrorDetail(error),
@@ -223,11 +250,17 @@ const AutostopDisplay: FC<AutostopDisplayProps> = ({
 						}}
 					>
 						<MinusIcon />
-						<span className="sr-only">Subtract 1 hour from deadline</span>
+						<span className="sr-only">
+							{tI18n(
+								"WorkspacePage.WorkspaceScheduleControls.subtract_1_hour_from_deadline_78e67387",
+							)}
+						</span>
 					</Button>
 				</TooltipTrigger>
 				<TooltipContent side="bottom">
-					Subtract 1 hour from deadline
+					{tI18n(
+						"WorkspacePage.WorkspaceScheduleControls.subtract_1_hour_from_deadline_78e67387",
+					)}
 				</TooltipContent>
 			</Tooltip>
 			<Tooltip>
@@ -241,10 +274,18 @@ const AutostopDisplay: FC<AutostopDisplayProps> = ({
 						}}
 					>
 						<PlusIcon />
-						<span className="sr-only">Add 1 hour to deadline</span>
+						<span className="sr-only">
+							{tI18n(
+								"WorkspacePage.WorkspaceScheduleControls.add_1_hour_to_deadline_6b9bd8cf",
+							)}
+						</span>
 					</Button>
 				</TooltipTrigger>
-				<TooltipContent side="bottom">Add 1 hour to deadline</TooltipContent>
+				<TooltipContent side="bottom">
+					{tI18n(
+						"WorkspacePage.WorkspaceScheduleControls.add_1_hour_to_deadline_6b9bd8cf",
+					)}
+				</TooltipContent>
 			</Tooltip>
 		</div>
 	);

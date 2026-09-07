@@ -1,9 +1,11 @@
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { i18n } from "#/i18n";
 import type { Theme } from "#/theme";
 import { useTheme } from "#/theme/context";
 import { Bar } from "./Chart/Bar";
@@ -52,6 +54,8 @@ export const ScriptsChart: FC<ScriptsChartProps> = ({
 	timings,
 	onBack,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const generalTiming = mergeTimeRanges(timings.map((t) => t.range));
 	const totalTime = calcDuration(generalTiming);
 	const [ticks, scale] = makeTicks(totalTime);
@@ -78,7 +82,9 @@ export const ScriptsChart: FC<ScriptsChartProps> = ({
 					]}
 				/>
 				<ChartSearch
-					placeholder="Filter results..."
+					placeholder={tI18n(
+						"workspaces.WorkspaceTiming.ScriptsChart.filter_results_6335eaba",
+					)}
 					value={filter}
 					onChange={setFilter}
 				/>
@@ -87,7 +93,10 @@ export const ScriptsChart: FC<ScriptsChartProps> = ({
 			<ChartContent>
 				<YAxis>
 					<YAxisSection>
-						<YAxisHeader>{stage.name} stage</YAxisHeader>
+						<YAxisHeader>
+							{stage.name}
+							{tI18n("workspaces.WorkspaceTiming.ScriptsChart.stage_545870f5")}
+						</YAxisHeader>
 						<YAxisLabels>
 							{visibleTimings.map((t) => (
 								<YAxisLabel key={t.name} id={encodeURIComponent(t.name)}>
@@ -121,10 +130,17 @@ export const ScriptsChart: FC<ScriptsChartProps> = ({
 											side="bottom"
 											className="border-surface-quaternary text-content-primary"
 										>
-											Script exited with <strong>code {t.exitCode}</strong>
+											{tI18n(
+												"workspaces.WorkspaceTiming.ScriptsChart.script_exited_with_cb9794f6",
+											)}
+											<strong>
+												{tI18n(
+													"workspaces.WorkspaceTiming.ScriptsChart.code_aacf0b42",
+												)}
+												{t.exitCode}
+											</strong>
 										</TooltipContent>
 									</Tooltip>
-
 									{formatTime(duration)}
 								</XAxisRow>
 							);
@@ -139,21 +155,27 @@ export const ScriptsChart: FC<ScriptsChartProps> = ({
 function getLegendsByStatus(theme: Theme): Record<string, ChartLegend> {
 	return {
 		ok: {
-			label: "success",
+			label: i18n.t(
+				"workspaces:workspaces.WorkspaceTiming.ScriptsChart.success_aee40884",
+			),
 			colors: {
 				fill: theme.roles.success.background,
 				stroke: theme.roles.success.outline,
 			},
 		},
 		exit_failure: {
-			label: "failure",
+			label: i18n.t(
+				"workspaces:workspaces.WorkspaceTiming.ScriptsChart.failure_16d34b5e",
+			),
 			colors: {
 				fill: theme.roles.error.background,
 				stroke: theme.roles.error.outline,
 			},
 		},
 		timeout: {
-			label: "timed out",
+			label: i18n.t(
+				"workspaces:workspaces.WorkspaceTiming.ScriptsChart.timed_out_3dcd80f1",
+			),
 			colors: {
 				fill: theme.roles.warning.background,
 				stroke: theme.roles.warning.outline,

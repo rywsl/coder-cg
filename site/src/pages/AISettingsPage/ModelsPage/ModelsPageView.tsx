@@ -1,5 +1,6 @@
 import { ChevronDownIcon, PlusIcon, SearchIcon } from "lucide-react";
 import { type FC, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router";
 import type { ChatModel } from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
@@ -59,6 +60,8 @@ const AddModelDropdown: FC<{
 	providerStates: readonly ProviderState[];
 	align?: "start" | "end";
 }> = ({ providerStates, align = "end" }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
 	const { organization } = useOrganizationModels();
@@ -71,16 +74,26 @@ const AddModelDropdown: FC<{
 			<DropdownMenuTrigger asChild>
 				<Button variant="outline">
 					<PlusIcon />
-					<span>Add model</span>
+					<span>
+						{tI18n(
+							"AISettingsPage.ModelsPage.ModelsPageView.add_model_b2609f7d",
+						)}
+					</span>
 					<ChevronDownIcon className="ml-1 size-icon-xs" />
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align={align} className="min-w-56">
 				<div className="px-2 py-1.5 text-xs font-medium text-content-secondary">
-					Select a provider
+					{tI18n(
+						"AISettingsPage.ModelsPage.ModelsPageView.select_a_provider_71e2ca7b",
+					)}
 				</div>
 				{manageableProviderStates.length === 0 ? (
-					<DropdownMenuItem disabled>No providers available</DropdownMenuItem>
+					<DropdownMenuItem disabled>
+						{tI18n(
+							"AISettingsPage.ModelsPage.ModelsPageView.no_providers_available_53c1773b",
+						)}
+					</DropdownMenuItem>
 				) : (
 					manageableProviderStates.map((providerState) => (
 						<DropdownMenuItem
@@ -120,6 +133,8 @@ const ModelsPageView: FC<ModelsPageViewProps> = ({
 	providerTypeByID,
 	canCreateModel,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
 	const { organization, accessibleOrganizations } = useOrganizationModels();
@@ -223,10 +238,13 @@ const ModelsPageView: FC<ModelsPageViewProps> = ({
 					) : undefined
 				}
 			>
-				<SettingsHeaderTitle>Models</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n("AISettingsPage.ModelsPage.ModelsPageView.models_d17d2d78")}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Choose which models from your configured providers are available for
-					users to select. You can set a default and adjust context limits.
+					{tI18n(
+						"AISettingsPage.ModelsPage.ModelsPageView.choose_which_models_from_your_configured_provide_caebc21b",
+					)}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
 			{(loadError ?? refetchError) != null && (
@@ -242,8 +260,12 @@ const ModelsPageView: FC<ModelsPageViewProps> = ({
 						</InputGroupAddon>
 						<InputGroupInput
 							type="search"
-							placeholder="Search models..."
-							aria-label="Search models"
+							placeholder={tI18n(
+								"AISettingsPage.ModelsPage.ModelsPageView.search_models_37b90680",
+							)}
+							aria-label={tI18n(
+								"AISettingsPage.ModelsPage.ModelsPageView.search_models_10421935",
+							)}
 							value={searchQuery}
 							onChange={(e) => handleSearchChange(e.target.value)}
 						/>
@@ -272,12 +294,22 @@ const ModelsPageView: FC<ModelsPageViewProps> = ({
 				<Select value={providerFilter} onValueChange={handleProviderChange}>
 					<SelectTrigger
 						className="w-full shadow-none sm:w-60"
-						aria-label="Filter by provider"
+						aria-label={tI18n(
+							"AISettingsPage.ModelsPage.ModelsPageView.filter_by_provider_82e78a60",
+						)}
 					>
-						<SelectValue placeholder="All providers" />
+						<SelectValue
+							placeholder={tI18n(
+								"AISettingsPage.ModelsPage.ModelsPageView.all_providers_20e56db7",
+							)}
+						/>
 					</SelectTrigger>
 					<SelectContent>
-						<SelectItem value={ALL_PROVIDERS_VALUE}>All providers</SelectItem>
+						<SelectItem value={ALL_PROVIDERS_VALUE}>
+							{tI18n(
+								"AISettingsPage.ModelsPage.ModelsPageView.all_providers_20e56db7",
+							)}
+						</SelectItem>
 						{providerStates.map((providerState) => (
 							<SelectItem key={providerState.key} value={providerState.key}>
 								<span className="flex items-center gap-2">
@@ -289,14 +321,33 @@ const ModelsPageView: FC<ModelsPageViewProps> = ({
 					</SelectContent>
 				</Select>
 			</div>
-			<Table className="table-fixed" aria-label="Models">
+			<Table
+				className="table-fixed"
+				aria-label={tI18n(
+					"AISettingsPage.ModelsPage.ModelsPageView.models_d17d2d78",
+				)}
+			>
 				<TableHeader>
 					<TableRow>
-						<TableHead className="w-1/3">Name</TableHead>
-						<TableHead className="w-1/4">Provider</TableHead>
-						<TableHead className="w-1/4">Context limit</TableHead>
+						<TableHead className="w-1/3">
+							{tI18n("AISettingsPage.ModelsPage.ModelsPageView.name_dcd1d522")}
+						</TableHead>
+						<TableHead className="w-1/4">
+							{tI18n(
+								"AISettingsPage.ModelsPage.ModelsPageView.provider_472590ae",
+							)}
+						</TableHead>
+						<TableHead className="w-1/4">
+							{tI18n(
+								"AISettingsPage.ModelsPage.ModelsPageView.context_limit_284d7b18",
+							)}
+						</TableHead>
 						<TableHead className="w-12">
-							<span className="sr-only">Open model</span>
+							<span className="sr-only">
+								{tI18n(
+									"AISettingsPage.ModelsPage.ModelsPageView.open_model_a24a11a9",
+								)}
+							</span>
 						</TableHead>
 					</TableRow>
 				</TableHeader>
@@ -305,8 +356,12 @@ const ModelsPageView: FC<ModelsPageViewProps> = ({
 						<TableLoader />
 					) : loadError != null ? null : !hasModels ? (
 						<TableEmpty
-							message="No models configured"
-							description="Configured models will appear here."
+							message={tI18n(
+								"AISettingsPage.ModelsPage.ModelsPageView.no_models_configured_fb2770bd",
+							)}
+							description={tI18n(
+								"AISettingsPage.ModelsPage.ModelsPageView.configured_models_will_appear_here_62b0874b",
+							)}
 							cta={
 								canCreateModel ? (
 									<AddModelDropdown
@@ -318,8 +373,12 @@ const ModelsPageView: FC<ModelsPageViewProps> = ({
 						/>
 					) : filteredModels.length === 0 ? (
 						<TableEmpty
-							message="No models match your filters"
-							description="Try a different search term or provider."
+							message={tI18n(
+								"AISettingsPage.ModelsPage.ModelsPageView.no_models_match_your_filters_f586615d",
+							)}
+							description={tI18n(
+								"AISettingsPage.ModelsPage.ModelsPageView.try_a_different_search_term_or_provider_6bf6cbb8",
+							)}
 						/>
 					) : (
 						pagedItems.map((model) => (
@@ -355,13 +414,17 @@ const ModelsPageView: FC<ModelsPageViewProps> = ({
 						/>
 					</div>
 					<span className="text-xs text-content-secondary">
-						Showing <strong className="font-medium">{pagedItems.length}</strong>{" "}
-						of <strong className="font-medium">{filteredModels.length}</strong>{" "}
-						models
+						{tI18n("AISettingsPage.ModelsPage.ModelsPageView.showing_7282e1fb")}
+						<strong className="font-medium">{pagedItems.length}</strong>{" "}
+						{tI18n("AISettingsPage.ModelsPage.ModelsPageView.of_4acb731c")}
+						<strong className="font-medium">{filteredModels.length}</strong>{" "}
+						{tI18n("AISettingsPage.ModelsPage.ModelsPageView.models_8edcc26c")}
 						{hasFilters && (
 							<>
 								{" "}
-								(filtered from{" "}
+								{tI18n(
+									"AISettingsPage.ModelsPage.ModelsPageView.filtered_from_50f95c59",
+								)}{" "}
 								<strong className="font-medium">{models.length}</strong>)
 							</>
 						)}

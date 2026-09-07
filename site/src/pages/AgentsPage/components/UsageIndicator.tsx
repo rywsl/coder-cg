@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { CoinsIcon, InfoIcon, ServerIcon } from "lucide-react";
 import { type FC, Fragment, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { meAISpend } from "#/api/queries/users";
 import { workspaceQuota } from "#/api/queries/workspaceQuota";
@@ -19,6 +20,7 @@ import {
 } from "#/components/Tooltip/Tooltip";
 import { UsageBar } from "#/components/UsageBar/UsageBar";
 import { useAuthenticated } from "#/hooks/useAuthenticated";
+import { currentIntlLocale } from "#/i18n/locale";
 import {
 	getDefaultOrganizationName,
 	useDashboard,
@@ -47,9 +49,11 @@ type UsageSectionData = {
 	severity: UsageSeverity;
 };
 
-const numberFormatter = new Intl.NumberFormat("en-US");
+const numberFormatter = new Intl.NumberFormat(currentIntlLocale());
 
 export const UsageIndicator: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { user } = useAuthenticated();
 	const { organizations } = useDashboard();
 	const aiSpendAvailable = Boolean(useFeatureVisibility().aibridge);
@@ -89,8 +93,10 @@ export const UsageIndicator: FC = () => {
 
 		sections.push({
 			id: "ai-spend",
-			title: "AI spend",
-			progressLabel: "AI spend usage",
+			title: tI18n("AgentsPage.components.UsageIndicator.ai_spend_aa5699b0"),
+			progressLabel: tI18n(
+				"AgentsPage.components.UsageIndicator.ai_spend_usage_61191cb0",
+			),
 			percent: exceeded
 				? 100
 				: usageProgressPercentage(currentSpend, spendLimit),
@@ -99,11 +105,15 @@ export const UsageIndicator: FC = () => {
 			hoverLabel: `Spend ${formatCostMicros(currentSpend)}`,
 			detail: (
 				<>
-					{formatCostMicros(currentSpend)} of {formatCostMicros(spendLimit)}{" "}
-					used
+					{formatCostMicros(currentSpend)}
+					{tI18n("AgentsPage.components.UsageIndicator.of_a4282e4b")}
+					{formatCostMicros(spendLimit)}{" "}
+					{tI18n("AgentsPage.components.UsageIndicator.used_f8391613")}
 					{exceeded && (
 						<span className="ml-1 text-content-destructive">
-							(limit exceeded)
+							{tI18n(
+								"AgentsPage.components.UsageIndicator.limit_exceeded_d9901970",
+							)}
 						</span>
 					)}
 				</>
@@ -127,20 +137,36 @@ export const UsageIndicator: FC = () => {
 
 		const workspaceHoverLabel =
 			quota.budget > 0
-				? `Workspaces ${formatNumber(creditsConsumed)}/${formatNumber(quota.budget)}`
-				: `Workspaces ${formatNumber(creditsConsumed)}`;
+				? tI18n(
+						"AgentsPage.components.UsageIndicator.workspaces_value0_value1_304a009b",
+						{
+							value0: formatNumber(creditsConsumed),
+							value1: formatNumber(quota.budget),
+						},
+					)
+				: tI18n(
+						"AgentsPage.components.UsageIndicator.workspaces_value0_9dfe49d5",
+						{
+							value0: formatNumber(creditsConsumed),
+						},
+					);
 
 		sections.push({
 			id: "workspace-quota",
-			title: "Workspace quota",
-			progressLabel: "Workspace quota usage",
+			title: tI18n(
+				"AgentsPage.components.UsageIndicator.workspace_quota_21bfe1a8",
+			),
+			progressLabel: tI18n(
+				"AgentsPage.components.UsageIndicator.workspace_quota_usage_4e6f7177",
+			),
 			percent: usageProgressPercentage(creditsConsumed, quota.budget),
 			severity: getSeverity(creditsConsumed, quota.budget),
 			icon: <ServerIcon className="size-3.5" />,
 			hoverLabel: workspaceHoverLabel,
 			detail: quotaDetail,
-			tooltip:
-				"Workspaces, stopped or running, may consume credits. Stop or delete unused ones to free quota.",
+			tooltip: tI18n(
+				"AgentsPage.components.UsageIndicator.workspaces_stopped_or_running_may_consume_credit_16f4fdcf",
+			),
 		});
 	}
 
@@ -154,8 +180,12 @@ export const UsageIndicator: FC = () => {
 const UsageMenu: FC<{ sections: readonly UsageSectionData[] }> = ({
 	sections,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const triggerAriaLabel =
-		sections.length > 1 ? "Usage" : (sections[0]?.title ?? "Usage");
+		sections.length > 1
+			? tI18n("AgentsPage.components.UsageIndicator.usage_8d59829c")
+			: (sections[0]?.title ?? "Usage");
 
 	return (
 		<DropdownMenu>
@@ -262,6 +292,8 @@ const UsageRingProgress: FC<{
 };
 
 const UsageSection: FC<{ section: UsageSectionData }> = ({ section }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const roundedPercent = Math.round(section.percent);
 
 	return (
@@ -279,7 +311,6 @@ const UsageSection: FC<{ section: UsageSectionData }> = ({ section }) => {
 					{roundedPercent}%
 				</span>
 			</div>
-
 			<div className="px-2 pb-2">
 				<UsageBar
 					ariaLabel={section.progressLabel}
@@ -287,7 +318,6 @@ const UsageSection: FC<{ section: UsageSectionData }> = ({ section }) => {
 					severity={section.severity}
 				/>
 			</div>
-
 			<div
 				className={cn(
 					"px-2 text-xs leading-5 text-content-secondary",
@@ -303,7 +333,12 @@ const UsageSection: FC<{ section: UsageSectionData }> = ({ section }) => {
 									<button
 										type="button"
 										className="mt-0.5 inline-flex size-3.5 shrink-0 cursor-help items-center justify-center rounded-sm border-none bg-transparent p-0 text-content-secondary/70 outline-hidden transition-colors hover:text-content-primary focus-visible:ring-2 focus-visible:ring-content-link"
-										aria-label={`${section.title} help`}
+										aria-label={tI18n(
+											"AgentsPage.components.UsageIndicator.value0_help_07383552",
+											{
+												value0: section.title,
+											},
+										)}
 									>
 										<InfoIcon className="size-3.5" />
 									</button>
@@ -320,7 +355,6 @@ const UsageSection: FC<{ section: UsageSectionData }> = ({ section }) => {
 					)}
 				</div>
 			</div>
-
 			{section.secondaryDetail && (
 				<div className="px-2 pb-2 text-xs text-content-secondary">
 					{section.secondaryDetail}

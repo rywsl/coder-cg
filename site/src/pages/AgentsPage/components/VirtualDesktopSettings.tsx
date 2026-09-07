@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Link } from "#/components/Link/Link";
 import {
@@ -12,6 +13,7 @@ import {
 } from "#/components/Select/Select";
 import { Skeleton } from "#/components/Skeleton/Skeleton";
 import { useTemporarySavedState } from "#/components/TemporarySavedState/TemporarySavedState";
+import { i18n } from "#/i18n";
 import { AgentSettingLayout } from "#/pages/AISettingsPage/CoderAgentsPage/components/AgentSettingLayout";
 
 interface MutationCallbacks {
@@ -31,8 +33,18 @@ interface VirtualDesktopSettingsProps {
 }
 
 const computerUseProviderOptions = [
-	{ label: "Anthropic", value: "anthropic" },
-	{ label: "OpenAI", value: "openai" },
+	{
+		label: i18n.t(
+			"agents:AgentsPage.components.VirtualDesktopSettings.anthropic_744205e4",
+		),
+		value: "anthropic",
+	},
+	{
+		label: i18n.t(
+			"agents:AgentsPage.components.VirtualDesktopSettings.openai_8b7d1a31",
+		),
+		value: "openai",
+	},
 ] as const;
 
 const getComputerUseProviderLabel = (provider: string) => {
@@ -49,6 +61,8 @@ export const VirtualDesktopSettings: FC<VirtualDesktopSettingsProps> = ({
 	isSavingComputerUseProvider,
 	computerUseProviderSaveError,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { isSavedVisible, showSavedState } = useTemporarySavedState();
 	const serverProvider = computerUseProviderData?.provider ?? "";
 	const hasLoaded = computerUseProviderData !== undefined;
@@ -80,20 +94,26 @@ export const VirtualDesktopSettings: FC<VirtualDesktopSettingsProps> = ({
 
 	return (
 		<AgentSettingLayout
-			title="Virtual desktop"
+			title={tI18n(
+				"AgentsPage.components.VirtualDesktopSettings.virtual_desktop_009e9166",
+			)}
 			description={
 				<>
-					Allow agents to use a virtual, graphical desktop within workspaces.
-					Requires the{" "}
+					{tI18n(
+						"AgentsPage.components.VirtualDesktopSettings.allow_agents_to_use_a_virtual_graphical_desktop__5e7e17d5",
+					)}{" "}
 					<Link
 						href="https://registry.coder.com/modules/coder/portabledesktop"
 						target="_blank"
 						size="sm"
 					>
-						portabledesktop module
+						{tI18n(
+							"AgentsPage.components.VirtualDesktopSettings.portabledesktop_module_d33a8a56",
+						)}
 					</Link>{" "}
-					to be installed in the workspace and a computer use provider to be
-					configured.
+					{tI18n(
+						"AgentsPage.components.VirtualDesktopSettings.to_be_installed_in_the_workspace_and_a_computer__79a46bc9",
+					)}
 				</>
 			}
 			showSave={canSave}
@@ -103,7 +123,11 @@ export const VirtualDesktopSettings: FC<VirtualDesktopSettingsProps> = ({
 			onSubmit={form.handleSubmit}
 			error={
 				computerUseProviderSaveError ? (
-					<p className="m-0">Failed to save computer use provider.</p>
+					<p className="m-0">
+						{tI18n(
+							"AgentsPage.components.VirtualDesktopSettings.failed_to_save_computer_use_provider_dfa28fcc",
+						)}
+					</p>
 				) : undefined
 			}
 		>
@@ -114,10 +138,16 @@ export const VirtualDesktopSettings: FC<VirtualDesktopSettingsProps> = ({
 					disabled={isFormDisabled}
 				>
 					<SelectTrigger
-						aria-label="Computer use provider"
+						aria-label={tI18n(
+							"AgentsPage.components.VirtualDesktopSettings.computer_use_provider_10f0fae9",
+						)}
 						className="h-10 w-full justify-between rounded-md border border-border border-solid bg-transparent px-3 text-sm shadow-none"
 					>
-						<SelectValue placeholder="Select provider">
+						<SelectValue
+							placeholder={tI18n(
+								"AgentsPage.components.VirtualDesktopSettings.select_provider_644c6aae",
+							)}
+						>
 							{isLoadingComputerUseProvider ? (
 								<Skeleton className="h-4 w-20" aria-hidden="true" />
 							) : form.values.provider ? (

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import type { SlimRole } from "#/api/typesGenerated";
 import { Badge } from "#/components/Badge/Badge";
 import { TableCell } from "#/components/Table/Table";
@@ -42,11 +43,16 @@ type MoreRolePillProps = {
 };
 
 const MoreRolePill: React.FC<MoreRolePillProps> = ({ roles }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<TooltipProvider>
 			<Tooltip delayDuration={0}>
 				<TooltipTrigger asChild>
-					<Badge>+{roles.length} more</Badge>
+					<Badge>
+						+{roles.length}
+						{tI18n("users.UserRoleCell.more_226ba18b")}
+					</Badge>
 				</TooltipTrigger>
 
 				<TooltipContent className="flex flex-row flex-wrap content-around gap-x-2 gap-y-3 px-4 py-3 border-surface-quaternary">
@@ -64,6 +70,8 @@ type RoleBadgeProps = {
 };
 
 const RoleBadge: React.FC<RoleBadgeProps> = ({ role }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const displayName = role.display_name || role.name;
 	const isOwnerRole =
 		role.name === "owner" || role.name === "organization-admin";
@@ -79,7 +87,9 @@ const RoleBadge: React.FC<RoleBadgeProps> = ({ role }) => {
 						<span>{displayName}*</span>
 					</TooltipTrigger>
 					<TooltipContent side="bottom" sideOffset={8}>
-						This user has this role for all organizations.
+						{tI18n(
+							"users.UserRoleCell.this_user_has_this_role_for_all_organizations_a9232e06",
+						)}
 					</TooltipContent>
 				</Tooltip>
 			) : (

@@ -1,5 +1,6 @@
 import { EllipsisVerticalIcon } from "lucide-react";
 import { type FC, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "#/components/Button/Button";
 import { ConfirmDialog } from "#/components/Dialog/ConfirmDialog/ConfirmDialog";
 import {
@@ -16,6 +17,8 @@ type AgentDevcontainerMoreActionsProps = {
 export const AgentDevcontainerMoreActions: FC<
 	AgentDevcontainerMoreActionsProps
 > = ({ deleteDevContainer }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
 	const [open, setOpen] = useState(false);
 	const menuContentId = useId();
@@ -25,10 +28,13 @@ export const AgentDevcontainerMoreActions: FC<
 			<DropdownMenuTrigger asChild>
 				<Button size="icon-lg" variant="subtle" aria-controls={menuContentId}>
 					<EllipsisVerticalIcon aria-hidden="true" />
-					<span className="sr-only">Dev Container actions</span>
+					<span className="sr-only">
+						{tI18n(
+							"resources.AgentDevcontainerMoreActions.dev_container_actions_81b88653",
+						)}
+					</span>
 				</Button>
 			</DropdownMenuTrigger>
-
 			<DropdownMenuContent id={menuContentId} align="end">
 				<DropdownMenuItem
 					className="text-content-destructive focus:text-content-destructive"
@@ -36,10 +42,9 @@ export const AgentDevcontainerMoreActions: FC<
 						setIsConfirmingDelete(true);
 					}}
 				>
-					Delete&hellip;
+					{tI18n("resources.AgentDevcontainerMoreActions.delete_9ce78fe3")}
 				</DropdownMenuItem>
 			</DropdownMenuContent>
-
 			<DevcontainerDeleteDialog
 				isOpen={isConfirmingDelete}
 				onCancel={() => setIsConfirmingDelete(false)}
@@ -63,17 +68,22 @@ const DevcontainerDeleteDialog: FC<DevcontainerDeleteDialogProps> = ({
 	onCancel,
 	onConfirm,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<ConfirmDialog
 			type="delete"
 			open={isOpen}
-			title="Delete Dev Container"
+			title={tI18n(
+				"resources.AgentDevcontainerMoreActions.delete_dev_container_42dd659f",
+			)}
 			onConfirm={onConfirm}
 			onClose={onCancel}
 			description={
 				<p>
-					Are you sure you want to delete this Dev Container? Any unsaved work
-					will be lost.
+					{tI18n(
+						"resources.AgentDevcontainerMoreActions.are_you_sure_you_want_to_delete_this_dev_contain_69cea10a",
+					)}
 				</p>
 			}
 		/>

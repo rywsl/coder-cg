@@ -1,5 +1,6 @@
 import { ArrowUpRightIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { BuildInfoResponse, Experiment } from "#/api/typesGenerated";
 import { PREMIUM_PAGE_PATH } from "#/components/Paywall/Paywall";
 import {
@@ -29,79 +30,106 @@ export const DeploymentSidebarView: FC<DeploymentSidebarViewProps> = ({
 	experiments,
 	buildInfo,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<BaseSidebar>
 			<div className="flex flex-col gap-1">
 				{permissions.viewDeploymentConfig && (
-					<SidebarNavItem href="/deployment/overview">Overview</SidebarNavItem>
+					<SidebarNavItem href="/deployment/overview">
+						{tI18n("management.DeploymentSidebarView.overview_d4b1ea57")}
+					</SidebarNavItem>
 				)}
 				{permissions.viewAllLicenses && (
-					<SidebarNavItem href="/deployment/licenses">Licenses</SidebarNavItem>
+					<SidebarNavItem href="/deployment/licenses">
+						{tI18n("management.DeploymentSidebarView.licenses_6d5d9004")}
+					</SidebarNavItem>
 				)}
 				{permissions.editDeploymentConfig && (
 					<SidebarNavItem href="/deployment/appearance">
-						Appearance
+						{tI18n("management.DeploymentSidebarView.appearance_3907fa7f")}
 					</SidebarNavItem>
 				)}
 				{permissions.viewDeploymentConfig && (
 					<SidebarNavItem href="/deployment/userauth">
-						User Authentication
+						{tI18n(
+							"management.DeploymentSidebarView.user_authentication_35610171",
+						)}
 					</SidebarNavItem>
 				)}
 				{permissions.viewDeploymentConfig && (
 					<SidebarNavItem href="/deployment/external-auth">
-						External Authentication
+						{tI18n(
+							"management.DeploymentSidebarView.external_authentication_1b308ef4",
+						)}
 					</SidebarNavItem>
 				)}
 				{permissions.viewDeploymentConfig &&
 					(experiments.includes("oauth2") ||
 						getPrereleaseFlag(buildInfo) === "devel") && (
 						<SidebarNavItem href="/deployment/oauth2-provider/apps">
-							OAuth2 Applications
+							{tI18n(
+								"management.DeploymentSidebarView.oauth2_applications_e740eaa0",
+							)}
 						</SidebarNavItem>
 					)}
 				{permissions.viewDeploymentConfig && (
-					<SidebarNavItem href="/deployment/network">Network</SidebarNavItem>
+					<SidebarNavItem href="/deployment/network">
+						{tI18n("management.DeploymentSidebarView.network_1744b964")}
+					</SidebarNavItem>
 				)}
 				{permissions.readWorkspaceProxies && (
 					<SidebarNavItem href="/deployment/workspace-proxies">
-						Workspace Proxies
+						{tI18n(
+							"management.DeploymentSidebarView.workspace_proxies_62ee3d16",
+						)}
 					</SidebarNavItem>
 				)}
 				{permissions.viewDeploymentConfig && (
-					<SidebarNavItem href="/deployment/security">Security</SidebarNavItem>
+					<SidebarNavItem href="/deployment/security">
+						{tI18n("management.DeploymentSidebarView.security_8f6fb4eb")}
+					</SidebarNavItem>
 				)}
 				{permissions.viewDeploymentConfig && (
 					<SidebarNavItem href="/deployment/observability">
-						Observability
+						{tI18n("management.DeploymentSidebarView.observability_a37c9310")}
 					</SidebarNavItem>
 				)}
 
 				{permissions.viewAllUsers && (
-					<SidebarNavItem href="/deployment/users">Users</SidebarNavItem>
+					<SidebarNavItem href="/deployment/users">
+						{tI18n("management.DeploymentSidebarView.users_6b0cc904")}
+					</SidebarNavItem>
 				)}
 				{permissions.viewAnyGroup && (
 					<SidebarNavItem href="/deployment/groups">
 						<div className="flex flex-row items-center gap-1">
-							Groups {showOrganizations && <ArrowUpRightIcon size={16} />}
+							{tI18n("management.DeploymentSidebarView.groups_ffcf21b5")}
+							{showOrganizations && <ArrowUpRightIcon size={16} />}
 						</div>
 					</SidebarNavItem>
 				)}
 				{permissions.viewOrganizationIDPSyncSettings && (
 					<SidebarNavItem href="/deployment/idp-org-sync">
-						IdP Organization Sync
+						{tI18n(
+							"management.DeploymentSidebarView.idp_organization_sync_9d6641db",
+						)}
 					</SidebarNavItem>
 				)}
 				{permissions.viewNotificationTemplate && (
 					<SidebarNavItem href="/deployment/notifications">
 						<div className="flex flex-row items-center gap-2">
-							<span>Notifications</span>
+							<span>
+								{tI18n(
+									"management.DeploymentSidebarView.notifications_78801183",
+								)}
+							</span>
 						</div>
 					</SidebarNavItem>
 				)}
 				{!hidePremiumTab && (
 					<SidebarNavItem href={PREMIUM_PAGE_PATH}>
-						Trial Upgrade
+						{tI18n("management.DeploymentSidebarView.trial_upgrade_ee470e67")}
 					</SidebarNavItem>
 				)}
 			</div>

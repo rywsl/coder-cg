@@ -7,6 +7,7 @@ import {
 	UsersIcon,
 } from "lucide-react";
 import { type FC, type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { DropdownMenuItem } from "#/components/DropdownMenu/DropdownMenu";
 import { Link } from "#/components/Link/Link";
@@ -48,6 +49,8 @@ export const AppLink: FC<AppLinkProps> = ({
 	agent,
 	grouped,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const { proxy } = useProxy();
 	const host = proxy.preferredWildcardHostname;
 	const [iconError, setIconError] = useState(false);
@@ -66,7 +69,7 @@ export const AppLink: FC<AppLinkProps> = ({
 
 	if (app.health === "initializing") {
 		icon = <Spinner loading />;
-		primaryTooltip = "Initializing...";
+		primaryTooltip = tI18n("resources.AppLink.AppLink.initializing_6f191ff7");
 	}
 
 	if (app.health === "unhealthy") {
@@ -76,7 +79,7 @@ export const AppLink: FC<AppLinkProps> = ({
 				className="size-icon-sm text-content-warning"
 			/>
 		);
-		primaryTooltip = "Unhealthy";
+		primaryTooltip = tI18n("resources.AppLink.AppLink.unhealthy_317b1fbc");
 	}
 
 	if (isAppBlockedByMissingWildcard(app, host)) {
@@ -87,8 +90,9 @@ export const AppLink: FC<AppLinkProps> = ({
 				className="size-icon-sm text-content-secondary"
 			/>
 		);
-		primaryTooltip =
-			"Your admin has not configured subdomain application access";
+		primaryTooltip = tI18n(
+			"resources.AppLink.AppLink.your_admin_has_not_configured_subdomain_applicat_1091ca11",
+		);
 	}
 
 	if (app.subdomain_name && app.subdomain_name.length > 63) {
@@ -100,15 +104,17 @@ export const AppLink: FC<AppLinkProps> = ({
 		);
 		primaryTooltip = (
 			<>
-				Port forwarding will not work because hostname is too long, see the{" "}
+				{tI18n(
+					"resources.AppLink.AppLink.port_forwarding_will_not_work_because_hostname_i_fa237ff3",
+				)}{" "}
 				<Link
 					href={docs("/user-guides/workspace-access/port-forwarding#dashboard")}
 					target="_blank"
 					size="sm"
 				>
-					documentation
+					{tI18n("resources.AppLink.AppLink.documentation_caf9f906")}
 				</Link>{" "}
-				for more details
+				{tI18n("resources.AppLink.AppLink.for_more_details_4c7148e4")}
 			</>
 		);
 	}
@@ -123,9 +129,13 @@ export const AppLink: FC<AppLinkProps> = ({
 		);
 		primaryTooltip = (
 			<>
-				This app has an invalid URL and can't be opened. Ask your template
-				administrator to fix the app's <code>url</code> in the template's{" "}
-				<code>coder_app</code> configuration.
+				{tI18n(
+					"resources.AppLink.AppLink.this_app_has_an_invalid_url_and_can_t_be_opened__005b2dad",
+				)}
+				<code>url</code>
+				{tI18n("resources.AppLink.AppLink.in_the_template_s_52204cf4")}{" "}
+				<code>coder_app</code>
+				{tI18n("resources.AppLink.AppLink.configuration_2baa3a4a")}
 			</>
 		);
 	}
@@ -148,7 +158,9 @@ export const AppLink: FC<AppLinkProps> = ({
 	const { shareTooltip, shareIcon: ShareIcon } = canShare
 		? app.external
 			? {
-					shareTooltip: "Open external URL",
+					shareTooltip: tI18n(
+						"resources.AppLink.AppLink.open_external_url_22f414a5",
+					),
 					shareIcon: SquareArrowOutUpRightIcon,
 				}
 			: shareDetails[app.sharing_level]

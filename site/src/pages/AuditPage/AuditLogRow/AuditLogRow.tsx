@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { InfoIcon, NetworkIcon } from "lucide-react";
 import { type FC, type KeyboardEvent, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import userAgentParser from "ua-parser-js";
 import type { AuditLog, BuildReason } from "#/api/typesGenerated";
@@ -19,6 +20,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { currentIntlLocale } from "#/i18n/locale";
 import { buildReasonLabels } from "#/utils/workspace";
 import { AuditLogDescription } from "./AuditLogDescription/AuditLogDescription";
 import { AuditLogDiff } from "./AuditLogDiff/AuditLogDiff";
@@ -36,6 +38,8 @@ export const AuditLogRow: FC<AuditLogRowProps> = ({
 	defaultIsDiffOpen = false,
 	showOrgDetails,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const [isDiffOpen, setIsDiffOpen] = useState(defaultIsDiffOpen);
 	const diffs = Object.entries(auditLog.diff);
 	const shouldDisplayDiff = diffs.length > 0;
@@ -104,11 +108,15 @@ export const AuditLogRow: FC<AuditLogRowProps> = ({
 										<AuditLogDescription auditLog={auditLog} />
 										{auditLog.is_deleted && (
 											<span className="text-xs text-content-secondary">
-												(deleted)
+												{tI18n(
+													"AuditPage.AuditLogRow.AuditLogRow.deleted_ce28beb7",
+												)}
 											</span>
 										)}
 										<span className="text-content-secondary text-xs">
-											{new Date(auditLog.time).toLocaleTimeString()}
+											{new Date(auditLog.time).toLocaleTimeString(
+												currentIntlLocale(),
+											)}
 										</span>
 									</div>
 
@@ -127,7 +135,9 @@ export const AuditLogRow: FC<AuditLogRowProps> = ({
 														{auditLog.ip && (
 															<div>
 																<h4 className="m-0 text-content-primary leading-[150%] font-semibold">
-																	IP:
+																	{tI18n(
+																		"AuditPage.AuditLogRow.AuditLogRow.ip_9efec746",
+																	)}
 																</h4>
 																<div>{auditLog.ip}</div>
 															</div>
@@ -135,7 +145,9 @@ export const AuditLogRow: FC<AuditLogRowProps> = ({
 														{userAgent?.os.name && (
 															<div>
 																<h4 className="m-0 text-content-primary leading-[150%] font-semibold">
-																	OS:
+																	{tI18n(
+																		"AuditPage.AuditLogRow.AuditLogRow.os_049f4de9",
+																	)}
 																</h4>
 																<div>{userAgent.os.name}</div>
 															</div>
@@ -143,7 +155,9 @@ export const AuditLogRow: FC<AuditLogRowProps> = ({
 														{userAgent?.browser.name && (
 															<div>
 																<h4 className="m-0 text-content-primary leading-[150%] font-semibold">
-																	Browser:
+																	{tI18n(
+																		"AuditPage.AuditLogRow.AuditLogRow.browser_875ac3ed",
+																	)}
 																</h4>
 																<div>
 																	{userAgent.browser.name}{" "}
@@ -154,7 +168,9 @@ export const AuditLogRow: FC<AuditLogRowProps> = ({
 														{auditLog.organization && (
 															<div>
 																<h4 className="m-0 text-content-primary leading-[150%] font-semibold">
-																	Organization:
+																	{tI18n(
+																		"AuditPage.AuditLogRow.AuditLogRow.organization_5300e286",
+																	)}
 																</h4>
 																<Link
 																	asChild
@@ -174,7 +190,9 @@ export const AuditLogRow: FC<AuditLogRowProps> = ({
 															auditLog.action === "start" && (
 																<div>
 																	<h4 className="m-0 text-content-primary leading-normal font-semibold">
-																		Reason:
+																		{tI18n(
+																			"AuditPage.AuditLogRow.AuditLogRow.reason_3425d108",
+																		)}
 																	</h4>
 																	<div>
 																		{
@@ -193,19 +211,31 @@ export const AuditLogRow: FC<AuditLogRowProps> = ({
 											<div className="flex flex-row items-baseline gap-2">
 												{auditLog.ip && (
 													<span className="text-xs text-content-secondary block">
-														<span>IP: </span>
+														<span>
+															{tI18n(
+																"AuditPage.AuditLogRow.AuditLogRow.ip_c30278e6",
+															)}
+														</span>
 														<strong>{auditLog.ip}</strong>
 													</span>
 												)}
 												{userAgent?.os.name && (
 													<span className="text-xs text-content-secondary block">
-														<span>OS: </span>
+														<span>
+															{tI18n(
+																"AuditPage.AuditLogRow.AuditLogRow.os_a8177235",
+															)}
+														</span>
 														<strong>{userAgent.os.name}</strong>
 													</span>
 												)}
 												{userAgent?.browser.name && (
 													<span className="text-xs text-content-secondary block">
-														<span>Browser: </span>
+														<span>
+															{tI18n(
+																"AuditPage.AuditLogRow.AuditLogRow.browser_13071d40",
+															)}
+														</span>
 														<strong>
 															{userAgent.browser.name}{" "}
 															{userAgent.browser.version}
@@ -215,7 +245,11 @@ export const AuditLogRow: FC<AuditLogRowProps> = ({
 												{auditLog.additional_fields?.build_reason &&
 													auditLog.action === "start" && (
 														<span className="text-xs text-content-secondary block">
-															<span>Reason: </span>
+															<span>
+																{tI18n(
+																	"AuditPage.AuditLogRow.AuditLogRow.reason_4bc4df5f",
+																)}
+															</span>
 															<strong>
 																{
 																	buildReasonLabels[

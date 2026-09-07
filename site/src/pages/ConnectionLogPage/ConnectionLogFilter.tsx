@@ -1,5 +1,6 @@
 import capitalize from "lodash/capitalize";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	type ConnectionLogStatus,
 	ConnectionLogStatuses,
@@ -73,6 +74,8 @@ export const ConnectionLogFilter: FC<ConnectionLogFilterProps> = ({
 	error,
 	menus,
 }) => {
+	const { t: tI18n } = useTranslation("pages");
+
 	const width = menus.organization ? DEFAULT_USER_FILTER_WIDTH : undefined;
 	return (
 		<Filter
@@ -85,7 +88,13 @@ export const ConnectionLogFilter: FC<ConnectionLogFilterProps> = ({
 			error={error}
 			options={
 				<>
-					<UserMenu placeholder="All owners" menu={menus.user} width={width} />
+					<UserMenu
+						placeholder={tI18n(
+							"ConnectionLogPage.ConnectionLogFilter.all_owners_5f198db2",
+						)}
+						menu={menus.user}
+						width={width}
+					/>
 					<StatusMenu menu={menus.status} width={width} />
 					<TypeMenu menu={menus.type} width={width} />
 					{menus.organization && (
@@ -133,10 +142,16 @@ interface StatusMenuProps {
 }
 
 const StatusMenu: FC<StatusMenuProps> = ({ menu, width }) => {
+	const { t: tI18n } = useTranslation("pages");
+
 	return (
 		<SelectFilter
-			label="Filter by session status"
-			placeholder="All sessions"
+			label={tI18n(
+				"ConnectionLogPage.ConnectionLogFilter.filter_by_session_status_77776017",
+			)}
+			placeholder={tI18n(
+				"ConnectionLogPage.ConnectionLogFilter.all_sessions_78648d4d",
+			)}
 			options={menu.searchOptions}
 			onSelect={menu.selectOption}
 			selectedOption={menu.selectedOption ?? undefined}
@@ -174,10 +189,16 @@ interface TypeMenuProps {
 }
 
 const TypeMenu: FC<TypeMenuProps> = ({ menu, width }) => {
+	const { t: tI18n } = useTranslation("pages");
+
 	return (
 		<SelectFilter
-			label="Filter by connection type"
-			placeholder="All types"
+			label={tI18n(
+				"ConnectionLogPage.ConnectionLogFilter.filter_by_connection_type_0db36c18",
+			)}
+			placeholder={tI18n(
+				"ConnectionLogPage.ConnectionLogFilter.all_types_f10988e7",
+			)}
 			options={menu.searchOptions}
 			onSelect={menu.selectOption}
 			selectedOption={menu.selectedOption ?? undefined}

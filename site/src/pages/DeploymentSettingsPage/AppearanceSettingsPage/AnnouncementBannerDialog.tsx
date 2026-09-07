@@ -2,6 +2,7 @@ import { cn } from "cn";
 import { useFormik } from "formik";
 import { type FC, useState } from "react";
 import { SliderPicker, TwitterPicker } from "react-color";
+import { useTranslation } from "react-i18next";
 import type { BannerConfig } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
 import {
@@ -29,6 +30,8 @@ export const AnnouncementBannerDialog: FC<AnnouncementBannerDialogProps> = ({
 	onCancel,
 	onUpdate,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const theme = useTheme();
 	const isCreating = banner.message === "";
 
@@ -44,7 +47,9 @@ export const AnnouncementBannerDialog: FC<AnnouncementBannerDialogProps> = ({
 	});
 	const getFieldHelpers = getFormHelpers(bannerForm);
 	const messageField = getFieldHelpers("message", {
-		helperText: "Markdown bold, italics, and links are supported.",
+		helperText: tI18n(
+			"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerDialog.markdown_bold_italics_and_links_are_supported_46408fbd",
+		),
 	});
 	const messageHelperId = `${messageField.id}-helper`;
 	const messageErrorId = `${messageField.id}-error`;
@@ -70,19 +75,26 @@ export const AnnouncementBannerDialog: FC<AnnouncementBannerDialogProps> = ({
 					backgroundColor={bannerForm.values.background_color}
 				/>
 			</div>
-
 			<DialogContent
 				className="max-w-[500px]"
 				data-testid="dialog"
 				aria-describedby={undefined}
 			>
 				<DialogHeader>
-					<DialogTitle>Announcement banner</DialogTitle>
+					<DialogTitle>
+						{tI18n(
+							"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerDialog.announcement_banner_fbdcf7ab",
+						)}
+					</DialogTitle>
 				</DialogHeader>
 
 				<div className="flex flex-col gap-4">
 					<div className="flex flex-col gap-2">
-						<Label htmlFor={messageField.id}>Message</Label>
+						<Label htmlFor={messageField.id}>
+							{tI18n(
+								"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerDialog.message_2f77668a",
+							)}
+						</Label>
 						<Textarea
 							id={messageField.id}
 							name={messageField.name}
@@ -90,7 +102,9 @@ export const AnnouncementBannerDialog: FC<AnnouncementBannerDialogProps> = ({
 							onChange={messageField.onChange}
 							onBlur={messageField.onBlur}
 							rows={3}
-							placeholder="Enter a message for the banner"
+							placeholder={tI18n(
+								"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerDialog.enter_a_message_for_the_banner_f3df2442",
+							)}
 							aria-invalid={messageField.error}
 							aria-describedby={
 								messageField.error
@@ -121,7 +135,9 @@ export const AnnouncementBannerDialog: FC<AnnouncementBannerDialogProps> = ({
 					</div>
 					<div>
 						<h4 className="m-0 mb-2 text-base font-semibold text-content-primary">
-							Background color
+							{tI18n(
+								"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerDialog.background_color_3e314daf",
+							)}
 						</h4>
 						<div className="flex flex-col gap-4">
 							{showHuePicker ? (
@@ -180,7 +196,16 @@ export const AnnouncementBannerDialog: FC<AnnouncementBannerDialogProps> = ({
 									variant="outline"
 									onClick={() => setShowHuePicker((it) => !it)}
 								>
-									Show {showHuePicker ? "palette" : "slider"}
+									{tI18n(
+										"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerDialog.show_dd0fcd29",
+									)}
+									{showHuePicker
+										? tI18n(
+												"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerDialog.palette_19e4bd2d",
+											)
+										: tI18n(
+												"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerDialog.slider_e0d98dc3",
+											)}
 								</Button>
 							</div>
 						</div>
@@ -189,9 +214,19 @@ export const AnnouncementBannerDialog: FC<AnnouncementBannerDialogProps> = ({
 
 				<DialogFooter>
 					<DialogActions
-						cancelText="Cancel"
+						cancelText={tI18n(
+							"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerDialog.cancel_19766ed6",
+						)}
 						confirmLoading={bannerForm.isSubmitting}
-						confirmText={isCreating ? "Create" : "Update"}
+						confirmText={
+							isCreating
+								? tI18n(
+										"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerDialog.create_4759498a",
+									)
+								: tI18n(
+										"DeploymentSettingsPage.AppearanceSettingsPage.AnnouncementBannerDialog.update_c1c1009d",
+									)
+						}
 						confirmDisabled={bannerForm.isSubmitting || previewMessage === ""}
 						onCancel={onCancel}
 						onConfirm={bannerForm.handleSubmit}

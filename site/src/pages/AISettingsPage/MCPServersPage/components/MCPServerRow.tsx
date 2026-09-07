@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { ChevronRightIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Badge } from "#/components/Badge/Badge";
 import { TableCell, TableRow } from "#/components/Table/Table";
@@ -14,6 +15,8 @@ interface MCPServerRowProps {
 }
 
 export const MCPServerRow: FC<MCPServerRowProps> = ({ server, onClick }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const clickableProps = useClickableTableRow({
 		onClick: () => onClick?.(),
 	});
@@ -38,7 +41,9 @@ export const MCPServerRow: FC<MCPServerRowProps> = ({ server, onClick }) => {
 					</span>
 					{!enabled && (
 						<Badge variant="default" className="shrink-0">
-							Disabled
+							{tI18n(
+								"AISettingsPage.MCPServersPage.components.MCPServerRow.disabled_75081b59",
+							)}
 						</Badge>
 					)}
 				</div>

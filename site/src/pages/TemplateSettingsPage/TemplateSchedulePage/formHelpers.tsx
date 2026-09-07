@@ -1,5 +1,6 @@
 import * as Yup from "yup";
 import type { UpdateTemplateMeta } from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 import type {
 	TemplateAutostartRequirementDaysValue,
 	TemplateAutostopRequirementDaysValue,
@@ -23,36 +24,80 @@ const MAX_TTL_DAYS = 30;
 export const getValidationSchema = (): Yup.AnyObjectSchema =>
 	Yup.object({
 		default_ttl_ms: Yup.number()
-			.integer("Default time until autostop must be an integer.")
+			.integer(
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.default_time_until_autostop_must_be_an_integer_061519c4",
+				),
+			)
 			.required()
-			.min(0, "Default time until autostop must not be less than 0.")
+			.min(
+				0,
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.default_time_until_autostop_must_not_be_less_tha_67d7b9b7",
+				),
+			)
 			.max(
-				24 * MAX_TTL_DAYS /* 30 days in hours */,
-				"Please enter a limit that is less than or equal to 720 hours (30 days).",
+				24 * MAX_TTL_DAYS,
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.please_enter_a_limit_that_is_less_than_or_equal__8a950140",
+				),
 			),
 		activity_bump_ms: Yup.number()
-			.integer("Activity bump must be an integer.")
+			.integer(
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.activity_bump_must_be_an_integer_6f5b0cf8",
+				),
+			)
 			.required()
-			.min(0, "Activity bump must not be less than 0.")
+			.min(
+				0,
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.activity_bump_must_not_be_less_than_0_2755accb",
+				),
+			)
 			.max(
-				24 * MAX_TTL_DAYS /* 30 days in hours */,
-				"Please enter an activity bump duration that is less than or equal to 720 hours (30 days).",
+				24 * MAX_TTL_DAYS,
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.please_enter_an_activity_bump_duration_that_is_l_d25e7eae",
+				),
 			),
 		time_til_autostop_notify_ms: Yup.number()
-			.integer("Autostop reminder must be an integer.")
+			.integer(
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.autostop_reminder_must_be_an_integer_6df13058",
+				),
+			)
 			.required()
-			.min(0, "Autostop reminder must not be less than 0.")
+			.min(
+				0,
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.autostop_reminder_must_not_be_less_than_0_6a846d40",
+				),
+			)
 			.max(
-				24 * MAX_TTL_DAYS /* 30 days in hours */,
-				"Autostop reminder must not exceed 720 hours (30 days).",
+				24 * MAX_TTL_DAYS,
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.autostop_reminder_must_not_exceed_720_hours_30_d_2432c436",
+				),
 			),
 		failure_ttl_ms: Yup.number()
-			.integer("Failure cleanup days must be an integer.")
+			.integer(
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.failure_cleanup_days_must_be_an_integer_e948b52b",
+				),
+			)
 			.required()
-			.min(0, "Failure cleanup days must not be less than 0.")
+			.min(
+				0,
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.failure_cleanup_days_must_not_be_less_than_0_9b7f64fa",
+				),
+			)
 			.test(
 				"positive-if-enabled",
-				"Failure cleanup days must be greater than zero when enabled.",
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.failure_cleanup_days_must_be_greater_than_zero_w_c2e39780",
+				),
 				function (value) {
 					const parent = this.parent as TemplateScheduleFormValues;
 					if (!parent.failure_cleanup_enabled) {
@@ -62,12 +107,23 @@ export const getValidationSchema = (): Yup.AnyObjectSchema =>
 				},
 			),
 		time_til_dormant_ms: Yup.number()
-			.integer("Dormancy threshold must be an integer.")
+			.integer(
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.dormancy_threshold_must_be_an_integer_5772fabd",
+				),
+			)
 			.required()
-			.min(0, "Dormancy threshold must not be less than 0.")
+			.min(
+				0,
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.dormancy_threshold_must_not_be_less_than_0_a984cd38",
+				),
+			)
 			.test(
 				"positive-if-enabled",
-				"Dormancy threshold must be greater than zero when enabled.",
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.dormancy_threshold_must_be_greater_than_zero_whe_a56bae1c",
+				),
 				function (value) {
 					const parent = this.parent as TemplateScheduleFormValues;
 					if (parent.inactivity_cleanup_enabled) {
@@ -77,12 +133,23 @@ export const getValidationSchema = (): Yup.AnyObjectSchema =>
 				},
 			),
 		time_til_dormant_autodelete_ms: Yup.number()
-			.integer("Dormancy auto-deletion days must be an integer.")
+			.integer(
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.dormancy_auto_deletion_days_must_be_an_integer_1fc2ef3d",
+				),
+			)
 			.required()
-			.min(0, "Dormancy auto-deletion days must not be less than 0.")
+			.min(
+				0,
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.dormancy_auto_deletion_days_must_not_be_less_tha_c371b050",
+				),
+			)
 			.test(
 				"positive-if-enabled",
-				"Dormancy auto-deletion days must be greater than zero when enabled.",
+				i18n.t(
+					"templates:TemplateSettingsPage.TemplateSchedulePage.formHelpers.dormancy_auto_deletion_days_must_be_greater_than_548fed7e",
+				),
 				function (value) {
 					const parent = this.parent as TemplateScheduleFormValues;
 					if (parent.dormant_autodeletion_cleanup_enabled) {

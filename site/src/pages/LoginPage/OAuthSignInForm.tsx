@@ -1,5 +1,6 @@
 import { KeyIcon } from "lucide-react";
 import { type FC, useId } from "react";
+import { useTranslation } from "react-i18next";
 import type { AuthMethods } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
 import { ExternalImage } from "#/components/ExternalImage/ExternalImage";
@@ -15,6 +16,8 @@ export const OAuthSignInForm: FC<OAuthSignInFormProps> = ({
 	redirectTo,
 	authMethods,
 }) => {
+	const { t: tI18n } = useTranslation("auth");
+
 	return (
 		<div className="grid gap-4">
 			{authMethods?.github.enabled && (
@@ -32,11 +35,10 @@ export const OAuthSignInForm: FC<OAuthSignInFormProps> = ({
 						)}`}
 					>
 						<ExternalImage src="/icon/github.svg" />
-						GitHub
+						{tI18n("LoginPage.OAuthSignInForm.github_f911e414")}
 					</a>
 				</Button>
 			)}
-
 			{authMethods?.oidc.enabled && (
 				<Button
 					variant="outline"
@@ -56,7 +58,8 @@ export const OAuthSignInForm: FC<OAuthSignInFormProps> = ({
 						) : (
 							<KeyIcon />
 						)}
-						{authMethods.oidc.signInText || "OpenID Connect"}
+						{authMethods.oidc.signInText ||
+							tI18n("LoginPage.OAuthSignInForm.openid_connect_50a8a027")}
 					</a>
 				</Button>
 			)}
@@ -69,6 +72,8 @@ type OidcIconProps = {
 };
 
 const OidcIcon: FC<OidcIconProps> = ({ iconUrl }) => {
+	const { t: tI18n } = useTranslation("auth");
+
 	const hookId = useId();
 	const oidcId = `${hookId}-oidc`;
 
@@ -79,7 +84,7 @@ const OidcIcon: FC<OidcIconProps> = ({ iconUrl }) => {
 		<>
 			<ExternalImage alt="" src={iconUrl} aria-labelledby={oidcId} />
 			<div id={oidcId} className="sr-only">
-				Open ID Connect
+				{tI18n("LoginPage.OAuthSignInForm.open_id_connect_0677e36a")}
 			</div>
 		</>
 	);

@@ -8,6 +8,7 @@ import {
 	TrashIcon,
 } from "lucide-react";
 import { type FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link as RouterLink } from "react-router";
 import { toast } from "sonner";
@@ -54,6 +55,8 @@ export const WorkspaceMoreActions: FC<WorkspaceMoreActionsProps> = ({
 	isStopping,
 	onActionSuccess,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const queryClient = useQueryClient();
 
 	const [workspaceErrorDialog, setWorkspaceErrorDialog] = useState<{
@@ -83,7 +86,12 @@ export const WorkspaceMoreActions: FC<WorkspaceMoreActionsProps> = ({
 			toast.error(
 				getErrorMessage(
 					error,
-					`Failed to delete workspace "${workspace.name}".`,
+					tI18n(
+						"workspaces.WorkspaceMoreActions.WorkspaceMoreActions.failed_to_delete_workspace_value0_7c221751",
+						{
+							value0: workspace.name,
+						},
+					),
 				),
 				{
 					description: getErrorDetail(error),
@@ -130,7 +138,11 @@ export const WorkspaceMoreActions: FC<WorkspaceMoreActionsProps> = ({
 						disabled={disabled}
 					>
 						<EllipsisVerticalIcon aria-hidden="true" />
-						<span className="sr-only">Workspace actions</span>
+						<span className="sr-only">
+							{tI18n(
+								"workspaces.WorkspaceMoreActions.WorkspaceMoreActions.workspace_actions_66f56cc7",
+							)}
+						</span>
 					</Button>
 				</DropdownMenuTrigger>
 
@@ -138,7 +150,9 @@ export const WorkspaceMoreActions: FC<WorkspaceMoreActionsProps> = ({
 					{onStop && (
 						<DropdownMenuItem onClick={onStop} disabled={isStopping}>
 							<SquareIcon />
-							Stop&hellip;
+							{tI18n(
+								"workspaces.WorkspaceMoreActions.WorkspaceMoreActions.stop_6b4c3354",
+							)}
 						</DropdownMenuItem>
 					)}
 
@@ -147,7 +161,9 @@ export const WorkspaceMoreActions: FC<WorkspaceMoreActionsProps> = ({
 							to={`/@${workspace.owner_name}/${workspace.name}/settings`}
 						>
 							<SettingsIcon />
-							Settings
+							{tI18n(
+								"workspaces.WorkspaceMoreActions.WorkspaceMoreActions.settings_74a883a0",
+							)}
 						</RouterLink>
 					</DropdownMenuItem>
 
@@ -158,7 +174,9 @@ export const WorkspaceMoreActions: FC<WorkspaceMoreActionsProps> = ({
 							}}
 						>
 							<HistoryIcon />
-							Change version&hellip;
+							{tI18n(
+								"workspaces.WorkspaceMoreActions.WorkspaceMoreActions.change_version_1ed5322e",
+							)}
 						</DropdownMenuItem>
 					)}
 
@@ -167,12 +185,16 @@ export const WorkspaceMoreActions: FC<WorkspaceMoreActionsProps> = ({
 						disabled={!isDuplicationReady}
 					>
 						<CopyIcon />
-						Duplicate&hellip;
+						{tI18n(
+							"workspaces.WorkspaceMoreActions.WorkspaceMoreActions.duplicate_5d202208",
+						)}
 					</DropdownMenuItem>
 
 					<DropdownMenuItem onClick={() => setIsDownloadDialogOpen(true)}>
 						<DownloadIcon />
-						Download logs&hellip;
+						{tI18n(
+							"workspaces.WorkspaceMoreActions.WorkspaceMoreActions.download_logs_6213204d",
+						)}
 					</DropdownMenuItem>
 
 					<DropdownMenuSeparator />
@@ -185,17 +207,17 @@ export const WorkspaceMoreActions: FC<WorkspaceMoreActionsProps> = ({
 						data-testid="delete-button"
 					>
 						<TrashIcon />
-						Delete&hellip;
+						{tI18n(
+							"workspaces.WorkspaceMoreActions.WorkspaceMoreActions.delete_9ce78fe3",
+						)}
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
-
 			<DownloadLogsDialog
 				workspace={workspace}
 				open={isDownloadDialogOpen}
 				onClose={() => setIsDownloadDialogOpen(false)}
 			/>
-
 			{changeVersionMutation.error instanceof ParameterValidationError && (
 				<UpdateBuildParametersDialog
 					workspace={workspace}
@@ -205,7 +227,6 @@ export const WorkspaceMoreActions: FC<WorkspaceMoreActionsProps> = ({
 					}}
 				/>
 			)}
-
 			<ChangeWorkspaceVersionDialog
 				workspace={workspace}
 				open={changeVersionDialogOpen}
@@ -217,7 +238,6 @@ export const WorkspaceMoreActions: FC<WorkspaceMoreActionsProps> = ({
 					changeVersionMutation.mutate({ versionId: version.id });
 				}}
 			/>
-
 			<WorkspaceDeleteDialog
 				workspace={workspace}
 				canDeleteFailedWorkspace={Boolean(permissions?.deleteFailedWorkspace)}
@@ -230,7 +250,6 @@ export const WorkspaceMoreActions: FC<WorkspaceMoreActionsProps> = ({
 					setIsConfirmingDelete(false);
 				}}
 			/>
-
 			<WorkspaceErrorDialog
 				open={workspaceErrorDialog.open}
 				error={workspaceErrorDialog.error}

@@ -2,6 +2,7 @@ import { cn } from "cn";
 import kebabCase from "lodash/fp/kebabCase";
 import { BellOffIcon, RotateCcwIcon } from "lucide-react";
 import { type FC, Suspense } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { NavLink, Outlet } from "react-router";
 import { health, refreshHealth } from "#/api/queries/debug";
@@ -30,6 +31,8 @@ const linkStyles = {
 };
 
 export const HealthLayout: FC = () => {
+	const { t: tI18n } = useTranslation("pages");
+
 	const queryClient = useQueryClient();
 	const {
 		data: healthStatus,
@@ -70,8 +73,9 @@ export const HealthLayout: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Health")}</title>
-
+			<title>
+				{pageTitle(tI18n("HealthPage.HealthLayout.health_55898449"))}
+			</title>
 			<DashboardFullPage>
 				<div className="flex basis-0 flex-1 overflow-hidden">
 					<div className="w-64 shrink-0 text-sm border-0 border-solid border-r border-r-border">
@@ -99,12 +103,16 @@ export const HealthLayout: FC = () => {
 											</Button>
 										</TooltipTrigger>
 										<TooltipContent side="bottom">
-											Refresh health checks
+											{tI18n(
+												"HealthPage.HealthLayout.refresh_health_checks_95c4ff2f",
+											)}
 										</TooltipContent>
 									</Tooltip>
 								</div>
 								<div className="font-medium mt-4">
-									{healthStatus.healthy ? "Healthy" : "Unhealthy"}
+									{healthStatus.healthy
+										? tI18n("HealthPage.HealthLayout.healthy_7f1e323b")
+										: tI18n("HealthPage.HealthLayout.unhealthy_317b1fbc")}
 								</div>
 								<div className="text-content-secondary line-height-[150%]">
 									{healthStatus.healthy
@@ -113,14 +121,22 @@ export const HealthLayout: FC = () => {
 													healthStatus[key as keyof typeof visibleSections];
 												return section.warnings && section.warnings.length > 0;
 											})
-											? "All systems operational, but performance might be degraded"
-											: "All systems operational"
-										: "Some issues have been detected"}
+											? tI18n(
+													"HealthPage.HealthLayout.all_systems_operational_but_performance_might_be_e680c031",
+												)
+											: tI18n(
+													"HealthPage.HealthLayout.all_systems_operational_39bd8d49",
+												)
+										: tI18n(
+												"HealthPage.HealthLayout.some_issues_have_been_detected_f232ccdd",
+											)}
 								</div>
 							</div>
 
 							<div className="flex flex-col">
-								<span className="font-medium">Last check</span>
+								<span className="font-medium">
+									{tI18n("HealthPage.HealthLayout.last_check_c982b23d")}
+								</span>
 								<span
 									data-pixel="ignore"
 									className="text-content-secondary line-height-[150%]"
@@ -130,7 +146,9 @@ export const HealthLayout: FC = () => {
 							</div>
 
 							<div className="flex flex-col">
-								<span className="font-medium">Version</span>
+								<span className="font-medium">
+									{tI18n("HealthPage.HealthLayout.version_dd167905")}
+								</span>
 								<span
 									data-pixel="ignore"
 									className="text-content-secondary line-height-[150%]"

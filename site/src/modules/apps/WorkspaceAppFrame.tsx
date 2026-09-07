@@ -5,6 +5,7 @@ import {
 	HouseIcon,
 } from "lucide-react";
 import { type ComponentProps, type FC, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import type { Workspace } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
@@ -33,6 +34,8 @@ export const WorkspaceAppFrame: FC<WorkspaceAppFrameProps> = ({
 	app,
 	active,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const link = useAppLink(app, {
 		agent: app.agent,
 		workspace,
@@ -69,16 +72,26 @@ export const WorkspaceAppFrame: FC<WorkspaceAppFrameProps> = ({
 						}}
 					>
 						<HouseIcon />
-						<span className="sr-only">Home</span>
+						<span className="sr-only">
+							{tI18n("apps.WorkspaceAppFrame.home_3a786953")}
+						</span>
 					</Button>
 
 					<div className="w-full" />
 
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<Button size="icon" variant="subtle" aria-label="More options">
+							<Button
+								size="icon"
+								variant="subtle"
+								aria-label={tI18n(
+									"apps.WorkspaceAppFrame.more_options_bc79cdff",
+								)}
+							>
 								<EllipsisVerticalIcon aria-hidden="true" />
-								<span className="sr-only">More options</span>
+								<span className="sr-only">
+									{tI18n("apps.WorkspaceAppFrame.more_options_bc79cdff")}
+								</span>
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
@@ -89,32 +102,39 @@ export const WorkspaceAppFrame: FC<WorkspaceAppFrameProps> = ({
 									rel="noreferrer"
 								>
 									<ExternalLinkIcon />
-									Open app in new tab
+									{tI18n("apps.WorkspaceAppFrame.open_app_in_new_tab_afeffd83")}
 								</RouterLink>
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>
 			)}
-
 			{app.health === "healthy" || app.health === "disabled" ? (
 				<WorkspaceIframe ref={frameRef} src={link.href} title={link.label} />
 			) : app.health === "unhealthy" ? (
 				<div className="w-full h-full flex flex-col items-center justify-center p-4">
 					<h3 className="m-0 font-medium text-content-primary text-base text-center">
-						App "{app.display_name}" is unhealthy
+						{tI18n("apps.WorkspaceAppFrame.app_7d981419")}
+						{app.display_name}
+						{tI18n("apps.WorkspaceAppFrame.is_unhealthy_a275e158")}
 					</h3>
 					<div className="text-content-secondary text-sm">
 						<span className="block text-center">
-							Here are some troubleshooting steps you can take:
+							{tI18n(
+								"apps.WorkspaceAppFrame.here_are_some_troubleshooting_steps_you_can_take_23bb194b",
+							)}
 						</span>
 						<ul className="m-0 pt-4 flex flex-col gap-4">
 							{app.healthcheck && (
 								<li>
 									<span className="block font-medium text-content-primary mb-1">
-										Verify healthcheck
+										{tI18n(
+											"apps.WorkspaceAppFrame.verify_healthcheck_d521d0a9",
+										)}
 									</span>
-									Try running the following inside your workspace:{" "}
+									{tI18n(
+										"apps.WorkspaceAppFrame.try_running_the_following_inside_your_workspace_7b03376c",
+									)}{" "}
 									<code className="font-mono text-content-primary select-all">
 										curl -v "{app.healthcheck.url}"
 									</code>
@@ -122,13 +142,15 @@ export const WorkspaceAppFrame: FC<WorkspaceAppFrameProps> = ({
 							)}
 							<li>
 								<span className="block font-medium text-content-primary mb-1">
-									Check logs
+									{tI18n("apps.WorkspaceAppFrame.check_logs_ed855f3d")}
 								</span>
-								See{" "}
+								{tI18n("apps.WorkspaceAppFrame.see_6863067e")}{" "}
 								<code className="font-mono text-content-primary select-all">
 									/tmp/coder-agent.log
 								</code>{" "}
-								inside your workspace "{workspace.name}" for more information.
+								{tI18n("apps.WorkspaceAppFrame.inside_your_workspace_f3cf38c9")}
+								{workspace.name}
+								{tI18n("apps.WorkspaceAppFrame.for_more_information_c761f7a6")}
 							</li>
 						</ul>
 					</div>
@@ -140,10 +162,12 @@ export const WorkspaceAppFrame: FC<WorkspaceAppFrameProps> = ({
 			) : (
 				<div className="w-full h-full flex flex-col items-center justify-center">
 					<h3 className="m-0 font-medium text-content-primary text-base">
-						Error
+						{tI18n("apps.WorkspaceAppFrame.error_54a0e8c1")}
 					</h3>
 					<span className="text-content-secondary text-sm">
-						The app is in an unknown health state.
+						{tI18n(
+							"apps.WorkspaceAppFrame.the_app_is_in_an_unknown_health_state_c4b0f3e5",
+						)}
 					</span>
 				</div>
 			)}

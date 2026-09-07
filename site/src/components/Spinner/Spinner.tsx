@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 /**
  * This component was inspired by
  * https://www.radix-ui.com/themes/docs/components/spinner and developed using
@@ -42,6 +43,8 @@ export function Spinner({
 	label,
 	...props
 }: SpinnerProps) {
+	const { t: tI18n } = useTranslation("components");
+
 	if (!loading) {
 		return children;
 	}
@@ -56,7 +59,7 @@ export function Spinner({
 			className={cn(spinnerVariants({ size, className }))}
 			{...props}
 		>
-			<title>Loading spinner</title>
+			<title>{tI18n("Spinner.Spinner.loading_spinner_e9ec6cc1")}</title>
 			{leaves.map((leaf) => (
 				<rect
 					key={leaf}

@@ -12,6 +12,7 @@ import {
 	type ReactNode,
 	useId,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { type SetURLSearchParams, useSearchParams } from "react-router";
 import { getErrorDetail, getErrorMessage } from "#/api/errors";
@@ -50,6 +51,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { currentIntlLocale } from "#/i18n/locale";
 import { RequirePermission } from "#/modules/permissions/RequirePermission";
 import { useTemplateLayoutContext } from "#/pages/TemplatePage/TemplateLayout";
 import { getLatencyColor } from "#/utils/latency";
@@ -69,6 +71,8 @@ import { numberOfWeeksOptions, WeekPicker } from "./WeekPicker";
 const DEFAULT_NUMBER_OF_WEEKS = numberOfWeeksOptions[0];
 
 export default function TemplateInsightsPage() {
+	const { t: tI18n } = useTranslation("templates");
+
 	const { template, permissions } = useTemplateLayoutContext();
 	const [searchParams, setSearchParams] = useSearchParams();
 
@@ -111,8 +115,14 @@ export default function TemplateInsightsPage() {
 
 	return (
 		<RequirePermission isFeatureVisible={canViewInsights}>
-			<title>{getTemplatePageTitle("Insights", template)}</title>
-
+			<title>
+				{getTemplatePageTitle(
+					tI18n(
+						"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.insights_2a932f90",
+					),
+					template,
+				)}
+			</title>
 			<TemplateInsightsPageView
 				controls={
 					<TemplateInsightsControls
@@ -278,22 +288,34 @@ const ActiveUsersPanel: FC<ActiveUsersPanelProps> = ({
 	interval,
 	...panelProps
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<Panel {...panelProps}>
 			<PanelHeader>
 				<PanelTitle className="flex items-center gap-2">
-					{interval === "day" ? "Daily" : "Weekly"} Active Users
+					{interval === "day"
+						? tI18n(
+								"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.daily_b36c2611",
+							)
+						: tI18n(
+								"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.weekly_29751324",
+							)}
+					{tI18n(
+						"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.active_users_3cc1cf06",
+					)}
 					<HelpPopover>
 						<HelpPopoverIconTrigger size="small" />
 						<HelpPopoverContent>
 							<HelpPopoverTitle>
-								How do we calculate active users?
+								{tI18n(
+									"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.how_do_we_calculate_active_users_7cca7e31",
+								)}
 							</HelpPopoverTitle>
 							<HelpPopoverText>
-								When a connection is initiated to a user&apos;s workspace they
-								are considered an active user. e.g. apps, web terminal, SSH.
-								This is for measuring user activity and has no connection to
-								license consumption.
+								{tI18n(
+									"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.when_a_connection_is_initiated_to_a_user_s_works_d5df95e4",
+								)}
 							</HelpPopoverText>
 						</HelpPopoverContent>
 					</HelpPopover>
@@ -322,17 +344,27 @@ const UsersLatencyPanel: FC<UsersLatencyPanelProps> = ({
 	className,
 	...panelProps
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<Panel {...panelProps} className={cn("overflow-y-auto", className)}>
 			<PanelHeader>
 				<PanelTitle className="flex items-center gap-2">
-					Latency by user
+					{tI18n(
+						"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.latency_by_user_6d774537",
+					)}
 					<HelpPopover>
 						<HelpPopoverIconTrigger size="small" />
 						<HelpPopoverContent>
-							<HelpPopoverTitle>How is latency calculated?</HelpPopoverTitle>
+							<HelpPopoverTitle>
+								{tI18n(
+									"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.how_is_latency_calculated_41e3dc3e",
+								)}
+							</HelpPopoverTitle>
 							<HelpPopoverText>
-								The median round trip time of user connections to workspaces.
+								{tI18n(
+									"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.the_median_round_trip_time_of_user_connections_t_732738a7",
+								)}
 							</HelpPopoverText>
 						</HelpPopoverContent>
 					</HelpPopover>
@@ -357,7 +389,10 @@ const UsersLatencyPanel: FC<UsersLatencyPanelProps> = ({
 										getLatencyColor(row.latency_ms.p50),
 									)}
 								>
-									{row.latency_ms.p50.toFixed(0)}ms
+									{row.latency_ms.p50.toFixed(0)}
+									{tI18n(
+										"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.ms_f785c3ce",
+									)}
 								</div>
 							</div>
 						))}
@@ -377,18 +412,27 @@ const UsersActivityPanel: FC<UsersActivityPanelProps> = ({
 	className,
 	...panelProps
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<Panel {...panelProps} className={cn("overflow-y-auto", className)}>
 			<PanelHeader>
 				<PanelTitle className="flex items-center gap-2">
-					Activity by user
+					{tI18n(
+						"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.activity_by_user_6500e151",
+					)}
 					<HelpPopover>
 						<HelpPopoverIconTrigger size="small" />
 						<HelpPopoverContent>
-							<HelpPopoverTitle>How is activity calculated?</HelpPopoverTitle>
+							<HelpPopoverTitle>
+								{tI18n(
+									"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.how_is_activity_calculated_f0edba5a",
+								)}
+							</HelpPopoverTitle>
 							<HelpPopoverText>
-								When a connection is initiated to a user&apos;s workspace they
-								are considered an active user. e.g. apps, web terminal, SSH
+								{tI18n(
+									"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.when_a_connection_is_initiated_to_a_user_s_works_c3b2fba2",
+								)}
 							</HelpPopoverText>
 						</HelpPopoverContent>
 					</HelpPopover>
@@ -428,6 +472,8 @@ const TemplateUsagePanel: FC<TemplateUsagePanelProps> = ({
 	className,
 	...panelProps
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	// The API returns a row for each app, even if the user didn't use it.
 	const validUsage = data
 		?.filter((u) => u.seconds > 0)
@@ -439,7 +485,11 @@ const TemplateUsagePanel: FC<TemplateUsagePanelProps> = ({
 	return (
 		<Panel {...panelProps} className={cn("overflow-y-auto", className)}>
 			<PanelHeader>
-				<PanelTitle>App & IDE Usage</PanelTitle>
+				<PanelTitle>
+					{tI18n(
+						"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.app_ide_usage_ef09d674",
+					)}
+				</PanelTitle>
 			</PanelHeader>
 			<PanelContent error={error} data={validUsage}>
 				{
@@ -483,8 +533,17 @@ const TemplateUsagePanel: FC<TemplateUsagePanelProps> = ({
 										{formatTime(usage.seconds)}
 										{usage.times_used > 0 && (
 											<span className="text-[12px] text-content-disabled">
-												Opened {usage.times_used.toLocaleString()}{" "}
-												{usage.times_used === 1 ? "time" : "times"}
+												{tI18n(
+													"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.opened_bc2405b2",
+												)}
+												{usage.times_used.toLocaleString(currentIntlLocale())}{" "}
+												{usage.times_used === 1
+													? tI18n(
+															"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.time_33607480",
+														)
+													: tI18n(
+															"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.times_2bf61a3b",
+														)}
 											</span>
 										)}
 									</div>
@@ -508,10 +567,16 @@ const TemplateParametersUsagePanel: FC<TemplateParametersUsagePanelProps> = ({
 	error,
 	...panelProps
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<Panel {...panelProps}>
 			<PanelHeader>
-				<PanelTitle>Parameters usage</PanelTitle>
+				<PanelTitle>
+					{tI18n(
+						"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.parameters_usage_5f4adfc3",
+					)}
+				</PanelTitle>
 			</PanelHeader>
 			<PanelContent error={error} data={data}>
 				{data?.map((parameter, parameterIndex) => {
@@ -532,16 +597,22 @@ const TemplateParametersUsagePanel: FC<TemplateParametersUsagePanelProps> = ({
 							</div>
 							<div className="flex-1 text-sm grid grid-cols-[1fr_auto] gap-x-4 items-baseline">
 								<div className="font-medium text-sm text-content-secondary py-1">
-									Value
+									{tI18n(
+										"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.value_8e37953d",
+									)}
 								</div>
 								<Tooltip>
 									<TooltipTrigger asChild>
 										<div className="font-medium text-sm text-content-secondary text-right py-1 cursor-default">
-											Count
+											{tI18n(
+												"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.count_37bac495",
+											)}
 										</div>
 									</TooltipTrigger>
 									<TooltipContent>
-										The number of workspaces using this value
+										{tI18n(
+											"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.the_number_of_workspaces_using_this_value_0ba749ba",
+										)}
 									</TooltipContent>
 								</Tooltip>
 								{[...parameter.values]
@@ -556,7 +627,7 @@ const TemplateParametersUsagePanel: FC<TemplateParametersUsagePanelProps> = ({
 												/>
 											</div>
 											<div className="text-right py-1">
-												{usage.count.toLocaleString()}
+												{usage.count.toLocaleString(currentIntlLocale())}
 											</div>
 										</Fragment>
 									))}
@@ -588,6 +659,8 @@ const ParameterUsageLabel: FC<ParameterUsageLabelProps> = ({
 	usage,
 	parameter,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const ariaId = useId();
 
 	if (parameter.options) {
@@ -656,12 +729,16 @@ const ParameterUsageLabel: FC<ParameterUsageLabelProps> = ({
 				{usage.value === "false" ? (
 					<>
 						<CircleXIcon className="size-icon-xs text-content-destructive" />
-						False
+						{tI18n(
+							"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.false_60a33e6c",
+						)}
 					</>
 				) : (
 					<>
 						<CircleCheckIcon className="size-icon-xs text-content-success" />
-						True
+						{tI18n(
+							"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.true_3cbc87c7",
+						)}
 					</>
 				)}
 			</div>
@@ -735,6 +812,8 @@ interface NoDataAvailableProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const NoDataAvailable: FC<NoDataAvailableProps> = ({ error, ...props }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<div
 			{...props}
@@ -742,8 +821,15 @@ const NoDataAvailable: FC<NoDataAvailableProps> = ({ error, ...props }) => {
 		>
 			{error
 				? getErrorDetail(error) ||
-					getErrorMessage(error, "Unable to fetch insights")
-				: "No data available"}
+					getErrorMessage(
+						error,
+						tI18n(
+							"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.unable_to_fetch_insights_cca49071",
+						),
+					)
+				: tI18n(
+						"TemplatePage.TemplateInsightsPage.TemplateInsightsPage.no_data_available_d2d2d48c",
+					)}
 		</div>
 	);
 };
@@ -784,7 +870,7 @@ function formatTime(seconds: number): string {
 		return `${value.amount} ${singularUnit}`;
 	}
 
-	return `${value.amount.toLocaleString(undefined, {
+	return `${value.amount.toLocaleString(currentIntlLocale(), {
 		maximumFractionDigits: 1,
 		minimumFractionDigits: 0,
 	})} ${value.unit}`;

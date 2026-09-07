@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
 	Sidebar as BaseSidebar,
 	SettingsSidebarNavItem,
@@ -5,23 +6,25 @@ import {
 import { useWorkspaceSettings } from "./useWorkspaceSettings";
 
 export const Sidebar: React.FC = () => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const { permissions } = useWorkspaceSettings();
 
 	return (
 		<BaseSidebar>
 			<div className="flex flex-col gap-1">
 				<SettingsSidebarNavItem end href="">
-					General
+					{tI18n("WorkspaceSettingsPage.Sidebar.general_c910d474")}
 				</SettingsSidebarNavItem>
 				<SettingsSidebarNavItem href="parameters">
-					Parameters
+					{tI18n("WorkspaceSettingsPage.Sidebar.parameters_e68b36b1")}
 				</SettingsSidebarNavItem>
 				<SettingsSidebarNavItem href="schedule">
-					Schedule
+					{tI18n("WorkspaceSettingsPage.Sidebar.schedule_f4830a1d")}
 				</SettingsSidebarNavItem>
 				{permissions?.shareWorkspace && (
 					<SettingsSidebarNavItem href="sharing">
-						Sharing
+						{tI18n("WorkspaceSettingsPage.Sidebar.sharing_bbedc70e")}
 					</SettingsSidebarNavItem>
 				)}
 			</div>

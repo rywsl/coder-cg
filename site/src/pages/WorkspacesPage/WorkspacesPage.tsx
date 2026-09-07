@@ -6,6 +6,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "react-query";
 import { useSearchParams } from "react-router";
 import { toast } from "sonner";
@@ -52,6 +53,8 @@ function useSafeSearchParams() {
 type BatchAction = "delete" | "stop" | "update";
 
 const WorkspacesPage: FC = () => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const queryClient = useQueryClient();
 	// We have to be careful with how we use useSearchParams or any other
 	// derived hooks. The URL is global state, but each call to useSearchParams
@@ -171,7 +174,6 @@ const WorkspacesPage: FC = () => {
 	return (
 		<>
 			<title>{pageTitle("Workspaces")}</title>
-
 			<WorkspacesPageView
 				canCreateTemplate={permissions.createTemplates}
 				canCreateWorkspace={permissions.createWorkspace}
@@ -229,12 +231,19 @@ const WorkspacesPage: FC = () => {
 					});
 				}}
 				onActionError={(error) => {
-					toast.error(getErrorMessage(error, "Failed to perform action."), {
-						description: getErrorDetail(error),
-					});
+					toast.error(
+						getErrorMessage(
+							error,
+							tI18n(
+								"WorkspacesPage.WorkspacesPage.failed_to_perform_action_6f51f6b1",
+							),
+						),
+						{
+							description: getErrorDetail(error),
+						},
+					);
 				}}
 			/>
-
 			<BatchDeleteConfirmation
 				isLoading={batchActions.isProcessing}
 				checkedWorkspaces={checkedWorkspaces}
@@ -245,7 +254,6 @@ const WorkspacesPage: FC = () => {
 					setActiveBatchAction(undefined);
 				}}
 			/>
-
 			<BatchStopConfirmation
 				isLoading={batchActions.isProcessing}
 				workspacesToStop={workspacesToStop}
@@ -256,7 +264,6 @@ const WorkspacesPage: FC = () => {
 					setActiveBatchAction(undefined);
 				}}
 			/>
-
 			<BatchUpdateModalForm
 				open={activeBatchAction === "update"}
 				workspacesToUpdate={checkedWorkspaces}

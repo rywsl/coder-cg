@@ -1,5 +1,6 @@
 import { ExternalLinkIcon } from "lucide-react";
 import { type FC, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { useLocation, useNavigate, useParams } from "react-router";
 import {
@@ -15,6 +16,8 @@ import { docs } from "#/utils/docs";
 import { getTemplatePageTitle } from "../utils";
 
 const TemplateFilesPage: FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const { organization: organizationName = "default" } = useParams() as {
 		organization?: string;
 	};
@@ -51,16 +54,25 @@ const TemplateFilesPage: FC = () => {
 
 	return (
 		<>
-			<title>{getTemplatePageTitle("Source Code", template)}</title>
-
+			<title>
+				{getTemplatePageTitle(
+					tI18n(
+						"TemplatePage.TemplateFilesPage.TemplateFilesPage.source_code_bc47da66",
+					),
+					template,
+				)}
+			</title>
 			{justCreated && (
 				<Alert severity="info" dismissible className="mb-6">
 					<AlertTitle className="font-semibold">
-						Awesome, you just created a new template!
+						{tI18n(
+							"TemplatePage.TemplateFilesPage.TemplateFilesPage.awesome_you_just_created_a_new_template_2703d822",
+						)}
 					</AlertTitle>
 					<AlertDescription>
-						To customize it further you can edit the Terraform or Coder Template
-						directly. You can use our template agent skill to help you.
+						{tI18n(
+							"TemplatePage.TemplateFilesPage.TemplateFilesPage.to_customize_it_further_you_can_edit_the_terrafo_be8fc05f",
+						)}
 					</AlertDescription>
 					<div className="flex items-center gap-2 mt-4">
 						<Button asChild size="sm" variant="default">
@@ -70,7 +82,9 @@ const TemplateFilesPage: FC = () => {
 								rel="noopener noreferrer"
 								className="flex items-center"
 							>
-								View agent skill
+								{tI18n(
+									"TemplatePage.TemplateFilesPage.TemplateFilesPage.view_agent_skill_9b39b289",
+								)}
 								<ExternalLinkIcon className="size-icon-sm ml-1" />
 							</a>
 						</Button>
@@ -81,14 +95,15 @@ const TemplateFilesPage: FC = () => {
 								rel="noopener noreferrer"
 								className="flex items-center"
 							>
-								View docs
+								{tI18n(
+									"TemplatePage.TemplateFilesPage.TemplateFilesPage.view_docs_61479fda",
+								)}
 								<ExternalLinkIcon className="size-icon-sm ml-1" />
 							</a>
 						</Button>
 					</div>
 				</Alert>
 			)}
-
 			{shouldDisplayFiles ? (
 				<TemplateFiles
 					organizationName={template.organization_name}

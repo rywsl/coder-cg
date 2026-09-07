@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	DAUsResponse,
 	Experiment,
@@ -30,16 +31,23 @@ export const OverviewPageView: FC<OverviewPageViewProps> = ({
 	safeExperiments,
 	invalidExperiments,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<>
 			<SettingsHeader>
-				<SettingsHeaderTitle>General</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"DeploymentSettingsPage.OverviewPage.OverviewPageView.general_c910d474",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Information about your Coder deployment.{" "}
+					{tI18n(
+						"DeploymentSettingsPage.OverviewPage.OverviewPageView.information_about_your_coder_deployment_0860d99a",
+					)}{" "}
 					<SettingsHeaderDocsLink href={docs("/admin/setup")} />
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			<div className="flex flex-col gap-8">
 				<UserEngagementChart
 					data={dailyActiveUsers?.entries.map((i) => ({
@@ -49,7 +57,11 @@ export const OverviewPageView: FC<OverviewPageViewProps> = ({
 				/>
 				{invalidExperiments.length > 0 && (
 					<Alert severity="warning">
-						<AlertTitle>Invalid experiments in use:</AlertTitle>
+						<AlertTitle>
+							{tI18n(
+								"DeploymentSettingsPage.OverviewPage.OverviewPageView.invalid_experiments_in_use_2ed9f8f7",
+							)}
+						</AlertTitle>
 						<ul>
 							{invalidExperiments.map((it) => (
 								<li key={it}>
@@ -57,16 +69,21 @@ export const OverviewPageView: FC<OverviewPageViewProps> = ({
 								</li>
 							))}
 						</ul>
-						It is recommended that you remove these experiments from your
-						configuration as they have no effect. See{" "}
+						{tI18n(
+							"DeploymentSettingsPage.OverviewPage.OverviewPageView.it_is_recommended_that_you_remove_these_experime_d712aa24",
+						)}{" "}
 						<Link
 							href={docs("/reference/cli/server#--experiments")}
 							target="_blank"
 							rel="noreferrer"
 						>
-							the documentation
+							{tI18n(
+								"DeploymentSettingsPage.OverviewPage.OverviewPageView.the_documentation_a0030756",
+							)}
 						</Link>{" "}
-						for more details.
+						{tI18n(
+							"DeploymentSettingsPage.OverviewPage.OverviewPageView.for_more_details_1db5bfcf",
+						)}
 					</Alert>
 				)}
 				<OptionsTable

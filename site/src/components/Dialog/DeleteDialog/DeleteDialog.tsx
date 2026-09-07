@@ -1,4 +1,5 @@
 import { type FC, type FormEvent, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert } from "#/components/Alert/Alert";
 import { Button } from "#/components/Button/Button";
 import {
@@ -41,6 +42,8 @@ export const DeleteDialog: FC<DeleteDialogProps> = ({
 	label,
 	confirmText = "Delete",
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const confirmId = useId();
 	const errorId = `${confirmId}-error`;
 
@@ -74,9 +77,18 @@ export const DeleteDialog: FC<DeleteDialogProps> = ({
 		<Dialog open={isOpen} onOpenChange={handleOpenChange}>
 			<DialogContent variant="destructive" data-testid="dialog">
 				<DialogHeader>
-					<DialogTitle>{title ?? `Delete ${entity}`}</DialogTitle>
+					<DialogTitle>
+						{title ??
+							tI18n("Dialog.DeleteDialog.DeleteDialog.delete_value0_50256b39", {
+								value0: entity,
+							})}
+					</DialogTitle>
 					<DialogDescription>
-						{verb ?? "Deleting"} this {entity} is irreversible!
+						{verb ??
+							tI18n("Dialog.DeleteDialog.DeleteDialog.deleting_21ed2f9e")}
+						{tI18n("Dialog.DeleteDialog.DeleteDialog.this_1891012c")}
+						{entity}
+						{tI18n("Dialog.DeleteDialog.DeleteDialog.is_irreversible_80238c6e")}
 					</DialogDescription>
 				</DialogHeader>
 
@@ -87,15 +99,24 @@ export const DeleteDialog: FC<DeleteDialogProps> = ({
 						</Alert>
 					)}
 					<p className="m-0 text-sm text-content-secondary font-medium">
-						Type <strong className="text-content-primary">{name}</strong> below
-						to confirm.
+						{tI18n("Dialog.DeleteDialog.DeleteDialog.type_068e513f")}
+						<strong className="text-content-primary">{name}</strong>
+						{tI18n(
+							"Dialog.DeleteDialog.DeleteDialog.below_to_confirm_ecf5e7eb",
+						)}
 					</p>
 				</div>
 
 				<form className="flex flex-col gap-6" onSubmit={onSubmit}>
 					<div className="flex flex-col gap-2">
 						<Label htmlFor={confirmId}>
-							{label ?? `Name of the ${entity} to delete`}
+							{label ??
+								tI18n(
+									"Dialog.DeleteDialog.DeleteDialog.name_of_the_value0_to_delete_4817e976",
+									{
+										value0: entity,
+									},
+								)}
 						</Label>
 						<Input
 							id={confirmId}
@@ -113,7 +134,11 @@ export const DeleteDialog: FC<DeleteDialogProps> = ({
 						/>
 						{displayErrorMessage && (
 							<span id={errorId} className="text-xs text-content-destructive">
-								{userConfirmationText} does not match the name of this {entity}
+								{userConfirmationText}
+								{tI18n(
+									"Dialog.DeleteDialog.DeleteDialog.does_not_match_the_name_of_this_8beeeeee",
+								)}
+								{entity}
 							</span>
 						)}
 					</div>
@@ -125,7 +150,7 @@ export const DeleteDialog: FC<DeleteDialogProps> = ({
 							disabled={confirmLoading}
 							onClick={() => handleOpenChange(false)}
 						>
-							Cancel
+							{tI18n("Dialog.DeleteDialog.DeleteDialog.cancel_19766ed6")}
 						</Button>
 						<Button
 							type="submit"

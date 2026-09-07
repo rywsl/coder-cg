@@ -1,5 +1,6 @@
 import { CheckIcon, PlusIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import type { Organization } from "#/api/typesGenerated";
 import { ChevronDownIcon } from "#/components/AnimatedIcons/ChevronDown";
@@ -43,6 +44,8 @@ interface OrganizationsSettingsNavigationProps {
 export const OrganizationSidebarView: FC<
 	OrganizationsSettingsNavigationProps
 > = ({ activeOrganization, orgPermissions, organizations, permissions }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const sortedOrganizations = [...organizations].sort((a, b) => {
 		// active org first
 		if (a.id === activeOrganization?.id) return -1;
@@ -77,16 +80,28 @@ export const OrganizationSidebarView: FC<
 								</span>
 							</>
 						) : (
-							<span className="truncate">No organization selected</span>
+							<span className="truncate">
+								{tI18n(
+									"management.OrganizationSidebarView.no_organization_selected_278cd177",
+								)}
+							</span>
 						)}
 						<ChevronDownIcon className="ml-auto size-icon-sm!" />
 					</Button>
 				</PopoverTrigger>
 				<PopoverContent align="start" className="w-60">
 					<Command loop>
-						<CommandInput placeholder="Find organization" />
+						<CommandInput
+							placeholder={tI18n(
+								"management.OrganizationSidebarView.find_organization_268a5563",
+							)}
+						/>
 						<CommandList>
-							<CommandEmpty>No organization found.</CommandEmpty>
+							<CommandEmpty>
+								{tI18n(
+									"management.OrganizationSidebarView.no_organization_found_1aa8362e",
+								)}
+							</CommandEmpty>
 							<CommandGroup className="pb-2">
 								<div className="flex flex-col max-h-[260px] overflow-y-auto">
 									{sortedOrganizations.map((organization) => (
@@ -129,7 +144,10 @@ export const OrganizationSidebarView: FC<
 												}, 200);
 											}}
 										>
-											<PlusIcon /> Create Organization
+											<PlusIcon />
+											{tI18n(
+												"management.OrganizationSidebarView.create_organization_80ba4eb9",
+											)}
 										</CommandItem>
 									</CommandGroup>
 								</>
@@ -163,23 +181,25 @@ interface OrganizationSettingsNavigationProps {
 const OrganizationSettingsNavigation: FC<
 	OrganizationSettingsNavigationProps
 > = ({ organization, orgPermissions }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<div className="flex flex-col gap-1 my-2">
 			<SettingsSidebarNavItem end href={urlForSubpage(organization.name)}>
-				Members
+				{tI18n("management.OrganizationSidebarView.members_1044a4c0")}
 			</SettingsSidebarNavItem>
 			{orgPermissions.viewGroups && (
 				<SettingsSidebarNavItem
 					href={urlForSubpage(organization.name, "groups")}
 				>
-					Groups
+					{tI18n("management.OrganizationSidebarView.groups_39bbb719")}
 				</SettingsSidebarNavItem>
 			)}
 			{orgPermissions.viewOrgRoles && (
 				<SettingsSidebarNavItem
 					href={urlForSubpage(organization.name, "roles")}
 				>
-					Roles
+					{tI18n("management.OrganizationSidebarView.roles_c2533705")}
 				</SettingsSidebarNavItem>
 			)}
 			{orgPermissions.viewProvisioners &&
@@ -188,17 +208,23 @@ const OrganizationSettingsNavigation: FC<
 						<SettingsSidebarNavItem
 							href={urlForSubpage(organization.name, "provisioners")}
 						>
-							Provisioners
+							{tI18n(
+								"management.OrganizationSidebarView.provisioners_82d4a12e",
+							)}
 						</SettingsSidebarNavItem>
 						<SettingsSidebarNavItem
 							href={urlForSubpage(organization.name, "provisioner-keys")}
 						>
-							Provisioner Keys
+							{tI18n(
+								"management.OrganizationSidebarView.provisioner_keys_3c2d4e86",
+							)}
 						</SettingsSidebarNavItem>
 						<SettingsSidebarNavItem
 							href={urlForSubpage(organization.name, "provisioner-jobs")}
 						>
-							Provisioner Jobs
+							{tI18n(
+								"management.OrganizationSidebarView.provisioner_jobs_e4be4fbf",
+							)}
 						</SettingsSidebarNavItem>
 					</>
 				)}
@@ -206,14 +232,14 @@ const OrganizationSettingsNavigation: FC<
 				<SettingsSidebarNavItem
 					href={urlForSubpage(organization.name, "idp-sync")}
 				>
-					IdP Sync
+					{tI18n("management.OrganizationSidebarView.idp_sync_4af5d734")}
 				</SettingsSidebarNavItem>
 			)}
 			{orgPermissions.editSettings && (
 				<SettingsSidebarNavItem
 					href={urlForSubpage(organization.name, "settings")}
 				>
-					Settings
+					{tI18n("management.OrganizationSidebarView.settings_74a883a0")}
 				</SettingsSidebarNavItem>
 			)}
 		</div>

@@ -1,5 +1,6 @@
 import { PlusIcon } from "lucide-react";
 import { type FC, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	CreateUserSecretRequest,
 	ImportUserSecretsRequest,
@@ -59,6 +60,8 @@ export const SecretsPageView: FC<SecretsPageViewProps> = ({
 	onDeleteSecret,
 	onToggleSecretEnabled,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	const [dialogState, setDialogState] = useState<SecretDialogState>({
 		mode: "add",
 		open: false,
@@ -89,19 +92,24 @@ export const SecretsPageView: FC<SecretsPageViewProps> = ({
 				actions={
 					<Button onClick={(event) => openAddSecret(event.currentTarget)}>
 						<PlusIcon />
-						Add secret
+						{tI18n(
+							"UserSettingsPage.SecretsPage.SecretsPageView.add_secret_f57a23c6",
+						)}
 					</Button>
 				}
 			>
-				<SettingsHeaderTitle>Secrets</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"UserSettingsPage.SecretsPage.SecretsPageView.secrets_d8707d41",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Secrets with an environment variable or file path are injected into
-					workspaces you own when they start. Each environment variable and file
-					path must be unique.{" "}
+					{tI18n(
+						"UserSettingsPage.SecretsPage.SecretsPageView.secrets_with_an_environment_variable_or_file_pat_eef0f2b0",
+					)}{" "}
 					<SettingsHeaderDocsLink href={docs("/user-guides/user-secrets")} />
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			<SecretDialog
 				open={dialogState.open}
 				secret={dialogSecret}
@@ -112,9 +120,7 @@ export const SecretsPageView: FC<SecretsPageViewProps> = ({
 				onUpdateSecret={onUpdateSecret}
 				onImportSecrets={onImportSecrets}
 			/>
-
 			{getSecretsError ? <ErrorAlert error={getSecretsError} /> : undefined}
-
 			<section className="flex flex-col gap-4">
 				<SecretsTable
 					secrets={secrets}

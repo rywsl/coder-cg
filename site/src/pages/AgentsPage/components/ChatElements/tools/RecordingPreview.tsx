@@ -1,6 +1,7 @@
 import { ImageOffIcon, PlayIcon } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { getChatFileURL } from "../../../utils/chatAttachments";
 import { VideoLightbox } from "../../VideoLightbox";
 import { DEFAULT_ASPECT, PREVIEW_HEIGHT } from "./previewConstants";
@@ -30,6 +31,8 @@ export const RecordingPreview: React.FC<RecordingPreviewProps> = ({
 	src: srcOverride,
 	thumbnailSrc: thumbnailSrcOverride,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [showLightbox, setShowLightbox] = useState(false);
 	const [thumbnailError, setThumbnailError] = useState(false);
 	// Incremented each time the lightbox opens so the VideoLightbox
@@ -46,12 +49,16 @@ export const RecordingPreview: React.FC<RecordingPreviewProps> = ({
 			{thumbnailError ? (
 				<div className="flex size-full items-center justify-center gap-1.5 bg-surface-secondary text-xs text-content-secondary">
 					<ImageOffIcon className="size-3" />
-					Thumbnail unavailable
+					{tI18n(
+						"AgentsPage.components.ChatElements.tools.RecordingPreview.thumbnail_unavailable_7f7739d9",
+					)}
 				</div>
 			) : thumbnailFileId ? (
 				<img
 					src={thumbnailSrcOverride ?? getChatFileURL(thumbnailFileId)}
-					alt="Recording thumbnail"
+					alt={tI18n(
+						"AgentsPage.components.ChatElements.tools.RecordingPreview.recording_thumbnail_21e1ac13",
+					)}
 					className="size-full pointer-events-none object-cover"
 					onError={() => setThumbnailError(true)}
 				/>
@@ -61,7 +68,9 @@ export const RecordingPreview: React.FC<RecordingPreviewProps> = ({
 			)}
 			<button
 				type="button"
-				aria-label="View recording"
+				aria-label={tI18n(
+					"AgentsPage.components.ChatElements.tools.RecordingPreview.view_recording_b1c5e013",
+				)}
 				onClick={() => {
 					setShowLightbox(true);
 					setLightboxKey((k) => k + 1);

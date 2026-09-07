@@ -1,4 +1,5 @@
 import { type FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router";
 import { toast } from "sonner";
@@ -24,6 +25,8 @@ import { pageTitle } from "#/utils/page";
 import { CustomRolesPageView } from "./CustomRolesPageView";
 
 const CustomRolesPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { permissions } = useAuthenticated();
 	const queryClient = useQueryClient();
 	const { custom_roles: isCustomRolesEnabled } = useFeatureVisibility();
@@ -57,7 +60,9 @@ const CustomRolesPage: FC = () => {
 			toast.error(
 				getErrorMessage(
 					organizationRolesQuery.error,
-					"Error loading custom roles.",
+					tI18n(
+						"OrganizationSettingsPage.CustomRolesPage.CustomRolesPage.error_loading_custom_roles_b1acba0b",
+					),
 				),
 				{
 					description: getErrorDetail(organizationRolesQuery.error),
@@ -67,25 +72,38 @@ const CustomRolesPage: FC = () => {
 	}, [organizationRolesQuery.error]);
 
 	if (!organization) {
-		return <EmptyState message="Organization not found" />;
+		return (
+			<EmptyState
+				message={tI18n(
+					"OrganizationSettingsPage.CustomRolesPage.CustomRolesPage.organization_not_found_00c50f7a",
+				)}
+			/>
+		);
 	}
 
 	return (
 		<div className="w-full max-w-(--breakpoint-2xl) pb-10">
 			<title>
 				{pageTitle(
-					"Custom Roles",
+					tI18n(
+						"OrganizationSettingsPage.CustomRolesPage.CustomRolesPage.custom_roles_6e845384",
+					),
 					organization.display_name || organization.name,
 				)}
 			</title>
-
 			<RequirePermission
 				isFeatureVisible={organizationPermissions?.viewOrgRoles ?? false}
 			>
 				<SettingsHeader>
-					<SettingsHeaderTitle>Roles</SettingsHeaderTitle>
+					<SettingsHeaderTitle>
+						{tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CustomRolesPage.roles_c2533705",
+						)}
+					</SettingsHeaderTitle>
 					<SettingsHeaderDescription>
-						Manage roles for this organization.{" "}
+						{tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CustomRolesPage.manage_roles_for_this_organization_8ad3ed17",
+						)}{" "}
 						<SettingsHeaderDocsLink href={docs("/admin/users/groups-roles")} />
 					</SettingsHeaderDescription>
 				</SettingsHeader>
@@ -110,10 +128,19 @@ const CustomRolesPage: FC = () => {
 								organizationId: organization.id,
 								req: { default_org_member_roles: roles },
 							});
-							toast.success("Default roles updated.");
+							toast.success(
+								tI18n(
+									"OrganizationSettingsPage.CustomRolesPage.CustomRolesPage.default_roles_updated_afd4cc06",
+								),
+							);
 						} catch (error) {
 							toast.error(
-								getErrorMessage(error, "Failed to update default roles."),
+								getErrorMessage(
+									error,
+									tI18n(
+										"OrganizationSettingsPage.CustomRolesPage.CustomRolesPage.failed_to_update_default_roles_a0cdd07c",
+									),
+								),
 								{ description: getErrorDetail(error) },
 							);
 						}
@@ -125,7 +152,9 @@ const CustomRolesPage: FC = () => {
 					isOpen={roleToDelete !== undefined}
 					confirmLoading={deleteRoleMutation.isPending}
 					name={roleToDelete?.name ?? ""}
-					entity="role"
+					entity={tI18n(
+						"OrganizationSettingsPage.CustomRolesPage.CustomRolesPage.role_4b168d88",
+					)}
 					onCancel={() => setRoleToDelete(undefined)}
 					onConfirm={async () => {
 						try {
@@ -144,7 +173,12 @@ const CustomRolesPage: FC = () => {
 							);
 						} catch (error) {
 							toast.error(
-								getErrorMessage(error, "Failed to delete custom role."),
+								getErrorMessage(
+									error,
+									tI18n(
+										"OrganizationSettingsPage.CustomRolesPage.CustomRolesPage.failed_to_delete_custom_role_5a72eb1f",
+									),
+								),
 								{
 									description: getErrorDetail(error),
 								},

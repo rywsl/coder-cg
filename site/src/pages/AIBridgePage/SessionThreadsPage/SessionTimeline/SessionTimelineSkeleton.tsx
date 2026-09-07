@@ -1,8 +1,11 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Skeleton } from "#/components/Skeleton/Skeleton";
 import { StatusIndicatorDot } from "#/components/StatusIndicator/StatusIndicator";
 
 export const SessionTimelineSkeleton: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<div className="relative">
 			<div className="grid grid-cols-[16px_1rem_1px_1fr_auto_16px]">
@@ -15,7 +18,9 @@ export const SessionTimelineSkeleton: FC = () => {
 				</div>
 				<div className="row-start-1 col-start-4 col-span-2 flex items-center h-10">
 					<span className="text-content-secondary font-normal ml-4 py-1 text-sm">
-						Session started
+						{tI18n(
+							"AIBridgePage.SessionThreadsPage.SessionTimeline.SessionTimelineSkeleton.session_started_a6a7c4b6",
+						)}
 					</span>
 				</div>
 

@@ -1,4 +1,5 @@
 import { type FC, Suspense } from "react";
+import { useTranslation } from "react-i18next";
 import { Navigate, Outlet, useLocation } from "react-router";
 import {
 	Breadcrumb,
@@ -14,6 +15,8 @@ import { RequirePermission } from "#/modules/permissions/RequirePermission";
 import { DeploymentSidebar } from "./DeploymentSidebar";
 
 const DeploymentSettingsLayout: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { permissions } = useAuthenticated();
 	const location = useLocation();
 
@@ -40,12 +43,18 @@ const DeploymentSettingsLayout: FC = () => {
 				<Breadcrumb>
 					<BreadcrumbList>
 						<BreadcrumbItem>
-							<BreadcrumbPage>Admin Settings</BreadcrumbPage>
+							<BreadcrumbPage>
+								{tI18n(
+									"management.DeploymentSettingsLayout.admin_settings_bf478a00",
+								)}
+							</BreadcrumbPage>
 						</BreadcrumbItem>
 						<BreadcrumbSeparator />
 						<BreadcrumbItem>
 							<BreadcrumbPage className="text-content-primary">
-								Deployment
+								{tI18n(
+									"management.DeploymentSettingsLayout.deployment_870a8ffd",
+								)}
 							</BreadcrumbPage>
 						</BreadcrumbItem>
 					</BreadcrumbList>

@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
-
+import { applyLocale } from "#/i18n/locale";
 import {
 	dollarsToMicros,
+	formatBudgetUSD,
 	formatCostMicros,
 	isPositiveFiniteDollarAmount,
 	MICROS_PER_DOLLAR,
@@ -94,5 +95,19 @@ describe("formatCostMicros", () => {
 		expect(formatCostMicros(12_345_678)).toBe("$12.35");
 		expect(formatCostMicros("1500000")).toBe("$1.50");
 		expect(formatCostMicros(1_234_560_000)).toBe("$1,234.56");
+	});
+});
+
+describe("formatBudgetUSD", () => {
+	it("uses the active locale when formatting", () => {
+		try {
+			applyLocale("zh-CN");
+			expect(formatBudgetUSD(1_200_000_000)).toBe("US$1,200");
+
+			applyLocale("en");
+			expect(formatBudgetUSD(1_200_000_000)).toBe("$1,200");
+		} finally {
+			applyLocale("en");
+		}
 	});
 });

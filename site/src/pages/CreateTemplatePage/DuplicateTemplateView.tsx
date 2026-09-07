@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { useNavigate, useSearchParams } from "react-router";
 import {
@@ -26,6 +27,8 @@ export const DuplicateTemplateView: FC<CreateTemplatePageViewProps> = ({
 	error,
 	isCreating,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const navigate = useNavigate();
 	const { entitlements } = useDashboard();
 	const [searchParams] = useSearchParams();
@@ -80,9 +83,20 @@ export const DuplicateTemplateView: FC<CreateTemplatePageViewProps> = ({
 		<>
 			{totalPrebuilds > 0 && (
 				<Alert severity="warning" className="mb-4">
-					This template has prebuilds configured. Duplicating this template will
-					automatically cause {totalPrebuilds}{" "}
-					{totalPrebuilds === 1 ? "prebuild" : "prebuilds"} to be created.
+					{tI18n(
+						"CreateTemplatePage.DuplicateTemplateView.this_template_has_prebuilds_configured_duplicati_9684c874",
+					)}
+					{totalPrebuilds}{" "}
+					{totalPrebuilds === 1
+						? tI18n(
+								"CreateTemplatePage.DuplicateTemplateView.prebuild_5d1831c5",
+							)
+						: tI18n(
+								"CreateTemplatePage.DuplicateTemplateView.prebuilds_1d1362ce",
+							)}
+					{tI18n(
+						"CreateTemplatePage.DuplicateTemplateView.to_be_created_e59c437c",
+					)}
 				</Alert>
 			)}
 			<CreateTemplateForm

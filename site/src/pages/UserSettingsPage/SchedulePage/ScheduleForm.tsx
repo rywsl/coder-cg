@@ -1,5 +1,6 @@
 import { type FormikContextType, useFormik } from "formik";
 import { type FC, useEffect, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import type {
 	UpdateUserQuietHoursScheduleRequest,
@@ -19,6 +20,8 @@ import {
 	SelectValue,
 } from "#/components/Select/Select";
 import { Spinner } from "#/components/Spinner/Spinner";
+import { i18n } from "#/i18n";
+import { currentIntlLocale } from "#/i18n/locale";
 import { getFormHelpers } from "#/utils/formUtils";
 import { quietHoursDisplay, timeToCron, validTime } from "#/utils/schedule";
 import { getPreferredTimezone, timeZones } from "#/utils/timeZones";
@@ -31,15 +34,21 @@ interface ScheduleFormValues {
 const validationSchema = Yup.object({
 	time: Yup.string()
 		.ensure()
-		.test("is-time-string", "Time must be in HH:mm format.", (value) => {
-			if (!validTime(value)) {
-				return false;
-			}
-			const parts = value.split(":");
-			const HH = Number(parts[0]);
-			const mm = Number(parts[1]);
-			return HH >= 0 && HH <= 23 && mm >= 0 && mm <= 59;
-		}),
+		.test(
+			"is-time-string",
+			i18n.t(
+				"users:UserSettingsPage.SchedulePage.ScheduleForm.time_must_be_in_hh_mm_format_b252adb4",
+			),
+			(value) => {
+				if (!validTime(value)) {
+					return false;
+				}
+				const parts = value.split(":");
+				const HH = Number(parts[0]);
+				const mm = Number(parts[1]);
+				return HH >= 0 && HH <= 23 && mm >= 0 && mm <= 59;
+			},
+		),
 	timezone: Yup.string().required(),
 });
 
@@ -59,6 +68,8 @@ export const ScheduleForm: FC<ScheduleFormProps> = ({
 	onSubmit,
 	now,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	// Update every 15 seconds to update the "Next occurrence" field.
 	const [, setTime] = useState<number>(Date.now());
 	useEffect(() => {
@@ -86,7 +97,7 @@ export const ScheduleForm: FC<ScheduleFormProps> = ({
 			},
 		});
 	const getFieldHelpers = getFormHelpers<ScheduleFormValues>(form, submitError);
-	const browserLocale = navigator.language || "en-US";
+	const browserLocale = currentIntlLocale();
 	const timezoneId = useId();
 	const timezoneField = getFieldHelpers("timezone");
 	const fieldsDisabled = isLoading || !initialValues.user_can_set;
@@ -98,29 +109,39 @@ export const ScheduleForm: FC<ScheduleFormProps> = ({
 
 				{!initialValues.user_set && (
 					<Alert severity="info">
-						You are currently using the default quiet hours schedule, which
-						starts every day at <code>{initialValues.time}</code> in{" "}
+						{tI18n(
+							"UserSettingsPage.SchedulePage.ScheduleForm.you_are_currently_using_the_default_quiet_hours__7d57eaf8",
+						)}
+						<code>{initialValues.time}</code>
+						{tI18n("UserSettingsPage.SchedulePage.ScheduleForm.in_8f6b9ac6")}{" "}
 						<code>{initialValues.timezone}</code>.
 					</Alert>
 				)}
 
 				{!initialValues.user_can_set && (
 					<Alert severity="error">
-						Your administrator has disabled the ability to set a custom quiet
-						hours schedule.
+						{tI18n(
+							"UserSettingsPage.SchedulePage.ScheduleForm.your_administrator_has_disabled_the_ability_to_s_008a0665",
+						)}
 					</Alert>
 				)}
 
 				<div className="grid grid-cols-1 sm:grid-cols-2 items-start gap-4">
 					<FormField
 						field={getFieldHelpers("time")}
-						label="Start time"
+						label={tI18n(
+							"UserSettingsPage.SchedulePage.ScheduleForm.start_time_babe9dda",
+						)}
 						type="time"
 						disabled={fieldsDisabled}
 						className="relative [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-3 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
 					/>
 					<div className="flex flex-col gap-2 min-w-0">
-						<Label htmlFor={timezoneId}>Timezone</Label>
+						<Label htmlFor={timezoneId}>
+							{tI18n(
+								"UserSettingsPage.SchedulePage.ScheduleForm.timezone_4ceca1d5",
+							)}
+						</Label>
 						<Select
 							value={form.values.timezone}
 							onValueChange={(value) => {
@@ -160,7 +181,9 @@ export const ScheduleForm: FC<ScheduleFormProps> = ({
 								onBlur: () => {},
 								error: false,
 							}}
-							label="Next occurrence"
+							label={tI18n(
+								"UserSettingsPage.SchedulePage.ScheduleForm.next_occurrence_21781551",
+							)}
 							disabled
 						/>
 					</div>
@@ -169,7 +192,9 @@ export const ScheduleForm: FC<ScheduleFormProps> = ({
 				<div className="flex justify-end">
 					<Button disabled={fieldsDisabled} type="submit">
 						<Spinner loading={isLoading} />
-						Update schedule
+						{tI18n(
+							"UserSettingsPage.SchedulePage.ScheduleForm.update_schedule_0c968349",
+						)}
 					</Button>
 				</div>
 			</FormFields>

@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import camelCase from "lodash/camelCase";
 import capitalize from "lodash/capitalize";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router";
 import * as Yup from "yup";
@@ -35,6 +36,7 @@ import { Link } from "#/components/Link/Link";
 import { OrganizationAutocomplete } from "#/components/OrganizationAutocomplete/OrganizationAutocomplete";
 import { Spinner } from "#/components/Spinner/Spinner";
 import { Textarea } from "#/components/Textarea/Textarea";
+import { i18n } from "#/i18n";
 import { ProvisionerTagsField } from "#/modules/provisioners/ProvisionerTagsField";
 import { SelectedTemplate } from "#/pages/CreateWorkspacePage/SelectedTemplate";
 import { docs } from "#/utils/docs";
@@ -75,11 +77,19 @@ export interface CreateTemplateFormData {
 }
 
 const validationSchema = Yup.object({
-	name: nameValidator("Name"),
-	display_name: displayNameValidator("Display name"),
+	name: nameValidator(
+		i18n.t("templates:CreateTemplatePage.CreateTemplateForm.name_dcd1d522"),
+	),
+	display_name: displayNameValidator(
+		i18n.t(
+			"templates:CreateTemplatePage.CreateTemplateForm.display_name_2b7f6a84",
+		),
+	),
 	description: Yup.string().max(
 		MAX_DESCRIPTION_CHAR_LIMIT,
-		"Please enter a description that is less than or equal to 128 characters.",
+		i18n.t(
+			"templates:CreateTemplatePage.CreateTemplateForm.please_enter_a_description_that_is_less_than_or__7d20ad93",
+		),
 	),
 	icon: Yup.string().optional(),
 });
@@ -201,6 +211,8 @@ type CreateTemplateFormProps = (
 const emptyOrgs: Organization[] = [];
 
 export const CreateTemplateForm: FC<CreateTemplateFormProps> = (props) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const [searchParams] = useSearchParams();
 	const [selectedOrg, setSelectedOrg] = useState<Organization | null>(null);
 	const {
@@ -280,8 +292,10 @@ export const CreateTemplateForm: FC<CreateTemplateFormProps> = (props) => {
 		<HorizontalForm onSubmit={form.handleSubmit} className="pb-12">
 			{/* General info */}
 			<FormSection
-				title="General"
-				description="The name is used to identify the template in URLs and the API."
+				title={tI18n("CreateTemplatePage.CreateTemplateForm.general_c910d474")}
+				description={tI18n(
+					"CreateTemplatePage.CreateTemplateForm.the_name_is_used_to_identify_the_template_in_url_0035a189",
+				)}
 			>
 				<FormFields>
 					{"starterTemplate" in props && (
@@ -302,7 +316,11 @@ export const CreateTemplateForm: FC<CreateTemplateFormProps> = (props) => {
 							{showProvisionerWarning && <ProvisionerWarning />}
 
 							<div className="flex flex-col gap-2">
-								<Label htmlFor="organization">Organization</Label>
+								<Label htmlFor="organization">
+									{tI18n(
+										"CreateTemplatePage.CreateTemplateForm.organization_d764d425",
+									)}
+								</Label>
 								<OrganizationAutocomplete
 									id="organization"
 									required
@@ -326,7 +344,7 @@ export const CreateTemplateForm: FC<CreateTemplateFormProps> = (props) => {
 
 					<FormField
 						field={getFieldHelpers("name")}
-						label="Name"
+						label={tI18n("CreateTemplatePage.CreateTemplateForm.name_dcd1d522")}
 						disabled={isSubmitting}
 						onChange={onChangeTrimmed(form)}
 						required
@@ -334,22 +352,29 @@ export const CreateTemplateForm: FC<CreateTemplateFormProps> = (props) => {
 					/>
 				</FormFields>
 			</FormSection>
-
 			{/* Display info  */}
 			<FormSection
-				title="Display"
-				description="A friendly name, description, and icon to help developers identify your template."
+				title={tI18n("CreateTemplatePage.CreateTemplateForm.display_34e108c0")}
+				description={tI18n(
+					"CreateTemplatePage.CreateTemplateForm.a_friendly_name_description_and_icon_to_help_dev_7a9cbfe1",
+				)}
 			>
 				<FormFields>
 					<FormField
 						field={getFieldHelpers("display_name")}
-						label="Display name"
+						label={tI18n(
+							"CreateTemplatePage.CreateTemplateForm.display_name_2b7f6a84",
+						)}
 						disabled={isSubmitting}
 						className="w-full"
 					/>
 
 					<div className="flex flex-col gap-2">
-						<Label htmlFor={descriptionField.id}>Description</Label>
+						<Label htmlFor={descriptionField.id}>
+							{tI18n(
+								"CreateTemplatePage.CreateTemplateForm.description_526e0087",
+							)}
+						</Label>
 						<Textarea
 							id={descriptionField.id}
 							name={descriptionField.name}
@@ -390,20 +415,24 @@ export const CreateTemplateForm: FC<CreateTemplateFormProps> = (props) => {
 					/>
 				</FormFields>
 			</FormSection>
-
 			{provisioners && provisioners.length > 0 && (
 				<FormSection
-					title="Provisioner tags"
+					title={tI18n(
+						"CreateTemplatePage.CreateTemplateForm.provisioner_tags_f9b9e2e7",
+					)}
 					description={
 						<>
-							Tags are a way to control which provisioner daemons complete which
-							build jobs.{" "}
+							{tI18n(
+								"CreateTemplatePage.CreateTemplateForm.tags_are_a_way_to_control_which_provisioner_daem_8b7d64ff",
+							)}{" "}
 							<Link
 								href={docs("/admin/provisioners")}
 								target="_blank"
 								rel="noreferrer"
 							>
-								Learn more...
+								{tI18n(
+									"CreateTemplatePage.CreateTemplateForm.learn_more_0bfa7ffe",
+								)}
 							</Link>
 						</>
 					}
@@ -416,13 +445,16 @@ export const CreateTemplateForm: FC<CreateTemplateFormProps> = (props) => {
 					</FormFields>
 				</FormSection>
 			)}
-
 			{/* Variables */}
 			{variables && variables.length > 0 && (
 				<FormSection
 					ref={variablesSectionRef}
-					title="Variables"
-					description="Input variables allow you to customize templates without altering their source code."
+					title={tI18n(
+						"CreateTemplatePage.CreateTemplateForm.variables_02db55ba",
+					)}
+					description={tI18n(
+						"CreateTemplatePage.CreateTemplateForm.input_variables_allow_you_to_customize_templates_c9db4de8",
+					)}
 				>
 					<FormFields>
 						{variables.map((variable, index) => (
@@ -442,14 +474,15 @@ export const CreateTemplateForm: FC<CreateTemplateFormProps> = (props) => {
 					</FormFields>
 				</FormSection>
 			)}
-
 			<FormFooter>
 				<Button onClick={onCancel} variant="outline">
-					Cancel
+					{tI18n("CreateTemplatePage.CreateTemplateForm.cancel_19766ed6")}
 				</Button>
 				<Button type="submit" disabled={isSubmitting}>
 					<Spinner loading={isSubmitting} />
-					{jobError ? "Retry" : "Save"}
+					{jobError
+						? tI18n("CreateTemplatePage.CreateTemplateForm.retry_942087cc")
+						: tI18n("CreateTemplatePage.CreateTemplateForm.save_1509f561")}
 				</Button>
 				{logs && (
 					<button
@@ -457,7 +490,9 @@ export const CreateTemplateForm: FC<CreateTemplateFormProps> = (props) => {
 						onClick={onOpenBuildLogsDrawer}
 						className="cursor-pointer border-0 bg-transparent text-sm font-medium text-content-secondary hover:text-content-primary hover:underline hover:underline-offset-4"
 					>
-						Show build logs
+						{tI18n(
+							"CreateTemplatePage.CreateTemplateForm.show_build_logs_94b3249a",
+						)}
 					</button>
 				)}
 			</FormFooter>
@@ -481,12 +516,17 @@ const fillNameAndDisplayWithFilename = async (
 };
 
 const ProvisionerWarning: FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<Alert severity="warning" className="mb-4" prominent>
-			This organization does not have any provisioners. Before you create a
-			template, you&apos;ll need to configure a provisioner.{" "}
+			{tI18n(
+				"CreateTemplatePage.CreateTemplateForm.this_organization_does_not_have_any_provisioners_21515c68",
+			)}{" "}
 			<Link href={docs("/admin/provisioners#organization-scoped-provisioners")}>
-				See our documentation.
+				{tI18n(
+					"CreateTemplatePage.CreateTemplateForm.see_our_documentation_ff74e6ec",
+				)}
 			</Link>
 		</Alert>
 	);

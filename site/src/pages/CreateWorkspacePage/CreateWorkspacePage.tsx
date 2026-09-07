@@ -7,6 +7,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate, useParams, useSearchParams } from "react-router";
 import { API } from "#/api/api";
@@ -44,6 +45,8 @@ const createWorkspaceModes = ["form", "auto", "duplicate"] as const;
 export type CreateWorkspaceMode = (typeof createWorkspaceModes)[number];
 
 const CreateWorkspacePage: FC = () => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const { organization: organizationName = "default", template: templateName } =
 		useParams() as { organization?: string; template: string };
 	const { user: me } = useAuthenticated();
@@ -276,8 +279,12 @@ const CreateWorkspacePage: FC = () => {
 	const loadFormDataError = templateQuery.error ?? permissionsQuery.error;
 
 	const title = autoCreateWorkspaceMutation.isPending
-		? "Creating workspace..."
-		: "Create workspace";
+		? tI18n(
+				"CreateWorkspacePage.CreateWorkspacePage.creating_workspace_388150b3",
+			)
+		: tI18n(
+				"CreateWorkspacePage.CreateWorkspacePage.create_workspace_4b892277",
+			);
 
 	const onCreateWorkspace = useCallback(
 		(workspace: Workspace) => {
@@ -353,9 +360,15 @@ const CreateWorkspacePage: FC = () => {
 				? "an external authentication provider that is"
 				: "external authentication providers that are";
 		setAutoCreateError({
-			message: `This template requires ${subject} not connected.`,
-			detail:
-				"Auto-creation has been disabled. Please connect all required external authentication providers before continuing.",
+			message: tI18n(
+				"CreateWorkspacePage.CreateWorkspacePage.this_template_requires_value0_not_connected_7ede8be3",
+				{
+					value0: subject,
+				},
+			),
+			detail: tI18n(
+				"CreateWorkspacePage.CreateWorkspacePage.auto_creation_has_been_disabled_please_connect_a_98b97762",
+			),
 		});
 	}
 
@@ -369,7 +382,9 @@ const CreateWorkspacePage: FC = () => {
 		setMode("form");
 		autoCreateReady = false;
 		setAutoCreateError({
-			message: "Auto-creation has been disabled.",
+			message: tI18n(
+				"CreateWorkspacePage.CreateWorkspacePage.auto_creation_has_been_disabled_d097b4d7",
+			),
 			detail:
 				urlPresetResult.error ??
 				"The requested preset could not be resolved. Please check the preset value before continuing.",
@@ -409,7 +424,6 @@ const CreateWorkspacePage: FC = () => {
 	return (
 		<>
 			<title>{pageTitle(title)}</title>
-
 			<AutoCreateConsentDialog
 				open={showAutoCreateConsent}
 				presetName={effectivePresetName}
@@ -417,7 +431,6 @@ const CreateWorkspacePage: FC = () => {
 				onConfirm={() => setAutoCreateConsented(true)}
 				onDeny={() => setMode("form")}
 			/>
-
 			{loadFormDataError ? (
 				// The view reads the template and permission results
 				// unconditionally, so render query failures as a page-level

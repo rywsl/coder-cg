@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import { PlusIcon, TrashIcon, TriangleAlertIcon } from "lucide-react";
 import { type FC, type KeyboardEventHandler, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import type {
 	Organization,
@@ -54,6 +55,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { i18n } from "#/i18n";
 import { docs } from "#/utils/docs";
 import { isUUID } from "#/utils/uuid";
 import { OrganizationPills } from "./OrganizationPills";
@@ -73,7 +75,9 @@ const validationSchema = Yup.object({
 	mapping: Yup.object()
 		.test(
 			"valid-mapping",
-			"Invalid organization sync settings mapping structure",
+			i18n.t(
+				"administration:DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.invalid_organization_sync_settings_mapping_struc_b6ce4a8b",
+			),
 			(value) => {
 				if (!value) return true;
 				return Object.entries(value).every(
@@ -97,6 +101,8 @@ export const IdpOrgSyncPageView: FC<IdpSyncPageViewProps> = ({
 	onSyncFieldChange,
 	error,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const form = useFormik<OrganizationSyncSettings>({
 		initialValues: {
 			field: organizationSyncSettings?.field ?? "",
@@ -160,7 +166,9 @@ export const IdpOrgSyncPageView: FC<IdpSyncPageViewProps> = ({
 					<div className="flex flex-row">
 						<div className="grid items-center gap-1">
 							<Label className="text-sm" htmlFor={`${id}-sync-field`}>
-								Organization sync field
+								{tI18n(
+									"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.organization_sync_field_2df93b43",
+								)}
 							</Label>
 							<div className="flex flex-row items-center gap-5">
 								<div className="flex flex-row gap-2 w-72">
@@ -182,7 +190,9 @@ export const IdpOrgSyncPageView: FC<IdpSyncPageViewProps> = ({
 										}}
 									>
 										<Spinner loading={form.isSubmitting} />
-										Save
+										{tI18n(
+											"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.save_1509f561",
+										)}
 									</Button>
 								</div>
 								<div className="flex flex-row items-center gap-3">
@@ -203,14 +213,18 @@ export const IdpOrgSyncPageView: FC<IdpSyncPageViewProps> = ({
 									/>
 									<span className="flex flex-row items-center gap-1">
 										<Label htmlFor={`${id}-assign-default-org`}>
-											Assign Default Organization
+											{tI18n(
+												"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.assign_default_organization_d4baa3b1",
+											)}
 										</Label>
 										<AssignDefaultOrgHelpPopover />
 									</span>
 								</div>
 							</div>
 							<p className="text-content-secondary text-2xs m-0">
-								If empty, organization sync is deactivated
+								{tI18n(
+									"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.if_empty_organization_sync_is_deactivated_1161aa41",
+								)}
 							</p>
 						</div>
 					</div>
@@ -223,7 +237,9 @@ export const IdpOrgSyncPageView: FC<IdpSyncPageViewProps> = ({
 						<div className="flex flex-row pt-8 gap-2 justify-between items-start">
 							<div className="grid items-center gap-1 w-72">
 								<Label className="text-sm" htmlFor={`${id}-idp-org-name`}>
-									IdP organization name
+									{tI18n(
+										"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.idp_organization_name_e19519db",
+									)}
 								</Label>
 
 								{claimFieldValues ? (
@@ -241,14 +257,18 @@ export const IdpOrgSyncPageView: FC<IdpSyncPageViewProps> = ({
 														? { label: idpOrgName, value: idpOrgName }
 														: undefined
 												}
-												placeholder="Select IdP organization"
+												placeholder={tI18n(
+													"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.select_idp_organization_9aab89f9",
+												)}
 											/>
 										</ComboboxTrigger>
 										<ComboboxContent className="w-72">
 											<ComboboxInput
 												value={inputValue}
 												onValueChange={setInputValue}
-												placeholder="Search..."
+												placeholder={tI18n(
+													"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.search_7f553822",
+												)}
 												onKeyDown={handleKeyDown}
 											/>
 											<ComboboxList>
@@ -283,7 +303,9 @@ export const IdpOrgSyncPageView: FC<IdpSyncPageViewProps> = ({
 							</div>
 							<div className="grid items-center gap-1 flex-1">
 								<Label className="text-sm" htmlFor={`${id}-coder-org`}>
-									Coder organization
+									{tI18n(
+										"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.coder_organization_f877cf32",
+									)}
 								</Label>
 								<MultiSelectCombobox
 									inputProps={{
@@ -297,10 +319,14 @@ export const IdpOrgSyncPageView: FC<IdpSyncPageViewProps> = ({
 										value: org.id,
 									}))}
 									hidePlaceholderWhenSelected
-									placeholder="Select organization"
+									placeholder={tI18n(
+										"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.select_organization_99e5009d",
+									)}
 									emptyIndicator={
 										<p className="text-center text-md text-content-primary">
-											No organizations found
+											{tI18n(
+												"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.no_organizations_found_538995db",
+											)}
 										</p>
 									}
 								/>
@@ -328,7 +354,9 @@ export const IdpOrgSyncPageView: FC<IdpSyncPageViewProps> = ({
 									<Spinner loading={form.isSubmitting}>
 										<PlusIcon />
 									</Spinner>
-									Add IdP organization
+									{tI18n(
+										"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.add_idp_organization_7173680e",
+									)}
 								</Button>
 							</div>
 						</div>
@@ -356,22 +384,25 @@ export const IdpOrgSyncPageView: FC<IdpSyncPageViewProps> = ({
 					</div>
 				</fieldset>
 			</form>
-
 			<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 				<DialogContent className="flex flex-col gap-12 max-w-lg">
 					<DialogHeader className="flex flex-col gap-4">
 						<DialogTitle>
-							Switch off default organization assignment
+							{tI18n(
+								"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.switch_off_default_organization_assignment_7860a8c1",
+							)}
 						</DialogTitle>
 						<DialogDescription>
-							Warning: This will remove all users from the default organization
-							unless otherwise specified in an organization mapping defined
-							below.
+							{tI18n(
+								"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.warning_this_will_remove_all_users_from_the_defa_e95b8e7f",
+							)}
 						</DialogDescription>
 					</DialogHeader>
 					<DialogFooter className="flex flex-row">
 						<Button variant="outline" onClick={() => setIsDialogOpen(false)}>
-							Cancel
+							{tI18n(
+								"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.cancel_19766ed6",
+							)}
 						</Button>
 						<Button
 							onClick={() => {
@@ -382,7 +413,9 @@ export const IdpOrgSyncPageView: FC<IdpSyncPageViewProps> = ({
 							type="submit"
 						>
 							<Spinner loading={form.isSubmitting} />
-							Confirm
+							{tI18n(
+								"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.confirm_eebdd24a",
+							)}
 						</Button>
 					</DialogFooter>
 				</DialogContent>
@@ -397,23 +430,37 @@ interface IdpMappingTableProps {
 }
 
 const IdpMappingTable: FC<IdpMappingTableProps> = ({ isEmpty, children }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<Table>
 			<TableHeader>
 				<TableRow>
-					<TableHead className="w-2/5">IdP organization</TableHead>
-					<TableHead className="w-3/5">Coder organization</TableHead>
+					<TableHead className="w-2/5">
+						{tI18n(
+							"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.idp_organization_0b952944",
+						)}
+					</TableHead>
+					<TableHead className="w-3/5">
+						{tI18n(
+							"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.coder_organization_f877cf32",
+						)}
+					</TableHead>
 					<TableHead className="w-auto" />
 				</TableRow>
 			</TableHeader>
 			<TableBody>
 				{isEmpty ? (
 					<TableEmpty
-						message="No organization mappings"
+						message={tI18n(
+							"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.no_organization_mappings_f3622fd9",
+						)}
 						isCompact
 						cta={
 							<Link href={docs("/admin/users/idp-sync#organization-sync")}>
-								How to set up IdP organization sync
+								{tI18n(
+									"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.how_to_set_up_idp_organization_sync_f1de16e2",
+								)}
 							</Link>
 						}
 					/>
@@ -438,6 +485,8 @@ const OrganizationRow: FC<OrganizationRowProps> = ({
 	coderOrgs,
 	onDelete,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<TableRow data-testid={`idp-org-${idpOrg}`}>
 			<TableCell>
@@ -454,9 +503,9 @@ const OrganizationRow: FC<OrganizationRowProps> = ({
 								sideOffset={8}
 								className="p-2 text-xs text-content-secondary max-w-sm"
 							>
-								This value has not be seen in the specified claim field before.
-								You might want to check your IdP configuration and ensure that
-								this value is not misspelled.
+								{tI18n(
+									"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.this_value_has_not_be_seen_in_the_specified_clai_69d1ded4",
+								)}
 							</TooltipContent>
 						</Tooltip>
 					)}
@@ -470,11 +519,17 @@ const OrganizationRow: FC<OrganizationRowProps> = ({
 					variant="outline"
 					size="icon"
 					className="text-content-primary"
-					aria-label="delete"
+					aria-label={tI18n(
+						"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.delete_61975955",
+					)}
 					onClick={() => onDelete(idpOrg)}
 				>
 					<TrashIcon />
-					<span className="sr-only">Delete IdP mapping</span>
+					<span className="sr-only">
+						{tI18n(
+							"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.delete_idp_mapping_8c31481a",
+						)}
+					</span>
 				</Button>
 			</TableCell>
 		</TableRow>
@@ -482,13 +537,16 @@ const OrganizationRow: FC<OrganizationRowProps> = ({
 };
 
 const AssignDefaultOrgHelpPopover: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<HelpPopover>
 			<HelpPopoverIconTrigger />
 			<HelpPopoverContent>
 				<HelpPopoverText>
-					Disabling will remove all users from the default organization if a
-					mapping for the default organization is not defined.
+					{tI18n(
+						"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPageView.disabling_will_remove_all_users_from_the_default_6bed71ea",
+					)}
 				</HelpPopoverText>
 			</HelpPopoverContent>
 		</HelpPopover>

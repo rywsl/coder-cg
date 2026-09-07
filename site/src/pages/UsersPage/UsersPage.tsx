@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router";
 import { deploymentConfig } from "#/api/queries/deployment";
@@ -12,6 +13,8 @@ import { pageTitle } from "#/utils/page";
 import { UsersPageView } from "./UsersPageView";
 
 const UsersPage: React.FC = () => {
+	const { t: tI18n } = useTranslation("users");
+
 	const [searchParams, setSearchParams] = useSearchParams();
 	const { entitlements } = useDashboard();
 
@@ -54,8 +57,7 @@ const UsersPage: React.FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Users")}</title>
-
+			<title>{pageTitle(tI18n("UsersPage.UsersPage.users_6b0cc904"))}</title>
 			<UsersPageView
 				isLoading={isLoading}
 				filterProps={{

@@ -1,5 +1,6 @@
 import { EditIcon, ExternalLinkIcon, PlusIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import type { TemplateVersion } from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
@@ -39,6 +40,8 @@ export const TemplateVersionPageView: FC<TemplateVersionPageViewProps> = ({
 	baseFiles,
 	error,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const getLink = useLinks();
 	const templateLink = getLink(linkToTemplate(organizationName, templateName));
 
@@ -51,25 +54,31 @@ export const TemplateVersionPageView: FC<TemplateVersionPageViewProps> = ({
 							<Button asChild>
 								<RouterLink to={createWorkspaceUrl}>
 									<PlusIcon />
-									Create workspace
+									{tI18n(
+										"TemplateVersionPage.TemplateVersionPageView.create_workspace_4b892277",
+									)}
 								</RouterLink>
 							</Button>
 						)}
 						<Button variant="outline" asChild>
 							<RouterLink to={`${templateLink}/versions/${versionName}/edit`}>
 								<EditIcon className="size-icon-sm!" />
-								Edit
+								{tI18n(
+									"TemplateVersionPage.TemplateVersionPageView.edit_464c4ffd",
+								)}
 							</RouterLink>
 						</Button>
 					</>
 				}
 			>
-				<PageHeaderCaption>Version</PageHeaderCaption>
+				<PageHeaderCaption>
+					{tI18n(
+						"TemplateVersionPage.TemplateVersionPageView.version_dd167905",
+					)}
+				</PageHeaderCaption>
 				<PageHeaderTitle>{versionName}</PageHeaderTitle>
 			</PageHeader>
-
 			{!currentFiles && !error && <Loader />}
-
 			<div className="flex flex-col gap-8">
 				{Boolean(error) && <ErrorAlert error={error} />}
 				{currentVersion?.message && (
@@ -82,17 +91,23 @@ export const TemplateVersionPageView: FC<TemplateVersionPageViewProps> = ({
 						<Stats className="justify-between">
 							<div className="flex flex-wrap items-center">
 								<StatsItem
-									label="Template"
+									label={tI18n(
+										"TemplateVersionPage.TemplateVersionPageView.template_0575f29d",
+									)}
 									value={
 										<RouterLink to={templateLink}>{templateName}</RouterLink>
 									}
 								/>
 								<StatsItem
-									label="Created by"
+									label={tI18n(
+										"TemplateVersionPage.TemplateVersionPageView.created_by_374cd9d2",
+									)}
 									value={currentVersion.created_by.username}
 								/>
 								<StatsItem
-									label="Created"
+									label={tI18n(
+										"TemplateVersionPage.TemplateVersionPageView.created_d70b9e24",
+									)}
 									value={createDayString(currentVersion.created_at)}
 								/>
 							</div>
@@ -102,7 +117,9 @@ export const TemplateVersionPageView: FC<TemplateVersionPageViewProps> = ({
 								rel="noopener noreferrer"
 								className="flex items-center gap-1 p-2 text-xs text-content-secondary underline hover:text-content-primary md:py-3.5 md:px-4"
 							>
-								View raw logs
+								{tI18n(
+									"TemplateVersionPage.TemplateVersionPageView.view_raw_logs_ed3f405c",
+								)}
 								<ExternalLinkIcon className="size-3" />
 							</a>
 						</Stats>

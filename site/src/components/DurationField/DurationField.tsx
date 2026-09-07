@@ -6,6 +6,7 @@ import {
 	useId,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Input } from "#/components/Input/Input";
 import { Label } from "#/components/Label/Label";
 import {
@@ -58,6 +59,8 @@ export const DurationField: FC<DurationFieldProps> = ({
 	disabled,
 	...inputProps
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const generatedId = useId();
 	const id = idProp ?? generatedId;
 	const helperId = `${id}-helper`;
@@ -138,16 +141,22 @@ export const DurationField: FC<DurationFieldProps> = ({
 					}}
 					disabled={disabled}
 				>
-					<SelectTrigger className="w-[120px] flex-none" aria-label="Time unit">
+					<SelectTrigger
+						className="w-[120px] flex-none"
+						aria-label={tI18n("DurationField.DurationField.time_unit_f3598339")}
+					>
 						<SelectValue />
 					</SelectTrigger>
 					<SelectContent>
-						<SelectItem value="hours">Hours</SelectItem>
-						<SelectItem value="days">Days</SelectItem>
+						<SelectItem value="hours">
+							{tI18n("DurationField.DurationField.hours_21e84929")}
+						</SelectItem>
+						<SelectItem value="days">
+							{tI18n("DurationField.DurationField.days_e08c0aa8")}
+						</SelectItem>
 					</SelectContent>
 				</Select>
 			</div>
-
 			{helperText && (
 				<span
 					id={helperId}

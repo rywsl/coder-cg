@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { Workspace } from "#/api/typesGenerated";
 import { ConfirmDialog } from "#/components/Dialog/ConfirmDialog/ConfirmDialog";
 
@@ -17,6 +18,8 @@ export const BatchStopConfirmation: FC<BatchStopConfirmationProps> = ({
 	onConfirm,
 	isLoading,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const workspaceCount = `${workspacesToStop.length} ${
 		workspacesToStop.length === 1 ? "workspace" : "workspaces"
 	}`;
@@ -26,11 +29,21 @@ export const BatchStopConfirmation: FC<BatchStopConfirmationProps> = ({
 			type="delete"
 			open={open}
 			onClose={onClose}
-			title={`Stop ${workspaceCount}`}
+			title={tI18n(
+				"WorkspacesPage.BatchStopConfirmation.stop_value0_ef47536e",
+				{
+					value0: workspaceCount,
+				},
+			)}
 			confirmLoading={isLoading}
-			confirmText="Stop"
+			confirmText={tI18n("WorkspacesPage.BatchStopConfirmation.stop_cae7d57b")}
 			onConfirm={onConfirm}
-			description={`Are you sure you want to stop ${workspaceCount}? This will terminate all running processes and disconnect any active sessions.`}
+			description={tI18n(
+				"WorkspacesPage.BatchStopConfirmation.are_you_sure_you_want_to_stop_value0_this_will_t_e39da500",
+				{
+					value0: workspaceCount,
+				},
+			)}
 		/>
 	);
 };

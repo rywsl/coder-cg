@@ -9,6 +9,7 @@ import {
 	snakeToCamel,
 } from "#/api/chatModelOptions";
 import type * as TypesGen from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 
 // ── Preserved public types ─────────────────────────────────────
 
@@ -296,7 +297,12 @@ function yupTestForField(field: FieldSchema): Yup.StringSchema {
 		case "integer":
 			return Yup.string().test(
 				"optional-integer",
-				`${label} must be a valid integer.`,
+				i18n.t(
+					"agents:AgentsPage.components.ChatModelAdminPanel.modelConfigFormLogic.value0_must_be_a_valid_integer_a6158d7f",
+					{
+						value0: label,
+					},
+				),
 				(value) => {
 					const trimmed = value?.trim();
 					if (!trimmed) return true;
@@ -307,14 +313,24 @@ function yupTestForField(field: FieldSchema): Yup.StringSchema {
 		case "number":
 			return Yup.string().test(
 				"optional-number",
-				`${label} must be a valid number.`,
+				i18n.t(
+					"agents:AgentsPage.components.ChatModelAdminPanel.modelConfigFormLogic.value0_must_be_a_valid_number_0546ddac",
+					{
+						value0: label,
+					},
+				),
 				(value) => isValidOptionalNumber(value),
 			);
 
 		case "boolean":
 			return Yup.string().test(
 				"optional-boolean",
-				`${label} must be true or false.`,
+				i18n.t(
+					"agents:AgentsPage.components.ChatModelAdminPanel.modelConfigFormLogic.value0_must_be_true_or_false_0af34479",
+					{
+						value0: label,
+					},
+				),
 				(value) => {
 					const trimmed = value?.trim();
 					if (!trimmed) return true;
@@ -327,7 +343,12 @@ function yupTestForField(field: FieldSchema): Yup.StringSchema {
 				const allowed = field.enum;
 				return Yup.string().test(
 					"optional-select",
-					`${label} has an invalid value.`,
+					i18n.t(
+						"agents:AgentsPage.components.ChatModelAdminPanel.modelConfigFormLogic.value0_has_an_invalid_value_8ce4430b",
+						{
+							value0: label,
+						},
+					),
 					(value) => {
 						const trimmed = value?.trim();
 						if (!trimmed) return true;
@@ -350,12 +371,22 @@ function yupTestForField(field: FieldSchema): Yup.StringSchema {
 						parsed = JSON.parse(trimmed);
 					} catch {
 						return this.createError({
-							message: `${label} must be valid JSON.`,
+							message: i18n.t(
+								"agents:AgentsPage.components.ChatModelAdminPanel.modelConfigFormLogic.value0_must_be_valid_json_d8cc7df1",
+								{
+									value0: label,
+								},
+							),
 						});
 					}
 					if (!Array.isArray(parsed)) {
 						return this.createError({
-							message: `${label} must be a JSON array.`,
+							message: i18n.t(
+								"agents:AgentsPage.components.ChatModelAdminPanel.modelConfigFormLogic.value0_must_be_a_json_array_c5757157",
+								{
+									value0: label,
+								},
+							),
 						});
 					}
 					return true;
@@ -374,7 +405,12 @@ function yupTestForField(field: FieldSchema): Yup.StringSchema {
 						parsed = JSON.parse(trimmed);
 					} catch {
 						return this.createError({
-							message: `${label} must be valid JSON.`,
+							message: i18n.t(
+								"agents:AgentsPage.components.ChatModelAdminPanel.modelConfigFormLogic.value0_must_be_valid_json_d8cc7df1",
+								{
+									value0: label,
+								},
+							),
 						});
 					}
 					if (
@@ -383,7 +419,12 @@ function yupTestForField(field: FieldSchema): Yup.StringSchema {
 						Array.isArray(parsed)
 					) {
 						return this.createError({
-							message: `${label} must be a JSON object.`,
+							message: i18n.t(
+								"agents:AgentsPage.components.ChatModelAdminPanel.modelConfigFormLogic.value0_must_be_a_json_object_adf7ea48",
+								{
+									value0: label,
+								},
+							),
 						});
 					}
 					return true;
@@ -440,7 +481,9 @@ function buildYupSchema(
 // Pre-built general-fields schema with reasoning effort bounds.
 const generalFieldsSchema = buildYupSchema(getGeneralFields()).test(
 	"reasoning-effort-default-lte-max",
-	"Default reasoning effort must not exceed the max reasoning effort.",
+	i18n.t(
+		"agents:AgentsPage.components.ChatModelAdminPanel.modelConfigFormLogic.default_reasoning_effort_must_not_exceed_the_max_43af1180",
+	),
 	function validate(value) {
 		const efforts = deepGet(value, ["reasoningEffort"]);
 		const defaultValue = deepGet(efforts, ["default"]);
@@ -451,7 +494,9 @@ const generalFieldsSchema = buildYupSchema(getGeneralFields()).test(
 		if (defaultSet !== maxSet) {
 			return this.createError({
 				path: defaultSet ? "reasoningEffort.max" : "reasoningEffort.default",
-				message: "Default and max reasoning effort must both be set.",
+				message: i18n.t(
+					"agents:AgentsPage.components.ChatModelAdminPanel.modelConfigFormLogic.default_and_max_reasoning_effort_must_both_be_se_5d5f7927",
+				),
 			});
 		}
 		if (!defaultSet || !maxSet) {
@@ -465,8 +510,9 @@ const generalFieldsSchema = buildYupSchema(getGeneralFields()).test(
 		}
 		return this.createError({
 			path: "reasoningEffort.default",
-			message:
-				"Default reasoning effort must not exceed the max reasoning effort.",
+			message: i18n.t(
+				"agents:AgentsPage.components.ChatModelAdminPanel.modelConfigFormLogic.default_reasoning_effort_must_not_exceed_the_max_43af1180",
+			),
 		});
 	},
 );

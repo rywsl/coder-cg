@@ -1,5 +1,6 @@
 import { PlayIcon, RotateCcwIcon, SquareIcon, TrashIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { UseQueryResult } from "react-query";
 import { hasError, isApiValidationError } from "#/api/errors";
 import type { Template, Workspace } from "#/api/typesGenerated";
@@ -80,6 +81,8 @@ export const WorkspacesPageView: FC<WorkspacesPageViewProps> = ({
 	onActionError,
 	chatsByWorkspace,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	// Let's say the user has 5 workspaces, but tried to hit page 100, which
 	// does not exist. In this case, the page is not valid and we want to show a
 	// better error message.
@@ -94,31 +97,35 @@ export const WorkspacesPageView: FC<WorkspacesPageViewProps> = ({
 							templates={templates}
 							templatesFetchStatus={templatesFetchStatus}
 						>
-							New workspace
+							{tI18n(
+								"WorkspacesPage.WorkspacesPageView.new_workspace_df0caf1b",
+							)}
 						</WorkspacesButton>
 					)
 				}
 			>
 				<PageHeaderTitle>
 					<div className="flex flex-row gap-2 items-center">
-						<span>Workspaces</span>
+						<span>
+							{tI18n("WorkspacesPage.WorkspacesPageView.workspaces_1377264b")}
+						</span>
 						<WorkspaceHelpPopover />
 					</div>
 				</PageHeaderTitle>
 			</PageHeader>
-
 			<div className="flex flex-col gap-4">
 				{hasError(error) && !isApiValidationError(error) && (
 					<ErrorAlert error={error} />
 				)}
 				<WorkspacesFilter filter={filter} error={error} />
 			</div>
-
 			<TableToolbar>
 				{checkedWorkspaces.length > 0 ? (
 					<>
 						<div>
-							Selected <strong>{checkedWorkspaces.length}</strong> of{" "}
+							{tI18n("WorkspacesPage.WorkspacesPageView.selected_da550194")}
+							<strong>{checkedWorkspaces.length}</strong>
+							{tI18n("WorkspacesPage.WorkspacesPageView.of_88eb5a7e")}{" "}
 							<strong>{workspaces?.length}</strong>{" "}
 							{workspaces?.length === 1 ? "workspace" : "workspaces"}
 						</div>
@@ -131,7 +138,9 @@ export const WorkspacesPageView: FC<WorkspacesPageViewProps> = ({
 									size="sm"
 									className="ml-auto"
 								>
-									Bulk actions
+									{tI18n(
+										"WorkspacesPage.WorkspacesPageView.bulk_actions_19f0dd9a",
+									)}
 									<Spinner loading={isRunningBatchAction}>
 										<ChevronDownIcon />
 									</Spinner>
@@ -148,7 +157,8 @@ export const WorkspacesPageView: FC<WorkspacesPageViewProps> = ({
 									}
 									onClick={onBatchStartTransition}
 								>
-									<PlayIcon /> Start
+									<PlayIcon />
+									{tI18n("WorkspacesPage.WorkspacesPageView.start_f37b64a8")}
 								</DropdownMenuItem>
 								<DropdownMenuItem
 									disabled={
@@ -158,7 +168,8 @@ export const WorkspacesPageView: FC<WorkspacesPageViewProps> = ({
 									}
 									onClick={onBatchStopTransition}
 								>
-									<SquareIcon /> Stop
+									<SquareIcon />
+									{tI18n("WorkspacesPage.WorkspacesPageView.stop_af6785b0")}
 								</DropdownMenuItem>
 								<DropdownMenuSeparator />
 								<DropdownMenuItem onClick={onBatchUpdateTransition}>
@@ -166,13 +177,14 @@ export const WorkspacesPageView: FC<WorkspacesPageViewProps> = ({
 										className="size-icon-sm"
 										data-testid="bulk-action-update"
 									/>{" "}
-									Update&hellip;
+									{tI18n("WorkspacesPage.WorkspacesPageView.update_ca6b4901")}
 								</DropdownMenuItem>
 								<DropdownMenuItem
 									className="text-content-destructive focus:text-content-destructive"
 									onClick={onBatchDeleteTransition}
 								>
-									<TrashIcon /> Delete&hellip;
+									<TrashIcon />
+									{tI18n("WorkspacesPage.WorkspacesPageView.delete_c91ff404")}
 								</DropdownMenuItem>
 							</DropdownMenuContent>
 						</DropdownMenu>
@@ -188,19 +200,24 @@ export const WorkspacesPageView: FC<WorkspacesPageViewProps> = ({
 					)
 				)}
 			</TableToolbar>
-
 			{pageNumberIsInvalid ? (
 				<EmptyState
 					className="border border-solid border-border rounded-lg"
-					message="Page not found"
-					description="The page you are trying to access does not exist."
+					message={tI18n(
+						"WorkspacesPage.WorkspacesPageView.page_not_found_a469ab4c",
+					)}
+					description={tI18n(
+						"WorkspacesPage.WorkspacesPageView.the_page_you_are_trying_to_access_does_not_exist_79743f1b",
+					)}
 					cta={
 						<Button
 							onClick={() => {
 								onPageChange(1);
 							}}
 						>
-							Back to the first page
+							{tI18n(
+								"WorkspacesPage.WorkspacesPageView.back_to_the_first_page_5492a2c4",
+							)}
 						</Button>
 					}
 				/>
@@ -218,7 +235,6 @@ export const WorkspacesPageView: FC<WorkspacesPageViewProps> = ({
 					chatsByWorkspace={chatsByWorkspace}
 				/>
 			)}
-
 			{count !== undefined && (
 				// Temporary styling stopgap before component is migrated to using
 				// PaginationContainer (which renders PaginationWidgetBase using CSS

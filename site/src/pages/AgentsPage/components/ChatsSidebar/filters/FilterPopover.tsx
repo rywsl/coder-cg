@@ -7,6 +7,7 @@ import {
 	useId,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "#/components/Button/Button";
 import { Checkbox } from "#/components/Checkbox/Checkbox";
 import {
@@ -17,6 +18,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "#/components/RadioGroup/RadioGroup";
 import { ScrollArea } from "#/components/ScrollArea/ScrollArea";
 import { SearchField } from "#/components/SearchField/SearchField";
+import { i18n } from "#/i18n";
 import {
 	AGENT_ARCHIVE_STATUS_ORDER,
 	AGENT_CHAT_STATUS_ORDER,
@@ -32,33 +34,63 @@ import {
 } from "../../../utils/agentSidebarFilters";
 
 const PR_STATUS_LABELS: Record<AgentPRStatusFilter, string> = {
-	draft: "Draft",
-	open: "Open",
-	merged: "Merged",
-	closed: "Closed",
+	draft: i18n.t(
+		"agents:AgentsPage.components.ChatsSidebar.filters.FilterPopover.draft_ebf12ef4",
+	),
+	open: i18n.t(
+		"agents:AgentsPage.components.ChatsSidebar.filters.FilterPopover.open_ed077f3d",
+	),
+	merged: i18n.t(
+		"agents:AgentsPage.components.ChatsSidebar.filters.FilterPopover.merged_bd0a0620",
+	),
+	closed: i18n.t(
+		"agents:AgentsPage.components.ChatsSidebar.filters.FilterPopover.closed_c21ead06",
+	),
 };
 
 const GROUP_OPTIONS: readonly Readonly<{
 	value: AgentSidebarGroupBy;
 	label: string;
 }>[] = [
-	{ value: "date", label: "Date" },
-	{ value: "chat_status", label: "Chat status" },
+	{
+		value: "date",
+		label: i18n.t(
+			"agents:AgentsPage.components.ChatsSidebar.filters.FilterPopover.date_99c40ab4",
+		),
+	},
+	{
+		value: "chat_status",
+		label: i18n.t(
+			"agents:AgentsPage.components.ChatsSidebar.filters.FilterPopover.chat_status_b69d681c",
+		),
+	},
 ];
 
 const CHAT_STATUS_LABELS: Record<AgentChatStatusFilter, string> = {
-	unread: "Unread",
-	read: "Read",
+	unread: i18n.t(
+		"agents:AgentsPage.components.ChatsSidebar.filters.FilterPopover.unread_1b9f384c",
+	),
+	read: i18n.t(
+		"agents:AgentsPage.components.ChatsSidebar.filters.FilterPopover.read_9b9a8d05",
+	),
 };
 
 const ARCHIVE_STATUS_LABELS: Record<AgentArchiveStatusFilter, string> = {
-	active: "Active",
-	archived: "Archived",
+	active: i18n.t(
+		"agents:AgentsPage.components.ChatsSidebar.filters.FilterPopover.active_92340695",
+	),
+	archived: i18n.t(
+		"agents:AgentsPage.components.ChatsSidebar.filters.FilterPopover.archived_bdb86505",
+	),
 };
 
 const SOURCE_LABELS: Record<AgentSourceFilter, string> = {
-	created_by_me: "Created by me",
-	shared_with_me: "Shared with me",
+	created_by_me: i18n.t(
+		"agents:AgentsPage.components.ChatsSidebar.filters.FilterPopover.created_by_me_f9182f6f",
+	),
+	shared_with_me: i18n.t(
+		"agents:AgentsPage.components.ChatsSidebar.filters.FilterPopover.shared_with_me_0fd8abc2",
+	),
 };
 
 const CHAT_STATUS_OPTIONS: readonly Readonly<{
@@ -143,6 +175,8 @@ export const FilterPopover: FC<FilterPopoverProps> = ({
 	filters,
 	onFiltersChange,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const id = useId();
 	const [open, setOpen] = useState(false);
 	const [stagedFilters, setStagedFilters] =
@@ -258,7 +292,9 @@ export const FilterPopover: FC<FilterPopoverProps> = ({
 				<Button
 					variant="subtle"
 					size="icon"
-					aria-label="Filter agents"
+					aria-label={tI18n(
+						"AgentsPage.components.ChatsSidebar.filters.FilterPopover.filter_agents_2b2a8e18",
+					)}
 					className={cn(
 						"size-7 min-w-0 -mr-0.5 justify-end px-0 text-content-secondary hover:text-content-primary",
 						hasActiveFilters(filters) && "text-content-primary",
@@ -269,13 +305,19 @@ export const FilterPopover: FC<FilterPopoverProps> = ({
 			</PopoverTrigger>
 			<PopoverContent
 				align="end"
-				aria-label="Filter agents"
+				aria-label={tI18n(
+					"AgentsPage.components.ChatsSidebar.filters.FilterPopover.filter_agents_2b2a8e18",
+				)}
 				role="dialog"
 				className="mobile-full-width-dropdown mobile-full-width-dropdown-top-below-header w-64 overflow-hidden p-0 text-sm"
 			>
 				<div className="border-0 border-b border-solid border-border px-3 py-2">
 					<section className="space-y-2">
-						<SectionHeading id={`${id}-group-heading`}>Group</SectionHeading>
+						<SectionHeading id={`${id}-group-heading`}>
+							{tI18n(
+								"AgentsPage.components.ChatsSidebar.filters.FilterPopover.group_34ca0e76",
+							)}
+						</SectionHeading>
 						<RadioGroup
 							aria-labelledby={`${id}-group-heading`}
 							value={stagedFilters.groupBy}
@@ -306,12 +348,20 @@ export const FilterPopover: FC<FilterPopoverProps> = ({
 
 				<div className="px-3 pt-2">
 					<section>
-						<SectionHeading>Filter by</SectionHeading>
+						<SectionHeading>
+							{tI18n(
+								"AgentsPage.components.ChatsSidebar.filters.FilterPopover.filter_by_d00f5245",
+							)}
+						</SectionHeading>
 						<SearchField
 							value={optionSearch}
 							onChange={setOptionSearch}
-							placeholder="Search filters..."
-							aria-label="Search filters"
+							placeholder={tI18n(
+								"AgentsPage.components.ChatsSidebar.filters.FilterPopover.search_filters_b3c543f5",
+							)}
+							aria-label={tI18n(
+								"AgentsPage.components.ChatsSidebar.filters.FilterPopover.search_filters_f484e724",
+							)}
 							className="mt-2 h-9 [&_input]:h-9 [&_input]:text-xs [&_input]:font-normal [&_svg]:size-4"
 						/>
 						<ScrollArea
@@ -323,7 +373,11 @@ export const FilterPopover: FC<FilterPopoverProps> = ({
 							<div className="space-y-4">
 								{visiblePRStatuses.length > 0 && (
 									<div className="space-y-1.5">
-										<FilterGroupHeading>PR status</FilterGroupHeading>
+										<FilterGroupHeading>
+											{tI18n(
+												"AgentsPage.components.ChatsSidebar.filters.FilterPopover.pr_status_7a3252ac",
+											)}
+										</FilterGroupHeading>
 										<div className="space-y-2">
 											{visiblePRStatuses.map((status) => {
 												const checked =
@@ -354,7 +408,11 @@ export const FilterPopover: FC<FilterPopoverProps> = ({
 
 								{visibleChatStatusOptions.length > 0 && (
 									<div className="space-y-1.5">
-										<FilterGroupHeading>Chat status</FilterGroupHeading>
+										<FilterGroupHeading>
+											{tI18n(
+												"AgentsPage.components.ChatsSidebar.filters.FilterPopover.chat_status_b69d681c",
+											)}
+										</FilterGroupHeading>
 										<div className="space-y-2">
 											{visibleChatStatusOptions.map((option) => {
 												const optionId = `${id}-chat-status-${option.value}`;
@@ -388,7 +446,11 @@ export const FilterPopover: FC<FilterPopoverProps> = ({
 
 								{visibleSourceOptions.length > 0 && (
 									<div className="space-y-1.5">
-										<FilterGroupHeading>Source</FilterGroupHeading>
+										<FilterGroupHeading>
+											{tI18n(
+												"AgentsPage.components.ChatsSidebar.filters.FilterPopover.source_0e570ca6",
+											)}
+										</FilterGroupHeading>
 										<div className="space-y-2">
 											{visibleSourceOptions.map((option) => {
 												const optionId = `${id}-source-${option.value}`;
@@ -420,7 +482,9 @@ export const FilterPopover: FC<FilterPopoverProps> = ({
 								{visibleArchiveOptions.length > 0 && (
 									<div className="space-y-1.5">
 										<FilterGroupHeading id={`${id}-archive-heading`}>
-											Archive status
+											{tI18n(
+												"AgentsPage.components.ChatsSidebar.filters.FilterPopover.archive_status_bf062daf",
+											)}
 										</FilterGroupHeading>
 										<RadioGroup
 											aria-labelledby={`${id}-archive-heading`}
@@ -452,7 +516,9 @@ export const FilterPopover: FC<FilterPopoverProps> = ({
 
 								{!showFilterOptions && (
 									<p className="m-0 py-5 text-sm text-content-secondary">
-										No filters found
+										{tI18n(
+											"AgentsPage.components.ChatsSidebar.filters.FilterPopover.no_filters_found_43863a1c",
+										)}
 									</p>
 								)}
 							</div>
@@ -467,7 +533,9 @@ export const FilterPopover: FC<FilterPopoverProps> = ({
 						onClick={clearFilters}
 						className="h-8 min-w-0 px-0 text-xs font-normal"
 					>
-						Clear all
+						{tI18n(
+							"AgentsPage.components.ChatsSidebar.filters.FilterPopover.clear_all_29a390f9",
+						)}
 					</Button>
 					<Button
 						variant="default"
@@ -475,7 +543,9 @@ export const FilterPopover: FC<FilterPopoverProps> = ({
 						onClick={applyFilters}
 						className="h-8 min-w-[64px] px-3 text-xs font-normal"
 					>
-						Apply
+						{tI18n(
+							"AgentsPage.components.ChatsSidebar.filters.FilterPopover.apply_31e392d1",
+						)}
 					</Button>
 				</div>
 			</PopoverContent>

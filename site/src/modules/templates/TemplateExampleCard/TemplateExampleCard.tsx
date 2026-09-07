@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import type { FC, HTMLAttributes } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import type { TemplateExample } from "#/api/typesGenerated";
 import { Badge } from "#/components/Badge/Badge";
@@ -20,6 +21,8 @@ export const TemplateExampleCard: FC<TemplateExampleCardProps> = ({
 	className,
 	...divProps
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const useTemplateLink = templateBuilderEnabled
 		? `/templates/new/builder?base=${example.id}`
 		: `/templates/new?exampleId=${example.id}`;
@@ -53,7 +56,6 @@ export const TemplateExampleCard: FC<TemplateExampleCardProps> = ({
 					))}
 				</div>
 			</div>
-
 			<div>
 				<h4 className="text-sm font-semibold m-0 mb-1">{example.name}</h4>
 				<span className="block text-xs font-normal leading-[1.6] text-content-secondary">
@@ -65,15 +67,20 @@ export const TemplateExampleCard: FC<TemplateExampleCardProps> = ({
 						showExternalIcon={false}
 					>
 						<RouterLink to={`/starter-templates/${example.id}`}>
-							Read more
+							{tI18n(
+								"templates.TemplateExampleCard.TemplateExampleCard.read_more_83b79414",
+							)}
 						</RouterLink>
 					</Link>
 				</span>
 			</div>
-
 			<div className="mt-auto flex flex-col items-center gap-3 pt-6">
 				<Button asChild className="w-full">
-					<RouterLink to={useTemplateLink}>Use template</RouterLink>
+					<RouterLink to={useTemplateLink}>
+						{tI18n(
+							"templates.TemplateExampleCard.TemplateExampleCard.use_template_351dd54e",
+						)}
+					</RouterLink>
 				</Button>
 			</div>
 		</div>

@@ -6,6 +6,7 @@ import {
 	UsersIcon,
 } from "lucide-react";
 import { type FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { NavLink, useLocation } from "react-router";
 import type { Chat } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
@@ -50,6 +51,8 @@ export const ChatTreeNode: FC<ChatTreeNodeProps> = ({
 	isChildNode,
 	depth = 0,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const location = useLocation();
 	const locationSearch = normalizeLocationSearch(location.search);
 	const {
@@ -92,7 +95,14 @@ export const ChatTreeNode: FC<ChatTreeNodeProps> = ({
 	const lastTurnSummary = asNonEmptyString(chat.last_turn_summary);
 	const isStreaming = chat.status === "running";
 	const streamingSubtitle =
-		isStreaming && modelName ? `${modelName} streaming…` : undefined;
+		isStreaming && modelName
+			? tI18n(
+					"AgentsPage.components.ChatsSidebar.tree.ChatTreeNode.value0_streaming_63f1cd62",
+					{
+						value0: modelName,
+					},
+				)
+			: undefined;
 	const staleTurnSummaryReleaseMs = 10_000;
 	const [streamingSummary, setStreamingSummary] = useState<string | undefined>(
 		isStreaming ? lastTurnSummary : undefined,
@@ -146,7 +156,13 @@ export const ChatTreeNode: FC<ChatTreeNodeProps> = ({
 	const deletions = diffStatus?.deletions ?? 0;
 	const hasLineStats = additions > 0 || deletions > 0 || changedFiles > 0;
 	const filesChangedLabel = `${changedFiles} ${
-		changedFiles === 1 ? "file" : "files"
+		changedFiles === 1
+			? tI18n(
+					"AgentsPage.components.ChatsSidebar.tree.ChatTreeNode.file_3b9c358f",
+				)
+			: tI18n(
+					"AgentsPage.components.ChatsSidebar.tree.ChatTreeNode.files_3d7db37d",
+				)
 	}`;
 	const workspaceId = chat.workspace_id;
 	const isArchivingThisChat = isArchiving && archivingChatId === chat.id;
@@ -236,7 +252,15 @@ export const ChatTreeNode: FC<ChatTreeNodeProps> = ({
 										"[@media(hover:hover)]:group-hover/icon:visible",
 									)}
 									data-testid={`agents-tree-toggle-${chat.id}`}
-									aria-label={isExpanded ? "Collapse" : "Expand"}
+									aria-label={
+										isExpanded
+											? tI18n(
+													"AgentsPage.components.ChatsSidebar.tree.ChatTreeNode.collapse_be6eb1fc",
+												)
+											: tI18n(
+													"AgentsPage.components.ChatsSidebar.tree.ChatTreeNode.expand_07548c2c",
+												)
+									}
 									aria-expanded={isExpanded}
 								>
 									{isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
@@ -263,7 +287,11 @@ export const ChatTreeNode: FC<ChatTreeNodeProps> = ({
 											{chat.title}
 										</span>
 										{chat.has_unread && !isActiveChat && (
-											<span className="sr-only">(unread)</span>
+											<span className="sr-only">
+												{tI18n(
+													"AgentsPage.components.ChatsSidebar.tree.ChatTreeNode.unread_dfce6284",
+												)}
+											</span>
 										)}
 									</div>
 									<div className="flex min-w-0 items-center gap-1.5">
@@ -277,7 +305,14 @@ export const ChatTreeNode: FC<ChatTreeNodeProps> = ({
 										{hasLinkedDiffStatus && hasLineStats && (
 											<span
 												className="inline-flex shrink-0 items-center gap-0.5 text-[13px] leading-4 tabular-nums"
-												title={`${filesChangedLabel}, +${additions} -${deletions}`}
+												title={tI18n(
+													"AgentsPage.components.ChatsSidebar.tree.ChatTreeNode.value0_value1_value2_d31fea18",
+													{
+														value0: filesChangedLabel,
+														value1: additions,
+														value2: deletions,
+													},
+												)}
 											>
 												<span className="text-git-added-bright">
 													+{additions}
@@ -346,7 +381,9 @@ export const ChatTreeNode: FC<ChatTreeNodeProps> = ({
 							{isSharedChat && (
 								<UsersIcon
 									className="mt-auto size-3.5 text-content-secondary"
-									aria-label="Shared chat"
+									aria-label={tI18n(
+										"AgentsPage.components.ChatsSidebar.tree.ChatTreeNode.shared_chat_ca99f000",
+									)}
 								/>
 							)}
 							{hasMenuActions && !isArchivingThisChat && (
@@ -359,7 +396,12 @@ export const ChatTreeNode: FC<ChatTreeNodeProps> = ({
 												"absolute inset-0 flex h-6 w-7 min-w-0 justify-end rounded-none px-0 opacity-0 text-content-secondary hover:text-content-primary [@media(hover:hover)]:group-hover:opacity-100 data-[state=open]:opacity-100",
 												isActiveChat && "opacity-100",
 											)}
-											aria-label={`Open actions for ${chat.title}`}
+											aria-label={tI18n(
+												"AgentsPage.components.ChatsSidebar.tree.ChatTreeNode.open_actions_for_value0_c4ad7657",
+												{
+													value0: chat.title,
+												},
+											)}
 											onContextMenuCapture={(e) => {
 												e.preventDefault();
 												e.stopPropagation();
@@ -411,7 +453,6 @@ export const ChatTreeNode: FC<ChatTreeNodeProps> = ({
 					/>
 				</ContextMenuContent>
 			</ContextMenu>
-
 			{hasChildren && isExpanded && (
 				<div className="relative flex flex-col">
 					{childIDs.map((childID) => {

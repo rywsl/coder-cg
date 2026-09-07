@@ -10,6 +10,7 @@ import {
 	PauseIcon,
 } from "lucide-react";
 import type { Chat, ChatDiffStatus, ChatStatus } from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 
 type ChatIconConfig = {
 	icon: LucideIcon;
@@ -21,27 +22,37 @@ const statusConfig = {
 	waiting: {
 		icon: CheckIcon,
 		className: "text-content-secondary",
-		label: "Idle",
+		label: i18n.t(
+			"agents:AgentsPage.components.ChatsSidebar.tree.statusConfig.idle_ab0171ca",
+		),
 	},
 	running: {
 		icon: Loader2Icon,
 		className: "text-content-link animate-spin",
-		label: "Working",
+		label: i18n.t(
+			"agents:AgentsPage.components.ChatsSidebar.tree.statusConfig.working_a92f0449",
+		),
 	},
 	interrupting: {
 		icon: PauseIcon,
 		className: "text-content-warning",
-		label: "Interrupting",
+		label: i18n.t(
+			"agents:AgentsPage.components.ChatsSidebar.tree.statusConfig.interrupting_1fd2c31e",
+		),
 	},
 	requires_action: {
 		icon: PauseIcon,
 		className: "text-content-warning",
-		label: "Requires action",
+		label: i18n.t(
+			"agents:AgentsPage.components.ChatsSidebar.tree.statusConfig.requires_action_40f93de0",
+		),
 	},
 	error: {
 		icon: AlertTriangleIcon,
 		className: "text-content-destructive",
-		label: "Error",
+		label: i18n.t(
+			"agents:AgentsPage.components.ChatsSidebar.tree.statusConfig.error_54a0e8c1",
+		),
 	},
 } as const satisfies Record<ChatStatus, ChatIconConfig>;
 
@@ -60,27 +71,35 @@ const getPRIconConfig = (
 		return {
 			icon: GitMergeIcon,
 			className: "text-git-merged-bright",
-			label: "Pull request merged",
+			label: i18n.t(
+				"agents:AgentsPage.components.ChatsSidebar.tree.statusConfig.pull_request_merged_5f0f1f6d",
+			),
 		};
 	}
 	if (state === "closed") {
 		return {
 			icon: GitPullRequestClosedIcon,
 			className: "text-git-deleted-bright",
-			label: "Pull request closed",
+			label: i18n.t(
+				"agents:AgentsPage.components.ChatsSidebar.tree.statusConfig.pull_request_closed_2babc563",
+			),
 		};
 	}
 	if (diffStatus?.pull_request_draft) {
 		return {
 			icon: GitPullRequestDraftIcon,
 			className: "text-content-secondary",
-			label: "Draft pull request",
+			label: i18n.t(
+				"agents:AgentsPage.components.ChatsSidebar.tree.statusConfig.draft_pull_request_e201d835",
+			),
 		};
 	}
 	return {
 		icon: GitPullRequestArrowIcon,
 		className: "text-git-added-bright",
-		label: "Pull request open",
+		label: i18n.t(
+			"agents:AgentsPage.components.ChatsSidebar.tree.statusConfig.pull_request_open_c576c567",
+		),
 	};
 };
 

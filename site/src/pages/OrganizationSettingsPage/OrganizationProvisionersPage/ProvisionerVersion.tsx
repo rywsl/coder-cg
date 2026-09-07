@@ -1,5 +1,6 @@
 import { TriangleAlertIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { StatusIndicator } from "#/components/StatusIndicator/StatusIndicator";
 import {
 	Tooltip,
@@ -16,9 +17,13 @@ export const ProvisionerVersion: FC<ProvisionerVersionProps> = ({
 	provisionerVersion,
 	buildVersion,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return provisionerVersion === buildVersion ? (
 		<span className="text-xs font-medium text-content-secondary">
-			Up to date
+			{tI18n(
+				"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerVersion.up_to_date_ce29b7f8",
+			)}
 		</span>
 	) : (
 		<Tooltip>
@@ -30,14 +35,16 @@ export const ProvisionerVersion: FC<ProvisionerVersionProps> = ({
 					tabIndex={0}
 				>
 					<TriangleAlertIcon className="size-icon-xs" />
-					Outdated
+					{tI18n(
+						"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerVersion.outdated_c759f42e",
+					)}
 				</StatusIndicator>
 			</TooltipTrigger>
 			<TooltipContent className="max-w-xs">
 				<p className="m-0">
-					This provisioner is out of date. You may experience issues when using
-					a provisioner version that doesn't match your Coder deployment. Please
-					upgrade to a newer version.
+					{tI18n(
+						"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerVersion.this_provisioner_is_out_of_date_you_may_experien_97659d73",
+					)}
 				</p>
 			</TooltipContent>
 		</Tooltip>

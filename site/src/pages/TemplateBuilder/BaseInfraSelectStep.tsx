@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { templateBuilderBases } from "#/api/queries/templateBuilder";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
@@ -30,6 +31,8 @@ export const BaseInfraSelectStep: FC<BaseInfraSelectStepProps> = ({
 	selectedBaseId,
 	onSelectBase,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const { data, error, isLoading } = useQuery(templateBuilderBases());
 
 	if (isLoading) {
@@ -43,12 +46,22 @@ export const BaseInfraSelectStep: FC<BaseInfraSelectStepProps> = ({
 	const bases = sortByPriority(data?.bases ?? [], BASE_PRIORITY);
 
 	return (
-		<div role="radiogroup" aria-label="Base infrastructure templates">
-			<TemplateBuilderTitle>Pick a base template</TemplateBuilderTitle>
+		<div
+			role="radiogroup"
+			aria-label={tI18n(
+				"TemplateBuilder.BaseInfraSelectStep.base_infrastructure_templates_213855e0",
+			)}
+		>
+			<TemplateBuilderTitle>
+				{tI18n(
+					"TemplateBuilder.BaseInfraSelectStep.pick_a_base_template_8b0c22af",
+				)}
+			</TemplateBuilderTitle>
 			<TemplateBuilderSubtitle>
-				Select your infrastructure foundation.
+				{tI18n(
+					"TemplateBuilder.BaseInfraSelectStep.select_your_infrastructure_foundation_9c27e199",
+				)}
 			</TemplateBuilderSubtitle>
-
 			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 				{bases.map((base) => (
 					<TemplateCard

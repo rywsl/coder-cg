@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { chatModels } from "#/api/queries/chats";
 import { deriveProviderStates } from "#/modules/aiModels/providerStates";
@@ -10,6 +11,8 @@ import {
 } from "./organizationModels";
 
 const ModelsPage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { organization, permissions } = useOrganizationModels();
 	const organizationModelsQuery = useQuery(chatModels(organization.id));
 	const providers = organizationModelsQuery.data?.providers ?? [];
@@ -31,8 +34,12 @@ const ModelsPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Models", "AI Settings")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n("AISettingsPage.ModelsPage.ModelsPage.models_d17d2d78"),
+					tI18n("AISettingsPage.ModelsPage.ModelsPage.ai_settings_a8e5e2c6"),
+				)}
+			</title>
 			<ModelsPageView
 				key={organization.id}
 				isLoading={organizationModelsQuery.isLoading}

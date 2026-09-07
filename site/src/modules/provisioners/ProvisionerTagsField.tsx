@@ -1,9 +1,11 @@
 import { PlusIcon } from "lucide-react";
 import { type FC, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import type { ProvisionerDaemon } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
 import { Input } from "#/components/Input/Input";
+import { i18n } from "#/i18n";
 import { ProvisionerTag } from "#/modules/provisioners/ProvisionerTag";
 
 // Users can't delete these tags
@@ -56,15 +58,30 @@ export const ProvisionerTagsField: FC<ProvisionerTagsFieldProps> = ({
 
 const newTagSchema = Yup.object({
 	key: Yup.string()
-		.required("Key is required")
-		.notOneOf(["owner"], "Cannot override owner tag"),
+		.required(
+			i18n.t(
+				"administration:provisioners.ProvisionerTagsField.key_is_required_bd07d137",
+			),
+		)
+		.notOneOf(
+			["owner"],
+			i18n.t(
+				"administration:provisioners.ProvisionerTagsField.cannot_override_owner_tag_8b2b121b",
+			),
+		),
 	value: Yup.string()
-		.required("Value is required")
+		.required(
+			i18n.t(
+				"administration:provisioners.ProvisionerTagsField.value_is_required_1fbf278b",
+			),
+		)
 		.when("key", ([key], schema) => {
 			if (key === "scope") {
 				return schema.oneOf(
 					["organization", "scope"],
-					"Scope value must be 'organization' or 'user'",
+					i18n.t(
+						"administration:provisioners.ProvisionerTagsField.scope_value_must_be_organization_or_user_3ffa61b5",
+					),
 				);
 			}
 
@@ -79,6 +96,8 @@ type NewTagControlProps = {
 };
 
 const NewTagControl: FC<NewTagControlProps> = ({ onAdd }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const keyInputRef = useRef<HTMLInputElement>(null);
 	const [error, setError] = useState<string>();
 	const [newTag, setNewTag] = useState<Tag>({
@@ -117,25 +136,27 @@ const NewTagControl: FC<NewTagControlProps> = ({ onAdd }) => {
 		<div className="flex flex-col gap-1 max-w-72">
 			<div className="flex items-center gap-2">
 				<label className="sr-only" htmlFor="tag-key-input">
-					Tag key
+					{tI18n("provisioners.ProvisionerTagsField.tag_key_034df31a")}
 				</label>
 				<Input
 					ref={keyInputRef}
 					id="tag-key-input"
 					name="key"
-					placeholder="Key"
+					placeholder={tI18n("provisioners.ProvisionerTagsField.key_99a52df3")}
 					value={newTag.key}
 					onChange={(e) => setNewTag({ ...newTag, key: e.target.value.trim() })}
 					onKeyDown={addNewTagOnEnter}
 				/>
 
 				<label className="sr-only" htmlFor="tag-value-input">
-					Tag value
+					{tI18n("provisioners.ProvisionerTagsField.tag_value_16f64f1f")}
 				</label>
 				<Input
 					id="tag-value-input"
 					name="value"
-					placeholder="Value"
+					placeholder={tI18n(
+						"provisioners.ProvisionerTagsField.value_8e37953d",
+					)}
 					value={newTag.value}
 					onChange={(e) =>
 						setNewTag({ ...newTag, value: e.target.value.trim() })
@@ -150,7 +171,9 @@ const NewTagControl: FC<NewTagControlProps> = ({ onAdd }) => {
 					onClick={addNewTag}
 				>
 					<PlusIcon />
-					<span className="sr-only">Add tag</span>
+					<span className="sr-only">
+						{tI18n("provisioners.ProvisionerTagsField.add_tag_3e10b08c")}
+					</span>
 				</Button>
 			</div>
 			{error && (

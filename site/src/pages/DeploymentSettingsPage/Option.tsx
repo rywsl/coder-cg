@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { WrenchIcon } from "lucide-react";
 import type { FC, HTMLAttributes, PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
 import { DisabledBadge, EnabledBadge } from "#/components/Badge/PresetBadges";
 
 export const OptionName: FC<PropsWithChildren> = ({ children }) => {
@@ -20,6 +21,8 @@ interface OptionValueProps {
 }
 
 export const OptionValue: FC<OptionValueProps> = (props) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { children: value } = props;
 	const optionClassName =
 		"text-sm font-mono wrap-anywhere select-all [&_ul]:p-4";
@@ -42,7 +45,9 @@ export const OptionValue: FC<OptionValueProps> = (props) => {
 
 	if (!value || value.length === 0) {
 		return (
-			<span className={cn("option-value-empty", optionClassName)}>Not set</span>
+			<span className={cn("option-value-empty", optionClassName)}>
+				{tI18n("DeploymentSettingsPage.Option.not_set_4895f731")}
+			</span>
 		);
 	}
 

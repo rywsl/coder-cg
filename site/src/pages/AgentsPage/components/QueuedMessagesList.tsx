@@ -7,6 +7,7 @@ import {
 	Trash2Icon,
 } from "lucide-react";
 import { type FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { ChatQueuedMessage } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
 import { Spinner } from "#/components/Spinner/Spinner";
@@ -59,6 +60,8 @@ export const QueuedMessagesList: FC<QueuedMessagesListProps> = ({
 	onPromote,
 	className,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const items = messages.map((message) => {
 		const { displayText, attachmentCount, hookNotices } =
 			getQueuedMessageInfo(message);
@@ -180,7 +183,18 @@ export const QueuedMessagesList: FC<QueuedMessagesListProps> = ({
 							{item.attachmentCount > 0 && (
 								<span
 									role="img"
-									aria-label={`${item.attachmentCount} image attachment${item.attachmentCount !== 1 ? "s" : ""}`}
+									aria-label={tI18n(
+										"AgentsPage.components.QueuedMessagesList.value0_image_attachment_value1_ad46def5",
+										{
+											value0: item.attachmentCount,
+											value1:
+												item.attachmentCount !== 1
+													? tI18n(
+															"AgentsPage.components.QueuedMessagesList.s_043a7187",
+														)
+													: "",
+										},
+									)}
 									className="flex shrink-0 items-center gap-1 text-xs text-content-secondary"
 								>
 									<ImageIcon className="size-3" aria-hidden="true" />
@@ -192,7 +206,12 @@ export const QueuedMessagesList: FC<QueuedMessagesListProps> = ({
 									<TooltipTrigger asChild>
 										<button
 											type="button"
-											aria-label={`Lifecycle hook notice: ${item.hookNotices.join(" ")}`}
+											aria-label={tI18n(
+												"AgentsPage.components.QueuedMessagesList.lifecycle_hook_notice_value0_f945c2c1",
+												{
+													value0: item.hookNotices.join(" "),
+												},
+											)}
 											className="flex shrink-0 cursor-default items-center border-none bg-transparent p-0 text-highlight-sky"
 										>
 											<InfoIcon className="size-3" aria-hidden="true" />
@@ -211,7 +230,9 @@ export const QueuedMessagesList: FC<QueuedMessagesListProps> = ({
 									)}
 								>
 									<CornerDownLeftIcon className="size-3" />
-									to send
+									{tI18n(
+										"AgentsPage.components.QueuedMessagesList.to_send_1044b2d7",
+									)}
 								</span>
 							)}
 							<div
@@ -225,7 +246,9 @@ export const QueuedMessagesList: FC<QueuedMessagesListProps> = ({
 										<Button
 											variant="subtle"
 											size="icon"
-											aria-label="Send now"
+											aria-label={tI18n(
+												"AgentsPage.components.QueuedMessagesList.send_now_58803287",
+											)}
 											disabled={isBusy}
 											onClick={() => void handlePromote(item.id)}
 											className="size-6 rounded text-content-secondary hover:bg-surface-tertiary hover:text-content-primary"
@@ -237,14 +260,20 @@ export const QueuedMessagesList: FC<QueuedMessagesListProps> = ({
 											)}
 										</Button>
 									</TooltipTrigger>
-									<TooltipContent side="top">Send now</TooltipContent>
+									<TooltipContent side="top">
+										{tI18n(
+											"AgentsPage.components.QueuedMessagesList.send_now_58803287",
+										)}
+									</TooltipContent>
 								</Tooltip>
 								<Tooltip>
 									<TooltipTrigger asChild>
 										<Button
 											variant="subtle"
 											size="icon"
-											aria-label="Remove from queue"
+											aria-label={tI18n(
+												"AgentsPage.components.QueuedMessagesList.remove_from_queue_c0b9d9e9",
+											)}
 											disabled={isBusy}
 											onClick={() => void handleDelete(item.id)}
 											className="size-6 rounded text-content-secondary hover:bg-surface-tertiary hover:text-content-destructive"
@@ -256,7 +285,11 @@ export const QueuedMessagesList: FC<QueuedMessagesListProps> = ({
 											)}
 										</Button>
 									</TooltipTrigger>
-									<TooltipContent side="top">Remove</TooltipContent>
+									<TooltipContent side="top">
+										{tI18n(
+											"AgentsPage.components.QueuedMessagesList.remove_c3812fc4",
+										)}
+									</TooltipContent>
 								</Tooltip>
 							</div>
 						</div>

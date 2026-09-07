@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import type { FC } from "react";
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type {
 	Workspace,
@@ -56,12 +57,19 @@ export const PortsMenuItem: FC<{
 	onSelectInline,
 	onPortSelect,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const itemRef = useRef<HTMLDivElement>(null);
 
 	const label =
 		portsData.totalCount !== undefined
-			? `Ports (${portsData.totalCount})`
-			: "Ports";
+			? tI18n(
+					"AgentsPage.components.WorkspacePillPorts.ports_value0_d4eb893f",
+					{
+						value0: portsData.totalCount,
+					},
+				)
+			: tI18n("AgentsPage.components.WorkspacePillPorts.ports_de5648dd");
 
 	useEffect(() => {
 		if (!focusOnMount || !isBelowMd) {
@@ -114,6 +122,8 @@ export const MobilePortsPanel: FC<{
 	portsData: PortsData;
 	onBack: () => void;
 }> = ({ workspace, agent, host, portsData, onBack }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const backRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -130,7 +140,7 @@ export const MobilePortsPanel: FC<{
 				}}
 			>
 				<ArrowLeftIcon className="size-3.5" />
-				Back
+				{tI18n("AgentsPage.components.WorkspacePillPorts.back_76900f1b")}
 			</DropdownMenuItem>
 			<DropdownMenuSeparator className="my-1" />
 			<PortsList
@@ -150,6 +160,8 @@ const PortsList: FC<{
 	data: PortsData;
 	onPortSelect?: (selection: PortSelection) => void;
 }> = ({ host, agent, workspace, data, onPortSelect }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const route = `/@${workspace.owner_name}/${workspace.name}`;
 	const { listeningPorts, sharedPorts, privateListeningPorts, protocol } = data;
 
@@ -158,11 +170,12 @@ const PortsList: FC<{
 			{privateListeningPorts.length > 0 && (
 				<div className="px-2 pb-1.5 pt-1">
 					<span className="text-xs font-semibold text-content-secondary">
-						Listening Ports
+						{tI18n(
+							"AgentsPage.components.WorkspacePillPorts.listening_ports_c60e103d",
+						)}
 					</span>
 				</div>
 			)}
-
 			{privateListeningPorts.map((port) => (
 				<ListeningPortItem
 					key={port.port}
@@ -175,22 +188,24 @@ const PortsList: FC<{
 					onPortSelect={onPortSelect}
 				/>
 			))}
-
 			{listeningPorts !== undefined &&
 				sharedPorts !== undefined &&
 				privateListeningPorts.length === 0 &&
 				sharedPorts.length === 0 && (
 					<p className="px-2 py-2 text-center text-xs text-content-tertiary">
-						No open ports detected.
+						{tI18n(
+							"AgentsPage.components.WorkspacePillPorts.no_open_ports_detected_6120e125",
+						)}
 					</p>
 				)}
-
 			{(sharedPorts ?? []).length > 0 && (
 				<>
 					<DropdownMenuSeparator className="my-1" />
 					<div className="px-2 pb-1.5 pt-1">
 						<span className="text-xs font-semibold text-content-secondary">
-							Shared Ports
+							{tI18n(
+								"AgentsPage.components.WorkspacePillPorts.shared_ports_c27e1fcc",
+							)}
 						</span>
 					</div>
 					{(sharedPorts ?? []).map((share) => (
@@ -206,12 +221,13 @@ const PortsList: FC<{
 					))}
 				</>
 			)}
-
 			<DropdownMenuSeparator className="my-1" />
 			<DropdownMenuItem asChild>
 				<Link to={route} target="_blank" rel="noreferrer">
 					<ExternalLinkIcon className="size-3.5" />
-					Manage sharing
+					{tI18n(
+						"AgentsPage.components.WorkspacePillPorts.manage_sharing_11134644",
+					)}
 				</Link>
 			</DropdownMenuItem>
 		</>
@@ -235,12 +251,19 @@ const ListeningPortItem: FC<{
 	protocol,
 	onPortSelect,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	if (onPortSelect) {
 		return (
 			<DropdownMenuItem
 				onSelect={() =>
 					onPortSelect({
-						label: `Port ${port.port}`,
+						label: tI18n(
+							"AgentsPage.components.WorkspacePillPorts.port_value0_606ab507",
+							{
+								value0: port.port,
+							},
+						),
 						port: port.port,
 						protocol,
 					})
@@ -289,6 +312,8 @@ const SharedPortItem: FC<{
 	ownerName: string;
 	onPortSelect?: (selection: PortSelection) => void;
 }> = ({ share, host, agentName, workspaceName, ownerName, onPortSelect }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const ShareIcon =
 		share.share_level === "public"
 			? LockOpenIcon
@@ -300,7 +325,12 @@ const SharedPortItem: FC<{
 			<DropdownMenuItem
 				onSelect={() =>
 					onPortSelect({
-						label: `Port ${share.port}`,
+						label: tI18n(
+							"AgentsPage.components.WorkspacePillPorts.port_value0_606ab507",
+							{
+								value0: share.port,
+							},
+						),
 						port: share.port,
 						protocol: share.protocol,
 					})

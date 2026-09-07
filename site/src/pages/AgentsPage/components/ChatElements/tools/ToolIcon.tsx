@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ExternalImage } from "#/components/ExternalImage/ExternalImage";
 import {
 	Tooltip,
@@ -56,6 +57,8 @@ export const ToolIcon: React.FC<{
 	isRunning?: boolean;
 	serverName?: string;
 }> = ({ name, iconUrl, isRunning, serverName }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [imgError, setImgError] = useState(false);
 	const color = "text-current";
 	const base = cn(
@@ -75,7 +78,12 @@ export const ToolIcon: React.FC<{
 			<div className="size-4 shrink-0 overflow-hidden">
 				<ExternalImage
 					src={iconUrl}
-					alt={`${name} icon`}
+					alt={tI18n(
+						"AgentsPage.components.ChatElements.tools.ToolIcon.value0_icon_43d0d0a9",
+						{
+							value0: name,
+						},
+					)}
 					className={cn(
 						"block size-4",
 						// Monochrome: brightness-0 strips colour to black,

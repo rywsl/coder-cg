@@ -1,5 +1,6 @@
 import { CheckIcon, CircleAlertIcon, HourglassIcon } from "lucide-react";
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import type { TemplateVersion } from "#/api/typesGenerated";
 import { Badge, type BadgeProps } from "#/components/Badge/Badge";
 import { Spinner } from "#/components/Spinner/Spinner";
@@ -12,9 +13,20 @@ interface TemplateVersionStatusBadgeProps {
 export const TemplateVersionStatusBadge: FC<
 	TemplateVersionStatusBadgeProps
 > = ({ version }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const { text, icon, variant } = getStatus(version);
 	return (
-		<Badge variant={variant} title={`Build status is ${text}`} role="status">
+		<Badge
+			variant={variant}
+			title={tI18n(
+				"TemplateVersionEditorPage.TemplateVersionStatusBadge.build_status_is_value0_2493e016",
+				{
+					value0: text,
+				},
+			)}
+			role="status"
+		>
 			{icon}
 			{text}
 		</Badge>

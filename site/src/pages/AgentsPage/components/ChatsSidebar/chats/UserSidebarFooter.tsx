@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Avatar } from "#/components/Avatar/Avatar";
 import {
 	DropdownMenu,
@@ -11,6 +12,8 @@ import { useDashboard } from "#/modules/dashboard/useDashboard";
 import { UsageIndicator } from "../../UsageIndicator";
 
 export const UserSidebarFooter: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { user, signOut } = useAuthenticated();
 	const { appearance, buildInfo } = useDashboard();
 
@@ -22,7 +25,12 @@ export const UserSidebarFooter: FC = () => {
 					<DropdownMenuTrigger asChild>
 						<button
 							type="button"
-							aria-label={`Account menu for ${user.name || user.username}`}
+							aria-label={tI18n(
+								"AgentsPage.components.ChatsSidebar.chats.UserSidebarFooter.account_menu_for_value0_81ca6278",
+								{
+									value0: user.name || user.username,
+								},
+							)}
 							className="flex min-w-0 flex-1 items-center gap-2 bg-transparent border-0 cursor-pointer px-3 py-3 text-left hover:bg-surface-tertiary/50 transition-colors"
 						>
 							<Avatar

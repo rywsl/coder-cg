@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { WrenchIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "#/components/Badge/Badge";
 import { CopyableCodeBlock, RoleBadge } from "./DebugPanelPrimitives";
 import {
@@ -86,9 +87,25 @@ export const ToolEventCard: FC<ToolEventCardProps> = ({
 };
 
 const TranscriptToolRow: FC<{ msg: MessagePart }> = ({ msg }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const isToolCall = msg.kind === "tool-call";
-	const badgeLabel = msg.toolName ?? (isToolCall ? "Tool call" : "Tool result");
-	const payloadLabel = isToolCall ? "Arguments" : "Result";
+	const badgeLabel =
+		msg.toolName ??
+		(isToolCall
+			? tI18n(
+					"AgentsPage.components.RightPanel.DebugPanel.DebugStepCardTooling.tool_call_17011048",
+				)
+			: tI18n(
+					"AgentsPage.components.RightPanel.DebugPanel.DebugStepCardTooling.tool_result_9bb620ef",
+				));
+	const payloadLabel = isToolCall
+		? tI18n(
+				"AgentsPage.components.RightPanel.DebugPanel.DebugStepCardTooling.arguments_7f816072",
+			)
+		: tI18n(
+				"AgentsPage.components.RightPanel.DebugPanel.DebugStepCardTooling.result_6e7d50e8",
+			);
 	const payload = isToolCall ? msg.arguments : msg.result;
 
 	return (
@@ -101,13 +118,21 @@ const TranscriptToolRow: FC<{ msg: MessagePart }> = ({ msg }) => {
 				toolCallId={msg.toolCallId}
 				payloadLabel={payloadLabel}
 				payload={payload}
-				copyLabel={`Copy ${badgeLabel} ${payloadLabel}`}
+				copyLabel={tI18n(
+					"AgentsPage.components.RightPanel.DebugPanel.DebugStepCardTooling.copy_value0_value1_c6f80b29",
+					{
+						value0: badgeLabel,
+						value1: payloadLabel,
+					},
+				)}
 			/>
 		</div>
 	);
 };
 
 const TranscriptTextRow: FC<MessageRowProps> = ({ msg, clamp }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [expanded, setExpanded] = useState(false);
 	// Use the same code-point count as clampContent so the "see more"
 	// control never appears when the message is short enough that
@@ -149,9 +174,27 @@ const TranscriptTextRow: FC<MessageRowProps> = ({ msg, clamp }) => {
 							type="button"
 							onClick={() => setExpanded((prev) => !prev)}
 							className="border-0 bg-transparent p-0 text-2xs font-medium text-content-link transition-colors hover:underline"
-							aria-label={`See ${expanded ? "less" : "more"} of ${msg.role} message`}
+							aria-label={tI18n(
+								"AgentsPage.components.RightPanel.DebugPanel.DebugStepCardTooling.see_value0_of_value1_message_f2dd55da",
+								{
+									value0: expanded
+										? tI18n(
+												"AgentsPage.components.RightPanel.DebugPanel.DebugStepCardTooling.less_4fdd3b62",
+											)
+										: tI18n(
+												"AgentsPage.components.RightPanel.DebugPanel.DebugStepCardTooling.more_187897ce",
+											),
+									value1: msg.role,
+								},
+							)}
 						>
-							{expanded ? "see less" : "see more"}
+							{expanded
+								? tI18n(
+										"AgentsPage.components.RightPanel.DebugPanel.DebugStepCardTooling.see_less_8fc6889d",
+									)
+								: tI18n(
+										"AgentsPage.components.RightPanel.DebugPanel.DebugStepCardTooling.see_more_b19a6f63",
+									)}
 						</button>
 					) : null}
 				</>

@@ -1,5 +1,6 @@
 import { LoaderIcon, PlayIcon } from "lucide-react";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { skipToken, useMutation, useQuery } from "react-query";
 import { API } from "#/api/api";
 import { chatFilesKey, chatFileTextKey } from "#/api/queries/chats";
@@ -33,6 +34,8 @@ export const ProposePlanTool: React.FC<{
 	errorMessage,
 	onImplementPlan,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const hasInlineContent = (inlineContent?.trim().length ?? 0) > 0;
 	const fileQuery = useQuery({
 		queryKey: fileID ? chatFileTextKey(fileID) : chatFilesKey,
@@ -46,7 +49,9 @@ export const ProposePlanTool: React.FC<{
 	const fetchError = fileQuery.isError
 		? fileQuery.error instanceof Error
 			? fileQuery.error.message
-			: "Failed to load plan"
+			: tI18n(
+					"AgentsPage.components.ChatElements.tools.ProposePlanTool.failed_to_load_plan_1125bd67",
+				)
 		: undefined;
 	const fetchLoading = fileQuery.isLoading;
 	const displayContent = hasInlineContent
@@ -75,12 +80,31 @@ export const ProposePlanTool: React.FC<{
 			<ToolCall.Root
 				status={status}
 				isError={effectiveError}
-				errorMessage={effectiveErrorMessage || "Failed to propose plan"}
+				errorMessage={
+					effectiveErrorMessage ||
+					tI18n(
+						"AgentsPage.components.ChatElements.tools.ProposePlanTool.failed_to_propose_plan_5cef41a5",
+					)
+				}
 				hasContent={false}
 			>
 				<ToolCall.Header
 					iconName="propose_plan"
-					label={isRunning ? `Proposing ${filename}…` : `Proposed ${filename}`}
+					label={
+						isRunning
+							? tI18n(
+									"AgentsPage.components.ChatElements.tools.ProposePlanTool.proposing_value0_f241d05a",
+									{
+										value0: filename,
+									},
+								)
+							: tI18n(
+									"AgentsPage.components.ChatElements.tools.ProposePlanTool.proposed_value0_68d0bc8b",
+									{
+										value0: filename,
+									},
+								)
+					}
 				/>
 			</ToolCall.Root>
 			{hasDisplayContent ? (
@@ -89,7 +113,9 @@ export const ProposePlanTool: React.FC<{
 					<div className="group/plan-actions flex items-center gap-2">
 						<CopyButton
 							text={displayContent}
-							label="Copy plan"
+							label={tI18n(
+								"AgentsPage.components.ChatElements.tools.ProposePlanTool.copy_plan_be6f750a",
+							)}
 							className="opacity-0 transition-opacity group-hover/plan-actions:opacity-100 focus-visible:opacity-100"
 						/>
 						{canImplementPlan && (
@@ -105,7 +131,9 @@ export const ProposePlanTool: React.FC<{
 										disabled={
 											!canImplementPlan || implementPlanMutation.isPending
 										}
-										aria-label="Implement plan"
+										aria-label={tI18n(
+											"AgentsPage.components.ChatElements.tools.ProposePlanTool.implement_plan_515c393e",
+										)}
 									>
 										{implementPlanMutation.isPending ? (
 											<LoaderIcon className="size-3.5 animate-spin motion-reduce:animate-none" />
@@ -113,11 +141,19 @@ export const ProposePlanTool: React.FC<{
 											<PlayIcon />
 										)}
 										{implementPlanMutation.isPending
-											? "Implementing..."
-											: "Implement"}
+											? tI18n(
+													"AgentsPage.components.ChatElements.tools.ProposePlanTool.implementing_8643bb07",
+												)
+											: tI18n(
+													"AgentsPage.components.ChatElements.tools.ProposePlanTool.implement_c7a2b3bc",
+												)}
 									</Button>
 								</TooltipTrigger>
-								<TooltipContent>Implement plan</TooltipContent>
+								<TooltipContent>
+									{tI18n(
+										"AgentsPage.components.ChatElements.tools.ProposePlanTool.implement_plan_515c393e",
+									)}
+								</TooltipContent>
 							</Tooltip>
 						)}
 					</div>
@@ -126,14 +162,18 @@ export const ProposePlanTool: React.FC<{
 				!fetchLoading &&
 				!effectiveError && (
 					<p className="text-[13px] text-content-secondary italic">
-						No plan content.
+						{tI18n(
+							"AgentsPage.components.ChatElements.tools.ProposePlanTool.no_plan_content_969842f1",
+						)}
 					</p>
 				)
 			)}
 			{fetchLoading && (
 				<TranscriptRow className="gap-2 text-[13px] text-content-secondary">
 					<LoaderIcon className="size-3.5 animate-spin motion-reduce:animate-none" />
-					Loading plan…
+					{tI18n(
+						"AgentsPage.components.ChatElements.tools.ProposePlanTool.loading_plan_c9773eb9",
+					)}
 				</TranscriptRow>
 			)}
 		</div>

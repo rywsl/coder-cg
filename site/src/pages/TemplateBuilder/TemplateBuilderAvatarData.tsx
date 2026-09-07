@@ -1,4 +1,5 @@
 import type { FC, PropsWithChildren } from "react";
+import { useTranslation } from "react-i18next";
 import { Avatar } from "#/components/Avatar/Avatar";
 import { AvatarData } from "#/components/Avatar/AvatarData";
 import { Link } from "#/components/Link/Link";
@@ -16,6 +17,8 @@ export const TemplateBuilderAvatarData: FC<TemplateBuilderAvatarDataProps> = ({
 	iconUrl,
 	detailsUrl,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<AvatarData
 			avatar={<Avatar src={iconUrl} size="lg" variant="icon" />}
@@ -32,7 +35,9 @@ export const TemplateBuilderAvatarData: FC<TemplateBuilderAvatarDataProps> = ({
 							size="sm"
 							className="text-xs font-normal ml-1"
 						>
-							View details
+							{tI18n(
+								"TemplateBuilder.TemplateBuilderAvatarData.view_details_d1bf045b",
+							)}
 						</Link>
 					)}
 				</>

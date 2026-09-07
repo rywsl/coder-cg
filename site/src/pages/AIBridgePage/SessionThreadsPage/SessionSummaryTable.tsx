@@ -1,5 +1,6 @@
 import { BanIcon } from "lucide-react";
 import type { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	AIBridgeSessionNetworkCallSummary,
 	AIBridgeSessionNetworkDomain,
@@ -7,6 +8,7 @@ import type {
 } from "#/api/typesGenerated";
 import { Avatar } from "#/components/Avatar/Avatar";
 import { Badge } from "#/components/Badge/Badge";
+import { currentIntlLocale } from "#/i18n/locale";
 import { AIBridgeClientIcon } from "#/pages/AIBridgePage/icons/AIBridgeClientIcon";
 import { AIBridgeProviderIcon } from "#/pages/AIBridgePage/icons/AIBridgeProviderIcon";
 import { formatDateTime } from "#/utils/time";
@@ -58,6 +60,8 @@ export const SessionSummaryTable = ({
 	networkCalls,
 	networkDomains,
 }: SessionSummaryTableProps) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const durationInMs =
 		endTime !== undefined
 			? new Date(endTime).getTime() - new Date(startTime).getTime()
@@ -70,14 +74,18 @@ export const SessionSummaryTable = ({
 		networkCallsValue = <NetworkNoActivity />;
 	} else {
 		networkCallsValue = (
-			<Badge>{networkCalls.total.toLocaleString("en-US")}</Badge>
+			<Badge>{networkCalls.total.toLocaleString(currentIntlLocale())}</Badge>
 		);
 	}
 
 	return (
 		<dl className="text-sm text-content-secondary m-0 flex flex-col gap-y-2">
 			<div className="flex items-center justify-between">
-				<dt className="shrink-0 font-normal whitespace-nowrap">Session ID</dt>
+				<dt className="shrink-0 font-normal whitespace-nowrap">
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionSummaryTable.session_id_cb9ac5c5",
+					)}
+				</dt>
 				<dd
 					className="ml-4 min-w-0 truncate text-content-primary text-xs font-mono"
 					title={sessionId}
@@ -85,9 +93,12 @@ export const SessionSummaryTable = ({
 					{sessionId}
 				</dd>
 			</div>
-
 			<div className="flex items-center justify-between">
-				<dt className="shrink-0 font-normal whitespace-nowrap">Start time</dt>
+				<dt className="shrink-0 font-normal whitespace-nowrap">
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionSummaryTable.start_time_babe9dda",
+					)}
+				</dt>
 				<dd
 					className="ml-4 min-w-0 truncate text-content-primary text-xs font-mono"
 					title={formatDateTime(startTime)}
@@ -95,28 +106,51 @@ export const SessionSummaryTable = ({
 					{formatDateTime(startTime)}
 				</dd>
 			</div>
-
 			<div className="flex items-center justify-between">
-				<dt className="shrink-0 font-normal whitespace-nowrap">End time</dt>
+				<dt className="shrink-0 font-normal whitespace-nowrap">
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionSummaryTable.end_time_2e46006a",
+					)}
+				</dt>
 				<dd className="ml-4 min-w-0 truncate text-content-primary text-xs font-mono">
 					{endTime ? formatDateTime(endTime) : "—"}
 				</dd>
 			</div>
-
 			<div className="flex items-center justify-between">
-				<dt className="shrink-0 font-normal whitespace-nowrap">Duration</dt>
+				<dt className="shrink-0 font-normal whitespace-nowrap">
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionSummaryTable.duration_4fc52a3c",
+					)}
+				</dt>
 				<dd
 					className="ml-4 min-w-0 truncate text-content-primary text-xs font-mono"
-					title={durationInMs !== undefined ? `${durationInMs} ms` : undefined}
+					title={
+						durationInMs !== undefined
+							? tI18n(
+									"AIBridgePage.SessionThreadsPage.SessionSummaryTable.value0_ms_55077da6",
+									{
+										value0: durationInMs,
+									},
+								)
+							: undefined
+					}
 				>
 					{durationInMs !== undefined
-						? `${Math.round(durationInMs / 1000)} s`
+						? tI18n(
+								"AIBridgePage.SessionThreadsPage.SessionSummaryTable.value0_s_5eed7d4d",
+								{
+									value0: Math.round(durationInMs / 1000),
+								},
+							)
 						: "—"}
 				</dd>
 			</div>
-
 			<div className="flex items-center justify-between">
-				<dt className="shrink-0 font-normal whitespace-nowrap">Initiator</dt>
+				<dt className="shrink-0 font-normal whitespace-nowrap">
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionSummaryTable.initiator_69d86af5",
+					)}
+				</dt>
 				<dd className="ml-4 min-w-0 truncate text-content-primary flex items-center gap-2">
 					<Avatar
 						size="sm"
@@ -128,9 +162,12 @@ export const SessionSummaryTable = ({
 					</span>
 				</dd>
 			</div>
-
 			<div className="flex items-center justify-between">
-				<dt className="shrink-0 font-normal whitespace-nowrap">Client</dt>
+				<dt className="shrink-0 font-normal whitespace-nowrap">
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionSummaryTable.client_0c77fe09",
+					)}
+				</dt>
 				<dd className="ml-4 min-w-0 truncate text-content-primary">
 					<Badge className="gap-1.5 max-w-full min-w-0 overflow-hidden">
 						<div className="shrink-0 flex items-center">
@@ -138,17 +175,26 @@ export const SessionSummaryTable = ({
 						</div>
 						<span
 							className="truncate min-w-0 flex-1"
-							title={client ?? "Unknown"}
+							title={
+								client ??
+								tI18n(
+									"AIBridgePage.SessionThreadsPage.SessionSummaryTable.unknown_b764cdc0",
+								)
+							}
 						>
-							{client ?? "Unknown"}
+							{client ??
+								tI18n(
+									"AIBridgePage.SessionThreadsPage.SessionSummaryTable.unknown_b764cdc0",
+								)}
 						</span>
 					</Badge>
 				</dd>
 			</div>
-
 			<div className="flex items-start justify-between">
 				<dt className="shrink-0 font-normal whitespace-nowrap mt-1">
-					Provider
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionSummaryTable.provider_472590ae",
+					)}
 				</dt>
 				<dd className="ml-4 min-w-0 truncate text-content-primary flex flex-wrap gap-1">
 					{providers.map((p) => (
@@ -167,12 +213,12 @@ export const SessionSummaryTable = ({
 					))}
 				</dd>
 			</div>
-
 			<Separator />
-
 			<div className="flex items-center justify-between">
 				<dt className="shrink-0 font-normal whitespace-nowrap">
-					In / out tokens
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionSummaryTable.in_out_tokens_6ffefed3",
+					)}
 				</dt>
 				<dd className="ml-4 min-w-0 truncate text-content-primary">
 					<TokenBadges
@@ -182,54 +228,64 @@ export const SessionSummaryTable = ({
 					/>
 				</dd>
 			</div>
-
 			<div className="flex items-center justify-between">
-				<dt className="shrink-0 font-normal whitespace-nowrap">Threads</dt>
+				<dt className="shrink-0 font-normal whitespace-nowrap">
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionSummaryTable.threads_3e42e385",
+					)}
+				</dt>
 				<dd className="ml-4 min-w-0 truncate text-content-primary">
 					<Badge>{threadCount}</Badge>
 				</dd>
 			</div>
-
 			<div className="flex items-center justify-between">
-				<dt className="shrink-0 font-normal whitespace-nowrap">Tool calls</dt>
+				<dt className="shrink-0 font-normal whitespace-nowrap">
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionSummaryTable.tool_calls_da5122dc",
+					)}
+				</dt>
 				<dd className="ml-4 min-w-0 truncate text-content-primary">
 					<Badge>{toolCallCount}</Badge>
 				</dd>
 			</div>
-
 			<Separator />
-
 			<div className="flex items-center justify-between">
 				<dt className="shrink-0 font-normal whitespace-nowrap">
-					Network requests
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionSummaryTable.network_requests_49b8dd6b",
+					)}
 				</dt>
 				<dd className="ml-4 min-w-0 truncate text-content-primary">
 					{networkCallsValue}
 				</dd>
 			</div>
-
 			{networkCalls !== undefined && networkCalls.total > 0 && (
 				<div className="flex items-center justify-between">
 					<dt className="shrink-0 font-normal whitespace-nowrap">
-						Blocked network requests
+						{tI18n(
+							"AIBridgePage.SessionThreadsPage.SessionSummaryTable.blocked_network_requests_83676b93",
+						)}
 					</dt>
 					<dd className="ml-4 min-w-0 truncate text-content-primary">
 						{networkCalls.blocked > 0 ? (
 							<Badge svgSize="xs" className="gap-1 text-content-warning">
 								<BanIcon className="shrink-0" />
-								{networkCalls.blocked.toLocaleString("en-US")}
+								{networkCalls.blocked.toLocaleString(currentIntlLocale())}
 							</Badge>
 						) : (
-							<Badge>{networkCalls.blocked.toLocaleString("en-US")}</Badge>
+							<Badge>
+								{networkCalls.blocked.toLocaleString(currentIntlLocale())}
+							</Badge>
 						)}
 					</dd>
 				</div>
 			)}
-
 			{networkDomains !== undefined && (
 				<div className="flex items-start justify-between">
 					<dt className="shrink-0 font-normal whitespace-nowrap mt-px">
-						Top domains
+						{tI18n(
+							"AIBridgePage.SessionThreadsPage.SessionSummaryTable.top_domains_47336137",
+						)}
 					</dt>
 					<dd className="ml-4 min-w-0 text-content-primary text-right">
 						<div className="truncate" title={networkDomains.topDomain.domain}>
@@ -237,7 +293,13 @@ export const SessionSummaryTable = ({
 						</div>
 						{networkDomains.totalCount > 1 && (
 							<div className="text-content-secondary text-xs">
-								+{(networkDomains.totalCount - 1).toLocaleString("en-US")} more
+								+
+								{(networkDomains.totalCount - 1).toLocaleString(
+									currentIntlLocale(),
+								)}
+								{tI18n(
+									"AIBridgePage.SessionThreadsPage.SessionSummaryTable.more_226ba18b",
+								)}
 							</div>
 						)}
 					</dd>

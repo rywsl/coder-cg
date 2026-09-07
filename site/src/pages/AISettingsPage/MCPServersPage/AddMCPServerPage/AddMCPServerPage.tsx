@@ -1,4 +1,5 @@
 import { type FC, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate, useSearchParams } from "react-router";
 import { toast } from "sonner";
@@ -19,6 +20,8 @@ import {
 import AddMCPServerPageView from "./AddMCPServerPageView";
 
 const AddMCPServerPage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { permissions } = useAuthenticated();
 	const { organizations } = useDashboard();
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -138,7 +141,14 @@ const AddMCPServerPage: FC = () => {
 							onCreateServer={async (req) => {
 								try {
 									const server = await createMutation.mutateAsync(req);
-									toast.success(`MCP server "${server.display_name}" added.`);
+									toast.success(
+										tI18n(
+											"AISettingsPage.MCPServersPage.AddMCPServerPage.AddMCPServerPage.mcp_server_value0_added_561e41d0",
+											{
+												value0: server.display_name,
+											},
+										),
+									);
 									if (canOpenServer) {
 										await navigate(
 											updateMCPServerPath(server.id, organization),
@@ -149,7 +159,12 @@ const AddMCPServerPage: FC = () => {
 									return true;
 								} catch (error) {
 									toast.error(
-										getErrorMessage(error, "Failed to add MCP server."),
+										getErrorMessage(
+											error,
+											tI18n(
+												"AISettingsPage.MCPServersPage.AddMCPServerPage.AddMCPServerPage.failed_to_add_mcp_server_9baeb13b",
+											),
+										),
 									);
 									return false;
 								}

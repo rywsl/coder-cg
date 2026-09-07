@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { ChevronLeftIcon, CodeIcon, HashIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useOutletContext, useParams } from "react-router";
 import type {
 	DERPNodeReport,
@@ -41,6 +42,8 @@ interface NodeCheckRow {
 }
 
 const DERPRegionPage: FC = () => {
+	const { t: tI18n } = useTranslation("pages");
+
 	const healthStatus = useOutletContext<HealthcheckReport>();
 	const params = useParams() as { regionId: string };
 	const regionId = Number(params.regionId);
@@ -57,8 +60,12 @@ const DERPRegionPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle(region.RegionName, "Health")}</title>
-
+			<title>
+				{pageTitle(
+					region.RegionName,
+					tI18n("HealthPage.DERPRegionPage.health_55898449"),
+				)}
+			</title>
 			<Header>
 				<hgroup>
 					<Link
@@ -66,7 +73,7 @@ const DERPRegionPage: FC = () => {
 						to="/health/derp"
 					>
 						<ChevronLeftIcon className="size-icon-xs align-middle mr-2" />
-						Back to DERP
+						{tI18n("HealthPage.DERPRegionPage.back_to_derp_50ac2836")}
 					</Link>
 					<HeaderTitle>
 						<HealthyDot severity={severity as HealthSeverity} />
@@ -74,7 +81,6 @@ const DERPRegionPage: FC = () => {
 					</HeaderTitle>
 				</hgroup>
 			</Header>
-
 			<Main>
 				{warnings.map((warning) => {
 					return (
@@ -98,7 +104,9 @@ const DERPRegionPage: FC = () => {
 									{region.RegionID}
 								</Pill>
 							</TooltipTrigger>
-							<TooltipContent side="bottom">Region ID</TooltipContent>
+							<TooltipContent side="bottom">
+								{tI18n("HealthPage.DERPRegionPage.region_id_4bd985c8")}
+							</TooltipContent>
 						</Tooltip>
 						<Tooltip>
 							<TooltipTrigger asChild>
@@ -106,17 +114,20 @@ const DERPRegionPage: FC = () => {
 									{region.RegionCode}
 								</Pill>
 							</TooltipTrigger>
-							<TooltipContent side="bottom">Region Code</TooltipContent>
+							<TooltipContent side="bottom">
+								{tI18n("HealthPage.DERPRegionPage.region_code_da692a86")}
+							</TooltipContent>
 						</Tooltip>
 						<Tooltip>
 							<TooltipTrigger asChild>
 								<BooleanPill value={region.EmbeddedRelay}>
-									Embedded Relay
+									{tI18n("HealthPage.DERPRegionPage.embedded_relay_02893ba1")}
 								</BooleanPill>
 							</TooltipTrigger>
 							<TooltipContent side="bottom">
-								Whether this region uses a relay server embedded in the Coder
-								deployment.
+								{tI18n(
+									"HealthPage.DERPRegionPage.whether_this_region_uses_a_relay_server_embedded_dfd101d1",
+								)}
 							</TooltipContent>
 						</Tooltip>
 					</div>
@@ -139,26 +150,35 @@ const DERPRegionPage: FC = () => {
 					);
 					const checks: NodeCheckRow[] = [
 						{
-							label: "Exchange Messages",
-							description:
-								"Whether DERP clients can relay messages through this node.",
+							label: tI18n(
+								"HealthPage.DERPRegionPage.exchange_messages_fbbadfb1",
+							),
+							description: tI18n(
+								"HealthPage.DERPRegionPage.whether_derp_clients_can_relay_messages_through__4fe27b2b",
+							),
 							value: report.can_exchange_messages,
 						},
 						{
-							label: "Direct HTTP Upgrade",
-							description:
-								"Whether the connection used a direct HTTP upgrade instead of falling back to WebSocket. Fallback may indicate the DERP upgrade header is being blocked.",
+							label: tI18n(
+								"HealthPage.DERPRegionPage.direct_http_upgrade_dc01dc1f",
+							),
+							description: tI18n(
+								"HealthPage.DERPRegionPage.whether_the_connection_used_a_direct_http_upgrad_64baccf9",
+							),
 							value: !report.uses_websocket,
 						},
 						{
-							label: "STUN Enabled",
-							description: "Whether STUN is enabled on this node.",
+							label: tI18n("HealthPage.DERPRegionPage.stun_enabled_0fb7c3ea"),
+							description: tI18n(
+								"HealthPage.DERPRegionPage.whether_stun_is_enabled_on_this_node_dfd989aa",
+							),
 							value: report.stun.Enabled,
 						},
 						{
-							label: "STUN Reachable",
-							description:
-								"Whether this node responded to a STUN request successfully.",
+							label: tI18n("HealthPage.DERPRegionPage.stun_reachable_f8c13292"),
+							description: tI18n(
+								"HealthPage.DERPRegionPage.whether_this_node_responded_to_a_stun_request_su_7ebc4b19",
+							),
 							value: report.stun.CanSTUN,
 						},
 					];
@@ -173,8 +193,16 @@ const DERPRegionPage: FC = () => {
 										{node.HostName}
 									</h4>
 									<div className="flex items-center gap-2 text-content-secondary text-xs leading-tight mt-2">
-										<span>DERP Port: {node.DERPPort ?? "None"}</span>
-										<span>STUN Port: {node.STUNPort ?? "None"}</span>
+										<span>
+											{tI18n("HealthPage.DERPRegionPage.derp_port_5c96fb23")}
+											{node.DERPPort ??
+												tI18n("HealthPage.DERPRegionPage.none_dc937b59")}
+										</span>
+										<span>
+											{tI18n("HealthPage.DERPRegionPage.stun_port_b1114842")}
+											{node.STUNPort ??
+												tI18n("HealthPage.DERPRegionPage.none_dc937b59")}
+										</span>
 									</div>
 								</div>
 
@@ -184,13 +212,17 @@ const DERPRegionPage: FC = () => {
 											className={latencyColor}
 											icon={<StatusCircle background={latencyBackground} />}
 										>
-											{report.round_trip_ping_ms}ms
+											{report.round_trip_ping_ms}
+											{tI18n("HealthPage.DERPRegionPage.ms_f785c3ce")}
 										</Pill>
 									</TooltipTrigger>
-									<TooltipContent side="bottom">Round trip ping</TooltipContent>
+									<TooltipContent side="bottom">
+										{tI18n(
+											"HealthPage.DERPRegionPage.round_trip_ping_2dd63012",
+										)}
+									</TooltipContent>
 								</Tooltip>
 							</header>
-
 							<Table>
 								<TableBody className="[&>tr>td:first-of-type]:border-l-0 [&>tr>td:last-child]:border-r-0 [&>tr:last-child>td]:border-b-0 [&>tr>td]:rounded-none!">
 									{checks.map((check) => (

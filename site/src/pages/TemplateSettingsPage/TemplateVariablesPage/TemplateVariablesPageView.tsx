@@ -1,4 +1,5 @@
 import type { ComponentProps, FC } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	CreateTemplateVersionRequest,
 	TemplateVersion,
@@ -43,17 +44,24 @@ export const TemplateVariablesPageView: FC<TemplateVariablesPageViewProps> = ({
 	errors = {},
 	initialTouched,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const hasError = Object.values(errors).some((error) => Boolean(error));
 
 	return (
 		<div className="flex flex-col gap-12">
 			<SettingsHeader>
-				<SettingsHeaderTitle>Variables</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"TemplateSettingsPage.TemplateVariablesPage.TemplateVariablesPageView.variables_02db55ba",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Update the variables used by this template.
+					{tI18n(
+						"TemplateSettingsPage.TemplateVariablesPage.TemplateVariablesPageView.update_the_variables_used_by_this_template_fd7a6664",
+					)}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			{hasError && (
 				<div className="flex flex-col gap-4">
 					{Boolean(errors.buildError) && (
@@ -77,7 +85,9 @@ export const TemplateVariablesPageView: FC<TemplateVariablesPageViewProps> = ({
 			)}
 			{templateVariables && templateVariables.length === 0 && (
 				<Alert severity="info">
-					This template does not use managed variables.
+					{tI18n(
+						"TemplateSettingsPage.TemplateVariablesPage.TemplateVariablesPageView.this_template_does_not_use_managed_variables_b4bd2c16",
+					)}
 				</Alert>
 			)}
 		</div>

@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -11,18 +12,27 @@ import {
 } from "#/api/queries/organizations";
 import type { ShareableWorkspaceOwners } from "#/api/typesGenerated";
 import { EmptyState } from "#/components/EmptyState/EmptyState";
+import { i18n } from "#/i18n";
 import { useOrganizationSettings } from "#/modules/management/OrganizationSettingsLayout";
 import { RequirePermission } from "#/modules/permissions/RequirePermission";
 import { pageTitle } from "#/utils/page";
 import { OrganizationSettingsPageView } from "./OrganizationSettingsPageView";
 
 const sharingUpdatedToastLabels: Record<ShareableWorkspaceOwners, string> = {
-	none: "Workspace sharing disabled.",
-	service_accounts: "Workspace sharing restricted to service accounts.",
-	everyone: "Workspace sharing enabled for all users.",
+	none: i18n.t(
+		"administration:OrganizationSettingsPage.OrganizationSettingsPage.workspace_sharing_disabled_9bc03401",
+	),
+	service_accounts: i18n.t(
+		"administration:OrganizationSettingsPage.OrganizationSettingsPage.workspace_sharing_restricted_to_service_accounts_27d09164",
+	),
+	everyone: i18n.t(
+		"administration:OrganizationSettingsPage.OrganizationSettingsPage.workspace_sharing_enabled_for_all_users_79181914",
+	),
 };
 
 const OrganizationSettingsPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 	const { organization, organizationPermissions } = useOrganizationSettings();
@@ -44,12 +54,23 @@ const OrganizationSettingsPage: FC = () => {
 	);
 
 	if (!organization) {
-		return <EmptyState message="Organization not found" />;
+		return (
+			<EmptyState
+				message={tI18n(
+					"OrganizationSettingsPage.OrganizationSettingsPage.organization_not_found_00c50f7a",
+				)}
+			/>
+		);
 	}
 
 	const title = (
 		<title>
-			{pageTitle("Settings", organization.display_name || organization.name)}
+			{pageTitle(
+				tI18n(
+					"OrganizationSettingsPage.OrganizationSettingsPage.settings_74a883a0",
+				),
+				organization.display_name || organization.name,
+			)}
 		</title>
 	);
 
@@ -73,10 +94,14 @@ const OrganizationSettingsPage: FC = () => {
 		});
 
 		toast.promise(mutation, {
-			loading: "Updating workspace sharing settings...",
+			loading: tI18n(
+				"OrganizationSettingsPage.OrganizationSettingsPage.updating_workspace_sharing_settings_9567c85b",
+			),
 			success: sharingUpdatedToastLabels[value],
 			error: (error) => ({
-				message: "Failed to update workspace sharing settings.",
+				message: tI18n(
+					"OrganizationSettingsPage.OrganizationSettingsPage.failed_to_update_workspace_sharing_settings_2536c853",
+				),
 				description: getErrorDetail(error),
 			}),
 		});
@@ -96,21 +121,36 @@ const OrganizationSettingsPage: FC = () => {
 						});
 					navigate(`/organizations/${updatedOrganization.name}/settings`);
 					toast.success(
-						`Organization "${updatedOrganization.name}" settings updated successfully.`,
+						tI18n(
+							"OrganizationSettingsPage.OrganizationSettingsPage.organization_value0_settings_updated_successfull_c0ada6b3",
+							{
+								value0: updatedOrganization.name,
+							},
+						),
 					);
 				}}
 				onDeleteOrganization={async () => {
 					try {
 						await deleteOrganizationMutation.mutateAsync(organization.id);
 						toast.success(
-							`Organization "${organization.display_name || organization.name}" deleted successfully.`,
+							tI18n(
+								"OrganizationSettingsPage.OrganizationSettingsPage.organization_value0_deleted_successfully_2f4b7347",
+								{
+									value0: organization.display_name || organization.name,
+								},
+							),
 						);
 						navigate("/organizations");
 					} catch (error) {
 						toast.error(
 							getErrorMessage(
 								error,
-								`Failed to delete organization "${organization.name}".`,
+								tI18n(
+									"OrganizationSettingsPage.OrganizationSettingsPage.failed_to_delete_organization_value0_c06c5897",
+									{
+										value0: organization.name,
+									},
+								),
 							),
 							{
 								description: getErrorDetail(error),

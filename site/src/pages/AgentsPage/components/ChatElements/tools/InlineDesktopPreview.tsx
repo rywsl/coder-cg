@@ -1,6 +1,7 @@
 import { PanelRightOpenIcon } from "lucide-react";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Spinner } from "#/components/Spinner/Spinner";
 import {
 	type UseDesktopConnectionResult,
@@ -27,6 +28,8 @@ export const InlineDesktopPreview: React.FC<{
 	 * relying on module-level spies. */
 	connectionOverride?: UseDesktopConnectionResult;
 }> = ({ chatId, onClick, connectionOverride }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	// Pass undefined chatId when the override is provided so the
 	// real hook skips its WebSocket connection logic entirely.
 	const realConnection = useDesktopConnection({
@@ -83,11 +86,15 @@ export const InlineDesktopPreview: React.FC<{
 				<button
 					type="button"
 					onClick={onClick}
-					aria-label="Open desktop tab"
+					aria-label={tI18n(
+						"AgentsPage.components.ChatElements.tools.InlineDesktopPreview.open_desktop_tab_9496be47",
+					)}
 					className="absolute inset-0 z-10 flex cursor-pointer items-center justify-center gap-1.5 border-0 bg-black/0 p-0 transition-colors group-hover/preview:bg-black/50"
 				>
 					<span className="text-[13px] font-medium text-white opacity-0 drop-shadow-md transition-opacity group-hover/preview:opacity-100">
-						View desktop
+						{tI18n(
+							"AgentsPage.components.ChatElements.tools.InlineDesktopPreview.view_desktop_b7dc2416",
+						)}
 					</span>
 					<PanelRightOpenIcon className="size-4 text-white opacity-0 drop-shadow-md transition-opacity group-hover/preview:opacity-100" />
 				</button>
@@ -112,7 +119,9 @@ export const InlineDesktopPreview: React.FC<{
 				className="flex w-full items-center justify-center text-xs text-content-secondary"
 				style={{ aspectRatio }}
 			>
-				Desktop disconnected. Reconnecting…
+				{tI18n(
+					"AgentsPage.components.ChatElements.tools.InlineDesktopPreview.desktop_disconnected_reconnecting_face930a",
+				)}
 			</div>,
 		);
 	}
@@ -123,7 +132,9 @@ export const InlineDesktopPreview: React.FC<{
 				className="flex w-full items-center justify-center text-xs text-content-secondary"
 				style={{ aspectRatio: DEFAULT_ASPECT }}
 			>
-				Could not connect to desktop.
+				{tI18n(
+					"AgentsPage.components.ChatElements.tools.InlineDesktopPreview.could_not_connect_to_desktop_22b46290",
+				)}
 			</div>,
 		);
 	}

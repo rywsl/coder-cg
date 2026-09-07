@@ -1,4 +1,5 @@
 import { type FC, useEffect, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	type TerminalFontName,
 	TerminalFontNames,
@@ -16,6 +17,8 @@ import {
 	SelectValue,
 } from "#/components/Select/Select";
 import { Spinner } from "#/components/Spinner/Spinner";
+import { changeLocale } from "#/i18n";
+import { isSupportedLocale } from "#/i18n/locale";
 import { Section } from "#/pages/UserSettingsPage/Section";
 import type { ConcreteThemeName } from "#/theme";
 import {
@@ -63,7 +66,9 @@ export const AppearanceForm: FC<AppearanceFormProps> = ({
 	initialValues,
 	activeScheme,
 }) => {
+	const { i18n, t } = useTranslation(["appearance", "common"]);
 	const [values, setValues] = useState(() => toFormValues(initialValues));
+	const languageId = useId();
 	const themeModeId = useId();
 	const fontGroupId = useId();
 	const fontGroupLabelId = `${fontGroupId}-label`;
@@ -158,13 +163,46 @@ export const AppearanceForm: FC<AppearanceFormProps> = ({
 			{Boolean(error) && <ErrorAlert error={error} />}
 
 			<Section
+				title={t("common:language.label")}
+				layout="fluid"
+				className="mb-12"
+			>
+				<div className="flex max-w-md flex-col gap-2">
+					<Label htmlFor={languageId} className="text-sm font-medium">
+						{t("common:language.label")}
+					</Label>
+					<Select
+						value={isSupportedLocale(i18n.language) ? i18n.language : "en"}
+						onValueChange={(value) => {
+							if (isSupportedLocale(value)) {
+								void changeLocale(value);
+							}
+						}}
+					>
+						<SelectTrigger id={languageId} className="text-content-primary">
+							<SelectValue />
+						</SelectTrigger>
+						<SelectContent>
+							<SelectItem value="zh-CN">
+								{t("common:language.simplifiedChinese")}
+							</SelectItem>
+							<SelectItem value="en">{t("common:language.english")}</SelectItem>
+						</SelectContent>
+					</Select>
+					<p className="m-0 text-sm text-content-secondary">
+						{t("appearance:languageDescription")}
+					</p>
+				</div>
+			</Section>
+
+			<Section
 				title={
 					<div className="flex flex-row items-center gap-2">
-						<span>Theme</span>
+						<span>{t("appearance:theme.title")}</span>
 						<Spinner
 							loading={isUpdating}
 							size="sm"
-							label="Saving theme preference"
+							label={t("appearance:theme.saving")}
 						/>
 					</div>
 				}
@@ -174,7 +212,7 @@ export const AppearanceForm: FC<AppearanceFormProps> = ({
 				<div className="flex flex-col gap-4">
 					<div className="flex flex-col gap-2">
 						<Label htmlFor={themeModeId} className="text-sm font-medium">
-							Theme mode
+							{t("appearance:theme.mode")}
 						</Label>
 						<div className="flex items-center gap-4">
 							<Select
@@ -192,8 +230,12 @@ export const AppearanceForm: FC<AppearanceFormProps> = ({
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value="sync">Sync with system</SelectItem>
-									<SelectItem value="single">Single theme</SelectItem>
+									<SelectItem value="sync">
+										{t("appearance:theme.sync")}
+									</SelectItem>
+									<SelectItem value="single">
+										{t("appearance:theme.single")}
+									</SelectItem>
 								</SelectContent>
 							</Select>
 						</div>
@@ -220,11 +262,13 @@ export const AppearanceForm: FC<AppearanceFormProps> = ({
 			<Section
 				title={
 					<div className="flex flex-row items-center gap-2">
-						<span id={fontGroupLabelId}>Terminal Font</span>
+						<span id={fontGroupLabelId}>
+							{t("appearance:terminalFont.title")}
+						</span>
 						<Spinner
 							loading={isUpdating}
 							size="sm"
-							label="Saving terminal font"
+							label={t("appearance:terminalFont.saving")}
 						/>
 					</div>
 				}

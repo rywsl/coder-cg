@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Filter,
 	MenuSkeleton,
@@ -25,20 +26,22 @@ export const useStatusFilterMenu = ({
 	value,
 	onChange,
 }: Pick<UseFilterMenuOptions, "value" | "onChange">) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const statusOptions: SelectFilterOption[] = [
 		{
 			value: "active",
-			label: "Active",
+			label: tI18n("Filter.UsersFilter.active_92340695"),
 			startIcon: <StatusIndicatorDot variant="success" />,
 		},
 		{
 			value: "dormant",
-			label: "Dormant",
+			label: tI18n("Filter.UsersFilter.dormant_027d0e4c"),
 			startIcon: <StatusIndicatorDot variant="warning" />,
 		},
 		{
 			value: "suspended",
-			label: "Suspended",
+			label: tI18n("Filter.UsersFilter.suspended_e392a389"),
 			startIcon: <StatusIndicatorDot variant="inactive" />,
 		},
 	];
@@ -69,11 +72,13 @@ interface UsersFilterProps {
 }
 
 export const UsersFilter: FC<UsersFilterProps> = ({ filter, error, menus }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<Filter
 			presets={PRESET_FILTERS}
 			learnMoreLink={docs("/admin/users#user-filtering")}
-			learnMoreLabel2="User status"
+			learnMoreLabel2={tI18n("Filter.UsersFilter.user_status_6e07a34f")}
 			learnMoreLink2={docs("/admin/users#user-status")}
 			isLoading={menus?.status?.isInitializing ?? false}
 			filter={filter}
@@ -85,10 +90,12 @@ export const UsersFilter: FC<UsersFilterProps> = ({ filter, error, menus }) => {
 };
 
 const StatusMenu = (menu: StatusFilterMenu) => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<SelectFilter
-			label="Select a status"
-			placeholder="All statuses"
+			label={tI18n("Filter.UsersFilter.select_a_status_e3b579ea")}
+			placeholder={tI18n("Filter.UsersFilter.all_statuses_8ee57323")}
 			options={menu.searchOptions}
 			onSelect={menu.selectOption}
 			selectedOption={menu.selectedOption ?? undefined}

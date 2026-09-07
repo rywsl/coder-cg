@@ -1,18 +1,49 @@
 import type * as TypesGen from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 
 export const SECRET_PLACEHOLDER = "••••••••••••••••";
 
 export const TRANSPORT_OPTIONS = [
-	{ value: "streamable_http", label: "Streamable HTTP" },
+	{
+		value: "streamable_http",
+		label: i18n.t(
+			"agents:AISettingsPage.MCPServersPage.components.mcpServerFormLogic.streamable_http_e885e442",
+		),
+	},
 	{ value: "sse", label: "SSE" },
 ] as const;
 
 export const AUTH_TYPE_OPTIONS = [
-	{ value: "none", label: "None" },
-	{ value: "oauth2", label: "OAuth2" },
-	{ value: "api_key", label: "API key" },
-	{ value: "custom_headers", label: "Custom headers" },
-	{ value: "user_oidc", label: "User OIDC identity" },
+	{
+		value: "none",
+		label: i18n.t(
+			"agents:AISettingsPage.MCPServersPage.components.mcpServerFormLogic.none_dc937b59",
+		),
+	},
+	{
+		value: "oauth2",
+		label: i18n.t(
+			"agents:AISettingsPage.MCPServersPage.components.mcpServerFormLogic.oauth2_ead3e38f",
+		),
+	},
+	{
+		value: "api_key",
+		label: i18n.t(
+			"agents:AISettingsPage.MCPServersPage.components.mcpServerFormLogic.api_key_16f0ee47",
+		),
+	},
+	{
+		value: "custom_headers",
+		label: i18n.t(
+			"agents:AISettingsPage.MCPServersPage.components.mcpServerFormLogic.custom_headers_34cb675c",
+		),
+	},
+	{
+		value: "user_oidc",
+		label: i18n.t(
+			"agents:AISettingsPage.MCPServersPage.components.mcpServerFormLogic.user_oidc_identity_de07354d",
+		),
+	},
 ] as const;
 
 export const AUTH_TYPE_LABELS = Object.fromEntries(
@@ -22,18 +53,30 @@ export const AUTH_TYPE_LABELS = Object.fromEntries(
 export const AVAILABILITY_OPTIONS = [
 	{
 		value: "force_on",
-		label: "Force on",
-		description: "Always injected into every conversation.",
+		label: i18n.t(
+			"agents:AISettingsPage.MCPServersPage.components.mcpServerFormLogic.force_on_bde131e3",
+		),
+		description: i18n.t(
+			"agents:AISettingsPage.MCPServersPage.components.mcpServerFormLogic.always_injected_into_every_conversation_5f62c8bf",
+		),
 	},
 	{
 		value: "default_on",
-		label: "Default on",
-		description: "Pre-selected but users can opt out.",
+		label: i18n.t(
+			"agents:AISettingsPage.MCPServersPage.components.mcpServerFormLogic.default_on_2a592bdc",
+		),
+		description: i18n.t(
+			"agents:AISettingsPage.MCPServersPage.components.mcpServerFormLogic.pre_selected_but_users_can_opt_out_b7e51dac",
+		),
 	},
 	{
 		value: "default_off",
-		label: "Default off",
-		description: "Available but users must opt in.",
+		label: i18n.t(
+			"agents:AISettingsPage.MCPServersPage.components.mcpServerFormLogic.default_off_1216008b",
+		),
+		description: i18n.t(
+			"agents:AISettingsPage.MCPServersPage.components.mcpServerFormLogic.available_but_users_must_opt_in_47ebf7a2",
+		),
 	},
 ] as const;
 

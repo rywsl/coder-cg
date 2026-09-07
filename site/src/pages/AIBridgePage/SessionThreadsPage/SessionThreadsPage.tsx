@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useInfiniteQuery } from "react-query";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { infiniteSessionThreads } from "#/api/queries/aiBridge";
@@ -10,6 +11,8 @@ import { getAIBridgePermissions } from "../getAIBridgePermissions";
 import { SessionThreadsPageView } from "./SessionThreadsPageView";
 
 const SessionThreadsPage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { permissions } = useAuthenticated();
 	const { entitlements } = useDashboard();
 	const navigate = useNavigate();
@@ -35,8 +38,16 @@ const SessionThreadsPage: FC = () => {
 
 	return (
 		<RequirePermission isFeatureVisible={hasPermission}>
-			<title>{pageTitle("Session Threads", "AI Gateway")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionThreadsPage.session_threads_a111aa93",
+					),
+					tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionThreadsPage.ai_gateway_47219de2",
+					),
+				)}
+			</title>
 			<SessionThreadsPageView
 				session={firstPage}
 				threads={allThreads}

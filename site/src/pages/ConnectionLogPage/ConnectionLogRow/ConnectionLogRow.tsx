@@ -1,5 +1,6 @@
 import { InfoIcon, NetworkIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import userAgentParser from "ua-parser-js";
 import type { ConnectionLog } from "#/api/typesGenerated";
@@ -13,6 +14,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { currentIntlLocale } from "#/i18n/locale";
 import { connectionTypeIsWeb } from "#/utils/connection";
 import { ConnectionLogDescription } from "./ConnectionLogDescription/ConnectionLogDescription";
 
@@ -23,6 +25,8 @@ interface ConnectionLogRowProps {
 export const ConnectionLogRow: FC<ConnectionLogRowProps> = ({
 	connectionLog,
 }) => {
+	const { t: tI18n } = useTranslation("pages");
+
 	const userAgent = connectionLog.web_info?.user_agent
 		? userAgentParser(connectionLog.web_info?.user_agent)
 		: undefined;
@@ -56,9 +60,18 @@ export const ConnectionLogRow: FC<ConnectionLogRowProps> = ({
 							<div className="flex flex-row items-baseline gap-2 text-base">
 								<ConnectionLogDescription connectionLog={connectionLog} />
 								<span className="text-content-secondary text-xs">
-									{new Date(connectionLog.connect_time).toLocaleTimeString()}
+									{new Date(connectionLog.connect_time).toLocaleTimeString(
+										currentIntlLocale(),
+									)}
 									{connectionLog.ssh_info?.disconnect_time &&
-										` → ${new Date(connectionLog.ssh_info.disconnect_time).toLocaleTimeString()}`}
+										tI18n(
+											"ConnectionLogPage.ConnectionLogRow.ConnectionLogRow.value0_9cd15df5",
+											{
+												value0: new Date(
+													connectionLog.ssh_info.disconnect_time,
+												).toLocaleTimeString(currentIntlLocale()),
+											},
+										)}
 								</span>
 							</div>
 
@@ -67,7 +80,15 @@ export const ConnectionLogRow: FC<ConnectionLogRowProps> = ({
 									<StatusBadge
 										code={code}
 										isHttpCode={isWeb}
-										label={isWeb ? "HTTP Status Code" : "SSH Exit Code"}
+										label={
+											isWeb
+												? tI18n(
+														"ConnectionLogPage.ConnectionLogRow.ConnectionLogRow.http_status_code_7ca7e69c",
+													)
+												: tI18n(
+														"ConnectionLogPage.ConnectionLogRow.ConnectionLogRow.ssh_exit_code_23251ab9",
+													)
+										}
 									/>
 								)}
 								<Tooltip>
@@ -79,7 +100,9 @@ export const ConnectionLogRow: FC<ConnectionLogRowProps> = ({
 											{connectionLog.ip && (
 												<div>
 													<h4 className="m-0 text-content-primary text-sm leading-[150%] font-semibold">
-														IP:
+														{tI18n(
+															"ConnectionLogPage.ConnectionLogRow.ConnectionLogRow.ip_9efec746",
+														)}
 													</h4>
 													<div>{connectionLog.ip}</div>
 												</div>
@@ -87,7 +110,9 @@ export const ConnectionLogRow: FC<ConnectionLogRowProps> = ({
 											{userAgent?.os.name && (
 												<div>
 													<h4 className="m-0 text-content-primary text-sm leading-[150%] font-semibold">
-														OS:
+														{tI18n(
+															"ConnectionLogPage.ConnectionLogRow.ConnectionLogRow.os_049f4de9",
+														)}
 													</h4>
 													<div>{userAgent.os.name}</div>
 												</div>
@@ -95,7 +120,9 @@ export const ConnectionLogRow: FC<ConnectionLogRowProps> = ({
 											{userAgent?.browser.name && (
 												<div>
 													<h4 className="m-0 text-content-primary text-sm leading-[150%] font-semibold">
-														Browser:
+														{tI18n(
+															"ConnectionLogPage.ConnectionLogRow.ConnectionLogRow.browser_875ac3ed",
+														)}
 													</h4>
 													<div>
 														{userAgent.browser.name} {userAgent.browser.version}
@@ -105,7 +132,9 @@ export const ConnectionLogRow: FC<ConnectionLogRowProps> = ({
 											{connectionLog.organization && (
 												<div>
 													<h4 className="m-0 text-content-primary text-sm leading-[150%] font-semibold">
-														Organization:
+														{tI18n(
+															"ConnectionLogPage.ConnectionLogRow.ConnectionLogRow.organization_5300e286",
+														)}
 													</h4>
 													<Link
 														asChild
@@ -124,7 +153,9 @@ export const ConnectionLogRow: FC<ConnectionLogRowProps> = ({
 											{connectionLog.ssh_info?.disconnect_reason && (
 												<div>
 													<h4 className="m-0 text-content-primary text-sm leading-[150%] font-semibold">
-														Close Reason:
+														{tI18n(
+															"ConnectionLogPage.ConnectionLogRow.ConnectionLogRow.close_reason_2e49ef84",
+														)}
 													</h4>
 													<div>{connectionLog.ssh_info?.disconnect_reason}</div>
 												</div>

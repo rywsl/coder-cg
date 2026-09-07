@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { isApiError } from "#/api/errors";
 import type { Group } from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
@@ -22,25 +23,36 @@ export const AccountUserGroups: FC<AccountGroupsProps> = ({
 	error,
 	loading,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	const { showOrganizations } = useDashboard();
 
 	return (
 		<div>
 			<SettingsHeader>
 				<SettingsHeaderTitle hierarchy="secondary">
-					Your groups
+					{tI18n(
+						"UserSettingsPage.AccountPage.AccountUserGroups.your_groups_62375359",
+					)}
 				</SettingsHeaderTitle>
 				{groups && (
 					<SettingsHeaderDescription>
-						You are in{" "}
+						{tI18n(
+							"UserSettingsPage.AccountPage.AccountUserGroups.you_are_in_0c6dac04",
+						)}{" "}
 						<em className="not-italic text-content-primary font-semibold">
-							{groups.length} group
-							{groups.length !== 1 && "s"}
+							{groups.length}
+							{tI18n(
+								"UserSettingsPage.AccountPage.AccountUserGroups.group_42d62443",
+							)}
+							{groups.length !== 1 &&
+								tI18n(
+									"UserSettingsPage.AccountPage.AccountUserGroups.s_043a7187",
+								)}
 						</em>
 					</SettingsHeaderDescription>
 				)}
 			</SettingsHeader>
-
 			<div className="flex flex-col gap-6">
 				{isApiError(error) && <ErrorAlert error={error} />}
 
@@ -56,8 +68,14 @@ export const AccountUserGroups: FC<AccountGroupsProps> = ({
 										group.organization_display_name
 									) : (
 										<>
-											{group.total_member_count} member
-											{group.total_member_count !== 1 && "s"}
+											{group.total_member_count}
+											{tI18n(
+												"UserSettingsPage.AccountPage.AccountUserGroups.member_262e1806",
+											)}
+											{group.total_member_count !== 1 &&
+												tI18n(
+													"UserSettingsPage.AccountPage.AccountUserGroups.s_043a7187",
+												)}
 										</>
 									)
 								}

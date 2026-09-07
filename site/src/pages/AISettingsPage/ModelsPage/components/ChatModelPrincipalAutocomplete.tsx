@@ -1,5 +1,6 @@
 import { CheckIcon } from "lucide-react";
 import { type FC, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { keepPreviousData, useQuery } from "react-query";
 import { chatModelACLAvailable } from "#/api/queries/chats";
 import type { Group, ReducedUser } from "#/api/typesGenerated";
@@ -31,6 +32,8 @@ export const ChatModelPrincipalAutocomplete: FC<
 	excludedPrincipalIds,
 	className,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [inputValue, setInputValue] = useState("");
 	const [open, setOpen] = useState(false);
 	const autocompleteId = useId();
@@ -92,11 +95,17 @@ export const ChatModelPrincipalAutocomplete: FC<
 				inputValue={inputValue}
 				onInputChange={setInputValue}
 				loading={aclAvailableQuery.isFetching}
-				placeholder="Search for user or group"
+				placeholder={tI18n(
+					"AISettingsPage.ModelsPage.components.ChatModelPrincipalAutocomplete.search_for_user_or_group_0aa07b31",
+				)}
 				noOptionsText={
 					aclAvailableQuery.error
-						? "Unable to load users or groups"
-						: "No users or groups found"
+						? tI18n(
+								"AISettingsPage.ModelsPage.components.ChatModelPrincipalAutocomplete.unable_to_load_users_or_groups_4b1be748",
+							)
+						: tI18n(
+								"AISettingsPage.ModelsPage.components.ChatModelPrincipalAutocomplete.no_users_or_groups_found_02da3b9f",
+							)
 				}
 				className={className}
 				id={autocompleteId}

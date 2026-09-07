@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router";
 import { createGroup } from "#/api/queries/groups";
@@ -7,6 +8,8 @@ import { CreateGroupPageView } from "./CreateGroupPageView";
 import { useGroupsSettings } from "./GroupsPageProvider";
 
 const CreateGroupPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 	const { showOrganizations } = useGroupsSettings();
@@ -17,8 +20,9 @@ const CreateGroupPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("New group")}</title>
-
+			<title>
+				{pageTitle(tI18n("GroupsPage.CreateGroupPage.new_group_df796c65"))}
+			</title>
 			<CreateGroupPageView
 				onSubmit={async (data) => {
 					const newGroup = await createGroupMutation.mutateAsync(data);

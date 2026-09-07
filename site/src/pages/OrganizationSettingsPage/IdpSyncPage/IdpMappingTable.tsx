@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "#/components/Link/Link";
 import {
 	Table,
@@ -21,16 +22,24 @@ export const IdpMappingTable: FC<IdpMappingTableProps> = ({
 	rowCount,
 	children,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<div className="flex flex-col gap-2">
 			<Table>
 				<TableHeader>
 					<TableRow>
 						<TableCell className="w-2/5">
-							IdP {type.toLocaleLowerCase()}
+							{tI18n(
+								"OrganizationSettingsPage.IdpSyncPage.IdpMappingTable.idp_8a0182a9",
+							)}
+							{type.toLocaleLowerCase()}
 						</TableCell>
 						<TableCell className="w-3/5">
-							Coder {type.toLocaleLowerCase()}
+							{tI18n(
+								"OrganizationSettingsPage.IdpSyncPage.IdpMappingTable.coder_2bfab1f9",
+							)}
+							{type.toLocaleLowerCase()}
 						</TableCell>
 						<TableCell className="w-auto" />
 					</TableRow>
@@ -38,7 +47,12 @@ export const IdpMappingTable: FC<IdpMappingTableProps> = ({
 				<TableBody>
 					{rowCount === 0 ? (
 						<TableEmpty
-							message={`No ${type.toLocaleLowerCase()} mappings`}
+							message={tI18n(
+								"OrganizationSettingsPage.IdpSyncPage.IdpMappingTable.no_value0_mappings_60357919",
+								{
+									value0: type.toLocaleLowerCase(),
+								},
+							)}
 							isCompact
 							cta={
 								<Link
@@ -46,7 +60,13 @@ export const IdpMappingTable: FC<IdpMappingTableProps> = ({
 										`/admin/users/idp-sync#${type.toLocaleLowerCase()}-sync`,
 									)}
 								>
-									How to setup IdP {type.toLocaleLowerCase()} sync
+									{tI18n(
+										"OrganizationSettingsPage.IdpSyncPage.IdpMappingTable.how_to_setup_idp_31a5bbb2",
+									)}
+									{type.toLocaleLowerCase()}
+									{tI18n(
+										"OrganizationSettingsPage.IdpSyncPage.IdpMappingTable.sync_d88ae06a",
+									)}
 								</Link>
 							}
 						/>
@@ -57,9 +77,15 @@ export const IdpMappingTable: FC<IdpMappingTableProps> = ({
 			</Table>
 			<div className="flex justify-end">
 				<div className="text-content-secondary text-xs">
-					Showing <strong className="text-content-primary">{rowCount}</strong>{" "}
+					{tI18n(
+						"OrganizationSettingsPage.IdpSyncPage.IdpMappingTable.showing_7282e1fb",
+					)}
+					<strong className="text-content-primary">{rowCount}</strong>{" "}
 					{type.toLocaleLowerCase()}
-					{(rowCount === 0 || rowCount > 1) && "s"}
+					{(rowCount === 0 || rowCount > 1) &&
+						tI18n(
+							"OrganizationSettingsPage.IdpSyncPage.IdpMappingTable.s_043a7187",
+						)}
 				</div>
 			</div>
 		</div>

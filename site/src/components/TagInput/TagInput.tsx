@@ -1,5 +1,6 @@
 import { XIcon } from "lucide-react";
 import { type FC, useId, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "#/components/Badge/Badge";
 import { Button } from "#/components/Button/Button";
 
@@ -16,6 +17,8 @@ export const TagInput: FC<TagInputProps> = ({
 	values,
 	onChange,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const baseId = useId();
 
 	const itemIds = useMemo(() => {
@@ -41,7 +44,9 @@ export const TagInput: FC<TagInputProps> = ({
 							onClick={() => {
 								onChange(values.filter((oldValue) => oldValue !== value));
 							}}
-							aria-label={`Remove ${value}`}
+							aria-label={tI18n("TagInput.TagInput.remove_value0_e224cf24", {
+								value0: value,
+							})}
 						>
 							<XIcon className="size-icon-xs! pr-0!" />
 						</Button>
@@ -81,9 +86,8 @@ export const TagInput: FC<TagInputProps> = ({
 					}}
 				/>
 			</div>
-
 			<p className="text-content-secondary text-xs mt-1">
-				{'Type "," to separate the values'}
+				{tI18n("TagInput.TagInput.type_to_separate_the_values_40d311be")}
 			</p>
 		</div>
 	);

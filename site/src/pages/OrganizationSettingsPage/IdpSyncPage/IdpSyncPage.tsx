@@ -1,4 +1,5 @@
 import { type FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQueries, useQuery, useQueryClient } from "react-query";
 import { useParams, useSearchParams } from "react-router";
 import { toast } from "sonner";
@@ -29,6 +30,8 @@ import { pageTitle } from "#/utils/page";
 import IdpSyncPageView from "./IdpSyncPageView";
 
 const IdpSyncPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { permissions } = useAuthenticated();
 	const queryClient = useQueryClient();
 	// IdP sync does not have its own entitlement and is based on templace_rbac
@@ -87,12 +90,23 @@ const IdpSyncPage: FC = () => {
 	);
 
 	if (!organization) {
-		return <EmptyState message="Organization not found" />;
+		return (
+			<EmptyState
+				message={tI18n(
+					"OrganizationSettingsPage.IdpSyncPage.IdpSyncPage.organization_not_found_00c50f7a",
+				)}
+			/>
+		);
 	}
 
 	const title = (
 		<title>
-			{pageTitle("IdP Sync", organization.display_name || organization.name)}
+			{pageTitle(
+				tI18n(
+					"OrganizationSettingsPage.IdpSyncPage.IdpSyncPage.idp_sync_4af5d734",
+				),
+				organization.display_name || organization.name,
+			)}
 		</title>
 	);
 
@@ -122,25 +136,41 @@ const IdpSyncPage: FC = () => {
 	return (
 		<div className="w-full max-w-(--breakpoint-2xl) pb-10">
 			{title}
-
 			<SettingsHeader>
-				<SettingsHeaderTitle>IdP Sync</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"OrganizationSettingsPage.IdpSyncPage.IdpSyncPage.idp_sync_4af5d734",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Automatically assign groups or roles to a user based on their IdP
-					claims.{" "}
+					{tI18n(
+						"OrganizationSettingsPage.IdpSyncPage.IdpSyncPage.automatically_assign_groups_or_roles_to_a_user_b_fcab4cc0",
+					)}{" "}
 					<SettingsHeaderDocsLink href={docs("/admin/users/idp-sync")} />
 				</SettingsHeaderDescription>
 			</SettingsHeader>
 			{!isIdpSyncEnabled ? (
 				<PremiumPaywall
 					source="idp_sync"
-					message="IdP Sync"
-					description="Auto-sync groups & roles from your IdP."
+					message={tI18n(
+						"OrganizationSettingsPage.IdpSyncPage.IdpSyncPage.idp_sync_4af5d734",
+					)}
+					description={tI18n(
+						"OrganizationSettingsPage.IdpSyncPage.IdpSyncPage.auto_sync_groups_roles_from_your_idp_b57a8a89",
+					)}
 					features={[
-						"Sync groups & roles automatically",
-						"Configured per organization",
-						"No manual user assignment",
-						"Works with your OIDC provider",
+						tI18n(
+							"OrganizationSettingsPage.IdpSyncPage.IdpSyncPage.sync_groups_roles_automatically_7202e36e",
+						),
+						tI18n(
+							"OrganizationSettingsPage.IdpSyncPage.IdpSyncPage.configured_per_organization_0f80f6cb",
+						),
+						tI18n(
+							"OrganizationSettingsPage.IdpSyncPage.IdpSyncPage.no_manual_user_assignment_cf1b71df",
+						),
+						tI18n(
+							"OrganizationSettingsPage.IdpSyncPage.IdpSyncPage.works_with_your_oidc_provider_4fbb4584",
+						),
 					]}
 					canViewPremium={permissions.viewAllLicenses}
 				/>
@@ -160,12 +190,18 @@ const IdpSyncPage: FC = () => {
 					onSubmitGroupSyncSettings={async (data) => {
 						const mutation = patchGroupSyncSettingsMutation.mutateAsync(data);
 						toast.promise(mutation, {
-							loading: "Updating IdP group sync settings...",
-							success: "IdP group sync settings updated.",
+							loading: tI18n(
+								"OrganizationSettingsPage.IdpSyncPage.IdpSyncPage.updating_idp_group_sync_settings_4e9c973b",
+							),
+							success: tI18n(
+								"OrganizationSettingsPage.IdpSyncPage.IdpSyncPage.idp_group_sync_settings_updated_62ca9d76",
+							),
 							error: (error) => ({
 								message: getErrorMessage(
 									error,
-									"Failed to update IdP group sync settings.",
+									tI18n(
+										"OrganizationSettingsPage.IdpSyncPage.IdpSyncPage.failed_to_update_idp_group_sync_settings_cb49d2b0",
+									),
 								),
 								description: getErrorDetail(error),
 							}),
@@ -174,12 +210,18 @@ const IdpSyncPage: FC = () => {
 					onSubmitRoleSyncSettings={async (data) => {
 						try {
 							await patchRoleSyncSettingsMutation.mutateAsync(data);
-							toast.success("IdP Role sync settings updated.");
+							toast.success(
+								tI18n(
+									"OrganizationSettingsPage.IdpSyncPage.IdpSyncPage.idp_role_sync_settings_updated_c3527431",
+								),
+							);
 						} catch (error) {
 							toast.error(
 								getErrorMessage(
 									error,
-									"Failed to update IdP role sync settings.",
+									tI18n(
+										"OrganizationSettingsPage.IdpSyncPage.IdpSyncPage.failed_to_update_idp_role_sync_settings_f10d5a48",
+									),
 								),
 								{
 									description: getErrorDetail(error),

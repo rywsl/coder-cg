@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router";
 import { paginatedSessions } from "#/api/queries/aiBridge";
 import type { DateTimeRangeValue } from "#/components/DateTimeRangePicker/dateTimeRange";
@@ -23,6 +24,8 @@ import {
 } from "./timeRange";
 
 const AISessionListPage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { permissions } = useAuthenticated();
 	const { entitlements } = useDashboard();
 	const navigate = useNavigate();
@@ -116,8 +119,16 @@ const AISessionListPage: FC = () => {
 
 	return (
 		<RequirePermission isFeatureVisible={hasPermission}>
-			<title>{pageTitle("Sessions", "AI Gateway")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n(
+						"AIBridgePage.ListSessionsPage.ListSessionsPage.sessions_6fa3cbf4",
+					),
+					tI18n(
+						"AIBridgePage.ListSessionsPage.ListSessionsPage.ai_gateway_47219de2",
+					),
+				)}
+			</title>
 			<ListSessionsPageView
 				isLoading={sessionsQuery.isLoading}
 				isFetching={sessionsQuery.isFetching}

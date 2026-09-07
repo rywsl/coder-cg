@@ -1,5 +1,6 @@
 import { ExternalLinkIcon, PlusIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type { TemplateExample } from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
@@ -23,6 +24,8 @@ export const StarterTemplatePageView: FC<StarterTemplatePageViewProps> = ({
 	starterTemplate,
 	error,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	if (error) {
 		return (
 			<Margins>
@@ -43,13 +46,17 @@ export const StarterTemplatePageView: FC<StarterTemplatePageViewProps> = ({
 						<Button asChild variant="outline" size="sm">
 							<a target="_blank" href={starterTemplate.url} rel="noreferrer">
 								<ExternalLinkIcon />
-								View source code
+								{tI18n(
+									"StarterTemplatePage.StarterTemplatePageView.view_source_code_a46e92d0",
+								)}
 							</a>
 						</Button>
 						<Button asChild size="sm">
 							<Link to={`/templates/new?exampleId=${starterTemplate.id}`}>
 								<PlusIcon />
-								Use template
+								{tI18n(
+									"StarterTemplatePage.StarterTemplatePageView.use_template_351dd54e",
+								)}
 							</Link>
 						</Button>
 					</>
@@ -67,7 +74,6 @@ export const StarterTemplatePageView: FC<StarterTemplatePageViewProps> = ({
 					</div>
 				</div>
 			</PageHeader>
-
 			<div
 				className="bg-surface-secondary border border-solid border-border rounded-lg"
 				id="readme"

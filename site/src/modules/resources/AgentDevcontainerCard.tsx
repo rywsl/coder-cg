@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { ContainerIcon, ExternalLinkIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import { API } from "#/api/api";
@@ -65,6 +66,8 @@ export const AgentDevcontainerCard: FC<AgentDevcontainerCardProps> = ({
 	template,
 	wildcardHostname,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const { browser_only } = useFeatureVisibility();
 	const { proxy } = useProxy();
 	const queryClient = useQueryClient();
@@ -143,10 +146,22 @@ export const AgentDevcontainerCard: FC<AgentDevcontainerCardProps> = ({
 			}
 
 			const errorMessage =
-				error instanceof Error ? error.message : "An unknown error occurred.";
-			toast.error(`Failed to rebuild devcontainer "${devcontainer.name}".`, {
-				description: errorMessage,
-			});
+				error instanceof Error
+					? error.message
+					: tI18n(
+							"resources.AgentDevcontainerCard.an_unknown_error_occurred_30aa69b2",
+						);
+			toast.error(
+				tI18n(
+					"resources.AgentDevcontainerCard.failed_to_rebuild_devcontainer_value0_2be4d31f",
+					{
+						value0: devcontainer.name,
+					},
+				),
+				{
+					description: errorMessage,
+				},
+			);
 			console.error("Failed to rebuild devcontainer:", error);
 		},
 	});
@@ -188,15 +203,22 @@ export const AgentDevcontainerCard: FC<AgentDevcontainerCardProps> = ({
 				{devcontainer.subagent_id ? (
 					<Tooltip>
 						<TooltipTrigger asChild>
-							<span>dev container (terraform agent)</span>
+							<span>
+								{tI18n(
+									"resources.AgentDevcontainerCard.dev_container_terraform_agent_ba245f16",
+								)}
+							</span>
 						</TooltipTrigger>
 						<TooltipContent>
-							This dev container agent is defined in Terraform and has limited
-							configurability via the devcontainer.json file.
+							{tI18n(
+								"resources.AgentDevcontainerCard.this_dev_container_agent_is_defined_in_terraform_dddb8759",
+							)}
 						</TooltipContent>
 					</Tooltip>
 				) : (
-					<span>dev container</span>
+					<span>
+						{tI18n("resources.AgentDevcontainerCard.dev_container_b9713070")}
+					</span>
 				)}
 			</div>
 			<header
@@ -286,19 +308,21 @@ export const AgentDevcontainerCard: FC<AgentDevcontainerCardProps> = ({
 					/>
 				</div>
 			</header>
-
 			{devcontainer.error && (
 				<div className="px-8 pt-2 text-xs text-content-destructive">
 					{devcontainer.error}
 				</div>
 			)}
-
 			{(showSubAgentApps || showSubAgentAppsPlaceholders) && (
 				<div className="flex flex-col gap-8 px-8 pt-4">
 					{subAgent &&
 						workspace.latest_app_status?.agent_id === subAgent.id && (
 							<section>
-								<h3 className="sr-only">App statuses</h3>
+								<h3 className="sr-only">
+									{tI18n(
+										"resources.AgentDevcontainerCard.app_statuses_be84f42f",
+									)}
+								</h3>
 								<AppStatuses workspace={workspace} agent={subAgent} />
 							</section>
 						)}
@@ -343,7 +367,9 @@ export const AgentDevcontainerCard: FC<AgentDevcontainerCardProps> = ({
 										port.host_port !== undefined && port.host_ip !== undefined;
 									const helperText = hasHostBind
 										? `${port.host_ip}:${port.host_port}`
-										: "Not bound to host";
+										: tI18n(
+												"resources.AgentDevcontainerCard.not_bound_to_host_bf8d9a75",
+											);
 									const linkDest = hasHostBind
 										? portForwardURL(
 												wildcardHostname,
@@ -410,10 +436,14 @@ const DevcontainerDeleteErrorDialog: FC<DevcontainerDeleteErrorDialogProps> = ({
 	error,
 	onClose,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const errorDetail = getErrorDetail(error);
 	const errorMessage = getErrorMessage(
 		error,
-		"Failed to delete dev container.",
+		tI18n(
+			"resources.AgentDevcontainerCard.failed_to_delete_dev_container_fd463d74",
+		),
 	);
 
 	return (
@@ -427,21 +457,31 @@ const DevcontainerDeleteErrorDialog: FC<DevcontainerDeleteErrorDialogProps> = ({
 		>
 			<DialogContent variant="destructive">
 				<DialogHeader>
-					<DialogTitle>Error deleting dev container</DialogTitle>
+					<DialogTitle>
+						{tI18n(
+							"resources.AgentDevcontainerCard.error_deleting_dev_container_fc2da683",
+						)}
+					</DialogTitle>
 					<DialogDescription className="flex flex-row gap-4">
-						<strong className="text-content-primary">Message</strong>{" "}
+						<strong className="text-content-primary">
+							{tI18n("resources.AgentDevcontainerCard.message_2f77668a")}
+						</strong>{" "}
 						<span>{errorMessage}</span>
 					</DialogDescription>
 					{errorDetail && (
 						<DialogDescription className="flex flex-row gap-9">
-							<strong className="text-content-primary">Detail</strong>{" "}
+							<strong className="text-content-primary">
+								{tI18n("resources.AgentDevcontainerCard.detail_fb5f27d5")}
+							</strong>{" "}
 							<span className="wrap-anywhere break-normal">{errorDetail}</span>
 						</DialogDescription>
 					)}
 				</DialogHeader>
 				<DialogFooter>
 					<DialogClose asChild>
-						<Button>Ok</Button>
+						<Button>
+							{tI18n("resources.AgentDevcontainerCard.ok_843ac011")}
+						</Button>
 					</DialogClose>
 				</DialogFooter>
 			</DialogContent>

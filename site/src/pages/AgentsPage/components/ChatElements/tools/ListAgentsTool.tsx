@@ -1,5 +1,6 @@
 import { ExternalLinkIcon } from "lucide-react";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router";
 import { safeBuildAgentChatPath } from "../../../utils/navigation";
 import { ToolCall } from "./ToolCall";
@@ -17,22 +18,39 @@ export const ListAgentsTool: React.FC<{
 	isError: boolean;
 	errorMessage?: string;
 }> = ({ agents, total, status, isError, errorMessage }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const location = useLocation();
 	const hasContent = agents.length > 0;
 	const isRunning = status === "running";
 
 	const label = isRunning
-		? "Listing agents"
+		? tI18n(
+				"AgentsPage.components.ChatElements.tools.ListAgentsTool.listing_agents_f94b70c2",
+			)
 		: hasContent
-			? `Listed ${agents.length} of ${total} agents`
-			: "Listed 0 agents";
+			? tI18n(
+					"AgentsPage.components.ChatElements.tools.ListAgentsTool.listed_value0_of_value1_agents_f541c5c9",
+					{
+						value0: agents.length,
+						value1: total,
+					},
+				)
+			: tI18n(
+					"AgentsPage.components.ChatElements.tools.ListAgentsTool.listed_0_agents_3257b770",
+				);
 
 	return (
 		<ToolCall.Root
 			className="w-full"
 			status={status}
 			isError={isError}
-			errorMessage={errorMessage || "Failed to list agents"}
+			errorMessage={
+				errorMessage ||
+				tI18n(
+					"AgentsPage.components.ChatElements.tools.ListAgentsTool.failed_to_list_agents_325b5838",
+				)
+			}
 			hasContent={hasContent}
 		>
 			<ToolCall.Header iconName="list_agents" label={label} />

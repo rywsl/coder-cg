@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { TemplateVersionVariable } from "#/api/typesGenerated";
 import { Input } from "#/components/Input/Input";
 import { Label } from "#/components/Label/Label";
@@ -13,11 +14,15 @@ interface VariableLabelProps {
 }
 
 const VariableLabel: FC<VariableLabelProps> = ({ variable }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<label htmlFor={variable.name}>
 			<span className="mb-1 block text-sm text-content-secondary">
-				var.{variable.name}
-				{!variable.required && " (optional)"}
+				{tI18n("CreateTemplatePage.VariableInput.var_3e9dc289")}
+				{variable.name}
+				{!variable.required &&
+					tI18n("CreateTemplatePage.VariableInput.optional_edbfc3dc")}
 			</span>
 			<span className="block text-base font-semibold text-content-primary">
 				{variable.description}
@@ -60,6 +65,8 @@ const VariableField: FC<VariableInputProps> = ({
 	variable,
 	defaultValue,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	if (isBoolean(variable)) {
 		const trueId = `${variable.name}-true`;
 		const falseId = `${variable.name}-false`;
@@ -74,13 +81,13 @@ const VariableField: FC<VariableInputProps> = ({
 				<div className="flex items-center gap-2">
 					<RadioGroupItem id={trueId} value="true" />
 					<Label htmlFor={trueId} className="font-normal cursor-pointer">
-						True
+						{tI18n("CreateTemplatePage.VariableInput.true_3cbc87c7")}
 					</Label>
 				</div>
 				<div className="flex items-center gap-2">
 					<RadioGroupItem id={falseId} value="false" />
 					<Label htmlFor={falseId} className="font-normal cursor-pointer">
-						False
+						{tI18n("CreateTemplatePage.VariableInput.false_60a33e6c")}
 					</Label>
 				</div>
 			</RadioGroup>

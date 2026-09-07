@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { OctagonAlertIcon, TriangleAlertIcon } from "lucide-react";
 import type { FC, JSX } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { meAISpend } from "#/api/queries/users";
 import type * as TypesGen from "#/api/typesGenerated";
@@ -11,6 +12,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "#/components/DropdownMenu/DropdownMenu";
+import { i18n } from "#/i18n";
 import { useFeatureVisibility } from "#/modules/dashboard/useFeatureVisibility";
 import { getSeverity, type UsageSeverity } from "#/utils/budget";
 import { UserDropdownAISpend } from "./UserDropdownAISpend";
@@ -24,12 +26,16 @@ const severityIndicators: Partial<
 	warning: {
 		badge: "bg-surface-orange text-highlight-orange",
 		icon: <TriangleAlertIcon aria-hidden className="size-3" />,
-		label: "AI spend is nearing its limit",
+		label: i18n.t(
+			"dashboard:dashboard.Navbar.UserDropdown.UserDropdown.ai_spend_is_nearing_its_limit_21a981cc",
+		),
 	},
 	exceeded: {
 		badge: "bg-surface-red text-highlight-red",
 		icon: <OctagonAlertIcon aria-hidden className="size-3" />,
-		label: "AI spend limit exceeded",
+		label: i18n.t(
+			"dashboard:dashboard.Navbar.UserDropdown.UserDropdown.ai_spend_limit_exceeded_2ac39fb8",
+		),
 	},
 };
 
@@ -50,6 +56,8 @@ export const UserDropdown: FC<UserDropdownProps> = ({
 	onSignOut,
 	canViewLicenses,
 }) => {
+	const { t: tI18n } = useTranslation("dashboard");
+
 	const aibridgeVisible = Boolean(useFeatureVisibility().aibridge);
 	const { data, isError } = useQuery({
 		...meAISpend(),
@@ -82,7 +90,18 @@ export const UserDropdown: FC<UserDropdownProps> = ({
 			<DropdownMenuTrigger asChild>
 				<button
 					type="button"
-					aria-label={indicator ? `User menu. ${indicator.label}` : "User menu"}
+					aria-label={
+						indicator
+							? tI18n(
+									"dashboard.Navbar.UserDropdown.UserDropdown.user_menu_value0_bf9ce2a7",
+									{
+										value0: indicator.label,
+									},
+								)
+							: tI18n(
+									"dashboard.Navbar.UserDropdown.UserDropdown.user_menu_6fa25be1",
+								)
+					}
 					className="relative bg-transparent border-0 cursor-pointer p-0"
 				>
 					<Avatar fallback={user.username} src={user.avatar_url} size="lg" />
@@ -99,7 +118,6 @@ export const UserDropdown: FC<UserDropdownProps> = ({
 					)}
 				</button>
 			</DropdownMenuTrigger>
-
 			<DropdownMenuContent align="end" className="w-[260px]">
 				<UserDropdownContent
 					user={user}

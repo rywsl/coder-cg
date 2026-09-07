@@ -1,4 +1,5 @@
 import { type FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import { getErrorDetail, getErrorMessage } from "#/api/errors";
@@ -24,6 +25,8 @@ import { ExportPolicyButton } from "./ExportPolicyButton";
 import { IdpOrgSyncPageView } from "./IdpOrgSyncPageView";
 
 const IdpOrgSyncPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { permissions } = useAuthenticated();
 	const queryClient = useQueryClient();
 	// IdP sync does not have its own entitlement and is based on templace_rbac
@@ -54,7 +57,9 @@ const IdpOrgSyncPage: FC = () => {
 			toast.error(
 				getErrorMessage(
 					patchOrganizationSyncSettingsMutation.error,
-					"Error updating organization IdP sync settings.",
+					tI18n(
+						"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPage.error_updating_organization_idp_sync_settings_4de84c50",
+					),
 				),
 			);
 		}
@@ -66,16 +71,26 @@ const IdpOrgSyncPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Organization IdP Sync")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n(
+						"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPage.organization_idp_sync_8e69f5cd",
+					),
+				)}
+			</title>
 			<div>
 				<SettingsHeader
 					actions={<ExportPolicyButton syncSettings={settingsQuery.data} />}
 				>
-					<SettingsHeaderTitle>Organization IdP Sync</SettingsHeaderTitle>
+					<SettingsHeaderTitle>
+						{tI18n(
+							"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPage.organization_idp_sync_8e69f5cd",
+						)}
+					</SettingsHeaderTitle>
 					<SettingsHeaderDescription>
-						Automatically assign users to an organization based on their IdP
-						claims.{" "}
+						{tI18n(
+							"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPage.automatically_assign_users_to_an_organization_ba_34be883d",
+						)}{" "}
 						<SettingsHeaderDocsLink
 							href={docs("/admin/users/idp-sync#organization-sync")}
 						/>
@@ -84,12 +99,22 @@ const IdpOrgSyncPage: FC = () => {
 				{!isIdpSyncEnabled ? (
 					<PremiumPaywall
 						source="idp_org_sync"
-						message="IdP Organization Sync"
-						description="Configure organization mappings to synchronize claims in your auth provider to organizations within Coder."
+						message={tI18n(
+							"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPage.idp_organization_sync_9d6641db",
+						)}
+						description={tI18n(
+							"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPage.configure_organization_mappings_to_synchronize_c_bbb43e57",
+						)}
 						features={[
-							"Sync groups & roles automatically",
-							"No manual user assignment",
-							"Works with your OIDC provider",
+							tI18n(
+								"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPage.sync_groups_roles_automatically_7202e36e",
+							),
+							tI18n(
+								"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPage.no_manual_user_assignment_cf1b71df",
+							),
+							tI18n(
+								"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPage.works_with_your_oidc_provider_4fbb4584",
+							),
 						]}
 						canViewPremium={permissions.viewAllLicenses}
 					/>
@@ -102,12 +127,18 @@ const IdpOrgSyncPage: FC = () => {
 						onSubmit={async (data) => {
 							try {
 								await patchOrganizationSyncSettingsMutation.mutateAsync(data);
-								toast.success("Organization sync settings updated.");
+								toast.success(
+									tI18n(
+										"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPage.organization_sync_settings_updated_8e1f32e7",
+									),
+								);
 							} catch (error) {
 								toast.error(
 									getErrorMessage(
 										error,
-										"Failed to update organization IdP sync settings.",
+										tI18n(
+											"DeploymentSettingsPage.IdpOrgSyncPage.IdpOrgSyncPage.failed_to_update_organization_idp_sync_settings_b4993f1f",
+										),
 									),
 									{
 										description: getErrorDetail(error),

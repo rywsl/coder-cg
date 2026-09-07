@@ -1,8 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { i18n } from "#/i18n";
 
 const CLIPBOARD_TIMEOUT_MS = 1_000;
-export const COPY_FAILED_MESSAGE = "Failed to copy text to clipboard";
+export const COPY_FAILED_MESSAGE = i18n.t(
+	"pages:useClipboard.failed_to_copy_text_to_clipboard_5d373892",
+);
 const DIALOG_SELECTOR = 'dialog[open], [role="dialog"], [role="alertdialog"]';
 export const HTTP_FALLBACK_DATA_ID = "http-fallback";
 

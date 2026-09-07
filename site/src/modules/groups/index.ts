@@ -6,13 +6,20 @@ import {
 	type User,
 	type WorkspaceUser,
 } from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 import { MICROS_PER_DOLLAR, usdBudgetFormatter } from "#/utils/currency";
 
 /** Highest AI budget that can be configured for a group or member, in dollars. */
 export const maxAIBudgetDollars = MaxAISpendLimitMicros / MICROS_PER_DOLLAR;
 
 /** Shown when an entered AI budget falls outside the configurable range. */
-export const aiBudgetRangeError = `Enter an amount between 0 and ${usdBudgetFormatter.format(maxAIBudgetDollars)}.`;
+export const getAIBudgetRangeError = (): string =>
+	i18n.t(
+		"components:groups.index.enter_an_amount_between_0_and_value0_c71292a5",
+		{
+			value0: usdBudgetFormatter.format(maxAIBudgetDollars),
+		},
+	);
 
 /**
  * Union of all user-like types that can be distinguished from Group.
@@ -46,14 +53,16 @@ export const isEveryoneGroup = (group: Group): boolean =>
 export const getGroupSubtitle = (group: Group): string => {
 	// It is the everyone group when a group id is the same of the org id
 	if (group.id === group.organization_id) {
-		return "All users";
+		return i18n.t("components:groups.index.all_users_f7898130");
 	}
 
 	const total = group.total_member_count ?? group.members?.length ?? 0;
 
 	if (total === 1) {
-		return "1 member";
+		return i18n.t("components:groups.index.1_member_895022bc");
 	}
 
-	return `${total} members`;
+	return i18n.t("components:groups.index.value0_members_251dc659", {
+		value0: total,
+	});
 };

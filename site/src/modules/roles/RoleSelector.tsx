@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { UserIcon } from "lucide-react";
 import { type FC, useId } from "react";
+import { useTranslation } from "react-i18next";
 import { getErrorMessage } from "#/api/errors";
 import type { AssignableRoles } from "#/api/typesGenerated";
 import { Alert, AlertTitle } from "#/components/Alert/Alert";
@@ -34,6 +35,8 @@ export const RoleSelector: FC<RoleSelectorProps> = ({
 	onChange,
 	disabledReason,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	if (loading) {
 		return (
 			<RoleSelectorLayout>
@@ -48,7 +51,10 @@ export const RoleSelector: FC<RoleSelectorProps> = ({
 			<RoleSelectorLayout>
 				<Alert severity="error">
 					<AlertTitle>
-						{getErrorMessage(error, "Failed to load roles.")}
+						{getErrorMessage(
+							error,
+							tI18n("roles.RoleSelector.failed_to_load_roles_629904cf"),
+						)}
 					</AlertTitle>
 				</Alert>
 			</RoleSelectorLayout>
@@ -110,6 +116,8 @@ const RoleSelectorList: React.FC<RoleSelectorListProps> = ({
 	handleToggle,
 	disabledReason,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<div className="border border-border border-solid rounded-md overflow-y-auto max-h-72 p-3 flex flex-col gap-2">
 			{selectableRoles.map((role) => (
@@ -122,7 +130,10 @@ const RoleSelectorList: React.FC<RoleSelectorListProps> = ({
 				/>
 			))}
 			{advancedRoles.length > 0 && (
-				<CollapsibleSummary label="Advanced roles" scrollIntoViewOnOpen>
+				<CollapsibleSummary
+					label={tI18n("roles.RoleSelector.advanced_roles_fbd0ced4")}
+					scrollIntoViewOnOpen
+				>
 					{advancedRoles.map((role) => (
 						<RoleCheckbox
 							key={role.name}
@@ -198,9 +209,15 @@ const RoleSelectorLayout: React.FC<RoleSelectorLayoutProps> = ({
 	hideLabel,
 	children,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<div className="flex flex-col gap-2">
-			{!hideLabel && <span className="text-sm font-medium">Roles</span>}
+			{!hideLabel && (
+				<span className="text-sm font-medium">
+					{tI18n("roles.RoleSelector.roles_c2533705")}
+				</span>
+			)}
 			{children}
 		</div>
 	);
@@ -213,15 +230,22 @@ type ImpliedRolesListProps = {
 const ImpliedRolesList: React.FC<ImpliedRolesListProps> = ({
 	additionalImpliedRoles,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<>
-			<ImpliedRoleRow title="Member" description={roleDescriptions.member} />
+			<ImpliedRoleRow
+				title={tI18n("roles.RoleSelector.member_7c968fb7")}
+				description={roleDescriptions.member}
+			/>
 			{additionalImpliedRoles.map((role) => (
 				<ImpliedRoleRow
 					key={role.name}
 					title={role.display_name || role.name}
 					description={roleDescriptions[role.name] ?? ""}
-					caption="Sourced from organization default roles"
+					caption={tI18n(
+						"roles.RoleSelector.sourced_from_organization_default_roles_1fec6ee9",
+					)}
 				/>
 			))}
 		</>

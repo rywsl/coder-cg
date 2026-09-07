@@ -1,5 +1,6 @@
 import { Volume2Icon, VolumeOffIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "#/components/Button/Button";
 import {
 	Tooltip,
@@ -14,6 +15,8 @@ interface ChimeButtonProps {
 }
 
 export const ChimeButton: FC<ChimeButtonProps> = ({ enabled, onToggle }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [internalEnabled, setInternalEnabled] = useState(getChimeEnabled);
 	const isControlled = enabled !== undefined && onToggle !== undefined;
 	const isEnabled = isControlled ? enabled : internalEnabled;
@@ -36,7 +39,13 @@ export const ChimeButton: FC<ChimeButtonProps> = ({ enabled, onToggle }) => {
 					size="icon"
 					onClick={handleClick}
 					aria-label={
-						isEnabled ? "Mute completion chime" : "Enable completion chime"
+						isEnabled
+							? tI18n(
+									"AgentsPage.components.ChimeButton.mute_completion_chime_8cde3dfd",
+								)
+							: tI18n(
+									"AgentsPage.components.ChimeButton.enable_completion_chime_83f676ca",
+								)
 					}
 					className="size-7 text-content-secondary hover:text-content-primary"
 				>
@@ -48,7 +57,13 @@ export const ChimeButton: FC<ChimeButtonProps> = ({ enabled, onToggle }) => {
 				</Button>
 			</TooltipTrigger>
 			<TooltipContent>
-				{isEnabled ? "Disable completion sound" : "Enable completion sound"}
+				{isEnabled
+					? tI18n(
+							"AgentsPage.components.ChimeButton.disable_completion_sound_9cb780ca",
+						)
+					: tI18n(
+							"AgentsPage.components.ChimeButton.enable_completion_sound_213a47ff",
+						)}
 			</TooltipContent>
 		</Tooltip>
 	);

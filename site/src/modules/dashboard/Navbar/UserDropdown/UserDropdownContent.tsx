@@ -7,6 +7,7 @@ import {
 	TerminalIcon,
 } from "lucide-react";
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type * as TypesGen from "#/api/typesGenerated";
 import { CheckIcon } from "#/components/AnimatedIcons/Check";
@@ -67,6 +68,8 @@ export const UserDropdownContent: FC<UserDropdownContentProps> = ({
 	onSignOut,
 	trialCta,
 }) => {
+	const { t: tI18n } = useTranslation("dashboard");
+
 	const { showCopiedSuccess, copyToClipboard } = useClipboard();
 
 	return (
@@ -85,25 +88,41 @@ export const UserDropdownContent: FC<UserDropdownContentProps> = ({
 				<DropdownMenuItem asChild>
 					<a href={CODER_DESKTOP_DOCS_URL} target="_blank" rel="noreferrer">
 						<MonitorIcon />
-						<span>Install Coder Desktop</span>
+						<span>
+							{tI18n(
+								"dashboard.Navbar.UserDropdown.UserDropdownContent.install_coder_desktop_ca1c606f",
+							)}
+						</span>
 					</a>
 				</DropdownMenuItem>
 			)}
 			<DropdownMenuItem asChild>
 				<Link to="/install">
 					<TerminalIcon />
-					<span>Install CLI</span>
+					<span>
+						{tI18n(
+							"dashboard.Navbar.UserDropdown.UserDropdownContent.install_cli_d7ca5fdd",
+						)}
+					</span>
 				</Link>
 			</DropdownMenuItem>
 			<DropdownMenuItem asChild>
 				<Link to="/settings/account">
 					<CircleUserIcon />
-					<span>Account</span>
+					<span>
+						{tI18n(
+							"dashboard.Navbar.UserDropdown.UserDropdownContent.account_7e1b0d56",
+						)}
+					</span>
 				</Link>
 			</DropdownMenuItem>
 			<DropdownMenuItem onClick={onSignOut}>
 				<LogOutIcon />
-				<span>Sign Out</span>
+				<span>
+					{tI18n(
+						"dashboard.Navbar.UserDropdown.UserDropdownContent.sign_out_0b184bc5",
+					)}
+				</span>
 			</DropdownMenuItem>
 			{supportLinks && supportLinks.length > 0 && (
 				<>
@@ -122,7 +141,11 @@ export const UserDropdownContent: FC<UserDropdownContentProps> = ({
 				<DropdownMenuItem asChild>
 					<Link to="/coder-cup">
 						<CodernautsSVG />
-						<span>Codernauts</span>
+						<span>
+							{tI18n(
+								"dashboard.Navbar.UserDropdown.UserDropdownContent.codernauts_99dc05b5",
+							)}
+						</span>
 					</Link>
 				</DropdownMenuItem>
 			)}
@@ -142,7 +165,11 @@ export const UserDropdownContent: FC<UserDropdownContentProps> = ({
 						</a>
 					</DropdownMenuItem>
 				</TooltipTrigger>
-				<TooltipContent side="bottom">Browse the source code</TooltipContent>
+				<TooltipContent side="bottom">
+					{tI18n(
+						"dashboard.Navbar.UserDropdown.UserDropdownContent.browse_the_source_code_b765c028",
+					)}
+				</TooltipContent>
 			</Tooltip>
 			{buildInfo?.deployment_id && (
 				<Tooltip disableHoverableContent>
@@ -163,12 +190,23 @@ export const UserDropdownContent: FC<UserDropdownContentProps> = ({
 						</DropdownMenuItem>
 					</TooltipTrigger>
 					<TooltipContent side="bottom">
-						{showCopiedSuccess ? "Copied!" : "Copy deployment ID"}
+						{showCopiedSuccess
+							? tI18n(
+									"dashboard.Navbar.UserDropdown.UserDropdownContent.copied_ea61bc15",
+								)
+							: tI18n(
+									"dashboard.Navbar.UserDropdown.UserDropdownContent.copy_deployment_id_c69dbc76",
+								)}
 					</TooltipContent>
 				</Tooltip>
 			)}
 			<DropdownMenuItem className="text-xs" disabled>
-				<span>&copy; {new Date().getFullYear()} Coder Technologies, Inc.</span>
+				<span>
+					&copy; {new Date().getFullYear()}
+					{tI18n(
+						"dashboard.Navbar.UserDropdown.UserDropdownContent.coder_technologies_inc_6f4648e4",
+					)}
+				</span>
 			</DropdownMenuItem>
 		</>
 	);

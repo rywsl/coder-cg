@@ -1,8 +1,10 @@
 import { useFormik } from "formik";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Alert, AlertDescription } from "#/components/Alert/Alert";
 import { Button } from "#/components/Button/Button";
+import { i18n } from "#/i18n";
 import { pickReasoningEffort } from "../utils/reasoningEffort";
 import { ModelSelector, type ModelSelectorOption } from "./ChatElements";
 import { ModelOverrideAlerts } from "./ModelOverrideAlerts";
@@ -108,9 +110,19 @@ const getUnavailableModelLabel = (
 ): string => {
 	const modelLabel = getModelLabelByID(modelID, models);
 	if (!modelLabel) {
-		return `Unavailable model (${modelID})`;
+		return i18n.t(
+			"agents:AgentsPage.components.PersonalModelOverrideRow.unavailable_model_value0_7490b214",
+			{
+				value0: modelID,
+			},
+		);
 	}
-	return `Unavailable: ${modelLabel}`;
+	return i18n.t(
+		"agents:AgentsPage.components.PersonalModelOverrideRow.unavailable_value0_7a2161e2",
+		{
+			value0: modelLabel,
+		},
+	);
 };
 
 const getDefaultModeOptions = (
@@ -126,12 +138,16 @@ const getChatDefaultDescription = (
 	models: readonly TypesGen.ChatModel[],
 ): string => {
 	if (context !== "root") {
-		return "Your current chat model";
+		return i18n.t(
+			"agents:AgentsPage.components.PersonalModelOverrideRow.your_current_chat_model_ecf0ca26",
+		);
 	}
 	const defaultModel = models.find((model) => model.is_default);
 	return defaultModel
 		? getModelLabel(defaultModel)
-		: "Model definition default";
+		: i18n.t(
+				"agents:AgentsPage.components.PersonalModelOverrideRow.model_definition_default_0d07516f",
+			);
 };
 
 const getDeploymentDefaultDescription = (
@@ -139,11 +155,15 @@ const getDeploymentDefaultDescription = (
 	models: readonly TypesGen.ChatModel[],
 ): string => {
 	if (!deploymentDefault) {
-		return "Loading organization default";
+		return i18n.t(
+			"agents:AgentsPage.components.PersonalModelOverrideRow.loading_organization_default_2df2cee9",
+		);
 	}
 	const modelID = deploymentDefault.model_config_id.trim();
 	if (modelID === "") {
-		return "Chat default fallback";
+		return i18n.t(
+			"agents:AgentsPage.components.PersonalModelOverrideRow.chat_default_fallback_f40297ee",
+		);
 	}
 	return getModelLabelByID(modelID, models) ?? `Unavailable model (${modelID})`;
 };
@@ -170,6 +190,8 @@ export const PersonalModelOverrideRow: FC<PersonalModelOverrideRowProps> = ({
 	saveErrorMessage,
 	disabled,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const hasLoadedOverride = overrideData !== undefined;
 	const form = useFormik<PersonalOverrideFormValues>({
 		enableReinitialize: true,
@@ -185,7 +207,13 @@ export const PersonalModelOverrideRow: FC<PersonalModelOverrideRowProps> = ({
 	const canSave = hasLoadedOverride && !disabled && form.dirty;
 	const defaultModeOptions = getDefaultModeOptions(context).map((mode) => {
 		const label =
-			mode === "deployment_default" ? "Organization default" : "Chat default";
+			mode === "deployment_default"
+				? tI18n(
+						"AgentsPage.components.PersonalModelOverrideRow.organization_default_804a1f08",
+					)
+				: tI18n(
+						"AgentsPage.components.PersonalModelOverrideRow.chat_default_62895cc6",
+					);
 		const modeDescription =
 			mode === "deployment_default"
 				? getDeploymentDefaultDescription(deploymentDefault, models)
@@ -265,13 +293,19 @@ export const PersonalModelOverrideRow: FC<PersonalModelOverrideRowProps> = ({
 					disabled={isFormDisabled}
 					placeholder={
 						isInvalidRootDeploymentDefault
-							? "Invalid organization default"
+							? tI18n(
+									"AgentsPage.components.PersonalModelOverrideRow.invalid_organization_default_f32370e0",
+								)
 							: isUnavailableSelectedModel
 								? getUnavailableModelLabel(form.values.model_config_id, models)
-								: "Select..."
+								: tI18n(
+										"AgentsPage.components.PersonalModelOverrideRow.select_1339bddc",
+									)
 					}
 					triggerAriaLabel={`${title} behavior`}
-					emptyMessage="No matching models found."
+					emptyMessage={tI18n(
+						"AgentsPage.components.PersonalModelOverrideRow.no_matching_models_found_6a9fc8db",
+					)}
 					className="h-10 w-full justify-between rounded-md border border-border border-solid bg-transparent px-3 text-sm shadow-xs md:w-[18rem]"
 					contentClassName="min-w-[18rem]"
 					reasoningEffort={selectedReasoningEffort}
@@ -281,21 +315,29 @@ export const PersonalModelOverrideRow: FC<PersonalModelOverrideRowProps> = ({
 				/>
 				{modelOptions.length === 0 && (
 					<p role="status" className="m-0 text-xs text-content-secondary">
-						{isLoading ? "Loading models..." : "No enabled models found."}
+						{isLoading
+							? tI18n(
+									"AgentsPage.components.PersonalModelOverrideRow.loading_models_80243524",
+								)
+							: tI18n(
+									"AgentsPage.components.PersonalModelOverrideRow.no_enabled_models_found_bd30f5d9",
+								)}
 					</p>
 				)}
 
 				<ModelOverrideAlerts
 					isUnavailableSavedModel={isUnavailableSavedModel}
-					unavailableMessage="The saved model is unavailable and will be ignored until you choose a valid model override."
+					unavailableMessage={tI18n(
+						"AgentsPage.components.PersonalModelOverrideRow.the_saved_model_is_unavailable_and_will_be_ignor_ec776fb9",
+					)}
 					modelsError={modelsError}
 				>
 					{isInvalidRootDeploymentDefault && (
 						<Alert severity="warning">
 							<AlertDescription>
-								The saved root override uses the organization default, which is
-								not supported for root agents. Choose a valid value and save to
-								replace it.
+								{tI18n(
+									"AgentsPage.components.PersonalModelOverrideRow.the_saved_root_override_uses_the_organization_de_a00d230b",
+								)}
 							</AlertDescription>
 						</Alert>
 					)}
@@ -306,7 +348,9 @@ export const PersonalModelOverrideRow: FC<PersonalModelOverrideRowProps> = ({
 						type="submit"
 						disabled={isFormDisabled || !canSaveSelection}
 					>
-						Save
+						{tI18n(
+							"AgentsPage.components.PersonalModelOverrideRow.save_1509f561",
+						)}
 					</Button>
 				</div>
 				{isSaveError && (

@@ -1,4 +1,5 @@
 import type { FC, FormEventHandler, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "#/components/Button/Button";
 import { Spinner } from "#/components/Spinner/Spinner";
 import { TemporarySavedState } from "#/components/TemporarySavedState/TemporarySavedState";
@@ -26,6 +27,8 @@ export const AgentSettingLayout: FC<AgentSettingLayoutProps> = ({
 	saveDisabled,
 	onSubmit,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const shouldShowControls =
 		Boolean(children) || showSave || isSavedVisible || isSaving;
 
@@ -61,7 +64,9 @@ export const AgentSettingLayout: FC<AgentSettingLayoutProps> = ({
 									className="h-10 min-w-[88px]"
 								>
 									{isSaving && <Spinner loading className="size-4" />}
-									Save
+									{tI18n(
+										"AISettingsPage.CoderAgentsPage.components.AgentSettingLayout.save_1509f561",
+									)}
 								</Button>
 							))}
 					</div>

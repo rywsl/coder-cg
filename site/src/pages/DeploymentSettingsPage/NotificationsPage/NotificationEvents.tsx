@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import { getErrorDetail, getErrorMessage } from "#/api/errors";
@@ -39,6 +40,8 @@ export const NotificationEvents: FC<NotificationEventsProps> = ({
 	deploymentConfig,
 	canEdit = true,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	// Webhook
 	const hasWebhookNotifications = Object.values(templatesByGroup)
 		.flat()
@@ -71,15 +74,22 @@ export const NotificationEvents: FC<NotificationEventsProps> = ({
 							target="_blank"
 							rel="noreferrer"
 						>
-							View docs
-							<span className="sr-only"> (opens in new tab)</span>
+							{tI18n(
+								"DeploymentSettingsPage.NotificationsPage.NotificationEvents.view_docs_61479fda",
+							)}
+							<span className="sr-only">
+								{tI18n(
+									"DeploymentSettingsPage.NotificationsPage.NotificationEvents.opens_in_new_tab_541f18a6",
+								)}
+							</span>
 						</Link>
 					}
 				>
-					Webhook notifications are enabled, but not properly configured.
+					{tI18n(
+						"DeploymentSettingsPage.NotificationsPage.NotificationEvents.webhook_notifications_are_enabled_but_not_proper_a0600450",
+					)}
 				</Alert>
 			)}
-
 			{hasSMTPNotifications && !isSMTPConfigured && (
 				<Alert
 					severity="warning"
@@ -90,15 +100,22 @@ export const NotificationEvents: FC<NotificationEventsProps> = ({
 							target="_blank"
 							rel="noreferrer"
 						>
-							View docs
-							<span className="sr-only"> (opens in new tab)</span>
+							{tI18n(
+								"DeploymentSettingsPage.NotificationsPage.NotificationEvents.view_docs_61479fda",
+							)}
+							<span className="sr-only">
+								{tI18n(
+									"DeploymentSettingsPage.NotificationsPage.NotificationEvents.opens_in_new_tab_541f18a6",
+								)}
+							</span>
 						</Link>
 					}
 				>
-					SMTP notifications are enabled but not properly configured.
+					{tI18n(
+						"DeploymentSettingsPage.NotificationsPage.NotificationEvents.smtp_notifications_are_enabled_but_not_properly__3ab64e3e",
+					)}
 				</Alert>
 			)}
-
 			{Object.entries(templatesByGroup).map(([group, templates]) => (
 				<article
 					key={group}
@@ -156,6 +173,8 @@ const MethodSelect: FC<MethodSelectProps> = ({
 	templateName,
 	canEdit,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const queryClient = useQueryClient();
 	const updateMethodMutation = useMutation(
 		updateNotificationTemplateMethod(templateId, queryClient),
@@ -175,10 +194,19 @@ const MethodSelect: FC<MethodSelectProps> = ({
 					await updateMethodMutation.mutateAsync({
 						method,
 					});
-					toast.success("Notification method updated.");
+					toast.success(
+						tI18n(
+							"DeploymentSettingsPage.NotificationsPage.NotificationEvents.notification_method_updated_7718496b",
+						),
+					);
 				} catch (error) {
 					toast.error(
-						getErrorMessage(error, "Failed to update notification method."),
+						getErrorMessage(
+							error,
+							tI18n(
+								"DeploymentSettingsPage.NotificationsPage.NotificationEvents.failed_to_update_notification_method_4d4a14b5",
+							),
+						),
 						{
 							description: getErrorDetail(error),
 						},
@@ -187,7 +215,12 @@ const MethodSelect: FC<MethodSelectProps> = ({
 			}}
 		>
 			<SelectTrigger
-				aria-label={`Notification method for ${templateName}`}
+				aria-label={tI18n(
+					"DeploymentSettingsPage.NotificationsPage.NotificationEvents.notification_method_for_value0_ebb635ec",
+					{
+						value0: templateName,
+					},
+				)}
 				className="h-8 w-auto min-w-32 gap-2 [&>span]:flex [&>span]:items-center [&>span]:gap-2 [&>span]:line-clamp-none"
 			>
 				<SelectValue>

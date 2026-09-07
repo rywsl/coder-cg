@@ -2,6 +2,7 @@ import { cn } from "cn";
 import { useFormik } from "formik";
 import upperFirst from "lodash/upperFirst";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import {
 	type AutomaticUpdates,
@@ -49,6 +50,8 @@ export const WorkspaceSettingsForm: FC<WorkspaceSettingsFormProps> = ({
 	workspace,
 	error,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const formEnabled =
 		!workspace.template_require_active_version || workspace.allow_renames;
 
@@ -59,7 +62,9 @@ export const WorkspaceSettingsForm: FC<WorkspaceSettingsFormProps> = ({
 			automatic_updates: workspace.automatic_updates,
 		},
 		validationSchema: Yup.object({
-			name: nameValidator("Name"),
+			name: nameValidator(
+				tI18n("WorkspaceSettingsPage.WorkspaceSettingsForm.name_dcd1d522"),
+			),
 			automatic_updates: Yup.string().oneOf(AutomaticUpdateses),
 		}),
 	});
@@ -69,7 +74,9 @@ export const WorkspaceSettingsForm: FC<WorkspaceSettingsFormProps> = ({
 	);
 	const automaticUpdatesField = getFieldHelpers("automatic_updates", {
 		helperText: workspace.template_require_active_version
-			? "The template for this workspace requires automatic updates."
+			? tI18n(
+					"WorkspaceSettingsPage.WorkspaceSettingsForm.the_template_for_this_workspace_requires_automat_39483add",
+				)
 			: undefined,
 	});
 	const automaticUpdatesHelperId = `${automaticUpdatesField.id}-helper`;
@@ -77,8 +84,12 @@ export const WorkspaceSettingsForm: FC<WorkspaceSettingsFormProps> = ({
 	return (
 		<HorizontalForm onSubmit={form.handleSubmit} data-testid="form">
 			<FormSection
-				title="Workspace Name"
-				description="Update the name of your workspace."
+				title={tI18n(
+					"WorkspaceSettingsPage.WorkspaceSettingsForm.workspace_name_6fa5a5b1",
+				)}
+				description={tI18n(
+					"WorkspaceSettingsPage.WorkspaceSettingsForm.update_the_name_of_your_workspace_9e8775b9",
+				)}
 			>
 				<FormFields>
 					<FormField
@@ -86,13 +97,16 @@ export const WorkspaceSettingsForm: FC<WorkspaceSettingsFormProps> = ({
 							helperText: workspace.allow_renames
 								? form.values.name !== form.initialValues.name && (
 										<span className="text-content-warning">
-											Depending on the template, renaming your workspace may be
-											destructive
+											{tI18n(
+												"WorkspaceSettingsPage.WorkspaceSettingsForm.depending_on_the_template_renaming_your_workspac_bf87b1f2",
+											)}
 										</span>
 									)
 								: "Renaming your workspace can be destructive and is disabled by the template.",
 						})}
-						label="Name"
+						label={tI18n(
+							"WorkspaceSettingsPage.WorkspaceSettingsForm.name_dcd1d522",
+						)}
 						disabled={!workspace.allow_renames || form.isSubmitting}
 						onChange={onChangeTrimmed(form)}
 						autoFocus
@@ -101,12 +115,20 @@ export const WorkspaceSettingsForm: FC<WorkspaceSettingsFormProps> = ({
 				</FormFields>
 			</FormSection>
 			<FormSection
-				title="Automatic Updates"
-				description="Configure your workspace to automatically update when started."
+				title={tI18n(
+					"WorkspaceSettingsPage.WorkspaceSettingsForm.automatic_updates_e8287a1a",
+				)}
+				description={tI18n(
+					"WorkspaceSettingsPage.WorkspaceSettingsForm.configure_your_workspace_to_automatically_update_271dbfdd",
+				)}
 			>
 				<FormFields>
 					<div className="flex flex-col gap-2">
-						<Label htmlFor={automaticUpdatesField.id}>Update Policy</Label>
+						<Label htmlFor={automaticUpdatesField.id}>
+							{tI18n(
+								"WorkspaceSettingsPage.WorkspaceSettingsForm.update_policy_829fd2b1",
+							)}
+						</Label>
 						<Select
 							value={
 								workspace.template_require_active_version
@@ -162,12 +184,14 @@ export const WorkspaceSettingsForm: FC<WorkspaceSettingsFormProps> = ({
 			{formEnabled && (
 				<FormFooter>
 					<Button onClick={onCancel} variant="outline">
-						Cancel
+						{tI18n(
+							"WorkspaceSettingsPage.WorkspaceSettingsForm.cancel_19766ed6",
+						)}
 					</Button>
 
 					<Button type="submit" disabled={form.isSubmitting}>
 						<Spinner loading={form.isSubmitting} />
-						Save
+						{tI18n("WorkspaceSettingsPage.WorkspaceSettingsForm.save_1509f561")}
 					</Button>
 				</FormFooter>
 			)}

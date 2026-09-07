@@ -1,3 +1,5 @@
+import { i18n } from "#/i18n";
+import { currentIntlLocale } from "#/i18n/locale";
 export interface NormalizedAttempt {
 	attempt_number: number;
 	status: string;
@@ -14,14 +16,30 @@ export interface NormalizedAttempt {
 }
 
 const RUN_KIND_LABELS: Record<string, string> = {
-	chat_turn: "Chat Turn",
-	title_generation: "Title Generation",
-	compaction: "Compaction",
-	quickgen: "Quick Gen",
-	quick_gen: "Quick Gen",
-	llm_call: "LLM Call",
-	post_process: "Post-process",
-	tool_call: "Tool Call",
+	chat_turn: i18n.t(
+		"agents:AgentsPage.components.RightPanel.DebugPanel.debugPanelUtils.chat_turn_a1a88680",
+	),
+	title_generation: i18n.t(
+		"agents:AgentsPage.components.RightPanel.DebugPanel.debugPanelUtils.title_generation_03c8d7da",
+	),
+	compaction: i18n.t(
+		"agents:AgentsPage.components.RightPanel.DebugPanel.debugPanelUtils.compaction_a0ade140",
+	),
+	quickgen: i18n.t(
+		"agents:AgentsPage.components.RightPanel.DebugPanel.debugPanelUtils.quick_gen_508246f9",
+	),
+	quick_gen: i18n.t(
+		"agents:AgentsPage.components.RightPanel.DebugPanel.debugPanelUtils.quick_gen_508246f9",
+	),
+	llm_call: i18n.t(
+		"agents:AgentsPage.components.RightPanel.DebugPanel.debugPanelUtils.llm_call_a5e0a652",
+	),
+	post_process: i18n.t(
+		"agents:AgentsPage.components.RightPanel.DebugPanel.debugPanelUtils.post_process_9d0a37da",
+	),
+	tool_call: i18n.t(
+		"agents:AgentsPage.components.RightPanel.DebugPanel.debugPanelUtils.tool_call_3e398e6f",
+	),
 };
 
 export const SUCCESS_STATUSES = new Set([
@@ -304,7 +322,9 @@ const tryDecodeBase64 = (value: string): string | undefined => {
 
 export const getRunKindLabel = (kind: string): string => {
 	if (!kind.trim()) {
-		return "Unknown";
+		return i18n.t(
+			"agents:AgentsPage.components.RightPanel.DebugPanel.debugPanelUtils.unknown_b764cdc0",
+		);
 	}
 	return RUN_KIND_LABELS[kind] ?? humanizeToken(kind);
 };
@@ -1240,13 +1260,13 @@ export const extractTokenCounts = (
 
 export const formatTokenSummary = (input?: number, output?: number): string => {
 	if (input !== undefined && output !== undefined) {
-		return `${input.toLocaleString("en-US")}→${output.toLocaleString("en-US")} tok`;
+		return `${input.toLocaleString(currentIntlLocale())}→${output.toLocaleString(currentIntlLocale())} tok`;
 	}
 	if (input !== undefined) {
-		return `${input.toLocaleString("en-US")} in`;
+		return `${input.toLocaleString(currentIntlLocale())} in`;
 	}
 	if (output !== undefined) {
-		return `${output.toLocaleString("en-US")} out`;
+		return `${output.toLocaleString(currentIntlLocale())} out`;
 	}
 	return "";
 };

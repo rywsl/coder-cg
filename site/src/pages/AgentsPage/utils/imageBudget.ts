@@ -2,6 +2,7 @@ import {
 	AnthropicInlineImageCapBytes,
 	MaxChatFileSizeBytes,
 } from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 import { formatProviderLabel } from "./modelOptions";
 
 // Budgets sit below the wire limits to leave room for encoder framing
@@ -37,7 +38,9 @@ export function providerBudgetError(
 	actualBytes: number,
 	budgetBytes: number,
 ): string {
-	const label = provider ? formatProviderLabel(provider) : "this provider";
+	const label = provider
+		? formatProviderLabel(provider)
+		: i18n.t("agents:AgentsPage.utils.imageBudget.this_provider_c2f40144");
 	return `Image too large for ${label} (${formatMiB(actualBytes)} MiB). Inline images must be under ${formatMiB(budgetBytes)} MiB on this provider.`;
 }
 

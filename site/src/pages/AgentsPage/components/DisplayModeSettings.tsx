@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
 	preferenceSettings,
@@ -15,6 +16,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "#/components/Select/Select";
+import { i18n } from "#/i18n";
 
 type DisplayModeOption<T extends string> = { value: T; label: string };
 
@@ -22,16 +24,51 @@ type ThinkingDisplayMode = UserPreferenceSettings["thinking_display_mode"];
 type AgentDisplayMode = UserPreferenceSettings["code_diff_display_mode"];
 
 const thinkingDisplayOptions: DisplayModeOption<ThinkingDisplayMode>[] = [
-	{ value: "auto", label: "Auto" },
-	{ value: "preview", label: "Preview" },
-	{ value: "always_expanded", label: "Always expanded" },
-	{ value: "always_collapsed", label: "Always collapsed" },
+	{
+		value: "auto",
+		label: i18n.t(
+			"agents:AgentsPage.components.DisplayModeSettings.auto_02862497",
+		),
+	},
+	{
+		value: "preview",
+		label: i18n.t(
+			"agents:AgentsPage.components.DisplayModeSettings.preview_324b134f",
+		),
+	},
+	{
+		value: "always_expanded",
+		label: i18n.t(
+			"agents:AgentsPage.components.DisplayModeSettings.always_expanded_cb32471e",
+		),
+	},
+	{
+		value: "always_collapsed",
+		label: i18n.t(
+			"agents:AgentsPage.components.DisplayModeSettings.always_collapsed_dc324558",
+		),
+	},
 ];
 
 const agentDisplayOptions: DisplayModeOption<AgentDisplayMode>[] = [
-	{ value: "auto", label: "Auto" },
-	{ value: "always_expanded", label: "Always expanded" },
-	{ value: "always_collapsed", label: "Always collapsed" },
+	{
+		value: "auto",
+		label: i18n.t(
+			"agents:AgentsPage.components.DisplayModeSettings.auto_02862497",
+		),
+	},
+	{
+		value: "always_expanded",
+		label: i18n.t(
+			"agents:AgentsPage.components.DisplayModeSettings.always_expanded_cb32471e",
+		),
+	},
+	{
+		value: "always_collapsed",
+		label: i18n.t(
+			"agents:AgentsPage.components.DisplayModeSettings.always_collapsed_dc324558",
+		),
+	},
 ];
 
 type DisplayModeSettingsProps<T extends string> = {
@@ -99,12 +136,22 @@ const DisplayModeSettings = <T extends string>({
 };
 
 export const ThinkingDisplaySettings: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<DisplayModeSettings
-			title="Thinking display"
-			description="How thinking blocks should be displayed by default. 'Auto' fully expands during streaming, then auto-collapses when done. 'Preview' auto-expands with a height constraint during streaming. 'Always expanded' shows full content. 'Always collapsed' keeps them collapsed."
-			ariaLabel="Thinking display mode"
-			errorMessage="Failed to save your thinking display preference."
+			title={tI18n(
+				"AgentsPage.components.DisplayModeSettings.thinking_display_a030f314",
+			)}
+			description={tI18n(
+				"AgentsPage.components.DisplayModeSettings.how_thinking_blocks_should_be_displayed_by_defau_eba881f2",
+			)}
+			ariaLabel={tI18n(
+				"AgentsPage.components.DisplayModeSettings.thinking_display_mode_fc783d2c",
+			)}
+			errorMessage={tI18n(
+				"AgentsPage.components.DisplayModeSettings.failed_to_save_your_thinking_display_preference_2eae099b",
+			)}
 			defaultValue="auto"
 			options={thinkingDisplayOptions}
 			getMode={(settings) => settings.thinking_display_mode}
@@ -116,12 +163,22 @@ export const ThinkingDisplaySettings: FC = () => {
 };
 
 export const ShellToolDisplaySettings: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<DisplayModeSettings
-			title="Shell output display"
-			description="How shell command output should be displayed by default. 'Auto' opens running commands and completed commands with output, then keeps empty output collapsed. 'Always expanded' opens shell output by default. 'Always collapsed' keeps it collapsed."
-			ariaLabel="Shell output display mode"
-			errorMessage="Failed to save your shell output display preference."
+			title={tI18n(
+				"AgentsPage.components.DisplayModeSettings.shell_output_display_533a0528",
+			)}
+			description={tI18n(
+				"AgentsPage.components.DisplayModeSettings.how_shell_command_output_should_be_displayed_by__7b0d3b27",
+			)}
+			ariaLabel={tI18n(
+				"AgentsPage.components.DisplayModeSettings.shell_output_display_mode_6d7d08cb",
+			)}
+			errorMessage={tI18n(
+				"AgentsPage.components.DisplayModeSettings.failed_to_save_your_shell_output_display_prefere_0fe10225",
+			)}
 			defaultValue="auto"
 			options={agentDisplayOptions}
 			getMode={(settings) => settings.shell_tool_display_mode}
@@ -133,12 +190,22 @@ export const ShellToolDisplaySettings: FC = () => {
 };
 
 export const CodeDiffDisplaySettings: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<DisplayModeSettings
-			title="Code diff display"
-			description="Controls how code edit diffs appear. 'Auto' starts single-file writes collapsed and opens multi-file edits with a height-constrained preview. 'Always expanded' opens diffs by default; 'Always collapsed' keeps them collapsed."
-			ariaLabel="Code diff display mode"
-			errorMessage="Failed to save your code diff display preference."
+			title={tI18n(
+				"AgentsPage.components.DisplayModeSettings.code_diff_display_ab2ddf81",
+			)}
+			description={tI18n(
+				"AgentsPage.components.DisplayModeSettings.controls_how_code_edit_diffs_appear_auto_starts__e84d712b",
+			)}
+			ariaLabel={tI18n(
+				"AgentsPage.components.DisplayModeSettings.code_diff_display_mode_ffce6941",
+			)}
+			errorMessage={tI18n(
+				"AgentsPage.components.DisplayModeSettings.failed_to_save_your_code_diff_display_preference_7c005052",
+			)}
 			defaultValue="auto"
 			options={agentDisplayOptions}
 			getMode={(settings) => settings.code_diff_display_mode}

@@ -1,5 +1,6 @@
 import { EllipsisVerticalIcon, Share2Icon, UserPlusIcon } from "lucide-react";
 import { type FC, type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import {
@@ -54,34 +55,44 @@ type MemberRowMenuProps = {
 	onRemove: () => void;
 };
 
-const ReadRoleBadge: FC = () => (
-	<span className="inline-block shrink-0 rounded-md bg-surface-secondary px-2 py-0.5 text-xs leading-5">
-		Read
-	</span>
-);
+const ReadRoleBadge: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
 
-const MemberRowMenu: FC<MemberRowMenuProps> = ({ disabled, onRemove }) => (
-	<DropdownMenu>
-		<DropdownMenuTrigger asChild>
-			<Button
-				size="icon-lg"
-				variant="subtle"
-				aria-label="Open menu"
-				disabled={disabled}
-			>
-				<EllipsisVerticalIcon aria-hidden="true" />
-			</Button>
-		</DropdownMenuTrigger>
-		<DropdownMenuContent align="end">
-			<DropdownMenuItem
-				className="text-content-destructive focus:text-content-destructive"
-				onClick={onRemove}
-			>
-				Remove
-			</DropdownMenuItem>
-		</DropdownMenuContent>
-	</DropdownMenu>
-);
+	return (
+		<span className="inline-block shrink-0 rounded-md bg-surface-secondary px-2 py-0.5 text-xs leading-5">
+			{tI18n("AgentsPage.components.ChatSharingPopover.read_9b9a8d05")}
+		</span>
+	);
+};
+
+const MemberRowMenu: FC<MemberRowMenuProps> = ({ disabled, onRemove }) => {
+	const { t: tI18n } = useTranslation("agents");
+
+	return (
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<Button
+					size="icon-lg"
+					variant="subtle"
+					aria-label={tI18n(
+						"AgentsPage.components.ChatSharingPopover.open_menu_b40b3713",
+					)}
+					disabled={disabled}
+				>
+					<EllipsisVerticalIcon aria-hidden="true" />
+				</Button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent align="end">
+				<DropdownMenuItem
+					className="text-content-destructive focus:text-content-destructive"
+					onClick={onRemove}
+				>
+					{tI18n("AgentsPage.components.ChatSharingPopover.remove_c3812fc4")}
+				</DropdownMenuItem>
+			</DropdownMenuContent>
+		</DropdownMenu>
+	);
+};
 
 type AddChatMemberFormProps = {
 	isLoading: boolean;
@@ -95,23 +106,29 @@ const AddChatMemberForm: FC<AddChatMemberFormProps> = ({
 	onSubmit,
 	disabled,
 	children,
-}) => (
-	<form action={onSubmit}>
-		<div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-			<div className="min-w-0 flex-1">{children}</div>
-			<Button
-				disabled={disabled || isLoading}
-				type="submit"
-				className="w-full sm:w-auto"
-			>
-				<Spinner loading={isLoading}>
-					<UserPlusIcon className="size-icon-sm" />
-				</Spinner>
-				Add member
-			</Button>
-		</div>
-	</form>
-);
+}) => {
+	const { t: tI18n } = useTranslation("agents");
+
+	return (
+		<form action={onSubmit}>
+			<div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+				<div className="min-w-0 flex-1">{children}</div>
+				<Button
+					disabled={disabled || isLoading}
+					type="submit"
+					className="w-full sm:w-auto"
+				>
+					<Spinner loading={isLoading}>
+						<UserPlusIcon className="size-icon-sm" />
+					</Spinner>
+					{tI18n(
+						"AgentsPage.components.ChatSharingPopover.add_member_17108415",
+					)}
+				</Button>
+			</div>
+		</form>
+	);
+};
 
 type MemberIdentityProps =
 	| { kind: "group"; group: TypesGen.ChatGroup }
@@ -171,6 +188,8 @@ export const ChatSharingPopoverContent: FC<ChatSharingPopoverContentProps> = ({
 	organizationId,
 	open,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { user: currentUser } = useAuthenticated();
 	const queryClient = useQueryClient();
 	const [selectedOption, setSelectedOption] =
@@ -228,7 +247,11 @@ export const ChatSharingPopoverContent: FC<ChatSharingPopoverContentProps> = ({
 				{
 					onSuccess: () => {
 						setSelectedOption(null);
-						toast.success("Group added to chat.");
+						toast.success(
+							tI18n(
+								"AgentsPage.components.ChatSharingPopover.group_added_to_chat_d0faf062",
+							),
+						);
 					},
 				},
 			);
@@ -244,7 +267,11 @@ export const ChatSharingPopoverContent: FC<ChatSharingPopoverContentProps> = ({
 			{
 				onSuccess: () => {
 					setSelectedOption(null);
-					toast.success("Member added to chat.");
+					toast.success(
+						tI18n(
+							"AgentsPage.components.ChatSharingPopover.member_added_to_chat_4ee2f1ab",
+						),
+					);
 				},
 			},
 		);
@@ -258,7 +285,14 @@ export const ChatSharingPopoverContent: FC<ChatSharingPopoverContentProps> = ({
 		resetMutationErrors();
 		mutateUserRole(
 			{ chatId, userId: user.id, role: "" },
-			{ onSuccess: () => toast.success("Member removed from chat.") },
+			{
+				onSuccess: () =>
+					toast.success(
+						tI18n(
+							"AgentsPage.components.ChatSharingPopover.member_removed_from_chat_668bbe1a",
+						),
+					),
+			},
 		);
 	};
 
@@ -270,7 +304,14 @@ export const ChatSharingPopoverContent: FC<ChatSharingPopoverContentProps> = ({
 		resetMutationErrors();
 		mutateGroupRole(
 			{ chatId, groupId: group.id, role: "" },
-			{ onSuccess: () => toast.success("Group removed from chat.") },
+			{
+				onSuccess: () =>
+					toast.success(
+						tI18n(
+							"AgentsPage.components.ChatSharingPopover.group_removed_from_chat_d8dbfa10",
+						),
+					),
+			},
 		);
 	};
 
@@ -282,9 +323,12 @@ export const ChatSharingPopoverContent: FC<ChatSharingPopoverContentProps> = ({
 			className="w-[calc(100vw-2rem)] p-3 sm:w-[580px] sm:p-4"
 		>
 			<div className="flex items-center gap-2 mb-4">
-				<h3 className="text-lg font-semibold m-0">Chat sharing</h3>
+				<h3 className="text-lg font-semibold m-0">
+					{tI18n(
+						"AgentsPage.components.ChatSharingPopover.chat_sharing_92cb8346",
+					)}
+				</h3>
 			</div>
-
 			<div className="flex flex-col gap-4">
 				{mutationError && <ErrorAlert error={mutationError} />}
 				{aclQuery.error && <ErrorAlert error={aclQuery.error} />}
@@ -292,7 +336,11 @@ export const ChatSharingPopoverContent: FC<ChatSharingPopoverContentProps> = ({
 				{aclQuery.isLoading ? (
 					<div role="status" className="flex flex-col items-center gap-4 py-8">
 						<Spinner loading />
-						<span>Loading chat sharing</span>
+						<span>
+							{tI18n(
+								"AgentsPage.components.ChatSharingPopover.loading_chat_sharing_7042559e",
+							)}
+						</span>
 					</div>
 				) : acl ? (
 					<>
@@ -313,10 +361,14 @@ export const ChatSharingPopoverContent: FC<ChatSharingPopoverContentProps> = ({
 						{isEmpty ? (
 							<div className="flex min-h-44 flex-col items-center justify-center px-6 py-6 text-center">
 								<h4 className="m-0 text-sm font-medium text-content-secondary">
-									No shared members or groups yet
+									{tI18n(
+										"AgentsPage.components.ChatSharingPopover.no_shared_members_or_groups_yet_95df21c4",
+									)}
 								</h4>
 								<p className="m-0 mt-2 text-sm text-content-secondary">
-									Add a member or group using the controls above.
+									{tI18n(
+										"AgentsPage.components.ChatSharingPopover.add_a_member_or_group_using_the_controls_above_694a1dc1",
+									)}
 								</p>
 							</div>
 						) : (
@@ -345,16 +397,22 @@ export const ChatSharingPopoverContent: FC<ChatSharingPopoverContentProps> = ({
 						{!isEmpty && (
 							<div className="hidden sm:block">
 								<Table
-									aria-label="Shared chat members and groups"
+									aria-label={tI18n(
+										"AgentsPage.components.ChatSharingPopover.shared_chat_members_and_groups_83959107",
+									)}
 									wrapperClassName="max-h-60 overflow-y-auto"
 								>
 									<TableHeader>
 										<TableRow>
 											<TableHead className="sticky top-0 z-10 w-[50%] bg-surface-primary py-2">
-												Member
+												{tI18n(
+													"AgentsPage.components.ChatSharingPopover.member_7c968fb7",
+												)}
 											</TableHead>
 											<TableHead className="sticky top-0 z-10 w-[40%] bg-surface-primary py-2">
-												Role
+												{tI18n(
+													"AgentsPage.components.ChatSharingPopover.role_14736a2e",
+												)}
 											</TableHead>
 											<TableHead className="sticky top-0 z-10 w-[10%] bg-surface-primary py-2" />
 										</TableRow>
@@ -407,6 +465,8 @@ export const ChatShareButton: FC<ChatShareButtonProps> = ({
 	chatId,
 	organizationId,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [open, setOpen] = useState(false);
 	const [contentGeneration, setContentGeneration] = useState(0);
 
@@ -423,7 +483,7 @@ export const ChatShareButton: FC<ChatShareButtonProps> = ({
 			<PopoverTrigger asChild>
 				<TopbarButton data-testid="chat-share-button">
 					<Share2Icon />
-					Share
+					{tI18n("AgentsPage.components.ChatSharingPopover.share_29887a5f")}
 				</TopbarButton>
 			</PopoverTrigger>
 			<ChatSharingPopoverContent

@@ -1,4 +1,5 @@
 import { type FC, useId, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { API } from "#/api/api";
 import type { DisplayApp } from "#/api/typesGenerated";
 import { ChevronDownIcon } from "#/components/AnimatedIcons/ChevronDown";
@@ -34,6 +35,8 @@ const isVSCodeVariant = (value: string | null): value is VSCodeVariant => {
 export const VSCodeDevContainerButton: FC<VSCodeDevContainerButtonProps> = (
 	props,
 ) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [isVariantMenuOpen, setIsVariantMenuOpen] = useState(false);
 	const [variant, setVariant] = useState<VSCodeVariant>(() => {
 		const previousVariant = localStorage.getItem(VARIANT_KEY);
@@ -65,7 +68,9 @@ export const VSCodeDevContainerButton: FC<VSCodeDevContainerButtonProps> = (
 				<DropdownMenuTrigger asChild>
 					<AgentButton
 						aria-controls={isVariantMenuOpen ? menuContentId : undefined}
-						aria-label="select VSCode variant"
+						aria-label={tI18n(
+							"resources.VSCodeDevContainerButton.VSCodeDevContainerButton.select_vscode_variant_2f354c95",
+						)}
 						size="icon-lg"
 					>
 						<ChevronDownIcon open={isVariantMenuOpen} />

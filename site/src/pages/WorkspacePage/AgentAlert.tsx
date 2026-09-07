@@ -1,4 +1,5 @@
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, AlertDescription, AlertTitle } from "#/components/Alert/Alert";
 import { Button } from "#/components/Button/Button";
 
@@ -17,6 +18,8 @@ export const AgentAlert: FC<AgentAlertProps> = ({
 	prominent,
 	troubleshootingURL,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<Alert severity={severity} prominent={prominent}>
 			<AlertTitle>{title}</AlertTitle>
@@ -25,7 +28,9 @@ export const AgentAlert: FC<AgentAlertProps> = ({
 				{troubleshootingURL && (
 					<Button size="sm" asChild>
 						<a href={troubleshootingURL} target="_blank" rel="noreferrer">
-							View docs to troubleshoot
+							{tI18n(
+								"WorkspacePage.AgentAlert.view_docs_to_troubleshoot_403f4928",
+							)}
 						</a>
 					</Button>
 				)}

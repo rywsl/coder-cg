@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
 import { provisionerDaemonGroups } from "#/api/queries/organizations";
@@ -11,6 +12,8 @@ import { pageTitle } from "#/utils/page";
 import { OrganizationProvisionerKeysPageView } from "./OrganizationProvisionerKeysPageView";
 
 const OrganizationProvisionerKeysPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { permissions } = useAuthenticated();
 	const { organization: organizationName } = useParams() as {
 		organization: string;
@@ -25,13 +28,21 @@ const OrganizationProvisionerKeysPage: FC = () => {
 	});
 
 	if (!organization) {
-		return <EmptyState message="Organization not found" />;
+		return (
+			<EmptyState
+				message={tI18n(
+					"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPage.organization_not_found_00c50f7a",
+				)}
+			/>
+		);
 	}
 
 	const title = (
 		<title>
 			{pageTitle(
-				"Provisioner Keys",
+				tI18n(
+					"OrganizationSettingsPage.OrganizationProvisionerKeysPage.OrganizationProvisionerKeysPage.provisioner_keys_3c2d4e86",
+				),
 				organization.display_name || organization.name,
 			)}
 		</title>

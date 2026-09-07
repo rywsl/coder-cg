@@ -10,6 +10,7 @@ import {
 	UsersIcon,
 } from "lucide-react";
 import { type FC, Fragment, type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router";
 import type * as TypesGen from "#/api/typesGenerated";
 import type { ChatDiffStatus } from "#/api/typesGenerated";
@@ -65,6 +66,8 @@ type ChatTopBarProps = {
 const ChatSharingTopBarButton: FC<ChatSharingTopBarButtonProps> = ({
 	renderChatSharingContent,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [isChatSharingOpen, setIsChatSharingOpen] = useState(false);
 	const [contentGeneration, setContentGeneration] = useState(0);
 
@@ -83,7 +86,9 @@ const ChatSharingTopBarButton: FC<ChatSharingTopBarButtonProps> = ({
 					variant="subtle"
 					size="icon"
 					className="size-7 text-content-secondary hover:text-content-primary"
-					aria-label="Share chat"
+					aria-label={tI18n(
+						"AgentsPage.components.ChatTopBar.share_chat_60647476",
+					)}
 				>
 					<Share2Icon className="size-4" />
 				</Button>
@@ -117,6 +122,8 @@ export const ChatTopBar: FC<ChatTopBarProps> = ({
 	isSharedChat,
 	renderChatSharingContent,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { isEmbedded } = useEmbedContext();
 	const location = useLocation();
 
@@ -141,7 +148,7 @@ export const ChatTopBar: FC<ChatTopBarProps> = ({
 				>
 					<Link
 						to={{ pathname: "/agents", search: location.search }}
-						aria-label="Back"
+						aria-label={tI18n("AgentsPage.components.ChatTopBar.back_76900f1b")}
 					>
 						<ArrowLeftIcon />
 					</Link>
@@ -153,7 +160,9 @@ export const ChatTopBar: FC<ChatTopBarProps> = ({
 					variant="subtle"
 					size="icon"
 					onClick={onToggleSidebarCollapsed}
-					aria-label="Expand sidebar"
+					aria-label={tI18n(
+						"AgentsPage.components.ChatTopBar.expand_sidebar_37a5d648",
+					)}
 					className="hidden size-7 min-w-0 shrink-0 sm:inline-flex"
 				>
 					<PanelLeftIcon />
@@ -193,7 +202,9 @@ export const ChatTopBar: FC<ChatTopBarProps> = ({
 						{isSharedChat && (
 							<UsersIcon
 								className="size-3.5 shrink-0 text-content-secondary"
-								aria-label="Shared chat"
+								aria-label={tI18n(
+									"AgentsPage.components.ChatTopBar.shared_chat_ca99f000",
+								)}
 							/>
 						)}
 					</div>
@@ -210,7 +221,9 @@ export const ChatTopBar: FC<ChatTopBarProps> = ({
 									size="icon"
 									variant="subtle"
 									className="size-7 shrink-0 text-content-secondary hover:text-content-primary"
-									aria-label="Open agent actions"
+									aria-label={tI18n(
+										"AgentsPage.components.ChatTopBar.open_agent_actions_2befb4b6",
+									)}
 								>
 									<EllipsisVerticalIcon className="size-4" />
 								</Button>
@@ -258,10 +271,17 @@ export const ChatTopBar: FC<ChatTopBarProps> = ({
 						className="size-3.5! shrink-0"
 					/>
 					<span className="truncate max-w-[120px] hidden sm:inline">
-						{prTitle || (prNumberMatch ? `#${prNumberMatch}` : "PR")}
+						{prTitle ||
+							(prNumberMatch
+								? tI18n("AgentsPage.components.ChatTopBar.value0_dfaa497a", {
+										value0: prNumberMatch,
+									})
+								: tI18n("AgentsPage.components.ChatTopBar.pr_c3972ccd"))}
 					</span>
 					<span className="sm:hidden">
-						{prNumberMatch ? prNumberMatch : "PR"}
+						{prNumberMatch
+							? prNumberMatch
+							: tI18n("AgentsPage.components.ChatTopBar.pr_c3972ccd")}
 					</span>
 				</a>
 			)}
@@ -278,7 +298,9 @@ export const ChatTopBar: FC<ChatTopBarProps> = ({
 						size="icon"
 						onClick={panel.onToggleSidebar}
 						className="size-7 text-content-secondary hover:text-content-primary"
-						aria-label="Toggle panel"
+						aria-label={tI18n(
+							"AgentsPage.components.ChatTopBar.toggle_panel_ed988528",
+						)}
 					>
 						{panel.showSidebarPanel ? (
 							<PanelRightCloseIcon className="size-4" />

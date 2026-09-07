@@ -5,6 +5,7 @@ import {
 	GitBranchIcon,
 } from "lucide-react";
 import { type FC, type RefObject, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { chatDiffContents } from "#/api/queries/chats";
 import type * as TypesGen from "#/api/typesGenerated";
@@ -29,6 +30,8 @@ export { InlinePromptInput } from "../DiffViewer/CommentableDiffViewer";
 // -------------------------------------------------------------------
 
 const BranchCopyButton: FC<{ branch: string }> = ({ branch }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { copyToClipboard, showCopiedSuccess } = useClipboard();
 	return (
 		<Tooltip>
@@ -36,7 +39,12 @@ const BranchCopyButton: FC<{ branch: string }> = ({ branch }) => {
 				<button
 					type="button"
 					onClick={() => copyToClipboard(branch)}
-					aria-label={`Copy branch name: ${branch}`}
+					aria-label={tI18n(
+						"AgentsPage.components.DiffViewer.RemoteDiffPanel.copy_branch_name_value0_ace8b8f9",
+						{
+							value0: branch,
+						},
+					)}
 					className="inline-flex shrink-0 cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent p-0.5 text-content-secondary transition-colors hover:bg-surface-secondary hover:text-content-primary"
 				>
 					{showCopiedSuccess ? (
@@ -47,7 +55,13 @@ const BranchCopyButton: FC<{ branch: string }> = ({ branch }) => {
 				</button>
 			</TooltipTrigger>
 			<TooltipContent side="bottom">
-				{showCopiedSuccess ? "Copied" : "Copy branch name"}
+				{showCopiedSuccess
+					? tI18n(
+							"AgentsPage.components.DiffViewer.RemoteDiffPanel.copied_8d525e5f",
+						)
+					: tI18n(
+							"AgentsPage.components.DiffViewer.RemoteDiffPanel.copy_branch_name_0bdd2451",
+						)}
 			</TooltipContent>
 		</Tooltip>
 	);
@@ -72,6 +86,8 @@ export const RemoteDiffPanel: FC<RemoteDiffPanelProps> = ({
 	diffStyle,
 	diffStatus,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	// ---------------------------------------------------------------
 	// Data fetching
 	// ---------------------------------------------------------------
@@ -155,7 +171,9 @@ export const RemoteDiffPanel: FC<RemoteDiffPanelProps> = ({
 							rel="noreferrer"
 							className="inline-flex items-center gap-1 rounded-sm border border-solid border-border-default px-2 text-[13px] font-medium leading-5 text-content-primary no-underline transition-colors hover:bg-surface-secondary"
 						>
-							View PR
+							{tI18n(
+								"AgentsPage.components.DiffViewer.RemoteDiffPanel.view_pr_d9814dd0",
+							)}
 							<ExternalLinkIcon className="size-3" />
 						</a>
 					</div>

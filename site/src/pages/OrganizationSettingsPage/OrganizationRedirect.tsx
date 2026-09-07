@@ -1,10 +1,13 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Navigate } from "react-router";
 import { EmptyState } from "#/components/EmptyState/EmptyState";
 import { useOrganizationSettings } from "#/modules/management/OrganizationSettingsLayout";
 import { canEditOrganization } from "#/modules/permissions/organizations";
 
 const OrganizationRedirect: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const {
 		organizations,
 		organizationPermissionsByOrganizationId: organizationPermissions,
@@ -30,7 +33,13 @@ const OrganizationRedirect: FC = () => {
 	if (viewableOrg) {
 		return <Navigate to={`/organizations/${viewableOrg.name}`} replace />;
 	}
-	return <EmptyState message="No organizations found" />;
+	return (
+		<EmptyState
+			message={tI18n(
+				"OrganizationSettingsPage.OrganizationRedirect.no_organizations_found_538995db",
+			)}
+		/>
+	);
 };
 
 export default OrganizationRedirect;

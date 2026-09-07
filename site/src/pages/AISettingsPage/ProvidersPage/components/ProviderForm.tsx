@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import { TriangleAlertIcon } from "lucide-react";
 import { type FC, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import * as Yup from "yup";
 import type {
@@ -25,6 +26,7 @@ import {
 } from "#/components/Select/Select";
 import { Spinner } from "#/components/Spinner/Spinner";
 import { useUnsavedChangesPrompt } from "#/hooks/useUnsavedChangesPrompt";
+import { i18n } from "#/i18n";
 import { docs } from "#/utils/docs";
 import { getFormHelpers } from "#/utils/formUtils";
 import { CredentialField } from "./CredentialField";
@@ -74,9 +76,15 @@ const makeNameSchema = (editing: boolean) =>
 		: Yup.string()
 				.matches(
 					PROVIDER_NAME_REGEX,
-					"Name must be lowercase, hyphen-separated (e.g. 'my-anthropic').",
+					i18n.t(
+						"agents:AISettingsPage.ProvidersPage.components.ProviderForm.name_must_be_lowercase_hyphen_separated_e_g_my_a_0d4201a7",
+					),
 				)
-				.required("Name is required");
+				.required(
+					i18n.t(
+						"agents:AISettingsPage.ProvidersPage.components.ProviderForm.name_is_required_604fd1b2",
+					),
+				);
 
 // Display name is always optional. The form copy says blank falls back
 // to the provider name, and the update API supports clearing the value.
@@ -166,10 +174,18 @@ const makeOpenAiAnthropicSchema = (editing: boolean) =>
 		displayName: makeDisplayNameSchema(editing),
 		icon: Yup.string(),
 		// URL shape is validated by the backend; the form only checks presence.
-		baseUrl: Yup.string().required("Endpoint is required"),
+		baseUrl: Yup.string().required(
+			i18n.t(
+				"agents:AISettingsPage.ProvidersPage.components.ProviderForm.endpoint_is_required_e644e085",
+			),
+		),
 		apiKey: editing
 			? Yup.string()
-			: Yup.string().required("API key is required"),
+			: Yup.string().required(
+					i18n.t(
+						"agents:AISettingsPage.ProvidersPage.components.ProviderForm.api_key_is_required_59b831ea",
+					),
+				),
 		enabled: Yup.boolean(),
 	});
 
@@ -179,8 +195,9 @@ const credentialFilled = (value: string | undefined): boolean => {
 	return trimmed !== "" && trimmed !== SAVED_CREDENTIAL_MASK;
 };
 
-const BEDROCK_ACCESS_KEY_PAIRED_MESSAGE =
-	"Enter both access key and secret, or leave both blank to use AWS environment credentials.";
+const BEDROCK_ACCESS_KEY_PAIRED_MESSAGE = i18n.t(
+	"agents:AISettingsPage.ProvidersPage.components.ProviderForm.enter_both_access_key_and_secret_or_leave_both_b_cf872347",
+);
 
 // Bedrock access keys are optional: when both are blank the server
 // falls back to ambient AWS credentials (IAM role, AWS_PROFILE, IRSA,
@@ -203,26 +220,44 @@ const makeBedrockSchema = (editing: boolean) =>
 				then: (schema) =>
 					schema.matches(
 						BEDROCK_MANTLE_URL_REGEX,
-						"Endpoint must be a Bedrock mantle URL (https://bedrock-mantle.{region}.api.aws/anthropic).",
+						i18n.t(
+							"agents:AISettingsPage.ProvidersPage.components.ProviderForm.endpoint_must_be_a_bedrock_mantle_url_https_bedr_8852084b",
+						),
 					),
 				otherwise: (schema) =>
 					schema.matches(
 						BEDROCK_INVOKE_MODEL_URL_REGEX,
-						"Endpoint must be a Bedrock InvokeModel URL (https://bedrock-runtime.{region}.amazonaws.com).",
+						i18n.t(
+							"agents:AISettingsPage.ProvidersPage.components.ProviderForm.endpoint_must_be_a_bedrock_invokemodel_url_https_ea6b03d0",
+						),
 					),
 			})
-			.required("Endpoint is required"),
+			.required(
+				i18n.t(
+					"agents:AISettingsPage.ProvidersPage.components.ProviderForm.endpoint_is_required_e644e085",
+				),
+			),
 		apiKey: Yup.string(),
 		// Mantle passthrough forwards the model chosen by the client, so the
 		// model fields are not configured on the provider.
 		model: Yup.string().when("protocol", {
 			is: (protocol: string) => protocol !== "mantle",
-			then: (schema) => schema.required("Model is required"),
+			then: (schema) =>
+				schema.required(
+					i18n.t(
+						"agents:AISettingsPage.ProvidersPage.components.ProviderForm.model_is_required_58221dcf",
+					),
+				),
 			otherwise: (schema) => schema,
 		}),
 		smallFastModel: Yup.string().when("protocol", {
 			is: (protocol: string) => protocol !== "mantle",
-			then: (schema) => schema.required("Small-fast model is required"),
+			then: (schema) =>
+				schema.required(
+					i18n.t(
+						"agents:AISettingsPage.ProvidersPage.components.ProviderForm.small_fast_model_is_required_f6ea5400",
+					),
+				),
 			otherwise: (schema) => schema,
 		}),
 		accessKey: Yup.string().test(
@@ -253,7 +288,11 @@ const makeCopilotSchema = (editing: boolean) =>
 		name: makeNameSchema(editing),
 		displayName: makeDisplayNameSchema(editing),
 		icon: Yup.string(),
-		baseUrl: Yup.string().required("Endpoint is required"),
+		baseUrl: Yup.string().required(
+			i18n.t(
+				"agents:AISettingsPage.ProvidersPage.components.ProviderForm.endpoint_is_required_e644e085",
+			),
+		),
 		enabled: Yup.boolean(),
 	});
 
@@ -337,6 +376,8 @@ export const ProviderForm: FC<ProviderFormProps> = ({
 	isLoading = false,
 	submitError,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const resolvedType = initialValues?.type ?? defaultInitialValues.type;
 	const typeDefaults =
 		providerDefaults[resolvedType as keyof typeof providerDefaults];
@@ -383,9 +424,15 @@ export const ProviderForm: FC<ProviderFormProps> = ({
 
 	const iconField = (
 		<div className="flex flex-col gap-2">
-			<Label htmlFor="icon">Icon</Label>
+			<Label htmlFor="icon">
+				{tI18n(
+					"AISettingsPage.ProvidersPage.components.ProviderForm.icon_a35abcd6",
+				)}
+			</Label>
 			<div className="text-xs text-content-secondary">
-				Optional. URL or emoji shown for this provider.
+				{tI18n(
+					"AISettingsPage.ProvidersPage.components.ProviderForm.optional_url_or_emoji_shown_for_this_provider_0a51f6a1",
+				)}
 			</div>
 			<IconField
 				id="icon"
@@ -480,16 +527,24 @@ export const ProviderForm: FC<ProviderFormProps> = ({
 							<FormField
 								required
 								field={getFieldHelpers("name")}
-								label="Name"
-								description="Unique identifier (used in urls, can't be changed)"
+								label={tI18n(
+									"AISettingsPage.ProvidersPage.components.ProviderForm.name_dcd1d522",
+								)}
+								description={tI18n(
+									"AISettingsPage.ProvidersPage.components.ProviderForm.unique_identifier_used_in_urls_can_t_be_changed_637196f5",
+								)}
 								className="w-full"
 								placeholder={namePlaceholder(form.values.type)}
 								disabled={editing}
 							/>
 							<FormField
 								field={getFieldHelpers("displayName")}
-								label="Display name"
-								description="Friendly name. Defaults to name if blank."
+								label={tI18n(
+									"AISettingsPage.ProvidersPage.components.ProviderForm.display_name_2b7f6a84",
+								)}
+								description={tI18n(
+									"AISettingsPage.ProvidersPage.components.ProviderForm.friendly_name_defaults_to_name_if_blank_212d32e4",
+								)}
 								className="w-full"
 							/>
 						</div>
@@ -499,17 +554,26 @@ export const ProviderForm: FC<ProviderFormProps> = ({
 							field={getFieldHelpers("baseUrl", {
 								backendFieldName: "base_url",
 							})}
-							label="Endpoint"
+							label={tI18n(
+								"AISettingsPage.ProvidersPage.components.ProviderForm.endpoint_3df9726c",
+							)}
 							description={
 								typeSelectValue === "copilot" ? (
 									<>
-										The base URL for your Copilot tier:{" "}
+										{tI18n(
+											"AISettingsPage.ProvidersPage.components.ProviderForm.the_base_url_for_your_copilot_tier_baad719f",
+										)}{" "}
 										<code>https://api.individual.githubcopilot.com</code>,{" "}
-										<code>https://api.business.githubcopilot.com</code>, or{" "}
+										<code>https://api.business.githubcopilot.com</code>
+										{tI18n(
+											"AISettingsPage.ProvidersPage.components.ProviderForm.or_3d30020b",
+										)}{" "}
 										<code>https://api.enterprise.githubcopilot.com</code>.
 									</>
 								) : (
-									"The base URL where the provider's API is hosted."
+									tI18n(
+										"AISettingsPage.ProvidersPage.components.ProviderForm.the_base_url_where_the_provider_s_api_is_hosted_a25deddf",
+									)
 								)
 							}
 							className="w-full"
@@ -517,15 +581,16 @@ export const ProviderForm: FC<ProviderFormProps> = ({
 						/>
 						{typeSelectValue === "copilot" ? (
 							<p className="text-sm text-content-secondary m-0">
-								Copilot authenticates with each user's GitHub OAuth token at
-								request time, so there is no API key to configure here. This
-								requires a GitHub external authentication provider to be
-								configured.
+								{tI18n(
+									"AISettingsPage.ProvidersPage.components.ProviderForm.copilot_authenticates_with_each_user_s_github_oa_55687d18",
+								)}
 							</p>
 						) : (
 							<CredentialField
 								required
-								label="API key"
+								label={tI18n(
+									"AISettingsPage.ProvidersPage.components.ProviderForm.api_key_16f0ee47",
+								)}
 								helpers={getFieldHelpers("apiKey")}
 								onBlur={() => handleCredentialBlur("apiKey")}
 								onFocus={() => handleCredentialFocus("apiKey")}
@@ -542,22 +607,34 @@ export const ProviderForm: FC<ProviderFormProps> = ({
 							<FormField
 								required
 								field={getFieldHelpers("name")}
-								label="Name"
-								description="Unique identifier (used in urls, can't be changed)"
+								label={tI18n(
+									"AISettingsPage.ProvidersPage.components.ProviderForm.name_dcd1d522",
+								)}
+								description={tI18n(
+									"AISettingsPage.ProvidersPage.components.ProviderForm.unique_identifier_used_in_urls_can_t_be_changed_637196f5",
+								)}
 								className="w-full"
 								placeholder={namePlaceholder(form.values.type)}
 								disabled={editing}
 							/>
 							<FormField
 								field={getFieldHelpers("displayName")}
-								label="Display name"
-								description="Friendly name. Defaults to name if blank."
+								label={tI18n(
+									"AISettingsPage.ProvidersPage.components.ProviderForm.display_name_2b7f6a84",
+								)}
+								description={tI18n(
+									"AISettingsPage.ProvidersPage.components.ProviderForm.friendly_name_defaults_to_name_if_blank_212d32e4",
+								)}
 								className="w-full"
 							/>
 						</div>
 						{iconField}
 						<div className="flex flex-col gap-2">
-							<Label htmlFor="bedrock-protocol">Protocol</Label>
+							<Label htmlFor="bedrock-protocol">
+								{tI18n(
+									"AISettingsPage.ProvidersPage.components.ProviderForm.protocol_cf088334",
+								)}
+							</Label>
 							<Select
 								value={form.values.protocol}
 								onValueChange={(value) =>
@@ -570,14 +647,26 @@ export const ProviderForm: FC<ProviderFormProps> = ({
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value="invoke-model">InvokeModel</SelectItem>
-									<SelectItem value="mantle">Mantle</SelectItem>
+									<SelectItem value="invoke-model">
+										{tI18n(
+											"AISettingsPage.ProvidersPage.components.ProviderForm.invokemodel_c72cf967",
+										)}
+									</SelectItem>
+									<SelectItem value="mantle">
+										{tI18n(
+											"AISettingsPage.ProvidersPage.components.ProviderForm.mantle_ae66fdba",
+										)}
+									</SelectItem>
 								</SelectContent>
 							</Select>
 							<p className="text-xs text-content-secondary m-0">
 								{isMantle
-									? "Newer Anthropic-compatible Bedrock endpoint, recommended by AWS for new deployments."
-									: "Legacy Bedrock runtime API. Still supported; Mantle is recommended for new deployments."}
+									? tI18n(
+											"AISettingsPage.ProvidersPage.components.ProviderForm.newer_anthropic_compatible_bedrock_endpoint_reco_f327a00f",
+										)
+									: tI18n(
+											"AISettingsPage.ProvidersPage.components.ProviderForm.legacy_bedrock_runtime_api_still_supported_mantl_7a3ea598",
+										)}
 							</p>
 						</div>
 						<FormField
@@ -585,10 +674,14 @@ export const ProviderForm: FC<ProviderFormProps> = ({
 							field={getFieldHelpers("baseUrl", {
 								backendFieldName: "base_url",
 							})}
-							label="Endpoint"
+							label={tI18n(
+								"AISettingsPage.ProvidersPage.components.ProviderForm.endpoint_3df9726c",
+							)}
 							description={
 								<>
-									In the format of{" "}
+									{tI18n(
+										"AISettingsPage.ProvidersPage.components.ProviderForm.in_the_format_of_f3674a02",
+									)}{" "}
 									<code>
 										{isMantle
 											? "https://bedrock-mantle.{region}.api.aws/anthropic"
@@ -609,27 +702,35 @@ export const ProviderForm: FC<ProviderFormProps> = ({
 									<FormField
 										required
 										field={getFieldHelpers("model")}
-										label="Model"
+										label={tI18n(
+											"AISettingsPage.ProvidersPage.components.ProviderForm.model_5e2c614c",
+										)}
 										className="w-full"
 										placeholder={BEDROCK_DEFAULT_MODEL}
 									/>
 									<FormField
 										required
 										field={getFieldHelpers("smallFastModel")}
-										label="Small-fast model"
+										label={tI18n(
+											"AISettingsPage.ProvidersPage.components.ProviderForm.small_fast_model_45d78430",
+										)}
 										className="w-full"
 										placeholder={BEDROCK_DEFAULT_SMALL_FAST_MODEL}
 									/>
 								</div>
 								<p className="text-xs text-content-secondary m-0">
-									Find available Bedrock model IDs in the{" "}
+									{tI18n(
+										"AISettingsPage.ProvidersPage.components.ProviderForm.find_available_bedrock_model_ids_in_the_f1c0575b",
+									)}{" "}
 									<DocsLink
 										size="sm"
 										href={BEDROCK_MODEL_CARDS_URL}
 										target="_blank"
 										rel="noreferrer"
 									>
-										AWS Bedrock model cards
+										{tI18n(
+											"AISettingsPage.ProvidersPage.components.ProviderForm.aws_bedrock_model_cards_b8ebdfad",
+										)}
 									</DocsLink>
 									.
 								</p>
@@ -637,14 +738,18 @@ export const ProviderForm: FC<ProviderFormProps> = ({
 						)}
 						<div className="grid grid-cols-2 items-start gap-4">
 							<CredentialField
-								label="Access key"
+								label={tI18n(
+									"AISettingsPage.ProvidersPage.components.ProviderForm.access_key_8663b0d4",
+								)}
 								helpers={getFieldHelpers("accessKey")}
 								onBlur={() => handleCredentialBlur("accessKey")}
 								onFocus={() => handleCredentialFocus("accessKey")}
 								autoComplete="new-password"
 							/>
 							<CredentialField
-								label="Access key secret"
+								label={tI18n(
+									"AISettingsPage.ProvidersPage.components.ProviderForm.access_key_secret_96cc3983",
+								)}
 								helpers={getFieldHelpers("accessKeySecret")}
 								onBlur={() => handleCredentialBlur("accessKeySecret")}
 								onFocus={() => handleCredentialFocus("accessKeySecret")}
@@ -652,35 +757,51 @@ export const ProviderForm: FC<ProviderFormProps> = ({
 							/>
 						</div>
 						<p className="text-xs text-content-secondary m-0">
-							Optional. Leave both fields blank to authenticate with the AWS
-							environment (IAM role, instance profile, AWS_PROFILE).{" "}
+							{tI18n(
+								"AISettingsPage.ProvidersPage.components.ProviderForm.optional_leave_both_fields_blank_to_authenticate_5716ca65",
+							)}{" "}
 							<DocsLink
 								size="sm"
 								href={docs("/ai-coder/ai-gateway/providers#amazon-bedrock")}
 								target="_blank"
 								rel="noreferrer"
 							>
-								View docs
+								{tI18n(
+									"AISettingsPage.ProvidersPage.components.ProviderForm.view_docs_61479fda",
+								)}
 							</DocsLink>
 						</p>
 						<FormField
 							field={getFieldHelpers("roleArn")}
-							label="Role ARN"
+							label={tI18n(
+								"AISettingsPage.ProvidersPage.components.ProviderForm.role_arn_6cbb6f1d",
+							)}
 							className="w-full"
-							placeholder="arn:aws:iam::123456789012:role/BedrockRole"
+							placeholder={tI18n(
+								"AISettingsPage.ProvidersPage.components.ProviderForm.arn_aws_iam_123456789012_role_bedrockrole_6b155a5b",
+							)}
 						/>
 						<p className="text-xs text-content-secondary m-0">
-							Optional. When a role ARN is set, the gateway assumes that role
-							(using the base identity) before calling Bedrock.
+							{tI18n(
+								"AISettingsPage.ProvidersPage.components.ProviderForm.optional_when_a_role_arn_is_set_the_gateway_assu_df5ff74e",
+							)}
 						</p>
 						{editing && bedrockExternalId && (
 							<div className="flex flex-col gap-2">
-								<Label>External ID</Label>
+								<Label>
+									{tI18n(
+										"AISettingsPage.ProvidersPage.components.ProviderForm.external_id_69da56ba",
+									)}
+								</Label>
 								<CodeExample secret={false} code={bedrockExternalId} />
 								<p className="text-xs text-content-secondary m-0">
-									Server-generated. Add it to the assumed role's trust policy as
-									an <code>sts:ExternalId</code> condition so only this
-									deployment can assume the role.
+									{tI18n(
+										"AISettingsPage.ProvidersPage.components.ProviderForm.server_generated_add_it_to_the_assumed_role_s_tr_ca2c5302",
+									)}
+									<code>sts:ExternalId</code>
+									{tI18n(
+										"AISettingsPage.ProvidersPage.components.ProviderForm.condition_so_only_this_deployment_can_assume_the_9936222a",
+									)}
 								</p>
 							</div>
 						)}
@@ -690,7 +811,9 @@ export const ProviderForm: FC<ProviderFormProps> = ({
 				<div className="flex justify-end gap-4">
 					<Link to="/ai/settings/providers">
 						<Button variant="outline" type="button">
-							Cancel
+							{tI18n(
+								"AISettingsPage.ProvidersPage.components.ProviderForm.cancel_19766ed6",
+							)}
 						</Button>
 					</Link>
 					<Button
@@ -698,7 +821,13 @@ export const ProviderForm: FC<ProviderFormProps> = ({
 						type="submit"
 					>
 						<Spinner loading={isLoading} />
-						{editing ? "Update provider" : "Add provider"}
+						{editing
+							? tI18n(
+									"AISettingsPage.ProvidersPage.components.ProviderForm.update_provider_09ab4ff0",
+								)
+							: tI18n(
+									"AISettingsPage.ProvidersPage.components.ProviderForm.add_provider_8cd1856b",
+								)}
 					</Button>
 				</div>
 			</FormFields>
@@ -708,13 +837,19 @@ export const ProviderForm: FC<ProviderFormProps> = ({
 				open={unsavedChanges.isOpen}
 				onClose={unsavedChanges.onCancel}
 				onConfirm={unsavedChanges.onConfirm}
-				title="Unsaved changes"
-				confirmText="Confirm"
+				title={tI18n(
+					"AISettingsPage.ProvidersPage.components.ProviderForm.unsaved_changes_a710c2b9",
+				)}
+				confirmText={tI18n(
+					"AISettingsPage.ProvidersPage.components.ProviderForm.confirm_eebdd24a",
+				)}
 				description={
 					<div className="flex items-start gap-3">
 						<TriangleAlertIcon className="size-icon-sm mt-1 shrink-0" />
 						<p className="m-0">
-							Your updates haven't been saved. Leave anyway?
+							{tI18n(
+								"AISettingsPage.ProvidersPage.components.ProviderForm.your_updates_haven_t_been_saved_leave_anyway_0230d6de",
+							)}
 						</p>
 					</div>
 				}

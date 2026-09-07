@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -24,6 +25,8 @@ type CreateTokenPageProps = {
 };
 
 const CreateTokenPage: FC<CreateTokenPageProps> = ({ now }) => {
+	const { t: tI18n } = useTranslation("pages");
+
 	const navigate = useNavigate();
 
 	const {
@@ -46,15 +49,20 @@ const CreateTokenPage: FC<CreateTokenPageProps> = ({ now }) => {
 	const [formError, setFormError] = useState<unknown>(undefined);
 
 	const onCreateSuccess = () => {
-		toast.success("Token has been created.");
+		toast.success(
+			tI18n("CreateTokenPage.CreateTokenPage.token_has_been_created_f26a3ba4"),
+		);
 		navigate("/settings/tokens");
 	};
 
 	const onCreateError = (error: unknown) => {
 		setFormError(error);
-		toast.error("Failed to create token.", {
-			description: getErrorDetail(error),
-		});
+		toast.error(
+			tI18n("CreateTokenPage.CreateTokenPage.failed_to_create_token_8cec121b"),
+			{
+				description: getErrorDetail(error),
+			},
+		);
 	};
 
 	const form = useFormik<CreateTokenData>({
@@ -75,7 +83,11 @@ const CreateTokenPage: FC<CreateTokenPageProps> = ({ now }) => {
 
 	const tokenDescription = (
 		<>
-			<p>Make sure you copy the below token before proceeding:</p>
+			<p>
+				{tI18n(
+					"CreateTokenPage.CreateTokenPage.make_sure_you_copy_the_below_token_before_procee_af6f4996",
+				)}
+			</p>
 			<CodeExample
 				secret={false}
 				code={newToken?.key ?? ""}
@@ -90,12 +102,17 @@ const CreateTokenPage: FC<CreateTokenPageProps> = ({ now }) => {
 
 	return (
 		<>
-			<title>{pageTitle("Create Token")}</title>
-
+			<title>
+				{pageTitle(
+					tI18n("CreateTokenPage.CreateTokenPage.create_token_eda3d6ef"),
+				)}
+			</title>
 			{tokenFetchFailed && <ErrorAlert error={tokenFetchError} />}
 			<FullPageHorizontalForm
-				title="Create Token"
-				detail="All tokens are unscoped and therefore have full resource access."
+				title={tI18n("CreateTokenPage.CreateTokenPage.create_token_eda3d6ef")}
+				detail={tI18n(
+					"CreateTokenPage.CreateTokenPage.all_tokens_are_unscoped_and_therefore_have_full__aa0d2adc",
+				)}
 			>
 				<CreateTokenForm
 					form={form}
@@ -110,7 +127,9 @@ const CreateTokenPage: FC<CreateTokenPageProps> = ({ now }) => {
 				<ConfirmDialog
 					type="info"
 					hideCancel
-					title="Creation successful"
+					title={tI18n(
+						"CreateTokenPage.CreateTokenPage.creation_successful_2fa3d74c",
+					)}
 					description={tokenDescription}
 					open={creationSuccessful && Boolean(newToken.key)}
 					confirmLoading={isCreating}

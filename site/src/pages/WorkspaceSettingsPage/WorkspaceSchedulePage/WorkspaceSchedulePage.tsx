@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
@@ -33,6 +34,8 @@ import {
 import { WorkspaceScheduleForm } from "./WorkspaceScheduleForm";
 
 const WorkspaceSchedulePage: FC = () => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const params = useParams() as { username: string; workspace: string };
 	const navigate = useNavigate();
 	const username = params.username.replace("@", "");
@@ -52,12 +55,22 @@ const WorkspaceSchedulePage: FC = () => {
 				),
 			});
 			toast.success(
-				`Schedule for workspace "${workspaceName}" updated successfully.`,
+				tI18n(
+					"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceSchedulePage.schedule_for_workspace_value0_updated_successful_197faf57",
+					{
+						value0: workspaceName,
+					},
+				),
 			);
 		},
 		onError: (error) =>
 			toast.error(
-				`Failed to update schedule for workspace "${workspaceName}".`,
+				tI18n(
+					"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceSchedulePage.failed_to_update_schedule_for_workspace_value0_f9a57470",
+					{
+						value0: workspaceName,
+					},
+				),
 				{
 					description: getErrorDetail(error),
 				},
@@ -73,42 +86,58 @@ const WorkspaceSchedulePage: FC = () => {
 
 	return (
 		<div className="flex flex-col gap-12">
-			<title>{pageTitle(workspaceName, "Schedule")}</title>
-
+			<title>
+				{pageTitle(
+					workspaceName,
+					tI18n(
+						"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceSchedulePage.schedule_f4830a1d",
+					),
+				)}
+			</title>
 			<SettingsHeader>
-				<SettingsHeaderTitle>Schedule</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceSchedulePage.schedule_f4830a1d",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Configure when this workspace starts and stops automatically.
+					{tI18n(
+						"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceSchedulePage.configure_when_this_workspace_starts_and_stops_a_0c29a87e",
+					)}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			{error && <ErrorAlert error={error} />}
-
 			{isLoading && <Loader />}
-
 			{permissions && !permissions.updateWorkspace && (
 				<Alert severity="error">
-					You don&apos;t have permissions to update the schedule for this
-					workspace.
+					{tI18n(
+						"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceSchedulePage.you_don_t_have_permissions_to_update_the_schedul_75e126d2",
+					)}
 				</Alert>
 			)}
-
 			{template &&
 				(workspace.is_prebuild ? (
 					<Alert severity="info">
-						Prebuilt workspaces ignore workspace-level scheduling until they are
-						claimed. For prebuilt workspace specific scheduling refer to the{" "}
+						{tI18n(
+							"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceSchedulePage.prebuilt_workspaces_ignore_workspace_level_sched_1859aaa0",
+						)}{" "}
 						<Link
-							title="Prebuilt Workspaces Scheduling"
+							title={tI18n(
+								"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceSchedulePage.prebuilt_workspaces_scheduling_ade4d9fd",
+							)}
 							href={docs(
 								"/admin/templates/extending-templates/prebuilt-workspaces#scheduling",
 							)}
 							target="_blank"
 							rel="noreferrer"
 						>
-							Prebuilt Workspaces Scheduling
+							{tI18n(
+								"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceSchedulePage.prebuilt_workspaces_scheduling_ade4d9fd",
+							)}
 						</Link>{" "}
-						documentation page.
+						{tI18n(
+							"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceSchedulePage.documentation_page_c064490e",
+						)}
 					</Alert>
 				) : (
 					<WorkspaceScheduleForm
@@ -160,13 +189,20 @@ const WorkspaceSchedulePage: FC = () => {
 						}}
 					/>
 				))}
-
 			<ConfirmDialog
 				open={isConfirmingApply}
-				title="Restart workspace?"
-				description="Would you like to restart your workspace now to apply your new autostop setting, or let it apply after your next workspace start?"
-				confirmText="Restart"
-				cancelText="Apply later"
+				title={tI18n(
+					"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceSchedulePage.restart_workspace_55e09b3f",
+				)}
+				description={tI18n(
+					"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceSchedulePage.would_you_like_to_restart_your_workspace_now_to__6940dbf5",
+				)}
+				confirmText={tI18n(
+					"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceSchedulePage.restart_6b983a81",
+				)}
+				cancelText={tI18n(
+					"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceSchedulePage.apply_later_ec4934f4",
+				)}
 				hideCancel={false}
 				onConfirm={() => {
 					restartWorkspace();

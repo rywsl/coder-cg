@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import type { FC, ReactNode } from "react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Link,
 	NavLink,
@@ -51,6 +52,8 @@ export const AgentPageHeader: FC<AgentPageHeaderProps> = ({
 	webPush: controlledWebPush,
 	onToggleNotifications,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { isSidebarCollapsed, onExpandSidebar } =
 		useOutletContext<AgentsPageOutletContext>();
 	const location = useLocation();
@@ -108,7 +111,17 @@ export const AgentPageHeader: FC<AgentPageHeaderProps> = ({
 			}
 		} catch (error) {
 			const action = webPush.subscribed ? "disable" : "enable";
-			toast.error(getErrorMessage(error, `Failed to ${action} notifications.`));
+			toast.error(
+				getErrorMessage(
+					error,
+					tI18n(
+						"AgentsPage.components.AgentPageHeader.failed_to_value0_notifications_ed6c5fe0",
+						{
+							value0: action,
+						},
+					),
+				),
+			);
 		}
 	};
 
@@ -138,7 +151,9 @@ export const AgentPageHeader: FC<AgentPageHeaderProps> = ({
 					variant="subtle"
 					size="icon"
 					onClick={onExpandSidebar}
-					aria-label="Expand sidebar"
+					aria-label={tI18n(
+						"AgentsPage.components.AgentPageHeader.expand_sidebar_37a5d648",
+					)}
 					className="hidden size-7 min-w-0 shrink-0 sm:inline-flex"
 				>
 					<PanelLeftIcon />
@@ -155,7 +170,9 @@ export const AgentPageHeader: FC<AgentPageHeaderProps> = ({
 						<Button
 							variant="subtle"
 							size="icon"
-							aria-label="More options"
+							aria-label={tI18n(
+								"AgentsPage.components.AgentPageHeader.more_options_bc79cdff",
+							)}
 							className="size-7 text-content-secondary hover:text-content-primary sm:hidden"
 						>
 							<EllipsisIcon />
@@ -171,7 +188,9 @@ export const AgentPageHeader: FC<AgentPageHeaderProps> = ({
 								state={{ from: location.pathname + location.search }}
 							>
 								<SettingsIcon className="size-icon-sm" />
-								Settings
+								{tI18n(
+									"AgentsPage.components.AgentPageHeader.settings_74a883a0",
+								)}
 							</Link>
 						</DropdownMenuItem>
 						<DropdownMenuItem
@@ -185,7 +204,13 @@ export const AgentPageHeader: FC<AgentPageHeaderProps> = ({
 							) : (
 								<VolumeOffIcon className="size-icon-sm" />
 							)}
-							{chimeEnabled ? "Turn sound off" : "Turn sound on"}
+							{chimeEnabled
+								? tI18n(
+										"AgentsPage.components.AgentPageHeader.turn_sound_off_853b0ebe",
+									)
+								: tI18n(
+										"AgentsPage.components.AgentPageHeader.turn_sound_on_bad2768c",
+									)}
 						</DropdownMenuItem>
 						{webPush.enabled && (
 							<DropdownMenuItem
@@ -203,8 +228,12 @@ export const AgentPageHeader: FC<AgentPageHeaderProps> = ({
 									<BellOffIcon className="size-icon-sm" />
 								)}
 								{webPush.subscribed
-									? "Turn notifications off"
-									: "Turn notifications on"}
+									? tI18n(
+											"AgentsPage.components.AgentPageHeader.turn_notifications_off_ec5c552b",
+										)
+									: tI18n(
+											"AgentsPage.components.AgentPageHeader.turn_notifications_on_e455bfe7",
+										)}
 							</DropdownMenuItem>
 						)}
 					</DropdownMenuContent>

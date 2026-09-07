@@ -1,5 +1,6 @@
 import { LoaderIcon, TriangleAlertIcon } from "lucide-react";
 import { type FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { workspaceBuildLogs } from "#/api/queries/workspaceBuilds";
 import { workspaceById } from "#/api/queries/workspaces";
@@ -36,6 +37,8 @@ export const WorkspaceBuildLogSection: FC<WorkspaceBuildLogSectionProps> = ({
 	status,
 	buildId,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const isRunning = status === "running";
 
 	// Primary source: build ID from the chat binding, pushed via
@@ -109,7 +112,11 @@ export const WorkspaceBuildLogSection: FC<WorkspaceBuildLogSectionProps> = ({
 			return (
 				<div className="flex items-center gap-2 py-3 px-4 text-xs text-content-secondary">
 					<LoaderIcon className="size-3 animate-spin motion-reduce:animate-none" />
-					<span>Loading build logs…</span>
+					<span>
+						{tI18n(
+							"AgentsPage.components.ChatElements.tools.WorkspaceBuildLogSection.loading_build_logs_10527910",
+						)}
+					</span>
 				</div>
 			);
 		}
@@ -120,7 +127,11 @@ export const WorkspaceBuildLogSection: FC<WorkspaceBuildLogSectionProps> = ({
 		return (
 			<div className="flex items-center gap-2 py-3 px-4 text-xs text-content-secondary">
 				<TriangleAlertIcon className="size-3" />
-				<span>Failed to load build logs.</span>
+				<span>
+					{tI18n(
+						"AgentsPage.components.ChatElements.tools.WorkspaceBuildLogSection.failed_to_load_build_logs_5521b6c9",
+					)}
+				</span>
 			</div>
 		);
 	}
@@ -129,7 +140,11 @@ export const WorkspaceBuildLogSection: FC<WorkspaceBuildLogSectionProps> = ({
 		return (
 			<div className="flex items-center gap-2 py-3 px-4 text-xs text-content-secondary">
 				<TriangleAlertIcon className="size-3" />
-				<span>Build logs are taking longer than expected.</span>
+				<span>
+					{tI18n(
+						"AgentsPage.components.ChatElements.tools.WorkspaceBuildLogSection.build_logs_are_taking_longer_than_expected_f69b355e",
+					)}
+				</span>
 			</div>
 		);
 	}
@@ -142,7 +157,11 @@ export const WorkspaceBuildLogSection: FC<WorkspaceBuildLogSectionProps> = ({
 	) {
 		return (
 			<div className="flex items-center gap-2 py-3 px-4 text-xs text-content-secondary">
-				<span>No build logs available.</span>
+				<span>
+					{tI18n(
+						"AgentsPage.components.ChatElements.tools.WorkspaceBuildLogSection.no_build_logs_available_36984af2",
+					)}
+				</span>
 			</div>
 		);
 	}
@@ -151,7 +170,11 @@ export const WorkspaceBuildLogSection: FC<WorkspaceBuildLogSectionProps> = ({
 		return (
 			<div className="flex items-center gap-2 py-3 px-4 text-xs text-content-secondary">
 				<LoaderIcon className="size-3 animate-spin motion-reduce:animate-none" />
-				<span>Loading build logs…</span>
+				<span>
+					{tI18n(
+						"AgentsPage.components.ChatElements.tools.WorkspaceBuildLogSection.loading_build_logs_10527910",
+					)}
+				</span>
 			</div>
 		);
 	}
@@ -161,7 +184,9 @@ export const WorkspaceBuildLogSection: FC<WorkspaceBuildLogSectionProps> = ({
 			className="mt-1.5 rounded-md border border-solid border-border-default text-2xs"
 			viewportClassName="max-h-64"
 			viewportTabIndex={0}
-			viewportAriaLabel="Workspace build log"
+			viewportAriaLabel={tI18n(
+				"AgentsPage.components.ChatElements.tools.WorkspaceBuildLogSection.workspace_build_log_a7ee203b",
+			)}
 			scrollBarClassName="w-1.5"
 		>
 			<WorkspaceBuildLogs

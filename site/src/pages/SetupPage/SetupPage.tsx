@@ -1,4 +1,5 @@
 import { type FC, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery } from "react-query";
 import { Navigate } from "react-router";
 import { buildInfo } from "#/api/queries/buildInfo";
@@ -11,6 +12,8 @@ import { sendDeploymentEvent } from "#/utils/telemetry";
 import { SetupPageView } from "./SetupPageView";
 
 export const SetupPage: FC = () => {
+	const { t: tI18n } = useTranslation("auth");
+
 	const {
 		isLoading,
 		signIn,
@@ -56,7 +59,9 @@ export const SetupPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Set up your account")}</title>
+			<title>
+				{pageTitle(tI18n("SetupPage.SetupPage.set_up_your_account_34b78ccf"))}
+			</title>
 			<SetupPageView
 				authMethods={authMethodsQuery.data}
 				isLoading={isSigningIn || createFirstUserMutation.isPending}

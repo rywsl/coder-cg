@@ -1,5 +1,6 @@
 import RFB from "@novnc/novnc/lib/rfb";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { watchChatDesktop } from "#/api/api";
 import { useClipboard } from "#/hooks/useClipboard";
@@ -85,6 +86,8 @@ export function useDesktopConnection({
 	activated,
 	scaleViewport = false,
 }: UseDesktopConnectionOptions): UseDesktopConnectionResult {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [status, setStatus] = useState<DesktopConnectionStatus>("idle");
 
 	const [hasConnected, setHasConnected] = useState(false);
@@ -124,7 +127,9 @@ export function useDesktopConnection({
 	const { copyToClipboard: syncRemoteClipboardToLocal } = useClipboard({
 		onError: () => {
 			toast.error(
-				"Failed to sync the remote clipboard to your local clipboard.",
+				tI18n(
+					"AgentsPage.hooks.useDesktopConnection.failed_to_sync_the_remote_clipboard_to_your_loca_07335aa7",
+				),
 			);
 		},
 	});
@@ -323,7 +328,9 @@ export function useDesktopConnection({
 							});
 							if (permStatus.state === "denied") {
 								toast.error(
-									"Clipboard permission denied. Allow clipboard access in your browser settings to paste.",
+									tI18n(
+										"AgentsPage.hooks.useDesktopConnection.clipboard_permission_denied_allow_clipboard_acce_d9734a33",
+									),
 								);
 								return;
 							}

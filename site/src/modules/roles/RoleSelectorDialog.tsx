@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { AssignableRoles, SlimRole } from "#/api/typesGenerated";
 import { AvatarData } from "#/components/Avatar/AvatarData";
 import {
@@ -83,6 +84,8 @@ const ActiveRoleSelectorDialog: React.FC<{
 	loading,
 	error,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const [selectedRoles, setSelectedRoles] = useState<Set<string>>(
 		() => new Set(getRoleNames(user.roles)),
 	);
@@ -109,7 +112,9 @@ const ActiveRoleSelectorDialog: React.FC<{
 			<DialogContent>
 				<DialogHeader>
 					<div className="flex flex-row justify-between items-center">
-						<DialogTitle>Edit roles</DialogTitle>
+						<DialogTitle>
+							{tI18n("roles.RoleSelectorDialog.edit_roles_3b3489d0")}
+						</DialogTitle>
 						<AvatarData
 							title={user.username}
 							subtitle={user.email}

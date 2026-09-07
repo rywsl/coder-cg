@@ -7,6 +7,7 @@ import {
 	useId,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import TextareaAutosize from "react-textarea-autosize";
 import * as Yup from "yup";
 import { Alert, AlertDescription, AlertTitle } from "#/components/Alert/Alert";
@@ -71,6 +72,8 @@ export const PersonalSkillEditor: FC<PersonalSkillEditorProps> = ({
 	onOpenChange,
 	onSubmit,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const isCreate = mode === "create";
 	const importId = useId();
 	const nameId = useId();
@@ -82,15 +85,23 @@ export const PersonalSkillEditor: FC<PersonalSkillEditorProps> = ({
 	const validationSchema = Yup.object({
 		name: Yup.string()
 			.trim()
-			.required("Name is required.")
+			.required(
+				tI18n(
+					"AgentsPage.components.PersonalSkillEditor.name_is_required_f83a4bc1",
+				),
+			)
 			.test(
 				"skill-name",
-				"Use kebab-case with lowercase letters, numbers, and single hyphens, up to 256 bytes.",
+				tI18n(
+					"AgentsPage.components.PersonalSkillEditor.use_kebab_case_with_lowercase_letters_numbers_an_3bab4f5f",
+				),
 				(value) => Boolean(value && isValidPersonalSkillName(value.trim())),
 			)
 			.test(
 				"unique-name",
-				"A skill with this name already exists.",
+				tI18n(
+					"AgentsPage.components.PersonalSkillEditor.a_skill_with_this_name_already_exists_07a65473",
+				),
 				(value) =>
 					!isCreate ||
 					!existingNames.includes(
@@ -99,11 +110,17 @@ export const PersonalSkillEditor: FC<PersonalSkillEditorProps> = ({
 			),
 		description: Yup.string().test(
 			"description-size",
-			"Description must be 4096 bytes or smaller.",
+			tI18n(
+				"AgentsPage.components.PersonalSkillEditor.description_must_be_4096_bytes_or_smaller_4c55bfc7",
+			),
 			(value) => isValidPersonalSkillDescription(value ?? ""),
 		),
-		body: Yup.string().test("body-required", "Body is required.", (value) =>
-			Boolean(value?.trim()),
+		body: Yup.string().test(
+			"body-required",
+			tI18n(
+				"AgentsPage.components.PersonalSkillEditor.body_is_required_52e74135",
+			),
+			(value) => Boolean(value?.trim()),
 		),
 	});
 
@@ -148,7 +165,9 @@ export const PersonalSkillEditor: FC<PersonalSkillEditorProps> = ({
 		if (!result.ok) {
 			setImportStatus({
 				kind: "error",
-				title: "Could not parse SKILL.md",
+				title: tI18n(
+					"AgentsPage.components.PersonalSkillEditor.could_not_parse_skill_md_4a63765c",
+				),
 				detail: result.error,
 			});
 			return;
@@ -175,10 +194,16 @@ export const PersonalSkillEditor: FC<PersonalSkillEditorProps> = ({
 		setImportContent("");
 		setImportStatus({
 			kind: "success",
-			title: "Imported SKILL.md",
+			title: tI18n(
+				"AgentsPage.components.PersonalSkillEditor.imported_skill_md_7111bd76",
+			),
 			detail: isCreate
-				? "Updated name, description, and body fields."
-				: "Updated description and body fields. Kept the existing name.",
+				? tI18n(
+						"AgentsPage.components.PersonalSkillEditor.updated_name_description_and_body_fields_049c6f9c",
+					)
+				: tI18n(
+						"AgentsPage.components.PersonalSkillEditor.updated_description_and_body_fields_kept_the_exi_af7ace05",
+					),
 		});
 	};
 
@@ -212,8 +237,16 @@ export const PersonalSkillEditor: FC<PersonalSkillEditorProps> = ({
 	const bodyError = form.touched.body ? form.errors.body : undefined;
 	const isTooLarge = sizeBytes > PERSONAL_SKILL_MAX_SIZE_BYTES;
 	const isNearLimit = sizeBytes > PERSONAL_SKILL_MAX_SIZE_BYTES * 0.9;
-	const title = isCreate ? "Create personal skill" : "Edit personal skill";
-	const submitLabel = isCreate ? "Create skill" : "Save skill";
+	const title = isCreate
+		? tI18n(
+				"AgentsPage.components.PersonalSkillEditor.create_personal_skill_902a04c4",
+			)
+		: tI18n(
+				"AgentsPage.components.PersonalSkillEditor.edit_personal_skill_58dff266",
+			);
+	const submitLabel = isCreate
+		? tI18n("AgentsPage.components.PersonalSkillEditor.create_skill_1a903008")
+		: tI18n("AgentsPage.components.PersonalSkillEditor.save_skill_1d92b781");
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
@@ -225,10 +258,9 @@ export const PersonalSkillEditor: FC<PersonalSkillEditorProps> = ({
 					<DialogHeader className="px-6 pt-6">
 						<DialogTitle>{title}</DialogTitle>
 						<DialogDescription>
-							Personal skills are available to your agents and stored as a
-							single SKILL.md file with frontmatter. For richer skills with
-							supporting files, add them to your repo under `.agents/skills/` or
-							load them from a workspace.
+							{tI18n(
+								"AgentsPage.components.PersonalSkillEditor.personal_skills_are_available_to_your_agents_and_e12442f9",
+							)}
 						</DialogDescription>
 					</DialogHeader>
 
@@ -244,10 +276,15 @@ export const PersonalSkillEditor: FC<PersonalSkillEditorProps> = ({
 
 						<div className="flex flex-col gap-3 rounded-md border border-border-default p-4">
 							<div className="flex flex-col gap-1">
-								<Label htmlFor={importId}>Import from SKILL.md</Label>
+								<Label htmlFor={importId}>
+									{tI18n(
+										"AgentsPage.components.PersonalSkillEditor.import_from_skill_md_6b35dda0",
+									)}
+								</Label>
 								<p className="m-0 text-xs text-content-secondary">
-									Paste a full SKILL.md file with frontmatter to auto-fill the
-									fields below.
+									{tI18n(
+										"AgentsPage.components.PersonalSkillEditor.paste_a_full_skill_md_file_with_frontmatter_to_a_553bf72d",
+									)}
 								</p>
 							</div>
 							<TextareaAutosize
@@ -255,7 +292,9 @@ export const PersonalSkillEditor: FC<PersonalSkillEditorProps> = ({
 								value={importContent}
 								onChange={handleImportContentChange}
 								onPaste={handleImportContentPaste}
-								placeholder="---\nname: my-skill\ndescription: ...\n---\n\nBody..."
+								placeholder={tI18n(
+									"AgentsPage.components.PersonalSkillEditor.nname_my_skill_ndescription_n_n_nbody_6847cff4",
+								)}
 								disabled={isSubmitting}
 								minRows={4}
 								maxRows={10}
@@ -280,7 +319,9 @@ export const PersonalSkillEditor: FC<PersonalSkillEditorProps> = ({
 											setImportStatus(null);
 										}}
 									>
-										Clear
+										{tI18n(
+											"AgentsPage.components.PersonalSkillEditor.clear_83b12c22",
+										)}
 									</Button>
 								)}
 								<Button
@@ -290,19 +331,27 @@ export const PersonalSkillEditor: FC<PersonalSkillEditorProps> = ({
 										void importSkillMarkdown(importContent);
 									}}
 								>
-									Import
+									{tI18n(
+										"AgentsPage.components.PersonalSkillEditor.import_2cff9baa",
+									)}
 								</Button>
 							</div>
 						</div>
 						<div className="flex flex-col gap-2">
-							<Label htmlFor={nameId}>Name</Label>
+							<Label htmlFor={nameId}>
+								{tI18n(
+									"AgentsPage.components.PersonalSkillEditor.name_dcd1d522",
+								)}
+							</Label>
 							<Input
 								id={nameId}
 								name="name"
 								value={form.values.name}
 								onChange={form.handleChange}
 								onBlur={form.handleBlur}
-								placeholder="review-database-query"
+								placeholder={tI18n(
+									"AgentsPage.components.PersonalSkillEditor.review_database_query_ca1dca2d",
+								)}
 								readOnly={!isCreate}
 								disabled={isSubmitting}
 								aria-invalid={Boolean(nameError)}
@@ -318,21 +367,28 @@ export const PersonalSkillEditor: FC<PersonalSkillEditorProps> = ({
 								</p>
 							) : (
 								<p className="m-0 text-xs text-content-secondary">
-									Use lowercase letters, numbers, and hyphens. Names cannot be
-									changed after creation.
+									{tI18n(
+										"AgentsPage.components.PersonalSkillEditor.use_lowercase_letters_numbers_and_hyphens_names__e39db7bf",
+									)}
 								</p>
 							)}
 						</div>
 
 						<div className="flex flex-col gap-2">
-							<Label htmlFor={descriptionId}>Description</Label>
+							<Label htmlFor={descriptionId}>
+								{tI18n(
+									"AgentsPage.components.PersonalSkillEditor.description_526e0087",
+								)}
+							</Label>
 							<Input
 								id={descriptionId}
 								name="description"
 								value={form.values.description}
 								onChange={form.handleChange}
 								onBlur={form.handleBlur}
-								placeholder="When to use this skill"
+								placeholder={tI18n(
+									"AgentsPage.components.PersonalSkillEditor.when_to_use_this_skill_0fc9782b",
+								)}
 								disabled={isSubmitting}
 								aria-invalid={Boolean(descriptionError)}
 								aria-describedby={
@@ -350,14 +406,20 @@ export const PersonalSkillEditor: FC<PersonalSkillEditorProps> = ({
 						</div>
 
 						<div className="flex flex-col gap-2">
-							<Label htmlFor={bodyId}>Body</Label>
+							<Label htmlFor={bodyId}>
+								{tI18n(
+									"AgentsPage.components.PersonalSkillEditor.body_6ccaa641",
+								)}
+							</Label>
 							<TextareaAutosize
 								id={bodyId}
 								name="body"
 								value={form.values.body}
 								onChange={form.handleChange}
 								onBlur={form.handleBlur}
-								placeholder="Describe when and how agents should use this skill."
+								placeholder={tI18n(
+									"AgentsPage.components.PersonalSkillEditor.describe_when_and_how_agents_should_use_this_ski_b7739860",
+								)}
 								disabled={isSubmitting}
 								minRows={8}
 								aria-invalid={Boolean(bodyError)}
@@ -382,9 +444,12 @@ export const PersonalSkillEditor: FC<PersonalSkillEditorProps> = ({
 									isTooLarge && "text-content-destructive",
 								)}
 							>
-								{formatKiB(sizeBytes)} of{" "}
+								{formatKiB(sizeBytes)}
+								{tI18n("AgentsPage.components.PersonalSkillEditor.of_88eb5a7e")}{" "}
 								{formatKiB(PERSONAL_SKILL_MAX_SIZE_BYTES)}
-								used.
+								{tI18n(
+									"AgentsPage.components.PersonalSkillEditor.used_a47509e9",
+								)}
 							</p>
 						</div>
 					</div>
@@ -395,7 +460,9 @@ export const PersonalSkillEditor: FC<PersonalSkillEditorProps> = ({
 							disabled={isSubmitting}
 							onClick={() => onOpenChange(false)}
 						>
-							Cancel
+							{tI18n(
+								"AgentsPage.components.PersonalSkillEditor.cancel_19766ed6",
+							)}
 						</Button>
 						<Button
 							type="submit"

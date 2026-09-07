@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { ConcreteThemeName } from "#/theme";
 import { ThemePreview } from "./ThemePreview";
 import { DARK_THEMES, LIGHT_THEMES, THEME_COPY } from "./themeCopy";
@@ -20,9 +21,15 @@ export const SingleModeSection: FC<SingleModeSectionProps> = ({
 	name = "theme-single",
 	onSelect,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	return (
 		<fieldset className="m-0 min-w-0 border-0 p-0">
-			<legend className="sr-only">Theme</legend>
+			<legend className="sr-only">
+				{tI18n(
+					"UserSettingsPage.AppearancePage.SingleModeSection.theme_efb52e71",
+				)}
+			</legend>
 			<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 				{SINGLE_MODE_ORDER.map((theme) => (
 					<SingleTile

@@ -7,6 +7,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { getErrorMessage, isApiError } from "#/api/errors";
 import type { Chat } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
@@ -49,6 +50,8 @@ export const RenameChatDialog: FC<RenameChatDialogProps> = ({
 	onPropose,
 	onOpenChange,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [renameTitle, setRenameTitle] = useState("");
 	const [isRenamingChat, setIsRenamingChat] = useState(false);
 	const [isGeneratingTitle, setIsGeneratingTitle] = useState(false);
@@ -198,7 +201,12 @@ export const RenameChatDialog: FC<RenameChatDialogProps> = ({
 		} catch (error) {
 			if (sessionRef.current !== requestedSession) return;
 			setGenerateTitleError({
-				message: getErrorMessage(error, "Failed to generate a new title."),
+				message: getErrorMessage(
+					error,
+					tI18n(
+						"AgentsPage.components.ChatsSidebar.dialogs.RenameChatDialog.failed_to_generate_a_new_title_51b412e0",
+					),
+				),
 				// Read the response detail directly; getErrorDetail falls
 				// back to a generic developer-console hint for errors
 				// without a detail field.
@@ -256,7 +264,11 @@ export const RenameChatDialog: FC<RenameChatDialogProps> = ({
 				aria-describedby={undefined}
 			>
 				<DialogHeader className="flex-row items-center justify-between space-y-0 sm:flex-row">
-					<DialogTitle className="text-lg">Rename chat</DialogTitle>
+					<DialogTitle className="text-lg">
+						{tI18n(
+							"AgentsPage.components.ChatsSidebar.dialogs.RenameChatDialog.rename_chat_26076241",
+						)}
+					</DialogTitle>
 					{onPropose && (
 						<Button
 							type="button"
@@ -275,7 +287,9 @@ export const RenameChatDialog: FC<RenameChatDialogProps> = ({
 							) : (
 								<SparklesIcon className="size-[18px]" />
 							)}
-							Generate
+							{tI18n(
+								"AgentsPage.components.ChatsSidebar.dialogs.RenameChatDialog.generate_49e49bb4",
+							)}
 						</Button>
 					)}
 				</DialogHeader>
@@ -302,7 +316,9 @@ export const RenameChatDialog: FC<RenameChatDialogProps> = ({
 							}}
 							disabled={isRenamingChat || isGeneratingTitle}
 							maxLength={200}
-							aria-label="Chat title"
+							aria-label={tI18n(
+								"AgentsPage.components.ChatsSidebar.dialogs.RenameChatDialog.chat_title_17a3048c",
+							)}
 							aria-invalid={generateTitleError ? true : undefined}
 							aria-describedby={generateTitleError ? errorId : undefined}
 						/>
@@ -328,7 +344,9 @@ export const RenameChatDialog: FC<RenameChatDialogProps> = ({
 							onClick={closeDialog}
 							disabled={isRenamingChat}
 						>
-							Cancel
+							{tI18n(
+								"AgentsPage.components.ChatsSidebar.dialogs.RenameChatDialog.cancel_19766ed6",
+							)}
 						</Button>
 						<Button
 							type="submit"
@@ -342,7 +360,9 @@ export const RenameChatDialog: FC<RenameChatDialogProps> = ({
 							}
 						>
 							{isRenamingChat && <Spinner className="size-4" loading />}
-							Save
+							{tI18n(
+								"AgentsPage.components.ChatsSidebar.dialogs.RenameChatDialog.save_1509f561",
+							)}
 						</Button>
 					</DialogFooter>
 				</form>

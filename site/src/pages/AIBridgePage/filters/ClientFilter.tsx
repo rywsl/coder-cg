@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { API } from "#/api/api";
 import { ComboboxInput } from "#/components/Combobox/Combobox";
 import {
@@ -60,18 +61,26 @@ interface ClientFilterProps {
 }
 
 export const ClientFilter: React.FC<ClientFilterProps> = ({ menu, width }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<SelectFilter
-			label="Select client"
-			placeholder="All clients"
-			emptyText="No clients found"
+			label={tI18n("AIBridgePage.filters.ClientFilter.select_client_cb6d1f73")}
+			placeholder={tI18n(
+				"AIBridgePage.filters.ClientFilter.all_clients_b695c090",
+			)}
+			emptyText={tI18n(
+				"AIBridgePage.filters.ClientFilter.no_clients_found_808a93f5",
+			)}
 			options={menu.searchOptions}
 			onSelect={(option) => menu.selectOption(option)}
 			selectedOption={menu.selectedOption ?? undefined}
 			width={width}
 			selectFilterSearch={
 				<ComboboxInput
-					placeholder="Search client..."
+					placeholder={tI18n(
+						"AIBridgePage.filters.ClientFilter.search_client_2594284f",
+					)}
 					value={menu.query}
 					onValueChange={menu.setQuery}
 				/>

@@ -1,5 +1,6 @@
 import { UserPlusIcon } from "lucide-react";
 import { type ComponentProps, type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
@@ -31,6 +32,8 @@ export const UsersPageView: FC<UsersPageViewProps> = ({
 	canCreateUser,
 	...props
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	const [action, setAction] = useState<UserAdminAction | undefined>();
 
 	return (
@@ -41,20 +44,22 @@ export const UsersPageView: FC<UsersPageViewProps> = ({
 						<Button asChild>
 							<Link to="create">
 								<UserPlusIcon />
-								Create user
+								{tI18n("UsersPage.UsersPageView.create_user_f06da128")}
 							</Link>
 						</Button>
 					)
 				}
 			>
-				<SettingsHeaderTitle>Users</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n("UsersPage.UsersPageView.users_6b0cc904")}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Manage user accounts and permissions.
+					{tI18n(
+						"UsersPage.UsersPageView.manage_user_accounts_and_permissions_28ffc747",
+					)}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			<UsersFilter {...filterProps} />
-
 			<PaginationContainer query={usersQuery} paginationUnitLabel="users">
 				<UsersTable
 					{...props}
@@ -62,7 +67,6 @@ export const UsersPageView: FC<UsersPageViewProps> = ({
 					onAction={setAction}
 				/>
 			</PaginationContainer>
-
 			<UserActionDialogs action={action} onClose={() => setAction(undefined)} />
 		</>
 	);

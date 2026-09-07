@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import { type FC, useId } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { countries } from "#/api/countriesGenerated";
 import type * as TypesGen from "#/api/typesGenerated";
@@ -9,6 +10,7 @@ import { FormField } from "#/components/FormField/FormField";
 import { SelectItem } from "#/components/Select/Select";
 import { SelectField } from "#/components/SelectField/SelectField";
 import { Spinner } from "#/components/Spinner/Spinner";
+import { i18n } from "#/i18n";
 import { PrivacyPolicyNotice } from "#/modules/licenses/PrivacyPolicyNotice";
 import {
 	DATABASE_DOCS_LINK,
@@ -30,15 +32,30 @@ type TrialFormValues = TypesGen.CreateTrialLicenseRequest & {
 const validationSchema = trialInfoValidationSchema.shape({
 	email: Yup.string()
 		.trim()
-		.email("Please enter a valid email address.")
+		.email(
+			i18n.t(
+				"administration:DeploymentSettingsPage.PremiumPage.TrialRequestForm.please_enter_a_valid_email_address_958e4ccf",
+			),
+		)
 		.max(
 			MAX_EMAIL_LENGTH,
-			`Email address should be no longer than ${MAX_EMAIL_LENGTH} characters.`,
+			i18n.t(
+				"administration:DeploymentSettingsPage.PremiumPage.TrialRequestForm.email_address_should_be_no_longer_than_value0_ch_169a4eea",
+				{
+					value0: MAX_EMAIL_LENGTH,
+				},
+			),
 		)
-		.required("Please enter an email address."),
+		.required(
+			i18n.t(
+				"administration:DeploymentSettingsPage.PremiumPage.TrialRequestForm.please_enter_an_email_address_201953c9",
+			),
+		),
 	acknowledged: Yup.bool().oneOf(
 		[true],
-		"Please acknowledge the database requirements.",
+		i18n.t(
+			"administration:DeploymentSettingsPage.PremiumPage.TrialRequestForm.please_acknowledge_the_database_requirements_9c38eb56",
+		),
 	),
 });
 
@@ -65,6 +82,8 @@ export const TrialRequestForm: FC<TrialRequestFormProps> = ({
 	isSubmitting,
 	error,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const acknowledgementId = useId();
 	const form = useFormik<TrialFormValues>({
 		initialValues,
@@ -95,8 +114,12 @@ export const TrialRequestForm: FC<TrialRequestFormProps> = ({
 			<div className="flex flex-col gap-4">
 				<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 					<FormField
-						label="First name"
-						placeholder="Jane"
+						label={tI18n(
+							"DeploymentSettingsPage.PremiumPage.TrialRequestForm.first_name_702ef921",
+						)}
+						placeholder={tI18n(
+							"DeploymentSettingsPage.PremiumPage.TrialRequestForm.jane_4f23798d",
+						)}
 						required
 						field={getFieldHelpers("first_name", {
 							maxLength: MAX_NAME_LENGTH,
@@ -104,8 +127,12 @@ export const TrialRequestForm: FC<TrialRequestFormProps> = ({
 						disabled={isSubmitting}
 					/>
 					<FormField
-						label="Last name"
-						placeholder="Doe"
+						label={tI18n(
+							"DeploymentSettingsPage.PremiumPage.TrialRequestForm.last_name_7b488804",
+						)}
+						placeholder={tI18n(
+							"DeploymentSettingsPage.PremiumPage.TrialRequestForm.doe_fd53ef83",
+						)}
 						required
 						field={getFieldHelpers("last_name", { maxLength: MAX_NAME_LENGTH })}
 						disabled={isSubmitting}
@@ -113,9 +140,13 @@ export const TrialRequestForm: FC<TrialRequestFormProps> = ({
 				</div>
 
 				<FormField
-					label="Business email"
+					label={tI18n(
+						"DeploymentSettingsPage.PremiumPage.TrialRequestForm.business_email_e9afc27f",
+					)}
 					type="email"
-					placeholder="you@company.com"
+					placeholder={tI18n(
+						"DeploymentSettingsPage.PremiumPage.TrialRequestForm.you_company_com_652740e1",
+					)}
 					required
 					field={getFieldHelpers("email", { maxLength: MAX_EMAIL_LENGTH })}
 					onChange={onChangeTrimmed(form)}
@@ -124,8 +155,12 @@ export const TrialRequestForm: FC<TrialRequestFormProps> = ({
 
 				<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 					<FormField
-						label="Company"
-						placeholder="Acme Inc."
+						label={tI18n(
+							"DeploymentSettingsPage.PremiumPage.TrialRequestForm.company_de4743c8",
+						)}
+						placeholder={tI18n(
+							"DeploymentSettingsPage.PremiumPage.TrialRequestForm.acme_inc_ee60673d",
+						)}
 						required
 						field={getFieldHelpers("company_name", {
 							maxLength: MAX_COMPANY_NAME_LENGTH,
@@ -133,8 +168,12 @@ export const TrialRequestForm: FC<TrialRequestFormProps> = ({
 						disabled={isSubmitting}
 					/>
 					<FormField
-						label="Job title"
-						placeholder="Platform Engineer"
+						label={tI18n(
+							"DeploymentSettingsPage.PremiumPage.TrialRequestForm.job_title_86db80a8",
+						)}
+						placeholder={tI18n(
+							"DeploymentSettingsPage.PremiumPage.TrialRequestForm.platform_engineer_42ebff43",
+						)}
 						required
 						field={getFieldHelpers("job_title", {
 							maxLength: MAX_JOB_TITLE_LENGTH,
@@ -146,18 +185,24 @@ export const TrialRequestForm: FC<TrialRequestFormProps> = ({
 				<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 					<FormField
 						type="tel"
-						label="Phone number"
+						label={tI18n(
+							"DeploymentSettingsPage.PremiumPage.TrialRequestForm.phone_number_306f1bb2",
+						)}
 						placeholder="+1 415 5552671"
 						required
 						field={getFieldHelpers("phone_number")}
 						disabled={isSubmitting}
 					/>
 					<SelectField
-						label="Number of developers"
+						label={tI18n(
+							"DeploymentSettingsPage.PremiumPage.TrialRequestForm.number_of_developers_adc0f6fb",
+						)}
 						required
 						field={getFieldHelpers("developers")}
 						onValueChange={(value) => form.setFieldValue("developers", value)}
-						placeholder="Select..."
+						placeholder={tI18n(
+							"DeploymentSettingsPage.PremiumPage.TrialRequestForm.select_1339bddc",
+						)}
 						disabled={isSubmitting}
 					>
 						{numberOfDevelopersOptions.map((opt) => (
@@ -169,11 +214,15 @@ export const TrialRequestForm: FC<TrialRequestFormProps> = ({
 				</div>
 
 				<SelectField
-					label="Country"
+					label={tI18n(
+						"DeploymentSettingsPage.PremiumPage.TrialRequestForm.country_701d021d",
+					)}
 					required
 					field={getFieldHelpers("country")}
 					onValueChange={(value) => form.setFieldValue("country", value)}
-					placeholder="Select..."
+					placeholder={tI18n(
+						"DeploymentSettingsPage.PremiumPage.TrialRequestForm.select_1339bddc",
+					)}
 					disabled={isSubmitting}
 				>
 					{countries.map((c) => (
@@ -196,18 +245,22 @@ export const TrialRequestForm: FC<TrialRequestFormProps> = ({
 					/>
 					<div>
 						<label htmlFor={acknowledgementId} className="cursor-pointer">
-							I understand that Coder trial features increase database load, and
-							that Coder recommends an external PostgreSQL database for
-							production deployments.
+							{tI18n(
+								"DeploymentSettingsPage.PremiumPage.TrialRequestForm.i_understand_that_coder_trial_features_increase__0d6447c4",
+							)}
 						</label>{" "}
 						<a
 							href={docs(DATABASE_DOCS_LINK)}
 							target="_blank"
 							rel="noreferrer"
 							className="text-content-link hover:underline"
-							aria-label="Learn more about external PostgreSQL databases"
+							aria-label={tI18n(
+								"DeploymentSettingsPage.PremiumPage.TrialRequestForm.learn_more_about_external_postgresql_databases_a5d6fb6e",
+							)}
 						>
-							Learn more
+							{tI18n(
+								"DeploymentSettingsPage.PremiumPage.TrialRequestForm.learn_more_1445799c",
+							)}
 						</a>
 					</div>
 				</div>
@@ -217,7 +270,6 @@ export const TrialRequestForm: FC<TrialRequestFormProps> = ({
 					</span>
 				)}
 			</div>
-
 			<div className="flex flex-col gap-2">
 				<Button
 					type="submit"
@@ -226,10 +278,15 @@ export const TrialRequestForm: FC<TrialRequestFormProps> = ({
 					disabled={isSubmitting}
 				>
 					<Spinner loading={isSubmitting} />
-					Start a trial
+					{tI18n(
+						"DeploymentSettingsPage.PremiumPage.TrialRequestForm.start_a_trial_13118f1d",
+					)}
 				</Button>
 				<p className="m-0 text-2xs font-normal text-content-secondary leading-relaxed">
-					<PrivacyPolicyNotice /> Opt-out at any time.
+					<PrivacyPolicyNotice />
+					{tI18n(
+						"DeploymentSettingsPage.PremiumPage.TrialRequestForm.opt_out_at_any_time_a349523d",
+					)}
 				</p>
 			</div>
 		</form>

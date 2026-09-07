@@ -1,11 +1,13 @@
 import { CircleAlertIcon, InfoIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { TimingStage } from "#/api/typesGenerated";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { i18n } from "#/i18n";
 import { Bar, ClickableBar } from "./Chart/Bar";
 import { Blocks } from "./Chart/Blocks";
 import { Chart, ChartContent } from "./Chart/Chart";
@@ -84,6 +86,8 @@ export const StagesChart: FC<StagesChartProps> = ({
 	timings,
 	onSelectStage,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const totalRange = mergeTimeRanges(
 		timings.map((t) => t.range).filter((t) => t !== undefined),
 	);
@@ -164,7 +168,12 @@ export const StagesChart: FC<StagesChartProps> = ({
 											{/** We only want to expand stages with more than one resource */}
 											{t.visibleResources > 1 ? (
 												<ClickableBar
-													aria-label={`View ${t.stage.label} details`}
+													aria-label={tI18n(
+														"workspaces.WorkspaceTiming.StagesChart.view_value0_details_4e6e7bda",
+														{
+															value0: t.stage.label,
+														},
+													)}
 													scale={scale}
 													value={value}
 													offset={offset}
@@ -184,7 +193,9 @@ export const StagesChart: FC<StagesChartProps> = ({
 												<span>{formatTime(value)}</span>
 											) : (
 												<span className="text-content-destructive">
-													Invalid
+													{tI18n(
+														"workspaces.WorkspaceTiming.StagesChart.invalid_96c34a07",
+													)}
 												</span>
 											)}
 										</XAxisRow>
@@ -202,41 +213,54 @@ export const StagesChart: FC<StagesChartProps> = ({
 export const provisioningStages: Stage[] = [
 	{
 		name: "init",
-		label: "init",
+		label: i18n.t(
+			"workspaces:workspaces.WorkspaceTiming.StagesChart.init_bb54068a",
+		),
 		section: "provisioning",
 		tooltip: {
 			heading: "Terraform initialization",
-			description: "Download providers & modules.",
+			description: i18n.t(
+				"workspaces:workspaces.WorkspaceTiming.StagesChart.download_providers_modules_e93bd163",
+			),
 		},
 	},
 	{
 		name: "plan",
-		label: "plan",
+		label: i18n.t(
+			"workspaces:workspaces.WorkspaceTiming.StagesChart.plan_64879f7d",
+		),
 		section: "provisioning",
 		tooltip: {
 			heading: "Terraform plan",
-			description:
-				"Compare state of desired vs actual resources and compute changes to be made.",
+			description: i18n.t(
+				"workspaces:workspaces.WorkspaceTiming.StagesChart.compare_state_of_desired_vs_actual_resources_and_131e2348",
+			),
 		},
 	},
 	{
 		name: "apply",
-		label: "apply",
+		label: i18n.t(
+			"workspaces:workspaces.WorkspaceTiming.StagesChart.apply_97a5e41b",
+		),
 		section: "provisioning",
 		tooltip: {
 			heading: "Terraform apply",
-			description:
-				"Execute Terraform plan to create/modify/delete resources into desired states.",
+			description: i18n.t(
+				"workspaces:workspaces.WorkspaceTiming.StagesChart.execute_terraform_plan_to_create_modify_delete_r_5b671b3c",
+			),
 		},
 	},
 	{
 		name: "graph",
-		label: "graph",
+		label: i18n.t(
+			"workspaces:workspaces.WorkspaceTiming.StagesChart.graph_eef93e1d",
+		),
 		section: "provisioning",
 		tooltip: {
 			heading: "Terraform graph",
-			description:
-				"List all resources in plan, used to update coderd database.",
+			description: i18n.t(
+				"workspaces:workspaces.WorkspaceTiming.StagesChart.list_all_resources_in_plan_used_to_update_coderd_d7d0d14c",
+			),
 		},
 	},
 ];
@@ -245,22 +269,30 @@ export const agentStages = (section: string, agentId: string): Stage[] => {
 	return [
 		{
 			name: "connect",
-			label: "connect",
+			label: i18n.t(
+				"workspaces:workspaces.WorkspaceTiming.StagesChart.connect_5a638a12",
+			),
 			section,
 			agentId,
 			tooltip: {
 				heading: "Connect",
-				description: "Establish an RPC connection with the control plane.",
+				description: i18n.t(
+					"workspaces:workspaces.WorkspaceTiming.StagesChart.establish_an_rpc_connection_with_the_control_pla_1a1baae7",
+				),
 			},
 		},
 		{
 			name: "start",
-			label: "run startup scripts",
+			label: i18n.t(
+				"workspaces:workspaces.WorkspaceTiming.StagesChart.run_startup_scripts_b6951356",
+			),
 			section,
 			agentId,
 			tooltip: {
 				heading: "Run startup scripts",
-				description: "Execute each agent startup script.",
+				description: i18n.t(
+					"workspaces:workspaces.WorkspaceTiming.StagesChart.execute_each_agent_startup_script_13c10068",
+				),
 			},
 		},
 	];

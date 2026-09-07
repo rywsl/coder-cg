@@ -1,5 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { NumberedPageButton, PlaceholderPageButton } from "./PageButtons";
 import { PaginationNavButton } from "./PaginationNavButton";
 import { buildPagedList } from "./utils";
@@ -27,6 +28,8 @@ export const PaginationWidgetBase: FC<PaginationWidgetBaseProps> = ({
 	hasNextPage,
 	totalPages: totalPagesProp,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const totalPages = totalPagesProp ?? Math.ceil(totalRecords / pageSize);
 
 	if (totalPages < 2) {
@@ -43,7 +46,9 @@ export const PaginationWidgetBase: FC<PaginationWidgetBaseProps> = ({
 		<div className="flex flex-row items-center justify-center px-5 gap-x-1.5">
 			<PaginationNavButton
 				disabled={isPrevDisabled}
-				aria-label="Previous page"
+				aria-label={tI18n(
+					"PaginationWidget.PaginationWidgetBase.previous_page_1208ec01",
+				)}
 				onClick={() => {
 					if (!isPrevDisabled) {
 						onPageChange(currentPage - 1);
@@ -52,7 +57,6 @@ export const PaginationWidgetBase: FC<PaginationWidgetBaseProps> = ({
 			>
 				<ChevronLeftIcon />
 			</PaginationNavButton>
-
 			<div className="contents md:hidden">
 				<NumberedPageButton
 					highlighted
@@ -67,10 +71,11 @@ export const PaginationWidgetBase: FC<PaginationWidgetBaseProps> = ({
 					onChange={onPageChange}
 				/>
 			</div>
-
 			<PaginationNavButton
 				disabled={isNextDisabled}
-				aria-label="Next page"
+				aria-label={tI18n(
+					"PaginationWidget.PaginationWidgetBase.next_page_c08ac736",
+				)}
 				onClick={() => {
 					if (!isNextDisabled) {
 						onPageChange(currentPage + 1);

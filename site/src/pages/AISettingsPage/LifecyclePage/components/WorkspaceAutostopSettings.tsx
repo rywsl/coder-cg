@@ -1,8 +1,10 @@
 import { useFormik } from "formik";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import type * as TypesGen from "#/api/typesGenerated";
 import { useTemporarySavedState } from "#/components/TemporarySavedState/TemporarySavedState";
+import { i18n } from "#/i18n";
 import { DurationField } from "./DurationField/DurationField";
 import { LifecycleSettingLayout } from "./LifecycleSettingLayout";
 
@@ -33,8 +35,18 @@ const validationSchema = Yup.object({
 		then: (schema) =>
 			schema
 				.required()
-				.moreThan(0, "Duration must be greater than zero.")
-				.max(maxTTLMs, "Must not exceed 30 days (720 hours)."),
+				.moreThan(
+					0,
+					i18n.t(
+						"agents:AISettingsPage.LifecyclePage.components.WorkspaceAutostopSettings.duration_must_be_greater_than_zero_c8381695",
+					),
+				)
+				.max(
+					maxTTLMs,
+					i18n.t(
+						"agents:AISettingsPage.LifecyclePage.components.WorkspaceAutostopSettings.must_not_exceed_30_days_720_hours_46a4a49c",
+					),
+				),
 	}),
 });
 
@@ -46,6 +58,8 @@ export const WorkspaceAutostopSettings: FC<WorkspaceAutostopSettingsProps> = ({
 	isSavingWorkspaceTTL,
 	isSaveWorkspaceTTLError,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { isSavedVisible, showSavedState } = useTemporarySavedState();
 	const serverTTLMs = workspaceTTLData?.workspace_ttl_ms ?? 0;
 
@@ -87,11 +101,17 @@ export const WorkspaceAutostopSettings: FC<WorkspaceAutostopSettingsProps> = ({
 
 	return (
 		<LifecycleSettingLayout
-			title="Workspace autostop fallback"
-			description="Set a default autostop for agent-created workspaces that don't have one defined in their template. Template-defined autostop rules always take precedence. Active conversations will extend the stop time."
+			title={tI18n(
+				"AISettingsPage.LifecyclePage.components.WorkspaceAutostopSettings.workspace_autostop_fallback_be8a2dc2",
+			)}
+			description={tI18n(
+				"AISettingsPage.LifecyclePage.components.WorkspaceAutostopSettings.set_a_default_autostop_for_agent_created_workspa_84af8ca8",
+			)}
 			checked={form.values.enabled}
 			onCheckedChange={handleToggleAutostop}
-			switchLabel="Enable default autostop"
+			switchLabel={tI18n(
+				"AISettingsPage.LifecyclePage.components.WorkspaceAutostopSettings.enable_default_autostop_0bc9a804",
+			)}
 			disabled={isSavingWorkspaceTTL || isWorkspaceTTLLoading}
 			showSave={form.dirty}
 			isSaving={isSavingWorkspaceTTL}
@@ -106,10 +126,18 @@ export const WorkspaceAutostopSettings: FC<WorkspaceAutostopSettingsProps> = ({
 						   field. We display the error directly when present. */}
 						{fieldError && <p className="m-0">{fieldError}</p>}
 						{isSaveWorkspaceTTLError && (
-							<p className="m-0">Failed to save autostop setting.</p>
+							<p className="m-0">
+								{tI18n(
+									"AISettingsPage.LifecyclePage.components.WorkspaceAutostopSettings.failed_to_save_autostop_setting_bff2b28d",
+								)}
+							</p>
 						)}
 						{isWorkspaceTTLLoadError && (
-							<p className="m-0">Failed to load autostop setting.</p>
+							<p className="m-0">
+								{tI18n(
+									"AISettingsPage.LifecyclePage.components.WorkspaceAutostopSettings.failed_to_load_autostop_setting_7f5671e4",
+								)}
+							</p>
 						)}
 					</>
 				) : undefined
@@ -118,7 +146,9 @@ export const WorkspaceAutostopSettings: FC<WorkspaceAutostopSettingsProps> = ({
 			<DurationField
 				valueMs={form.values.workspace_ttl_ms}
 				onChange={handleTTLChange}
-				label="Autostop fallback"
+				label={tI18n(
+					"AISettingsPage.LifecyclePage.components.WorkspaceAutostopSettings.autostop_fallback_1521d2af",
+				)}
 				disabled={
 					!form.values.enabled || isSavingWorkspaceTTL || isWorkspaceTTLLoading
 				}

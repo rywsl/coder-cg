@@ -18,6 +18,7 @@ import {
 	type ReactNode,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link, useNavigate } from "react-router";
 import { API } from "#/api/api";
@@ -112,6 +113,8 @@ export const WorkspacesTable: FC<WorkspacesTableProps> = ({
 	onActionError,
 	chatsByWorkspace,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const dashboard = useDashboard();
 	const isLoading = !workspaces;
 	const isEmpty = workspaces && workspaces.length === 0;
@@ -143,21 +146,25 @@ export const WorkspacesTable: FC<WorkspacesTableProps> = ({
 											onCheckChange(workspaces);
 										}
 									}}
-									aria-label="Select all workspaces"
+									aria-label={tI18n(
+										"WorkspacesPage.WorkspacesTable.select_all_workspaces_a9c70b1d",
+									)}
 									className="my-0"
 								/>
-								Name
+								{tI18n("WorkspacesPage.WorkspacesTable.name_dcd1d522")}
 							</div>
 						)}
 					</TableHead>
 					<TableHead className={cn("w-1/3", hideHeaders && "invisible")}>
-						Template
+						{tI18n("WorkspacesPage.WorkspacesTable.template_0575f29d")}
 					</TableHead>
 					<TableHead className={cn("w-1/3", hideHeaders && "invisible")}>
-						Status
+						{tI18n("WorkspacesPage.WorkspacesTable.status_920e413c")}
 					</TableHead>
 					<TableHead className="w-0">
-						<span className="sr-only">Actions</span>
+						<span className="sr-only">
+							{tI18n("WorkspacesPage.WorkspacesTable.actions_ff8059dc")}
+						</span>
 					</TableHead>
 				</TableRow>
 			</TableHeader>
@@ -207,7 +214,12 @@ export const WorkspacesTable: FC<WorkspacesTableProps> = ({
 												);
 											}
 										}}
-										aria-label={`Select workspace ${workspace.name}`}
+										aria-label={tI18n(
+											"WorkspacesPage.WorkspacesTable.select_workspace_value0_02968ddc",
+											{
+												value0: workspace.name,
+											},
+										)}
 									/>
 									<AvatarData
 										title={
@@ -226,9 +238,16 @@ export const WorkspacesTable: FC<WorkspacesTableProps> = ({
 														<Link
 															to={`/agents/${chatsByWorkspace[workspace.id]}`}
 															onClick={(e) => e.stopPropagation()}
-															aria-label={`View agent conversation for ${workspace.name}`}
+															aria-label={tI18n(
+																"WorkspacesPage.WorkspacesTable.view_agent_conversation_for_value0_9caa9f45",
+																{
+																	value0: workspace.name,
+																},
+															)}
 														>
-															Agent
+															{tI18n(
+																"WorkspacesPage.WorkspacesTable.agent_11b39c93",
+															)}
 														</Link>
 													</Badge>
 												)}
@@ -236,7 +255,11 @@ export const WorkspacesTable: FC<WorkspacesTableProps> = ({
 										}
 										subtitle={
 											<div className="flex items-center gap-1">
-												<span className="sr-only">Owner: </span>
+												<span className="sr-only">
+													{tI18n(
+														"WorkspacesPage.WorkspacesTable.owner_60d5bbcb",
+													)}
+												</span>
 												<div className="flex gap-2">
 													{workspace.owner_name}
 													{workspace.shared_with &&
@@ -259,7 +282,6 @@ export const WorkspacesTable: FC<WorkspacesTableProps> = ({
 									/>
 								</div>
 							</TableCell>
-
 							<TableCell>
 								<AvatarData
 									title={
@@ -270,7 +292,11 @@ export const WorkspacesTable: FC<WorkspacesTableProps> = ({
 									subtitle={
 										dashboard.showOrganizations && (
 											<>
-												<span className="sr-only">Organization:</span>{" "}
+												<span className="sr-only">
+													{tI18n(
+														"WorkspacesPage.WorkspacesTable.organization_5300e286",
+													)}
+												</span>{" "}
 												{activeOrg?.display_name || workspace.organization_name}
 											</>
 										)
@@ -285,11 +311,9 @@ export const WorkspacesTable: FC<WorkspacesTableProps> = ({
 									}
 								/>
 							</TableCell>
-
 							<TableCell>
 								<WorkspaceStatus workspace={workspace} />
 							</TableCell>
-
 							<WorkspaceActionsCell
 								workspace={workspace}
 								onActionSuccess={onActionSuccess}
@@ -393,6 +417,8 @@ const WorkspaceActionsCell: FC<WorkspaceActionsCellProps> = ({
 	onActionSuccess,
 	onActionError,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const { user } = useAuthenticated();
 
 	const queryClient = useQueryClient();
@@ -493,7 +519,9 @@ const WorkspaceActionsCell: FC<WorkspaceActionsCellProps> = ({
 					<PrimaryAction
 						onClick={() => startWorkspaceMutation.mutate({})}
 						isLoading={startWorkspaceMutation.isPending}
-						label="Start workspace"
+						label={tI18n(
+							"WorkspacesPage.WorkspacesTable.start_workspace_0e6b0b29",
+						)}
 					>
 						<PlayIcon />
 					</PrimaryAction>
@@ -504,7 +532,9 @@ const WorkspaceActionsCell: FC<WorkspaceActionsCellProps> = ({
 						<PrimaryAction
 							onClick={workspaceUpdate.update}
 							isLoading={workspaceUpdate.isUpdating}
-							label="Update and start workspace"
+							label={tI18n(
+								"WorkspacesPage.WorkspacesTable.update_and_start_workspace_5b42a2a3",
+							)}
 						>
 							<RotateCcwIcon />
 						</PrimaryAction>
@@ -517,7 +547,9 @@ const WorkspaceActionsCell: FC<WorkspaceActionsCellProps> = ({
 						<PrimaryAction
 							onClick={workspaceUpdate.update}
 							isLoading={workspaceUpdate.isUpdating}
-							label="This template requires automatic updates on workspace startup. Contact your administrator if you want to preserve the template version."
+							label={tI18n(
+								"WorkspacesPage.WorkspacesTable.this_template_requires_automatic_updates_on_work_2b6b3f60",
+							)}
 						>
 							<PlayIcon />
 						</PrimaryAction>
@@ -530,7 +562,9 @@ const WorkspaceActionsCell: FC<WorkspaceActionsCellProps> = ({
 						<PrimaryAction
 							onClick={workspaceUpdate.update}
 							isLoading={workspaceUpdate.isUpdating}
-							label="Update and restart workspace"
+							label={tI18n(
+								"WorkspacesPage.WorkspacesTable.update_and_restart_workspace_e9cf8d0e",
+							)}
 						>
 							<RotateCcwIcon />
 						</PrimaryAction>
@@ -543,7 +577,9 @@ const WorkspaceActionsCell: FC<WorkspaceActionsCellProps> = ({
 						<PrimaryAction
 							onClick={workspaceUpdate.update}
 							isLoading={workspaceUpdate.isUpdating}
-							label="This template requires automatic updates on workspace restart. Contact your administrator if you want to preserve the template version."
+							label={tI18n(
+								"WorkspacesPage.WorkspacesTable.this_template_requires_automatic_updates_on_work_b8d892e8",
+							)}
 						>
 							<PlayIcon />
 						</PrimaryAction>
@@ -555,7 +591,9 @@ const WorkspaceActionsCell: FC<WorkspaceActionsCellProps> = ({
 					<PrimaryAction
 						onClick={() => setIsCancelConfirmOpen(true)}
 						isLoading={cancelBuildMutation.isPending}
-						label="Cancel build"
+						label={tI18n(
+							"WorkspacesPage.WorkspacesTable.cancel_build_880dc4fb",
+						)}
 					>
 						<BanIcon />
 					</PrimaryAction>
@@ -565,7 +603,7 @@ const WorkspaceActionsCell: FC<WorkspaceActionsCellProps> = ({
 					<PrimaryAction
 						onClick={retry}
 						isLoading={isRetrying}
-						label="Retry build"
+						label={tI18n("WorkspacesPage.WorkspacesTable.retry_build_90b37eb6")}
 					>
 						<RefreshCcwIcon />
 					</PrimaryAction>
@@ -586,9 +624,14 @@ const WorkspaceActionsCell: FC<WorkspaceActionsCellProps> = ({
 			{/* Stop workspace confirmation dialog */}
 			<ConfirmDialog
 				open={isStopConfirmOpen}
-				title="Stop workspace"
-				description={`Are you sure you want to stop the workspace "${workspace.name}"? This will terminate all running processes and disconnect any active sessions.`}
-				confirmText="Stop"
+				title={tI18n("WorkspacesPage.WorkspacesTable.stop_workspace_d7dca2f6")}
+				description={tI18n(
+					"WorkspacesPage.WorkspacesTable.are_you_sure_you_want_to_stop_the_workspace_valu_2403eed2",
+					{
+						value0: workspace.name,
+					},
+				)}
+				confirmText={tI18n("WorkspacesPage.WorkspacesTable.stop_cae7d57b")}
 				onClose={() => setIsStopConfirmOpen(false)}
 				onConfirm={() => {
 					stopWorkspaceMutation.mutate({});
@@ -596,7 +639,6 @@ const WorkspaceActionsCell: FC<WorkspaceActionsCellProps> = ({
 				}}
 				type="delete"
 			/>
-
 			<WorkspaceBuildCancelDialog
 				open={isCancelConfirmOpen}
 				onClose={() => setIsCancelConfirmOpen(false)}
@@ -650,6 +692,8 @@ type WorkspaceAppsProps = {
 };
 
 const WorkspaceApps: FC<WorkspaceAppsProps> = ({ workspace }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	/**
 	 * Coder is pretty flexible and allows an enormous variety of use cases, such
 	 * as having multiple resources with many agents, but they are not common. The
@@ -692,7 +736,7 @@ const WorkspaceApps: FC<WorkspaceAppsProps> = ({ workspace }) => {
 			<VSCodeIconLink
 				key="vscode"
 				variant="vscode"
-				label="Open VSCode"
+				label={tI18n("WorkspacesPage.WorkspacesTable.open_vscode_d3aefe4c")}
 				owner={workspace.owner_name}
 				workspace={workspace.name}
 				agent={agent.name}
@@ -706,7 +750,9 @@ const WorkspaceApps: FC<WorkspaceAppsProps> = ({ workspace }) => {
 			<VSCodeIconLink
 				key="vscode-insiders"
 				variant="vscode-insiders"
-				label="Open VSCode Insiders"
+				label={tI18n(
+					"WorkspacesPage.WorkspacesTable.open_vscode_insiders_5963a965",
+				)}
 				owner={workspace.owner_name}
 				workspace={workspace.name}
 				agent={agent.name}
@@ -740,7 +786,7 @@ const WorkspaceApps: FC<WorkspaceAppsProps> = ({ workspace }) => {
 					e.preventDefault();
 					openAppInNewWindow(href);
 				}}
-				label="Open Terminal"
+				label={tI18n("WorkspacesPage.WorkspacesTable.open_terminal_ae088e14")}
 			>
 				<SquareTerminalIcon className="size-7!" />
 			</BaseIconLink>,
@@ -794,6 +840,8 @@ type IconAppLinkProps = {
 };
 
 const IconAppLink: FC<IconAppLinkProps> = ({ app, workspace, agent }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const link = useAppLink(app, {
 		workspace,
 		agent,
@@ -805,7 +853,12 @@ const IconAppLink: FC<IconAppLinkProps> = ({ app, workspace, agent }) => {
 		return (
 			<BaseIconLink
 				key={app.id}
-				label={`${link.label} has an invalid URL`}
+				label={tI18n(
+					"WorkspacesPage.WorkspacesTable.value0_has_an_invalid_url_846df5cb",
+					{
+						value0: link.label,
+					},
+				)}
 				onClick={() => {}}
 			>
 				{app.icon ? (
@@ -823,7 +876,9 @@ const IconAppLink: FC<IconAppLinkProps> = ({ app, workspace, agent }) => {
 	return (
 		<BaseIconLink
 			key={app.id}
-			label={`Open ${link.label}`}
+			label={tI18n("WorkspacesPage.WorkspacesTable.open_value0_b50808ac", {
+				value0: link.label,
+			})}
 			href={link.href}
 			onClick={link.onClick}
 		>

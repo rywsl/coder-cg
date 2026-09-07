@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import type { FormikContextType } from "formik";
 import { type FC, useEffect, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { Button } from "#/components/Button/Button";
 import {
@@ -51,6 +52,8 @@ export const CreateTokenForm: FC<CreateTokenFormProps> = ({
 	creationFailed,
 	now,
 }) => {
+	const { t: tI18n } = useTranslation("pages");
+
 	const navigate = useNavigate();
 	const lifetimeId = useId();
 	const expiresOnId = useId();
@@ -74,14 +77,16 @@ export const CreateTokenForm: FC<CreateTokenFormProps> = ({
 	return (
 		<HorizontalForm onSubmit={form.handleSubmit}>
 			<FormSection
-				title="Name"
-				description="What is this token for?"
+				title={tI18n("CreateTokenPage.CreateTokenForm.name_dcd1d522")}
+				description={tI18n(
+					"CreateTokenPage.CreateTokenForm.what_is_this_token_for_c3a54cf3",
+				)}
 				classes={{ sectionInfo: "min-w-[300px]" }}
 			>
 				<FormFields>
 					<FormField
 						field={getFieldHelpers("name")}
-						label="Name"
+						label={tI18n("CreateTokenPage.CreateTokenForm.name_dcd1d522")}
 						required
 						onChange={onChangeTrimmed(form, () => setFormError(undefined))}
 						autoFocus
@@ -90,11 +95,13 @@ export const CreateTokenForm: FC<CreateTokenFormProps> = ({
 				</FormFields>
 			</FormSection>
 			<FormSection
-				title="Expiration"
+				title={tI18n("CreateTokenPage.CreateTokenForm.expiration_f38d6e0e")}
 				description={
 					form.values.lifetime ? (
 						<>
-							The token will expire on{" "}
+							{tI18n(
+								"CreateTokenPage.CreateTokenForm.the_token_will_expire_on_b44b2698",
+							)}{" "}
 							<span data-pixel="ignore">
 								{currentTime
 									.add(form.values.lifetime, "days")
@@ -103,7 +110,9 @@ export const CreateTokenForm: FC<CreateTokenFormProps> = ({
 							</span>
 						</>
 					) : (
-						"Please set a token expiration."
+						tI18n(
+							"CreateTokenPage.CreateTokenForm.please_set_a_token_expiration_fa6fae74",
+						)
 					)
 				}
 				classes={{ sectionInfo: "min-w-[300px]" }}
@@ -112,7 +121,7 @@ export const CreateTokenForm: FC<CreateTokenFormProps> = ({
 					<div className="flex flex-row gap-4">
 						<div className="flex flex-col gap-2 flex-1">
 							<Label htmlFor={lifetimeId}>
-								Lifetime{" "}
+								{tI18n("CreateTokenPage.CreateTokenForm.lifetime_bdcd897a")}{" "}
 								<span className="text-xs font-bold text-content-destructive">
 									*
 								</span>
@@ -140,7 +149,7 @@ export const CreateTokenForm: FC<CreateTokenFormProps> = ({
 						{lifetimeDays === "custom" && (
 							<div className="flex flex-col gap-2 flex-1">
 								<Label htmlFor={expiresOnId}>
-									Expires on{" "}
+									{tI18n("CreateTokenPage.CreateTokenForm.expires_on_71712ec2")}{" "}
 									<span className="text-xs font-bold text-content-destructive">
 										*
 									</span>
@@ -173,14 +182,15 @@ export const CreateTokenForm: FC<CreateTokenFormProps> = ({
 					</div>
 				</FormFields>
 			</FormSection>
-
 			<FormFooter>
 				<Button onClick={() => navigate("/settings/tokens")} variant="outline">
-					Cancel
+					{tI18n("CreateTokenPage.CreateTokenForm.cancel_19766ed6")}
 				</Button>
 				<Button type="submit" disabled={isCreating}>
 					<Spinner loading={isCreating} />
-					{creationFailed ? "Retry" : "Create token"}
+					{creationFailed
+						? tI18n("CreateTokenPage.CreateTokenForm.retry_942087cc")
+						: tI18n("CreateTokenPage.CreateTokenForm.create_token_5d8e8e30")}
 				</Button>
 			</FormFooter>
 		</HorizontalForm>

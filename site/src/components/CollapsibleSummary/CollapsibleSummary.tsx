@@ -2,6 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 import { ChevronRightIcon } from "lucide-react";
 import { type FC, type ReactNode, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const collapsibleSummaryVariants = cva(
 	`flex items-center gap-1 p-0 bg-transparent border-0 text-inherit cursor-pointer
@@ -56,6 +57,8 @@ export const CollapsibleSummary: FC<CollapsibleSummaryProps> = ({
 	size,
 	scrollIntoViewOnOpen,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const [isOpen, setIsOpen] = useState(defaultOpen);
 
 	const lastState = useRef<boolean>(defaultOpen);
@@ -95,11 +98,14 @@ export const CollapsibleSummary: FC<CollapsibleSummaryProps> = ({
 					/>
 				</div>
 				<span className="sr-only">
-					({isOpen ? "Hide" : "Show"}) {label}
+					(
+					{isOpen
+						? tI18n("CollapsibleSummary.CollapsibleSummary.hide_ac20a57b")
+						: tI18n("CollapsibleSummary.CollapsibleSummary.show_0df6f1ca")}
+					) {label}
 				</span>
 				<span className="[&:first-letter]:uppercase">{label}</span>
 			</button>
-
 			{isOpen && (
 				<div className="flex flex-col gap-4" ref={ref}>
 					{children}

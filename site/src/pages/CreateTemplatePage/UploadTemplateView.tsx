@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -21,6 +22,8 @@ export const UploadTemplateView: FC<CreateTemplatePageViewProps> = ({
 	isCreating,
 	error,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const navigate = useNavigate();
 	const { entitlements, showOrganizations } = useDashboard();
 	const formPermissions = getFormPermissions(entitlements);
@@ -56,9 +59,17 @@ export const UploadTemplateView: FC<CreateTemplatePageViewProps> = ({
 					try {
 						await uploadFileMutation.mutateAsync(file);
 					} catch (error) {
-						toast.error(getErrorMessage(error, "Failed to upload file."), {
-							description: getErrorDetail(error),
-						});
+						toast.error(
+							getErrorMessage(
+								error,
+								tI18n(
+									"CreateTemplatePage.UploadTemplateView.failed_to_upload_file_c6ec4a0f",
+								),
+							),
+							{
+								description: getErrorDetail(error),
+							},
+						);
 						uploadFileMutation.reset();
 					}
 				},

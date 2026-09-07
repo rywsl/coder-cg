@@ -1,6 +1,8 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
+import { i18n } from "#/i18n";
 import type { ProviderInfo } from "#/pages/AgentsPage/utils/modelOptions";
 import { SubagentModelOverrideSettings } from "#/pages/AISettingsPage/CoderAgentsPage/components/SubagentModelOverrideSettings";
 
@@ -34,19 +36,30 @@ const settings: readonly {
 }[] = [
 	{
 		context: "general",
-		title: "General subagent",
-		description:
-			"Used by delegated agents that can edit files or run commands.",
+		title: i18n.t(
+			"agents:AISettingsPage.CoderAgentsPage.OrganizationAgentSettingsView.general_subagent_21ad991d",
+		),
+		description: i18n.t(
+			"agents:AISettingsPage.CoderAgentsPage.OrganizationAgentSettingsView.used_by_delegated_agents_that_can_edit_files_or__0b95d089",
+		),
 	},
 	{
 		context: "explore",
-		title: "Explore subagent",
-		description: "Used for read-only codebase exploration.",
+		title: i18n.t(
+			"agents:AISettingsPage.CoderAgentsPage.OrganizationAgentSettingsView.explore_subagent_cd4148ac",
+		),
+		description: i18n.t(
+			"agents:AISettingsPage.CoderAgentsPage.OrganizationAgentSettingsView.used_for_read_only_codebase_exploration_e01bea30",
+		),
 	},
 	{
 		context: "title_generation",
-		title: "Title generation",
-		description: "Used to generate chat titles.",
+		title: i18n.t(
+			"agents:AISettingsPage.CoderAgentsPage.OrganizationAgentSettingsView.title_generation_bd87168d",
+		),
+		description: i18n.t(
+			"agents:AISettingsPage.CoderAgentsPage.OrganizationAgentSettingsView.used_to_generate_chat_titles_39a751a7",
+		),
 		// Title generation fails hard on a broken override instead of falling
 		// back to default model selection, so the generic warning is wrong here.
 		unavailableModelWarning:
@@ -54,13 +67,21 @@ const settings: readonly {
 	},
 	{
 		context: "compaction",
-		title: "Compaction",
-		description: "Used to summarize conversations near the context limit.",
+		title: i18n.t(
+			"agents:AISettingsPage.CoderAgentsPage.OrganizationAgentSettingsView.compaction_a0ade140",
+		),
+		description: i18n.t(
+			"agents:AISettingsPage.CoderAgentsPage.OrganizationAgentSettingsView.used_to_summarize_conversations_near_the_context_40be67d9",
+		),
 	},
 	{
 		context: "advisor",
-		title: "Advisor",
-		description: "Used by the advisor for strategic guidance.",
+		title: i18n.t(
+			"agents:AISettingsPage.CoderAgentsPage.OrganizationAgentSettingsView.advisor_28da8c1f",
+		),
+		description: i18n.t(
+			"agents:AISettingsPage.CoderAgentsPage.OrganizationAgentSettingsView.used_by_the_advisor_for_strategic_guidance_017836c4",
+		),
 	},
 ];
 
@@ -77,6 +98,8 @@ const OrganizationAgentSettingsView: FC<OrganizationAgentSettingsViewProps> = ({
 	savingContexts,
 	errorContexts,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	if (loadError) {
 		return <ErrorAlert error={loadError} />;
 	}
@@ -89,7 +112,9 @@ const OrganizationAgentSettingsView: FC<OrganizationAgentSettingsViewProps> = ({
 			{refetchError != null && <ErrorAlert error={refetchError} />}
 			{enabledModels.length === 0 && !isLoading && refetchError == null && (
 				<p role="status" className="m-0 text-content-secondary">
-					This organization has no enabled chat models.
+					{tI18n(
+						"AISettingsPage.CoderAgentsPage.OrganizationAgentSettingsView.this_organization_has_no_enabled_chat_models_15083a61",
+					)}
 				</p>
 			)}
 			<div className="flex flex-col gap-6 rounded-lg border border-solid border-border px-6 py-7">
@@ -114,9 +139,16 @@ const OrganizationAgentSettingsView: FC<OrganizationAgentSettingsViewProps> = ({
 							onSaveModelOverride={onSave}
 							isSaving={savingContexts.has(setting.context)}
 							isSaveError={errorContexts.has(setting.context)}
-							saveErrorMessage={`Failed to save ${setting.title.toLowerCase()} override.`}
+							saveErrorMessage={tI18n(
+								"AISettingsPage.CoderAgentsPage.OrganizationAgentSettingsView.failed_to_save_value0_override_64c5c010",
+								{
+									value0: setting.title.toLowerCase(),
+								},
+							)}
 							unavailableModelWarning={setting.unavailableModelWarning}
-							unsetPlaceholder="Use default"
+							unsetPlaceholder={tI18n(
+								"AISettingsPage.CoderAgentsPage.OrganizationAgentSettingsView.use_default_a769cedc",
+							)}
 							disabled={!canEdit}
 						/>
 					);

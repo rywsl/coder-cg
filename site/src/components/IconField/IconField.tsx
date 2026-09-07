@@ -8,6 +8,7 @@ import {
 	useId,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { ChevronDownIcon as AnimatedChevronDownIcon } from "#/components/AnimatedIcons/ChevronDown";
 import { Button } from "#/components/Button/Button";
 import { ExternalImage } from "#/components/ExternalImage/ExternalImage";
@@ -23,6 +24,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "#/components/Popover/Popover";
+import { i18n } from "#/i18n";
 
 const EmojiPicker = lazy(() => import("./EmojiPicker"));
 
@@ -38,7 +40,7 @@ type IconFieldProps = Omit<ComponentPropsWithRef<"input">, "type"> & {
 export const IconField: FC<IconFieldProps> = ({
 	id: idProp,
 	value,
-	label = "Icon",
+	label = i18n.t("components:IconField.IconField.icon_a35abcd6"),
 	error,
 	helperText,
 	disabled,
@@ -47,6 +49,8 @@ export const IconField: FC<IconFieldProps> = ({
 	fullWidth: _fullWidth,
 	...inputProps
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	if (typeof value !== "string" && typeof value !== "undefined") {
 		throw new Error(`Invalid icon value "${typeof value}"`);
 	}
@@ -103,9 +107,11 @@ export const IconField: FC<IconFieldProps> = ({
 								size="sm"
 								className="group h-7 gap-1"
 								disabled={disabled}
-								aria-label="Pick an emoji or icon"
+								aria-label={tI18n(
+									"IconField.IconField.pick_an_emoji_or_icon_5e4fefbb",
+								)}
 							>
-								Emoji
+								{tI18n("IconField.IconField.emoji_61ad8976")}
 								<AnimatedChevronDownIcon />
 							</Button>
 						</PopoverTrigger>
@@ -143,7 +149,6 @@ export const IconField: FC<IconFieldProps> = ({
 					{helperText}
 				</span>
 			) : null}
-
 			{/*
       - This component takes a long time to load (easily several seconds), so we
       don't want to wait until the user actually clicks the button to start loading.

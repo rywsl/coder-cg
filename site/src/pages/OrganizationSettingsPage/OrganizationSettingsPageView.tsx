@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	Organization,
 	ShareableWorkspaceOwners,
@@ -35,18 +36,22 @@ export const OrganizationSettingsPageView: FC<
 	onChangeShareableOwners,
 	isTogglingWorkspaceSharing = false,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<div className="w-full max-w-(--breakpoint-2xl) pb-10">
 			<SettingsHeader>
-				<SettingsHeaderTitle>Settings</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"OrganizationSettingsPage.OrganizationSettingsPageView.settings_74a883a0",
+					)}
+				</SettingsHeaderTitle>
 			</SettingsHeader>
-
 			<OrganizationInfoForm
 				organization={organization}
 				error={error}
 				onSubmit={onSubmit}
 			/>
-
 			{onChangeShareableOwners && (
 				<WorkspaceSharingSection
 					organizationId={organization.id}
@@ -56,7 +61,6 @@ export const OrganizationSettingsPageView: FC<
 					isTogglingWorkspaceSharing={isTogglingWorkspaceSharing}
 				/>
 			)}
-
 			{!organization.is_default && (
 				<DeleteOrganizationSection
 					organizationName={organization.name}

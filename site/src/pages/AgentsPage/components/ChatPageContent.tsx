@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import { type FC, Profiler, type ReactNode, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import type { UrlTransform } from "streamdown";
@@ -363,6 +364,8 @@ export const ChatPageInput: FC<ChatPageInputProps> = ({
 	attachedWorkspace,
 	folder,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const messagesByID = useChatSelector(store, selectMessagesByID);
 	const orderedMessageIDs = useChatSelector(store, selectOrderedMessageIDs);
 	const hasStreamState = useChatSelector(store, selectHasStreamState);
@@ -403,8 +406,18 @@ export const ChatPageInput: FC<ChatPageInputProps> = ({
 	const handleRefreshContext = chatId
 		? () =>
 				refreshContextMutation.mutate(undefined, {
-					onSuccess: () => toast.success("Context refreshed."),
-					onError: () => toast.error("Failed to refresh context."),
+					onSuccess: () =>
+						toast.success(
+							tI18n(
+								"AgentsPage.components.ChatPageContent.context_refreshed_f5f14376",
+							),
+						),
+					onError: () =>
+						toast.error(
+							tI18n(
+								"AgentsPage.components.ChatPageContent.failed_to_refresh_context_e53500aa",
+							),
+						),
 				})
 		: undefined;
 	const composeAttachments = useChatDraftAttachments(organizationId, chatId, {
@@ -511,7 +524,11 @@ export const ChatPageInput: FC<ChatPageInputProps> = ({
 						isUploadInProgress(uploadStates.get(file)),
 					);
 					if (hasActiveUploads) {
-						toast.warning("Wait for file uploads to finish before sending.");
+						toast.warning(
+							tI18n(
+								"AgentsPage.components.ChatPageContent.wait_for_file_uploads_to_finish_before_sending_21221823",
+							),
+						);
 						return;
 					}
 					// Collect uploaded attachment metadata for the optimistic
@@ -534,7 +551,13 @@ export const ChatPageInput: FC<ChatPageInputProps> = ({
 					}
 					if (skippedErrors > 0) {
 						toast.warning(
-							`${skippedErrors} attachment${skippedErrors > 1 ? "s" : ""} could not be sent (upload failed)`,
+							tI18n(
+								"AgentsPage.components.ChatPageContent.value0_attachment_value1_could_not_be_sent_uploa_f4ca1f59",
+								{
+									value0: skippedErrors,
+									value1: skippedErrors > 1 ? "s" : "",
+								},
+							),
 						);
 					}
 					const attachmentArg =

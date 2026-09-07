@@ -7,6 +7,7 @@ import {
 	XIcon,
 } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { toast } from "sonner";
 import type * as TypesGen from "#/api/typesGenerated";
@@ -58,6 +59,8 @@ export const MobileMenu: FC<MobileMenuProps> = ({
 	onSignOut,
 	isDefaultOpen,
 }) => {
+	const { t: tI18n } = useTranslation("dashboard");
+
 	const [open, setOpen] = useState(isDefaultOpen);
 
 	return (
@@ -67,7 +70,11 @@ export const MobileMenu: FC<MobileMenuProps> = ({
 			)}
 			<DropdownMenuTrigger asChild>
 				<Button
-					aria-label={open ? "Close menu" : "Open menu"}
+					aria-label={
+						open
+							? tI18n("dashboard.Navbar.MobileMenu.close_menu_6ccd5c78")
+							: tI18n("dashboard.Navbar.MobileMenu.open_menu_b40b3713")
+					}
 					size="icon-lg"
 					variant="subtle"
 				>
@@ -79,13 +86,19 @@ export const MobileMenu: FC<MobileMenuProps> = ({
 				sideOffset={17}
 			>
 				<DropdownMenuItem asChild className={itemStyles.default}>
-					<Link to="/workspaces">Workspaces</Link>
+					<Link to="/workspaces">
+						{tI18n("dashboard.Navbar.MobileMenu.workspaces_1377264b")}
+					</Link>
 				</DropdownMenuItem>
 				<DropdownMenuItem asChild className={itemStyles.default}>
-					<Link to="/templates">Templates</Link>
+					<Link to="/templates">
+						{tI18n("dashboard.Navbar.MobileMenu.templates_56b564b7")}
+					</Link>
 				</DropdownMenuItem>
 				<DropdownMenuItem asChild className={itemStyles.default}>
-					<Link to="/agents">Agents</Link>
+					<Link to="/agents">
+						{tI18n("dashboard.Navbar.MobileMenu.agents_279b44d2")}
+					</Link>
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<ProxySettingsSub proxyContextValue={proxyContextValue} />
@@ -112,6 +125,8 @@ type ProxySettingsSubProps = {
 };
 
 const ProxySettingsSub: FC<ProxySettingsSubProps> = ({ proxyContextValue }) => {
+	const { t: tI18n } = useTranslation("dashboard");
+
 	const selectedProxy = proxyContextValue?.proxy.proxy;
 	const latency = selectedProxy
 		? proxyContextValue?.proxyLatencies[selectedProxy?.id]
@@ -132,10 +147,13 @@ const ProxySettingsSub: FC<ProxySettingsSubProps> = ({ proxyContextValue }) => {
 						setOpen((prev) => !prev);
 					}}
 				>
-					Workspace proxy settings:
+					{tI18n(
+						"dashboard.Navbar.MobileMenu.workspace_proxy_settings_cd80e2a6",
+					)}
 					<span className="leading-none flex items-center gap-1">
 						<span className="sr-only">
-							Latency for {selectedProxy.display_name || selectedProxy.name}
+							{tI18n("dashboard.Navbar.MobileMenu.latency_for_82129a3e")}
+							{selectedProxy.display_name || selectedProxy.name}
 						</span>
 						<RadioIcon
 							aria-hidden="true"
@@ -168,9 +186,16 @@ const ProxySettingsSub: FC<ProxySettingsSubProps> = ({ proxyContextValue }) => {
 									e.preventDefault();
 
 									if (!p.healthy) {
-										toast.error("Failed to select proxy.", {
-											description: "Please select a healthy workspace proxy.",
-										});
+										toast.error(
+											tI18n(
+												"dashboard.Navbar.MobileMenu.failed_to_select_proxy_16e7d1f3",
+											),
+											{
+												description: tI18n(
+													"dashboard.Navbar.MobileMenu.please_select_a_healthy_workspace_proxy_25ba0ed8",
+												),
+											},
+										);
 										return;
 									}
 
@@ -197,7 +222,9 @@ const ProxySettingsSub: FC<ProxySettingsSubProps> = ({ proxyContextValue }) => {
 					asChild
 					className={cn(itemStyles.default, itemStyles.sub)}
 				>
-					<Link to="/deployment/workspace-proxies">Proxy settings</Link>
+					<Link to="/deployment/workspace-proxies">
+						{tI18n("dashboard.Navbar.MobileMenu.proxy_settings_4529dd70")}
+					</Link>
 				</DropdownMenuItem>
 				<DropdownMenuItem
 					className={cn(itemStyles.default, itemStyles.sub)}
@@ -206,7 +233,7 @@ const ProxySettingsSub: FC<ProxySettingsSubProps> = ({ proxyContextValue }) => {
 						proxyContextValue.refetchProxyLatencies();
 					}}
 				>
-					Refresh latencies
+					{tI18n("dashboard.Navbar.MobileMenu.refresh_latencies_ba8f2209")}
 				</DropdownMenuItem>
 			</CollapsibleContent>
 		</Collapsible>
@@ -218,6 +245,8 @@ type AdminSettingsSubProps = {
 };
 
 const AdminSettingsSub: FC<AdminSettingsSubProps> = ({ permissions }) => {
+	const { t: tI18n } = useTranslation("dashboard");
+
 	const [open, setOpen] = useState(false);
 
 	return (
@@ -230,7 +259,7 @@ const AdminSettingsSub: FC<AdminSettingsSubProps> = ({ permissions }) => {
 						setOpen((prev) => !prev);
 					}}
 				>
-					Admin settings
+					{tI18n("dashboard.Navbar.MobileMenu.admin_settings_502d9f3e")}
 					<ChevronRightIcon
 						className={cn("ml-auto", open ? "rotate-90" : "")}
 					/>
@@ -257,6 +286,8 @@ const UserSettingsSub: FC<UserSettingsSubProps> = ({
 	supportLinks,
 	onSignOut,
 }) => {
+	const { t: tI18n } = useTranslation("dashboard");
+
 	const [open, setOpen] = useState(false);
 
 	return (
@@ -273,7 +304,7 @@ const UserSettingsSub: FC<UserSettingsSubProps> = ({
 						src={user?.avatar_url}
 						fallback={user?.name || user?.username}
 					/>
-					User settings
+					{tI18n("dashboard.Navbar.MobileMenu.user_settings_2b363e87")}
 					<ChevronRightIcon
 						className={cn("ml-auto", open ? "rotate-90" : "")}
 					/>
@@ -284,13 +315,15 @@ const UserSettingsSub: FC<UserSettingsSubProps> = ({
 					asChild
 					className={cn(itemStyles.default, itemStyles.sub)}
 				>
-					<Link to="/settings/account">Account</Link>
+					<Link to="/settings/account">
+						{tI18n("dashboard.Navbar.MobileMenu.account_7e1b0d56")}
+					</Link>
 				</DropdownMenuItem>
 				<DropdownMenuItem
 					className={cn(itemStyles.default, itemStyles.sub)}
 					onClick={onSignOut}
 				>
-					Sign out
+					{tI18n("dashboard.Navbar.MobileMenu.sign_out_48f0d3d3")}
 				</DropdownMenuItem>
 				{supportLinks && (
 					<>

@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { groupsForUser } from "#/api/queries/groups";
 import {
@@ -13,6 +14,8 @@ import { AccountForm } from "./AccountForm";
 import { AccountUserGroups } from "./AccountUserGroups";
 
 const AccountPage: FC = () => {
+	const { t: tI18n } = useTranslation("users");
+
 	const { permissions, user: me } = useAuthenticated();
 	const { updateProfile, updateProfileError, isUpdatingProfile } =
 		useAuthContext();
@@ -28,9 +31,13 @@ const AccountPage: FC = () => {
 		<div className="flex flex-col gap-12">
 			<div>
 				<SettingsHeader>
-					<SettingsHeaderTitle>Account</SettingsHeaderTitle>
+					<SettingsHeaderTitle>
+						{tI18n("UserSettingsPage.AccountPage.AccountPage.account_7e1b0d56")}
+					</SettingsHeaderTitle>
 					<SettingsHeaderDescription>
-						Update your account info.
+						{tI18n(
+							"UserSettingsPage.AccountPage.AccountPage.update_your_account_info_e42e99c2",
+						)}
 					</SettingsHeaderDescription>
 				</SettingsHeader>
 				<AccountForm
@@ -46,7 +53,6 @@ const AccountPage: FC = () => {
 					onSubmit={updateProfile}
 				/>
 			</div>
-
 			{hasGroupsFeature && (
 				<AccountUserGroups
 					groups={groupsQuery.data}

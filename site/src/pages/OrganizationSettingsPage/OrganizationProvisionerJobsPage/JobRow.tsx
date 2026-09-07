@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { ChevronRightIcon, TriangleAlertIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import type { ProvisionerJob } from "#/api/typesGenerated";
 import { Avatar } from "#/components/Avatar/Avatar";
@@ -22,6 +23,8 @@ type JobRowProps = {
 };
 
 export const JobRow: FC<JobRowProps> = ({ job, defaultIsOpen = false }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const metadata = job.metadata;
 	const [isOpen, setIsOpen] = useState(defaultIsOpen);
 	const queue = {
@@ -47,7 +50,17 @@ export const JobRow: FC<JobRowProps> = ({ job, defaultIsOpen = false }) => {
 						<ChevronRightIcon
 							className={cn("mr-4 transition-transform", isOpen && "rotate-90")}
 						/>
-						<span className="sr-only">({isOpen ? "Hide" : "Show more"})</span>
+						<span className="sr-only">
+							(
+							{isOpen
+								? tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionerJobsPage.JobRow.hide_ac20a57b",
+									)
+								: tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionerJobsPage.JobRow.show_more_f5c9bd13",
+									)}
+							)
+						</span>
 						<span className="block first-letter:uppercase">
 							{relativeTime(new Date(job.created_at))}
 						</span>
@@ -82,7 +95,6 @@ export const JobRow: FC<JobRowProps> = ({ job, defaultIsOpen = false }) => {
 					<CancelJobButton job={job} />
 				</TableCell>
 			</TableRow>
-
 			{isOpen && (
 				<TableRow>
 					<TableCell colSpan={999} className="p-4 border-t-0">
@@ -104,10 +116,18 @@ export const JobRow: FC<JobRowProps> = ({ job, defaultIsOpen = false }) => {
 								"[&_dd]:text-content-primary [&_dd]:font-mono [&_dd]:leading-[22px] [&_dt]:font-medium",
 							])}
 						>
-							<dt>Job ID:</dt>
+							<dt>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerJobsPage.JobRow.job_id_e29dcd38",
+								)}
+							</dt>
 							<dd>{job.id}</dd>
 
-							<dt>Available provisioners:</dt>
+							<dt>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerJobsPage.JobRow.available_provisioners_633faded",
+								)}
+							</dt>
 							<dd>
 								{job.available_workers
 									? JSON.stringify(job.available_workers)
@@ -116,15 +136,26 @@ export const JobRow: FC<JobRowProps> = ({ job, defaultIsOpen = false }) => {
 
 							{job.worker_id && (
 								<>
-									<dt>Completed by provisioner:</dt>
+									<dt>
+										{tI18n(
+											"OrganizationSettingsPage.OrganizationProvisionerJobsPage.JobRow.completed_by_provisioner_2f6a28eb",
+										)}
+									</dt>
 									<dd className="flex items-center gap-2">
-										<span>{job.worker_name || "[removed]"}</span>
+										<span>
+											{job.worker_name ||
+												tI18n(
+													"OrganizationSettingsPage.OrganizationProvisionerJobsPage.JobRow.removed_985a5be9",
+												)}
+										</span>
 										{job.worker_name && (
 											<Button size="xs" variant="outline" asChild>
 												<RouterLink
 													to={`../provisioners?${new URLSearchParams({ ids: job.worker_id })}`}
 												>
-													View provisioner
+													{tI18n(
+														"OrganizationSettingsPage.OrganizationProvisionerJobsPage.JobRow.view_provisioner_878efd37",
+													)}
 												</RouterLink>
 											</Button>
 										)}
@@ -132,22 +163,43 @@ export const JobRow: FC<JobRowProps> = ({ job, defaultIsOpen = false }) => {
 								</>
 							)}
 
-							<dt>Associated workspace:</dt>
-							<dd>{job.metadata.workspace_name ?? "null"}</dd>
+							<dt>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerJobsPage.JobRow.associated_workspace_cc2e492b",
+								)}
+							</dt>
+							<dd>
+								{job.metadata.workspace_name ??
+									tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionerJobsPage.JobRow.null_74234e98",
+									)}
+							</dd>
 
-							<dt>Creation time:</dt>
+							<dt>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerJobsPage.JobRow.creation_time_e087974b",
+								)}
+							</dt>
 							<dd data-pixel="ignore">{job.created_at}</dd>
 
 							{job.queue_position > 0 && (
 								<>
-									<dt>Queue:</dt>
+									<dt>
+										{tI18n(
+											"OrganizationSettingsPage.OrganizationProvisionerJobsPage.JobRow.queue_bc751156",
+										)}
+									</dt>
 									<dd>
 										{job.queue_position}/{job.queue_size}
 									</dd>
 								</>
 							)}
 
-							<dt>Tags:</dt>
+							<dt>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionerJobsPage.JobRow.tags_865658f8",
+								)}
+							</dt>
 							<dd>
 								<ProvisionerTags>
 									{Object.entries(job.tags).map(([key, value]) => (

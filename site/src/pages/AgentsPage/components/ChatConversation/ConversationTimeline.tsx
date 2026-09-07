@@ -10,6 +10,7 @@ import {
 	PencilIcon,
 } from "lucide-react";
 import { type FC, memo, type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { UrlTransform } from "streamdown";
 import type * as TypesGen from "#/api/typesGenerated";
 import { AlertTitle } from "#/components/Alert/Alert";
@@ -85,14 +86,22 @@ const TimelineNotice: FC<{ children?: ReactNode }> = ({ children }) => (
 const LifecycleHookNotice: FC<{
 	children: string;
 	urlTransform?: UrlTransform;
-}> = ({ children, urlTransform }) => (
-	<TimelineNotice>
-		<div className="flex flex-col gap-1">
-			<AlertTitle>Lifecycle hook</AlertTitle>
-			<Response urlTransform={urlTransform}>{children}</Response>
-		</div>
-	</TimelineNotice>
-);
+}> = ({ children, urlTransform }) => {
+	const { t: tI18n } = useTranslation("agents");
+
+	return (
+		<TimelineNotice>
+			<div className="flex flex-col gap-1">
+				<AlertTitle>
+					{tI18n(
+						"AgentsPage.components.ChatConversation.ConversationTimeline.lifecycle_hook_8f9cc736",
+					)}
+				</AlertTitle>
+				<Response urlTransform={urlTransform}>{children}</Response>
+			</div>
+		</TimelineNotice>
+	);
+};
 
 const ChatMessageItem = memo<{
 	organizationId: string | undefined;
@@ -169,6 +178,8 @@ const ChatMessageItem = memo<{
 		subagentVariants,
 		showDesktopPreviews,
 	}) => {
+		const { t: tI18n } = useTranslation("agents");
+
 		const isUser = message?.role === "user";
 		const messageId = message?.id;
 		const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -294,7 +305,9 @@ const ChatMessageItem = memo<{
 							{displayState.hasCopyableContent && parsed && (
 								<CopyButton
 									text={parsed.markdown}
-									label="Copy message"
+									label={tI18n(
+										"AgentsPage.components.ChatConversation.ConversationTimeline.copy_message_457efe53",
+									)}
 									className="size-6"
 									tooltipSide="bottom"
 								/>
@@ -306,7 +319,9 @@ const ChatMessageItem = memo<{
 											size="icon"
 											variant="subtle"
 											className="size-6"
-											aria-label="Edit message"
+											aria-label={tI18n(
+												"AgentsPage.components.ChatConversation.ConversationTimeline.edit_message_9757ccd5",
+											)}
 											onClick={() => {
 												const { text, fileBlocks } =
 													getEditableUserMessagePayload(message);
@@ -314,10 +329,18 @@ const ChatMessageItem = memo<{
 											}}
 										>
 											<PencilIcon />
-											<span className="sr-only">Edit message</span>
+											<span className="sr-only">
+												{tI18n(
+													"AgentsPage.components.ChatConversation.ConversationTimeline.edit_message_9757ccd5",
+												)}
+											</span>
 										</Button>
 									</TooltipTrigger>
-									<TooltipContent side="bottom">Edit message</TooltipContent>
+									<TooltipContent side="bottom">
+										{tI18n(
+											"AgentsPage.components.ChatConversation.ConversationTimeline.edit_message_9757ccd5",
+										)}
+									</TooltipContent>
 								</Tooltip>
 							)}
 							{isUser &&
@@ -331,7 +354,9 @@ const ChatMessageItem = memo<{
 													size="icon"
 													variant="subtle"
 													className="size-6"
-													aria-label="Jump to previous user message"
+													aria-label={tI18n(
+														"AgentsPage.components.ChatConversation.ConversationTimeline.jump_to_previous_user_message_23b33031",
+													)}
 													disabled={prevUserMessageKey === undefined}
 													onClick={() => {
 														if (prevUserMessageKey !== undefined) {
@@ -341,12 +366,16 @@ const ChatMessageItem = memo<{
 												>
 													<ChevronLeftIcon />
 													<span className="sr-only">
-														Jump to previous user message
+														{tI18n(
+															"AgentsPage.components.ChatConversation.ConversationTimeline.jump_to_previous_user_message_23b33031",
+														)}
 													</span>
 												</Button>
 											</TooltipTrigger>
 											<TooltipContent side="bottom">
-												Jump to previous user message
+												{tI18n(
+													"AgentsPage.components.ChatConversation.ConversationTimeline.jump_to_previous_user_message_23b33031",
+												)}
 											</TooltipContent>
 										</Tooltip>
 										<Tooltip>
@@ -355,7 +384,9 @@ const ChatMessageItem = memo<{
 													size="icon"
 													variant="subtle"
 													className="size-6"
-													aria-label="Jump to next user message"
+													aria-label={tI18n(
+														"AgentsPage.components.ChatConversation.ConversationTimeline.jump_to_next_user_message_e67d478c",
+													)}
 													disabled={nextUserMessageKey === undefined}
 													onClick={() => {
 														if (nextUserMessageKey !== undefined) {
@@ -365,12 +396,16 @@ const ChatMessageItem = memo<{
 												>
 													<ChevronRightIcon />
 													<span className="sr-only">
-														Jump to next user message
+														{tI18n(
+															"AgentsPage.components.ChatConversation.ConversationTimeline.jump_to_next_user_message_e67d478c",
+														)}
 													</span>
 												</Button>
 											</TooltipTrigger>
 											<TooltipContent side="bottom">
-												Jump to next user message
+												{tI18n(
+													"AgentsPage.components.ChatConversation.ConversationTimeline.jump_to_next_user_message_e67d478c",
+												)}
 											</TooltipContent>
 										</Tooltip>
 									</>

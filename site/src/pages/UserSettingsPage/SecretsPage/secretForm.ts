@@ -10,6 +10,7 @@ import type {
 	UpdateUserSecretRequest,
 	UserSecret,
 } from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 
 export interface SecretFormValues {
 	name: string;
@@ -68,10 +69,14 @@ export const getCreateSecretRequiredFieldErrors = (
 ): SecretFieldErrors => {
 	const errors: SecretFieldErrors = {};
 	if (values.name.trim() === "") {
-		errors.name = "Name is required.";
+		errors.name = i18n.t(
+			"users:UserSettingsPage.SecretsPage.secretForm.name_is_required_f83a4bc1",
+		);
 	}
 	if (values.value === "") {
-		errors.value = "Value is required.";
+		errors.value = i18n.t(
+			"users:UserSettingsPage.SecretsPage.secretForm.value_is_required_046e146f",
+		);
 	}
 	return errors;
 };
@@ -122,7 +127,9 @@ export const mapSecretApiErrorToFormErrors = (
 	if (!apiError) {
 		return {
 			fieldErrors: {},
-			formError: "Something went wrong.",
+			formError: i18n.t(
+				"users:UserSettingsPage.SecretsPage.secretForm.something_went_wrong_0c953ab3",
+			),
 		};
 	}
 

@@ -1,5 +1,6 @@
 import { XIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { ProvisionerDaemon } from "#/api/typesGenerated";
 import { Badge } from "#/components/Badge/Badge";
 import { Button } from "#/components/Button/Button";
@@ -59,17 +60,23 @@ export const OrganizationProvisionersPageView: FC<
 	onFilterChange,
 	onRetry,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<section className="w-full max-w-(--breakpoint-2xl) pb-10">
 			<SettingsHeader>
-				<SettingsHeaderTitle>Provisioners</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.provisioners_82d4a12e",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Coder server runs provisioner daemons which execute terraform during
-					workspace and template builds.{" "}
+					{tI18n(
+						"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.coder_server_runs_provisioner_daemons_which_exec_8f8bec6c",
+					)}{" "}
 					<SettingsHeaderDocsLink href={docs("/admin/provisioners")} />
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			{filter.ids && (
 				<div className="flex items-center gap-2 mb-6">
 					<div className="relative">
@@ -86,27 +93,46 @@ export const OrganizationProvisionersPageView: FC<
 											onFilterChange({ ...filter, ids: "" });
 										}}
 									>
-										<span className="sr-only">Clear ID</span>
+										<span className="sr-only">
+											{tI18n(
+												"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.clear_id_9537d728",
+											)}
+										</span>
 										<XIcon />
 									</Button>
 								</TooltipTrigger>
-								<TooltipContent>Clear ID</TooltipContent>
+								<TooltipContent>
+									{tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.clear_id_9537d728",
+									)}
+								</TooltipContent>
 							</Tooltip>
 						</div>
 					</div>
 				</div>
 			)}
-
 			{showPaywall ? (
 				<PremiumPaywall
 					source="provisioners"
-					message="Provisioners"
-					description="Provisioners run your Terraform to create templates and workspaces."
+					message={tI18n(
+						"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.provisioners_82d4a12e",
+					)}
+					description={tI18n(
+						"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.provisioners_run_your_terraform_to_create_templa_09060a53",
+					)}
 					features={[
-						"Run build jobs in isolation",
-						"Isolate cloud APIs from Coder",
-						"Keep secrets off the Coder host",
-						"Reduce server load and queue times",
+						tI18n(
+							"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.run_build_jobs_in_isolation_172531de",
+						),
+						tI18n(
+							"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.isolate_cloud_apis_from_coder_bab1d6d8",
+						),
+						tI18n(
+							"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.keep_secrets_off_the_coder_host_68379f8f",
+						),
+						tI18n(
+							"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.reduce_server_load_and_queue_times_af610661",
+						),
 					]}
 					canViewPremium={permissions.viewAllLicenses}
 				/>
@@ -127,17 +153,39 @@ export const OrganizationProvisionersPageView: FC<
 							htmlFor="offline-filter"
 							className="text-sm font-medium leading-none"
 						>
-							Include offline provisioners
+							{tI18n(
+								"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.include_offline_provisioners_616cce9e",
+							)}
 						</label>
 					</div>
 					<Table>
 						<TableHeader>
 							<TableRow>
-								<TableHead>Name</TableHead>
-								<TableHead>Key</TableHead>
-								<TableHead>Version</TableHead>
-								<TableHead>Status</TableHead>
-								<TableHead>Tags</TableHead>
+								<TableHead>
+									{tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.name_dcd1d522",
+									)}
+								</TableHead>
+								<TableHead>
+									{tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.key_99a52df3",
+									)}
+								</TableHead>
+								<TableHead>
+									{tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.version_dd167905",
+									)}
+								</TableHead>
+								<TableHead>
+									{tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.status_920e413c",
+									)}
+								</TableHead>
+								<TableHead>
+									{tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.tags_1331275b",
+									)}
+								</TableHead>
 								<TableHead>
 									<LastConnectionHead />
 								</TableHead>
@@ -156,12 +204,18 @@ export const OrganizationProvisionersPageView: FC<
 									))
 								) : (
 									<TableEmpty
-										message="No provisioners found"
-										description="A provisioner is required before you can create templates and workspaces. You can connect your first provisioner by following our documentation."
+										message={tI18n(
+											"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.no_provisioners_found_6a5751fd",
+										)}
+										description={tI18n(
+											"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.a_provisioner_is_required_before_you_can_create__94114ee5",
+										)}
 										cta={
 											<Button size="sm" asChild>
 												<Link href={docs("/admin/provisioners")}>
-													Create a provisioner
+													{tI18n(
+														"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.create_a_provisioner_8365116e",
+													)}
 												</Link>
 											</Button>
 										}
@@ -169,10 +223,14 @@ export const OrganizationProvisionersPageView: FC<
 								)
 							) : error ? (
 								<TableEmpty
-									message="Error loading the provisioner jobs"
+									message={tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.error_loading_the_provisioner_jobs_c06b62fc",
+									)}
 									cta={
 										<Button onClick={onRetry} size="sm">
-											Retry
+											{tI18n(
+												"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.retry_942087cc",
+											)}
 										</Button>
 									}
 								/>

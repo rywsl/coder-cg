@@ -12,6 +12,7 @@ import {
 	type HTMLAttributes,
 	type ReactElement,
 } from "react";
+import { useTranslation } from "react-i18next";
 import type { HealthCode, HealthSeverity } from "#/api/typesGenerated";
 import { Link } from "#/components/Link/Link";
 import { docs } from "#/utils/docs";
@@ -238,6 +239,8 @@ export const BooleanPill: FC<BooleanPillProps> = ({
 type LogsProps = HTMLAttributes<HTMLDivElement> & { lines: readonly string[] };
 
 export const Logs: FC<LogsProps> = ({ className, lines, ...divProps }) => {
+	const { t: tI18n } = useTranslation("pages");
+
 	return (
 		<div
 			className={cn(
@@ -252,7 +255,9 @@ export const Logs: FC<LogsProps> = ({ className, lines, ...divProps }) => {
 				</span>
 			))}
 			{lines.length === 0 && (
-				<span className="text-content-secondary">No logs available</span>
+				<span className="text-content-secondary">
+					{tI18n("HealthPage.Content.no_logs_available_c8831ac9")}
+				</span>
 			)}
 		</div>
 	);
@@ -265,6 +270,8 @@ interface HealthMessageDocsLinkProps {
 export const HealthMessageDocsLink: FC<HealthMessageDocsLinkProps> = ({
 	code,
 }) => {
+	const { t: tI18n } = useTranslation("pages");
+
 	return (
 		<Link
 			href={docs(`/admin/monitoring/health-check#${code.toLocaleLowerCase()}`)}
@@ -272,7 +279,8 @@ export const HealthMessageDocsLink: FC<HealthMessageDocsLinkProps> = ({
 			rel="noreferrer"
 			className="mx-0"
 		>
-			Docs for {code}
+			{tI18n("HealthPage.Content.docs_for_0ec2594e")}
+			{code}
 		</Link>
 	);
 };

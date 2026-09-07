@@ -1,5 +1,6 @@
 import { ExternalLinkIcon } from "lucide-react";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { ToolCall } from "./ToolCall";
 import { asString, parseArgs, type ToolStatus } from "./utils";
@@ -31,6 +32,8 @@ export const CreateWorkspaceTool: React.FC<{
 	created = true,
 	labelOverride,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const isRunning = status === "running";
 	const rec = parseArgs(resultJson);
 	const ownerName = rec ? asString(rec.owner_name) : "";
@@ -38,16 +41,35 @@ export const CreateWorkspaceTool: React.FC<{
 	const workspaceLink = ownerName && wsName ? `/@${ownerName}/${wsName}` : null;
 
 	const label = isRunning
-		? "Creating workspace…"
+		? tI18n(
+				"AgentsPage.components.ChatElements.tools.CreateWorkspaceTool.creating_workspace_afb0bf22",
+			)
 		: labelOverride
 			? labelOverride
 			: isError
-				? `Failed to create ${wsName || "workspace"}`
+				? tI18n(
+						"AgentsPage.components.ChatElements.tools.CreateWorkspaceTool.failed_to_create_value0_598ad5f6",
+						{
+							value0: wsName || "workspace",
+						},
+					)
 				: created === false
-					? `Workspace ${wsName} already exists`
+					? tI18n(
+							"AgentsPage.components.ChatElements.tools.CreateWorkspaceTool.workspace_value0_already_exists_ee9d183d",
+							{
+								value0: wsName,
+							},
+						)
 					: wsName
-						? `Created ${wsName}`
-						: "Created workspace";
+						? tI18n(
+								"AgentsPage.components.ChatElements.tools.CreateWorkspaceTool.created_value0_4bc4d3b0",
+								{
+									value0: wsName,
+								},
+							)
+						: tI18n(
+								"AgentsPage.components.ChatElements.tools.CreateWorkspaceTool.created_workspace_9ed48b44",
+							);
 
 	const hasBuildLogs = isRunning || Boolean(buildId);
 
@@ -56,7 +78,12 @@ export const CreateWorkspaceTool: React.FC<{
 			className="w-full"
 			status={status}
 			isError={isError}
-			errorMessage={errorMessage || "Failed to create workspace"}
+			errorMessage={
+				errorMessage ||
+				tI18n(
+					"AgentsPage.components.ChatElements.tools.CreateWorkspaceTool.failed_to_create_workspace_0a8d4fd6",
+				)
+			}
 			hasContent={hasBuildLogs}
 			defaultExpanded={isRunning}
 		>
@@ -72,7 +99,9 @@ export const CreateWorkspaceTool: React.FC<{
 						<Link
 							to={workspaceLink}
 							className="inline-flex align-middle text-content-secondary opacity-50 transition-opacity hover:opacity-100"
-							aria-label="View workspace"
+							aria-label={tI18n(
+								"AgentsPage.components.ChatElements.tools.CreateWorkspaceTool.view_workspace_ea77e961",
+							)}
 						>
 							<ExternalLinkIcon className="size-3" />
 						</Link>

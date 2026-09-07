@@ -1,4 +1,5 @@
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Dialog, DialogContent, DialogTitle } from "#/components/Dialog/Dialog";
 import { RECORDING_UNAVAILABLE_TEXT } from "./ChatElements/tools/previewConstants";
 
@@ -13,6 +14,8 @@ export const VideoLightbox: FC<VideoLightboxProps> = ({
 	open,
 	onClose,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [videoError, setVideoError] = useState(false);
 
 	return (
@@ -21,7 +24,11 @@ export const VideoLightbox: FC<VideoLightboxProps> = ({
 				className="max-h-[85vh] max-w-[90vw] w-fit border-0 bg-transparent p-0 shadow-none"
 				aria-describedby={undefined}
 			>
-				<DialogTitle className="sr-only">Recording playback</DialogTitle>
+				<DialogTitle className="sr-only">
+					{tI18n(
+						"AgentsPage.components.VideoLightbox.recording_playback_708c8c8d",
+					)}
+				</DialogTitle>
 				{videoError ? (
 					<div className="flex items-center justify-center rounded bg-surface-secondary p-8 text-sm text-content-secondary">
 						{RECORDING_UNAVAILABLE_TEXT}

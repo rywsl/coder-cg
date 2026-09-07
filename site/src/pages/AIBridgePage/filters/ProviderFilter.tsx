@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { API } from "#/api/api";
 import type { AIProvider } from "#/api/typesGenerated";
 import {
@@ -52,11 +53,19 @@ interface ProviderFilterProps {
 }
 
 export const ProviderFilter: FC<ProviderFilterProps> = ({ menu, width }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<SelectFilter
-			label="Select provider"
-			placeholder="All providers"
-			emptyText="No providers found"
+			label={tI18n(
+				"AIBridgePage.filters.ProviderFilter.select_provider_644c6aae",
+			)}
+			placeholder={tI18n(
+				"AIBridgePage.filters.ProviderFilter.all_providers_20e56db7",
+			)}
+			emptyText={tI18n(
+				"AIBridgePage.filters.ProviderFilter.no_providers_found_0bc42eac",
+			)}
 			options={menu.searchOptions}
 			onSelect={(option) => menu.selectOption(option)}
 			selectedOption={menu.selectedOption ?? undefined}

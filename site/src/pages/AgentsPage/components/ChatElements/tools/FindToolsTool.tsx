@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { ToolCall } from "./ToolCall";
 import type { ToolStatus } from "./utils";
 
@@ -24,19 +25,47 @@ export const FindToolsTool: FC<FindToolsToolProps> = ({
 	isError,
 	errorMessage,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const queryLabel =
-		[...queries, ...names.map((name) => `name:${name}`)].join(", ") || "tools";
+		[
+			...queries,
+			...names.map((name) =>
+				tI18n(
+					"AgentsPage.components.ChatElements.tools.FindToolsTool.name_value0_3c8bfd25",
+					{
+						value0: name,
+					},
+				),
+			),
+		].join(", ") || "tools";
 	const label =
 		status === "running"
-			? `Searching tools: ${queryLabel}`
-			: `Searched tools: ${queryLabel} -> ${matches.length} matched`;
+			? tI18n(
+					"AgentsPage.components.ChatElements.tools.FindToolsTool.searching_tools_value0_1cdf73d5",
+					{
+						value0: queryLabel,
+					},
+				)
+			: tI18n(
+					"AgentsPage.components.ChatElements.tools.FindToolsTool.searched_tools_value0_value1_matched_4432f0c4",
+					{
+						value0: queryLabel,
+						value1: matches.length,
+					},
+				);
 
 	return (
 		<ToolCall.Root
 			className="w-full"
 			status={status}
 			isError={isError}
-			errorMessage={errorMessage || "Failed to search tools"}
+			errorMessage={
+				errorMessage ||
+				tI18n(
+					"AgentsPage.components.ChatElements.tools.FindToolsTool.failed_to_search_tools_f87c8522",
+				)
+			}
 			hasContent={matches.length > 0}
 		>
 			<ToolCall.Header iconName="find_tools" label={label} />

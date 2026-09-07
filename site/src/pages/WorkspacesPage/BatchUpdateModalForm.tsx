@@ -9,6 +9,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { useQueries } from "react-query";
 import { templateVersion } from "#/api/queries/templates";
 import type { Workspace } from "#/api/typesGenerated";
@@ -100,6 +101,8 @@ const ReviewPanel: FC<ReviewPanelProps> = ({
 	workspaceIconUrl,
 	className,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	// Preemptively adding border to this component to help decouple the styling
 	// from the rest of the components in this file, and make the core parts of
 	// this component easier to reason about
@@ -117,12 +120,14 @@ const ReviewPanel: FC<ReviewPanelProps> = ({
 						<span className="leading-tight">{workspaceName}</span>
 						{running && (
 							<Badge size="xs" variant="warning">
-								Running
+								{tI18n("WorkspacesPage.BatchUpdateModalForm.running_f4ccae29")}
 							</Badge>
 						)}
 						{transitioning && (
 							<Badge size="xs" variant="warning">
-								Getting latest status
+								{tI18n(
+									"WorkspacesPage.BatchUpdateModalForm.getting_latest_status_f5335f35",
+								)}
 							</Badge>
 						)}
 					</span>
@@ -152,13 +157,19 @@ const TemplateNameChange: FC<TemplateNameChangeProps> = ({
 	oldTemplateVersionName: oldTemplateName,
 	newTemplateVersionName: newTemplateName,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<>
 			<span aria-hidden className="line-clamp-1">
 				{oldTemplateName} &rarr; {newTemplateName}
 			</span>
 			<span className="sr-only">
-				Workspace will go from version {oldTemplateName} to version{" "}
+				{tI18n(
+					"WorkspacesPage.BatchUpdateModalForm.workspace_will_go_from_version_fcd81750",
+				)}
+				{oldTemplateName}
+				{tI18n("WorkspacesPage.BatchUpdateModalForm.to_version_806a5951")}{" "}
 				{newTemplateName}
 			</span>
 		</>
@@ -178,6 +189,8 @@ const RunningWorkspacesWarning: FC<RunningWorkspacesWarningProps> = ({
 	checkboxRef,
 	containerRef,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<div
 			ref={containerRef}
@@ -185,28 +198,36 @@ const RunningWorkspacesWarning: FC<RunningWorkspacesWarningProps> = ({
 		>
 			<h4 className="m-0 font-semibold flex flex-row items-center gap-2 text-content-primary">
 				<TriangleAlertIcon className="text-content-warning" size={16} />
-				Running workspaces detected
+				{tI18n(
+					"WorkspacesPage.BatchUpdateModalForm.running_workspaces_detected_855f6736",
+				)}
 			</h4>
-
 			<ul className="flex flex-col gap-1 m-0 px-5 pt-1.5 [&>li]:leading-snug text-content-secondary">
 				<li>
-					Updating a workspace will start it on its latest template version.
-					This can delete non-persistent data.
+					{tI18n(
+						"WorkspacesPage.BatchUpdateModalForm.updating_a_workspace_will_start_it_on_its_latest_a69ea744",
+					)}
 				</li>
 				<li>
-					Anyone connected to a running workspace will be disconnected until the
-					update is complete.
+					{tI18n(
+						"WorkspacesPage.BatchUpdateModalForm.anyone_connected_to_a_running_workspace_will_be__790103a4",
+					)}
 				</li>
-				<li>Any unsaved data will be lost.</li>
+				<li>
+					{tI18n(
+						"WorkspacesPage.BatchUpdateModalForm.any_unsaved_data_will_be_lost_5c78c491",
+					)}
+				</li>
 			</ul>
-
 			<Label.Root className="flex flex-row gap-3 items-center leading-tight pt-6">
 				<Checkbox
 					ref={checkboxRef}
 					checked={acceptedRisks}
 					onCheckedChange={onAcceptedRisksChange}
 				/>
-				I acknowledge these risks.
+				{tI18n(
+					"WorkspacesPage.BatchUpdateModalForm.i_acknowledge_these_risks_eae855c0",
+				)}
 			</Label.Root>
 		</div>
 	);
@@ -257,7 +278,6 @@ const ContainerBody: FC<ContainerBodyProps> = ({
 					{description}
 				</DialogDescription>
 			</div>
-
 			{children}
 		</div>
 	);
@@ -328,6 +348,8 @@ const ReviewForm: FC<ReviewFormProps> = ({
 	onCancel,
 	onSubmit,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const hookId = useId();
 	const [stage, setStage] = useState<RisksStage>("notAccepted");
 	const risksContainerRef = useRef<HTMLDivElement>(null);
@@ -363,30 +385,39 @@ const ReviewForm: FC<ReviewFormProps> = ({
 				<ContainerBody
 					headerText={
 						hasWorkspaces
-							? "All workspaces up to date"
-							: "No workspaces selected"
+							? tI18n(
+									"WorkspacesPage.BatchUpdateModalForm.all_workspaces_up_to_date_9bba86eb",
+								)
+							: tI18n(
+									"WorkspacesPage.BatchUpdateModalForm.no_workspaces_selected_7a1e86f7",
+								)
 					}
 					showDescription
 					description={
 						hasWorkspaces ? (
 							<>
-								None of the{" "}
+								{tI18n(
+									"WorkspacesPage.BatchUpdateModalForm.none_of_the_401aa131",
+								)}{" "}
 								<span className="text-content-primary font-semibold">
 									{workspacesToUpdate.length}
 								</span>{" "}
-								selected workspaces need updates.
+								{tI18n(
+									"WorkspacesPage.BatchUpdateModalForm.selected_workspaces_need_updates_7e27afc1",
+								)}
 							</>
 						) : (
-							"Nothing to update."
+							tI18n(
+								"WorkspacesPage.BatchUpdateModalForm.nothing_to_update_8ac25817",
+							)
 						)
 					}
 				>
 					{error !== undefined && <ErrorAlert error={error} />}
 				</ContainerBody>
-
 				<ContainerFooter className="flex flex-row justify-end">
 					<Button variant="outline" onClick={onCancel}>
-						Close
+						{tI18n("WorkspacesPage.BatchUpdateModalForm.close_7d9eb7ac")}
 					</Button>
 				</ContainerFooter>
 			</Container>
@@ -462,8 +493,12 @@ const ReviewForm: FC<ReviewFormProps> = ({
 				}}
 			>
 				<ContainerBody
-					headerText="Review updates"
-					description="The following workspaces will be updated:"
+					headerText={tI18n(
+						"WorkspacesPage.BatchUpdateModalForm.review_updates_accd9093",
+					)}
+					description={tI18n(
+						"WorkspacesPage.BatchUpdateModalForm.the_following_workspaces_will_be_updated_d73adc8c",
+					)}
 				>
 					<div className="flex flex-col gap-4">
 						{error !== undefined && <ErrorAlert error={error} />}
@@ -485,8 +520,12 @@ const ReviewForm: FC<ReviewFormProps> = ({
 
 						{readyToUpdate.length > 0 && (
 							<WorkspacesListSection
-								headerText="Ready to update"
-								description="These workspaces will be updated to the latest template version."
+								headerText={tI18n(
+									"WorkspacesPage.BatchUpdateModalForm.ready_to_update_f9375030",
+								)}
+								description={tI18n(
+									"WorkspacesPage.BatchUpdateModalForm.these_workspaces_will_be_updated_to_the_latest_t_c7815a32",
+								)}
 							>
 								{readyToUpdate.map((ws) => {
 									const matchedQuery = templateVersionQueries.find(
@@ -521,8 +560,12 @@ const ReviewForm: FC<ReviewFormProps> = ({
 
 						{noUpdateNeeded.length > 0 && (
 							<WorkspacesListSection
-								headerText="Already updated"
-								description="These workspaces are already updated and will be skipped."
+								headerText={tI18n(
+									"WorkspacesPage.BatchUpdateModalForm.already_updated_5ac1639b",
+								)}
+								description={tI18n(
+									"WorkspacesPage.BatchUpdateModalForm.these_workspaces_are_already_updated_and_will_be_9b73548b",
+								)}
 							>
 								{noUpdateNeeded.map((ws) => (
 									<PanelListItem key={ws.id}>
@@ -540,14 +583,12 @@ const ReviewForm: FC<ReviewFormProps> = ({
 
 						{dormant.length > 0 && (
 							<WorkspacesListSection
-								headerText="Dormant workspaces"
-								description={
-									<>
-										Dormant workspaces cannot be updated without first
-										activating the workspace. They will always be skipped during
-										batch updates.
-									</>
-								}
+								headerText={tI18n(
+									"WorkspacesPage.BatchUpdateModalForm.dormant_workspaces_2cd778ed",
+								)}
+								description={tI18n(
+									"WorkspacesPage.BatchUpdateModalForm.dormant_workspaces_cannot_be_updated_without_fir_ba45b86c",
+								)}
 							>
 								{dormant.map((ws) => (
 									<li
@@ -571,7 +612,7 @@ const ReviewForm: FC<ReviewFormProps> = ({
 				<ContainerFooter>
 					<div className="flex flex-row flex-wrap justify-end gap-4">
 						<Button variant="outline" onClick={onCancel}>
-							Cancel
+							{tI18n("WorkspacesPage.BatchUpdateModalForm.cancel_19766ed6")}
 						</Button>
 						<Button
 							variant="default"
@@ -583,21 +624,27 @@ const ReviewForm: FC<ReviewFormProps> = ({
 								<>
 									<Spinner loading />
 									<span className="sr-only">
-										Waiting for workspaces to finish processing
+										{tI18n(
+											"WorkspacesPage.BatchUpdateModalForm.waiting_for_workspaces_to_finish_processing_46f66994",
+										)}
 									</span>
 								</>
 							)}
 
 							{!safeToSubmit && !isProcessing && (
 								<span className="sr-only">
-									Unable to complete batch update because of workspace error
+									{tI18n(
+										"WorkspacesPage.BatchUpdateModalForm.unable_to_complete_batch_update_because_of_works_3d1506d5",
+									)}
 								</span>
 							)}
 
 							{someWorkspacesCanBeUpdated ? (
-								<span aria-hidden={buttonIsDisabled}>Update</span>
+								<span aria-hidden={buttonIsDisabled}>
+									{tI18n("WorkspacesPage.BatchUpdateModalForm.update_c1c1009d")}
+								</span>
 							) : (
-								"Close"
+								tI18n("WorkspacesPage.BatchUpdateModalForm.close_7d9eb7ac")
 							)}
 						</Button>
 					</div>
@@ -607,7 +654,9 @@ const ReviewForm: FC<ReviewFormProps> = ({
 							id={failedValidationId}
 							className="m-0 text-highlight-red text-right text-sm pt-2"
 						>
-							Please acknowledge risks to continue.
+							{tI18n(
+								"WorkspacesPage.BatchUpdateModalForm.please_acknowledge_risks_to_continue_40c2ebee",
+							)}
 						</p>
 					)}
 				</ContainerFooter>

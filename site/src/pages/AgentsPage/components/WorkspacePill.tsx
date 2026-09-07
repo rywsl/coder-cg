@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation } from "react-query";
 import { Link } from "react-router";
 import { toast } from "sonner";
@@ -71,6 +72,8 @@ export const WorkspacePill: FC<WorkspacePillProps> = ({
 	onRemoveWorkspace,
 	inOverflowPopover,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [open, setOpen] = useState(false);
 	const [tooltipOpen, setTooltipOpen] = useState(false);
 	const isRunning = workspace.latest_build.status === "running";
@@ -141,7 +144,12 @@ export const WorkspacePill: FC<WorkspacePillProps> = ({
 						<DropdownMenuTrigger asChild>
 							<button
 								type="button"
-								aria-label={`${workspace.name} workspace menu`}
+								aria-label={tI18n(
+									"AgentsPage.components.WorkspacePill.value0_workspace_menu_88824265",
+									{
+										value0: workspace.name,
+									},
+								)}
 								className={cn(
 									"inline-flex min-w-0 cursor-pointer items-center justify-start gap-1 rounded-full border-0 bg-transparent p-0 text-xs font-medium text-content-secondary transition-colors hover:bg-surface-tertiary hover:text-content-primary",
 									// Heights match the model selector trigger.
@@ -165,7 +173,6 @@ export const WorkspacePill: FC<WorkspacePillProps> = ({
 					</TooltipContent>
 				</Tooltip>
 			</span>
-
 			<DropdownMenuContent
 				side="top"
 				align="start"
@@ -197,7 +204,9 @@ export const WorkspacePill: FC<WorkspacePillProps> = ({
 							{hasVSCode && (
 								<VSCodeMenuItem
 									variant="vscode"
-									label="VS Code"
+									label={tI18n(
+										"AgentsPage.components.WorkspacePill.vs_code_af437cf8",
+									)}
 									workspace={workspace}
 									agent={agent}
 									chatId={chatId}
@@ -210,7 +219,9 @@ export const WorkspacePill: FC<WorkspacePillProps> = ({
 							{hasVSCodeInsiders && (
 								<VSCodeMenuItem
 									variant="vscode-insiders"
-									label="VS Code Insiders"
+									label={tI18n(
+										"AgentsPage.components.WorkspacePill.vs_code_insiders_e0f962db",
+									)}
 									workspace={workspace}
 									agent={agent}
 									chatId={chatId}
@@ -260,7 +271,9 @@ export const WorkspacePill: FC<WorkspacePillProps> = ({
 							<DropdownMenuItem asChild>
 								<Link to={route} target="_blank" rel="noreferrer">
 									<MonitorIcon className="size-3.5" />
-									View Workspace
+									{tI18n(
+										"AgentsPage.components.WorkspacePill.view_workspace_8244f5ad",
+									)}
 								</Link>
 							</DropdownMenuItem>
 							{onRemoveWorkspace && (
@@ -271,7 +284,9 @@ export const WorkspacePill: FC<WorkspacePillProps> = ({
 										onClick={onRemoveWorkspace}
 									>
 										<UnlinkIcon className="size-3.5" />
-										Detach workspace
+										{tI18n(
+											"AgentsPage.components.WorkspacePill.detach_workspace_0bb92a25",
+										)}
 									</DropdownMenuItem>
 								</>
 							)}
@@ -310,6 +325,8 @@ const VSCodeMenuItem: FC<{
 	generateKey,
 	isGeneratingKey,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const handleClick = () => {
 		generateKey(undefined, {
 			onSuccess: ({ key }) => {
@@ -323,7 +340,17 @@ const VSCodeMenuItem: FC<{
 				});
 			},
 			onError: (error: unknown) => {
-				toast.error(getErrorMessage(error, `Failed to open ${label}.`));
+				toast.error(
+					getErrorMessage(
+						error,
+						tI18n(
+							"AgentsPage.components.WorkspacePill.failed_to_open_value0_d661e3e4",
+							{
+								value0: label,
+							},
+						),
+					),
+				);
 			},
 		});
 	};
@@ -381,6 +408,8 @@ const TerminalMenuItem: FC<{
 	agent: WorkspaceAgent;
 	isRunning: boolean;
 }> = ({ workspace, agent, isRunning }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const href = getTerminalHref({
 		username: workspace.owner_name,
 		workspace: workspace.name,
@@ -395,7 +424,7 @@ const TerminalMenuItem: FC<{
 			disabled={!isRunning}
 		>
 			<SquareTerminalIcon className="size-3.5" />
-			Terminal
+			{tI18n("AgentsPage.components.WorkspacePill.terminal_e0926fda")}
 		</DropdownMenuItem>
 	);
 };
@@ -403,6 +432,8 @@ const TerminalMenuItem: FC<{
 const CopySSHMenuItem: FC<{
 	sshCommand: string;
 }> = ({ sshCommand }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { copyToClipboard } = useClipboard();
 
 	return (
@@ -412,7 +443,7 @@ const CopySSHMenuItem: FC<{
 			}}
 		>
 			<CopyIcon className="size-3.5" />
-			Copy SSH Command
+			{tI18n("AgentsPage.components.WorkspacePill.copy_ssh_command_2de818c8")}
 		</DropdownMenuItem>
 	);
 };

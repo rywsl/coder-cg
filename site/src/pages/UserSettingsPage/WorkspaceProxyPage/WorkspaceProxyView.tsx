@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { Region } from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
 import {
@@ -44,29 +45,47 @@ export const WorkspaceProxyView: FC<WorkspaceProxyViewProps> = ({
 	showPaywall,
 	permissions,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	return (
 		<div>
 			<SettingsHeader>
-				<SettingsHeaderTitle>Workspace Proxies</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"UserSettingsPage.WorkspaceProxyPage.WorkspaceProxyView.workspace_proxies_62ee3d16",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Workspace proxies improve terminal and web app connections to
-					workspaces.{" "}
+					{tI18n(
+						"UserSettingsPage.WorkspaceProxyPage.WorkspaceProxyView.workspace_proxies_improve_terminal_and_web_app_c_074d8faa",
+					)}{" "}
 					<SettingsHeaderDocsLink
 						href={docs("/admin/networking/workspace-proxies")}
 					/>
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			{showPaywall ? (
 				<PremiumPaywall
 					source="workspace_proxies"
-					message="Workspace Proxies"
-					description="Provide low-latency connections for geo-distributed teams."
+					message={tI18n(
+						"UserSettingsPage.WorkspaceProxyPage.WorkspaceProxyView.workspace_proxies_62ee3d16",
+					)}
+					description={tI18n(
+						"UserSettingsPage.WorkspaceProxyPage.WorkspaceProxyView.provide_low_latency_connections_for_geo_distribu_94a04038",
+					)}
 					features={[
-						"Low-latency connections for global teams",
-						"Automatic lowest-latency proxy selection",
-						"Relay for SSH, apps, and ports",
-						"Per-proxy latency and health metrics",
+						tI18n(
+							"UserSettingsPage.WorkspaceProxyPage.WorkspaceProxyView.low_latency_connections_for_global_teams_82872a96",
+						),
+						tI18n(
+							"UserSettingsPage.WorkspaceProxyPage.WorkspaceProxyView.automatic_lowest_latency_proxy_selection_9a2b5f28",
+						),
+						tI18n(
+							"UserSettingsPage.WorkspaceProxyPage.WorkspaceProxyView.relay_for_ssh_apps_and_ports_bae88b12",
+						),
+						tI18n(
+							"UserSettingsPage.WorkspaceProxyPage.WorkspaceProxyView.per_proxy_latency_and_health_metrics_31413af3",
+						),
 					]}
 					canViewPremium={permissions.viewAllLicenses}
 				/>
@@ -80,9 +99,21 @@ export const WorkspaceProxyView: FC<WorkspaceProxyViewProps> = ({
 					<Table>
 						<TableHeader>
 							<TableRow>
-								<TableHead className="w-[60%]">Proxy</TableHead>
-								<TableHead className="w-[20%]">Status</TableHead>
-								<TableHead className="w-[20%]">Latency</TableHead>
+								<TableHead className="w-[60%]">
+									{tI18n(
+										"UserSettingsPage.WorkspaceProxyPage.WorkspaceProxyView.proxy_a68ee416",
+									)}
+								</TableHead>
+								<TableHead className="w-[20%]">
+									{tI18n(
+										"UserSettingsPage.WorkspaceProxyPage.WorkspaceProxyView.status_920e413c",
+									)}
+								</TableHead>
+								<TableHead className="w-[20%]">
+									{tI18n(
+										"UserSettingsPage.WorkspaceProxyPage.WorkspaceProxyView.latency_e0e7d293",
+									)}
+								</TableHead>
 							</TableRow>
 						</TableHeader>
 						<TableBody>
@@ -113,11 +144,19 @@ const ProxiesTableBody: FC<ProxiesTableBodyProps> = ({
 	isLoading,
 	hasLoaded,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	if (isLoading) {
 		return <TableLoader />;
 	}
 	if (hasLoaded && proxies?.length === 0) {
-		return <TableEmpty message="No workspace proxies found" />;
+		return (
+			<TableEmpty
+				message={tI18n(
+					"UserSettingsPage.WorkspaceProxyPage.WorkspaceProxyView.no_workspace_proxies_found_8d45be26",
+				)}
+			/>
+		);
 	}
 	return proxies?.map((proxy) => (
 		<ProxyRow

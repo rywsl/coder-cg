@@ -1,10 +1,13 @@
 import { InfoIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { i18n } from "#/i18n";
+import { currentIntlLocale } from "#/i18n/locale";
 
 type AIGovernanceAddOnCardProps = {
 	title: string;
@@ -21,7 +24,12 @@ export const AIGovernanceAddOnCard: FC<AIGovernanceAddOnCardProps> = ({
 	limit,
 	isExceeded,
 }) => {
-	const actualLabel = actual === undefined ? "—" : actual.toLocaleString();
+	const { t: tI18n } = useTranslation("administration");
+
+	const actualLabel =
+		actual === undefined
+			? i18n.t("common:notAvailable")
+			: actual.toLocaleString(currentIntlLocale());
 
 	return (
 		<div
@@ -39,14 +47,18 @@ export const AIGovernanceAddOnCard: FC<AIGovernanceAddOnCardProps> = ({
 							<TooltipTrigger asChild>
 								<button
 									type="button"
-									aria-label="AI Governance seat information"
+									aria-label={tI18n(
+										"DeploymentSettingsPage.LicensesSettingsPage.AIGovernanceAddOnCard.ai_governance_seat_information_153f2e45",
+									)}
 									className="m-0 inline-flex appearance-none border-0 bg-transparent p-0 text-content-secondary"
 								>
 									<InfoIcon className="size-3" />
 								</button>
 							</TooltipTrigger>
 							<TooltipContent side="top">
-								Seats consumed by users using AI Governance features.
+								{tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.AIGovernanceAddOnCard.seats_consumed_by_users_using_ai_governance_feat_55bda210",
+								)}
 							</TooltipContent>
 						</Tooltip>
 					</div>
@@ -64,7 +76,7 @@ export const AIGovernanceAddOnCard: FC<AIGovernanceAddOnCardProps> = ({
 								>
 									{actualLabel}
 								</span>{" "}
-								/ {limit.toLocaleString()}
+								/ {limit.toLocaleString(currentIntlLocale())}
 							</div>
 						</div>
 					</div>

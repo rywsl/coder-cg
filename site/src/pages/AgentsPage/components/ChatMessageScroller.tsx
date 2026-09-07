@@ -5,6 +5,7 @@ import {
 import { cn } from "cn";
 import { ArrowDownIcon, RotateCcwIcon } from "lucide-react";
 import { type FC, type ReactNode, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "#/components/Button/Button";
 import { Spinner } from "#/components/Spinner/Spinner";
 import { chatWidthClass, useChatFullWidth } from "../hooks/useChatFullWidth";
@@ -33,6 +34,8 @@ const EarlierMessages: FC<EarlierMessagesProps> = ({
 	hasTranscriptRows,
 	onFetchMoreMessages,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { start: canScrollTowardStart } = useMessageScrollerScrollable();
 
 	// "Cannot scroll toward the start" also holds before any row is measured,
@@ -72,12 +75,16 @@ const EarlierMessages: FC<EarlierMessagesProps> = ({
 		return (
 			<div
 				role="status"
-				aria-label="Loading earlier messages"
+				aria-label={tI18n(
+					"AgentsPage.components.ChatMessageScroller.loading_earlier_messages_41311657",
+				)}
 				className="pointer-events-none absolute inset-x-0 top-2 z-10 flex justify-center"
 			>
 				<div className="flex items-center gap-2 rounded-full border border-border-default bg-surface-primary px-3 py-1.5 text-xs text-content-secondary shadow-xs">
 					<Spinner className="size-4" loading aria-hidden />
-					Loading earlier messages
+					{tI18n(
+						"AgentsPage.components.ChatMessageScroller.loading_earlier_messages_41311657",
+					)}
 				</div>
 			</div>
 		);
@@ -96,7 +103,9 @@ const EarlierMessages: FC<EarlierMessagesProps> = ({
 				onClick={() => void onFetchMoreMessages()}
 			>
 				<RotateCcwIcon />
-				Retry loading earlier messages
+				{tI18n(
+					"AgentsPage.components.ChatMessageScroller.retry_loading_earlier_messages_44b0af44",
+				)}
 			</Button>
 		</div>
 	);
@@ -111,6 +120,8 @@ export const ChatMessageScroller: FC<ChatMessageScrollerProps> = ({
 	children,
 	...earlierMessages
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [chatFullWidth] = useChatFullWidth();
 
 	return (
@@ -127,10 +138,11 @@ export const ChatMessageScroller: FC<ChatMessageScrollerProps> = ({
 					{children}
 				</MessageScroller.Content>
 			</MessageScroller.Viewport>
-
 			<MessageScroller.Button
 				direction="end"
-				aria-label="Scroll to bottom"
+				aria-label={tI18n(
+					"AgentsPage.components.ChatMessageScroller.scroll_to_bottom_6a36c1b2",
+				)}
 				render={
 					<Button
 						variant="outline"
@@ -141,7 +153,6 @@ export const ChatMessageScroller: FC<ChatMessageScrollerProps> = ({
 			>
 				<ArrowDownIcon />
 			</MessageScroller.Button>
-
 			<EarlierMessages {...earlierMessages} />
 		</MessageScroller.Root>
 	);

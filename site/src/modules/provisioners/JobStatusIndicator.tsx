@@ -1,5 +1,6 @@
 import { TriangleAlertIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { ProvisionerJobStatus } from "#/api/typesGenerated";
 import {
 	StatusIndicator,
@@ -29,6 +30,8 @@ export const JobStatusIndicator: FC<JobStatusIndicatorProps> = ({
 	status,
 	queue,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<StatusIndicator size="sm" variant={variantByStatus[status]}>
 			<StatusIndicatorDot />
@@ -36,7 +39,12 @@ export const JobStatusIndicator: FC<JobStatusIndicatorProps> = ({
 			{status === "failed" && (
 				<TriangleAlertIcon className="size-icon-xs p-px" />
 			)}
-			{status === "pending" && queue && `(${queue.position}/${queue.size})`}
+			{status === "pending" &&
+				queue &&
+				tI18n("provisioners.JobStatusIndicator.value0_value1_b67f0786", {
+					value0: queue.position,
+					value1: queue.size,
+				})}
 		</StatusIndicator>
 	);
 };

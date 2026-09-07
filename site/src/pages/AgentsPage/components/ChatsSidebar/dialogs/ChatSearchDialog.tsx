@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import type { FC, RefObject } from "react";
 import { type KeyboardEventHandler, useId, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { keepPreviousData, useQuery } from "react-query";
 import { type Location, useNavigate } from "react-router";
 import { chatSearch } from "#/api/queries/chats";
@@ -13,6 +14,7 @@ import type { Chat } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
 import { Dialog, DialogContent, DialogTitle } from "#/components/Dialog/Dialog";
 import { useDebouncedValue } from "#/hooks/debounce";
+import { i18n } from "#/i18n";
 import { ChatSearchInput, type SearchFilter } from "./ChatSearchInput";
 import { ChatSearchResults } from "./ChatSearchResults";
 import {
@@ -39,25 +41,33 @@ const FILTER_DEFINITIONS_BY_KEY: Readonly<
 	Record<ChatSearchFilterKey, Omit<FilterDefinition, "key">>
 > = {
 	has_unread: {
-		label: "Unread",
+		label: i18n.t(
+			"agents:AgentsPage.components.ChatsSidebar.dialogs.ChatSearchDialog.unread_1b9f384c",
+		),
 		icon: CircleDotIcon,
 		defaultValue: "true",
 		validate: (value) => isValidChatSearchFilterValue("has_unread", value),
 	},
 	archived: {
-		label: "Archived",
+		label: i18n.t(
+			"agents:AgentsPage.components.ChatsSidebar.dialogs.ChatSearchDialog.archived_bdb86505",
+		),
 		icon: ArchiveIcon,
 		defaultValue: "true",
 		validate: (value) => isValidChatSearchFilterValue("archived", value),
 	},
 	pr_status: {
-		label: "PR status",
+		label: i18n.t(
+			"agents:AgentsPage.components.ChatsSidebar.dialogs.ChatSearchDialog.pr_status_7a3252ac",
+		),
 		icon: FileTextIcon,
 		defaultValue: null,
 		validate: (value) => isValidChatSearchFilterValue("pr_status", value),
 	},
 	diff_url: {
-		label: "Diff URL",
+		label: i18n.t(
+			"agents:AgentsPage.components.ChatsSidebar.dialogs.ChatSearchDialog.diff_url_554fe04f",
+		),
 		icon: LinkIcon,
 		defaultValue: null,
 		validate: (value) => isValidChatSearchFilterValue("diff_url", value),
@@ -147,6 +157,8 @@ const ChatSearchDialogContent: FC<ChatSearchDialogContentProps> = ({
 	inputRef,
 	recentChats = [],
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const navigate = useNavigate();
 	const [filters, setFilters] = useState<SearchFilter[]>([]);
 	const [freeText, setFreeText] = useState("");
@@ -381,7 +393,11 @@ const ChatSearchDialogContent: FC<ChatSearchDialogContentProps> = ({
 
 	return (
 		<>
-			<DialogTitle className="sr-only">Search chats</DialogTitle>
+			<DialogTitle className="sr-only">
+				{tI18n(
+					"AgentsPage.components.ChatsSidebar.dialogs.ChatSearchDialog.search_chats_02a39c4a",
+				)}
+			</DialogTitle>
 			{/* Wrap input + dropdown so onBlur on the container closes
 				   the dropdown, but clicks within the dropdown (which is
 				   inside the same container) don't trigger blur. */}
@@ -410,7 +426,6 @@ const ChatSearchDialogContent: FC<ChatSearchDialogContentProps> = ({
 					<FilterDropdown filters={displayFilters} onSelectFilter={addFilter} />
 				)}
 			</div>
-
 			<ChatSearchResults
 				chats={searchQuery.data}
 				recentChats={recentChats}
@@ -436,12 +451,16 @@ const FilterDropdown: FC<{
 	readonly filters: readonly SearchFilter[];
 	readonly onSelectFilter: (def: FilterDefinition) => void;
 }> = ({ filters, onSelectFilter }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const activeKeys = new Set(filters.map((f) => f.key));
 
 	return (
 		<div className="absolute left-0 right-0 top-full z-10 mt-1 rounded-md border border-solid border-border bg-surface-primary p-3 shadow-md">
 			<h3 className="m-0 mb-2 text-xs font-medium text-content-secondary">
-				Filter by
+				{tI18n(
+					"AgentsPage.components.ChatsSidebar.dialogs.ChatSearchDialog.filter_by_d00f5245",
+				)}
 			</h3>
 			<div className="flex flex-wrap gap-2">
 				{FILTER_DEFINITIONS.map((def) => {

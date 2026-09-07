@@ -8,6 +8,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import * as Yup from "yup";
 import type * as TypesGen from "#/api/typesGenerated";
@@ -120,6 +121,8 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 	owner,
 	setOwner,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [suggestedName, setSuggestedName] = useState(generateWorkspaceName);
 	const [showPresetParameters, setShowPresetParameters] = useState(false);
 	const id = useId();
@@ -160,7 +163,11 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 			},
 			initialTouched,
 			validationSchema: Yup.object({
-				name: nameValidator("Workspace Name"),
+				name: nameValidator(
+					tI18n(
+						"CreateWorkspacePage.CreateWorkspacePageView.workspace_name_6fa5a5b1",
+					),
+				),
 				rich_parameter_values:
 					useValidationSchemaForDynamicParameters(parameters),
 			}),
@@ -193,15 +200,34 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 	}, [form.submitCount, form.errors]);
 
 	const [presetOptions, setPresetOptions] = useState([
-		{ label: "None", value: "undefined", icon: "", description: "" },
+		{
+			label: tI18n("CreateWorkspacePage.CreateWorkspacePageView.none_dc937b59"),
+			value: "undefined",
+			icon: "",
+			description: "",
+		},
 	]);
 	const [selectedPresetIndex, setSelectedPresetIndex] = useState(0);
 	// Build options and keep default label/value in sync
 	useEffect(() => {
 		const options = [
-			{ label: "None", value: "undefined", icon: "", description: "" },
+			{
+				label: tI18n(
+					"CreateWorkspacePage.CreateWorkspacePageView.none_dc937b59",
+				),
+				value: "undefined",
+				icon: "",
+				description: "",
+			},
 			...presets.map((preset) => ({
-				label: preset.Default ? `${preset.Name} (Default)` : preset.Name,
+				label: preset.Default
+					? tI18n(
+							"CreateWorkspacePage.CreateWorkspacePageView.value0_default_5f4eaa09",
+							{
+								value0: preset.Name,
+							},
+						)
+					: preset.Name,
 				value: preset.ID,
 				icon: preset.Icon,
 				description: preset.Description,
@@ -402,7 +428,11 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 			<div>
 				<Button variant="subtle" onClick={onCancel} className="-ml-3">
 					<ArrowLeftIcon />
-					<span>Go back</span>
+					<span>
+						{tI18n(
+							"CreateWorkspacePage.CreateWorkspacePageView.go_back_6aadac2f",
+						)}
+					</span>
 				</Button>
 			</div>
 			<div className="flex flex-col gap-6 w-full max-w-(--breakpoint-md) mx-auto pb-96">
@@ -422,7 +452,9 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 							</p>
 							{template.deprecated && (
 								<Badge variant="warning" size="sm">
-									Deprecated
+									{tI18n(
+										"CreateWorkspacePage.CreateWorkspacePageView.deprecated_6b2e8f83",
+									)}
 								</Badge>
 							)}
 						</span>
@@ -432,27 +464,35 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 									to={`/templates/${template.organization_name}/${template.name}/versions/${versionName}/edit`}
 								>
 									<ExternalLinkIcon />
-									View source
+									{tI18n(
+										"CreateWorkspacePage.CreateWorkspacePageView.view_source_6ee818aa",
+									)}
 								</RouterLink>
 							</Button>
 						)}
 					</div>
 					<span className="flex flex-row items-center gap-2">
-						<h1 className="text-3xl font-semibold m-0">New workspace</h1>
+						<h1 className="text-3xl font-semibold m-0">
+							{tI18n(
+								"CreateWorkspacePage.CreateWorkspacePageView.new_workspace_df0caf1b",
+							)}
+						</h1>
 
 						<HelpPopover>
 							<HelpPopoverIconTrigger />
 							<HelpPopoverContent className="max-w-xs text-sm">
-								Dynamic Parameters enhances Coder's existing parameter system
-								with real-time validation, conditional parameter behavior, and
-								richer input types.
+								{tI18n(
+									"CreateWorkspacePage.CreateWorkspacePageView.dynamic_parameters_enhances_coder_s_existing_par_58661a17",
+								)}
 								<br />
 								<Link
 									href={docs(
 										"/admin/templates/extending-templates/dynamic-parameters",
 									)}
 								>
-									View docs
+									{tI18n(
+										"CreateWorkspacePage.CreateWorkspacePageView.view_docs_61479fda",
+									)}
 								</Link>
 							</HelpPopoverContent>
 						</HelpPopover>
@@ -461,7 +501,9 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 
 				<form
 					onSubmit={form.handleSubmit}
-					aria-label="Create workspace form"
+					aria-label={tI18n(
+						"CreateWorkspacePage.CreateWorkspacePageView.create_workspace_form_53922a4c",
+					)}
 					className="flex flex-col gap-10 w-full border border-border-default border-solid rounded-lg p-6"
 					data-testid="form"
 				>
@@ -477,17 +519,23 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 										<RouterLink
 											to={`/templates/${template.organization_name}/${template.name}/settings/parameters`}
 										>
-											Open template settings
+											{tI18n(
+												"CreateWorkspacePage.CreateWorkspacePageView.open_template_settings_6ef057ef",
+											)}
 										</RouterLink>
 									</Button>
 								)
 							}
 						>
-							<AlertTitle>This template uses deprecated parameters</AlertTitle>
+							<AlertTitle>
+								{tI18n(
+									"CreateWorkspacePage.CreateWorkspacePageView.this_template_uses_deprecated_parameters_700efe5b",
+								)}
+							</AlertTitle>
 							<AlertDescription>
-								Some features like real-time validation and conditional
-								parameters won&apos;t work here until the template is switched
-								to dynamic parameters.{" "}
+								{tI18n(
+									"CreateWorkspacePage.CreateWorkspacePageView.some_features_like_real_time_validation_and_cond_290806f2",
+								)}{" "}
 								<Link
 									href={docs(
 										"/admin/templates/extending-templates/dynamic-parameters",
@@ -495,8 +543,14 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 									target="_blank"
 									rel="noreferrer"
 								>
-									View docs
-									<span className="sr-only"> (opens in new tab)</span>
+									{tI18n(
+										"CreateWorkspacePage.CreateWorkspacePageView.view_docs_61479fda",
+									)}
+									<span className="sr-only">
+										{tI18n(
+											"CreateWorkspacePage.CreateWorkspacePageView.opens_in_new_tab_541f18a6",
+										)}
+									</span>
 								</Link>
 							</AlertDescription>
 						</Alert>
@@ -510,9 +564,19 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 
 					{hasIgnoredUrlParams && urlPreset && (
 						<Alert severity="info" dismissible>
-							Preset selected. <code>param.*</code> URL parameters have been
-							ignored. Use either <code>preset</code> or <code>param.*</code>,
-							not both.
+							{tI18n(
+								"CreateWorkspacePage.CreateWorkspacePageView.preset_selected_c294532c",
+							)}
+							<code>param.*</code>
+							{tI18n(
+								"CreateWorkspacePage.CreateWorkspacePageView.url_parameters_have_been_ignored_use_either_4d8980d8",
+							)}
+							<code>preset</code>
+							{tI18n("CreateWorkspacePage.CreateWorkspacePageView.or_e1a3e78c")}
+							<code>param.*</code>
+							{tI18n(
+								"CreateWorkspacePage.CreateWorkspacePageView.not_both_1c755013",
+							)}
 						</Alert>
 					)}
 
@@ -522,36 +586,51 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 							dismissible
 							data-testid="duplication-warning"
 						>
-							Duplicating a workspace only copies its parameters. No state from
-							the old workspace is copied over.
+							{tI18n(
+								"CreateWorkspacePage.CreateWorkspacePageView.duplicating_a_workspace_only_copies_its_paramete_ff3e7a40",
+							)}
 						</Alert>
 					)}
 
 					<section className="flex flex-col gap-4">
 						<hgroup>
-							<h2 className="text-xl font-semibold m-0">General</h2>
+							<h2 className="text-xl font-semibold m-0">
+								{tI18n(
+									"CreateWorkspacePage.CreateWorkspacePageView.general_c910d474",
+								)}
+							</h2>
 							<p className="text-sm text-content-secondary mt-0">
 								{permissions.createWorkspaceForAny
-									? "Only admins can create workspaces for other users."
-									: "The name of your new workspace."}
+									? tI18n(
+											"CreateWorkspacePage.CreateWorkspacePageView.only_admins_can_create_workspaces_for_other_user_624d5e89",
+										)
+									: tI18n(
+											"CreateWorkspacePage.CreateWorkspacePageView.the_name_of_your_new_workspace_a5328103",
+										)}
 							</p>
 						</hgroup>
 						<div>
 							{versionId && versionId !== template.active_version_id && (
 								<div className="flex flex-col gap-2 pb-4">
 									<Label className="text-sm" htmlFor={`${id}-version-id`}>
-										Version ID
+										{tI18n(
+											"CreateWorkspacePage.CreateWorkspacePageView.version_id_727fd609",
+										)}
 									</Label>
 									<Input id={`${id}-version-id`} value={versionId} disabled />
 									<span className="text-xs text-content-secondary">
-										This parameter has been preset, and cannot be modified.
+										{tI18n(
+											"CreateWorkspacePage.CreateWorkspacePageView.this_parameter_has_been_preset_and_cannot_be_mod_3df8760e",
+										)}
 									</span>
 								</div>
 							)}
 							<div className="flex gap-4 flex-wrap">
 								<div className="flex flex-col gap-2 flex-1">
 									<Label className="text-sm" htmlFor={`${id}-workspace-name`}>
-										Workspace name
+										{tI18n(
+											"CreateWorkspacePage.CreateWorkspacePageView.workspace_name_9619649d",
+										)}
 									</Label>
 									<div className="flex flex-col">
 										<Input
@@ -570,7 +649,9 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 											</div>
 										)}
 										<div className="flex gap-2 text-xs text-content-secondary items-center">
-											Need a suggestion?
+											{tI18n(
+												"CreateWorkspacePage.CreateWorkspacePageView.need_a_suggestion_2a72e622",
+											)}
 											<Button
 												variant="subtle"
 												size="sm"
@@ -587,7 +668,9 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 								{permissions.createWorkspaceForAny && (
 									<div className="flex flex-col gap-2 flex-1">
 										<Label className="text-sm" htmlFor={`${id}-workspace-name`}>
-											Owner
+											{tI18n(
+												"CreateWorkspacePage.CreateWorkspacePageView.owner_4b1b8aa3",
+											)}
 										</Label>
 										<WorkspaceUserAutocomplete
 											organizationId={template.organization_id}
@@ -606,24 +689,33 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 						<section>
 							<hgroup>
 								<h2 className="text-xl font-semibold m-0">
-									External Authentication
+									{tI18n(
+										"CreateWorkspacePage.CreateWorkspacePageView.external_authentication_1b308ef4",
+									)}
 								</h2>
 								<p className="text-sm text-content-secondary mt-0">
-									This template uses external services for authentication.
+									{tI18n(
+										"CreateWorkspacePage.CreateWorkspacePageView.this_template_uses_external_services_for_authent_4d1de52e",
+									)}
 								</p>
 							</hgroup>
 							<div className="flex flex-col gap-4">
 								{Boolean(error) && !hasAllRequiredExternalAuth && (
 									<Alert severity="error" prominent>
-										To create a workspace using this template, please connect to
-										all required external authentication providers listed below.
+										{tI18n(
+											"CreateWorkspacePage.CreateWorkspacePageView.to_create_a_workspace_using_this_template_please_6d2b2dd0",
+										)}
 									</Alert>
 								)}
 								{!isCreatingForSelf && (
 									<Alert severity="info">
-										This shows the external authentication state for{" "}
-										{owner.username}. They must connect any required providers
-										themselves; you can't authenticate on their behalf.
+										{tI18n(
+											"CreateWorkspacePage.CreateWorkspacePageView.this_shows_the_external_authentication_state_for_cdf90ec7",
+										)}{" "}
+										{owner.username}
+										{tI18n(
+											"CreateWorkspacePage.CreateWorkspacePageView.they_must_connect_any_required_providers_themsel_4a0ce5dc",
+										)}
 									</Alert>
 								)}
 								{externalAuth.map((auth) => (
@@ -650,16 +742,23 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 					{parameters.length > 0 && (
 						<section className="flex flex-col gap-9">
 							<hgroup>
-								<h2 className="text-xl font-semibold m-0">Parameters</h2>
+								<h2 className="text-xl font-semibold m-0">
+									{tI18n(
+										"CreateWorkspacePage.CreateWorkspacePageView.parameters_e68b36b1",
+									)}
+								</h2>
 								<p className="text-sm text-content-secondary m-0">
-									These are the settings used by your template. Immutable
-									parameters cannot be modified once the workspace is created.
+									{tI18n(
+										"CreateWorkspacePage.CreateWorkspacePageView.these_are_the_settings_used_by_your_template_imm_7a61d218",
+									)}
 									<Link
 										href={docs(
 											"/admin/templates/extending-templates/dynamic-parameters",
 										)}
 									>
-										View docs
+										{tI18n(
+											"CreateWorkspacePage.CreateWorkspacePageView.view_docs_61479fda",
+										)}
 									</Link>
 								</p>
 							</hgroup>
@@ -669,7 +768,11 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 							{presets.length > 0 && (
 								<div className="flex flex-col gap-2">
 									<div className="flex gap-2 items-center">
-										<Label className="text-sm">Preset</Label>
+										<Label className="text-sm">
+											{tI18n(
+												"CreateWorkspacePage.CreateWorkspacePageView.preset_7252e7ce",
+											)}
+										</Label>
 									</div>
 									<div className="flex flex-col gap-4">
 										<div className="max-w-lg">
@@ -702,7 +805,9 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 															value:
 																presetOptions[selectedPresetIndex]?.value || "",
 														}}
-														placeholder="Select a preset"
+														placeholder={tI18n(
+															"CreateWorkspacePage.CreateWorkspacePageView.select_a_preset_7b64acc8",
+														)}
 													/>
 												</ComboboxTrigger>
 												<ComboboxContent align="start">
@@ -733,7 +838,9 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 													onCheckedChange={setShowPresetParameters}
 												/>
 												<Label htmlFor="show-preset-parameters">
-													Show preset parameters
+													{tI18n(
+														"CreateWorkspacePage.CreateWorkspacePageView.show_preset_parameters_66d4189d",
+													)}
 												</Label>
 											</span>
 										)}
@@ -803,7 +910,9 @@ export const CreateWorkspacePageView: FC<CreateWorkspacePageViewProps> = ({
 					<div className="flex flex-row justify-end">
 						<Button type="submit" disabled={disabled}>
 							<Spinner loading={creatingWorkspace} />
-							Create workspace
+							{tI18n(
+								"CreateWorkspacePage.CreateWorkspacePageView.create_workspace_4b892277",
+							)}
 						</Button>
 					</div>
 				</form>

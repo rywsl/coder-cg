@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { ProvisionerJobLog } from "#/api/typesGenerated";
 import { Loader } from "#/components/Loader/Loader";
 import { WorkspaceBuildLogs } from "#/modules/workspaces/WorkspaceBuildLogs/WorkspaceBuildLogs";
@@ -11,6 +12,8 @@ interface WorkspaceBuildLogsSectionProps {
 export const WorkspaceBuildLogsSection: FC<WorkspaceBuildLogsSectionProps> = ({
 	logs,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<div className="rounded-lg border border-solid overflow-hidden bg-surface-primary">
 			<header
@@ -20,7 +23,7 @@ export const WorkspaceBuildLogsSection: FC<WorkspaceBuildLogsSectionProps> = ({
 					"text-sm",
 				)}
 			>
-				Build logs
+				{tI18n("WorkspacePage.WorkspaceBuildLogsSection.build_logs_8884ec6d")}
 			</header>
 			<div className="h-[400px] overflow-y-auto">
 				{logs ? (

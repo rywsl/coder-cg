@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { CheckIcon, InfoIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ChevronDownIcon } from "#/components/AnimatedIcons/ChevronDown";
 import { Button } from "#/components/Button/Button";
 import {
@@ -22,6 +23,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { i18n } from "#/i18n";
 import { ProviderIcon } from "#/pages/AISettingsPage/ProvidersPage/components/ProviderIcon";
 import { formatProviderLabel as defaultFormatProviderLabel } from "#/utils/aiProviders";
 import { formatReasoningEffort } from "../../utils/reasoningEffort";
@@ -99,9 +101,13 @@ export const ModelSelector: FC<ModelSelectorProps> = ({
 	onValueChange,
 	triggerAriaLabel,
 	disabled = false,
-	placeholder = "Select model",
+	placeholder = i18n.t(
+		"agents:AgentsPage.components.ChatElements.ModelSelector.select_model_1d446005",
+	),
 	unsetLabel,
-	emptyMessage = "No models found.",
+	emptyMessage = i18n.t(
+		"agents:AgentsPage.components.ChatElements.ModelSelector.no_models_found_339e5fcd",
+	),
 	formatProviderLabel = defaultFormatProviderLabel,
 	className,
 	dropdownSide = "bottom",
@@ -112,6 +118,8 @@ export const ModelSelector: FC<ModelSelectorProps> = ({
 	reasoningEffort,
 	onReasoningEffortChange,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [open, setOpen] = useState(false);
 	const [search, setSearch] = useState("");
 	const handleOpenChange = (nextOpen: boolean) => {
@@ -153,7 +161,13 @@ export const ModelSelector: FC<ModelSelectorProps> = ({
 				<Button
 					aria-label={
 						triggerAriaLabel
-							? `${triggerAriaLabel}, ${triggerLabel}`
+							? tI18n(
+									"AgentsPage.components.ChatElements.ModelSelector.value0_value1_b667168f",
+									{
+										value0: triggerAriaLabel,
+										value1: triggerLabel,
+									},
+								)
 							: triggerLabel
 					}
 					aria-expanded={open}
@@ -213,8 +227,12 @@ export const ModelSelector: FC<ModelSelectorProps> = ({
 					<CommandInput
 						value={search}
 						onValueChange={setSearch}
-						placeholder="Search..."
-						aria-label="Search models"
+						placeholder={tI18n(
+							"AgentsPage.components.ChatElements.ModelSelector.search_7f553822",
+						)}
+						aria-label={tI18n(
+							"AgentsPage.components.ChatElements.ModelSelector.search_models_10421935",
+						)}
 						className="h-auto py-0 text-xs font-normal leading-[18px] text-content-primary placeholder:text-content-disabled"
 					/>
 					<CommandList
@@ -329,6 +347,8 @@ const ReasoningEffortRow: FC<ReasoningEffortRowProps> = ({
 	value,
 	onChange,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const selectableEfforts = option.reasoningEfforts ?? [];
 	if (selectableEfforts.length === 0) {
 		return null;
@@ -340,26 +360,33 @@ const ReasoningEffortRow: FC<ReasoningEffortRowProps> = ({
 		<div className="flex items-center gap-3 border-0 border-t border-solid border-border-default px-3 py-2">
 			<div className="flex shrink-0 items-center gap-1">
 				<span className="text-xs font-medium leading-[18px] text-content-secondary">
-					Effort
+					{tI18n(
+						"AgentsPage.components.ChatElements.ModelSelector.effort_4387e5d3",
+					)}
 				</span>
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<button
 							type="button"
-							aria-label="About reasoning effort"
+							aria-label={tI18n(
+								"AgentsPage.components.ChatElements.ModelSelector.about_reasoning_effort_fd5ac752",
+							)}
 							className="inline-flex size-3 items-center justify-center rounded-sm border-none bg-transparent p-0 text-content-secondary outline-hidden focus-visible:ring-2 focus-visible:ring-content-link"
 						>
 							<InfoIcon aria-hidden="true" className="size-3" />
 						</button>
 					</TooltipTrigger>
 					<TooltipContent side="top" className="max-w-[240px]">
-						Controls how much reasoning the model performs before responding.
-						Higher effort can improve quality but is slower and costs more.
+						{tI18n(
+							"AgentsPage.components.ChatElements.ModelSelector.controls_how_much_reasoning_the_model_performs_b_b8e38ae3",
+						)}
 					</TooltipContent>
 				</Tooltip>
 			</div>
 			<Slider
-				aria-label="Reasoning effort"
+				aria-label={tI18n(
+					"AgentsPage.components.ChatElements.ModelSelector.reasoning_effort_3236aeec",
+				)}
 				value={[effortIndex]}
 				onValueChange={([index]) => {
 					const nextEffort = selectableEfforts[index];

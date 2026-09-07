@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { DropdownMenuItem } from "#/components/DropdownMenu/DropdownMenu";
 
@@ -30,16 +31,22 @@ export const AdminSettingsItems: React.FC<AdminSettingsItemsProps> = ({
 	itemClassName,
 	permissions,
 }) => {
+	const { t: tI18n } = useTranslation("dashboard");
+
 	return (
 		<>
 			{permissions.canViewDeployment && (
 				<DropdownMenuItem asChild className={itemClassName}>
-					<Link to="/deployment">Deployment</Link>
+					<Link to="/deployment">
+						{tI18n("dashboard.Navbar.AdminSettings.deployment_870a8ffd")}
+					</Link>
 				</DropdownMenuItem>
 			)}
 			{permissions.canViewOrganizations && (
 				<DropdownMenuItem asChild className={itemClassName}>
-					<Link to="/organizations">Organizations</Link>
+					<Link to="/organizations">
+						{tI18n("dashboard.Navbar.AdminSettings.organizations_2730183d")}
+					</Link>
 				</DropdownMenuItem>
 			)}
 			{permissions.canViewAISettings && (
@@ -49,22 +56,30 @@ export const AdminSettingsItems: React.FC<AdminSettingsItemsProps> = ({
 			)}
 			{permissions.canViewAuditLog && (
 				<DropdownMenuItem asChild className={itemClassName}>
-					<Link to="/audit">Audit logs</Link>
+					<Link to="/audit">
+						{tI18n("dashboard.Navbar.AdminSettings.audit_logs_569ef18c")}
+					</Link>
 				</DropdownMenuItem>
 			)}
 			{permissions.canViewConnectionLog && (
 				<DropdownMenuItem asChild className={itemClassName}>
-					<Link to="/connectionlog">Connection logs</Link>
+					<Link to="/connectionlog">
+						{tI18n("dashboard.Navbar.AdminSettings.connection_logs_2c3ec0db")}
+					</Link>
 				</DropdownMenuItem>
 			)}
 			{permissions.canViewAIBridge && (
 				<DropdownMenuItem asChild className={itemClassName}>
-					<Link to="/ai-gateway/sessions">AI sessions</Link>
+					<Link to="/ai-gateway/sessions">
+						{tI18n("dashboard.Navbar.AdminSettings.ai_sessions_7f790876")}
+					</Link>
 				</DropdownMenuItem>
 			)}
 			{permissions.canViewHealth && (
 				<DropdownMenuItem asChild className={itemClassName}>
-					<Link to="/health">Healthcheck</Link>
+					<Link to="/health">
+						{tI18n("dashboard.Navbar.AdminSettings.healthcheck_2083bb5a")}
+					</Link>
 				</DropdownMenuItem>
 			)}
 		</>

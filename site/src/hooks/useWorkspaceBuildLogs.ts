@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { watchBuildLogsByBuildId } from "#/api/api";
 import type { ProvisionerJobLog } from "#/api/typesGenerated";
@@ -8,6 +9,8 @@ export const useWorkspaceBuildLogs = (
 	buildId: string | undefined,
 	enabled = true,
 ) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const [logs, setLogs] = useState<ProvisionerJobLog[]>();
 	const socket = useRef<WebSocket>(undefined);
 
@@ -32,7 +35,14 @@ export const useWorkspaceBuildLogs = (
 				});
 			},
 			onError: () => {
-				toast.error(`Error on getting "${buildId}" build logs.`);
+				toast.error(
+					tI18n(
+						"useWorkspaceBuildLogs.error_on_getting_value0_build_logs_367fcc16",
+						{
+							value0: buildId,
+						},
+					),
+				);
 			},
 		});
 

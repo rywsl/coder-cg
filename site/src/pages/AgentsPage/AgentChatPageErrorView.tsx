@@ -1,5 +1,6 @@
 import { RotateCcwIcon } from "lucide-react";
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { getErrorDetail, getErrorMessage } from "#/api/errors";
 import { Button } from "#/components/Button/Button";
 import { ChatTopBar } from "./components/ChatTopBar";
@@ -19,6 +20,8 @@ export const AgentChatPageErrorView: FC<AgentChatPageErrorViewProps> = ({
 	error,
 	onRetry,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const detail = getErrorDetail(error);
 
 	return (
@@ -39,10 +42,17 @@ export const AgentChatPageErrorView: FC<AgentChatPageErrorViewProps> = ({
 			<div className="flex flex-1 items-center justify-center px-6 text-center">
 				<div className="flex flex-col items-center">
 					<h3 className="m-0 font-medium text-base text-content-primary">
-						Failed to load chat
+						{tI18n(
+							"AgentsPage.AgentChatPageErrorView.failed_to_load_chat_d8b99a0a",
+						)}
 					</h3>
 					<p className="m-0 mt-1 max-w-md text-sm text-content-secondary">
-						{getErrorMessage(error, "The chat could not be loaded.")}
+						{getErrorMessage(
+							error,
+							tI18n(
+								"AgentsPage.AgentChatPageErrorView.the_chat_could_not_be_loaded_7a2ff5bb",
+							),
+						)}
 					</p>
 					{detail && (
 						<p className="m-0 mt-1 max-w-md text-sm text-content-secondary">
@@ -51,7 +61,7 @@ export const AgentChatPageErrorView: FC<AgentChatPageErrorViewProps> = ({
 					)}
 					<Button size="sm" onClick={onRetry} className="mt-4">
 						<RotateCcwIcon />
-						Try again
+						{tI18n("AgentsPage.AgentChatPageErrorView.try_again_d8b8392e")}
 					</Button>
 				</div>
 			</div>

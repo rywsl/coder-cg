@@ -1,5 +1,6 @@
 import { ArrowLeftIcon, TrashIcon, UserPlusIcon } from "lucide-react";
 import { type ComponentProps, type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
 	Link,
@@ -57,6 +58,8 @@ export type GroupPageOutletContext = {
 };
 
 const GroupPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { organization = "default", groupName } = useParams() as {
 		organization?: string;
 		groupName: string;
@@ -97,7 +100,10 @@ const GroupPage: FC = () => {
 
 	const title = (
 		<title>
-			{pageTitle((groupData?.display_name || groupData?.name) ?? "Loading...")}
+			{pageTitle(
+				(groupData?.display_name || groupData?.name) ??
+					tI18n("GroupsPage.GroupPage.loading_47d2a515"),
+			)}
 		</title>
 	);
 
@@ -123,12 +129,11 @@ const GroupPage: FC = () => {
 	return (
 		<>
 			{title}
-
 			<div className="flex justify-between items-center">
 				<Button variant="subtle" asChild className="-ml-3">
 					<Link to={activeTab === "settings" ? "../.." : ".."} relative="path">
 						<ArrowLeftIcon />
-						<span>Back to groups</span>
+						<span>{tI18n("GroupsPage.GroupPage.back_to_groups_033bcce2")}</span>
 					</Link>
 				</Button>
 				{canUpdateGroup && (
@@ -152,12 +157,11 @@ const GroupPage: FC = () => {
 							}}
 						>
 							<TrashIcon />
-							Delete
+							{tI18n("GroupsPage.GroupPage.delete_e2d0a549")}
 						</Button>
 					</div>
 				)}
 			</div>
-
 			<div className="flex flex-col gap-6 pt-6">
 				<div className="flex items-center gap-4 min-w-0">
 					<Avatar
@@ -167,12 +171,14 @@ const GroupPage: FC = () => {
 					/>
 					<SettingsHeaderTitle>
 						<span className="block min-w-0 truncate">
-							{groupData.display_name || groupData.name || "Unknown Group"}
+							{groupData.display_name ||
+								groupData.name ||
+								tI18n("GroupsPage.GroupPage.unknown_group_79ce4cef")}
 						</span>
 					</SettingsHeaderTitle>
 				</div>
 				<p className="text-sm text-content-secondary m-0">
-					Manage members for this group.
+					{tI18n("GroupsPage.GroupPage.manage_members_for_this_group_ea9e309e")}
 				</p>
 
 				{canUpdateGroup && (
@@ -182,10 +188,10 @@ const GroupPage: FC = () => {
 					>
 						<LinkTabsList className="justify-start">
 							<TabLink to="." value="members">
-								Group members
+								{tI18n("GroupsPage.GroupPage.group_members_dd0fd917")}
 							</TabLink>
 							<TabLink to="settings" value="settings">
-								Group settings
+								{tI18n("GroupsPage.GroupPage.group_settings_ba4062f8")}
 							</TabLink>
 						</LinkTabsList>
 						{activeTab === "members" && <AIBudgetPeriod />}
@@ -208,13 +214,12 @@ const GroupPage: FC = () => {
 					}
 				/>
 			</div>
-
 			{groupQuery.data && (
 				<DeleteDialog
 					isOpen={isDeletingGroup}
 					confirmLoading={deleteGroupMutation.isPending}
 					name={groupQuery.data.name}
-					entity="group"
+					entity={tI18n("GroupsPage.GroupPage.group_ad936fcb")}
 					onConfirm={async () => {
 						try {
 							await deleteGroupMutation.mutateAsync({
@@ -222,14 +227,24 @@ const GroupPage: FC = () => {
 								groupName: groupData.name,
 							});
 							toast.success(
-								`Group "${groupQuery.data.name}" deleted successfully.`,
+								tI18n(
+									"GroupsPage.GroupPage.group_value0_deleted_successfully_5d7a788e",
+									{
+										value0: groupQuery.data.name,
+									},
+								),
 							);
 							navigate("..");
 						} catch (error) {
 							toast.error(
 								getErrorMessage(
 									error,
-									`Failed to delete group "${groupQuery.data.name}".`,
+									tI18n(
+										"GroupsPage.GroupPage.failed_to_delete_group_value0_9ebeaab3",
+										{
+											value0: groupQuery.data.name,
+										},
+									),
 								),
 								{
 									description: getErrorDetail(error),
@@ -255,6 +270,8 @@ const AddUsersDialog: FC<AddUsersDialogProps> = ({
 	onSubmit,
 	organizationId,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const [addUserDialogOpen, setAddUserDialogOpen] = useState(false);
 	const [submitting, setSubmitting] = useState(false);
 	const [filter, setFilter] = useState("");
@@ -271,7 +288,7 @@ const AddUsersDialog: FC<AddUsersDialogProps> = ({
 		<>
 			<Button onClick={() => setAddUserDialogOpen(true)}>
 				<UserPlusIcon />
-				Add users
+				{tI18n("GroupsPage.GroupPage.add_users_4cd030d9")}
 			</Button>
 			<Dialog
 				open={addUserDialogOpen}
@@ -286,7 +303,7 @@ const AddUsersDialog: FC<AddUsersDialogProps> = ({
 					className="max-w-md gap-4 border-border-default bg-surface-primary p-8 text-content-primary"
 				>
 					<DialogTitle className="font-semibold text-content-primary">
-						Add user(s)
+						{tI18n("GroupsPage.GroupPage.add_user_s_28d7e893")}
 					</DialogTitle>
 					<MultiMemberSelect
 						organizationId={organizationId}
@@ -307,7 +324,7 @@ const AddUsersDialog: FC<AddUsersDialogProps> = ({
 							onClick={closeDialog}
 							disabled={submitting}
 						>
-							Cancel
+							{tI18n("GroupsPage.GroupPage.cancel_19766ed6")}
 						</Button>
 						<Button
 							disabled={submitting || selected.length === 0}
@@ -318,7 +335,12 @@ const AddUsersDialog: FC<AddUsersDialogProps> = ({
 									closeDialog();
 								} catch (error) {
 									toast.error(
-										getErrorMessage(error, "Failed to add members."),
+										getErrorMessage(
+											error,
+											tI18n(
+												"GroupsPage.GroupPage.failed_to_add_members_a48a5dd0",
+											),
+										),
 										{
 											description: getErrorDetail(error),
 										},
@@ -329,7 +351,7 @@ const AddUsersDialog: FC<AddUsersDialogProps> = ({
 							}}
 						>
 							<Spinner loading={submitting} />
-							Add users
+							{tI18n("GroupsPage.GroupPage.add_users_4cd030d9")}
 						</Button>
 					</DialogFooter>
 				</DialogContent>

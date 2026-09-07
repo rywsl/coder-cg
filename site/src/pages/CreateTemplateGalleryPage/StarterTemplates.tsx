@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useSearchParams } from "react-router";
 import type { TemplateExample } from "#/api/typesGenerated";
 import { TemplateExampleCard } from "#/modules/templates/TemplateExampleCard/TemplateExampleCard";
@@ -55,6 +56,8 @@ export const StarterTemplates: FC<StarterTemplatesProps> = ({
 	starterTemplatesByTag,
 	templateBuilderEnabled,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const [urlParams] = useSearchParams();
 	const tags = starterTemplatesByTag
 		? selectTags(starterTemplatesByTag)
@@ -69,10 +72,14 @@ export const StarterTemplates: FC<StarterTemplatesProps> = ({
 			{starterTemplatesByTag && tags && (
 				<div className="sticky top-[88px] flex w-[202px] shrink-0 flex-col gap-4">
 					<h2 className="m-0 text-base font-normal text-content-primary">
-						Choose a starter template
+						{tI18n(
+							"CreateTemplateGalleryPage.StarterTemplates.choose_a_starter_template_10c54464",
+						)}
 					</h2>
 					<span className="text-xs font-semibold uppercase tracking-widest text-content-secondary">
-						Filter
+						{tI18n(
+							"CreateTemplateGalleryPage.StarterTemplates.filter_638e249f",
+						)}
 					</span>
 					{tags.map((tag) => (
 						<Link
@@ -90,7 +97,6 @@ export const StarterTemplates: FC<StarterTemplatesProps> = ({
 					))}
 				</div>
 			)}
-
 			<div className="flex h-max flex-wrap gap-8">
 				{visibleTemplates?.map((example) => (
 					<TemplateExampleCard

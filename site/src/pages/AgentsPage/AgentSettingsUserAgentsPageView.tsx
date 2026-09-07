@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Alert, AlertDescription } from "#/components/Alert/Alert";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
@@ -67,6 +68,8 @@ export const AgentSettingsUserAgentsPageView: FC<
 	isSavingExploreModelOverride,
 	isSaveExploreModelOverrideError,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const personalOverridesEnabled = overridesData?.enabled ?? true;
 	const isLoading = isLoadingOverrides || isLoadingModels;
 	// Rows stay enabled when the organization has no models so the model-free
@@ -78,14 +81,23 @@ export const AgentSettingsUserAgentsPageView: FC<
 	return (
 		<div className="flex flex-col gap-8">
 			<SectionHeader
-				label="Agents"
-				description="Choose personal model defaults for root agents and delegated agents."
+				label={tI18n(
+					"AgentsPage.AgentSettingsUserAgentsPageView.agents_279b44d2",
+				)}
+				description={tI18n(
+					"AgentsPage.AgentSettingsUserAgentsPageView.choose_personal_model_defaults_for_root_agents_a_49b67c8d",
+				)}
 			/>
 			{organizations.length > 1 && selectedOrganization && (
 				<OrganizationAutocomplete
 					value={selectedOrganization}
 					options={organizations}
-					ariaLabel={`Organization ${getOrganizationLabel(selectedOrganization, organizations)}`}
+					ariaLabel={tI18n(
+						"AgentsPage.AgentSettingsUserAgentsPageView.organization_value0_792b6bda",
+						{
+							value0: getOrganizationLabel(selectedOrganization, organizations),
+						},
+					)}
 					triggerClassName="w-60"
 					optionsTabbable
 					onChange={(organization) => {
@@ -104,7 +116,9 @@ export const AgentSettingsUserAgentsPageView: FC<
 							type="button"
 							variant="outline"
 						>
-							Retry
+							{tI18n(
+								"AgentsPage.AgentSettingsUserAgentsPageView.retry_942087cc",
+							)}
 						</Button>
 					)}
 				</div>
@@ -112,32 +126,38 @@ export const AgentSettingsUserAgentsPageView: FC<
 			{!personalOverridesEnabled && (
 				<Alert severity="info">
 					<AlertDescription>
-						Personal model overrides are disabled by an administrator. Saved
-						values are shown for reference, but changes cannot be saved.
+						{tI18n(
+							"AgentsPage.AgentSettingsUserAgentsPageView.personal_model_overrides_are_disabled_by_an_admi_2e770eb6",
+						)}
 					</AlertDescription>
 				</Alert>
 			)}
 			{isOrganizationUnresolved && (
 				<Alert severity="info">
 					<AlertDescription>
-						An organization is not available. Personal model overrides cannot be
-						changed.
+						{tI18n(
+							"AgentsPage.AgentSettingsUserAgentsPageView.an_organization_is_not_available_personal_model__4e518075",
+						)}
 					</AlertDescription>
 				</Alert>
 			)}
 			{hasNoOrganizationModels && (
 				<Alert severity="info">
 					<AlertDescription>
-						The selected organization has no available chat models. Default
-						options can still be saved. Ask an organization administrator to add
-						and enable a model before you choose a specific model.
+						{tI18n(
+							"AgentsPage.AgentSettingsUserAgentsPageView.the_selected_organization_has_no_available_chat__7cdd1fe9",
+						)}
 					</AlertDescription>
 				</Alert>
 			)}
 			<PersonalModelOverrideRow
 				context="root"
-				title="Root agent model"
-				description="Choose the model behavior for new root agents."
+				title={tI18n(
+					"AgentsPage.AgentSettingsUserAgentsPageView.root_agent_model_a7c6a856",
+				)}
+				description={tI18n(
+					"AgentsPage.AgentSettingsUserAgentsPageView.choose_the_model_behavior_for_new_root_agents_f2f613d3",
+				)}
 				overrideData={overridesData?.root}
 				modelOptions={modelOptions}
 				models={models}
@@ -146,13 +166,19 @@ export const AgentSettingsUserAgentsPageView: FC<
 				onSave={onSaveRootModelOverride}
 				isSaving={isSavingRootModelOverride}
 				isSaveError={isSaveRootModelOverrideError}
-				saveErrorMessage="Failed to save root agent model override."
+				saveErrorMessage={tI18n(
+					"AgentsPage.AgentSettingsUserAgentsPageView.failed_to_save_root_agent_model_override_24991e92",
+				)}
 				disabled={isDisabled}
 			/>
 			<PersonalModelOverrideRow
 				context="general"
-				title="General subagent model"
-				description="Choose the model behavior for delegated agents with write capabilities."
+				title={tI18n(
+					"AgentsPage.AgentSettingsUserAgentsPageView.general_subagent_model_7c7b2d70",
+				)}
+				description={tI18n(
+					"AgentsPage.AgentSettingsUserAgentsPageView.choose_the_model_behavior_for_delegated_agents_w_22cbd5f3",
+				)}
 				overrideData={overridesData?.general}
 				deploymentDefault={overridesData?.deployment_defaults.general}
 				modelOptions={modelOptions}
@@ -162,13 +188,19 @@ export const AgentSettingsUserAgentsPageView: FC<
 				onSave={onSaveGeneralModelOverride}
 				isSaving={isSavingGeneralModelOverride}
 				isSaveError={isSaveGeneralModelOverrideError}
-				saveErrorMessage="Failed to save general subagent model override."
+				saveErrorMessage={tI18n(
+					"AgentsPage.AgentSettingsUserAgentsPageView.failed_to_save_general_subagent_model_override_7e7cb1d0",
+				)}
 				disabled={isDisabled}
 			/>
 			<PersonalModelOverrideRow
 				context="explore"
-				title="Explore subagent model"
-				description="Choose the model behavior for read-only Explore subagents."
+				title={tI18n(
+					"AgentsPage.AgentSettingsUserAgentsPageView.explore_subagent_model_bdc09e4a",
+				)}
+				description={tI18n(
+					"AgentsPage.AgentSettingsUserAgentsPageView.choose_the_model_behavior_for_read_only_explore__eb2c7098",
+				)}
 				overrideData={overridesData?.explore}
 				deploymentDefault={overridesData?.deployment_defaults.explore}
 				modelOptions={modelOptions}
@@ -178,7 +210,9 @@ export const AgentSettingsUserAgentsPageView: FC<
 				onSave={onSaveExploreModelOverride}
 				isSaving={isSavingExploreModelOverride}
 				isSaveError={isSaveExploreModelOverrideError}
-				saveErrorMessage="Failed to save Explore subagent model override."
+				saveErrorMessage={tI18n(
+					"AgentsPage.AgentSettingsUserAgentsPageView.failed_to_save_explore_subagent_model_override_0d30275c",
+				)}
 				disabled={isDisabled}
 			/>
 		</div>

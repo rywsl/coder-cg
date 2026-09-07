@@ -1,5 +1,6 @@
 import { type FormikContextType, type FormikTouched, useFormik } from "formik";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import type {
 	CreateTemplateVersionRequest,
@@ -40,6 +41,8 @@ export const TemplateVariablesForm: FC<TemplateVariablesForm> = ({
 	isSubmitting,
 	initialTouched,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const initialUserVariableValues =
 		selectInitialUserVariableValues(templateVariables);
 	const form: FormikContextType<CreateTemplateVersionRequest> =
@@ -69,7 +72,9 @@ export const TemplateVariablesForm: FC<TemplateVariablesForm> = ({
 	return (
 		<HorizontalForm
 			onSubmit={form.handleSubmit}
-			aria-label="Template variables"
+			aria-label={tI18n(
+				"TemplateSettingsPage.TemplateVariablesPage.TemplateVariablesForm.template_variables_ff084774",
+			)}
 		>
 			{templateVariables.map((templateVariable, index) => {
 				let fieldHelpers: FormHelpers;
@@ -110,15 +115,18 @@ export const TemplateVariablesForm: FC<TemplateVariablesForm> = ({
 					</FormSection>
 				);
 			})}
-
 			<FormFooter>
 				<Button onClick={onCancel} variant="outline">
-					Cancel
+					{tI18n(
+						"TemplateSettingsPage.TemplateVariablesPage.TemplateVariablesForm.cancel_19766ed6",
+					)}
 				</Button>
 
 				<Button type="submit" disabled={isSubmitting}>
 					<Spinner loading={isSubmitting} />
-					Save
+					{tI18n(
+						"TemplateSettingsPage.TemplateVariablesPage.TemplateVariablesForm.save_1509f561",
+					)}
 				</Button>
 			</FormFooter>
 		</HorizontalForm>
@@ -167,6 +175,8 @@ const ValidationSchemaForTemplateVariables = (
 	_ns: string,
 	templateVariables: TemplateVersionVariable[],
 ): Yup.AnySchema => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return Yup.array()
 		.of(
 			Yup.object().shape({
@@ -186,7 +196,9 @@ const ValidationSchemaForTemplateVariables = (
 							if (!val || val.length === 0) {
 								return ctx.createError({
 									path: ctx.path,
-									message: "Variable is required.",
+									message: tI18n(
+										"TemplateSettingsPage.TemplateVariablesPage.TemplateVariablesForm.variable_is_required_9000d3a6",
+									),
 								});
 							}
 						}

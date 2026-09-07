@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { RefreshCwIcon } from "lucide-react";
 import { type FC, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { WorkspaceAgent } from "#/api/typesGenerated";
 import {
 	Alert,
@@ -61,15 +62,19 @@ export const WorkspaceTerminalAlerts = ({
 };
 
 const ErrorScriptAlert: FC = () => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<TerminalAlert
 			severity="warning"
 			dismissible
 			actions={<RefreshSessionButton />}
 		>
-			The workspace{" "}
+			{tI18n("terminal.WorkspaceTerminalAlerts.the_workspace_ee8dc98c")}{" "}
 			<Link
-				title="startup script has exited with an error"
+				title={tI18n(
+					"terminal.WorkspaceTerminalAlerts.startup_script_has_exited_with_an_error_45b27cbe",
+				)}
 				href={docs(
 					"/admin/templates/troubleshooting#startup-script-exited-with-an-error",
 				)}
@@ -77,43 +82,60 @@ const ErrorScriptAlert: FC = () => {
 				rel="noreferrer"
 				className="mx-0"
 			>
-				startup script has exited with an error
+				{tI18n(
+					"terminal.WorkspaceTerminalAlerts.startup_script_has_exited_with_an_error_45b27cbe",
+				)}
 			</Link>
-			, we recommend reloading this session and{" "}
+			{tI18n(
+				"terminal.WorkspaceTerminalAlerts.we_recommend_reloading_this_session_and_243078c0",
+			)}{" "}
 			<Link
-				title=" debugging the startup script"
+				title={tI18n(
+					"terminal.WorkspaceTerminalAlerts.debugging_the_startup_script_c56ee7ca",
+				)}
 				href={docs("/admin/templates/troubleshooting#startup-script-issues")}
 				target="_blank"
 				rel="noreferrer"
 			>
-				debugging the startup script
+				{tI18n(
+					"terminal.WorkspaceTerminalAlerts.debugging_the_startup_script_797895bf",
+				)}
 			</Link>{" "}
-			because{" "}
+			{tI18n("terminal.WorkspaceTerminalAlerts.because_a511aeee")}{" "}
 			<Link
-				title="your workspace may be incomplete."
+				title={tI18n(
+					"terminal.WorkspaceTerminalAlerts.your_workspace_may_be_incomplete_b00f06ec",
+				)}
 				href={docs(
 					"/admin/templates/troubleshooting#your-workspace-may-be-incomplete",
 				)}
 				target="_blank"
 				rel="noreferrer"
 			>
-				your workspace may be incomplete.
+				{tI18n(
+					"terminal.WorkspaceTerminalAlerts.your_workspace_may_be_incomplete_b00f06ec",
+				)}
 			</Link>{" "}
 		</TerminalAlert>
 	);
 };
 
 const LoadingScriptsAlert: FC = () => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<TerminalAlert
 			dismissible
 			severity="info"
 			actions={<RefreshSessionButton />}
 		>
-			Startup scripts are still running. You can continue using this terminal,
-			but{" "}
+			{tI18n(
+				"terminal.WorkspaceTerminalAlerts.startup_scripts_are_still_running_you_can_contin_d92b7fd0",
+			)}{" "}
 			<Link
-				title="your workspace may be incomplete."
+				title={tI18n(
+					"terminal.WorkspaceTerminalAlerts.your_workspace_may_be_incomplete_b00f06ec",
+				)}
 				href={docs(
 					"/admin/templates/troubleshooting#your-workspace-may-be-incomplete",
 				)}
@@ -121,33 +143,43 @@ const LoadingScriptsAlert: FC = () => {
 				rel="noreferrer"
 			>
 				{" "}
-				your workspace may be incomplete.
+				{tI18n(
+					"terminal.WorkspaceTerminalAlerts.your_workspace_may_be_incomplete_b00f06ec",
+				)}
 			</Link>
 		</TerminalAlert>
 	);
 };
 
 const LoadedScriptsAlert: FC = () => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<TerminalAlert
 			severity="success"
 			dismissible
 			actions={<RefreshSessionButton />}
 		>
-			Startup scripts have completed successfully. The workspace is ready but
-			this{" "}
+			{tI18n(
+				"terminal.WorkspaceTerminalAlerts.startup_scripts_have_completed_successfully_the__47b00667",
+			)}{" "}
 			<Link
-				title="session was started before the startup scripts finished"
+				title={tI18n(
+					"terminal.WorkspaceTerminalAlerts.session_was_started_before_the_startup_scripts_f_d639fbbd",
+				)}
 				href={docs(
 					"/admin/templates/troubleshooting#your-workspace-may-be-incomplete",
 				)}
 				target="_blank"
 				rel="noreferrer"
 			>
-				session was started before the startup script finished.
+				{tI18n(
+					"terminal.WorkspaceTerminalAlerts.session_was_started_before_the_startup_script_fi_2938fa8e",
+				)}
 			</Link>{" "}
-			To ensure your shell environment is up-to-date, we recommend reloading
-			this session.
+			{tI18n(
+				"terminal.WorkspaceTerminalAlerts.to_ensure_your_shell_environment_is_up_to_date_w_a2dda7e7",
+			)}
 		</TerminalAlert>
 	);
 };
@@ -175,18 +207,22 @@ const TerminalAlert: FC<AlertProps> = (props) => {
 // Since the terminal connection is always trying to reconnect, we show this
 // alert to indicate that the terminal is trying to connect.
 const DisconnectedAlert: FC<AlertProps> = (props) => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<TerminalAlert
 			{...props}
 			severity="info"
 			actions={<RefreshSessionButton />}
 		>
-			Trying to connect...
+			{tI18n("terminal.WorkspaceTerminalAlerts.trying_to_connect_8aa585d3")}
 		</TerminalAlert>
 	);
 };
 
 const RefreshSessionButton: FC = () => {
+	const { t: tI18n } = useTranslation("components");
+
 	const [isRefreshing, setIsRefreshing] = useState(false);
 
 	return (
@@ -199,7 +235,9 @@ const RefreshSessionButton: FC = () => {
 			}}
 		>
 			<RefreshCwIcon className={cn(isRefreshing && "animate-spin")} />
-			{isRefreshing ? "Refreshing session..." : "Refresh session"}
+			{isRefreshing
+				? tI18n("terminal.WorkspaceTerminalAlerts.refreshing_session_8c713dac")
+				: tI18n("terminal.WorkspaceTerminalAlerts.refresh_session_e019a4be")}
 		</Button>
 	);
 };

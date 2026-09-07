@@ -1,4 +1,5 @@
 import { EllipsisVerticalIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type {
 	Group,
@@ -59,20 +60,34 @@ type OrganizationMemberTableEntry = OrganizationMemberWithUserData & {
 export const OrganizationMembersTable: React.FC<
 	OrganizationMembersTableProps
 > = (props) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<Table>
 			<TableHeader>
 				<TableRow>
-					<TableHead className="w-max">User</TableHead>
+					<TableHead className="w-max">
+						{tI18n(
+							"OrganizationSettingsPage.OrganizationMembersTable.user_b512d97e",
+						)}
+					</TableHead>
 					<TableHead className="w-1/6">
 						<div className="flex flex-row items-center gap-2">
-							<span>Roles</span>
+							<span>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationMembersTable.roles_c2533705",
+								)}
+							</span>
 							<RolesHelpPopover />
 						</div>
 					</TableHead>
 					<TableHead className="w-1/6">
 						<div className="flex flex-row items-center gap-2">
-							<span>Groups</span>
+							<span>
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationMembersTable.groups_39bbb719",
+								)}
+							</span>
 							<GroupsHelpPopover />
 						</div>
 					</TableHead>
@@ -97,12 +112,20 @@ const OrganizationMembersTableBody: React.FC<OrganizationMembersTableProps> = ({
 	canEditMembers,
 	canViewActivity,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	if (!members) {
 		return <TableLoader />;
 	}
 
 	if (!members.length) {
-		return <TableEmpty message="No members in this organization" />;
+		return (
+			<TableEmpty
+				message={tI18n(
+					"OrganizationSettingsPage.OrganizationMembersTable.no_members_in_this_organization_79ba6b4b",
+				)}
+			/>
+		);
 	}
 
 	return (
@@ -135,10 +158,16 @@ const OrganizationMembersTableBody: React.FC<OrganizationMembersTableProps> = ({
 										<Button
 											size="icon-lg"
 											variant="subtle"
-											aria-label="Open menu"
+											aria-label={tI18n(
+												"OrganizationSettingsPage.OrganizationMembersTable.open_menu_b40b3713",
+											)}
 										>
 											<EllipsisVerticalIcon aria-hidden="true" />
-											<span className="sr-only">Open menu</span>
+											<span className="sr-only">
+												{tI18n(
+													"OrganizationSettingsPage.OrganizationMembersTable.open_menu_b40b3713",
+												)}
+											</span>
 										</Button>
 									</DropdownMenuTrigger>
 									<DropdownMenuContent align="end">
@@ -146,7 +175,9 @@ const OrganizationMembersTableBody: React.FC<OrganizationMembersTableProps> = ({
 											<Link
 												to={`/workspaces?filter=${encodeURIComponent(`owner:${member.username} organization:${organizationName}`)}`}
 											>
-												View workspaces
+												{tI18n(
+													"OrganizationSettingsPage.OrganizationMembersTable.view_workspaces_8cf7e8d0",
+												)}
 											</Link>
 										</DropdownMenuItem>
 
@@ -155,7 +186,10 @@ const OrganizationMembersTableBody: React.FC<OrganizationMembersTableProps> = ({
 												<Link
 													to={`/audit?filter=${encodeURIComponent(`username:${member.username} organization:${organizationName}`)}`}
 												>
-													View activity {!canViewActivity && <PremiumBadge />}
+													{tI18n(
+														"OrganizationSettingsPage.OrganizationMembersTable.view_activity_c469de16",
+													)}
+													{!canViewActivity && <PremiumBadge />}
 												</Link>
 											</DropdownMenuItem>
 										)}
@@ -164,7 +198,9 @@ const OrganizationMembersTableBody: React.FC<OrganizationMembersTableProps> = ({
 											disabled={isUpdatingMemberRoles}
 											onClick={() => onEditMemberRoles(member)}
 										>
-											Edit roles
+											{tI18n(
+												"OrganizationSettingsPage.OrganizationMembersTable.edit_roles_3b3489d0",
+											)}
 										</DropdownMenuItem>
 
 										<DropdownMenuSeparator />
@@ -173,7 +209,9 @@ const OrganizationMembersTableBody: React.FC<OrganizationMembersTableProps> = ({
 											className="text-content-destructive focus:text-content-destructive"
 											onClick={() => removeMember(member)}
 										>
-											Remove&hellip;
+											{tI18n(
+												"OrganizationSettingsPage.OrganizationMembersTable.remove_708d2523",
+											)}
 										</DropdownMenuItem>
 									</DropdownMenuContent>
 								</DropdownMenu>

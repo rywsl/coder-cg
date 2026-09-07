@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
 	chatAutoArchiveDays,
@@ -18,6 +19,8 @@ import { pageTitle } from "#/utils/page";
 import { LifecyclePageView } from "./LifecyclePageView";
 
 const LifecyclePage: FC = () => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { permissions } = useAuthenticated();
 	const queryClient = useQueryClient();
 	const workspaceTTLQuery = useQuery({
@@ -58,7 +61,16 @@ const LifecyclePage: FC = () => {
 
 	return (
 		<RequirePermission isFeatureVisible={permissions.editDeploymentConfig}>
-			<title>{pageTitle("Lifecycle", "AI Settings")}</title>
+			<title>
+				{pageTitle(
+					tI18n(
+						"AISettingsPage.LifecyclePage.LifecyclePage.lifecycle_46459b1f",
+					),
+					tI18n(
+						"AISettingsPage.LifecyclePage.LifecyclePage.ai_settings_a8e5e2c6",
+					),
+				)}
+			</title>
 			<LifecyclePageView
 				workspaceTTLData={workspaceTTLQuery.data}
 				isWorkspaceTTLLoading={workspaceTTLQuery.isLoading}

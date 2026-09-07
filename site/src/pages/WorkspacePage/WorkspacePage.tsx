@@ -1,4 +1,5 @@
 import { type FC, useEffect, useEffectEvent } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router";
 import { toast } from "sonner";
@@ -16,6 +17,8 @@ import { Margins } from "#/components/Margins/Margins";
 import { WorkspaceReadyPage } from "./WorkspaceReadyPage";
 
 const WorkspacePage: FC = () => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const queryClient = useQueryClient();
 	const params = useParams() as {
 		username: string;
@@ -79,9 +82,16 @@ const WorkspacePage: FC = () => {
 		socket.addEventListener("message", (event) => {
 			if (event.parseError) {
 				toast.error(
-					`Unable to process latest data for workspace "${workspaceName}".`,
+					tI18n(
+						"WorkspacePage.WorkspacePage.unable_to_process_latest_data_for_workspace_valu_a9c3299c",
+						{
+							value0: workspaceName,
+						},
+					),
 					{
-						description: "Please try refreshing the page.",
+						description: tI18n(
+							"WorkspacePage.WorkspacePage.please_try_refreshing_the_page_ed111497",
+						),
 					},
 				);
 				return;
@@ -92,9 +102,19 @@ const WorkspacePage: FC = () => {
 			}
 		});
 		socket.addEventListener("error", () => {
-			toast.error(`Unable to get changes for workspace "${workspaceName}".`, {
-				description: "Connection has been closed.",
-			});
+			toast.error(
+				tI18n(
+					"WorkspacePage.WorkspacePage.unable_to_get_changes_for_workspace_value0_00452e5b",
+					{
+						value0: workspaceName,
+					},
+				),
+				{
+					description: tI18n(
+						"WorkspacePage.WorkspacePage.connection_has_been_closed_21dfe564",
+					),
+				},
+			);
 		});
 
 		return () => socket.close();

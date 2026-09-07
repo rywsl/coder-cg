@@ -1,4 +1,5 @@
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { docs } from "#/utils/docs";
 
@@ -29,6 +30,8 @@ export const AgentSetupNotice: FC<AgentSetupNoticeProps> = ({
 	unsupportedProviderNames = [],
 	aiGatewayDisabled,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const hasProvider = providerCount > 0;
 	const hasModel = modelCount > 0;
 	const hasUnsupportedProviderNames = unsupportedProviderNames.length > 0;
@@ -41,8 +44,9 @@ export const AgentSetupNotice: FC<AgentSetupNoticeProps> = ({
 	if (aiGatewayDisabled) {
 		return (
 			<NoticeContainer>
-				AI Gateway is disabled. Enable it in your deployment config to chat with
-				Coder Agents.
+				{tI18n(
+					"AgentsPage.components.AgentSetupNotice.ai_gateway_is_disabled_enable_it_in_your_deploym_a01a236f",
+				)}
 			</NoticeContainer>
 		);
 	}
@@ -62,29 +66,50 @@ export const AgentSetupNotice: FC<AgentSetupNoticeProps> = ({
 				rel="noreferrer"
 				className="text-content-link transition-colors hover:text-content-link/80"
 			>
-				not supported by Coder Agents
+				{tI18n(
+					"AgentsPage.components.AgentSetupNotice.not_supported_by_coder_agents_f8c4b18d",
+				)}
 			</a>
 		);
 		if (!isAdmin) {
 			return (
 				<NoticeContainer>
-					{providerList} {unsupportedProviderNames.length === 1 ? "is" : "are"}{" "}
-					configured but {unsupportedLink}. Ask your admin to add a supported
-					provider.
+					{providerList}{" "}
+					{unsupportedProviderNames.length === 1
+						? tI18n("AgentsPage.components.AgentSetupNotice.is_fa51fd49")
+						: tI18n("AgentsPage.components.AgentSetupNotice.are_ba78973d")}{" "}
+					{tI18n(
+						"AgentsPage.components.AgentSetupNotice.configured_but_4cc53a86",
+					)}
+					{unsupportedLink}
+					{tI18n(
+						"AgentsPage.components.AgentSetupNotice.ask_your_admin_to_add_a_supported_provider_ffd1eec1",
+					)}
 				</NoticeContainer>
 			);
 		}
 		return (
 			<NoticeContainer>
-				{providerList} {unsupportedProviderNames.length === 1 ? "is" : "are"}{" "}
-				configured but {unsupportedLink}. Add a supported{" "}
+				{providerList}{" "}
+				{unsupportedProviderNames.length === 1
+					? tI18n("AgentsPage.components.AgentSetupNotice.is_fa51fd49")
+					: tI18n("AgentsPage.components.AgentSetupNotice.are_ba78973d")}{" "}
+				{tI18n(
+					"AgentsPage.components.AgentSetupNotice.configured_but_4cc53a86",
+				)}
+				{unsupportedLink}
+				{tI18n(
+					"AgentsPage.components.AgentSetupNotice.add_a_supported_16133691",
+				)}{" "}
 				<Link
 					to="/ai/settings/providers"
 					className="text-content-link transition-colors hover:text-content-link/80"
 				>
-					provider
+					{tI18n("AgentsPage.components.AgentSetupNotice.provider_5c4c1964")}
 				</Link>{" "}
-				to chat with Coder Agents.
+				{tI18n(
+					"AgentsPage.components.AgentSetupNotice.to_chat_with_coder_agents_7c8618e8",
+				)}
 			</NoticeContainer>
 		);
 	}
@@ -93,8 +118,9 @@ export const AgentSetupNotice: FC<AgentSetupNoticeProps> = ({
 	if (!isAdmin) {
 		return (
 			<NoticeContainer>
-				AI models aren't available yet. Your admin is still getting things set
-				up.
+				{tI18n(
+					"AgentsPage.components.AgentSetupNotice.ai_models_aren_t_available_yet_your_admin_is_sti_34004c34",
+				)}
 			</NoticeContainer>
 		);
 	}
@@ -103,22 +129,26 @@ export const AgentSetupNotice: FC<AgentSetupNoticeProps> = ({
 	if (!hasProvider) {
 		return (
 			<NoticeContainer>
-				To chat with Coder Agents, set up a{" "}
+				{tI18n(
+					"AgentsPage.components.AgentSetupNotice.to_chat_with_coder_agents_set_up_a_01b643be",
+				)}{" "}
 				<Link
 					to="/ai/settings/providers"
 					className="text-content-link transition-colors hover:text-content-link/80"
 				>
-					provider
+					{tI18n("AgentsPage.components.AgentSetupNotice.provider_5c4c1964")}
 				</Link>
 				{!hasModel && (
 					<>
 						{" "}
-						then add a{" "}
+						{tI18n(
+							"AgentsPage.components.AgentSetupNotice.then_add_a_6a026f52",
+						)}{" "}
 						<Link
 							to="/ai/settings/models"
 							className="text-content-link transition-colors hover:text-content-link/80"
 						>
-							model
+							{tI18n("AgentsPage.components.AgentSetupNotice.model_9372c470")}
 						</Link>
 					</>
 				)}
@@ -130,12 +160,14 @@ export const AgentSetupNotice: FC<AgentSetupNoticeProps> = ({
 	// Admin: has providers but no models
 	return (
 		<NoticeContainer>
-			To chat with Coder Agents, set up a{" "}
+			{tI18n(
+				"AgentsPage.components.AgentSetupNotice.to_chat_with_coder_agents_set_up_a_01b643be",
+			)}{" "}
 			<Link
 				to="/ai/settings/models"
 				className="text-content-link transition-colors hover:text-content-link/80"
 			>
-				model
+				{tI18n("AgentsPage.components.AgentSetupNotice.model_9372c470")}
 			</Link>
 			.
 		</NoticeContainer>

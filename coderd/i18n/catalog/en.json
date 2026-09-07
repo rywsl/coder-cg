@@ -1,0 +1,1737 @@
+{
+	"messages": {
+		"\"organization\" must be provided.": "\"organization\" must be provided.",
+		"\"provisionerkey\" must be provided.": "\"provisionerkey\" must be provided.",
+		"\"task\" must be provided.": "\"task\" must be provided.",
+		"\"user\" must be an existing uuid or username.": "\"user\" must be an existing uuid or username.",
+		"\"user\" must be provided.": "\"user\" must be provided.",
+		"\"workspaceproxy\" must be provided.": "\"workspaceproxy\" must be provided.",
+		"'Accept' header contains unsupported media type": "'Accept' header contains unsupported media type",
+		"'url' and 'id' cannot be provided together!": "'url' and 'id' cannot be provided together!",
+		"'url' or 'id' must be provided!": "'url' or 'id' must be provided!",
+		"A database error occurred": "A database error occurred",
+		"A key with this name already exists.": "A key with this name already exists.",
+		"A profile collection is already in progress. Try again later.": "A profile collection is already in progress. Try again later.",
+		"A skill with that name already exists.": "A skill with that name already exists.",
+		"A template with this name already exists in the organization.": "A template with this name already exists in the organization.",
+		"A user with this username already exists.": "A user with this username already exists.",
+		"AI Gateway Proxy handler not mounted.": "AI Gateway Proxy handler not mounted.",
+		"AI Gateway Proxy is not enabled.": "AI Gateway Proxy is not enabled.",
+		"AI Gateway key invalid.": "AI Gateway key invalid.",
+		"AI Gateway key required.": "AI Gateway key required.",
+		"AI Gateway must be enabled for Coder Agents functionality. Please contact your deployment administrator.": "AI Gateway must be enabled for Coder Agents functionality. Please contact your deployment administrator.",
+		"AI provider ID is required.": "AI provider ID is required.",
+		"AI provider not found.": "AI provider not found.",
+		"API key and external provisioner authentication provided, but only one is allowed": "API key and external provisioner authentication provided, but only one is allowed",
+		"API key and external proxy authentication provided, but only one is allowed": "API key and external proxy authentication provided, but only one is allowed",
+		"API key and workspace agent token provided, but only one is allowed": "API key and workspace agent token provided, but only one is allowed",
+		"API key auth type requires api_key_header and api_key_value.": "API key auth type requires api_key_header and api_key_value.",
+		"API key is required.": "API key is required.",
+		"API key must not contain leading or trailing whitespace.": "API key must not contain leading or trailing whitespace.",
+		"API key or external provisioner authentication required, but none provided": "API key or external provisioner authentication required, but none provided",
+		"API key or external proxy authentication required, but none provided": "API key or external proxy authentication required, but none provided",
+		"API key or workspace agent token required, but none provided": "API key or workspace agent token required, but none provided",
+		"API key too large.": "API key too large.",
+		"Advanced template scheduling (and user quiet hours schedule) is an Enterprise feature. Contact sales!": "Advanced template scheduling (and user quiet hours schedule) is an Enterprise feature. Contact sales!",
+		"Advanced template scheduling (and user quiet hours schedule) is not enabled.": "Advanced template scheduling (and user quiet hours schedule) is not enabled.",
+		"Advisor model settings moved to PUT /api/experimental/organizations/{organization}/chats/model-overrides/advisor.": "Advisor model settings moved to PUT /api/experimental/organizations/{organization}/chats/model-overrides/advisor.",
+		"Agent doesn't exist with that id, or you do not have access to it.": "Agent doesn't exist with that id, or you do not have access to it.",
+		"Agent not found.": "Agent not found.",
+		"All workspaces must be deleted before a template can be removed.": "All workspaces must be deleted before a template can be removed.",
+		"An administrator has not enabled user personal model overrides.": "An administrator has not enabled user personal model overrides.",
+		"An administrator has not enabled user-controlled chat debug logging.": "An administrator has not enabled user-controlled chat debug logging.",
+		"An internal error occurred. Please try again or contact the system administrator.": "An internal error occurred. Please try again or contact the system administrator.",
+		"An internal server error occurred.": "An internal server error occurred.",
+		"App ID does not match secret app ID.": "App ID does not match secret app ID.",
+		"Archived template versions cannot be used to make a workspace.": "Archived template versions cannot be used to make a workspace.",
+		"At least one field must be provided.": "At least one field must be provided.",
+		"At least one model price is required.": "At least one model price is required.",
+		"At least one price must be set. Use 0 to declare a model free of charge.": "At least one price must be set. Use 0 to declare a model free of charge.",
+		"At least one tool result is required.": "At least one tool result is required.",
+		"Autostart is not allowed for workspaces using this template.": "Autostart is not allowed for workspaces using this template.",
+		"Autostart is not supported for prebuilt workspaces": "Autostart is not supported for prebuilt workspaces",
+		"BYOK is disabled.": "BYOK is disabled.",
+		"Bedrock providers do not accept api_keys; configure access credentials via settings.": "Bedrock providers do not accept api_keys; configure access credentials via settings.",
+		"Bedrock settings are only valid for type=anthropic or type=bedrock.": "Bedrock settings are only valid for type=anthropic or type=bedrock.",
+		"Bring Your Own Key (BYOK) mode is not enabled.": "Bring Your Own Key (BYOK) mode is not enabled.",
+		"Cannot add the same user to a group twice!": "Cannot add the same user to a group twice!",
+		"Cannot archive an active chat. Interrupt or wait for the chat to finish first.": "Cannot archive an active chat. Interrupt or wait for the chat to finish first.",
+		"Cannot archive template versions not associate with a template.": "Cannot archive template versions not associate with a template.",
+		"Cannot change your own chat sharing role.": "Cannot change your own chat sharing role.",
+		"Cannot clear the chat in its current state.": "Cannot clear the chat in its current state.",
+		"Cannot compact the chat in its current state.": "Cannot compact the chat in its current state.",
+		"Cannot create a client secret for a public OAuth2 app.": "Cannot create a client secret for a public OAuth2 app.",
+		"Cannot create skills for deleted users.": "Cannot create skills for deleted users.",
+		"Cannot delete primary proxy": "Cannot delete primary proxy",
+		"Cannot edit messages in an archived chat.": "Cannot edit messages in an archived chat.",
+		"Cannot fetch logs for task in current state.": "Cannot fetch logs for task in current state.",
+		"Cannot modify roles for OIDC users when role sync is enabled.": "Cannot modify roles for OIDC users when role sync is enabled.",
+		"Cannot modify roles for OIDC users when role sync is enabled. This organization member's roles are managed by the identity provider. Have the user re-login to refresh their roles.": "Cannot modify roles for OIDC users when role sync is enabled. This organization member's roles are managed by the identity provider. Have the user re-login to refresh their roles.",
+		"Cannot modify skills for deleted users.": "Cannot modify skills for deleted users.",
+		"Cannot pin a child chat.": "Cannot pin a child chat.",
+		"Cannot pin an archived chat.": "Cannot pin an archived chat.",
+		"Cannot promote queued messages in an archived chat.": "Cannot promote queued messages in an archived chat.",
+		"Cannot send messages to an archived chat.": "Cannot send messages to an archived chat.",
+		"Cannot submit tool results to an archived chat.": "Cannot submit tool results to an archived chat.",
+		"Cannot update name of default primary proxy": "Cannot update name of default primary proxy",
+		"Cannot update name of default primary proxy, did you mean to update the 'display name'?": "Cannot update name of default primary proxy, did you mean to update the 'display name'?",
+		"Cannot use \"me\" without a valid session.": "Cannot use \"me\" without a valid session.",
+		"Cannot use both after_id and before_id in the same request.": "Cannot use both after_id and before_id in the same request.",
+		"Chat ACLs can only be set on root chats.": "Chat ACLs can only be set on root chats.",
+		"Chat archive state can only be changed on the root chat.": "Chat archive state can only be changed on the root chat.",
+		"Chat attachment limit reached.": "Chat attachment limit reached.",
+		"Chat attachment unavailable.": "Chat attachment unavailable.",
+		"Chat debug logging is already forced on by deployment configuration.": "Chat debug logging is already forced on by deployment configuration.",
+		"Chat has no queued messages to delete.": "Chat has no queued messages to delete.",
+		"Chat has no queued messages to promote.": "Chat has no queued messages to promote.",
+		"Chat is in an invalid state.": "Chat is in an invalid state.",
+		"Chat is not in a state that accepts message edits.": "Chat is not in a state that accepts message edits.",
+		"Chat is not in a state that accepts new messages.": "Chat is not in a state that accepts new messages.",
+		"Chat is not in an interruptible state.": "Chat is not in an interruptible state.",
+		"Chat is not in an invalid state.": "Chat is not in an invalid state.",
+		"Chat is not waiting for tool results.": "Chat is not waiting for tool results.",
+		"Chat lifecycle hook dispatch failed.": "Chat lifecycle hook dispatch failed.",
+		"Chat message not found.": "Chat message not found.",
+		"Chat model config already exists.": "Chat model config already exists.",
+		"Chat sharing is disabled for this deployment.": "Chat sharing is disabled for this deployment.",
+		"Chat streaming is not available.": "Chat streaming is not available.",
+		"Claim build failed permanently.": "Claim build failed permanently.",
+		"Conflicting client credentials between Authorization header and request body": "Conflicting client credentials between Authorization header and request body",
+		"Content is required.": "Content is required.",
+		"Context limit is required.": "Context limit is required.",
+		"Context limit must be greater than zero.": "Context limit must be greater than zero.",
+		"Copilot providers do not accept api_keys; they authenticate via request-time GitHub OAuth tokens.": "Copilot providers do not accept api_keys; they authenticate via request-time GitHub OAuth tokens.",
+		"Could not determine request Host.": "Could not determine request Host.",
+		"Custom autostop TTL is not allowed for workspaces using this template.": "Custom autostop TTL is not allowed for workspaces using this template.",
+		"Custom headers auth type requires at least one custom header.": "Custom headers auth type requires at least one custom header.",
+		"Custom prompt exceeds maximum length.": "Custom prompt exceeds maximum length.",
+		"Deadline extension is not supported for prebuilt workspaces": "Deadline extension is not supported for prebuilt workspaces",
+		"Default organization cannot be deleted.": "Default organization cannot be deleted.",
+		"Deployment stats are still processing!": "Deployment stats are still processing!",
+		"DerpOnly cannot be true when DerpEnabled is false.": "DerpOnly cannot be true when DerpEnabled is false.",
+		"Devcontainer ID is required.": "Devcontainer ID is required.",
+		"Developer error: ParentChatID got set somehow in api.postChats. This should never happen.": "Developer error: ParentChatID got set somehow in api.postChats. This should never happen.",
+		"Device authenticated!": "Device authenticated!",
+		"Device flow is not enabled for Github OAuth2.": "Device flow is not enabled for Github OAuth2.",
+		"Display name must be 64 characters or less.": "Display name must be 64 characters or less.",
+		"Dormancy updates are not supported for prebuilt workspaces": "Dormancy updates are not supported for prebuilt workspaces",
+		"Duplicate dynamic tool name.": "Duplicate dynamic tool name.",
+		"Duration must be positive.": "Duration must be positive.",
+		"Dynamic tool name must not be empty.": "Dynamic tool name must not be empty.",
+		"Email cannot be set for service accounts.": "Email cannot be set for service accounts.",
+		"Entitlements updated": "Entitlements updated",
+		"Environment-injected user secrets bytes limit reached.": "Environment-injected user secrets bytes limit reached.",
+		"Error decoding JWT claims.": "Error decoding JWT claims.",
+		"Error deleting organization.": "Error deleting organization.",
+		"Error deleting user chat compaction threshold.": "Error deleting user chat compaction threshold.",
+		"Error listing user chat compaction thresholds.": "Error listing user chat compaction thresholds.",
+		"Error reading user chat custom prompt.": "Error reading user chat custom prompt.",
+		"Error reading user preference settings.": "Error reading user preference settings.",
+		"Error reading user settings.": "Error reading user settings.",
+		"Error updating user chat compaction threshold.": "Error updating user chat compaction threshold.",
+		"Error updating user chat custom prompt.": "Error updating user chat custom prompt.",
+		"Error updating workspace time until shutdown.": "Error updating workspace time until shutdown.",
+		"Example not found.": "Example not found.",
+		"Expanded .zip archive exceeds maximum size.": "Expanded .zip archive exceeds maximum size.",
+		"External agent is authenticated with an instance ID.": "External agent is authenticated with an instance ID.",
+		"External authentication is required to create a workspace with this template.": "External authentication is required to create a workspace with this template.",
+		"External provisioner daemons is an Enterprise feature. Contact sales!": "External provisioner daemons is an Enterprise feature. Contact sales!",
+		"Failed exchanging Oauth code.": "Failed exchanging Oauth code.",
+		"Failed to accept WebSocket.": "Failed to accept WebSocket.",
+		"Failed to accept websocket connection.": "Failed to accept websocket connection.",
+		"Failed to accept websocket.": "Failed to accept websocket.",
+		"Failed to authorize device.": "Failed to authorize device.",
+		"Failed to call count unread inbox notifications.": "Failed to call count unread inbox notifications.",
+		"Failed to clear chat context.": "Failed to clear chat context.",
+		"Failed to compact chat.": "Failed to compact chat.",
+		"Failed to compose template.": "Failed to compose template.",
+		"Failed to connect to agent desktop.": "Failed to connect to agent desktop.",
+		"Failed to count unread inbox notifications.": "Failed to count unread inbox notifications.",
+		"Failed to create API key.": "Failed to create API key.",
+		"Failed to create MCP server config.": "Failed to create MCP server config.",
+		"Failed to create agentapi client.": "Failed to create agentapi client.",
+		"Failed to create chat file download URL.": "Failed to create chat file download URL.",
+		"Failed to create chat message.": "Failed to create chat message.",
+		"Failed to create chat model config.": "Failed to create chat model config.",
+		"Failed to create chat.": "Failed to create chat.",
+		"Failed to create external auth response.": "Failed to create external auth response.",
+		"Failed to create external log source.": "Failed to create external log source.",
+		"Failed to create key. Please retry.": "Failed to create key. Please retry.",
+		"Failed to create snapshot envelope.": "Failed to create snapshot envelope.",
+		"Failed to delete MCP server config.": "Failed to delete MCP server config.",
+		"Failed to delete chat model config.": "Failed to delete chat model config.",
+		"Failed to delete devcontainer from agent.": "Failed to delete devcontainer from agent.",
+		"Failed to delete external auth link.": "Failed to delete external auth link.",
+		"Failed to delete key.": "Failed to delete key.",
+		"Failed to delete push notification subscription.": "Failed to delete push notification subscription.",
+		"Failed to delete queued message.": "Failed to delete queued message.",
+		"Failed to delete task": "Failed to delete task",
+		"Failed to delete user AI provider key.": "Failed to delete user AI provider key.",
+		"Failed to determine workspace from agent token.": "Failed to determine workspace from agent token.",
+		"Failed to dial workspace agent.": "Failed to dial workspace agent.",
+		"Failed to disconnect OAuth2 token.": "Failed to disconnect OAuth2 token.",
+		"Failed to edit chat message.": "Failed to edit chat message.",
+		"Failed to encrypt API key.": "Failed to encrypt API key.",
+		"Failed to exchange authorization code for token.": "Failed to exchange authorization code for token.",
+		"Failed to exchange device code.": "Failed to exchange device code.",
+		"Failed to exchange token": "Failed to exchange token",
+		"Failed to extract OIDC claims.": "Failed to extract OIDC claims.",
+		"Failed to fetch appearance config.": "Failed to fetch appearance config.",
+		"Failed to fetch child chat diff statuses.": "Failed to fetch child chat diff statuses.",
+		"Failed to fetch child chats.": "Failed to fetch child chats.",
+		"Failed to fetch containers from agent.": "Failed to fetch containers from agent.",
+		"Failed to fetch current health settings.": "Failed to fetch current health settings.",
+		"Failed to fetch current notifications settings.": "Failed to fetch current notifications settings.",
+		"Failed to fetch current prebuilds settings.": "Failed to fetch current prebuilds settings.",
+		"Failed to fetch health settings.": "Failed to fetch health settings.",
+		"Failed to fetch task.": "Failed to fetch task.",
+		"Failed to finalize gzip archive.": "Failed to finalize gzip archive.",
+		"Failed to finalize tar archive.": "Failed to finalize tar archive.",
+		"Failed to find linked user.": "Failed to find linked user.",
+		"Failed to generate OAuth2 app authorization code": "Failed to generate OAuth2 app authorization code",
+		"Failed to generate OAuth2 authorization code": "Failed to generate OAuth2 authorization code",
+		"Failed to generate OAuth2 client secret.": "Failed to generate OAuth2 client secret.",
+		"Failed to generate chat title.": "Failed to generate chat title.",
+		"Failed to generate token extra.": "Failed to generate token extra.",
+		"Failed to generate trial": "Failed to generate trial",
+		"Failed to get AI provider.": "Failed to get AI provider.",
+		"Failed to get allowance": "Failed to get allowance",
+		"Failed to get build.": "Failed to get build.",
+		"Failed to get chat auto-archive days.": "Failed to get chat auto-archive days.",
+		"Failed to get chat cost.": "Failed to get chat cost.",
+		"Failed to get chat debug retention days.": "Failed to get chat debug retention days.",
+		"Failed to get chat diff.": "Failed to get chat diff.",
+		"Failed to get chat file.": "Failed to get chat file.",
+		"Failed to get chat messages.": "Failed to get chat messages.",
+		"Failed to get chat model config.": "Failed to get chat model config.",
+		"Failed to get chat retention days.": "Failed to get chat retention days.",
+		"Failed to get chat user prompts.": "Failed to get chat user prompts.",
+		"Failed to get chats by workspace.": "Failed to get chats by workspace.",
+		"Failed to get consumed": "Failed to get consumed",
+		"Failed to get external auth link during deletion.": "Failed to get external auth link during deletion.",
+		"Failed to get external auth link.": "Failed to get external auth link.",
+		"Failed to get filtered inbox notifications.": "Failed to get filtered inbox notifications.",
+		"Failed to get latest workspace app status.": "Failed to get latest workspace app status.",
+		"Failed to get latest workspace build.": "Failed to get latest workspace build.",
+		"Failed to get messages from task app.": "Failed to get messages from task app.",
+		"Failed to get metadata.": "Failed to get metadata.",
+		"Failed to get notification by id.": "Failed to get notification by id.",
+		"Failed to get queued messages.": "Failed to get queued messages.",
+		"Failed to get status from task app.": "Failed to get status from task app.",
+		"Failed to get template": "Failed to get template",
+		"Failed to get token configuration.": "Failed to get token configuration.",
+		"Failed to get user link.": "Failed to get user link.",
+		"Failed to get user links.": "Failed to get user links.",
+		"Failed to get user token.": "Failed to get user token.",
+		"Failed to get user tokens.": "Failed to get user tokens.",
+		"Failed to get user.": "Failed to get user.",
+		"Failed to get webpush subscriptions.": "Failed to get webpush subscriptions.",
+		"Failed to get workspace agents.": "Failed to get workspace agents.",
+		"Failed to get workspace app.": "Failed to get workspace app.",
+		"Failed to get workspace resource.": "Failed to get workspace resource.",
+		"Failed to get workspace.": "Failed to get workspace.",
+		"Failed to insert external auth link.": "Failed to insert external auth link.",
+		"Failed to insert push notification subscription.": "Failed to insert push notification subscription.",
+		"Failed to insert workspace app status.": "Failed to insert workspace app status.",
+		"Failed to install license": "Failed to install license",
+		"Failed to interrupt chat.": "Failed to interrupt chat.",
+		"Failed to invalidate presets.": "Failed to invalidate presets.",
+		"Failed to list AI provider keys.": "Failed to list AI provider keys.",
+		"Failed to list AI providers.": "Failed to list AI providers.",
+		"Failed to list MCP server configs.": "Failed to list MCP server configs.",
+		"Failed to list chats for agent.": "Failed to list chats for agent.",
+		"Failed to list chats.": "Failed to list chats.",
+		"Failed to list child chats.": "Failed to list child chats.",
+		"Failed to list keys.": "Failed to list keys.",
+		"Failed to list user AI provider keys.": "Failed to list user AI provider keys.",
+		"Failed to load chat model availability.": "Failed to load chat model availability.",
+		"Failed to look up AI Gateway key.": "Failed to look up AI Gateway key.",
+		"Failed to mark all unread notifications as read.": "Failed to mark all unread notifications as read.",
+		"Failed to marshal dynamic tools.": "Failed to marshal dynamic tools.",
+		"Failed to marshal health settings.": "Failed to marshal health settings.",
+		"Failed to marshal label filter.": "Failed to marshal label filter.",
+		"Failed to marshal labels.": "Failed to marshal labels.",
+		"Failed to marshal notifications settings.": "Failed to marshal notifications settings.",
+		"Failed to marshal prebuilds settings.": "Failed to marshal prebuilds settings.",
+		"Failed to obtain user information claims.": "Failed to obtain user information claims.",
+		"Failed to open chat stream.": "Failed to open chat stream.",
+		"Failed to open chat watch stream.": "Failed to open chat watch stream.",
+		"Failed to parse access URL.": "Failed to parse access URL.",
+		"Failed to parse build number as integer.": "Failed to parse build number as integer.",
+		"Failed to parse request.": "Failed to parse request.",
+		"Failed to parse secrets file.": "Failed to parse secrets file.",
+		"Failed to process OAuth login.": "Failed to process OAuth login.",
+		"Failed to promote queued message.": "Failed to promote queued message.",
+		"Failed to publish workspace update.": "Failed to publish workspace update.",
+		"Failed to reach task app endpoint.": "Failed to reach task app endpoint.",
+		"Failed to reach the Coder license server.": "Failed to reach the Coder license server.",
+		"Failed to read back chat after creation.": "Failed to read back chat after creation.",
+		"Failed to read body, invalid json.": "Failed to read body, invalid json.",
+		"Failed to read file from request.": "Failed to read file from request.",
+		"Failed to read request body.": "Failed to read request body.",
+		"Failed to reconcile chat state.": "Failed to reconcile chat state.",
+		"Failed to recreate devcontainer from agent.": "Failed to recreate devcontainer from agent.",
+		"Failed to refresh entitlements": "Failed to refresh entitlements",
+		"Failed to refresh external auth token.": "Failed to refresh external auth token.",
+		"Failed to resolve chat model config.": "Failed to resolve chat model config.",
+		"Failed to resolve the workspace's template-declared external auth providers.": "Failed to resolve the workspace's template-declared external auth providers.",
+		"Failed to retrieve user notification preferences.": "Failed to retrieve user notification preferences.",
+		"Failed to retrieve user notifications preferences.": "Failed to retrieve user notifications preferences.",
+		"Failed to save chat file.": "Failed to save chat file.",
+		"Failed to send custom notification": "Failed to send custom notification",
+		"Failed to send test notification": "Failed to send test notification",
+		"Failed to start CPU profile.": "Failed to start CPU profile.",
+		"Failed to start trace.": "Failed to start trace.",
+		"Failed to start yamux over websocket.": "Failed to start yamux over websocket.",
+		"Failed to store OAuth2 token.": "Failed to store OAuth2 token.",
+		"Failed to subscribe to agent for log streaming.": "Failed to subscribe to agent for log streaming.",
+		"Failed to subscribe to chat events.": "Failed to subscribe to chat events.",
+		"Failed to subscribe to workspace for log streaming.": "Failed to subscribe to workspace for log streaming.",
+		"Failed to sync replicas": "Failed to sync replicas",
+		"Failed to test webpush subscription": "Failed to test webpush subscription",
+		"Failed to unmarshal access token claims.": "Failed to unmarshal access token claims.",
+		"Failed to unmarshal health settings.": "Failed to unmarshal health settings.",
+		"Failed to unmarshal notifications settings.": "Failed to unmarshal notifications settings.",
+		"Failed to unmarshal prebuilds settings.": "Failed to unmarshal prebuilds settings.",
+		"Failed to unmarshal user info claims.": "Failed to unmarshal user info claims.",
+		"Failed to update MCP server config.": "Failed to update MCP server config.",
+		"Failed to update app status.": "Failed to update app status.",
+		"Failed to update chat auto-archive days.": "Failed to update chat auto-archive days.",
+		"Failed to update chat debug retention days.": "Failed to update chat debug retention days.",
+		"Failed to update chat labels.": "Failed to update chat labels.",
+		"Failed to update chat model ACL.": "Failed to update chat model ACL.",
+		"Failed to update chat model config.": "Failed to update chat model config.",
+		"Failed to update chat plan mode.": "Failed to update chat plan mode.",
+		"Failed to update chat retention days.": "Failed to update chat retention days.",
+		"Failed to update chat title.": "Failed to update chat title.",
+		"Failed to update chat workspace binding.": "Failed to update chat workspace binding.",
+		"Failed to update entitlements": "Failed to update entitlements",
+		"Failed to update external auth link.": "Failed to update external auth link.",
+		"Failed to update group.": "Failed to update group.",
+		"Failed to update health settings.": "Failed to update health settings.",
+		"Failed to update inbox notification read status.": "Failed to update inbox notification read status.",
+		"Failed to update notifications settings.": "Failed to update notifications settings.",
+		"Failed to update prebuilds settings.": "Failed to update prebuilds settings.",
+		"Failed to update role permissions": "Failed to update role permissions",
+		"Failed to update task input.": "Failed to update task input.",
+		"Failed to update user AI provider key.": "Failed to update user AI provider key.",
+		"Failed to update user GitHub ID.": "Failed to update user GitHub ID.",
+		"Failed to update user notifications preferences.": "Failed to update user notifications preferences.",
+		"Failed to update workspace build state.": "Failed to update workspace build state.",
+		"Failed to upgrade connection to websocket.": "Failed to upgrade connection to websocket.",
+		"Failed to upload logs": "Failed to upload logs",
+		"Failed to validate MCP server IDs.": "Failed to validate MCP server IDs.",
+		"Failed to validate create API key request.": "Failed to validate create API key request.",
+		"Failed to validate form values.": "Failed to validate form values.",
+		"Failed to validate health settings.": "Failed to validate health settings.",
+		"Failed to validate organization membership.": "Failed to validate organization membership.",
+		"Failed to validate token.": "Failed to validate token.",
+		"Failed to verify OIDC token.": "Failed to verify OIDC token.",
+		"Failed to verify access token.": "Failed to verify access token.",
+		"Failed to verify hostname in URL.": "Failed to verify hostname in URL.",
+		"Failed to verify redirect_uri query parameter.": "Failed to verify redirect_uri query parameter.",
+		"Failed to write CPU profile to archive.": "Failed to write CPU profile to archive.",
+		"Failed to write trace to archive.": "Failed to write trace to archive.",
+		"File content type does not match Content-Type header.": "File content type does not match Content-Type header.",
+		"File id must be a valid UUID.": "File id must be a valid UUID.",
+		"File id must be provided in url.": "File id must be provided in url.",
+		"File not found.": "File not found.",
+		"File path delivery for user secrets is disabled by the deployment administrator. Clear file_path or use env_name instead.": "File path delivery for user secrets is disabled by the deployment administrator. Clear file_path or use env_name instead.",
+		"File too large.": "File too large.",
+		"Filename is required.": "Filename is required.",
+		"Forbidden": "Forbidden",
+		"Forbidden reading template of selected workspace.": "Forbidden reading template of selected workspace.",
+		"Forbidden.": "Forbidden.",
+		"Git auth device flow not supported.": "Git auth device flow not supported.",
+		"Git auth provider does not support device flow.": "Git auth provider does not support device flow.",
+		"Github OAuth2 is not enabled.": "Github OAuth2 is not enabled.",
+		"Given tags are not acceptable to the service": "Given tags are not acceptable to the service",
+		"Group names must be unique": "Group names must be unique",
+		"Healthcheck timed out.": "Healthcheck timed out.",
+		"Incompatible or unparsable version": "Incompatible or unparsable version",
+		"Incomplete .zip archive file.": "Incomplete .zip archive file.",
+		"Incorrect email or one-time passcode.": "Incorrect email or one-time passcode.",
+		"Incorrect email or password.": "Incorrect email or password.",
+		"Insufficient permissions to update appearance": "Insufficient permissions to update appearance",
+		"Insufficient permissions to update health settings.": "Insufficient permissions to update health settings.",
+		"Internal error accepting websocket connection.": "Internal error accepting websocket connection.",
+		"Internal error bundling template.": "Internal error bundling template.",
+		"Internal error calculating workspace autostart schedule.": "Internal error calculating workspace autostart schedule.",
+		"Internal error canceling workspace build.": "Internal error canceling workspace build.",
+		"Internal error checking file.": "Internal error checking file.",
+		"Internal error checking template name.": "Internal error checking template name.",
+		"Internal error checking workspace agent authorization.": "Internal error checking workspace agent authorization.",
+		"Internal error checking workspace tags": "Internal error checking workspace tags",
+		"Internal error converting AI provider.": "Internal error converting AI provider.",
+		"Internal error converting tasks.": "Internal error converting tasks.",
+		"Internal error converting template parameter insights.": "Internal error converting template parameter insights.",
+		"Internal error converting template version parameter.": "Internal error converting template version parameter.",
+		"Internal error converting template version parameters.": "Internal error converting template version parameters.",
+		"Internal error converting workspace build.": "Internal error converting workspace build.",
+		"Internal error converting workspace rows.": "Internal error converting workspace rows.",
+		"Internal error converting workspace.": "Internal error converting workspace.",
+		"Internal error converting workspaces.": "Internal error converting workspaces.",
+		"Internal error creating AI provider.": "Internal error creating AI provider.",
+		"Internal error creating OAuth2 application.": "Internal error creating OAuth2 application.",
+		"Internal error creating OAuth2 client secret.": "Internal error creating OAuth2 client secret.",
+		"Internal error creating file.": "Internal error creating file.",
+		"Internal error creating provisioner daemon.": "Internal error creating provisioner daemon.",
+		"Internal error creating secret.": "Internal error creating secret.",
+		"Internal error creating task.": "Internal error creating task.",
+		"Internal error creating template version.": "Internal error creating template version.",
+		"Internal error creating template.": "Internal error creating template.",
+		"Internal error creating user.": "Internal error creating user.",
+		"Internal error creating workspace build.": "Internal error creating workspace build.",
+		"Internal error decoding snapshot data.": "Internal error decoding snapshot data.",
+		"Internal error decoding task snapshot.": "Internal error decoding task snapshot.",
+		"Internal error deleting API key.": "Internal error deleting API key.",
+		"Internal error deleting OAuth2 application.": "Internal error deleting OAuth2 application.",
+		"Internal error deleting OAuth2 client secret.": "Internal error deleting OAuth2 client secret.",
+		"Internal error deleting app tokens.": "Internal error deleting app tokens.",
+		"Internal error deleting devcontainer.": "Internal error deleting devcontainer.",
+		"Internal error deleting license": "Internal error deleting license",
+		"Internal error deleting organization.": "Internal error deleting organization.",
+		"Internal error deleting secret.": "Internal error deleting secret.",
+		"Internal error deleting template.": "Internal error deleting template.",
+		"Internal error deleting user.": "Internal error deleting user.",
+		"Internal error dialing workspace agent.": "Internal error dialing workspace agent.",
+		"Internal error encoding advisor configuration.": "Internal error encoding advisor configuration.",
+		"Internal error encoding settings.": "Internal error encoding settings.",
+		"Internal error expiring API key.": "Internal error expiring API key.",
+		"Internal error fetching API key.": "Internal error fetching API key.",
+		"Internal error fetching API keys.": "Internal error fetching API keys.",
+		"Internal error fetching DAUs.": "Internal error fetching DAUs.",
+		"Internal error fetching MCP server config.": "Internal error fetching MCP server config.",
+		"Internal error fetching OAuth2 app secret.": "Internal error fetching OAuth2 app secret.",
+		"Internal error fetching OAuth2 app.": "Internal error fetching OAuth2 app.",
+		"Internal error fetching acting user.": "Internal error fetching acting user.",
+		"Internal error fetching advisor configuration.": "Internal error fetching advisor configuration.",
+		"Internal error fetching authenticated Github user organizations.": "Internal error fetching authenticated Github user organizations.",
+		"Internal error fetching authenticated Github user.": "Internal error fetching authenticated Github user.",
+		"Internal error fetching chat debug logging setting.": "Internal error fetching chat debug logging setting.",
+		"Internal error fetching chat model config.": "Internal error fetching chat model config.",
+		"Internal error fetching chat system prompt configuration.": "Internal error fetching chat system prompt configuration.",
+		"Internal error fetching chat workspace.": "Internal error fetching chat workspace.",
+		"Internal error fetching chat.": "Internal error fetching chat.",
+		"Internal error fetching computer use provider.": "Internal error fetching computer use provider.",
+		"Internal error fetching containers.": "Internal error fetching containers.",
+		"Internal error fetching debug run.": "Internal error fetching debug run.",
+		"Internal error fetching debug runs.": "Internal error fetching debug runs.",
+		"Internal error fetching debug steps.": "Internal error fetching debug steps.",
+		"Internal error fetching default organization. If you are encountering this error, you will have to restart the Coder deployment.": "Internal error fetching default organization. If you are encountering this error, you will have to restart the Coder deployment.",
+		"Internal error fetching example.": "Internal error fetching example.",
+		"Internal error fetching examples.": "Internal error fetching examples.",
+		"Internal error fetching external auth link.": "Internal error fetching external auth link.",
+		"Internal error fetching file.": "Internal error fetching file.",
+		"Internal error fetching git SSH key.": "Internal error fetching git SSH key.",
+		"Internal error fetching group.": "Internal error fetching group.",
+		"Internal error fetching job resources.": "Internal error fetching job resources.",
+		"Internal error fetching keys.": "Internal error fetching keys.",
+		"Internal error fetching latest workspace build parameters.": "Internal error fetching latest workspace build parameters.",
+		"Internal error fetching latest workspace build.": "Internal error fetching latest workspace build.",
+		"Internal error fetching licenses.": "Internal error fetching licenses.",
+		"Internal error fetching listening ports.": "Internal error fetching listening ports.",
+		"Internal error fetching model overrides.": "Internal error fetching model overrides.",
+		"Internal error fetching notification template.": "Internal error fetching notification template.",
+		"Internal error fetching organization member.": "Internal error fetching organization member.",
+		"Internal error fetching organization model defaults.": "Internal error fetching organization model defaults.",
+		"Internal error fetching organization.": "Internal error fetching organization.",
+		"Internal error fetching organizations.": "Internal error fetching organizations.",
+		"Internal error fetching personal Github user.": "Internal error fetching personal Github user.",
+		"Internal error fetching personal model override setting.": "Internal error fetching personal model override setting.",
+		"Internal error fetching plan mode instructions.": "Internal error fetching plan mode instructions.",
+		"Internal error fetching previous workspace build": "Internal error fetching previous workspace build",
+		"Internal error fetching provisioner daemons by organization.": "Internal error fetching provisioner daemons by organization.",
+		"Internal error fetching provisioner daemons.": "Internal error fetching provisioner daemons.",
+		"Internal error fetching provisioner job.": "Internal error fetching provisioner job.",
+		"Internal error fetching provisioner jobs.": "Internal error fetching provisioner jobs.",
+		"Internal error fetching provisioner logs.": "Internal error fetching provisioner logs.",
+		"Internal error fetching provisioner resource.": "Internal error fetching provisioner resource.",
+		"Internal error fetching provisioner state.": "Internal error fetching provisioner state.",
+		"Internal error fetching secret.": "Internal error fetching secret.",
+		"Internal error fetching session threads.": "Internal error fetching session threads.",
+		"Internal error fetching session.": "Internal error fetching session.",
+		"Internal error fetching task snapshot.": "Internal error fetching task snapshot.",
+		"Internal error fetching task workspace before deleting task.": "Internal error fetching task workspace before deleting task.",
+		"Internal error fetching task workspace build job.": "Internal error fetching task workspace build job.",
+		"Internal error fetching task workspace build.": "Internal error fetching task workspace build.",
+		"Internal error fetching task workspace.": "Internal error fetching task workspace.",
+		"Internal error fetching task.": "Internal error fetching task.",
+		"Internal error fetching tasks.": "Internal error fetching tasks.",
+		"Internal error fetching template admins.": "Internal error fetching template admins.",
+		"Internal error fetching template by name.": "Internal error fetching template by name.",
+		"Internal error fetching template insights.": "Internal error fetching template insights.",
+		"Internal error fetching template schedule options.": "Internal error fetching template schedule options.",
+		"Internal error fetching template schedule.": "Internal error fetching template schedule.",
+		"Internal error fetching template version at after_id.": "Internal error fetching template version at after_id.",
+		"Internal error fetching template version data.": "Internal error fetching template version data.",
+		"Internal error fetching template version job status.": "Internal error fetching template version job status.",
+		"Internal error fetching template version parameters.": "Internal error fetching template version parameters.",
+		"Internal error fetching template version presets.": "Internal error fetching template version presets.",
+		"Internal error fetching template version variables.": "Internal error fetching template version variables.",
+		"Internal error fetching template version.": "Internal error fetching template version.",
+		"Internal error fetching template versions.": "Internal error fetching template versions.",
+		"Internal error fetching template.": "Internal error fetching template.",
+		"Internal error fetching templates in organization.": "Internal error fetching templates in organization.",
+		"Internal error fetching the latest workspace build.": "Internal error fetching the latest workspace build.",
+		"Internal error fetching the previous template version.": "Internal error fetching the previous template version.",
+		"Internal error fetching timings.": "Internal error fetching timings.",
+		"Internal error fetching user activity.": "Internal error fetching user activity.",
+		"Internal error fetching user admins.": "Internal error fetching user admins.",
+		"Internal error fetching user chat debug logging setting.": "Internal error fetching user chat debug logging setting.",
+		"Internal error fetching user count.": "Internal error fetching user count.",
+		"Internal error fetching user latency.": "Internal error fetching user latency.",
+		"Internal error fetching user personal model overrides.": "Internal error fetching user personal model overrides.",
+		"Internal error fetching user status counts over time.": "Internal error fetching user status counts over time.",
+		"Internal error fetching user's SSH key.": "Internal error fetching user's SSH key.",
+		"Internal error fetching user's external auths.": "Internal error fetching user's external auths.",
+		"Internal error fetching user's organization memberships.": "Internal error fetching user's organization memberships.",
+		"Internal error fetching user's organizations.": "Internal error fetching user's organizations.",
+		"Internal error fetching user's parameters.": "Internal error fetching user's parameters.",
+		"Internal error fetching user.": "Internal error fetching user.",
+		"Internal error fetching users.": "Internal error fetching users.",
+		"Internal error fetching workspace TTL setting.": "Internal error fetching workspace TTL setting.",
+		"Internal error fetching workspace agent log sources.": "Internal error fetching workspace agent log sources.",
+		"Internal error fetching workspace agent scripts.": "Internal error fetching workspace agent scripts.",
+		"Internal error fetching workspace agent.": "Internal error fetching workspace agent.",
+		"Internal error fetching workspace agents.": "Internal error fetching workspace agents.",
+		"Internal error fetching workspace app statuses.": "Internal error fetching workspace app statuses.",
+		"Internal error fetching workspace applications.": "Internal error fetching workspace applications.",
+		"Internal error fetching workspace apps.": "Internal error fetching workspace apps.",
+		"Internal error fetching workspace build at \"after_id\".": "Internal error fetching workspace build at \"after_id\".",
+		"Internal error fetching workspace build parameters.": "Internal error fetching workspace build parameters.",
+		"Internal error fetching workspace build.": "Internal error fetching workspace build.",
+		"Internal error fetching workspace by name.": "Internal error fetching workspace by name.",
+		"Internal error fetching workspace data.": "Internal error fetching workspace data.",
+		"Internal error fetching workspace metadata.": "Internal error fetching workspace metadata.",
+		"Internal error fetching workspace resource.": "Internal error fetching workspace resource.",
+		"Internal error fetching workspace resources.": "Internal error fetching workspace resources.",
+		"Internal error fetching workspace template.": "Internal error fetching workspace template.",
+		"Internal error fetching workspace.": "Internal error fetching workspace.",
+		"Internal error fetching workspaces by template id.": "Internal error fetching workspaces by template id.",
+		"Internal error fetching workspaces.": "Internal error fetching workspaces.",
+		"Internal error generating a new SSH keypair.": "Internal error generating a new SSH keypair.",
+		"Internal error generating state string.": "Internal error generating state string.",
+		"Internal error getting AI Gateway clients.": "Internal error getting AI Gateway clients.",
+		"Internal error getting AI Gateway models.": "Internal error getting AI Gateway models.",
+		"Internal error getting AI Gateway sessions.": "Internal error getting AI Gateway sessions.",
+		"Internal error getting OAuth2 client secrets.": "Internal error getting OAuth2 client secrets.",
+		"Internal error getting file.": "Internal error getting file.",
+		"Internal error getting template schedule options.": "Internal error getting template schedule options.",
+		"Internal error getting workspace build data.": "Internal error getting workspace build data.",
+		"Internal error hashing new password.": "Internal error hashing new password.",
+		"Internal error importing secrets.": "Internal error importing secrets.",
+		"Internal error inserting organization member.": "Internal error inserting organization member.",
+		"Internal error inserting provisioner job.": "Internal error inserting provisioner job.",
+		"Internal error inserting template.": "Internal error inserting template.",
+		"Internal error listing AI providers.": "Internal error listing AI providers.",
+		"Internal error listing examples.": "Internal error listing examples.",
+		"Internal error listing parameter schemas.": "Internal error listing parameter schemas.",
+		"Internal error listing secrets.": "Internal error listing secrets.",
+		"Internal error loading AI provider keys.": "Internal error loading AI provider keys.",
+		"Internal error loading module catalog.": "Internal error loading module catalog.",
+		"Internal error marshaling trace metadata.": "Internal error marshaling trace metadata.",
+		"Internal error parsing licenses.": "Internal error parsing licenses.",
+		"Internal error parsing task app URL.": "Internal error parsing task app URL.",
+		"Internal error preparing follow-up workspace build parameters": "Internal error preparing follow-up workspace build parameters",
+		"Internal error preparing sql filter.": "Internal error preparing sql filter.",
+		"Internal error processing .zip archive.": "Internal error processing .zip archive.",
+		"Internal error provisioner job.": "Internal error provisioner job.",
+		"Internal error queueing follow-up workspace build": "Internal error queueing follow-up workspace build",
+		"Internal error reading auth config from database": "Internal error reading auth config from database",
+		"Internal error reading job agent.": "Internal error reading job agent.",
+		"Internal error reading workspace agent.": "Internal error reading workspace agent.",
+		"Internal error recreating devcontainer.": "Internal error recreating devcontainer.",
+		"Internal error refreshing chat context.": "Internal error refreshing chat context.",
+		"Internal error saving file.": "Internal error saving file.",
+		"Internal error setting up server-sent events.": "Internal error setting up server-sent events.",
+		"Internal error setting up workspace event subscription": "Internal error setting up workspace event subscription",
+		"Internal error setting workspace as favorite": "Internal error setting workspace as favorite",
+		"Internal error signing state jwt.": "Internal error signing state jwt.",
+		"Internal error storing snapshot.": "Internal error storing snapshot.",
+		"Internal error streaming agent reinitialization events.": "Internal error streaming agent reinitialization events.",
+		"Internal error submitting tool results.": "Internal error submitting tool results.",
+		"Internal error subscribing to template events.": "Internal error subscribing to template events.",
+		"Internal error subscribing to workspace build events.": "Internal error subscribing to workspace build events.",
+		"Internal error subscribing to workspace events.": "Internal error subscribing to workspace events.",
+		"Internal error unmarshalling job metadata.": "Internal error unmarshalling job metadata.",
+		"Internal error unmarshalling metadata.": "Internal error unmarshalling metadata.",
+		"Internal error unmarshalling provisioner job.": "Internal error unmarshalling provisioner job.",
+		"Internal error unsetting workspace as favorite": "Internal error unsetting workspace as favorite",
+		"Internal error unsetting workspace dormant status": "Internal error unsetting workspace dormant status",
+		"Internal error updating OAuth2 application.": "Internal error updating OAuth2 application.",
+		"Internal error updating active template version.": "Internal error updating active template version.",
+		"Internal error updating advisor configuration.": "Internal error updating advisor configuration.",
+		"Internal error updating chat debug logging setting.": "Internal error updating chat debug logging setting.",
+		"Internal error updating chat system prompt configuration.": "Internal error updating chat system prompt configuration.",
+		"Internal error updating computer use provider.": "Internal error updating computer use provider.",
+		"Internal error updating organization.": "Internal error updating organization.",
+		"Internal error updating personal model override setting.": "Internal error updating personal model override setting.",
+		"Internal error updating plan mode instructions.": "Internal error updating plan mode instructions.",
+		"Internal error updating provisioner job.": "Internal error updating provisioner job.",
+		"Internal error updating secret.": "Internal error updating secret.",
+		"Internal error updating task.": "Internal error updating task.",
+		"Internal error updating user appearance settings.": "Internal error updating user appearance settings.",
+		"Internal error updating user chat debug logging setting.": "Internal error updating user chat debug logging setting.",
+		"Internal error updating user personal model override.": "Internal error updating user personal model override.",
+		"Internal error updating user preference settings.": "Internal error updating user preference settings.",
+		"Internal error updating user's git SSH key.": "Internal error updating user's git SSH key.",
+		"Internal error updating user's password.": "Internal error updating user's password.",
+		"Internal error updating user.": "Internal error updating user.",
+		"Internal error updating workspace TTL setting.": "Internal error updating workspace TTL setting.",
+		"Internal error updating workspace automatic updates setting": "Internal error updating workspace automatic updates setting",
+		"Internal error updating workspace autostart schedule.": "Internal error updating workspace autostart schedule.",
+		"Internal error updating workspace locked status.": "Internal error updating workspace locked status.",
+		"Internal error updating workspace sharing settings.": "Internal error updating workspace sharing settings.",
+		"Internal error updating workspace.": "Internal error updating workspace.",
+		"Internal error validating after_session_id cursor.": "Internal error validating after_session_id cursor.",
+		"Internal error validating model config override.": "Internal error validating model config override.",
+		"Internal error validating reasoning effort.": "Internal error validating reasoning effort.",
+		"Internal error validating request body payload.": "Internal error validating request body payload.",
+		"Internal error waiting for template import.": "Internal error waiting for template import.",
+		"Internal error watching agent's containers.": "Internal error watching agent's containers.",
+		"Internal error watching agent's git state.": "Internal error watching agent's git state.",
+		"Internal error with passwords.": "Internal error with passwords.",
+		"Internal error with workspace agent authorization context.": "Internal error with workspace agent authorization context.",
+		"Internal error workspace build.": "Internal error workspace build.",
+		"Internal error.": "Internal error.",
+		"Internal server error": "Internal server error",
+		"Invalid .zip archive contents.": "Invalid .zip archive contents.",
+		"Invalid AI Gateway clients search query.": "Invalid AI Gateway clients search query.",
+		"Invalid AI Gateway models search query.": "Invalid AI Gateway models search query.",
+		"Invalid AI model price source.": "Invalid AI model price source.",
+		"Invalid AI model prices.": "Invalid AI model prices.",
+		"Invalid AI provider ID.": "Invalid AI provider ID.",
+		"Invalid AI provider request.": "Invalid AI provider request.",
+		"Invalid AI spend limit.": "Invalid AI spend limit.",
+		"Invalid AWS identity.": "Invalid AWS identity.",
+		"Invalid Autostart Schedule.": "Invalid Autostart Schedule.",
+		"Invalid Azure identity.": "Invalid Azure identity.",
+		"Invalid GCP identity.": "Invalid GCP identity.",
+		"Invalid MCP server config ID.": "Invalid MCP server config ID.",
+		"Invalid MCP server config.": "Invalid MCP server config.",
+		"Invalid OAuth2 client ID.": "Invalid OAuth2 client ID.",
+		"Invalid OAuth2 revocation URL.": "Invalid OAuth2 revocation URL.",
+		"Invalid URL path.": "Invalid URL path.",
+		"Invalid URL.": "Invalid URL.",
+		"Invalid Workspace Automatic Updates setting.": "Invalid Workspace Automatic Updates setting.",
+		"Invalid Workspace Time to Shutdown.": "Invalid Workspace Time to Shutdown.",
+		"Invalid after_id parameter.": "Invalid after_id parameter.",
+		"Invalid after_id query parameter.": "Invalid after_id query parameter.",
+		"Invalid agent chat send shortcut.": "Invalid agent chat send shortcut.",
+		"Invalid agentapi payload structure.": "Invalid agentapi payload structure.",
+		"Invalid audit search query.": "Invalid audit search query.",
+		"Invalid autostart schedule.": "Invalid autostart schedule.",
+		"Invalid before_id query parameter.": "Invalid before_id query parameter.",
+		"Invalid busy_behavior value.": "Invalid busy_behavior value.",
+		"Invalid chat message ID.": "Invalid chat message ID.",
+		"Invalid chat model config ID.": "Invalid chat model config ID.",
+		"Invalid chat model override context.": "Invalid chat model override context.",
+		"Invalid chat personal model override context.": "Invalid chat personal model override context.",
+		"Invalid chat search query.": "Invalid chat search query.",
+		"Invalid client id": "Invalid client id",
+		"Invalid client_type.": "Invalid client_type.",
+		"Invalid code diff display mode.": "Invalid code diff display mode.",
+		"Invalid compression threshold.": "Invalid compression threshold.",
+		"Invalid computer use provider.": "Invalid computer use provider.",
+		"Invalid connection search query.": "Invalid connection search query.",
+		"Invalid create template request.": "Invalid create template request.",
+		"Invalid custom headers.": "Invalid custom headers.",
+		"Invalid debug run ID.": "Invalid debug run ID.",
+		"Invalid default_org_member_roles entry.": "Invalid default_org_member_roles entry.",
+		"Invalid device code": "Invalid device code",
+		"Invalid duration parameter.": "Invalid duration parameter.",
+		"Invalid external proxy token": "Invalid external proxy token",
+		"Invalid file ID.": "Invalid file ID.",
+		"Invalid file.": "Invalid file.",
+		"Invalid format parameter.": "Invalid format parameter.",
+		"Invalid group name.": "Invalid group name.",
+		"Invalid group search query.": "Invalid group search query.",
+		"Invalid hostname in URL.": "Invalid hostname in URL.",
+		"Invalid input part.": "Invalid input part.",
+		"Invalid key ID.": "Invalid key ID.",
+		"Invalid key name.": "Invalid key name.",
+		"Invalid label format": "Invalid label format",
+		"Invalid labels.": "Invalid labels.",
+		"Invalid license": "Invalid license",
+		"Invalid limit parameter (0-2000).": "Invalid limit parameter (0-2000).",
+		"Invalid limit parameter (1-200).": "Invalid limit parameter (1-200).",
+		"Invalid limit query parameter.": "Invalid limit query parameter.",
+		"Invalid log level provided.": "Invalid log level provided.",
+		"Invalid member search query.": "Invalid member search query.",
+		"Invalid model config ID.": "Invalid model config ID.",
+		"Invalid model config.": "Invalid model config.",
+		"Invalid model_config_id.": "Invalid model_config_id.",
+		"Invalid model_config_id: model config not found or disabled.": "Invalid model_config_id: model config not found or disabled.",
+		"Invalid model_config_id: provider credentials unavailable for this model.": "Invalid model_config_id: provider credentials unavailable for this model.",
+		"Invalid model_config_id: provider is not enabled for this model.": "Invalid model_config_id: provider is not enabled for this model.",
+		"Invalid or missing OAuth2 state parameter.": "Invalid or missing OAuth2 state parameter.",
+		"Invalid organization ID.": "Invalid organization ID.",
+		"Invalid organization member search query.": "Invalid organization member search query.",
+		"Invalid pagination cursor.": "Invalid pagination cursor.",
+		"Invalid pagination limit value.": "Invalid pagination limit value.",
+		"Invalid password.": "Invalid password.",
+		"Invalid personal model override mode.": "Invalid personal model override mode.",
+		"Invalid plan_mode value.": "Invalid plan_mode value.",
+		"Invalid premium funnel event.": "Invalid premium funnel event.",
+		"Invalid query parameters.": "Invalid query parameters.",
+		"Invalid query params": "Invalid query params",
+		"Invalid queued message ID.": "Invalid queued message ID.",
+		"Invalid reasoning_effort value.": "Invalid reasoning_effort value.",
+		"Invalid redirect_uri query parameter.": "Invalid redirect_uri query parameter.",
+		"Invalid redirect_uri.": "Invalid redirect_uri.",
+		"Invalid request": "Invalid request",
+		"Invalid request body": "Invalid request body",
+		"Invalid request to update MCP server config ACL.": "Invalid request to update MCP server config ACL.",
+		"Invalid request to update chat ACL.": "Invalid request to update chat ACL.",
+		"Invalid request to update chat model ACL.": "Invalid request to update chat model ACL.",
+		"Invalid request to update notification template method": "Invalid request to update notification template method",
+		"Invalid request to update template ACL": "Invalid request to update template ACL",
+		"Invalid request to update template metadata!": "Invalid request to update template metadata!",
+		"Invalid request to update workspace ACL": "Invalid request to update workspace ACL",
+		"Invalid request, not allowed to assign organization member permissions for an organization role.": "Invalid request, not allowed to assign organization member permissions for an organization role.",
+		"Invalid request, not allowed to assign site wide permissions for an organization role.": "Invalid request, not allowed to assign site wide permissions for an organization role.",
+		"Invalid request, not allowed to assign user permissions for an organization role.": "Invalid request, not allowed to assign user permissions for an organization role.",
+		"Invalid role name": "Invalid role name",
+		"Invalid session search query.": "Invalid session search query.",
+		"Invalid shareable workspace owners value.": "Invalid shareable workspace owners value.",
+		"Invalid shell tool display mode.": "Invalid shell tool display mode.",
+		"Invalid snapshot data.": "Invalid snapshot data.",
+		"Invalid source for secondary user claims.": "Invalid source for secondary user claims.",
+		"Invalid state provided.": "Invalid state provided.",
+		"Invalid task ID format.": "Invalid task ID format.",
+		"Invalid task app response.": "Invalid task app response.",
+		"Invalid task search query.": "Invalid task search query.",
+		"Invalid template search query.": "Invalid template search query.",
+		"Invalid thinking display mode.": "Invalid thinking display mode.",
+		"Invalid timezone.": "Invalid timezone.",
+		"Invalid token format": "Invalid token format",
+		"Invalid user UUID": "Invalid user UUID",
+		"Invalid user input": "Invalid user input",
+		"Invalid user search query.": "Invalid user search query.",
+		"Invalid user_id query parameter": "Invalid user_id query parameter",
+		"Invalid user_id query parameter.": "Invalid user_id query parameter.",
+		"Invalid webpush endpoint.": "Invalid webpush endpoint.",
+		"Invalid workspace search query.": "Invalid workspace search query.",
+		"Job has already been marked as canceled!": "Job has already been marked as canceled!",
+		"Job has already been marked as canceled.": "Job has already been marked as canceled.",
+		"Job has already completed!": "Job has already completed!",
+		"Job has already completed.": "Job has already completed.",
+		"Job has been marked as canceled.": "Job has been marked as canceled.",
+		"Job has been marked as canceled...": "Job has been marked as canceled...",
+		"Job hasn't completed!": "Job hasn't completed!",
+		"Key name must be unique.": "Key name must be unique.",
+		"Legacy chat provider APIs were removed. Use AI provider APIs instead.": "Legacy chat provider APIs were removed. Use AI provider APIs instead.",
+		"License ID must be an integer": "License ID must be an integer",
+		"License cannot be used on this deployment!": "License cannot be used on this deployment!",
+		"Logged out!": "Logged out!",
+		"Login type 'none' requires a service account.": "Login type 'none' requires a service account.",
+		"Logs limit exceeded": "Logs limit exceeded",
+		"MCP server OAuth2 authorization URL is not configured.": "MCP server OAuth2 authorization URL is not configured.",
+		"MCP server config already exists.": "MCP server config already exists.",
+		"MCP server config slug already exists.": "MCP server config slug already exists.",
+		"MCP server configuration changed during authorization.": "MCP server configuration changed during authorization.",
+		"MCP server does not use OAuth2 authentication.": "MCP server does not use OAuth2 authentication.",
+		"MCP server initialization failed": "MCP server initialization failed",
+		"MCP server is not enabled.": "MCP server is not enabled.",
+		"Managing user_oidc MCP server configs requires deployment-level permissions.": "Managing user_oidc MCP server configs requires deployment-level permissions.",
+		"Message is too long.": "Message is too long.",
+		"Message must be less than 160 characters.": "Message must be less than 160 characters.",
+		"Message queue is full.": "Message queue is full.",
+		"Method not allowed": "Method not allowed",
+		"Missing OAuth2 client ID.": "Missing OAuth2 client ID.",
+		"Missing UUID in URL.": "Missing UUID in URL.",
+		"Missing authorization code.": "Missing authorization code.",
+		"Missing base_template_id.": "Missing base_template_id.",
+		"Missing client_id parameter": "Missing client_id parameter",
+		"Missing feature query parameter.": "Missing feature query parameter.",
+		"Missing group name in URL": "Missing group name in URL",
+		"Missing organization query parameter.": "Missing organization query parameter.",
+		"Missing redirect_uri query parameter.": "Missing redirect_uri query parameter.",
+		"Missing required external proxy token": "Missing required external proxy token",
+		"Missing session_id path parameter.": "Missing session_id path parameter.",
+		"Missing values, this cannot be empty": "Missing values, this cannot be empty",
+		"Model ACLs cannot be set here. Use the nested /acl endpoint after creating the model.": "Model ACLs cannot be set here. Use the nested /acl endpoint after creating the model.",
+		"Model ACLs cannot be updated here. Use the nested /acl endpoint.": "Model ACLs cannot be updated here. Use the nested /acl endpoint.",
+		"Model config is disabled.": "Model config is disabled.",
+		"Model is required.": "Model is required.",
+		"Must be 0 (disabled) or at least one minute.": "Must be 0 (disabled) or at least one minute.",
+		"Must be 64 characters or fewer, lowercase letters, numbers, and non-consecutive hyphens, cannot start or end with a hyphen.": "Must be 64 characters or fewer, lowercase letters, numbers, and non-consecutive hyphens, cannot start or end with a hyphen.",
+		"Must be a positive integer.": "Must be a positive integer.",
+		"Must be a valid boolean": "Must be a valid boolean",
+		"Must be an integer": "Must be an integer",
+		"Must be an integer greater than or equal to zero": "Must be an integer greater than or equal to zero",
+		"Name is already used": "Name is already used",
+		"Name is required": "Name is required",
+		"Name must be at most 64 characters": "Name must be at most 64 characters",
+		"New password cannot match old password.": "New password cannot match old password.",
+		"No chat model is available in this organization.": "No chat model is available in this organization.",
+		"No email found in OIDC payload!": "No email found in OIDC payload!",
+		"No logs provided.": "No logs provided.",
+		"No organization specified to place the user as a member of. It is required to specify at least one organization id to place the user in.": "No organization specified to place the user as a member of. It is required to specify at least one organization id to place the user in.",
+		"No update arguments provided. Nothing to do.": "No update arguments provided. Nothing to do.",
+		"No value provided.": "No value provided.",
+		"No workspace exists for this job.": "No workspace exists for this job.",
+		"Non-browser connections are disabled for your deployment.": "Non-browser connections are disabled for your deployment.",
+		"Not Found.": "Not Found.",
+		"Nothing to clear.": "Nothing to clear.",
+		"Nothing to compact.": "Nothing to compact.",
+		"Notification template method unchanged.": "Notification template method unchanged.",
+		"OAuth2 application not found.": "OAuth2 application not found.",
+		"OAuth2 auth type requires either all of oauth2_client_id, oauth2_auth_url, and oauth2_token_url (manual configuration), or none of them (automatic discovery via RFC 7591).": "OAuth2 auth type requires either all of oauth2_client_id, oauth2_auth_url, and oauth2_token_url (manual configuration), or none of them (automatic discovery via RFC 7591).",
+		"OAuth2 auto-discovery failed. Provide oauth2_client_id, oauth2_auth_url, and oauth2_token_url manually, or ensure the MCP server supports RFC 9728 (Protected Resource Metadata) and RFC 7591 (Dynamic Client Registration).": "OAuth2 auto-discovery failed. Provide oauth2_client_id, oauth2_auth_url, and oauth2_token_url manually, or ensure the MCP server supports RFC 9728 (Protected Resource Metadata) and RFC 7591 (Dynamic Client Registration).",
+		"OAuth2 provider returned an error.": "OAuth2 provider returned an error.",
+		"OIDC login is not permitted from this host.": "OIDC login is not permitted from this host.",
+		"OIDC redirect_uri cookie does not match the current request host.": "OIDC redirect_uri cookie does not match the current request host.",
+		"OIDC token missing 'sub' claim field or 'sub' claim field is empty.": "OIDC token missing 'sub' claim field or 'sub' claim field is empty.",
+		"Old password is incorrect.": "Old password is incorrect.",
+		"Old password is required.": "Old password is required.",
+		"OnSuccess TemplateVersionPresetID requires TemplateVersionID.": "OnSuccess TemplateVersionPresetID requires TemplateVersionID.",
+		"OnSuccess cannot be set alongside DryRun.": "OnSuccess cannot be set alongside DryRun.",
+		"OnSuccess cannot be set alongside Orphan.": "OnSuccess cannot be set alongside Orphan.",
+		"OnSuccess cannot be set alongside ProvisionerState.": "OnSuccess cannot be set alongside ProvisionerState.",
+		"OnSuccess is only permitted when stopping a workspace.": "OnSuccess is only permitted when stopping a workspace.",
+		"OnSuccess transition must be start.": "OnSuccess transition must be start.",
+		"One or more MCP server IDs are invalid or disabled.": "One or more MCP server IDs are invalid or disabled.",
+		"Only .tar files can be converted to .zip format": "Only .tar files can be converted to .zip format",
+		"Only http scheme is supported for direct agent-dial.": "Only http scheme is supported for direct agent-dial.",
+		"Only owners can change the password of an owner.": "Only owners can change the password of an owner.",
+		"Only the chat owner may clear the chat context.": "Only the chat owner may clear the chat context.",
+		"Only the chat owner may compact the chat.": "Only the chat owner may compact the chat.",
+		"Only the chat owner may edit messages.": "Only the chat owner may edit messages.",
+		"Only the chat owner may promote queued messages.": "Only the chat owner may promote queued messages.",
+		"Only the chat owner may propose a title.": "Only the chat owner may propose a title.",
+		"Only the chat owner may send messages.": "Only the chat owner may send messages.",
+		"Only the chat owner may submit tool results.": "Only the chat owner may submit tool results.",
+		"Only user messages can be edited.": "Only user messages can be edited.",
+		"Only versions that have been built successfully can be promoted.": "Only versions that have been built successfully can be promoted.",
+		"OpenRouter-like provider configured as type openai does not support slash-namespaced models.": "OpenRouter-like provider configured as type openai does not support slash-namespaced models.",
+		"Organization already exists with that name.": "Organization already exists with that name.",
+		"Organization has been deleted.": "Organization has been deleted.",
+		"Organization not found.": "Organization not found.",
+		"Organization sync is enabled for OIDC users, meaning manual organization assignment is not allowed for this user. Have the user re-login to refresh their organizations.": "Organization sync is enabled for OIDC users, meaning manual organization assignment is not allowed for this user. Have the user re-login to refresh their organizations.",
+		"Orphan is only permitted when deleting a workspace.": "Orphan is only permitted when deleting a workspace.",
+		"PKCE challenge must be provided.": "PKCE challenge must be provided.",
+		"Parameter \"client_id\" is required and cannot be empty": "Parameter \"client_id\" is required and cannot be empty",
+		"Parameter \"client_secret\" is required and cannot be empty": "Parameter \"client_secret\" is required and cannot be empty",
+		"Password authentication is disabled.": "Password authentication is disabled.",
+		"Password based authentication is disabled! Unable to provision new users with password authentication.": "Password based authentication is disabled! Unable to provision new users with password authentication.",
+		"Password cannot be set for service accounts.": "Password cannot be set for service accounts.",
+		"Password is invalid": "Password is invalid",
+		"Personal skill limit reached.": "Personal skill limit reached.",
+		"Pin order must be non-negative.": "Pin order must be non-negative.",
+		"Plan mode instructions exceed maximum length.": "Plan mode instructions exceed maximum length.",
+		"Port must be between 9 and 65535.": "Port must be between 9 and 65535.",
+		"Port protocol not allowed.": "Port protocol not allowed.",
+		"Port share not found.": "Port share not found.",
+		"Port sharing level not allowed.": "Port sharing level not allowed.",
+		"Price is required. Use 'null' for a price that is not known.": "Price is required. Use 'null' for a price that is not known.",
+		"Price must not be negative.": "Price must not be negative.",
+		"Provide either \"timezone\" or \"tz_offset\", not both.": "Provide either \"timezone\" or \"tz_offset\", not both.",
+		"ProvisionerState cannot be set alongside Orphan since state intent is unclear.": "ProvisionerState cannot be set alongside Orphan since state intent is unclear.",
+		"Proxy has been deleted!": "Proxy has been deleted!",
+		"Query param \"after\" must be an integer greater than or equal to zero.": "Query param \"after\" must be an integer greater than or equal to zero.",
+		"Query param \"after\" must be an integer.": "Query param \"after\" must be an integer.",
+		"Query param \"code_challenge\" is required and cannot be empty": "Query param \"code_challenge\" is required and cannot be empty",
+		"Query param \"provider_name\" has invalid value: provider not found or unauthorized": "Query param \"provider_name\" has invalid value: provider not found or unauthorized",
+		"Query param \"started_before\" has invalid value: \"started_before\" must be after \"started_after\" if set": "Query param \"started_before\" has invalid value: \"started_before\" must be after \"started_after\" if set",
+		"Query parameter \"period_start\" must be before \"period_end\".": "Query parameter \"period_start\" must be before \"period_end\".",
+		"Query parameter has invalid value.": "Query parameter has invalid value.",
+		"Query parameters \"period_start\" and \"period_end\" must be provided together.": "Query parameters \"period_start\" and \"period_end\" must be provided together.",
+		"Query parameters have invalid values.": "Query parameters have invalid values.",
+		"Query period must not exceed 31 days.": "Query period must not exceed 31 days.",
+		"Queued message not found.": "Queued message not found.",
+		"Queued message promotion accepted.": "Queued message promotion accepted.",
+		"Replica ID is invalid.": "Replica ID is invalid.",
+		"Request body must be valid JSON.": "Request body must be valid JSON.",
+		"Request body too large.": "Request body too large.",
+		"Reserved name": "Reserved name",
+		"Reserved role name": "Reserved role name",
+		"Resource doesn't exist with that id.": "Resource doesn't exist with that id.",
+		"Resource not found or you do not have access to this resource": "Resource not found or you do not have access to this resource",
+		"Resource not found.": "Resource not found.",
+		"Route not found.": "Route not found.",
+		"SCIM is disabled, please contact your administrator if you believe this is an error": "SCIM is disabled, please contact your administrator if you believe this is an error",
+		"Server instance is shutting down": "Server instance is shutting down",
+		"Service accounts must use login type 'none'.": "Service accounts must use login type 'none'.",
+		"Session not found.": "Session not found.",
+		"Skill name in path does not match frontmatter name.": "Skill name in path does not match frontmatter name.",
+		"State mismatched.": "State mismatched.",
+		"State must be one of: complete, failure, working, idle.": "State must be one of: complete, failure, working, idle.",
+		"State must be provided.": "State must be provided.",
+		"Stored advisor configuration is invalid.": "Stored advisor configuration is invalid.",
+		"Stored workspace TTL is invalid.": "Stored workspace TTL is invalid.",
+		"Successfully deleted group!": "Successfully deleted group!",
+		"Successfully updated notification template method.": "Successfully updated notification template method.",
+		"Successfully updated template ACL list.": "Successfully updated template ACL list.",
+		"Swagger documentation is disabled.": "Swagger documentation is disabled.",
+		"System prompt exceeds maximum length.": "System prompt exceeds maximum length.",
+		"TTL updates are not supported for prebuilt workspaces": "TTL updates are not supported for prebuilt workspaces",
+		"Task app URL is not configured.": "Task app URL is not configured.",
+		"Task app is not ready to accept input.": "Task app is not ready to accept input.",
+		"Task app rejected the message.": "Task app rejected the message.",
+		"Task does not have a workspace app.": "Task does not have a workspace app.",
+		"Task does not have a workspace.": "Task does not have a workspace.",
+		"Task input is required.": "Task input is required.",
+		"Task is paused.": "Task is paused.",
+		"Task must be active.": "Task must be active.",
+		"Task workspace is already running.": "Task workspace is already running.",
+		"Template does not exist.": "Template does not exist.",
+		"Template does not have a valid \"coder_ai_task\" resource.": "Template does not have a valid \"coder_ai_task\" resource.",
+		"Template has been deleted!": "Template has been deleted!",
+		"Template import failed.": "Template import failed.",
+		"Template import was canceled.": "Template import was canceled.",
+		"Template or template versions not found.": "Template or template versions not found.",
+		"Template version does not exist": "Template version does not exist",
+		"Template version import job hasn't completed!": "Template version import job hasn't completed!",
+		"Template version is already part of a template": "Template version is already part of a template",
+		"Template version is archived": "Template version is archived",
+		"Template version job has not finished": "Template version job has not finished",
+		"Template version not found or you do not have access to this resource": "Template version not found or you do not have access to this resource",
+		"Template version not found.": "Template version not found.",
+		"Text format is not supported with follow mode.": "Text format is not supported with follow mode.",
+		"The Bedrock external ID is server-generated and cannot be changed.": "The Bedrock external ID is server-generated and cannot be changed.",
+		"The Coder license server returned an invalid license.": "The Coder license server returned an invalid license.",
+		"The GitHub user ID is missing, this should never happen. Please report this error.": "The GitHub user ID is missing, this should never happen. Please report this error.",
+		"The PKCE code verifier is invalid": "The PKCE code verifier is invalid",
+		"The access token audience does not match this resource": "The access token audience does not match this resource",
+		"The access token has expired": "The access token has expired",
+		"The access token is invalid": "The access token is invalid",
+		"The application's registered callback URL is not usable": "The application's registered callback URL is not usable",
+		"The authorization code is invalid or expired": "The authorization code is invalid or expired",
+		"The client credentials are invalid": "The client credentials are invalid",
+		"The code_verifier parameter must be 43 to 128 characters from the unreserved character set [A-Za-z0-9-._~] (RFC 7636 §4.1)": "The code_verifier parameter must be 43 to 128 characters from the unreserved character set [A-Za-z0-9-._~] (RFC 7636 §4.1)",
+		"The grant type is missing or unsupported": "The grant type is missing or unsupported",
+		"The initial user has already been created!": "The initial user has already been created!",
+		"The initial user has already been created.": "The initial user has already been created.",
+		"The initial user has not been created!": "The initial user has not been created!",
+		"The name \"primary\" is reserved for the primary region.": "The name \"primary\" is reserved for the primary region.",
+		"The oauth2 method requested is not configured!": "The oauth2 method requested is not configured!",
+		"The provided template version doesn't belong to the specified template.": "The provided template version doesn't belong to the specified template.",
+		"The provided template version is archived.": "The provided template version is archived.",
+		"The provisioner query parameter must be specified.": "The provisioner query parameter must be specified.",
+		"The refresh token is invalid or expired": "The refresh token is invalid or expired",
+		"The request could not be answered": "The request could not be answered",
+		"The request is missing required parameters or is otherwise malformed": "The request is missing required parameters or is otherwise malformed",
+		"The request requires higher privileges than provided by the access token": "The request requires higher privileges than provided by the access token",
+		"The requested scope could not be evaluated": "The requested scope could not be evaluated",
+		"The resource parameter is invalid": "The resource parameter is invalid",
+		"There was an unknown error completing the healthcheck.": "There was an unknown error completing the healthcheck.",
+		"This account is already linked to a different identity provider subject.": "This account is already linked to a different identity provider subject.",
+		"This deployment already has a license.": "This deployment already has a license.",
+		"This username is already in use.": "This username is already in use.",
+		"This value is already in use and should be unique.": "This value is already in use and should be unique.",
+		"Timed out waiting for template import to complete.": "Timed out waiting for template import to complete.",
+		"Title cannot be empty.": "Title cannot be empty.",
+		"Title generation timed out. Try again or rename manually.": "Title generation timed out. Try again or rename manually.",
+		"Title generation was canceled.": "Title generation was canceled.",
+		"Token audience validation failed": "Token audience validation failed",
+		"Too many dynamic tools.": "Too many dynamic tools.",
+		"URL is invalid.": "URL is invalid.",
+		"Unable to create a Task with the provided name.": "Unable to create a Task with the provided name.",
+		"Unable to determine the details of the actor creating the account.": "Unable to determine the details of the actor creating the account.",
+		"Unable to determine the details of the actor deleting the account.": "Unable to determine the details of the actor deleting the account.",
+		"Unable to issue a trial license.": "Unable to issue a trial license.",
+		"Unable to marshal announcement banners": "Unable to marshal announcement banners",
+		"Unable to parse notification template UUID.": "Unable to parse notification template UUID.",
+		"Unable to set Codernauts enabled": "Unable to set Codernauts enabled",
+		"Unable to set announcement banners": "Unable to set announcement banners",
+		"Unable to set application name": "Unable to set application name",
+		"Unable to set logo URL": "Unable to set logo URL",
+		"Unable to update task input, task must be paused.": "Unable to update task input, task must be paused.",
+		"Unauthorized": "Unauthorized",
+		"Unauthorized to create workspace.": "Unauthorized to create workspace.",
+		"Unauthorized to queue follow-up workspace build.": "Unauthorized to queue follow-up workspace build.",
+		"Unexpected field 'legacy_group_name_mapping'. Field not allowed, set to null or remove it.": "Unexpected field 'legacy_group_name_mapping'. Field not allowed, set to null or remove it.",
+		"Unknown base template.": "Unknown base template.",
+		"Unknown license ID": "Unknown license ID",
+		"Unknown or unsupported API version": "Unknown or unsupported API version",
+		"Unknown premium funnel source.": "Unknown premium funnel source.",
+		"Unknown premium paywall variant.": "Unknown premium paywall variant.",
+		"Unsupported conversion format.": "Unsupported conversion format.",
+		"Unsupported file type for dynamic template version tags": "Unsupported file type for dynamic template version tags",
+		"Unsupported file type.": "Unsupported file type.",
+		"Unsupported font family.": "Unsupported font family.",
+		"Unsupported task snapshot format.": "Unsupported task snapshot format.",
+		"Updated the active template version!": "Updated the active template version!",
+		"User account must have password based authentication.": "User account must have password based authentication.",
+		"User already exists.": "User already exists.",
+		"User has been deleted!": "User has been deleted!",
+		"User is already an organization member": "User is already an organization member",
+		"User is not a member of the referenced group.": "User is not a member of the referenced group.",
+		"User is not an OIDC user.": "User is not an OIDC user.",
+		"User secrets limit reached.": "User secrets limit reached.",
+		"User secrets value-bytes limit reached.": "User secrets value-bytes limit reached.",
+		"Users cannot set custom quiet hours schedule due to deployment configuration.": "Users cannot set custom quiet hours schedule due to deployment configuration.",
+		"Users without password login type cannot change their password.": "Users without password login type cannot change their password.",
+		"Validation failed.": "Validation failed.",
+		"Value must be at least one minute.": "Value must be at least one minute.",
+		"Webpush subscription not found.": "Webpush subscription not found.",
+		"Wildcard URL is invalid.": "Wildcard URL is invalid.",
+		"Workspace TTL must be non-negative.": "Workspace TTL must be non-negative.",
+		"Workspace TTL must not be less than 1 minute.": "Workspace TTL must not be less than 1 minute.",
+		"Workspace TTL must not exceed 30 days.": "Workspace TTL must not exceed 30 days.",
+		"Workspace agent not authorized.": "Workspace agent not authorized.",
+		"Workspace agent token invalid.": "Workspace agent token invalid.",
+		"Workspace does not belong to the specified organization.": "Workspace does not belong to the specified organization.",
+		"Workspace does not belong to this chat's organization.": "Workspace does not belong to this chat's organization.",
+		"Workspace does not have an external agent.": "Workspace does not have an external agent.",
+		"Workspace identity not cached.": "Workspace identity not cached.",
+		"Workspace is not a prebuilt workspace waiting to be claimed.": "Workspace is not a prebuilt workspace waiting to be claimed.",
+		"Workspace not found or you do not have access to this resource": "Workspace not found or you do not have access to this resource",
+		"Workspace renames are not enabled for this template.": "Workspace renames are not enabled for this template.",
+		"Workspace resources can only be fetched for builds.": "Workspace resources can only be fetched for builds.",
+		"Workspace sharing is disabled for this organization.": "Workspace sharing is disabled for this organization.",
+		"You are not a member of the specified organization.": "You are not a member of the specified organization.",
+		"You are not authorized to create users.": "You are not authorized to create users.",
+		"You are not authorized to use this endpoint.": "You are not authorized to use this endpoint.",
+		"You are not authorized to view this user's login type.": "You are not authorized to view this user's login type.",
+		"You are not authorized to watch all workspace builds.": "You are not authorized to watch all workspace builds.",
+		"You are signed out or your session has expired. Please sign in again to continue.": "You are signed out or your session has expired. Please sign in again to continue.",
+		"You can only favorite workspaces that you own.": "You can only favorite workspaces that you own.",
+		"You can only un-favorite workspaces that you own.": "You can only un-favorite workspaces that you own.",
+		"You cannot change your own organization roles.": "You cannot change your own organization roles.",
+		"You cannot change your own roles.": "You cannot change your own roles.",
+		"You cannot change your own workspace sharing role.": "You cannot change your own workspace sharing role.",
+		"You cannot delete a user that has workspaces. Delete their workspaces and try again!": "You cannot delete a user that has workspaces. Delete their workspaces and try again!",
+		"You cannot delete yourself!": "You cannot delete yourself!",
+		"You cannot specify both an example_id and a file_id.": "You cannot specify both an example_id and a file_id.",
+		"You cannot suspend yourself.": "You cannot suspend yourself.",
+		"You do not have permission to view the IDP claim field values": "You do not have permission to view the IDP claim field values",
+		"You do not have permission to view the available IDP fields": "You do not have permission to view the available IDP fields",
+		"You must configure OIDC before creating OIDC users.": "You must configure OIDC before creating OIDC users.",
+		"You've been rate limited. Please try again later.": "You've been rate limited. Please try again later.",
+		"Your primary email must be verified on GitHub!": "Your primary email must be verified on GitHub!",
+		"after_id must be less than before_id.": "after_id must be less than before_id.",
+		"agent name cannot be empty": "agent name cannot be empty",
+		"aibridged handler not mounted": "aibridged handler not mounted",
+		"bad `since` format, must be RFC3339": "bad `since` format, must be RFC3339",
+		"cannot remove self from an organization": "cannot remove self from an organization",
+		"claimField query parameter is required": "claimField query parameter is required",
+		"deployment_default is not supported for root personal model overrides.": "deployment_default is not supported for root personal model overrides.",
+		"environment variable already in use": "environment variable already in use",
+		"failed to query job": "failed to query job",
+		"failed to subscribe to job updates": "failed to subscribe to job updates",
+		"field is not allowed": "field is not allowed",
+		"file path already in use": "file path already in use",
+		"get provisioner daemon key": "get provisioner daemon key",
+		"id_token not found in response payload. Ensure your OIDC callback is configured correctly!": "id_token not found in response payload. Ensure your OIDC callback is configured correctly!",
+		"label key must not be empty": "label key must not be empty",
+		"model_config_id is required when mode is model.": "model_config_id is required when mode is model.",
+		"model_config_id must be empty unless mode is model.": "model_config_id must be empty unless mode is model.",
+		"must be 43 to 128 characters from the unreserved character set [A-Za-z0-9-._~]": "must be 43 to 128 characters from the unreserved character set [A-Za-z0-9-._~]",
+		"must be 43 to 128 characters from the unreserved character set [A-Za-z0-9-._~] (RFC 7636 §4.1)": "must be 43 to 128 characters from the unreserved character set [A-Za-z0-9-._~] (RFC 7636 §4.1)",
+		"must be always or never": "must be always or never",
+		"must be an absolute URI without fragment": "must be an absolute URI without fragment",
+		"must be one of: auto, always_expanded, always_collapsed": "must be one of: auto, always_expanded, always_collapsed",
+		"must be one of: auto, preview, always_expanded, always_collapsed": "must be one of: auto, preview, always_expanded, always_collapsed",
+		"must be one of: enter, modifier_enter": "must be one of: enter, modifier_enter",
+		"must be set when agent_id is set": "must be set when agent_id is set",
+		"must be set when app_name is set": "must be set when app_name is set",
+		"must not be empty": "must not be empty",
+		"name already in use": "name already in use",
+		"organization_id is required.": "organization_id is required.",
+		"provisioner daemon key and psk provided, but only one is allowed": "provisioner daemon key and psk provided, but only one is allowed",
+		"provisioner daemon key invalid": "provisioner daemon key invalid",
+		"provisioner daemon key required": "provisioner daemon key required",
+		"provisioner daemon psk invalid": "provisioner daemon psk invalid",
+		"reasoning_effort requires mode model.": "reasoning_effort requires mode model.",
+		"reasoning_effort requires model_config_id.": "reasoning_effort requires model_config_id.",
+		"starting_before query parameter should be any of 'all', 'read', 'unread'.": "starting_before query parameter should be any of 'all', 'read', 'unread'.",
+		"template not found": "template not found",
+		"template version archived": "template version archived",
+		"threshold_percent is out of range.": "threshold_percent is out of range.",
+		"user must be a member of this group": "user must be a member of this group",
+		"👋": "👋"
+	},
+	"templates": [
+		{
+			"source": "\"search\" cannot be combined with %s",
+			"translation": "\"search\" cannot be combined with {{0}}"
+		},
+		{
+			"source": "%q does not match regex %q",
+			"translation": "{{0}} does not match regex {{1}}"
+		},
+		{
+			"source": "%q is a reserved group and cannot be deleted!",
+			"translation": "{{0}} is a reserved group and cannot be deleted!"
+		},
+		{
+			"source": "%q is a reserved group name",
+			"translation": "{{0}} is a reserved group name"
+		},
+		{
+			"source": "%q is a reserved group name!",
+			"translation": "{{0}} is a reserved group name!"
+		},
+		{
+			"source": "%q is already in use",
+			"translation": "{{0}} is already in use"
+		},
+		{
+			"source": "%q is not a built-in role.",
+			"translation": "{{0}} is not a built-in role."
+		},
+		{
+			"source": "%q is not a valid app sharing level",
+			"translation": "{{0}} is not a valid app sharing level"
+		},
+		{
+			"source": "%q is not a valid display app",
+			"translation": "{{0}} is not a valid display app"
+		},
+		{
+			"source": "%q is not a valid method; %s are the available options",
+			"translation": "{{0}} is not a valid method; {{1}} are the available options"
+		},
+		{
+			"source": "%q is not a valid positive integer",
+			"translation": "{{0}} is not a valid positive integer"
+		},
+		{
+			"source": "%q is not a valid query param",
+			"translation": "{{0}} is not a valid query param"
+		},
+		{
+			"source": "%q is not an open in setting",
+			"translation": "{{0}} is not an open in setting"
+		},
+		{
+			"source": "%s is a Premium feature. Contact sales!",
+			"translation": "{{0}} is a Premium feature. Contact sales!"
+		},
+		{
+			"source": "%s is currently at capacity. Please try again later.",
+			"translation": "{{0}} is currently at capacity. Please try again later."
+		},
+		{
+			"source": "%s/%s appears more than once.",
+			"translation": "{{0}}/{{1}} appears more than once."
+		},
+		{
+			"source": "%v is not a valid UUID.",
+			"translation": "{{0}} is not a valid UUID."
+		},
+		{
+			"source": "A group named %q already exists.",
+			"translation": "A group named {{0}} already exists."
+		},
+		{
+			"source": "A group with name %q already exists.",
+			"translation": "A group with name {{0}} already exists."
+		},
+		{
+			"source": "A template version with name %q already exists for this template.",
+			"translation": "A template version with name {{0}} already exists for this template."
+		},
+		{
+			"source": "A token with name %q already exists.",
+			"translation": "A token with name {{0}} already exists."
+		},
+		{
+			"source": "AI provider %q already exists.",
+			"translation": "AI provider {{0}} already exists."
+		},
+		{
+			"source": "Agent state is %q, it must be in the %q state.",
+			"translation": "Agent state is {{0}}, it must be in the {{1}} state."
+		},
+		{
+			"source": "Agent state is %q, must be connected.",
+			"translation": "Agent state is {{0}}, must be connected."
+		},
+		{
+			"source": "App URL %q has an invalid port %q.",
+			"translation": "App URL {{0}} has an invalid port {{1}}."
+		},
+		{
+			"source": "Application port %d is not permitted. Coder reserves ports less than %d for internal use.",
+			"translation": "Application port {{0}} is not permitted. Coder reserves ports less than {{1}} for internal use."
+		},
+		{
+			"source": "Auto-archive days must be between 0 and %d.",
+			"translation": "Auto-archive days must be between 0 and {{0}}."
+		},
+		{
+			"source": "Cannot %s a deleted workspace!",
+			"translation": "Cannot {{0}} a deleted workspace!"
+		},
+		{
+			"source": "Cannot add or remove users from the %q group!",
+			"translation": "Cannot add or remove users from the {{0}} group!"
+		},
+		{
+			"source": "Cannot convert to login type %q.",
+			"translation": "Cannot convert to login type {{0}}."
+		},
+		{
+			"source": "Cannot delete reserved '%s' provisioner key",
+			"translation": "Cannot delete reserved '{{0}}' provisioner key"
+		},
+		{
+			"source": "Cannot rename the %q group!",
+			"translation": "Cannot rename the {{0}} group!"
+		},
+		{
+			"source": "Cannot update the Display Name for the %q group!",
+			"translation": "Cannot update the Display Name for the {{0}} group!"
+		},
+		{
+			"source": "Chat debug retention days must be between 0 and %d.",
+			"translation": "Chat debug retention days must be between 0 and {{0}}."
+		},
+		{
+			"source": "Chat is already %s.",
+			"translation": "Chat is already {{0}}."
+		},
+		{
+			"source": "Cookie %q must be provided for the OIDC callback when CODER_OIDC_REDIRECT_ALLOWED_HOSTS is configured.",
+			"translation": "Cookie {{0}} must be provided for the OIDC callback when CODER_OIDC_REDIRECT_ALLOWED_HOSTS is configured."
+		},
+		{
+			"source": "Cookie %q must be provided.",
+			"translation": "Cookie {{0}} must be provided."
+		},
+		{
+			"source": "Could not refresh expired %s token. Try re-authenticating to resolve this issue.",
+			"translation": "Could not refresh expired {{0}} token. Try re-authenticating to resolve this issue."
+		},
+		{
+			"source": "Duration cannot exceed %s.",
+			"translation": "Duration cannot exceed {{0}}."
+		},
+		{
+			"source": "Email in OIDC payload isn't a string. Got: %t",
+			"translation": "Email in OIDC payload isn't a string. Got: {{0}}"
+		},
+		{
+			"source": "Endpoint only supports using \"resource_id\" field %d times, found %d usages. Remove %d objects with this field set.",
+			"translation": "Endpoint only supports using \"resource_id\" field {{0}} times, found {{1}} usages. Remove {{2}} objects with this field set."
+		},
+		{
+			"source": "Entitlements already recently refreshed, please wait %d seconds to force a new refresh",
+			"translation": "Entitlements already recently refreshed, please wait {{0}} seconds to force a new refresh"
+		},
+		{
+			"source": "External agent '%s' not found in workspace.",
+			"translation": "External agent '{{0}}' not found in workspace."
+		},
+		{
+			"source": "Failed to %s chat.",
+			"translation": "Failed to {{0}} chat."
+		},
+		{
+			"source": "Failed to collect %s profile.",
+			"translation": "Failed to collect {{0}} profile."
+		},
+		{
+			"source": "Failed to retrieve %q notifications templates.",
+			"translation": "Failed to retrieve {{0}} notifications templates."
+		},
+		{
+			"source": "Failed to write %s profile to archive.",
+			"translation": "Failed to write {{0}} profile to archive."
+		},
+		{
+			"source": "ID %q must be a valid user UUID.",
+			"translation": "ID {{0}} must be a valid user UUID."
+		},
+		{
+			"source": "Incorrect login type, attempting to use %q but user is of login type %q",
+			"translation": "Incorrect login type, attempting to use {{0}} but user is of login type {{1}}"
+		},
+		{
+			"source": "Instance with id %q not found.",
+			"translation": "Instance with id {{0}} not found."
+		},
+		{
+			"source": "Internal error clearing %s model override.",
+			"translation": "Internal error clearing {{0}} model override."
+		},
+		{
+			"source": "Internal error fetching organization %q.",
+			"translation": "Internal error fetching organization {{0}}."
+		},
+		{
+			"source": "Internal error fetching workspace by name %q.",
+			"translation": "Internal error fetching workspace by name {{0}}."
+		},
+		{
+			"source": "Internal error updating %s model override.",
+			"translation": "Internal error updating {{0}} model override."
+		},
+		{
+			"source": "Internal error updating user's status to %q.",
+			"translation": "Internal error updating user's status to {{0}}."
+		},
+		{
+			"source": "Invalid CORS behavior %q. Must be one of [%s]",
+			"translation": "Invalid CORS behavior {{0}}. Must be one of [{{1}}]"
+		},
+		{
+			"source": "Invalid UUID %q.",
+			"translation": "Invalid UUID {{0}}."
+		},
+		{
+			"source": "Invalid boolean value %q for \"include_deleted\" query param.",
+			"translation": "Invalid boolean value {{0}} for \"include_deleted\" query param."
+		},
+		{
+			"source": "Invalid color format: %q",
+			"translation": "Invalid color format: {{0}}"
+		},
+		{
+			"source": "Invalid expect_status %q. Only 'running' or 'pending' are allowed.",
+			"translation": "Invalid expect_status {{0}}. Only 'running' or 'pending' are allowed."
+		},
+		{
+			"source": "Invalid feature: %q",
+			"translation": "Invalid feature: {{0}}"
+		},
+		{
+			"source": "Invalid format for tag %q. Key and value must be separated with =.",
+			"translation": "Invalid format for tag {{0}}. Key and value must be separated with =."
+		},
+		{
+			"source": "Invalid format option %q.",
+			"translation": "Invalid format option {{0}}."
+		},
+		{
+			"source": "Invalid label filter: %q (expected format key:value, both must be non-empty)",
+			"translation": "Invalid label filter: {{0}} (expected format key:value, both must be non-empty)"
+		},
+		{
+			"source": "Invalid provider id or name: must be a UUID or match %s.",
+			"translation": "Invalid provider id or name: must be a UUID or match {{0}}."
+		},
+		{
+			"source": "Invalid toolset: %s",
+			"translation": "Invalid toolset: {{0}}"
+		},
+		{
+			"source": "Invalid workspace ID %q: %s",
+			"translation": "Invalid workspace ID {{0}}: {{1}}"
+		},
+		{
+			"source": "Job %q doesn't exist for version %q.",
+			"translation": "Job {{0}} doesn't exist for version {{1}}."
+		},
+		{
+			"source": "Job ID %q must be a valid UUID.",
+			"translation": "Job ID {{0}} must be a valid UUID."
+		},
+		{
+			"source": "Missing required parameter: %s",
+			"translation": "Missing required parameter: {{0}}"
+		},
+		{
+			"source": "Multiple agents found with instance ID %q. Set CODER_AGENT_NAME to one of: %s",
+			"translation": "Multiple agents found with instance ID {{0}}. Set CODER_AGENT_NAME to one of: {{1}}"
+		},
+		{
+			"source": "Multiple external auth providers declared by this workspace's template match %q: %s.",
+			"translation": "Multiple external auth providers declared by this workspace's template match {{0}}: {{1}}."
+		},
+		{
+			"source": "Multiple roles with the name %s found",
+			"translation": "Multiple roles with the name {{0}} found"
+		},
+		{
+			"source": "Must be less than %d.",
+			"translation": "Must be less than {{0}}."
+		},
+		{
+			"source": "Must not exceed %d.",
+			"translation": "Must not exceed {{0}}."
+		},
+		{
+			"source": "Name cannot be reserved name '%s'",
+			"translation": "Name cannot be reserved name '{{0}}'"
+		},
+		{
+			"source": "No agent found with instance ID %q and name %q.",
+			"translation": "No agent found with instance ID {{0}} and name {{1}}."
+		},
+		{
+			"source": "No custom role with the name %s found",
+			"translation": "No custom role with the name {{0}} found"
+		},
+		{
+			"source": "No matching external auth provider found in Coder for the url %q.",
+			"translation": "No matching external auth provider found in Coder for the url {{0}}."
+		},
+		{
+			"source": "No template version found by name %q.",
+			"translation": "No template version found by name {{0}}."
+		},
+		{
+			"source": "Object %q id is not a valid uuid.",
+			"translation": "Object {{0}} id is not a valid uuid."
+		},
+		{
+			"source": "Object's \"resource_type\" field must be defined for key %q.",
+			"translation": "Object's \"resource_type\" field must be defined for key {{0}}."
+		},
+		{
+			"source": "Organization already exists with the name %q.",
+			"translation": "Organization already exists with the name {{0}}."
+		},
+		{
+			"source": "Organization does not exist with the provided id %q.",
+			"translation": "Organization does not exist with the provided id {{0}}."
+		},
+		{
+			"source": "Organization name %q is reserved.",
+			"translation": "Organization name {{0}} is reserved."
+		},
+		{
+			"source": "Password cannot be set for non-password (%q) authentication.",
+			"translation": "Password cannot be set for non-password ({{0}}) authentication."
+		},
+		{
+			"source": "Provider %q is not supported. Supported providers: %s.",
+			"translation": "Provider {{0}} is not supported. Supported providers: {{1}}."
+		},
+		{
+			"source": "Provider is required. Supported providers: %s.",
+			"translation": "Provider is required. Supported providers: {{0}}."
+		},
+		{
+			"source": "Provisioner job %q not found.",
+			"translation": "Provisioner job {{0}} not found."
+		},
+		{
+			"source": "Provisioner key with name '%s' already exists in organization",
+			"translation": "Provisioner key with name '{{0}}' already exists in organization"
+		},
+		{
+			"source": "Query element %q can only contain 1 ':'",
+			"translation": "Query element {{0}} can only contain 1 ':'"
+		},
+		{
+			"source": "Query element %q cannot start or end with ':'",
+			"translation": "Query element {{0}} cannot start or end with ':'"
+		},
+		{
+			"source": "Query param %q has invalid value: %s",
+			"translation": "Query param {{0}} has invalid value: {{1}}"
+		},
+		{
+			"source": "Query param %q has invalid values: %s",
+			"translation": "Query param {{0}} has invalid values: {{1}}"
+		},
+		{
+			"source": "Query param %q is required and cannot be empty",
+			"translation": "Query param {{0}} is required and cannot be empty"
+		},
+		{
+			"source": "Query param %q must be a valid 32-bit positive integer: %s",
+			"translation": "Query param {{0}} must be a valid 32-bit positive integer: {{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid 64-bit integer: %s",
+			"translation": "Query param {{0}} must be a valid 64-bit integer: {{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid 64-bit positive integer: %s",
+			"translation": "Query param {{0}} must be a valid 64-bit positive integer: {{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid JSON object: %s",
+			"translation": "Query param {{0}} must be a valid JSON object: {{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid boolean: %s",
+			"translation": "Query param {{0}} must be a valid boolean: {{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid date format (%s): %s",
+			"translation": "Query param {{0}} must be a valid date format ({{1}}): {{2}}"
+		},
+		{
+			"source": "Query param %q must be a valid duration (e.g., '24h', '30m', '1h30m'): %s",
+			"translation": "Query param {{0}} must be a valid duration (e.g., '24h', '30m', '1h30m'): {{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid integer: %s",
+			"translation": "Query param {{0}} must be a valid integer: {{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid positive integer: %s",
+			"translation": "Query param {{0}} must be a valid positive integer: {{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid string: %s",
+			"translation": "Query param {{0}} must be a valid string: {{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid url: %s",
+			"translation": "Query param {{0}} must be a valid url: {{1}}"
+		},
+		{
+			"source": "Query param %q must be a valid uuid",
+			"translation": "Query param {{0}} must be a valid uuid"
+		},
+		{
+			"source": "Query param %q must be after than %q",
+			"translation": "Query param {{0}} must be after than {{1}}"
+		},
+		{
+			"source": "Query param %q must exactly match %s",
+			"translation": "Query param {{0}} must exactly match {{1}}"
+		},
+		{
+			"source": "Query param %q must have the clock set to %02d:00:00, got %s",
+			"translation": "Query param {{0}} must have the clock set to {{1}}:00:00, got {{2}}"
+		},
+		{
+			"source": "Query param %q must have the clock set to 00:00:00, got %s",
+			"translation": "Query param {{0}} must have the clock set to 00:00:00, got {{1}}"
+		},
+		{
+			"source": "Query param %q must not be in the future",
+			"translation": "Query param {{0}} must not be in the future"
+		},
+		{
+			"source": "Query param %q must not be zero",
+			"translation": "Query param {{0}} must not be zero"
+		},
+		{
+			"source": "Query param %q provided more than once, found %d times. Only provide 1 instance of this query param.",
+			"translation": "Query param {{0}} provided more than once, found {{1}} times. Only provide 1 instance of this query param."
+		},
+		{
+			"source": "Query parameter \"period_start\" is older than the configured AI Gateway data retention window (%s).",
+			"translation": "Query parameter \"period_start\" is older than the configured AI Gateway data retention window ({{0}})."
+		},
+		{
+			"source": "Record at \"after_id\" (%q) does not exist.",
+			"translation": "Record at \"after_id\" ({{0}}) does not exist."
+		},
+		{
+			"source": "Record at \"after_id\" (%q) does not exists.",
+			"translation": "Record at \"after_id\" ({{0}}) does not exists."
+		},
+		{
+			"source": "Resource found for id %q, but isn't registered on the latest history.",
+			"translation": "Resource found for id {{0}}, but isn't registered on the latest history."
+		},
+		{
+			"source": "Retention days must be between 0 and %d.",
+			"translation": "Retention days must be between 0 and {{0}}."
+		},
+		{
+			"source": "Source %q is not supported. Supported sources: %s.",
+			"translation": "Source {{0}} is not supported. Supported sources: {{1}}."
+		},
+		{
+			"source": "Task is %s.",
+			"translation": "Task is {{0}}."
+		},
+		{
+			"source": "Template %q doesn't exist.",
+			"translation": "Template {{0}} doesn't exist."
+		},
+		{
+			"source": "Template %q has been deleted!",
+			"translation": "Template {{0}} has been deleted!"
+		},
+		{
+			"source": "Template %q has been deprecated, and cannot be used to create a new workspace.",
+			"translation": "Template {{0}} has been deprecated, and cannot be used to create a new workspace."
+		},
+		{
+			"source": "Template version %q does not exist.",
+			"translation": "Template version {{0}} does not exist."
+		},
+		{
+			"source": "Template version %q doesn't exist.",
+			"translation": "Template version {{0}} doesn't exist."
+		},
+		{
+			"source": "Template version %s is already part of a template",
+			"translation": "Template version {{0}} is already part of a template"
+		},
+		{
+			"source": "Template version %s is archived.",
+			"translation": "Template version {{0}} is archived."
+		},
+		{
+			"source": "Template version already %s",
+			"translation": "Template version already {{0}}"
+		},
+		{
+			"source": "Template with name %q already exists.",
+			"translation": "Template with name {{0}} already exists."
+		},
+		{
+			"source": "The grant type %q is not supported",
+			"translation": "The grant type {{0}} is not supported"
+		},
+		{
+			"source": "The template version references a Git auth provider %q that no longer exists.",
+			"translation": "The template version references a Git auth provider {{0}} that no longer exists."
+		},
+		{
+			"source": "This workspace's template declares external auth provider(s) that this deployment no longer configures: %s.",
+			"translation": "This workspace's template declares external auth provider(s) that this deployment no longer configures: {{0}}."
+		},
+		{
+			"source": "Title must be at most %d characters.",
+			"translation": "Title must be at most {{0}} characters."
+		},
+		{
+			"source": "Too many workspace IDs, maximum is %d.",
+			"translation": "Too many workspace IDs, maximum is {{0}}."
+		},
+		{
+			"source": "Unauthorized access to use the template %q.",
+			"translation": "Unauthorized access to use the template {{0}}."
+		},
+		{
+			"source": "Unknown login type %q.",
+			"translation": "Unknown login type {{0}}."
+		},
+		{
+			"source": "Unknown os/arch: %s/%s",
+			"translation": "Unknown os/arch: {{0}}/{{1}}"
+		},
+		{
+			"source": "Unknown profile type: %q.",
+			"translation": "Unknown profile type: {{0}}."
+		},
+		{
+			"source": "Unknown provisioner type %q",
+			"translation": "Unknown provisioner type {{0}}"
+		},
+		{
+			"source": "Unsupported content type header %q.",
+			"translation": "Unsupported content type header {{0}}."
+		},
+		{
+			"source": "Unsupported login type %q for manually creating new users.",
+			"translation": "Unsupported login type {{0}} for manually creating new users."
+		},
+		{
+			"source": "User is not active (status = %q). Contact an admin to reactivate your account.",
+			"translation": "User is not active (status = {{0}}). Contact an admin to reactivate your account."
+		},
+		{
+			"source": "User must be a member of organization %q",
+			"translation": "User must be a member of organization {{0}}"
+		},
+		{
+			"source": "Validation failed for tag %q with value: \"%v\"",
+			"translation": "Validation failed for tag {{0}} with value: \"{{1}}\""
+		},
+		{
+			"source": "Workspace %q Build %d does not exist.",
+			"translation": "Workspace {{0}} Build {{1}} does not exist."
+		},
+		{
+			"source": "Workspace %q already exists.",
+			"translation": "Workspace {{0}} already exists."
+		},
+		{
+			"source": "Workspace %q is deleted and cannot be updated.",
+			"translation": "Workspace {{0}} is deleted and cannot be updated."
+		},
+		{
+			"source": "Workspace %q was deleted, you can view this workspace by specifying '?include_deleted=true' and trying again.",
+			"translation": "Workspace {{0}} was deleted, you can view this workspace by specifying '?include_deleted=true' and trying again."
+		},
+		{
+			"source": "Workspace proxy with name %q already exists.",
+			"translation": "Workspace proxy with name {{0}} already exists."
+		},
+		{
+			"source": "You aren't allowed to create provisioner daemons with scope %q",
+			"translation": "You aren't allowed to create provisioner daemons with scope {{0}}"
+		},
+		{
+			"source": "You cannot suspend a user with the %q role. You must remove the role first.",
+			"translation": "You cannot suspend a user with the {{0}} role. You must remove the role first."
+		},
+		{
+			"source": "You've been rate limited for sending more than %v requests in %v.",
+			"translation": "You've been rate limited for sending more than {{0}} requests in {{1}}."
+		},
+		{
+			"source": "Your account is %s. Contact an admin to reactivate your account.",
+			"translation": "Your account is {{0}}. Contact an admin to reactivate your account."
+		},
+		{
+			"source": "agent name %q does not match regex %q",
+			"translation": "agent name {{0}} does not match regex {{1}}"
+		},
+		{
+			"source": "duplicate entries for ID %s",
+			"translation": "duplicate entries for ID {{0}}"
+		},
+		{
+			"source": "failed to validate group IDs: %v",
+			"translation": "failed to validate group IDs: {{0}}"
+		},
+		{
+			"source": "failed to validate user IDs: %v",
+			"translation": "failed to validate user IDs: {{0}}"
+		},
+		{
+			"source": "group with ID %v does not exist",
+			"translation": "group with ID {{0}} does not exist"
+		},
+		{
+			"source": "group_ids has %d entries, maximum is %d.",
+			"translation": "group_ids has {{0}} entries, maximum is {{1}}."
+		},
+		{
+			"source": "invalid value %q, must be one of [%s]",
+			"translation": "invalid value {{0}}, must be one of [{{1}}]"
+		},
+		{
+			"source": "label key %q contains invalid characters; must match %s",
+			"translation": "label key {{0}} contains invalid characters; must match {{1}}"
+		},
+		{
+			"source": "label key %q exceeds maximum length of %d bytes",
+			"translation": "label key {{0}} exceeds maximum length of {{1}} bytes"
+		},
+		{
+			"source": "label value for key %q exceeds maximum length of %d bytes",
+			"translation": "label value for key {{0}} exceeds maximum length of {{1}} bytes"
+		},
+		{
+			"source": "label value for key %q must not be empty",
+			"translation": "label value for key {{0}} must not be empty"
+		},
+		{
+			"source": "max_output_tokens %d must be non-negative.",
+			"translation": "max_output_tokens {{0}} must be non-negative."
+		},
+		{
+			"source": "max_uses_per_run %d must be non-negative.",
+			"translation": "max_uses_per_run {{0}} must be non-negative."
+		},
+		{
+			"source": "must be one of %v",
+			"translation": "must be one of {{0}}"
+		},
+		{
+			"source": "too many labels (%d); maximum is %d",
+			"translation": "too many labels ({{0}}); maximum is {{1}}"
+		},
+		{
+			"source": "unable to auth: please provide the %s header",
+			"translation": "unable to auth: please provide the {{0}} header"
+		},
+		{
+			"source": "user with ID %v does not exist",
+			"translation": "user with ID {{0}} does not exist"
+		},
+		{
+			"source": "user_ids has %d entries, maximum is %d.",
+			"translation": "user_ids has {{0}} entries, maximum is {{1}}."
+		}
+	]
+}

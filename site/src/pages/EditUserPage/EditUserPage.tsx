@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
@@ -12,6 +13,8 @@ import { isUUID } from "#/utils/uuid";
 import { EditUserForm } from "./EditUserForm";
 
 const EditUserPage: FC = () => {
+	const { t: tI18n } = useTranslation("users");
+
 	const { user: usernameOrId } = useParams() as { user: string };
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
@@ -48,12 +51,24 @@ const EditUserPage: FC = () => {
 		});
 
 		toast.promise(mutation, {
-			loading: `Saving user "${values.username}"…`,
-			success: `User "${values.username}" updated successfully.`,
+			loading: tI18n("EditUserPage.EditUserPage.saving_user_value0_3c53abe8", {
+				value0: values.username,
+			}),
+			success: tI18n(
+				"EditUserPage.EditUserPage.user_value0_updated_successfully_d330e1c6",
+				{
+					value0: values.username,
+				},
+			),
 			error: (e) => ({
 				message: getErrorMessage(
 					e,
-					`Failed to update user "${values.username}".`,
+					tI18n(
+						"EditUserPage.EditUserPage.failed_to_update_user_value0_0d713cb0",
+						{
+							value0: values.username,
+						},
+					),
 				),
 				description: getErrorDetail(e),
 			}),
@@ -62,8 +77,14 @@ const EditUserPage: FC = () => {
 
 	return (
 		<Margins>
-			<title>{pageTitle("Edit User", `${userData.username}`)}</title>
-
+			<title>
+				{pageTitle(
+					tI18n("EditUserPage.EditUserPage.edit_user_e8a88353"),
+					tI18n("EditUserPage.EditUserPage.value0_84322da2", {
+						value0: userData.username,
+					}),
+				)}
+			</title>
 			<EditUserForm
 				error={updateProfileMutation.error}
 				isLoading={updateProfileMutation.isPending}

@@ -1,6 +1,7 @@
 import { PlusIcon, RotateCwIcon } from "lucide-react";
 import type { FC } from "react";
 import Confetti from "react-confetti";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import type { GetLicensesResponse } from "#/api/api";
 import type { Feature, UserStatusChangeCount } from "#/api/typesGenerated";
@@ -61,6 +62,8 @@ const LicensesSettingsPageView: FC<Props> = ({
 	aiGovernanceUserFeature,
 	agentRuntimeHoursFeature,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const theme = useTheme();
 	const { width, height } = useWindowSize();
 
@@ -73,12 +76,17 @@ const LicensesSettingsPageView: FC<Props> = ({
 				numberOfPieces={showConfetti ? 200 : 0}
 				colors={[theme.palette.primary.main, theme.palette.secondary.main]}
 			/>
-
 			<div className="flex flex-row gap-4 items-baseline justify-between">
 				<SettingsHeader>
-					<SettingsHeaderTitle>Licenses</SettingsHeaderTitle>
+					<SettingsHeaderTitle>
+						{tI18n(
+							"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPageView.licenses_6d5d9004",
+						)}
+					</SettingsHeaderTitle>
 					<SettingsHeaderDescription>
-						Manage licenses to unlock Premium features.
+						{tI18n(
+							"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPageView.manage_licenses_to_unlock_premium_features_31a087bf",
+						)}
 					</SettingsHeaderDescription>
 				</SettingsHeader>
 
@@ -86,7 +94,9 @@ const LicensesSettingsPageView: FC<Props> = ({
 					<Button variant="outline" asChild>
 						<RouterLink to="/deployment/licenses/add">
 							<PlusIcon />
-							Add a license
+							{tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPageView.add_a_license_ea3f85ca",
+							)}
 						</RouterLink>
 					</Button>
 					<Tooltip>
@@ -99,17 +109,19 @@ const LicensesSettingsPageView: FC<Props> = ({
 								<Spinner loading={isRefreshing}>
 									<RotateCwIcon />
 								</Spinner>
-								Refresh
+								{tI18n(
+									"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPageView.refresh_0e916101",
+								)}
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent side="bottom" className="max-w-xs">
-							Refresh license entitlements. This is done automatically every 10
-							minutes.
+							{tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPageView.refresh_license_entitlements_this_is_done_automa_f75b985f",
+							)}
 						</TooltipContent>
 					</Tooltip>
 				</div>
 			</div>
-
 			<div className="flex flex-col gap-4">
 				{isLoading && <Skeleton height={78} />}
 
@@ -141,26 +153,37 @@ const LicensesSettingsPageView: FC<Props> = ({
 						<div className="flex flex-col gap-2 items-center">
 							<div className="flex flex-col gap-1 items-center">
 								<span className="text-base">
-									You don&apos;t have any licenses!
+									{tI18n(
+										"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPageView.you_don_t_have_any_licenses_fb1564e1",
+									)}
 								</span>
 								<span className="text-content-secondary text-center max-w-[464px] mt-2">
-									You&apos;re missing out on high availability, RBAC, quotas,
-									and much more. Contact{" "}
+									{tI18n(
+										"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPageView.you_re_missing_out_on_high_availability_rbac_quo_28c52a3e",
+									)}{" "}
 									<Link
 										href={CONTACT_SALES_LINK}
 										className="m-0 p-0 text-base"
 										showExternalIcon={false}
 									>
-										sales
+										{tI18n(
+											"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPageView.sales_e04eb290",
+										)}
 									</Link>{" "}
-									or{" "}
+									{tI18n(
+										"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPageView.or_7175517a",
+									)}{" "}
 									<RouterLink
 										to="/deployment/premium"
 										className="m-0 p-0 text-content-link"
 									>
-										request a trial license
+										{tI18n(
+											"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPageView.request_a_trial_license_3841f600",
+										)}
 									</RouterLink>{" "}
-									to get started.
+									{tI18n(
+										"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPageView.to_get_started_305f69df",
+									)}
 								</span>
 							</div>
 						</div>
@@ -181,7 +204,9 @@ const LicensesSettingsPageView: FC<Props> = ({
 						<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 							{hasUserLimitEntitlementData && (
 								<SeatUsageBarCard
-									title="Seat usage"
+									title={tI18n(
+										"DeploymentSettingsPage.LicensesSettingsPage.LicensesSettingsPageView.seat_usage_d098712f",
+									)}
 									actual={userLimitActual}
 									limit={userLimitLimit}
 									allowUnlimited

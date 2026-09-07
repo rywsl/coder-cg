@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { AlertTriangleIcon, ClipboardPasteIcon, XIcon } from "lucide-react";
 import type { FC, ReactEventHandler } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { Spinner } from "#/components/Spinner/Spinner";
 import {
@@ -73,6 +74,8 @@ export const AttachmentPreview: FC<{
 	onTextPreview,
 	onInlineText,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const textAttachmentRequest = useLatestAbortController();
 
 	if (attachments.length === 0) return null;
@@ -158,7 +161,12 @@ export const AttachmentPreview: FC<{
 							) : hasTextAttachment ? (
 								<button
 									type="button"
-									aria-label={`View ${file.name}`}
+									aria-label={tI18n(
+										"AgentsPage.components.AttachmentPreview.view_value0_09d06f15",
+										{
+											value0: file.name,
+										},
+									)}
 									className="flex h-16 w-28 flex-col items-start justify-start overflow-hidden rounded-md border-0 bg-surface-tertiary p-2 text-left transition-colors hover:bg-surface-quaternary focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-content-link"
 									onClick={async () => {
 										const nextContent = await loadTextAttachmentContent(
@@ -176,7 +184,10 @@ export const AttachmentPreview: FC<{
 								</button>
 							) : (
 								<div className="flex size-16 items-center justify-center rounded-md border border-border-default bg-surface-secondary text-xs text-content-secondary">
-									{file.name.split(".").pop()?.toUpperCase() || "FILE"}
+									{file.name.split(".").pop()?.toUpperCase() ||
+										tI18n(
+											"AgentsPage.components.AttachmentPreview.file_9ef2faff",
+										)}
 								</div>
 							)}
 							{hasTextAttachment && (
@@ -190,7 +201,9 @@ export const AttachmentPreview: FC<{
 										onInlineText?.(file, nextContent);
 									}}
 									className="absolute -bottom-2 -right-2 flex size-6 cursor-pointer items-center justify-center rounded-full border-0 bg-surface-primary text-content-secondary shadow-xs opacity-0 transition-opacity hover:bg-surface-secondary hover:text-content-primary group-hover:opacity-100 group-focus-within:opacity-100 focus:opacity-100"
-									aria-label="Paste inline"
+									aria-label={tI18n(
+										"AgentsPage.components.AttachmentPreview.paste_inline_08c313b6",
+									)}
 								>
 									<ClipboardPasteIcon aria-hidden="true" className="size-3.5" />
 								</button>
@@ -208,14 +221,19 @@ export const AttachmentPreview: FC<{
 										<div
 											className="absolute inset-0 flex items-center justify-center rounded-md bg-overlay"
 											role="img"
-											aria-label="Upload error"
+											aria-label={tI18n(
+												"AgentsPage.components.AttachmentPreview.upload_error_e3d3ed73",
+											)}
 										>
 											<AlertTriangleIcon className="size-5 text-content-warning" />
 										</div>
 									</TooltipTrigger>
 									<TooltipContent side="top">
 										<p className="max-w-xs text-xs">
-											{uploadState.error ?? "Upload failed"}
+											{uploadState.error ??
+												tI18n(
+													"AgentsPage.components.AttachmentPreview.upload_failed_6efc5d27",
+												)}
 										</p>
 									</TooltipContent>
 								</Tooltip>
@@ -224,7 +242,12 @@ export const AttachmentPreview: FC<{
 								type="button"
 								onClick={() => onRemove(file)}
 								className="absolute -right-2 -top-2 flex size-6 cursor-pointer items-center justify-center rounded-full border-0 bg-surface-primary text-content-secondary shadow-xs opacity-0 transition-opacity hover:bg-surface-secondary hover:text-content-primary group-hover:opacity-100 group-focus-within:opacity-100 focus:opacity-100"
-								aria-label={`Remove ${file.name}`}
+								aria-label={tI18n(
+									"AgentsPage.components.AttachmentPreview.remove_value0_e224cf24",
+									{
+										value0: file.name,
+									},
+								)}
 							>
 								<XIcon aria-hidden="true" className="size-3.5" />
 							</button>

@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { useFormik } from "formik";
 import { type FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import * as Yup from "yup";
 import {
@@ -16,6 +17,7 @@ import { Label } from "#/components/Label/Label";
 import { Link } from "#/components/Link/Link";
 import { OrganizationAutocomplete } from "#/components/OrganizationAutocomplete/OrganizationAutocomplete";
 import { Textarea } from "#/components/Textarea/Textarea";
+import { i18n } from "#/i18n";
 import {
 	TemplateBuilderSubtitle,
 	TemplateBuilderTitle,
@@ -38,17 +40,31 @@ export const TEMPLATE_CUSTOMIZATIONS_FORM_ID = "template-customizations-form";
 const MAX_DESCRIPTION_CHAR_LIMIT = 128;
 
 const validationSchema = Yup.object({
-	name: nameValidator("Template ID"),
-	display_name: displayNameValidator("Display name"),
+	name: nameValidator(
+		i18n.t(
+			"templates:TemplateBuilder.TemplateCustomizationsStep.template_id_ef4b6c0a",
+		),
+	),
+	display_name: displayNameValidator(
+		i18n.t(
+			"templates:TemplateBuilder.TemplateCustomizationsStep.display_name_2b7f6a84",
+		),
+	),
 	description: Yup.string().max(
 		MAX_DESCRIPTION_CHAR_LIMIT,
-		"Please enter a description that is less than or equal to 128 characters.",
+		i18n.t(
+			"templates:TemplateBuilder.TemplateCustomizationsStep.please_enter_a_description_that_is_less_than_or__7d20ad93",
+		),
 	),
 	icon: iconValidator,
 	// An organization is always required: the page is gated on the create-
 	// template permission, so there is always at least one permitted org, and
 	// it is auto-selected when only one is available.
-	organization_id: Yup.string().required("Select an organization to continue."),
+	organization_id: Yup.string().required(
+		i18n.t(
+			"templates:TemplateBuilder.TemplateCustomizationsStep.select_an_organization_to_continue_7664962a",
+		),
+	),
 });
 
 interface TemplateCustomizationsStepProps {
@@ -60,6 +76,8 @@ interface TemplateCustomizationsStepProps {
 export const TemplateCustomizationsStep: FC<
 	TemplateCustomizationsStepProps
 > = ({ state, onCreate, onProvisionerStatusChange }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const permittedOrgsQuery = useQuery(
 		permittedOrganizations({
 			object: { resource_type: "template" },
@@ -120,13 +138,17 @@ export const TemplateCustomizationsStep: FC<
 			noValidate
 			className="min-w-[654px]"
 		>
-			<TemplateBuilderTitle>Customizations</TemplateBuilderTitle>
+			<TemplateBuilderTitle>
+				{tI18n(
+					"TemplateBuilder.TemplateCustomizationsStep.customizations_2213674d",
+				)}
+			</TemplateBuilderTitle>
 			<TemplateBuilderSubtitle>
-				Add additional configurations.
+				{tI18n(
+					"TemplateBuilder.TemplateCustomizationsStep.add_additional_configurations_5f7aeaca",
+				)}
 			</TemplateBuilderSubtitle>
-
 			{showProvisionerWarning && <ProvisionerWarning />}
-
 			<div className="flex gap-8">
 				{/* Base template card */}
 				{state.selectedBase && <BaseTemplateCard base={state.selectedBase} />}
@@ -136,16 +158,22 @@ export const TemplateCustomizationsStep: FC<
 					{/* Left column */}
 					<FormField
 						field={getFieldHelpers("display_name")}
-						label="Display name"
+						label={tI18n(
+							"TemplateBuilder.TemplateCustomizationsStep.display_name_2b7f6a84",
+						)}
 						id="template-display-name"
-						placeholder="My Template"
+						placeholder={tI18n(
+							"TemplateBuilder.TemplateCustomizationsStep.my_template_0870055b",
+						)}
 					/>
 
 					{/* Right column */}
 					{orgOptions.length > 0 && (
 						<div className="flex flex-col gap-2">
 							<Label htmlFor="organization">
-								Organization
+								{tI18n(
+									"TemplateBuilder.TemplateCustomizationsStep.organization_d764d425",
+								)}
 								<span className="text-xs font-bold text-content-destructive ml-1">
 									*
 								</span>
@@ -167,11 +195,17 @@ export const TemplateCustomizationsStep: FC<
 
 					{/* Left column */}
 					<div className="flex flex-col gap-2">
-						<Label htmlFor="template-description">Description</Label>
+						<Label htmlFor="template-description">
+							{tI18n(
+								"TemplateBuilder.TemplateCustomizationsStep.description_526e0087",
+							)}
+						</Label>
 						<Textarea
 							{...form.getFieldProps("description")}
 							id="template-description"
-							placeholder="Describe what this template is for"
+							placeholder={tI18n(
+								"TemplateBuilder.TemplateCustomizationsStep.describe_what_this_template_is_for_16834a9a",
+							)}
 							rows={3}
 							aria-invalid={descriptionField.error}
 							className={cn(
@@ -184,7 +218,9 @@ export const TemplateCustomizationsStep: FC<
 							</span>
 						)}
 						<p className="text-xs text-content-secondary">
-							Used by both humans and Agents to identify templates.
+							{tI18n(
+								"TemplateBuilder.TemplateCustomizationsStep.used_by_both_humans_and_agents_to_identify_templ_ba0d23c6",
+							)}
 						</p>
 
 						<IconField
@@ -204,12 +240,18 @@ export const TemplateCustomizationsStep: FC<
 					{/* Right column */}
 					<FormField
 						field={getFieldHelpers("name", {
-							helperText: "Used to identify the template in URLs and the API.",
+							helperText: tI18n(
+								"TemplateBuilder.TemplateCustomizationsStep.used_to_identify_the_template_in_urls_and_the_ap_6d941fd5",
+							),
 						})}
-						label="ID"
+						label={tI18n(
+							"TemplateBuilder.TemplateCustomizationsStep.id_3843971d",
+						)}
 						required
 						id="template-name"
-						placeholder="my-template"
+						placeholder={tI18n(
+							"TemplateBuilder.TemplateCustomizationsStep.my_template_79f2d122",
+						)}
 					/>
 				</div>
 			</div>
@@ -218,24 +260,33 @@ export const TemplateCustomizationsStep: FC<
 };
 
 const ProvisionerWarning: FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<Alert severity="error" prominent className="my-4">
-			This organization does not have any provisioners. Before you create a
-			template, you&apos;ll need to configure a provisioner.{" "}
+			{tI18n(
+				"TemplateBuilder.TemplateCustomizationsStep.this_organization_does_not_have_any_provisioners_21515c68",
+			)}{" "}
 			<Link href={docs("/admin/provisioners#organization-scoped-provisioners")}>
-				See our documentation
+				{tI18n(
+					"TemplateBuilder.TemplateCustomizationsStep.see_our_documentation_cb5a6292",
+				)}
 			</Link>
 		</Alert>
 	);
 };
 
 const BaseTemplateCard: FC<{ base: SelectedBaseMeta }> = ({ base }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	return (
 		<div className="w-56 shrink-0 rounded-lg bg-surface-secondary p-4 self-start">
 			{base.iconUrl && <Avatar src={base.iconUrl} size="lg" variant="icon" />}
 			<p className="text-sm font-bold text-content-primary">{base.name}</p>
 			<p className="text-xs text-content-secondary mt-1">
-				Preset based on base template
+				{tI18n(
+					"TemplateBuilder.TemplateCustomizationsStep.preset_based_on_base_template_10fbd60c",
+				)}
 			</p>
 		</div>
 	);

@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { CodeExample } from "#/components/CodeExample/CodeExample";
 import { ConfirmDialog } from "#/components/Dialog/ConfirmDialog/ConfirmDialog";
@@ -20,11 +21,14 @@ export const ResetPasswordDialog: FC<ResetPasswordDialogProps> = ({
 	newPassword,
 	loading,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const description = (
 		<>
 			<p>
-				You will need to send <strong>{user?.username}</strong> the following
-				password:
+				{tI18n("users.ResetPasswordDialog.you_will_need_to_send_68c8b947")}
+				<strong>{user?.username}</strong>
+				{tI18n("users.ResetPasswordDialog.the_following_password_7da338a2")}
 			</p>
 			<CodeExample
 				secret={false}
@@ -41,9 +45,9 @@ export const ResetPasswordDialog: FC<ResetPasswordDialogProps> = ({
 			open={open}
 			onConfirm={onConfirm}
 			onClose={onClose}
-			title="Reset password"
+			title={tI18n("users.ResetPasswordDialog.reset_password_e0edfeb3")}
 			confirmLoading={loading}
-			confirmText="Reset password"
+			confirmText={tI18n("users.ResetPasswordDialog.reset_password_e0edfeb3")}
 			description={description}
 		/>
 	);

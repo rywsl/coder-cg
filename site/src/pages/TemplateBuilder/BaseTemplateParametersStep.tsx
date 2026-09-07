@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { templateBuilderBases } from "#/api/queries/templateBuilder";
 import type {
@@ -7,6 +8,7 @@ import type {
 	TemplateBuilderModuleVariable,
 } from "#/api/typesGenerated";
 import { MemoizedMarkdown } from "#/components/Markdown/Markdown";
+import { i18n } from "#/i18n";
 import {
 	TemplateBuilderSubtitle,
 	TemplateBuilderTitle,
@@ -61,7 +63,13 @@ function variableToField(
 		required: variable.required,
 		placeholder:
 			defaultPlaceholder(variable.default) ??
-			(variable.required ? "Required" : "Optional"),
+			(variable.required
+				? i18n.t(
+						"templates:TemplateBuilder.BaseTemplateParametersStep.required_4850b174",
+					)
+				: i18n.t(
+						"templates:TemplateBuilder.BaseTemplateParametersStep.optional_59be7133",
+					)),
 		field: {
 			name: variable.name,
 			id,
@@ -99,6 +107,8 @@ export function baseParametersComplete(
 export const BaseTemplateParametersStep: FC<
 	BaseTemplateParametersStepProps
 > = ({ baseId, values, onChangeValues }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const { data } = useQuery(templateBuilderBases());
 	const base = data?.bases.find((b) => b.id === baseId);
 	const variables = base?.variables.filter((v) => !v.sensitive) ?? [];
@@ -118,11 +128,16 @@ export const BaseTemplateParametersStep: FC<
 
 	return (
 		<>
-			<TemplateBuilderTitle>Configure base template</TemplateBuilderTitle>
+			<TemplateBuilderTitle>
+				{tI18n(
+					"TemplateBuilder.BaseTemplateParametersStep.configure_base_template_589526ec",
+				)}
+			</TemplateBuilderTitle>
 			<TemplateBuilderSubtitle>
-				Your base template requires customizations.
+				{tI18n(
+					"TemplateBuilder.BaseTemplateParametersStep.your_base_template_requires_customizations_81ee6aff",
+				)}
 			</TemplateBuilderSubtitle>
-
 			<TemplateConfiguration
 				name={base?.name ?? "Base Template"}
 				description={base?.description ?? ""}

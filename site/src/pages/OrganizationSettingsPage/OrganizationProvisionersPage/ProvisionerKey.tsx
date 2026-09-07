@@ -1,5 +1,6 @@
 import { InfoIcon } from "lucide-react";
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	ProvisionerKeyNameBuiltIn,
 	ProvisionerKeyNamePSK,
@@ -10,6 +11,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { i18n } from "#/i18n";
 
 type KeyType = "builtin" | "userAuth" | "psk" | "key";
 
@@ -29,22 +31,27 @@ function getKeyType(name: string) {
 const infoByType: Record<KeyType, ReactNode> = {
 	builtin: (
 		<>
-			These provisioners are running as part of a coderd instance. Built-in
-			provisioners are only available for the default organization.{" "}
+			{i18n.t(
+				"administration:OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerKey.these_provisioners_are_running_as_part_of_a_code_3e7c9509",
+			)}{" "}
 		</>
 	),
 	userAuth: (
 		<>
-			These provisioners are connected by users using the <code>coder</code>{" "}
-			CLI, and are authorized by the users credentials. They can be tagged to
-			only run provisioner jobs for that user. User-authenticated provisioners
-			are only available for the default organization.
+			{i18n.t(
+				"administration:OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerKey.these_provisioners_are_connected_by_users_using__d84ea7c3",
+			)}
+			<code>coder</code>{" "}
+			{i18n.t(
+				"administration:OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerKey.cli_and_are_authorized_by_the_users_credentials__9a2dc3f3",
+			)}
 		</>
 	),
 	psk: (
 		<>
-			These provisioners all use pre-shared key authentication. PSK provisioners
-			are only available for the default organization.
+			{i18n.t(
+				"administration:OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerKey.these_provisioners_all_use_pre_shared_key_authen_d38451da",
+			)}
 		</>
 	),
 	key: null,
@@ -55,6 +62,8 @@ type ProvisionerKeyProps = {
 };
 
 export const ProvisionerKey: FC<ProvisionerKeyProps> = ({ name }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const type = getKeyType(name);
 	const info = infoByType[type];
 
@@ -65,7 +74,11 @@ export const ProvisionerKey: FC<ProvisionerKeyProps> = ({ name }) => {
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<span className="flex items-center">
-							<span className="sr-only">More info</span>
+							<span className="sr-only">
+								{tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionersPage.ProvisionerKey.more_info_7dd4d97d",
+								)}
+							</span>
 							<InfoIcon
 								tabIndex={0}
 								className="cursor-pointer size-icon-xs p-0.5"

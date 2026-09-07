@@ -1,4 +1,6 @@
+import { useTranslation } from "react-i18next";
 import { PaywallSmall } from "#/components/Paywall/PaywallSmall";
+import { i18n } from "#/i18n";
 import type { PaywallProps } from "./Paywall";
 
 type PaywallAIGovernanceVariant = "governance" | "sessions";
@@ -8,8 +10,9 @@ const PAYWALL_AIGOVERNANCE_COPY: Record<
 	{ description: string; features: string[] }
 > = {
 	governance: {
-		description:
-			"Get a full audit trail of every prompt, tool call, and model response, so AI adoption stays visible, secure, and accountable.",
+		description: i18n.t(
+			"components:Paywall.PaywallAIGovernance.get_a_full_audit_trail_of_every_prompt_tool_call_caa5356c",
+		),
 		features: [
 			"Centralized auth, no scattered API keys",
 			"Approve MCP servers & tools org-wide",
@@ -17,8 +20,9 @@ const PAYWALL_AIGOVERNANCE_COPY: Record<
 		],
 	},
 	sessions: {
-		description:
-			"Trace every AI coding session step by step to see which prompt triggered which tool call, and who was behind it.",
+		description: i18n.t(
+			"components:Paywall.PaywallAIGovernance.trace_every_ai_coding_session_step_by_step_to_se_c9d80183",
+		),
 		features: [
 			"Full session & thread-level detail",
 			"Attribute every action to a user",
@@ -35,11 +39,13 @@ const PaywallAIGovernance = ({
 	variant = "governance",
 	onCTAClick,
 }: PaywallAIGovernanceProps) => {
+	const { t: tI18n } = useTranslation("components");
+
 	const { description, features } = PAYWALL_AIGOVERNANCE_COPY[variant];
 
 	return (
 		<PaywallSmall
-			message="AI Gateway"
+			message={tI18n("Paywall.PaywallAIGovernance.ai_gateway_47219de2")}
 			canViewPremium
 			description={description}
 			features={features}

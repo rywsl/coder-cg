@@ -1,4 +1,5 @@
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation } from "react-query";
 import { toast } from "sonner";
 import { API } from "#/api/api";
@@ -34,6 +35,8 @@ export const useAppLink = (
 	app: WorkspaceApp,
 	{ agent, workspace }: UseAppLinkParams,
 ): AppLink => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const label = app.display_name ?? app.slug;
 	const { proxy } = useProxy();
 
@@ -68,21 +71,49 @@ export const useAppLink = (
 			const isCoderApp = app.url?.startsWith("coder:");
 
 			if (isJetBrainsGateway) {
-				toast.error(`Failed to open "${label}".`, {
-					description: "JetBrains Gateway must be installed.",
-				});
+				toast.error(
+					tI18n("apps.useAppLink.failed_to_open_value0_eb35d4dd", {
+						value0: label,
+					}),
+					{
+						description: tI18n(
+							"apps.useAppLink.jetbrains_gateway_must_be_installed_a259c8b3",
+						),
+					},
+				);
 			} else if (isJetBrainsToolbox) {
-				toast.error(`Failed to open "${label}".`, {
-					description: "JetBrains Toolbox must be installed.",
-				});
+				toast.error(
+					tI18n("apps.useAppLink.failed_to_open_value0_eb35d4dd", {
+						value0: label,
+					}),
+					{
+						description: tI18n(
+							"apps.useAppLink.jetbrains_toolbox_must_be_installed_501a5b1a",
+						),
+					},
+				);
 			} else if (isCoderApp) {
-				toast.error(`Failed to open "${label}".`, {
-					description: "Coder Desktop must be installed.",
-				});
+				toast.error(
+					tI18n("apps.useAppLink.failed_to_open_value0_eb35d4dd", {
+						value0: label,
+					}),
+					{
+						description: tI18n(
+							"apps.useAppLink.coder_desktop_must_be_installed_f20e6692",
+						),
+					},
+				);
 			} else {
-				toast.error(`Failed to open "${label}".`, {
-					description: "The app must be installed first.",
-				});
+				toast.error(
+					tI18n("apps.useAppLink.failed_to_open_value0_eb35d4dd", {
+						value0: label,
+					}),
+					{
+						description: tI18n(
+							"apps.useAppLink.the_app_must_be_installed_first_0b5b14f4",
+						),
+					},
+				);
 			}
 		}, openAppExternallyFailedTimeout);
 		window.addEventListener(
@@ -106,7 +137,14 @@ export const useAppLink = (
 			location.href = buildHref(key);
 		},
 		onError: (error) => {
-			toast.error(getErrorMessage(error, `Failed to open "${label}".`));
+			toast.error(
+				getErrorMessage(
+					error,
+					tI18n("apps.useAppLink.failed_to_open_value0_eb35d4dd", {
+						value0: label,
+					}),
+				),
+			);
 		},
 	});
 

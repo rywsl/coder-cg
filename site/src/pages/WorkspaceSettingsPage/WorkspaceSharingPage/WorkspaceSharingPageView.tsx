@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	Group,
 	Workspace,
@@ -57,18 +58,25 @@ export const WorkspaceSharingPageView: FC<WorkspaceSharingPageViewProps> = ({
 	onRemoveGroup,
 	hasRemovedMember,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return (
 		<div className="flex flex-col gap-12">
 			<SettingsHeader>
-				<SettingsHeaderTitle>Sharing</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"WorkspaceSettingsPage.WorkspaceSharingPage.WorkspaceSharingPageView.sharing_bbedc70e",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Share this workspace with other users and groups.{" "}
+					{tI18n(
+						"WorkspaceSettingsPage.WorkspaceSharingPage.WorkspaceSharingPageView.share_this_workspace_with_other_users_and_groups_a5da66dd",
+					)}{" "}
 					<SettingsHeaderDocsLink
 						href={docs("/user-guides/shared-workspaces")}
 					/>
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			<WorkspaceSharingForm
 				organizationId={workspace.organization_id}
 				workspaceACL={workspaceACL}

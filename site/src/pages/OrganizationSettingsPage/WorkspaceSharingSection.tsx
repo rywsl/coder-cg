@@ -1,4 +1,5 @@
 import { type FC, useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	type ShareableWorkspaceOwners,
 	ShareableWorkspaceOwnerses,
@@ -29,6 +30,8 @@ export const WorkspaceSharingSection: FC<WorkspaceSharingSectionProps> = ({
 	onChangeShareableOwners,
 	isTogglingWorkspaceSharing,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const [pendingSharingChange, setPendingSharingChange] =
 		useState<ShareableWorkspaceOwners | null>(null);
 
@@ -41,16 +44,24 @@ export const WorkspaceSharingSection: FC<WorkspaceSharingSectionProps> = ({
 		<>
 			<HorizontalForm className="mt-12">
 				<FormSection
-					title="Workspace Sharing"
-					description="Control whether workspace owners can share their workspaces."
+					title={tI18n(
+						"OrganizationSettingsPage.WorkspaceSharingSection.workspace_sharing_3eee503a",
+					)}
+					description={tI18n(
+						"OrganizationSettingsPage.WorkspaceSharingSection.control_whether_workspace_owners_can_share_their_e4760fc9",
+					)}
 				>
 					<div className="flex flex-col gap-2">
 						{workspaceSharingGloballyDisabled && (
 							<Alert severity="warning" className="mb-4">
-								<AlertTitle>Disabled by deployment settings</AlertTitle>
-								Workspace sharing has been disallowed by an administrator.
-								Sharing must be allowed by an administrator before sharing can
-								be used in this organization.
+								<AlertTitle>
+									{tI18n(
+										"OrganizationSettingsPage.WorkspaceSharingSection.disabled_by_deployment_settings_7267a26f",
+									)}
+								</AlertTitle>
+								{tI18n(
+									"OrganizationSettingsPage.WorkspaceSharingSection.workspace_sharing_has_been_disallowed_by_an_admi_73a16962",
+								)}
 							</Alert>
 						)}
 						<div className="flex items-start gap-3">
@@ -77,11 +88,14 @@ export const WorkspaceSharingSection: FC<WorkspaceSharingSectionProps> = ({
 										htmlFor={workspaceSharingId}
 										className="text-sm cursor-pointer"
 									>
-										Allow workspace sharing
+										{tI18n(
+											"OrganizationSettingsPage.WorkspaceSharingSection.allow_workspace_sharing_60d64ade",
+										)}
 									</label>
 									<div className="text-xs text-content-secondary">
-										When enabled, workspace owners can share their workspaces
-										with other users in this organization.
+										{tI18n(
+											"OrganizationSettingsPage.WorkspaceSharingSection.when_enabled_workspace_owners_can_share_their_wo_6d874593",
+										)}
 									</div>
 								</div>
 								{shareableWorkspaceOwners !== "none" &&
@@ -117,12 +131,14 @@ export const WorkspaceSharingSection: FC<WorkspaceSharingSectionProps> = ({
 														htmlFor={sharingServiceAccountsId}
 														className="text-sm cursor-pointer"
 													>
-														Only service accounts can share workspaces
+														{tI18n(
+															"OrganizationSettingsPage.WorkspaceSharingSection.only_service_accounts_can_share_workspaces_50726efa",
+														)}
 													</label>
 													<span className="text-xs text-content-secondary">
-														Service accounts are non-login accounts typically
-														used for automation, CI/CD pipelines, and
-														centrally-managed shared environments.
+														{tI18n(
+															"OrganizationSettingsPage.WorkspaceSharingSection.service_accounts_are_non_login_accounts_typicall_7fb7b8c3",
+														)}
 													</span>
 												</div>
 											</div>
@@ -135,7 +151,9 @@ export const WorkspaceSharingSection: FC<WorkspaceSharingSectionProps> = ({
 													htmlFor={sharingEveryoneId}
 													className="text-sm cursor-pointer"
 												>
-													All members can share workspaces
+													{tI18n(
+														"OrganizationSettingsPage.WorkspaceSharingSection.all_members_can_share_workspaces_f2a10adc",
+													)}
 												</label>
 											</div>
 										</RadioGroup>
@@ -145,7 +163,6 @@ export const WorkspaceSharingSection: FC<WorkspaceSharingSectionProps> = ({
 					</div>
 				</FormSection>
 			</HorizontalForm>
-
 			<DisableWorkspaceSharingDialog
 				isOpen={pendingSharingChange !== null}
 				organizationId={organizationId}

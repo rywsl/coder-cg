@@ -8,10 +8,12 @@ import {
 } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { Link, useLocation } from "react-router";
 import { chatModel } from "#/api/queries/chats";
 import { ScrollArea } from "#/components/ScrollArea/ScrollArea";
+import { i18n } from "#/i18n";
 import { safeBuildAgentChatPath } from "../../../utils/navigation";
 import { Response } from "../Response";
 import { useDesktopPanel } from "./DesktopPanelContext";
@@ -25,33 +27,65 @@ import type { SubagentAction, SubagentDescriptor } from "./subagentDescriptor";
 import { ToolCall } from "./ToolCall";
 import { isSubagentSuccessStatus, type ToolStatus } from "./utils";
 
-const SUBAGENT_VERBS: Record<
+const SUBAGENT_VERB_LABELS: Record<
 	SubagentAction,
 	{ completed: string; running: string; error: string; timeout: string }
 > = {
 	spawn: {
-		completed: "Spawned ",
-		running: "Spawning ",
-		error: "Failed to spawn ",
-		timeout: "Timed out spawning ",
+		completed: i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.SubagentTool.spawned_68ec75eb",
+		),
+		running: i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.SubagentTool.spawning_fad2589e",
+		),
+		error: i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.SubagentTool.failed_to_spawn_d81c861b",
+		),
+		timeout: i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.SubagentTool.timed_out_spawning_136a09ea",
+		),
 	},
 	wait: {
-		completed: "Waited for ",
-		running: "Waiting for ",
-		error: "Failed waiting for ",
-		timeout: "Timed out waiting for ",
+		completed: i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.SubagentTool.waited_for_709b6ebf",
+		),
+		running: i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.SubagentTool.waiting_for_a9263aa2",
+		),
+		error: i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.SubagentTool.failed_waiting_for_22fc12b4",
+		),
+		timeout: i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.SubagentTool.timed_out_waiting_for_02643276",
+		),
 	},
 	message: {
-		completed: "Messaged ",
-		running: "Messaging ",
-		error: "Failed to message ",
-		timeout: "Timed out messaging ",
+		completed: i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.SubagentTool.messaged_b27b2d7d",
+		),
+		running: i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.SubagentTool.messaging_ee886f90",
+		),
+		error: i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.SubagentTool.failed_to_message_e1a37153",
+		),
+		timeout: i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.SubagentTool.timed_out_messaging_4e2a83f4",
+		),
 	},
 	interrupt: {
-		completed: "Interrupted ",
-		running: "Interrupting ",
-		error: "Failed to interrupt ",
-		timeout: "Timed out interrupting ",
+		completed: i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.SubagentTool.interrupted_797b1c17",
+		),
+		running: i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.SubagentTool.interrupting_b0985e83",
+		),
+		error: i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.SubagentTool.failed_to_interrupt_df3ec33e",
+		),
+		timeout: i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.SubagentTool.timed_out_interrupting_539bb6aa",
+		),
 	},
 };
 
@@ -68,7 +102,9 @@ function getSubagentLabel(
 	modelDisplay: SpawnModelDisplay,
 ): React.ReactNode {
 	if (showDesktopPreview && toolStatus === "running") {
-		return "Using the computer...";
+		return i18n.t(
+			"agents:AgentsPage.components.ChatElements.tools.SubagentTool.using_the_computer_32ec6a6e",
+		);
 	}
 	if (
 		descriptor.variant === "computer_use" &&
@@ -77,7 +113,10 @@ function getSubagentLabel(
 	) {
 		return (
 			<>
-				Used the computer <span className="opacity-60">{title}</span>
+				{i18n.t(
+					"agents:AgentsPage.components.ChatElements.tools.SubagentTool.used_the_computer_cf55f7db",
+				)}
+				<span className="opacity-60">{title}</span>
 			</>
 		);
 	}
@@ -96,12 +135,15 @@ function getSubagentLabel(
 		.join(", ");
 	return (
 		<>
-			{SUBAGENT_VERBS[descriptor.action][phase]}
+			{SUBAGENT_VERB_LABELS[descriptor.action][phase]}
 			<span className="opacity-60">{title}</span>
 			{modelDetails && (
 				<>
 					{" "}
-					with <span className="opacity-60">{modelDetails}</span>
+					{i18n.t(
+						"agents:AgentsPage.components.ChatElements.tools.SubagentTool.with_9faea861",
+					)}
+					<span className="opacity-60">{modelDetails}</span>
 				</>
 			)}
 		</>
@@ -191,6 +233,8 @@ export const SubagentTool: React.FC<{
 	recordingFileId,
 	thumbnailFileId,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const location = useLocation();
 	const [expanded, setExpanded] = useState(false);
 	const { desktopChatId, onOpenDesktop } = useDesktopPanel();
@@ -251,14 +295,15 @@ export const SubagentTool: React.FC<{
 						<Link
 							to={{ pathname: agentChatPath, search: location.search }}
 							className="inline-flex align-middle text-content-secondary opacity-50 transition-opacity hover:opacity-100"
-							aria-label="View agent"
+							aria-label={tI18n(
+								"AgentsPage.components.ChatElements.tools.SubagentTool.view_agent_7ce7832e",
+							)}
 						>
 							<ExternalLinkIcon className="size-3" />
 						</Link>
 					</ToolCall.HeaderActions>
 				)}
 			</ToolCall.HeaderLayout>
-
 			{showDesktopPreview && desktopChatId && toolStatus !== "completed" && (
 				<div className="mt-1.5 overflow-hidden rounded-lg border border-solid border-border-default">
 					<InlineDesktopPreview
@@ -267,7 +312,6 @@ export const SubagentTool: React.FC<{
 					/>
 				</div>
 			)}
-
 			{recordingFileId && toolStatus === "completed" && (
 				<div className="mt-1.5 w-fit">
 					<RecordingPreview
@@ -282,7 +326,9 @@ export const SubagentTool: React.FC<{
 						className="mt-1.5 rounded-md border border-solid border-border-default"
 						viewportClassName="max-h-64"
 						viewportTabIndex={0}
-						viewportAriaLabel="Subagent prompt"
+						viewportAriaLabel={tI18n(
+							"AgentsPage.components.ChatElements.tools.SubagentTool.subagent_prompt_5edfdc6e",
+						)}
 						scrollBarClassName="w-1.5"
 					>
 						<div className="px-3 py-2">
@@ -296,7 +342,9 @@ export const SubagentTool: React.FC<{
 						className="mt-1.5 rounded-md border border-solid border-border-default"
 						viewportClassName="max-h-64"
 						viewportTabIndex={0}
-						viewportAriaLabel="Subagent response"
+						viewportAriaLabel={tI18n(
+							"AgentsPage.components.ChatElements.tools.SubagentTool.subagent_response_650dedbd",
+						)}
 						scrollBarClassName="w-1.5"
 					>
 						<div className="px-3 py-2">
@@ -310,7 +358,9 @@ export const SubagentTool: React.FC<{
 						className="mt-1.5 rounded-md border border-solid border-border-default"
 						viewportClassName="max-h-64"
 						viewportTabIndex={0}
-						viewportAriaLabel="Subagent report"
+						viewportAriaLabel={tI18n(
+							"AgentsPage.components.ChatElements.tools.SubagentTool.subagent_report_17393611",
+						)}
 						scrollBarClassName="w-1.5"
 					>
 						<div className="px-3 py-2">

@@ -1,5 +1,6 @@
 import { ChevronLeftIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink } from "react-router";
 import { toast } from "sonner";
 import { getErrorDetail } from "#/api/errors";
@@ -26,6 +27,8 @@ export const AddNewLicensePageView: FC<AddNewLicenseProps> = ({
 	isSavingLicense,
 	savingLicenseError,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	function handleFileUploaded(files: File[]) {
 		const fileReader = new FileReader();
 		fileReader.onload = () => {
@@ -34,9 +37,14 @@ export const AddNewLicensePageView: FC<AddNewLicenseProps> = ({
 			onSaveLicenseKey(licenseKey);
 
 			fileReader.onerror = (error) => {
-				toast.error("Failed to read file.", {
-					description: getErrorDetail(error),
-				});
+				toast.error(
+					tI18n(
+						"DeploymentSettingsPage.LicensesSettingsPage.AddNewLicensePageView.failed_to_read_file_cb49d251",
+					),
+					{
+						description: getErrorDetail(error),
+					},
+				);
 			};
 		};
 
@@ -53,35 +61,52 @@ export const AddNewLicensePageView: FC<AddNewLicenseProps> = ({
 		<>
 			<div className="flex flex-row gap-4 items-baseline justify-between">
 				<SettingsHeader>
-					<SettingsHeaderTitle>Add a license</SettingsHeaderTitle>
+					<SettingsHeaderTitle>
+						{tI18n(
+							"DeploymentSettingsPage.LicensesSettingsPage.AddNewLicensePageView.add_a_license_ea3f85ca",
+						)}
+					</SettingsHeaderTitle>
 					<SettingsHeaderDescription>
-						Get access to high availability, RBAC, quotas, and more.
+						{tI18n(
+							"DeploymentSettingsPage.LicensesSettingsPage.AddNewLicensePageView.get_access_to_high_availability_rbac_quotas_and__177de0d9",
+						)}
 					</SettingsHeaderDescription>
 				</SettingsHeader>
 
 				<Button asChild variant="outline">
 					<RouterLink to="/deployment/licenses">
 						<ChevronLeftIcon />
-						All Licenses
+						{tI18n(
+							"DeploymentSettingsPage.LicensesSettingsPage.AddNewLicensePageView.all_licenses_dc4cb25f",
+						)}
 					</RouterLink>
 				</Button>
 			</div>
-
 			{savingLicenseError && <ErrorAlert error={savingLicenseError} />}
-
 			<FileUpload
 				isUploading={isUploading}
 				onUpload={onUpload}
-				removeLabel="Remove File"
-				title="Upload Your License"
-				description="Select a text file that contains your license key."
+				removeLabel={tI18n(
+					"DeploymentSettingsPage.LicensesSettingsPage.AddNewLicensePageView.remove_file_b4e51ea4",
+				)}
+				title={tI18n(
+					"DeploymentSettingsPage.LicensesSettingsPage.AddNewLicensePageView.upload_your_license_f1485251",
+				)}
+				description={tI18n(
+					"DeploymentSettingsPage.LicensesSettingsPage.AddNewLicensePageView.select_a_text_file_that_contains_your_license_ke_c61358e2",
+				)}
 			/>
-
 			<div className="flex flex-col gap-4 pt-10">
-				<DividerWithText>or</DividerWithText>
+				<DividerWithText>
+					{tI18n(
+						"DeploymentSettingsPage.LicensesSettingsPage.AddNewLicensePageView.or_7175517a",
+					)}
+				</DividerWithText>
 
 				<Fieldset
-					title="Paste Your License"
+					title={tI18n(
+						"DeploymentSettingsPage.LicensesSettingsPage.AddNewLicensePageView.paste_your_license_3e111530",
+					)}
 					onSubmit={(e) => {
 						e.preventDefault();
 
@@ -94,13 +119,17 @@ export const AddNewLicensePageView: FC<AddNewLicenseProps> = ({
 					}}
 					button={
 						<Button type="submit" disabled={isSavingLicense}>
-							Upload License
+							{tI18n(
+								"DeploymentSettingsPage.LicensesSettingsPage.AddNewLicensePageView.upload_license_fb57a366",
+							)}
 						</Button>
 					}
 				>
 					<Textarea
 						name="licenseKey"
-						placeholder="Enter your license..."
+						placeholder={tI18n(
+							"DeploymentSettingsPage.LicensesSettingsPage.AddNewLicensePageView.enter_your_license_b6f427f0",
+						)}
 						rows={3}
 					/>
 				</Fieldset>

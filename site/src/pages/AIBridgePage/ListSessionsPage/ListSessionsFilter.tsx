@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { DateTimeRangePicker } from "#/components/DateTimeRangePicker/DateTimeRangePicker";
 import type { DateTimeRangeValue } from "#/components/DateTimeRangePicker/dateTimeRange";
 import {
@@ -38,6 +39,8 @@ export const ListSessionsFilter: FC<ListSessionsFilterProps> = ({
 	timeRange,
 	onTimeRangeChange,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<Filter
 			filter={filter}
@@ -55,7 +58,9 @@ export const ListSessionsFilter: FC<ListSessionsFilterProps> = ({
 					/>
 					<UserMenu
 						menu={menus.user}
-						placeholder="All users"
+						placeholder={tI18n(
+							"AIBridgePage.ListSessionsPage.ListSessionsFilter.all_users_f7898130",
+						)}
 						width={FILTER_WIDTH}
 					/>
 					<ProviderFilter menu={menus.provider} width={FILTER_WIDTH} />

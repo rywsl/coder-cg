@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 /**
  * @file Defines a centralized place for filter dropdown groups that are
  * relevant across multiple pages within the Coder UI.
@@ -99,20 +100,28 @@ export const OrganizationsMenu: FC<OrganizationsMenuProps> = ({
 	menu,
 	width,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<SelectFilter
-			label="Select an organization"
-			placeholder="All organizations"
-			emptyText="No organizations found"
+			label={tI18n("tableFiltering.options.select_an_organization_48326f52")}
+			placeholder={tI18n("tableFiltering.options.all_organizations_e3002b23")}
+			emptyText={tI18n(
+				"tableFiltering.options.no_organizations_found_538995db",
+			)}
 			options={menu.searchOptions}
 			onSelect={menu.selectOption}
 			selectedOption={menu.selectedOption ?? undefined}
 			selectFilterSearch={
 				<ComboboxInput
-					placeholder="Search organization..."
+					placeholder={tI18n(
+						"tableFiltering.options.search_organization_65bb5e5c",
+					)}
 					value={menu.query}
 					onValueChange={menu.setQuery}
-					aria-label="Search organization"
+					aria-label={tI18n(
+						"tableFiltering.options.search_organization_a3281e6c",
+					)}
 				/>
 			}
 			width={width}

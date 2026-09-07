@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import type { TemplateVersion } from "#/api/typesGenerated";
 import { Avatar } from "#/components/Avatar/Avatar";
@@ -9,6 +10,7 @@ import { TableCell } from "#/components/Table/Table";
 import { TimelineEntry } from "#/components/Timeline/TimelineEntry";
 import { useAuthenticated } from "#/hooks/useAuthenticated";
 import { useClickableTableRow } from "#/hooks/useClickableTableRow";
+import { currentIntlLocale } from "#/i18n/locale";
 
 interface VersionRowProps {
 	version: TemplateVersion;
@@ -25,6 +27,8 @@ export const VersionRow: FC<VersionRowProps> = ({
 	onPromoteClick,
 	onArchiveClick,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const navigate = useNavigate();
 	const { permissions } = useAuthenticated();
 
@@ -49,38 +53,68 @@ export const VersionRow: FC<VersionRowProps> = ({
 						/>
 						<div className="flex flex-row items-center gap-2 font-inherit text-base font-normal leading-normal">
 							<span>
-								<strong>{version.created_by.username}</strong> created the
-								version <strong>{version.name}</strong>
+								<strong>{version.created_by.username}</strong>
+								{tI18n(
+									"TemplatePage.TemplateVersionsPage.VersionRow.created_the_version_2734dd27",
+								)}
+								<strong>{version.name}</strong>
 							</span>
 							{version.message && (
-								<InfoTooltip title="Message" message={version.message} />
+								<InfoTooltip
+									title={tI18n(
+										"TemplatePage.TemplateVersionsPage.VersionRow.message_2f77668a",
+									)}
+									message={version.message}
+								/>
 							)}
 							<span className="text-xs text-content-secondary">
-								{new Date(version.created_at).toLocaleTimeString()}
+								{new Date(version.created_at).toLocaleTimeString(
+									currentIntlLocale(),
+								)}
 							</span>
 						</div>
 					</div>
 					<div className="flex flex-row items-center gap-4">
 						{isActive && (
 							<Badge role="status" variant="green">
-								Active
+								{tI18n(
+									"TemplatePage.TemplateVersionsPage.VersionRow.active_92340695",
+								)}
 							</Badge>
 						)}
-						{isLatest && <Badge role="status">Newest</Badge>}
+						{isLatest && (
+							<Badge role="status">
+								{tI18n(
+									"TemplatePage.TemplateVersionsPage.VersionRow.newest_d15efa17",
+								)}
+							</Badge>
+						)}
 						{jobStatus === "pending" && (
-							<Badge role="status">Pending&hellip;</Badge>
+							<Badge role="status">
+								{tI18n(
+									"TemplatePage.TemplateVersionsPage.VersionRow.pending_d867c5b4",
+								)}
+							</Badge>
 						)}
 						{jobStatus === "running" && (
 							<Badge role="status" variant="info">
-								Building&hellip;
+								{tI18n(
+									"TemplatePage.TemplateVersionsPage.VersionRow.building_10dee879",
+								)}
 							</Badge>
 						)}
 						{(jobStatus === "canceling" || jobStatus === "canceled") && (
-							<Badge role="status">Canceled</Badge>
+							<Badge role="status">
+								{tI18n(
+									"TemplatePage.TemplateVersionsPage.VersionRow.canceled_13ca2ee2",
+								)}
+							</Badge>
 						)}
 						{jobStatus === "failed" && (
 							<Badge role="status" variant="destructive">
-								Failed
+								{tI18n(
+									"TemplatePage.TemplateVersionsPage.VersionRow.failed_031a8f0f",
+								)}
 							</Badge>
 						)}
 
@@ -94,7 +128,9 @@ export const VersionRow: FC<VersionRowProps> = ({
 									onArchiveClick?.(version);
 								}}
 							>
-								Archive&hellip;
+								{tI18n(
+									"TemplatePage.TemplateVersionsPage.VersionRow.archive_53411237",
+								)}
 							</Button>
 						)}
 
@@ -108,7 +144,9 @@ export const VersionRow: FC<VersionRowProps> = ({
 									onPromoteClick?.(version);
 								}}
 							>
-								Promote&hellip;
+								{tI18n(
+									"TemplatePage.TemplateVersionsPage.VersionRow.promote_871f4166",
+								)}
 							</Button>
 						)}
 					</div>

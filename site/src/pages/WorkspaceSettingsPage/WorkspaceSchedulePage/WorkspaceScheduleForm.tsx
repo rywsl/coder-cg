@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import { type FormikTouched, useFormik } from "formik";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import type { Template } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
@@ -23,6 +24,7 @@ import {
 } from "#/components/Select/Select";
 import { Spinner } from "#/components/Spinner/Spinner";
 import { Switch } from "#/components/Switch/Switch";
+import { i18n } from "#/i18n";
 import {
 	defaultSchedule,
 	emptySchedule,
@@ -65,7 +67,9 @@ export const validationSchema = Yup.object({
 	sunday: Yup.boolean(),
 	monday: Yup.boolean().test(
 		"at-least-one-day",
-		"Must set at least one day of week if autostart is enabled.",
+		i18n.t(
+			"workspaces:WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.must_set_at_least_one_day_of_week_if_autostart_i_3e48952d",
+		),
 		function (value) {
 			const parent = this.parent as WorkspaceScheduleFormValues;
 
@@ -95,7 +99,9 @@ export const validationSchema = Yup.object({
 		.ensure()
 		.test(
 			"required-if-autostart",
-			"Start time is required when autostart is enabled.",
+			i18n.t(
+				"workspaces:WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.start_time_is_required_when_autostart_is_enabled_b49388bf",
+			),
 			function (value) {
 				const parent = this.parent as WorkspaceScheduleFormValues;
 				if (parent.autostartEnabled) {
@@ -104,46 +110,62 @@ export const validationSchema = Yup.object({
 				return true;
 			},
 		)
-		.test("is-time-string", "Time must be in HH:mm format.", (value) => {
-			if (value === "") {
-				return true;
-			}
-			if (!/^[0-9][0-9]:[0-9][0-9]$/.test(value)) {
-				return false;
-			}
-			const parts = value.split(":");
-			const HH = Number(parts[0]);
-			const mm = Number(parts[1]);
-			return HH >= 0 && HH <= 23 && mm >= 0 && mm <= 59;
-		}),
+		.test(
+			"is-time-string",
+			i18n.t(
+				"workspaces:WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.time_must_be_in_hh_mm_format_b252adb4",
+			),
+			(value) => {
+				if (value === "") {
+					return true;
+				}
+				if (!/^[0-9][0-9]:[0-9][0-9]$/.test(value)) {
+					return false;
+				}
+				const parts = value.split(":");
+				const HH = Number(parts[0]);
+				const mm = Number(parts[1]);
+				return HH >= 0 && HH <= 23 && mm >= 0 && mm <= 59;
+			},
+		),
 	timezone: Yup.string()
 		.ensure()
-		.test("is-timezone", "Invalid timezone.", function (value) {
-			const parent = this.parent as WorkspaceScheduleFormValues;
+		.test(
+			"is-timezone",
+			i18n.t(
+				"workspaces:WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.invalid_timezone_453e495c",
+			),
+			function (value) {
+				const parent = this.parent as WorkspaceScheduleFormValues;
 
-			if (!parent.startTime) {
-				return true;
-			}
-			// Unfortunately, there's not a good API on dayjs at this time for
-			// evaluating a timezone. Attempt to parse today in the supplied timezone
-			// and return as valid if the function doesn't throw.
-			// Need to use dayjs.tz directly here as our utility functions don't expose validation
-			try {
-				dayjs.tz(dayjs(), value);
-				return true;
-			} catch {
-				return false;
-			}
-		}),
+				if (!parent.startTime) {
+					return true;
+				}
+				// Unfortunately, there's not a good API on dayjs at this time for
+				// evaluating a timezone. Attempt to parse today in the supplied timezone
+				// and return as valid if the function doesn't throw.
+				// Need to use dayjs.tz directly here as our utility functions don't expose validation
+				try {
+					dayjs.tz(dayjs(), value);
+					return true;
+				} catch {
+					return false;
+				}
+			},
+		),
 	ttl: Yup.number()
 		.min(0)
 		.max(
-			24 * 30 /* 30 days */,
-			"Please enter a limit that is less than or equal to 30 days (720 hours).",
+			24 * 30,
+			i18n.t(
+				"workspaces:WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.please_enter_a_limit_that_is_less_than_or_equal__6f7e6ac3",
+			),
 		)
 		.test(
 			"positive-if-autostop",
-			"Time until shutdown must be greater than zero when autostop is enabled.",
+			i18n.t(
+				"workspaces:WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.time_until_shutdown_must_be_greater_than_zero_wh_01be5f8a",
+			),
 			function (value) {
 				const parent = this.parent as WorkspaceScheduleFormValues;
 				if (parent.autostopEnabled) {
@@ -164,6 +186,8 @@ export const WorkspaceScheduleForm: FC<WorkspaceScheduleFormProps> = ({
 	defaultTTL,
 	template,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const form = useFormik<WorkspaceScheduleFormValues>({
 		initialValues,
 		onSubmit,
@@ -177,37 +201,51 @@ export const WorkspaceScheduleForm: FC<WorkspaceScheduleFormProps> = ({
 		{
 			value: form.values.monday,
 			name: "monday",
-			label: "Mon",
+			label: tI18n(
+				"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.mon_f40d7f51",
+			),
 		},
 		{
 			value: form.values.tuesday,
 			name: "tuesday",
-			label: "Tue",
+			label: tI18n(
+				"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.tue_d1eb39b0",
+			),
 		},
 		{
 			value: form.values.wednesday,
 			name: "wednesday",
-			label: "Wed",
+			label: tI18n(
+				"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.wed_58339f45",
+			),
 		},
 		{
 			value: form.values.thursday,
 			name: "thursday",
-			label: "Thu",
+			label: tI18n(
+				"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.thu_7da11212",
+			),
 		},
 		{
 			value: form.values.friday,
 			name: "friday",
-			label: "Fri",
+			label: tI18n(
+				"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.fri_66dab40c",
+			),
 		},
 		{
 			value: form.values.saturday,
 			name: "saturday",
-			label: "Sat",
+			label: tI18n(
+				"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.sat_fdeb71b5",
+			),
 		},
 		{
 			value: form.values.sunday,
 			name: "sunday",
-			label: "Sun",
+			label: tI18n(
+				"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.sun_db18f17f",
+			),
 		},
 	];
 
@@ -229,8 +267,12 @@ export const WorkspaceScheduleForm: FC<WorkspaceScheduleFormProps> = ({
 	return (
 		<HorizontalForm onSubmit={form.handleSubmit}>
 			<FormSection
-				title="Autostart"
-				description="Select the time and days of week on which you want the workspace starting automatically."
+				title={tI18n(
+					"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.autostart_5a6ab379",
+				)}
+				description={tI18n(
+					"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.select_the_time_and_days_of_week_on_which_you_wa_1c2129b9",
+				)}
 			>
 				<FormFields>
 					<div className="flex items-center gap-3">
@@ -251,12 +293,15 @@ export const WorkspaceScheduleForm: FC<WorkspaceScheduleFormProps> = ({
 								htmlFor="autostartEnabled"
 								className="font-medium cursor-pointer"
 							>
-								Enable Autostart
+								{tI18n(
+									"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.enable_autostart_881396f0",
+								)}
 							</Label>
 							{!template.allow_user_autostart && (
 								<span className="text-xs text-content-secondary mt-0.5">
-									The template for this workspace does not allow modification of
-									autostart.
+									{tI18n(
+										"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.the_template_for_this_workspace_does_not_allow_m_df83b5c7",
+									)}
 								</span>
 							)}
 						</div>
@@ -264,7 +309,11 @@ export const WorkspaceScheduleForm: FC<WorkspaceScheduleFormProps> = ({
 
 					<div className="flex gap-4">
 						<div className="flex flex-col gap-2 flex-1">
-							<Label htmlFor="startTime">Start time</Label>
+							<Label htmlFor="startTime">
+								{tI18n(
+									"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.start_time_babe9dda",
+								)}
+							</Label>
 							<Input
 								id="startTime"
 								name="startTime"
@@ -282,7 +331,11 @@ export const WorkspaceScheduleForm: FC<WorkspaceScheduleFormProps> = ({
 							)}
 						</div>
 						<div className="flex flex-col gap-2 flex-1">
-							<Label htmlFor="timezone">Timezone</Label>
+							<Label htmlFor="timezone">
+								{tI18n(
+									"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.timezone_4ceca1d5",
+								)}
+							</Label>
 							<Select
 								value={form.values.timezone}
 								onValueChange={(value) => {
@@ -311,7 +364,9 @@ export const WorkspaceScheduleForm: FC<WorkspaceScheduleFormProps> = ({
 
 					<fieldset className="border-0 p-0 m-0">
 						<legend className="text-xs text-content-secondary font-medium mb-1">
-							Days of Week
+							{tI18n(
+								"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.days_of_week_94a1985c",
+							)}
 						</legend>
 
 						<div className="flex flex-row flex-wrap gap-x-4 gap-y-2 pt-1">
@@ -341,21 +396,27 @@ export const WorkspaceScheduleForm: FC<WorkspaceScheduleFormProps> = ({
 
 						{form.errors.monday && (
 							<span className="text-xs text-content-destructive mt-1 block">
-								Must set at least one day of week if autostart is enabled.
+								{tI18n(
+									"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.must_set_at_least_one_day_of_week_if_autostart_i_3e48952d",
+								)}
 							</span>
 						)}
 					</fieldset>
 				</FormFields>
 			</FormSection>
-
 			<FormSection
-				title="Autostop"
+				title={tI18n(
+					"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.autostop_f7816a97",
+				)}
 				description={
 					<>
-						Set how many hours should elapse after the workspace started before
-						the workspace automatically shuts down. This will be extended by{" "}
-						{humanDuration(template.activity_bump_ms)} after last activity in
-						the workspace was detected.
+						{tI18n(
+							"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.set_how_many_hours_should_elapse_after_the_works_0917b4b4",
+						)}{" "}
+						{humanDuration(template.activity_bump_ms)}
+						{tI18n(
+							"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.after_last_activity_in_the_workspace_was_detecte_c6b73c06",
+						)}
 					</>
 				}
 			>
@@ -378,19 +439,26 @@ export const WorkspaceScheduleForm: FC<WorkspaceScheduleFormProps> = ({
 								htmlFor="autostopEnabled"
 								className="font-medium cursor-pointer"
 							>
-								Enable Autostop
+								{tI18n(
+									"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.enable_autostop_251ac4fd",
+								)}
 							</Label>
 							{!template.allow_user_autostop && (
 								<span className="text-xs text-content-secondary mt-0.5">
-									The template for this workspace does not allow modification of
-									autostop.
+									{tI18n(
+										"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.the_template_for_this_workspace_does_not_allow_m_8e0a5c14",
+									)}
 								</span>
 							)}
 						</div>
 					</div>
 
 					<div className="flex flex-col gap-2">
-						<Label htmlFor="ttl">Time until shutdown (hours)</Label>
+						<Label htmlFor="ttl">
+							{tI18n(
+								"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.time_until_shutdown_hours_0f1e4fb1",
+							)}
+						</Label>
 						<Input
 							id="ttl"
 							name="ttl"
@@ -417,10 +485,11 @@ export const WorkspaceScheduleForm: FC<WorkspaceScheduleFormProps> = ({
 					</div>
 				</FormFields>
 			</FormSection>
-
 			<FormFooter>
 				<Button onClick={onCancel} variant="outline">
-					Cancel
+					{tI18n(
+						"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.cancel_19766ed6",
+					)}
 				</Button>
 
 				<Button
@@ -431,7 +500,9 @@ export const WorkspaceScheduleForm: FC<WorkspaceScheduleFormProps> = ({
 					}
 				>
 					<Spinner loading={isLoading} />
-					Save
+					{tI18n(
+						"WorkspaceSettingsPage.WorkspaceSchedulePage.WorkspaceScheduleForm.save_1509f561",
+					)}
 				</Button>
 			</FormFooter>
 		</HorizontalForm>

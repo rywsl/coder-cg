@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { isApiValidationError } from "#/api/errors";
 import type { CreateAIGatewayKeyResponse } from "#/api/typesGenerated";
@@ -16,6 +17,7 @@ import {
 } from "#/components/Dialog/Dialog";
 import { FormField } from "#/components/FormField/FormField";
 import { Spinner } from "#/components/Spinner/Spinner";
+import { i18n } from "#/i18n";
 import { getFormHelpers } from "#/utils/formUtils";
 
 interface CreateGatewayKeyFormValues {
@@ -24,13 +26,23 @@ interface CreateGatewayKeyFormValues {
 
 const validationSchema = Yup.object({
 	name: Yup.string()
-		.required("Name is required.")
+		.required(
+			i18n.t(
+				"agents:AISettingsPage.GatewayKeysPage.CreateGatewayKeyDialog.name_is_required_f83a4bc1",
+			),
+		)
 		.matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
 			excludeEmptyString: true,
-			message:
-				"Use lowercase letters and numbers with optional single hyphens between words.",
+			message: i18n.t(
+				"agents:AISettingsPage.GatewayKeysPage.CreateGatewayKeyDialog.use_lowercase_letters_and_numbers_with_optional__a0a41c23",
+			),
 		})
-		.max(64, "Name cannot be longer than 64 characters."),
+		.max(
+			64,
+			i18n.t(
+				"agents:AISettingsPage.GatewayKeysPage.CreateGatewayKeyDialog.name_cannot_be_longer_than_64_characters_c3271a77",
+			),
+		),
 });
 
 interface CreateGatewayKeyDialogProps {
@@ -50,6 +62,8 @@ export const CreateGatewayKeyDialog: FC<CreateGatewayKeyDialogProps> = ({
 	submitError,
 	isSubmitting = false,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const form = useFormik<CreateGatewayKeyFormValues>({
 		initialValues: { name: "" },
 		validationSchema,
@@ -83,7 +97,13 @@ export const CreateGatewayKeyDialog: FC<CreateGatewayKeyDialogProps> = ({
 			>
 				<DialogHeader>
 					<DialogTitle>
-						{createdKey ? "Save your AI Gateway key" : "Create AI Gateway key"}
+						{createdKey
+							? tI18n(
+									"AISettingsPage.GatewayKeysPage.CreateGatewayKeyDialog.save_your_ai_gateway_key_2c519f60",
+								)
+							: tI18n(
+									"AISettingsPage.GatewayKeysPage.CreateGatewayKeyDialog.create_ai_gateway_key_c7be578d",
+								)}
 					</DialogTitle>
 				</DialogHeader>
 
@@ -91,8 +111,9 @@ export const CreateGatewayKeyDialog: FC<CreateGatewayKeyDialogProps> = ({
 					<div className="flex flex-col gap-5">
 						<Alert severity="warning">
 							<AlertDescription>
-								Copy this key now. For security reasons it cannot be shown
-								again.
+								{tI18n(
+									"AISettingsPage.GatewayKeysPage.CreateGatewayKeyDialog.copy_this_key_now_for_security_reasons_it_cannot_7895869e",
+								)}
 							</AlertDescription>
 						</Alert>
 						<CodeExample
@@ -101,7 +122,11 @@ export const CreateGatewayKeyDialog: FC<CreateGatewayKeyDialogProps> = ({
 							className="min-h-0 select-all w-full"
 						/>
 						<DialogFooter>
-							<Button onClick={closeDialog}>Done</Button>
+							<Button onClick={closeDialog}>
+								{tI18n(
+									"AISettingsPage.GatewayKeysPage.CreateGatewayKeyDialog.done_11a6767d",
+								)}
+							</Button>
 						</DialogFooter>
 					</div>
 				) : (
@@ -110,11 +135,16 @@ export const CreateGatewayKeyDialog: FC<CreateGatewayKeyDialogProps> = ({
 						<form onSubmit={form.handleSubmit} className="flex flex-col gap-5">
 							<FormField
 								field={getFieldHelpers("name", {
-									helperText:
-										"Lowercase letters and numbers with optional single hyphens between words. Maximum 64 characters.",
+									helperText: tI18n(
+										"AISettingsPage.GatewayKeysPage.CreateGatewayKeyDialog.lowercase_letters_and_numbers_with_optional_sing_a1ccb6b6",
+									),
 								})}
-								label="Name"
-								placeholder="primary-gateway"
+								label={tI18n(
+									"AISettingsPage.GatewayKeysPage.CreateGatewayKeyDialog.name_dcd1d522",
+								)}
+								placeholder={tI18n(
+									"AISettingsPage.GatewayKeysPage.CreateGatewayKeyDialog.primary_gateway_4941da8b",
+								)}
 								autoFocus
 								autoComplete="off"
 							/>
@@ -124,11 +154,15 @@ export const CreateGatewayKeyDialog: FC<CreateGatewayKeyDialogProps> = ({
 									disabled={isBusy}
 									onClick={closeDialog}
 								>
-									Cancel
+									{tI18n(
+										"AISettingsPage.GatewayKeysPage.CreateGatewayKeyDialog.cancel_19766ed6",
+									)}
 								</Button>
 								<Button type="submit" disabled={isBusy || !form.dirty}>
 									<Spinner loading={isBusy} />
-									Create
+									{tI18n(
+										"AISettingsPage.GatewayKeysPage.CreateGatewayKeyDialog.create_4759498a",
+									)}
 								</Button>
 							</DialogFooter>
 						</form>

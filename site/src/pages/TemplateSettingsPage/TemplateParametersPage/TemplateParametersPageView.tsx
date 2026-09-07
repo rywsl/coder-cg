@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { TemplateVersion } from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
 import { Badge } from "#/components/Badge/Badge";
@@ -44,6 +45,8 @@ export const TemplateParametersPageView: React.FC<
 	onChangeClassicParameterFlow,
 	onRefresh,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const [isConfirmingRefresh, setIsConfirmingRefresh] = useState(false);
 	const refreshButtonRef = useRef<HTMLButtonElement>(null);
 	const importedAt = activeVersion.job.completed_at;
@@ -51,28 +54,34 @@ export const TemplateParametersPageView: React.FC<
 	return (
 		<div className="flex max-w-prose flex-col gap-8">
 			<SettingsHeader>
-				<SettingsHeaderTitle>Parameters</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.parameters_e68b36b1",
+					)}
+				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Control how this template's parameters are resolved when a workspace
-					is created.
+					{tI18n(
+						"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.control_how_this_template_s_parameters_are_resol_4f1ce625",
+					)}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
-
 			{error ? <ErrorAlert error={error} /> : null}
-
 			{!canUpdate && (
 				<p className="m-0 text-sm text-content-secondary">
-					You need permission to update this template to change these settings.
+					{tI18n(
+						"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.you_need_permission_to_update_this_template_to_c_3a82a2f7",
+					)}
 				</p>
 			)}
-
 			<div className="flex items-start">
 				{/* sm + m-1 keeps the layout from shifting */}
 				<Spinner
 					size="sm"
 					className="m-1 shrink-0"
 					loading={isSaving}
-					label="Saving parameter compatibility mode"
+					label={tI18n(
+						"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.saving_parameter_compatibility_mode_497f0679",
+					)}
 				>
 					<Checkbox
 						id="use_classic_parameter_flow"
@@ -87,23 +96,25 @@ export const TemplateParametersPageView: React.FC<
 				<StackLabel>
 					<Label htmlFor="use_classic_parameter_flow">
 						<span className="flex flex-row items-center gap-2">
-							Use parameter compatibility mode for workspace builds
+							{tI18n(
+								"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.use_parameter_compatibility_mode_for_workspace_b_282bd94b",
+							)}
 							<Badge size="sm" variant="warning">
-								Deprecated
+								{tI18n(
+									"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.deprecated_6b2e8f83",
+								)}
 							</Badge>
 						</span>
 					</Label>
 					<StackLabelHelperText>
-						Turn this on only if this template does not work with dynamic
-						parameters. Compatibility mode will force workspace builds to fall
-						back to the older "Rich parameters" strategy, which is deprecated
-						and will be removed in a future release.
+						{tI18n(
+							"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.turn_this_on_only_if_this_template_does_not_work_8756d1e3",
+						)}
 					</StackLabelHelperText>
 					<StackLabelHelperText>
-						Dynamic parameters are the default since Coder 2.25, and let you use
-						additional form types, identity-aware parameter values, conditional
-						parameters, and data sources. In some cases it may be necessary to
-						refresh template data for dynamic parameters to work properly.
+						{tI18n(
+							"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.dynamic_parameters_are_the_default_since_coder_2_9aa2ee5a",
+						)}
 					</StackLabelHelperText>
 					<Link
 						className="self-start text-xs"
@@ -111,31 +122,48 @@ export const TemplateParametersPageView: React.FC<
 							"/admin/templates/extending-templates/dynamic-parameters",
 						)}
 					>
-						Learn more
+						{tI18n(
+							"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.learn_more_1445799c",
+						)}
 					</Link>
 				</StackLabel>
 			</div>
-
 			<Separator className="my-2" />
-
 			<section className="flex flex-col gap-4">
 				<SettingsHeaderTitle level="h2" hierarchy="secondary">
-					Template data
+					{tI18n(
+						"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.template_data_4aed743d",
+					)}
 				</SettingsHeaderTitle>
 
 				<p className="m-0 text-sm text-content-secondary">
-					Coder caches certain values (like Terraform <code>data</code> sources)
-					when a new template version is created, and every workspace built from
-					that version will reuse the same results. Refreshing will create a new
-					template version, allowing cached values to be updated.
+					{tI18n(
+						"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.coder_caches_certain_values_like_terraform_59f63b6a",
+					)}
+					<code>data</code>
+					{tI18n(
+						"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.sources_when_a_new_template_version_is_created_a_3ebfb414",
+					)}
 				</p>
 
 				<dl className="m-0 grid grid-cols-[max-content_1fr] gap-x-6 gap-y-2 text-sm">
-					<dt className="text-content-secondary">Active version</dt>
+					<dt className="text-content-secondary">
+						{tI18n(
+							"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.active_version_44e1ea1c",
+						)}
+					</dt>
 					<dd className="m-0">{activeVersion.name}</dd>
-					<dt className="text-content-secondary">Last imported</dt>
+					<dt className="text-content-secondary">
+						{tI18n(
+							"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.last_imported_74ffc732",
+						)}
+					</dt>
 					<dd className="m-0">
-						{importedAt ? formatDate(new Date(importedAt)) : "Unknown"}
+						{importedAt
+							? formatDate(new Date(importedAt))
+							: tI18n(
+									"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.unknown_b764cdc0",
+								)}
 					</dd>
 				</dl>
 
@@ -146,25 +174,33 @@ export const TemplateParametersPageView: React.FC<
 						onClick={() => setIsConfirmingRefresh(true)}
 					>
 						<Spinner loading={isRefreshing} />
-						Refresh template data
+						{tI18n(
+							"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.refresh_template_data_31dc6d66",
+						)}
 					</Button>
 				</div>
 			</section>
-
 			<ConfirmDialog
 				open={isConfirmingRefresh}
 				type="info"
 				hideCancel={false}
-				title="Refresh template data"
+				title={tI18n(
+					"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.refresh_template_data_31dc6d66",
+				)}
 				description={
 					<>
-						This creates a new template version from the same source as{" "}
-						<strong>{activeVersion.name}</strong> and makes it the active
-						version. New workspaces will use it immediately. Existing workspaces
-						keep running until they are updated.
+						{tI18n(
+							"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.this_creates_a_new_template_version_from_the_sam_d6116c27",
+						)}{" "}
+						<strong>{activeVersion.name}</strong>
+						{tI18n(
+							"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.and_makes_it_the_active_version_new_workspaces_w_71f20bb1",
+						)}
 					</>
 				}
-				confirmText="Refresh"
+				confirmText={tI18n(
+					"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPageView.refresh_0e916101",
+				)}
 				onClose={() => setIsConfirmingRefresh(false)}
 				onConfirm={() => {
 					setIsConfirmingRefresh(false);

@@ -2,6 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 import { XIcon } from "lucide-react";
 import type { CSSProperties, FC } from "react";
+import { useTranslation } from "react-i18next";
 import { FileIcon } from "#/components/FileIcon/FileIcon";
 import { getFileReferenceDisplay } from "./fileReferenceDisplay";
 
@@ -133,6 +134,8 @@ export function EditableFileReferenceChip({
 		onRemove: () => void;
 		onOpen: () => void;
 	}) {
+	const { t: tI18n } = useTranslation("agents");
+
 	const { shortFile, lineRange, title } = getFileReferenceDisplay({
 		fileName,
 		startLine,
@@ -155,7 +158,12 @@ export function EditableFileReferenceChip({
 				type="button"
 				className={fileReferenceTriggerVariants({ interactive: true })}
 				onClick={onOpen}
-				aria-label={`Open ${title}`}
+				aria-label={tI18n(
+					"AgentsPage.components.ChatMessageInput.FileReferenceChip.open_value0_b50808ac",
+					{
+						value0: title,
+					},
+				)}
 			>
 				<FileReferenceChipContent fileName={shortFile} lineRange={lineRange} />
 			</button>
@@ -168,7 +176,9 @@ export function EditableFileReferenceChip({
 					e.stopPropagation();
 					onRemove();
 				}}
-				aria-label="Remove reference"
+				aria-label={tI18n(
+					"AgentsPage.components.ChatMessageInput.FileReferenceChip.remove_reference_cbeda6a6",
+				)}
 				tabIndex={-1}
 			>
 				<XIcon className="size-2.5" />

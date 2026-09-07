@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
 	keepPreviousData,
 	useMutation,
@@ -19,6 +20,8 @@ import { useTemplateSettings } from "../TemplateSettingsLayout";
 import { TemplateParametersPageView } from "./TemplateParametersPageView";
 
 const TemplateParametersPage: React.FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const { template, permissions } = useTemplateSettings();
 	const queryClient = useQueryClient();
 
@@ -50,8 +53,14 @@ const TemplateParametersPage: React.FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle(template.name, "Parameters")}</title>
-
+			<title>
+				{pageTitle(
+					template.name,
+					tI18n(
+						"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPage.parameters_e68b36b1",
+					),
+				)}
+			</title>
 			<TemplateParametersPageView
 				activeVersion={activeVersion}
 				useClassicParameterFlow={template.use_classic_parameter_flow}
@@ -97,7 +106,12 @@ const TemplateParametersPage: React.FC = () => {
 						});
 						await promoteMutation.mutateAsync(newVersion.id);
 						toast.success(
-							`Template "${template.name}" data refreshed successfully.`,
+							tI18n(
+								"TemplateSettingsPage.TemplateParametersPage.TemplateParametersPage.template_value0_data_refreshed_successfully_1795e2a4",
+								{
+									value0: template.name,
+								},
+							),
 						);
 					} catch {}
 				}}

@@ -1,4 +1,5 @@
 import type * as TypesGen from "#/api/typesGenerated";
+import { i18n } from "#/i18n";
 import type { ChatDetailError } from "./chatError";
 import { getErrorTitle } from "./chatStatusHelpers";
 import type { ReconnectState, RetryState, StreamState } from "./types";
@@ -7,8 +8,12 @@ type LiveStatusBase = {
 	hasAccumulatedOutput: boolean;
 };
 
-const RECONNECTING_TITLE = "Reconnecting";
-const RECONNECTING_MESSAGE = "Chat stream disconnected. Reconnecting…";
+const RECONNECTING_TITLE = i18n.t(
+	"agents:AgentsPage.components.ChatConversation.liveStatusModel.reconnecting_afb118fc",
+);
+const RECONNECTING_MESSAGE = i18n.t(
+	"agents:AgentsPage.components.ChatConversation.liveStatusModel.chat_stream_disconnected_reconnecting_c9ef831c",
+);
 
 export type LiveStatusModel =
 	| ({ phase: "idle" } & LiveStatusBase)

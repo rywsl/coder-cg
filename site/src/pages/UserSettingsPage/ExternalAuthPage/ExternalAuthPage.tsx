@@ -1,4 +1,5 @@
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "sonner";
 import { getErrorDetail, getErrorMessage } from "#/api/errors";
@@ -16,6 +17,8 @@ import {
 import { ExternalAuthPageView } from "./ExternalAuthPageView";
 
 const ExternalAuthPage: FC = () => {
+	const { t: tI18n } = useTranslation("users");
+
 	const queryClient = useQueryClient();
 	// This is used to tell the child components something was unlinked and things
 	// need to be refetched
@@ -29,7 +32,11 @@ const ExternalAuthPage: FC = () => {
 	return (
 		<>
 			<SettingsHeader>
-				<SettingsHeaderTitle>External Authentication</SettingsHeaderTitle>
+				<SettingsHeaderTitle>
+					{tI18n(
+						"UserSettingsPage.ExternalAuthPage.ExternalAuthPage.external_authentication_1b308ef4",
+					)}
+				</SettingsHeaderTitle>
 			</SettingsHeader>
 			<ExternalAuthPageView
 				isLoading={externalAuthsQuery.isLoading}
@@ -43,16 +50,31 @@ const ExternalAuthPage: FC = () => {
 					try {
 						const data = await validateAppMutation.mutateAsync(providerID);
 						if (data.authenticated) {
-							toast.success("Application link is valid.");
+							toast.success(
+								tI18n(
+									"UserSettingsPage.ExternalAuthPage.ExternalAuthPage.application_link_is_valid_1ef1ab7f",
+								),
+							);
 						} else {
-							toast.error("Application link is not valid.", {
-								description:
-									"Please unlink the application and reauthenticate.",
-							});
+							toast.error(
+								tI18n(
+									"UserSettingsPage.ExternalAuthPage.ExternalAuthPage.application_link_is_not_valid_964953c1",
+								),
+								{
+									description: tI18n(
+										"UserSettingsPage.ExternalAuthPage.ExternalAuthPage.please_unlink_the_application_and_reauthenticate_565d3dce",
+									),
+								},
+							);
 						}
 					} catch (error) {
 						toast.error(
-							getErrorMessage(error, "Error validating application link."),
+							getErrorMessage(
+								error,
+								tI18n(
+									"UserSettingsPage.ExternalAuthPage.ExternalAuthPage.error_validating_application_link_690bcb9b",
+								),
+							),
 							{
 								description: getErrorDetail(error),
 							},
@@ -62,18 +84,30 @@ const ExternalAuthPage: FC = () => {
 			/>
 			<DeleteDialog
 				key={appToUnlink?.id}
-				title="Unlink Application"
-				verb="Unlinking"
+				title={tI18n(
+					"UserSettingsPage.ExternalAuthPage.ExternalAuthPage.unlink_application_0b0c1a46",
+				)}
+				verb={tI18n(
+					"UserSettingsPage.ExternalAuthPage.ExternalAuthPage.unlinking_4e9e9576",
+				)}
 				info={
 					appToUnlink?.supports_revocation
-						? "This action will remove external authentication link and will try to revoke the access token from OAuth2 provider. Auth link will be removed regardless if token revocation is successful."
-						: "This action will not revoke the access token from the OAuth2 provider. It only removes the link on this side. To fully revoke access, you must do so on the OAuth2 provider's side."
+						? tI18n(
+								"UserSettingsPage.ExternalAuthPage.ExternalAuthPage.this_action_will_remove_external_authentication__1badda78",
+							)
+						: tI18n(
+								"UserSettingsPage.ExternalAuthPage.ExternalAuthPage.this_action_will_not_revoke_the_access_token_fro_4da9fda1",
+							)
 				}
-				label="Name of the application to unlink"
+				label={tI18n(
+					"UserSettingsPage.ExternalAuthPage.ExternalAuthPage.name_of_the_application_to_unlink_b5a55e62",
+				)}
 				isOpen={appToUnlink !== undefined}
 				confirmLoading={unlinkAppMutation.isPending}
 				name={appToUnlink?.id ?? ""}
-				entity="application"
+				entity={tI18n(
+					"UserSettingsPage.ExternalAuthPage.ExternalAuthPage.application_1fe28920",
+				)}
 				onCancel={() => setAppToUnlink(undefined)}
 				onConfirm={async () => {
 					if (!appToUnlink) {
@@ -96,9 +130,17 @@ const ExternalAuthPage: FC = () => {
 								: "Successfully deleted external auth link. Token has NOT been revoked from the OAuth2 provider.",
 						);
 					} catch (e) {
-						toast.error(getErrorMessage(e, "Error unlinking application."), {
-							description: getErrorDetail(e),
-						});
+						toast.error(
+							getErrorMessage(
+								e,
+								tI18n(
+									"UserSettingsPage.ExternalAuthPage.ExternalAuthPage.error_unlinking_application_4833462d",
+								),
+							),
+							{
+								description: getErrorDetail(e),
+							},
+						);
 					}
 				}}
 			/>

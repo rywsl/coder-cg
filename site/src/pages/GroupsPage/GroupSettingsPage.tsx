@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate, useOutletContext, useParams } from "react-router";
 import { toast } from "sonner";
@@ -20,6 +21,8 @@ const budgetFromInput = (dollars: string): number | null =>
 	dollars.trim() === "" ? null : dollarsToMicros(dollars);
 
 const GroupSettingsPage: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const { organization = "default", groupName } = useParams() as {
 		organization?: string;
 		groupName: string;
@@ -74,7 +77,15 @@ const GroupSettingsPage: FC = () => {
 					});
 				} catch (error) {
 					toast.error(
-						getErrorMessage(error, `Failed to update group "${groupName}".`),
+						getErrorMessage(
+							error,
+							tI18n(
+								"GroupsPage.GroupSettingsPage.failed_to_update_group_value0_31287348",
+								{
+									value0: groupName,
+								},
+							),
+						),
 						{ description: getErrorDetail(error) },
 					);
 					return;
@@ -86,7 +97,12 @@ const GroupSettingsPage: FC = () => {
 						await saveBudgetMutation.mutateAsync(next);
 					} catch (error) {
 						toast.error(
-							getErrorMessage(error, "Failed to update the AI budget."),
+							getErrorMessage(
+								error,
+								tI18n(
+									"GroupsPage.GroupSettingsPage.failed_to_update_the_ai_budget_4cfa5d57",
+								),
+							),
 							{ description: getErrorDetail(error) },
 						);
 						return;

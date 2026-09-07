@@ -1,5 +1,6 @@
 import { RefreshCwIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useMutation } from "react-query";
 import { toast } from "sonner";
 import { API } from "#/api/api";
@@ -10,11 +11,22 @@ import { useTemplateLayoutContext } from "#/pages/TemplatePage/TemplateLayout";
 import { pageTitle } from "#/utils/page";
 
 const TemplatePrebuildsPage: FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const { template } = useTemplateLayoutContext();
 
 	return (
 		<>
-			<title>{pageTitle(`${template.name} - Prebuilds`)}</title>
+			<title>
+				{pageTitle(
+					tI18n(
+						"TemplatePage.TemplatePrebuildsPage.TemplatePrebuildsPage.value0_prebuilds_b1d4842c",
+						{
+							value0: template.name,
+						},
+					),
+				)}
+			</title>
 			<TemplatePrebuildsPageView templateId={template.id} />
 		</>
 	);
@@ -27,11 +39,17 @@ interface TemplatePrebuildsPageViewProps {
 export const TemplatePrebuildsPageView: FC<TemplatePrebuildsPageViewProps> = ({
 	templateId,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const invalidateMutation = useMutation({
 		mutationFn: () => API.invalidateTemplatePresets(templateId),
 		onSuccess: (data: InvalidatePresetsResponse) => {
 			if (data.invalidated.length === 0) {
-				toast.success("No template presets required invalidation.");
+				toast.success(
+					tI18n(
+						"TemplatePage.TemplatePrebuildsPage.TemplatePrebuildsPage.no_template_presets_required_invalidation_3592f047",
+					),
+				);
 				return;
 			}
 
@@ -40,7 +58,14 @@ export const TemplatePrebuildsPageView: FC<TemplatePrebuildsPageViewProps> = ({
 			const count = data.invalidated.length;
 
 			toast.success(
-				`Invalidated ${count} ${count === 1 ? "preset" : "presets"} for version "${template_version_name}".`,
+				tI18n(
+					"TemplatePage.TemplatePrebuildsPage.TemplatePrebuildsPage.invalidated_value0_value1_for_version_value2_7900e169",
+					{
+						value0: count,
+						value1: count === 1 ? "preset" : "presets",
+						value2: template_version_name,
+					},
+				),
 			);
 		},
 	});
@@ -53,12 +78,14 @@ export const TemplatePrebuildsPageView: FC<TemplatePrebuildsPageViewProps> = ({
 				)}
 				<div>
 					<h3 className="text-xl text-content-primary m-0">
-						Invalidate presets
+						{tI18n(
+							"TemplatePage.TemplatePrebuildsPage.TemplatePrebuildsPage.invalidate_presets_bfb31fd9",
+						)}
 					</h3>
 					<p className="text-sm text-content-secondary">
-						All prebuilt workspaces for the active template version are marked
-						as invalid. This is useful when prebuilds become stale due to
-						repository changes or infrastructure updates and need recycling.
+						{tI18n(
+							"TemplatePage.TemplatePrebuildsPage.TemplatePrebuildsPage.all_prebuilt_workspaces_for_the_active_template__10ea0a3d",
+						)}
 					</p>
 				</div>
 
@@ -69,7 +96,9 @@ export const TemplatePrebuildsPageView: FC<TemplatePrebuildsPageViewProps> = ({
 						className="gap-2"
 					>
 						<RefreshCwIcon className="size-4" />
-						Invalidate now
+						{tI18n(
+							"TemplatePage.TemplatePrebuildsPage.TemplatePrebuildsPage.invalidate_now_03f4edd7",
+						)}
 					</Button>
 				</div>
 			</div>

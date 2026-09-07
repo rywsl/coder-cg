@@ -5,6 +5,7 @@ import {
 	Suspense,
 	useContext,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router";
 import { API } from "#/api/api";
@@ -77,6 +78,8 @@ export const useTemplateLayoutContext = (): TemplateLayoutContextValue => {
 export const TemplateLayout: FC<PropsWithChildren> = ({
 	children = <Outlet />,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const navigate = useNavigate();
 	const { user: me } = useAuthenticated();
 	const { organization: organizationName = "default", template: templateName } =
@@ -134,42 +137,40 @@ export const TemplateLayout: FC<PropsWithChildren> = ({
 					navigate("/templates");
 				}}
 			/>
-
 			<LinkTabs active={activeTab} className="mb-10 -mt-3">
 				<Margins>
 					<LinkTabsList>
 						<TabLink to="docs" value="docs">
-							Docs
+							{tI18n("TemplatePage.TemplateLayout.docs_7af023c4")}
 						</TabLink>
 						{data.permissions.canUpdateTemplate && (
 							<TabLink to="files" value="files">
-								Source Code
+								{tI18n("TemplatePage.TemplateLayout.source_code_bc47da66")}
 							</TabLink>
 						)}
 						<TabLink to="resources" value="resources">
-							Resources
+							{tI18n("TemplatePage.TemplateLayout.resources_e89b30aa")}
 						</TabLink>
 						<TabLink to="versions" value="versions">
-							Versions
+							{tI18n("TemplatePage.TemplateLayout.versions_f89ea270")}
 						</TabLink>
 						<TabLink to="embed" value="embed">
-							Embed
+							{tI18n("TemplatePage.TemplateLayout.embed_7512561d")}
 						</TabLink>
 						{shouldShowInsights && (
 							<TabLink to="insights" value="insights">
-								Insights
+								{tI18n("TemplatePage.TemplateLayout.insights_2a932f90")}
 							</TabLink>
 						)}
 						{isWorkspacePrebuildsEnabled &&
 							data.permissions.canUpdateTemplate && (
 								<TabLink to="prebuilds" value="prebuilds">
-									Prebuilds
+									{tI18n("TemplatePage.TemplateLayout.prebuilds_0fbe5564")}
 								</TabLink>
 							)}
 					</LinkTabsList>
 				</Margins>
 			</LinkTabs>
-
 			<Margins>
 				<TemplateLayoutContext.Provider value={data}>
 					<Suspense fallback={<Loader />}>{children}</Suspense>

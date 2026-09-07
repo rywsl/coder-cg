@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import type { Template } from "#/api/typesGenerated";
 import { Avatar } from "#/components/Avatar/Avatar";
@@ -19,23 +20,36 @@ export const WorkspacesEmpty: FC<WorkspacesEmptyProps> = ({
 	canCreateTemplate,
 	canCreateWorkspace,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const getLink = useLinks();
 
 	const totalFeaturedTemplates = 6;
 	const featuredTemplates = templates?.slice(0, totalFeaturedTemplates);
-	const defaultTitle = "Create a workspace";
-	const defaultMessage =
-		"A workspace is your personal, customizable development environment.";
+	const defaultTitle = tI18n(
+		"WorkspacesPage.WorkspacesEmpty.create_a_workspace_954bd1fe",
+	);
+	const defaultMessage = tI18n(
+		"WorkspacesPage.WorkspacesEmpty.a_workspace_is_your_personal_customizable_develo_128fbf22",
+	);
 
 	if (isUsingFilter) {
-		return <EmptyState message="No results matched your search" />;
+		return (
+			<EmptyState
+				message={tI18n(
+					"WorkspacesPage.WorkspacesEmpty.no_results_matched_your_search_c229583b",
+				)}
+			/>
+		);
 	}
 
 	if (!canCreateWorkspace) {
 		return (
 			<EmptyState
-				message="No workspaces"
-				description="You don't have permission to create workspaces. Contact your administrator if you need workspace access."
+				message={tI18n("WorkspacesPage.WorkspacesEmpty.no_workspaces_3e9f82e1")}
+				description={tI18n(
+					"WorkspacesPage.WorkspacesEmpty.you_don_t_have_permission_to_create_workspaces_c_51983e9c",
+				)}
 			/>
 		);
 	}
@@ -44,10 +58,19 @@ export const WorkspacesEmpty: FC<WorkspacesEmptyProps> = ({
 		return (
 			<EmptyState
 				message={defaultTitle}
-				description={`${defaultMessage} To create a workspace, you first need to create a template.`}
+				description={tI18n(
+					"WorkspacesPage.WorkspacesEmpty.value0_to_create_a_workspace_you_first_need_to_c_6d90c81d",
+					{
+						value0: defaultMessage,
+					},
+				)}
 				cta={
 					<Button asChild>
-						<Link to="/templates/new/builder">Create a template</Link>
+						<Link to="/templates/new/builder">
+							{tI18n(
+								"WorkspacesPage.WorkspacesEmpty.create_a_template_39b06be6",
+							)}
+						</Link>
 					</Button>
 				}
 			/>
@@ -58,7 +81,12 @@ export const WorkspacesEmpty: FC<WorkspacesEmptyProps> = ({
 		return (
 			<EmptyState
 				message={defaultTitle}
-				description={`${defaultMessage} There are no templates available, but you will see them here once your admin adds them.`}
+				description={tI18n(
+					"WorkspacesPage.WorkspacesEmpty.value0_there_are_no_templates_available_but_you__52f37992",
+					{
+						value0: defaultMessage,
+					},
+				)}
 			/>
 		);
 	}
@@ -66,7 +94,12 @@ export const WorkspacesEmpty: FC<WorkspacesEmptyProps> = ({
 	return (
 		<EmptyState
 			message={defaultTitle}
-			description={`${defaultMessage} Select one template below to start.`}
+			description={tI18n(
+				"WorkspacesPage.WorkspacesEmpty.value0_select_one_template_below_to_start_a336ffb3",
+				{
+					value0: defaultMessage,
+				},
+			)}
 			cta={
 				<div>
 					<div className="flex flex-wrap gap-4 mb-6 justify-center max-w-[800px]">
@@ -103,7 +136,11 @@ export const WorkspacesEmpty: FC<WorkspacesEmptyProps> = ({
 
 					{templates && templates.length > totalFeaturedTemplates && (
 						<Button asChild>
-							<Link to="/templates">See all templates</Link>
+							<Link to="/templates">
+								{tI18n(
+									"WorkspacesPage.WorkspacesEmpty.see_all_templates_b852c331",
+								)}
+							</Link>
 						</Button>
 					)}
 				</div>

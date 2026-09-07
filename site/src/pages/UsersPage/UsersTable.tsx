@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useTranslation } from "react-i18next";
 import type { GroupsByUserId } from "#/api/queries/groups";
 import type * as TypesGen from "#/api/typesGenerated";
 import { AvatarData } from "#/components/Avatar/AvatarData";
@@ -48,27 +49,35 @@ export type UsersTableProps = {
 };
 
 export const UsersTable: React.FC<UsersTableProps> = (props) => {
+	const { t: tI18n } = useTranslation("users");
+
 	return (
-		<Table data-testid="users-table" aria-label="Users">
+		<Table
+			data-testid="users-table"
+			aria-label={tI18n("UsersPage.UsersTable.users_6b0cc904")}
+		>
 			<TableHeader>
 				<TableRow>
-					<TableHead className="w-max">User</TableHead>
+					<TableHead className="w-max">
+						{tI18n("UsersPage.UsersTable.user_b512d97e")}
+					</TableHead>
 					<TableHead className="w-1/6">
 						<div className="flex flex-row gap-2 items-center">
-							<span>Roles</span>
+							<span>{tI18n("UsersPage.UsersTable.roles_c2533705")}</span>
 							<RolesHelpPopover />
 						</div>
 					</TableHead>
 					<TableHead className="w-1/6">
 						<div className="flex flex-row gap-2 items-center">
-							<span>Groups</span>
+							<span>{tI18n("UsersPage.UsersTable.groups_39bbb719")}</span>
 							<GroupsHelpPopover />
 						</div>
 					</TableHead>
-					<TableHead className="w-1/6">Status</TableHead>
+					<TableHead className="w-1/6">
+						{tI18n("UsersPage.UsersTable.status_920e413c")}
+					</TableHead>
 				</TableRow>
 			</TableHeader>
-
 			<TableBody>
 				<UsersTableBody {...props} />
 			</TableBody>
@@ -86,12 +95,18 @@ const UsersTableBody: React.FC<UsersTableProps> = ({
 	oidcRoleSyncEnabled,
 	onAction,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	if (isLoading) {
 		return <UsersTableSkeleton canEditUsers={canEditUsers} />;
 	}
 
 	if (!users || users.length === 0) {
-		return <TableEmpty message="No users found" />;
+		return (
+			<TableEmpty
+				message={tI18n("UsersPage.UsersTable.no_users_found_bf1e104f")}
+			/>
+		);
 	}
 
 	return users.map((user) => (
@@ -99,7 +114,11 @@ const UsersTableBody: React.FC<UsersTableProps> = ({
 			<TableCell>
 				<AvatarData
 					title={user.username}
-					subtitle={user.is_service_account ? "Service Account" : user.email}
+					subtitle={
+						user.is_service_account
+							? tI18n("UsersPage.UsersTable.service_account_562c51b8")
+							: user.email
+					}
 					src={user.avatar_url}
 				/>
 			</TableCell>

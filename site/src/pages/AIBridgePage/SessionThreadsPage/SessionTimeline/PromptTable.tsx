@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "#/components/Badge/Badge";
 import {
 	Tooltip,
@@ -28,6 +29,8 @@ export const PromptTable: FC<PromptTableProps> = ({
 	tokenUsageMetadata,
 	className,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<dl
 			className={cn(
@@ -36,7 +39,11 @@ export const PromptTable: FC<PromptTableProps> = ({
 			)}
 		>
 			<div className="flex items-center justify-between">
-				<dt className="shrink-0 whitespace-nowrap">Timestamp</dt>
+				<dt className="shrink-0 whitespace-nowrap">
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionTimeline.PromptTable.timestamp_115a2cc9",
+					)}
+				</dt>
 				<dd
 					className="ml-4 min-w-0 truncate font-mono text-xs"
 					title={formatDate(timestamp)}
@@ -44,9 +51,12 @@ export const PromptTable: FC<PromptTableProps> = ({
 					{formatDate(timestamp)}
 				</dd>
 			</div>
-
 			<div className="flex items-center justify-between">
-				<dt className="shrink-0 whitespace-nowrap">Model</dt>
+				<dt className="shrink-0 whitespace-nowrap">
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionTimeline.PromptTable.model_5e2c614c",
+					)}
+				</dt>
 				<dd className="ml-4 min-w-0 truncate flex justify-end">
 					<TooltipProvider>
 						<Tooltip>
@@ -61,9 +71,12 @@ export const PromptTable: FC<PromptTableProps> = ({
 					</TooltipProvider>
 				</dd>
 			</div>
-
 			<div className="flex items-center justify-between">
-				<dt className="shrink-0 whitespace-nowrap">In / out tokens</dt>
+				<dt className="shrink-0 whitespace-nowrap">
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionTimeline.PromptTable.in_out_tokens_6ffefed3",
+					)}
+				</dt>
 				<dd className="ml-4 min-w-0 truncate flex justify-end">
 					<TokenBadges
 						inputTokens={inputTokens}

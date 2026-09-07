@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { API } from "#/api/api";
 import { ComboboxInput } from "#/components/Combobox/Combobox";
 import {
@@ -59,18 +60,26 @@ interface ModelFilterProps {
 }
 
 export const ModelFilter: FC<ModelFilterProps> = ({ menu, width }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	return (
 		<SelectFilter
-			label="Select model"
-			placeholder="All models"
-			emptyText="No models found"
+			label={tI18n("AIBridgePage.filters.ModelFilter.select_model_1d446005")}
+			placeholder={tI18n(
+				"AIBridgePage.filters.ModelFilter.all_models_0f589c19",
+			)}
+			emptyText={tI18n(
+				"AIBridgePage.filters.ModelFilter.no_models_found_a650c298",
+			)}
 			options={menu.searchOptions}
 			onSelect={(option) => menu.selectOption(option)}
 			selectedOption={menu.selectedOption ?? undefined}
 			width={width}
 			selectFilterSearch={
 				<ComboboxInput
-					placeholder="Search model..."
+					placeholder={tI18n(
+						"AIBridgePage.filters.ModelFilter.search_model_a0bb9f24",
+					)}
 					value={menu.query}
 					onValueChange={menu.setQuery}
 				/>

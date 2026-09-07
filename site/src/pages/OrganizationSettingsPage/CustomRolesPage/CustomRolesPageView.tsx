@@ -1,5 +1,6 @@
 import { EllipsisVerticalIcon, PlusIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link as RouterLink, useNavigate } from "react-router";
 import type { AssignableRoles, Organization, Role } from "#/api/typesGenerated";
 import { PremiumBadge } from "#/components/Badge/PresetBadges";
@@ -67,17 +68,29 @@ export const CustomRolesPageView: FC<CustomRolesPageViewProps> = ({
 	onUpdateDefaultRoles,
 	isUpdatingDefaultRoles,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<div className="flex flex-col gap-12">
 			{!isCustomRolesEnabled && (
 				<PremiumPaywallSmall
 					source="custom_roles"
-					message="Custom Roles"
-					description="Build roles with the exact permissions your team needs."
+					message={tI18n(
+						"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.custom_roles_6e845384",
+					)}
+					description={tI18n(
+						"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.build_roles_with_the_exact_permissions_your_team_e2ae93f0",
+					)}
 					features={[
-						"Configure roles per organization",
-						"Go beyond the built-in role set",
-						"Assign custom roles to any user",
+						tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.configure_roles_per_organization_24875798",
+						),
+						tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.go_beyond_the_built_in_role_set_84002d02",
+						),
+						tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.assign_custom_roles_to_any_user_84ab06d7",
+						),
 					]}
 					canViewPremium={permissions.viewAllLicenses}
 				/>
@@ -100,18 +113,23 @@ export const CustomRolesPageView: FC<CustomRolesPageViewProps> = ({
 							<Button variant="outline" asChild>
 								<RouterLink to="create">
 									<PlusIcon />
-									Create custom role
+									{tI18n(
+										"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.create_custom_role_661dd96c",
+									)}
 								</RouterLink>
 							</Button>
 						)
 					}
 				>
 					<SettingsHeaderTitle level="h2" hierarchy="secondary">
-						Custom Roles
+						{tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.custom_roles_6e845384",
+						)}
 					</SettingsHeaderTitle>
 					<SettingsHeaderDescription>
-						Create custom roles to grant users a tailored set of granular
-						permissions.
+						{tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.create_custom_roles_to_grant_users_a_tailored_se_242ab516",
+						)}
 					</SettingsHeaderDescription>
 				</SettingsHeader>
 				<RoleTable
@@ -121,17 +139,22 @@ export const CustomRolesPageView: FC<CustomRolesPageViewProps> = ({
 					canUpdateOrgRole={canUpdateOrgRole}
 					canDeleteOrgRole={canDeleteOrgRole}
 					onDeleteRole={onDeleteRole}
-					aria-label="Custom roles"
+					aria-label={tI18n(
+						"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.custom_roles_c703c7f9",
+					)}
 				/>
 			</div>
 			<div>
 				<SettingsHeader>
 					<SettingsHeaderTitle level="h2" hierarchy="secondary">
-						Built-In Roles
+						{tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.built_in_roles_5c7ec9a7",
+						)}
 					</SettingsHeaderTitle>
 					<SettingsHeaderDescription>
-						Built-in roles have predefined permissions. You cannot edit or
-						delete built-in roles.
+						{tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.built_in_roles_have_predefined_permissions_you_c_703d4c54",
+						)}
 					</SettingsHeaderDescription>
 				</SettingsHeader>
 				<RoleTable
@@ -141,7 +164,9 @@ export const CustomRolesPageView: FC<CustomRolesPageViewProps> = ({
 					canUpdateOrgRole={canUpdateOrgRole}
 					canDeleteOrgRole={canDeleteOrgRole}
 					onDeleteRole={onDeleteRole}
-					aria-label="Built-in roles"
+					aria-label={tI18n(
+						"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.built_in_roles_cc8484f1",
+					)}
 				/>
 			</div>
 		</div>
@@ -165,6 +190,8 @@ const DefaultRolesSection: FC<DefaultRolesSectionProps> = ({
 	isUpdatingDefaultRoles,
 	onUpdateDefaultRoles,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const [isEditing, setIsEditing] = useState(false);
 
 	return (
@@ -182,31 +209,35 @@ const DefaultRolesSection: FC<DefaultRolesSectionProps> = ({
 								!availableOrgRoles
 							}
 						>
-							Edit default roles
+							{tI18n(
+								"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.edit_default_roles_6b1ab2b8",
+							)}
 						</Button>
 					)
 				}
 			>
 				<SettingsHeaderTitle level="h2" hierarchy="secondary">
-					Default Roles
+					{tI18n(
+						"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.default_roles_28dec485",
+					)}
 					{!defaultRolesEntitled && <PremiumBadge />}
 				</SettingsHeaderTitle>
 				<SettingsHeaderDescription>
-					Roles granted to every member of this organization, current and
-					future, in addition to any roles assigned directly. Removing a role
-					here removes it from all members that are not assigned that role
-					directly.
-					{!defaultRolesEntitled && (
-						<> Editing organization settings requires a Premium license.</>
+					{tI18n(
+						"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.roles_granted_to_every_member_of_this_organizati_6b092ace",
 					)}
+					{!defaultRolesEntitled &&
+						tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.editing_organization_settings_requires_a_premium_c058e600",
+						)}
 				</SettingsHeaderDescription>
 			</SettingsHeader>
 			<div className="text-sm">
 				{organization.default_org_member_roles.length === 0 ? (
 					<span className="text-content-secondary">
-						No default roles. Members have only the permissions of their
-						directly assigned roles, which excludes creating and using
-						workspaces.
+						{tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.no_default_roles_members_have_only_the_permissio_52075c35",
+						)}
 					</span>
 				) : (
 					<DefaultRolesSummary
@@ -270,12 +301,22 @@ const RoleTable: FC<RoleTableProps> = ({
 	"aria-label": ariaLabel,
 	...bodyProps
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<Table aria-label={ariaLabel}>
 			<TableHeader>
 				<TableRow>
-					<TableHead className="w-2/5">Name</TableHead>
-					<TableHead className="w-3/5">Permissions</TableHead>
+					<TableHead className="w-2/5">
+						{tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.name_dcd1d522",
+						)}
+					</TableHead>
+					<TableHead className="w-3/5">
+						{tI18n(
+							"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.permissions_abccc78c",
+						)}
+					</TableHead>
 					<TableHead className="w-auto" />
 				</TableRow>
 			</TableHeader>
@@ -294,19 +335,29 @@ const RoleTableBody: FC<RoleTableBodyProps> = ({
 	canDeleteOrgRole,
 	onDeleteRole,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	if (roles === undefined) {
 		return <TableLoader />;
 	}
 	if (roles.length === 0) {
 		return (
 			<TableEmpty
-				message="No custom roles yet"
+				message={tI18n(
+					"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.no_custom_roles_yet_7ff860eb",
+				)}
 				description={
 					canCreateOrgRole && isCustomRolesEnabled
-						? "Create your first custom role"
+						? tI18n(
+								"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.create_your_first_custom_role_6393c00c",
+							)
 						: !isCustomRolesEnabled
-							? "Upgrade to a premium license to create a custom role"
-							: "You don't have permission to create a custom role"
+							? tI18n(
+									"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.upgrade_to_a_premium_license_to_create_a_custom__fe46c114",
+								)
+							: tI18n(
+									"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.you_don_t_have_permission_to_create_a_custom_rol_18978706",
+								)
 				}
 				cta={
 					canCreateOrgRole &&
@@ -314,7 +365,9 @@ const RoleTableBody: FC<RoleTableBodyProps> = ({
 						<Button asChild>
 							<RouterLink to="create">
 								<PlusIcon />
-								Create custom role
+								{tI18n(
+									"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.create_custom_role_661dd96c",
+								)}
 							</RouterLink>
 						</Button>
 					)
@@ -352,16 +405,16 @@ const RoleRow: FC<RoleRowProps> = ({
 	canUpdateOrgRole,
 	canDeleteOrgRole,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const navigate = useNavigate();
 
 	return (
 		<TableRow data-testid={`role-${role.name}`} className="h-14">
 			<TableCell>{role.display_name || role.name}</TableCell>
-
 			<TableCell>
 				<PermissionPillsList permissions={role.organization_permissions} />
 			</TableCell>
-
 			<TableCell>
 				{!role.built_in && (canUpdateOrgRole || canDeleteOrgRole) && (
 					<DropdownMenu>
@@ -369,16 +422,24 @@ const RoleRow: FC<RoleRowProps> = ({
 							<ShadcnButton
 								size="icon-lg"
 								variant="subtle"
-								aria-label="Open menu"
+								aria-label={tI18n(
+									"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.open_menu_b40b3713",
+								)}
 							>
 								<EllipsisVerticalIcon aria-hidden="true" />
-								<span className="sr-only">Open menu</span>
+								<span className="sr-only">
+									{tI18n(
+										"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.open_menu_b40b3713",
+									)}
+								</span>
 							</ShadcnButton>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
 							{canUpdateOrgRole && (
 								<DropdownMenuItem onClick={() => navigate(role.name)}>
-									Edit
+									{tI18n(
+										"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.edit_464c4ffd",
+									)}
 								</DropdownMenuItem>
 							)}
 							{canDeleteOrgRole && (
@@ -386,7 +447,9 @@ const RoleRow: FC<RoleRowProps> = ({
 									className="text-content-destructive focus:text-content-destructive"
 									onClick={onDelete}
 								>
-									Delete&hellip;
+									{tI18n(
+										"OrganizationSettingsPage.CustomRolesPage.CustomRolesPageView.delete_9ce78fe3",
+									)}
 								</DropdownMenuItem>
 							)}
 						</DropdownMenuContent>

@@ -1,5 +1,6 @@
 import { cn } from "cn";
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, NavLink, useMatch } from "react-router";
 import {
 	Sidebar as BaseSidebar,
@@ -37,6 +38,8 @@ const SubNavItem: FC<{ href: string; children?: ReactNode }> = ({
 );
 
 const ModelsSidebarNavItem: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const legacyMatch = useMatch("/ai/settings/models/*");
 	const organizationMatch = useMatch(
 		"/ai/settings/organizations/:organization/models/*",
@@ -52,7 +55,7 @@ const ModelsSidebarNavItem: FC = () => {
 				isActive && "font-semibold text-content-primary",
 			)}
 		>
-			Models
+			{tI18n("management.AISettingsSidebarView.models_d17d2d78")}
 		</Link>
 	);
 };
@@ -62,41 +65,49 @@ const AISettingsSidebarView: FC<AISettingsSidebarViewProps> = ({
 	canAccessOrganizationModels = false,
 	canShareOrganizationMCPServers = false,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	return (
 		<BaseSidebar>
 			<div className="flex flex-col gap-1">
 				{permissions.viewDeploymentConfig && (
 					<SidebarNavItem href="/ai/settings/governance">
-						AI Governance
+						{tI18n("management.AISettingsSidebarView.ai_governance_2ab040bd")}
 					</SidebarNavItem>
 				)}
 				{permissions.viewAIGatewayKeys && (
 					<SidebarNavItem href="/ai/settings/gateway-keys">
-						AI Gateway keys
+						{tI18n("management.AISettingsSidebarView.ai_gateway_keys_cab8f75b")}
 					</SidebarNavItem>
 				)}
 				{permissions.viewAnyAIProvider && (
 					<SidebarNavItem href="/ai/settings/providers">
-						Providers
+						{tI18n("management.AISettingsSidebarView.providers_996c32b3")}
 					</SidebarNavItem>
 				)}
 				{(canAccessAnyChatModelConfig(permissions) ||
 					canAccessOrganizationModels) && <ModelsSidebarNavItem />}
 				{(permissions.editDeploymentConfig || canAccessOrganizationModels) && (
 					<SidebarNavItem href="/ai/settings/coder-agents">
-						Coder Agents
+						{tI18n("management.AISettingsSidebarView.coder_agents_19b8e154")}
 					</SidebarNavItem>
 				)}
 				{permissions.editDeploymentConfig && (
 					<div className="flex flex-col gap-1 ml-3 border-0 border-solid border-l border-l-border">
-						<SubNavItem href="/ai/settings/mcp-servers">MCP servers</SubNavItem>
+						<SubNavItem href="/ai/settings/mcp-servers">
+							{tI18n("management.AISettingsSidebarView.mcp_servers_22a7559f")}
+						</SubNavItem>
 						{permissions.updateAnyTemplate && (
-							<SubNavItem href="/ai/settings/templates">Templates</SubNavItem>
+							<SubNavItem href="/ai/settings/templates">
+								{tI18n("management.AISettingsSidebarView.templates_56b564b7")}
+							</SubNavItem>
 						)}
 						<SubNavItem href="/ai/settings/instructions">
-							Instructions
+							{tI18n("management.AISettingsSidebarView.instructions_934652dc")}
 						</SubNavItem>
-						<SubNavItem href="/ai/settings/lifecycle">Lifecycle</SubNavItem>
+						<SubNavItem href="/ai/settings/lifecycle">
+							{tI18n("management.AISettingsSidebarView.lifecycle_46459b1f")}
+						</SubNavItem>
 					</div>
 				)}
 				{!permissions.editDeploymentConfig &&
@@ -116,13 +127,15 @@ const AISettingsSidebarView: FC<AISettingsSidebarViewProps> = ({
 										: "/ai/settings/mcp-servers/add"
 								}
 							>
-								MCP servers
+								{tI18n("management.AISettingsSidebarView.mcp_servers_22a7559f")}
 							</SubNavItem>
 						</div>
 					)}
 				{!permissions.editDeploymentConfig && permissions.updateAnyTemplate && (
 					<div className="flex flex-col gap-1 ml-3 border-0 border-solid border-l border-l-border">
-						<SubNavItem href="/ai/settings/templates">Templates</SubNavItem>
+						<SubNavItem href="/ai/settings/templates">
+							{tI18n("management.AISettingsSidebarView.templates_56b564b7")}
+						</SubNavItem>
 					</div>
 				)}
 			</div>

@@ -1,10 +1,12 @@
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { groupById } from "#/api/queries/groups";
 import type { Group, GroupMemberAISpend } from "#/api/typesGenerated";
 import { Badge } from "#/components/Badge/Badge";
 import { Spinner } from "#/components/Spinner/Spinner";
 import { TableCell } from "#/components/Table/Table";
+import { i18n } from "#/i18n";
 import { AIBudgetAmount } from "#/modules/groups/AIBudgetAmount";
 import { AIBudgetUsage } from "#/modules/groups/AIBudgetUsage";
 import { formatBudgetUSD } from "#/utils/currency";
@@ -13,8 +15,9 @@ import { StatusIconTooltip } from "./StatusIconTooltip";
 const EM_DASH = "\u2014";
 
 /** Shown on both cells when the governing group is in another org. */
-const OTHER_ORG_MESSAGE =
-	"This user's AI budget is managed by a group in another organization and isn't visible here.";
+const OTHER_ORG_MESSAGE = i18n.t(
+	"administration:GroupsPage.GroupMemberBudgetCells.this_user_s_ai_budget_is_managed_by_a_group_in_a_ccfbce11",
+);
 
 /**
  * The AI spend and Budget group cells for a group member. Spend is scoped to
@@ -25,6 +28,8 @@ export const GroupMemberBudgetCells: FC<{
 	userID: string;
 	spend: GroupMemberAISpend | undefined;
 }> = ({ group, userID, spend }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const effective = effectiveBudgetGroup(spend, group);
 	const isEveryoneGroup = spend?.effective_group_id === group.organization_id;
 	const fromOtherGroup = effective.kind === "otherGroup";
@@ -58,7 +63,9 @@ export const GroupMemberBudgetCells: FC<{
 				<Badge size="sm">
 					{spend?.effective_budget
 						? badgeName("Everyone")
-						: "Everyone (not allocated)"}
+						: tI18n(
+								"GroupsPage.GroupMemberBudgetCells.everyone_not_allocated_2d7a1377",
+							)}
 				</Badge>
 			);
 			break;
@@ -98,26 +105,34 @@ export const GroupMemberBudgetCells: FC<{
 							<span className="text-content-secondary">
 								{formatBudgetUSD(spend.group_spend_micros)}
 							</span>{" "}
-							<span className="text-content-disabled">USD</span>
+							<span className="text-content-disabled">
+								{tI18n("GroupsPage.GroupMemberBudgetCells.usd_a26cdf3a")}
+							</span>
 						</span>
 						<StatusIconTooltip
 							message={
 								<>
-									The amount shown is this user's spend in the{" "}
+									{tI18n(
+										"GroupsPage.GroupMemberBudgetCells.the_amount_shown_is_this_user_s_spend_in_the_fc905203",
+									)}{" "}
 									<span className="font-medium text-content-primary">
 										{groupName}
 									</span>{" "}
-									group. Their AI budget is currently managed by the{" "}
+									{tI18n(
+										"GroupsPage.GroupMemberBudgetCells.group_their_ai_budget_is_currently_managed_by_th_be0c2cc2",
+									)}{" "}
 									<span className="font-medium text-content-primary">
 										{effectiveGroupName}
 									</span>{" "}
-									group.
+									{tI18n("GroupsPage.GroupMemberBudgetCells.group_4012eb4b")}
 								</>
 							}
 						/>
 					</span>
 					<span className="text-xs text-content-secondary">
-						Budget managed by another group
+						{tI18n(
+							"GroupsPage.GroupMemberBudgetCells.budget_managed_by_another_group_54d120b1",
+						)}
 					</span>
 				</div>
 			);
@@ -134,22 +149,32 @@ export const GroupMemberBudgetCells: FC<{
 							spendLimit={null}
 						/>
 					}
-					message="None of this user's groups have an AI budget configured, so their AI usage isn't restricted."
+					message={tI18n(
+						"GroupsPage.GroupMemberBudgetCells.none_of_this_user_s_groups_have_an_ai_budget_con_02cca7a9",
+					)}
 				/>
 			);
 		} else {
 			const limitLabel =
 				spend.effective_budget?.limit_source === "user_override"
-					? "Custom"
-					: "Group";
+					? tI18n("GroupsPage.GroupMemberBudgetCells.custom_494ca78f")
+					: tI18n("GroupsPage.GroupMemberBudgetCells.group_34ca0e76");
 			budget = (
 				<div className="flex flex-col gap-0.5">
 					<span>
 						<AIBudgetAmount spend={spend.group_spend_micros} limit={limit} />{" "}
-						<span className="text-content-disabled">USD</span>
+						<span className="text-content-disabled">
+							{tI18n("GroupsPage.GroupMemberBudgetCells.usd_a26cdf3a")}
+						</span>
 					</span>
 					<span className="text-xs text-content-secondary">
-						{`${limitLabel} limit ${formatBudgetUSD(limit)}`}
+						{tI18n(
+							"GroupsPage.GroupMemberBudgetCells.value0_limit_value1_d9c8790b",
+							{
+								value0: limitLabel,
+								value1: formatBudgetUSD(limit),
+							},
+						)}
 					</span>
 				</div>
 			);

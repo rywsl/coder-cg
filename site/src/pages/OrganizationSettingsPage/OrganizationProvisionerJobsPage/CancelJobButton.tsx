@@ -1,5 +1,6 @@
 import { BanIcon } from "lucide-react";
 import { type FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { ProvisionerJob } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
 import {
@@ -16,6 +17,8 @@ type CancelJobButtonProps = {
 };
 
 export const CancelJobButton: FC<CancelJobButtonProps> = ({ job }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const isCancellable = CANCELLABLE.includes(job.status);
 
@@ -25,7 +28,9 @@ export const CancelJobButton: FC<CancelJobButtonProps> = ({ job }) => {
 				<TooltipTrigger asChild>
 					<Button
 						disabled={!isCancellable}
-						aria-label="Cancel job"
+						aria-label={tI18n(
+							"OrganizationSettingsPage.OrganizationProvisionerJobsPage.CancelJobButton.cancel_job_a5032d26",
+						)}
 						size="icon"
 						variant="outline"
 						onClick={() => {
@@ -35,9 +40,12 @@ export const CancelJobButton: FC<CancelJobButtonProps> = ({ job }) => {
 						<BanIcon />
 					</Button>
 				</TooltipTrigger>
-				<TooltipContent>Cancel job</TooltipContent>
+				<TooltipContent>
+					{tI18n(
+						"OrganizationSettingsPage.OrganizationProvisionerJobsPage.CancelJobButton.cancel_job_a5032d26",
+					)}
+				</TooltipContent>
 			</Tooltip>
-
 			<CancelJobConfirmationDialog
 				open={isDialogOpen}
 				job={job}

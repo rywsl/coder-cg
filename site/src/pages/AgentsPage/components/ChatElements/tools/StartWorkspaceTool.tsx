@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { ToolCall } from "./ToolCall";
 import type { ToolStatus } from "./utils";
 import { WorkspaceBuildLogSection } from "./WorkspaceBuildLogSection";
@@ -22,17 +23,33 @@ export const StartWorkspaceTool: FC<StartWorkspaceToolProps> = ({
 	noBuild,
 	labelOverride,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const isRunning = status === "running";
 
 	const label = isRunning
-		? "Starting workspace…"
+		? tI18n(
+				"AgentsPage.components.ChatElements.tools.StartWorkspaceTool.starting_workspace_3339e32b",
+			)
 		: labelOverride
 			? labelOverride
 			: isError
-				? `Failed to start ${workspaceName || "workspace"}`
+				? tI18n(
+						"AgentsPage.components.ChatElements.tools.StartWorkspaceTool.failed_to_start_value0_403611e9",
+						{
+							value0: workspaceName || "workspace",
+						},
+					)
 				: workspaceName
-					? `Started ${workspaceName}`
-					: "Started workspace";
+					? tI18n(
+							"AgentsPage.components.ChatElements.tools.StartWorkspaceTool.started_value0_281dff47",
+							{
+								value0: workspaceName,
+							},
+						)
+					: tI18n(
+							"AgentsPage.components.ChatElements.tools.StartWorkspaceTool.started_workspace_4530ffc2",
+						);
 
 	const hasBuildLogs = (isRunning || Boolean(buildId)) && !noBuild;
 
@@ -41,7 +58,12 @@ export const StartWorkspaceTool: FC<StartWorkspaceToolProps> = ({
 			className="w-full"
 			status={status}
 			isError={isError}
-			errorMessage={errorMessage || "Failed to start workspace"}
+			errorMessage={
+				errorMessage ||
+				tI18n(
+					"AgentsPage.components.ChatElements.tools.StartWorkspaceTool.failed_to_start_workspace_7a5b7ed2",
+				)
+			}
 			hasContent={hasBuildLogs}
 			defaultExpanded={isRunning}
 		>

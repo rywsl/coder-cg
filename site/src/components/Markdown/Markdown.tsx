@@ -21,6 +21,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "#/components/Table/Table";
+import { i18n } from "#/i18n";
 
 interface MarkdownProps {
 	/**
@@ -218,7 +219,11 @@ function parseChildrenAsAlertContent(
 					children: (
 						<>
 							{recastProps.children}
-							<span className="sr-only"> (link opens in new tab)</span>
+							<span className="sr-only">
+								{i18n.t(
+									"components:Markdown.Markdown.link_opens_in_new_tab_20897869",
+								)}
+							</span>
 						</>
 					),
 				},

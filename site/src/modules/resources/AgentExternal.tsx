@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { workspaceAgentCredentials } from "#/api/queries/workspaces";
 import type { Workspace, WorkspaceAgent } from "#/api/typesGenerated";
@@ -12,6 +13,8 @@ interface AgentExternalProps {
 }
 
 export const AgentExternal: FC<AgentExternalProps> = ({ agent, workspace }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	const {
 		data: credentials,
 		error,
@@ -30,8 +33,11 @@ export const AgentExternal: FC<AgentExternalProps> = ({ agent, workspace }) => {
 	return (
 		<section className="text-base text-content-secondary pb-2 leading-relaxed">
 			<p>
-				Please run the following command to attach an agent to the{" "}
-				{workspace.name} workspace:
+				{tI18n(
+					"resources.AgentExternal.please_run_the_following_command_to_attach_an_ag_ef79fa65",
+				)}{" "}
+				{workspace.name}
+				{tI18n("resources.AgentExternal.workspace_718ec194")}
 			</p>
 			<CodeExample
 				code={credentials?.command ?? ""}

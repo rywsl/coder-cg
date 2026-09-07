@@ -1,4 +1,5 @@
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "#/components/Button/Button";
 
 type NumberedPageButtonProps = {
@@ -16,10 +17,23 @@ export const NumberedPageButton: FC<NumberedPageButtonProps> = ({
 	highlighted = false,
 	disabled = false,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
+	let ariaLabel = tI18n("PaginationWidget.PageButtons.page_value0_3a8697b9", {
+		value0: pageNumber,
+	});
+	if (highlighted) {
+		ariaLabel = tI18n("PaginationWidget.PageButtons.current_page_5c15d4a7");
+	} else if (pageNumber === 1) {
+		ariaLabel = tI18n("PaginationWidget.PageButtons.first_page_c278e9ed");
+	} else if (pageNumber === totalPages) {
+		ariaLabel = tI18n("PaginationWidget.PageButtons.last_page_e6e00be5");
+	}
+
 	return (
 		<BasePageButton
 			name="Page button"
-			aria-label={getNumberedButtonLabel(pageNumber, totalPages, highlighted)}
+			aria-label={ariaLabel}
 			onClick={onClick}
 			highlighted={highlighted}
 			disabled={disabled}
@@ -38,11 +52,18 @@ export const PlaceholderPageButton: FC<PlaceholderPageButtonProps> = ({
 	pagesOmitted,
 	children = <>&hellip;</>,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	return (
 		<BasePageButton
 			disabled
 			name="Omitted pages"
-			aria-label={`Omitting ${pagesOmitted} pages`}
+			aria-label={tI18n(
+				"PaginationWidget.PageButtons.omitting_value0_pages_61e516fd",
+				{
+					value0: pagesOmitted,
+				},
+			)}
 		>
 			{children}
 		</BasePageButton>
@@ -80,23 +101,3 @@ const BasePageButton: FC<BasePageButtonProps> = ({
 		</Button>
 	);
 };
-
-function getNumberedButtonLabel(
-	page: number,
-	totalPages: number,
-	highlighted: boolean,
-): string {
-	if (highlighted) {
-		return "Current Page";
-	}
-
-	if (page === 1) {
-		return "First Page";
-	}
-
-	if (page === totalPages) {
-		return "Last Page";
-	}
-
-	return `Page ${page}`;
-}

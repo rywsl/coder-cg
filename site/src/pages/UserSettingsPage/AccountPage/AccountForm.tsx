@@ -1,5 +1,6 @@
 import { type FormikTouched, useFormik } from "formik";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import type { UpdateUserProfileRequest } from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
@@ -7,6 +8,7 @@ import { Button } from "#/components/Button/Button";
 import { Form, FormFields } from "#/components/Form/Form";
 import { FormField } from "#/components/FormField/FormField";
 import { Spinner } from "#/components/Spinner/Spinner";
+import { i18n } from "#/i18n";
 import {
 	getFormHelpers,
 	nameValidator,
@@ -14,7 +16,9 @@ import {
 } from "#/utils/formUtils";
 
 const validationSchema = Yup.object({
-	username: nameValidator("Username"),
+	username: nameValidator(
+		i18n.t("users:UserSettingsPage.AccountPage.AccountForm.username_e3b89e9d"),
+	),
 	name: Yup.string(),
 });
 
@@ -38,6 +42,8 @@ export const AccountForm: FC<AccountFormProps> = ({
 	updateProfileError,
 	initialTouched,
 }) => {
+	const { t: tI18n } = useTranslation("users");
+
 	const form = useFormik({
 		initialValues,
 		validationSchema,
@@ -55,7 +61,9 @@ export const AccountForm: FC<AccountFormProps> = ({
 
 				<FormField
 					field={getFieldHelpers("email")}
-					label="Email"
+					label={tI18n(
+						"UserSettingsPage.AccountPage.AccountForm.email_969ccbd3",
+					)}
 					value={email}
 					disabled
 				/>
@@ -66,17 +74,22 @@ export const AccountForm: FC<AccountFormProps> = ({
 					autoComplete="username"
 					disabled={!editable}
 					className="w-full"
-					label="Username"
+					label={tI18n(
+						"UserSettingsPage.AccountPage.AccountForm.username_e3b89e9d",
+					)}
 				/>
 				<FormField
 					field={{
 						...getFieldHelpers("name"),
-						helperText:
-							'The human-readable name is optional and can be accessed in a template via the "data.coder_workspace_owner.me.full_name" property.',
+						helperText: tI18n(
+							"UserSettingsPage.AccountPage.AccountForm.the_human_readable_name_is_optional_and_can_be_a_34bf86a1",
+						),
 					}}
 					autoComplete="name"
 					className="w-full"
-					label="Name"
+					label={tI18n(
+						"UserSettingsPage.AccountPage.AccountForm.name_dcd1d522",
+					)}
 					onBlur={(event) => {
 						event.target.value = event.target.value.trim();
 						form.handleChange(event);
@@ -85,7 +98,9 @@ export const AccountForm: FC<AccountFormProps> = ({
 				<div>
 					<Button disabled={isLoading} type="submit">
 						<Spinner loading={isLoading} />
-						Update account
+						{tI18n(
+							"UserSettingsPage.AccountPage.AccountForm.update_account_79bd50e1",
+						)}
 					</Button>
 				</div>
 			</FormFields>

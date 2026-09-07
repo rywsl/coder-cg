@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { ImageIcon } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	externalImageHost,
 	isExternalImageSource,
@@ -12,6 +13,8 @@ import {
  * viewer's IP to the image host (Cure53 CDM-02-006).
  */
 export const MarkdownImage = ({ src, alt }: { src?: string; alt?: string }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [consented, setConsented] = useState(false);
 
 	if (!src) {
@@ -32,7 +35,17 @@ export const MarkdownImage = ({ src, alt }: { src?: string; alt?: string }) => {
 		return (
 			<span className="inline-flex items-center gap-1.5 rounded-md border border-solid border-border-default bg-surface-secondary px-2 py-1 text-xs text-content-secondary">
 				<ImageIcon aria-hidden className="size-3.5 shrink-0" />
-				Blocked image{alt ? `: ${alt}` : ""}
+				{tI18n(
+					"AgentsPage.components.ChatElements.MarkdownImage.blocked_image_cf81bad7",
+				)}
+				{alt
+					? tI18n(
+							"AgentsPage.components.ChatElements.MarkdownImage.value0_4de37ed4",
+							{
+								value0: alt,
+							},
+						)
+					: ""}
 			</span>
 		);
 	}
@@ -41,7 +54,12 @@ export const MarkdownImage = ({ src, alt }: { src?: string; alt?: string }) => {
 		<button
 			type="button"
 			onClick={() => setConsented(true)}
-			aria-label={`Load external image from ${host}`}
+			aria-label={tI18n(
+				"AgentsPage.components.ChatElements.MarkdownImage.load_external_image_from_value0_8ab8fff7",
+				{
+					value0: host,
+				},
+			)}
 			className={cn(
 				"inline-flex max-w-full cursor-pointer items-center gap-1.5",
 				"rounded-md border border-solid border-border-default bg-surface-secondary",
@@ -51,9 +69,24 @@ export const MarkdownImage = ({ src, alt }: { src?: string; alt?: string }) => {
 		>
 			<ImageIcon aria-hidden className="size-3.5 shrink-0" />
 			<span className="truncate">
-				{alt ? `${alt}: ` : ""}external image from {host}
+				{alt
+					? tI18n(
+							"AgentsPage.components.ChatElements.MarkdownImage.value0_18bd5dd2",
+							{
+								value0: alt,
+							},
+						)
+					: ""}
+				{tI18n(
+					"AgentsPage.components.ChatElements.MarkdownImage.external_image_from_5052b5b9",
+				)}
+				{host}
 			</span>
-			<span className="shrink-0 font-medium text-content-link">Load</span>
+			<span className="shrink-0 font-medium text-content-link">
+				{tI18n(
+					"AgentsPage.components.ChatElements.MarkdownImage.load_8a6bdb6b",
+				)}
+			</span>
 		</button>
 	);
 };

@@ -160,7 +160,8 @@ export const CompanyNameOverLimit: Story = {
 	play: async ({ canvasElement, args }) => {
 		const canvas = within(canvasElement);
 
-		await userEvent.type(canvas.getByLabelText(/^Company/), "a".repeat(101));
+		await userEvent.click(canvas.getByLabelText(/^Company/));
+		await userEvent.paste("a".repeat(101));
 
 		await waitFor(() =>
 			expect(
@@ -208,30 +209,17 @@ export const SubmitsCompleteForm: Story = {
 	play: async ({ canvasElement, args }) => {
 		const canvas = within(canvasElement);
 
-		await userEvent.type(
-			canvas.getByLabelText(/^Business email/),
-			COMPLETE_REQUEST.email,
-		);
-		await userEvent.type(
-			canvas.getByLabelText(/^First name/),
-			COMPLETE_REQUEST.first_name,
-		);
-		await userEvent.type(
-			canvas.getByLabelText(/^Last name/),
-			COMPLETE_REQUEST.last_name,
-		);
-		await userEvent.type(
-			canvas.getByLabelText(/^Company/),
-			COMPLETE_REQUEST.company_name,
-		);
-		await userEvent.type(
-			canvas.getByLabelText(/^Job title/),
-			COMPLETE_REQUEST.job_title,
-		);
-		await userEvent.type(
-			canvas.getByLabelText(/^Phone number/),
-			COMPLETE_REQUEST.phone_number,
-		);
+		for (const [label, value] of [
+			[/^Business email/, COMPLETE_REQUEST.email],
+			[/^First name/, COMPLETE_REQUEST.first_name],
+			[/^Last name/, COMPLETE_REQUEST.last_name],
+			[/^Company/, COMPLETE_REQUEST.company_name],
+			[/^Job title/, COMPLETE_REQUEST.job_title],
+			[/^Phone number/, COMPLETE_REQUEST.phone_number],
+		] as const) {
+			await userEvent.click(canvas.getByLabelText(label));
+			await userEvent.paste(value);
+		}
 		await selectOption(canvasElement, /^Number of developers/, /^51 - 100$/);
 		await selectOption(canvasElement, /^Country/, /United States$/);
 

@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import type { FC, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import type { Group } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
@@ -13,8 +14,9 @@ import {
 import { Label } from "#/components/Label/Label";
 import { Link } from "#/components/Link/Link";
 import { Spinner } from "#/components/Spinner/Spinner";
+import { i18n } from "#/i18n";
 import {
-	aiBudgetRangeError,
+	getAIBudgetRangeError,
 	isEveryoneGroup,
 	maxAIBudgetDollars,
 } from "#/modules/groups";
@@ -36,28 +38,36 @@ type FormData = {
 };
 
 const validationSchema = Yup.object({
-	name: nameValidator("Name"),
+	name: nameValidator(
+		i18n.t("administration:GroupsPage.GroupSettingsPageView.name_dcd1d522"),
+	),
 	quota_allowance: Yup.number().required().min(0).integer(),
 	// Optional: empty means no budget. A value must be within the range; 0 disables.
 	monthly_budget_per_member: Yup.number()
 		.transform((value, original) => (original === "" ? undefined : value))
-		.min(0, aiBudgetRangeError)
-		.max(maxAIBudgetDollars, aiBudgetRangeError),
+		.min(0, getAIBudgetRangeError)
+		.max(maxAIBudgetDollars, getAIBudgetRangeError),
 });
 
-const BudgetDocsLink: FC = () => (
-	<Link
-		href={docs("/ai-coder/ai-gateway/cost-controls#effective-group-resolution")}
-		target="_blank"
-		rel="noreferrer"
-		size="sm"
-		// The link's default left padding reads as a stray gap when the link
-		// wraps to its own line under the helper text.
-		className="pl-0"
-	>
-		View docs
-	</Link>
-);
+const BudgetDocsLink: FC = () => {
+	const { t: tI18n } = useTranslation("administration");
+
+	return (
+		<Link
+			href={docs(
+				"/ai-coder/ai-gateway/cost-controls#effective-group-resolution",
+			)}
+			target="_blank"
+			rel="noreferrer"
+			size="sm"
+			// The link's default left padding reads as a stray gap when the link
+			// wraps to its own line under the helper text.
+			className="pl-0"
+		>
+			{tI18n("GroupsPage.GroupSettingsPageView.view_docs_61479fda")}
+		</Link>
+	);
+};
 
 interface AIBudgetFeedbackProps {
 	error: boolean;
@@ -72,6 +82,8 @@ const AIBudgetFeedback: FC<AIBudgetFeedbackProps> = ({
 	monthlyBudgetPerMember,
 	memberCount,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	if (error) {
 		return (
 			<span className="text-left text-xs text-content-destructive">
@@ -89,19 +101,25 @@ const AIBudgetFeedback: FC<AIBudgetFeedbackProps> = ({
 		const { summary, message } =
 			budgetValue === ""
 				? {
-						summary: "This group doesn't have a budget set.",
-						message:
-							"Members will fall back to another group's limit, or if no budgets have been set, they will have no spend limit.",
+						summary: tI18n(
+							"GroupsPage.GroupSettingsPageView.this_group_doesn_t_have_a_budget_set_ff45eb6b",
+						),
+						message: tI18n(
+							"GroupsPage.GroupSettingsPageView.members_will_fall_back_to_another_group_s_limit__a67e3683",
+						),
 					}
 				: {
 						summary: (
 							<>
-								This group's limit has been set to{" "}
+								{tI18n(
+									"GroupsPage.GroupSettingsPageView.this_group_s_limit_has_been_set_to_decac4da",
+								)}{" "}
 								<span className="font-medium text-content-primary">$0</span>.
 							</>
 						),
-						message:
-							"A $0 limit blocks AI access for members that aren't in another group with a budget set.",
+						message: tI18n(
+							"GroupsPage.GroupSettingsPageView.a_0_limit_blocks_ai_access_for_members_that_aren_5aa50965",
+						),
 					};
 		return (
 			<>
@@ -118,13 +136,18 @@ const AIBudgetFeedback: FC<AIBudgetFeedbackProps> = ({
 	if (Number.isFinite(budgetAmount) && budgetAmount > 0) {
 		return (
 			<span className="text-left text-xs text-content-secondary">
-				This group's limit is{" "}
+				{tI18n(
+					"GroupsPage.GroupSettingsPageView.this_group_s_limit_is_40fca312",
+				)}{" "}
 				<span className="font-medium text-content-primary">
 					{usdBudgetFormatter.format(budgetAmount * memberCount)}
 				</span>
-				/month, based on{" "}
+				{tI18n("GroupsPage.GroupSettingsPageView.month_based_on_1b994ac4")}{" "}
 				<span className="font-medium text-content-primary">{memberCount}</span>{" "}
-				{memberCount === 1 ? "member" : "members"}. <BudgetDocsLink />
+				{memberCount === 1
+					? tI18n("GroupsPage.GroupSettingsPageView.member_e31ab643")
+					: tI18n("GroupsPage.GroupSettingsPageView.members_17373ca1")}
+				. <BudgetDocsLink />
 			</span>
 		);
 	}
@@ -151,6 +174,8 @@ const UpdateGroupForm: FC<UpdateGroupFormProps> = ({
 	onSubmit,
 	isLoading,
 }) => {
+	const { t: tI18n } = useTranslation("administration");
+
 	const form = useFormik<FormData>({
 		initialValues: {
 			name: group.name,
@@ -165,14 +190,22 @@ const UpdateGroupForm: FC<UpdateGroupFormProps> = ({
 	});
 	const getFieldHelpers = getFormHelpers<FormData>(form, errors);
 	const nameField = getFieldHelpers("name", {
-		helperText: "Unique identifier.",
+		helperText: tI18n(
+			"GroupsPage.GroupSettingsPageView.unique_identifier_62d55bfc",
+		),
 	});
 	const displayNameField = getFieldHelpers("display_name", {
-		helperText: "Friendly name. Defaults to the name if blank.",
+		helperText: tI18n(
+			"GroupsPage.GroupSettingsPageView.friendly_name_defaults_to_the_name_if_blank_c7f655d7",
+		),
 	});
 	const quotaField = getFieldHelpers("quota_allowance", {
-		helperText: `This group gives ${form.values.quota_allowance} quota credits to each
-            of its members.`,
+		helperText: tI18n(
+			"GroupsPage.GroupSettingsPageView.this_group_gives_value0_quota_credits_to_each_of_5073c010",
+			{
+				value0: form.values.quota_allowance,
+			},
+		),
 	});
 	const budgetField = getFieldHelpers("monthly_budget_per_member");
 
@@ -181,13 +214,13 @@ const UpdateGroupForm: FC<UpdateGroupFormProps> = ({
 			<section className="flex flex-col gap-4">
 				<div className="flex flex-col gap-2">
 					<h2 className="text-xl font-semibold text-content-primary m-0">
-						General
+						{tI18n("GroupsPage.GroupSettingsPageView.general_c910d474")}
 					</h2>
 				</div>
 				<div className="flex flex-col gap-6">
 					<div className="flex flex-col items-start gap-2">
 						<Label htmlFor={nameField.id}>
-							Name{" "}
+							{tI18n("GroupsPage.GroupSettingsPageView.name_dcd1d522")}{" "}
 							<span className="text-xs font-bold text-content-destructive">
 								*
 							</span>
@@ -218,7 +251,11 @@ const UpdateGroupForm: FC<UpdateGroupFormProps> = ({
 					{!isEveryoneGroup(group) && (
 						<>
 							<div className="flex flex-col items-start gap-2">
-								<Label htmlFor={displayNameField.id}>Display name</Label>
+								<Label htmlFor={displayNameField.id}>
+									{tI18n(
+										"GroupsPage.GroupSettingsPageView.display_name_2b7f6a84",
+									)}
+								</Label>
 								<Input
 									id={displayNameField.id}
 									name={displayNameField.name}
@@ -245,22 +282,27 @@ const UpdateGroupForm: FC<UpdateGroupFormProps> = ({
 								{...getFieldHelpers("avatar_url")}
 								onChange={onChangeTrimmed(form)}
 								fullWidth
-								label="Avatar URL"
+								label={tI18n(
+									"GroupsPage.GroupSettingsPageView.avatar_url_18a20f99",
+								)}
 								onPickEmoji={(value) => form.setFieldValue("avatar_url", value)}
 							/>
 						</>
 					)}
 				</div>
 			</section>
-
 			{showAISettings && (
 				<section className="flex flex-col gap-4">
 					<h2 className="m-0 text-xl font-semibold text-content-primary">
-						AI budget
+						{tI18n("GroupsPage.GroupSettingsPageView.ai_budget_4b897a4d")}
 					</h2>
 					<div className="flex flex-col gap-6">
 						<div className="flex flex-col items-start gap-2">
-							<Label htmlFor={budgetField.id}>Monthly limit per member</Label>
+							<Label htmlFor={budgetField.id}>
+								{tI18n(
+									"GroupsPage.GroupSettingsPageView.monthly_limit_per_member_8a53fd72",
+								)}
+							</Label>
 							<InputGroup>
 								<InputGroupInput
 									id={budgetField.id}
@@ -274,11 +316,13 @@ const UpdateGroupForm: FC<UpdateGroupFormProps> = ({
 									min="0"
 									max={maxAIBudgetDollars}
 									step="1"
-									placeholder="no budget"
+									placeholder={tI18n(
+										"GroupsPage.GroupSettingsPageView.no_budget_fa2e5945",
+									)}
 									aria-invalid={budgetField.error}
 								/>
 								<InputGroupAddon align="inline-end" className="pr-3">
-									USD
+									{tI18n("GroupsPage.GroupSettingsPageView.usd_a26cdf3a")}
 								</InputGroupAddon>
 							</InputGroup>
 							<AIBudgetFeedback
@@ -291,19 +335,24 @@ const UpdateGroupForm: FC<UpdateGroupFormProps> = ({
 					</div>
 				</section>
 			)}
-
 			<section className="flex flex-col gap-4">
 				<div className="flex flex-col gap-2">
 					<h2 className="text-xl font-semibold text-content-primary m-0">
-						Quotas
+						{tI18n("GroupsPage.GroupSettingsPageView.quotas_422b3847")}
 					</h2>
 					<p className="text-sm leading-none m-0 text-content-secondary">
-						You can use quotas to restrict how many resources a user can create.
+						{tI18n(
+							"GroupsPage.GroupSettingsPageView.you_can_use_quotas_to_restrict_how_many_resource_04cfcd09",
+						)}
 					</p>
 				</div>
 				<div className="flex flex-col gap-6">
 					<div className="flex flex-col items-start gap-2">
-						<Label htmlFor={quotaField.id}>Quota Allowance</Label>
+						<Label htmlFor={quotaField.id}>
+							{tI18n(
+								"GroupsPage.GroupSettingsPageView.quota_allowance_53415b1f",
+							)}
+						</Label>
 						<Input
 							id={quotaField.id}
 							name={quotaField.name}
@@ -328,11 +377,10 @@ const UpdateGroupForm: FC<UpdateGroupFormProps> = ({
 					</div>
 				</div>
 			</section>
-
 			<footer className="flex items-center justify-end space-x-2">
 				<Button type="submit" disabled={isLoading}>
 					<Spinner loading={isLoading} />
-					Save
+					{tI18n("GroupsPage.GroupSettingsPageView.save_1509f561")}
 				</Button>
 			</footer>
 		</form>

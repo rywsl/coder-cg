@@ -11,6 +11,7 @@ import {
 import semver from "semver";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Spinner } from "#/components/Spinner/Spinner";
+import { i18n } from "#/i18n";
 import { getPendingStatusLabel } from "./provisionerJob";
 
 dayjs.extend(duration);
@@ -55,19 +56,19 @@ export const systemBuildReasons = [
 export const buildReasonLabels: Record<TypesGen.BuildReason, string> = {
 	// User build reasons
 	initiator: "API",
-	dashboard: "Dashboard",
+	dashboard: i18n.t("pages:workspace.dashboard_67b69646"),
 	cli: "CLI",
-	ssh_connection: "SSH Connection",
-	vscode_connection: "VSCode Connection",
-	jetbrains_connection: "JetBrains Connection",
+	ssh_connection: i18n.t("pages:workspace.ssh_connection_2e1d02c4"),
+	vscode_connection: i18n.t("pages:workspace.vscode_connection_9934053d"),
+	jetbrains_connection: i18n.t("pages:workspace.jetbrains_connection_9488974a"),
 
 	// System build reasons
-	autostart: "Autostart",
-	autostop: "Autostop",
-	dormancy: "Dormancy",
-	task_auto_pause: "Task Auto-Pause",
-	task_manual_pause: "Task Manual Pause",
-	task_resume: "Task Resume",
+	autostart: i18n.t("pages:workspace.autostart_5a6ab379"),
+	autostop: i18n.t("pages:workspace.autostop_f7816a97"),
+	dormancy: i18n.t("pages:workspace.dormancy_de2899a5"),
+	task_auto_pause: i18n.t("pages:workspace.task_auto_pause_b8387c1b"),
+	task_manual_pause: i18n.t("pages:workspace.task_manual_pause_8c7431b6"),
+	task_resume: i18n.t("pages:workspace.task_resume_b18627bb"),
 };
 
 const getWorkspaceBuildDurationInSeconds = (
@@ -86,7 +87,7 @@ const getWorkspaceBuildDurationInSeconds = (
 
 export const displayWorkspaceBuildDuration = (
 	build: TypesGen.WorkspaceBuild,
-	inProgressLabel = "In progress",
+	inProgressLabel = i18n.t("pages:workspace.in_progress_c1f88e9d"),
 ): string => {
 	const duration = getWorkspaceBuildDurationInSeconds(build);
 	return duration ? `${duration} seconds` : inProgressLabel;
@@ -313,7 +314,7 @@ export const lastUsedMessage = (lastUsedAt: string | Date): string => {
 	let message = t.fromNow();
 
 	if (t.isAfter(now.subtract(1, "hour"))) {
-		message = "Now";
+		message = i18n.t("pages:workspace.now_fe18013d");
 	} else if (t.isAfter(now.subtract(3, "day"))) {
 		message = t.fromNow();
 	} else if (t.isAfter(now.subtract(1, "month"))) {
@@ -321,7 +322,7 @@ export const lastUsedMessage = (lastUsedAt: string | Date): string => {
 	} else if (t.isAfter(now.subtract(100, "year"))) {
 		message = t.fromNow();
 	} else {
-		message = "Never";
+		message = i18n.t("pages:workspace.never_6300ef80");
 	}
 
 	return message;

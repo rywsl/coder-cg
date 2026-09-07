@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { type FormikTouched, useFormik } from "formik";
 import { type FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { Template, UpdateTemplateMeta } from "#/api/typesGenerated";
 import { Button } from "#/components/Button/Button";
 import { Checkbox } from "#/components/Checkbox/Checkbox";
@@ -81,6 +82,8 @@ export const TemplateScheduleForm: FC<TemplateScheduleForm> = ({
 	isSubmitting,
 	initialTouched,
 }) => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const validationSchema = getValidationSchema();
 	const form = useFormik<TemplateScheduleFormValues>({
 		initialValues: {
@@ -319,11 +322,17 @@ export const TemplateScheduleForm: FC<TemplateScheduleForm> = ({
 	return (
 		<HorizontalForm
 			onSubmit={form.handleSubmit}
-			aria-label="Template settings form"
+			aria-label={tI18n(
+				"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.template_settings_form_ffeb1444",
+			)}
 		>
 			<FormSection
-				title="Autostop"
-				description="Define when workspaces created from this template are stopped."
+				title={tI18n(
+					"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.autostop_f7816a97",
+				)}
+				description={tI18n(
+					"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.define_when_workspaces_created_from_this_templat_73db978f",
+				)}
 			>
 				<FormFields>
 					<FormField
@@ -332,7 +341,9 @@ export const TemplateScheduleForm: FC<TemplateScheduleForm> = ({
 								<DefaultTTLHelperText ttl={form.values.default_ttl_ms} />
 							),
 						})}
-						label="Default autostop (hours)"
+						label={tI18n(
+							"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.default_autostop_hours_373e9d3e",
+						)}
 						type="number"
 						disabled={isSubmitting}
 						min={0}
@@ -350,7 +361,9 @@ export const TemplateScheduleForm: FC<TemplateScheduleForm> = ({
 								/>
 							),
 						})}
-						label="Activity bump (hours)"
+						label={tI18n(
+							"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.activity_bump_hours_962ed151",
+						)}
 						type="number"
 						disabled={
 							isSubmitting ||
@@ -374,7 +387,9 @@ export const TemplateScheduleForm: FC<TemplateScheduleForm> = ({
 								/>
 							),
 						})}
-						label="Autostop reminder (hours)"
+						label={tI18n(
+							"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.autostop_reminder_hours_3f5f7d05",
+						)}
 						type="number"
 						disabled={isSubmitting}
 						min={0}
@@ -385,7 +400,9 @@ export const TemplateScheduleForm: FC<TemplateScheduleForm> = ({
 					<div className="grid grid-cols-2 gap-4 w-full items-start">
 						<div className="flex flex-col gap-2 min-w-0">
 							<Label htmlFor={autostopDaysField.id}>
-								Days with required stop
+								{tI18n(
+									"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.days_with_required_stop_69326cb0",
+								)}
 							</Label>
 							<Select
 								value={form.values.autostop_requirement_days_of_week}
@@ -413,10 +430,26 @@ export const TemplateScheduleForm: FC<TemplateScheduleForm> = ({
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value="off">Off</SelectItem>
-									<SelectItem value="daily">Daily</SelectItem>
-									<SelectItem value="saturday">Saturday</SelectItem>
-									<SelectItem value="sunday">Sunday</SelectItem>
+									<SelectItem value="off">
+										{tI18n(
+											"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.off_ca7981b4",
+										)}
+									</SelectItem>
+									<SelectItem value="daily">
+										{tI18n(
+											"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.daily_b36c2611",
+										)}
+									</SelectItem>
+									<SelectItem value="saturday">
+										{tI18n(
+											"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.saturday_dbe35c73",
+										)}
+									</SelectItem>
+									<SelectItem value="sunday">
+										{tI18n(
+											"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.sunday_873fef76",
+										)}
+									</SelectItem>
 								</SelectContent>
 							</Select>
 							{autostopDaysField.helperText && (
@@ -444,7 +477,9 @@ export const TemplateScheduleForm: FC<TemplateScheduleForm> = ({
 										/>
 									),
 								})}
-								label="Weeks between required stops"
+								label={tI18n(
+									"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.weeks_between_required_stops_cf5d26ec",
+								)}
 								type="number"
 								disabled={
 									isSubmitting ||
@@ -475,21 +510,26 @@ export const TemplateScheduleForm: FC<TemplateScheduleForm> = ({
 						/>
 						<Label htmlFor="allow-user-autostop">
 							<StackLabel>
-								Allow users to customize autostop duration for workspaces.
+								{tI18n(
+									"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.allow_users_to_customize_autostop_duration_for_w_b868b87e",
+								)}
 								<StackLabelHelperText>
-									By default, workspaces will inherit the Autostop timer from
-									this template. Enabling this option allows users to set custom
-									Autostop timers on their workspaces or turn off the timer.
+									{tI18n(
+										"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.by_default_workspaces_will_inherit_the_autostop__d412880d",
+									)}
 								</StackLabelHelperText>
 							</StackLabel>
 						</Label>
 					</div>
 				</FormFields>
 			</FormSection>
-
 			<FormSection
-				title="Autostart"
-				description="Allow users to set custom autostart and autostop scheduling options for workspaces created from this template."
+				title={tI18n(
+					"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.autostart_5a6ab379",
+				)}
+				description={tI18n(
+					"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.allow_users_to_set_custom_autostart_and_autostop_0ba22369",
+				)}
 			>
 				<div className="flex flex-col gap-4">
 					<div className="flex items-start">
@@ -507,7 +547,9 @@ export const TemplateScheduleForm: FC<TemplateScheduleForm> = ({
 						/>
 						<Label htmlFor="allow_user_autostart">
 							<StackLabel>
-								Allow users to automatically start workspaces on a schedule.
+								{tI18n(
+									"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.allow_users_to_automatically_start_workspaces_on_2b9285e2",
+								)}
 							</StackLabel>
 						</Label>
 					</div>
@@ -529,11 +571,14 @@ export const TemplateScheduleForm: FC<TemplateScheduleForm> = ({
 					)}
 				</div>
 			</FormSection>
-
 			{allowAdvancedScheduling && (
 				<FormSection
-					title="Dormancy"
-					description="When enabled, Coder will mark workspaces as dormant after a period of time with no connections. Dormant workspaces can be auto-deleted (see below) or manually reviewed by the workspace owner or admins."
+					title={tI18n(
+						"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.dormancy_de2899a5",
+					)}
+					description={tI18n(
+						"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.when_enabled_coder_will_mark_workspaces_as_dorma_6d0060a3",
+					)}
 				>
 					<FormFields>
 						<div className="flex flex-col gap-8">
@@ -545,12 +590,18 @@ export const TemplateScheduleForm: FC<TemplateScheduleForm> = ({
 									onCheckedChange={handleToggleInactivityCleanup}
 								/>
 								<Label htmlFor="dormancyThreshold">
-									<StackLabel>Enable Dormancy Threshold</StackLabel>
+									<StackLabel>
+										{tI18n(
+											"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.enable_dormancy_threshold_bc00438b",
+										)}
+									</StackLabel>
 								</Label>
 							</div>
 
 							<DurationField
-								label="Time until dormant"
+								label={tI18n(
+									"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.time_until_dormant_73bfdf8a",
+								)}
 								valueMs={form.values.time_til_dormant_ms ?? 0}
 								onChange={(v) => form.setFieldValue("time_til_dormant_ms", v)}
 								disabled={
@@ -574,19 +625,26 @@ export const TemplateScheduleForm: FC<TemplateScheduleForm> = ({
 								/>
 								<Label htmlFor="dormancyAutoDeletion">
 									<StackLabel>
-										Enable Dormancy Auto-Deletion
+										{tI18n(
+											"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.enable_dormancy_auto_deletion_e96e485d",
+										)}
 										<StackLabelHelperText>
-											When enabled, Coder will permanently delete dormant
-											workspaces after a period of time.{" "}
+											{tI18n(
+												"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.when_enabled_coder_will_permanently_delete_dorma_4e307a86",
+											)}{" "}
 											<strong>
-												Once a workspace is deleted it cannot be recovered.
+												{tI18n(
+													"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.once_a_workspace_is_deleted_it_cannot_be_recover_acd02e5f",
+												)}
 											</strong>
 										</StackLabelHelperText>
 									</StackLabel>
 								</Label>
 							</div>
 							<DurationField
-								label="Time until deletion"
+								label={tI18n(
+									"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.time_until_deletion_d44afa86",
+								)}
 								valueMs={form.values.time_til_dormant_autodelete_ms ?? 0}
 								onChange={(v) =>
 									form.setFieldValue("time_til_dormant_autodelete_ms", v)
@@ -613,16 +671,21 @@ export const TemplateScheduleForm: FC<TemplateScheduleForm> = ({
 								/>
 								<Label htmlFor="failureCleanupEnabled">
 									<StackLabel>
-										Enable Failure Cleanup
+										{tI18n(
+											"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.enable_failure_cleanup_fef02042",
+										)}
 										<StackLabelHelperText>
-											When enabled, Coder will attempt to stop workspaces that
-											are in a failed state after a period of time.
+											{tI18n(
+												"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.when_enabled_coder_will_attempt_to_stop_workspac_98a03c5e",
+											)}
 										</StackLabelHelperText>
 									</StackLabel>
 								</Label>
 							</div>
 							<DurationField
-								label="Time until cleanup"
+								label={tI18n(
+									"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.time_until_cleanup_b4d5bbad",
+								)}
 								valueMs={form.values.failure_ttl_ms ?? 0}
 								onChange={(v) => form.setFieldValue("failure_ttl_ms", v)}
 								disabled={isSubmitting || !form.values.failure_cleanup_enabled}
@@ -666,7 +729,9 @@ export const TemplateScheduleForm: FC<TemplateScheduleForm> = ({
 					onClose={() => {
 						setIsScheduleDialogOpen(false);
 					}}
-					title="Workspace Scheduling"
+					title={tI18n(
+						"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.workspace_scheduling_193644b8",
+					)}
 					updateDormantWorkspaces={(update: boolean) =>
 						form.setFieldValue("update_workspace_dormant_at", update)
 					}
@@ -689,10 +754,11 @@ export const TemplateScheduleForm: FC<TemplateScheduleForm> = ({
 					}
 				/>
 			)}
-
 			<FormFooter>
 				<Button onClick={onCancel} variant="outline">
-					Cancel
+					{tI18n(
+						"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.cancel_19766ed6",
+					)}
 				</Button>
 
 				<Button
@@ -700,7 +766,9 @@ export const TemplateScheduleForm: FC<TemplateScheduleForm> = ({
 					disabled={isSubmitting || !form.isValid || !form.dirty}
 				>
 					<Spinner loading={isSubmitting} />
-					Save
+					{tI18n(
+						"TemplateSettingsPage.TemplateSchedulePage.TemplateScheduleForm.save_1509f561",
+					)}
 				</Button>
 			</FormFooter>
 		</HorizontalForm>

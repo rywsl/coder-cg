@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { Workspace } from "#/api/typesGenerated";
 import { Badge } from "#/components/Badge/Badge";
 import {
@@ -19,17 +20,25 @@ type WorkspaceDormantBadgeProps = {
 export const WorkspaceDormantBadge: FC<WorkspaceDormantBadgeProps> = ({
 	workspace,
 }) => {
+	const { t: tI18n } = useTranslation("workspaces");
+
 	return workspace.deleting_at ? (
 		<Tooltip>
 			<TooltipTrigger asChild>
 				<Badge role="status" variant="destructive" size="xs">
-					Deletion Pending
+					{tI18n(
+						"workspaces.WorkspaceDormantBadge.WorkspaceDormantBadge.deletion_pending_a0542172",
+					)}
 				</Badge>
 			</TooltipTrigger>
 			<TooltipContent side="bottom" className="max-w-xs">
-				This workspace has not been used for{" "}
-				{relativeTimeWithoutSuffix(workspace.last_used_at)} and has been marked
-				dormant. It is scheduled to be deleted on{" "}
+				{tI18n(
+					"workspaces.WorkspaceDormantBadge.WorkspaceDormantBadge.this_workspace_has_not_been_used_for_ac55990c",
+				)}{" "}
+				{relativeTimeWithoutSuffix(workspace.last_used_at)}
+				{tI18n(
+					"workspaces.WorkspaceDormantBadge.WorkspaceDormantBadge.and_has_been_marked_dormant_it_is_scheduled_to_b_6364b391",
+				)}{" "}
 				{formatDateTime(workspace.deleting_at, DATE_FORMAT.FULL_DATETIME)}.
 			</TooltipContent>
 		</Tooltip>
@@ -37,14 +46,19 @@ export const WorkspaceDormantBadge: FC<WorkspaceDormantBadgeProps> = ({
 		<Tooltip>
 			<TooltipTrigger asChild>
 				<Badge role="status" variant="warning" size="xs">
-					Dormant
+					{tI18n(
+						"workspaces.WorkspaceDormantBadge.WorkspaceDormantBadge.dormant_027d0e4c",
+					)}
 				</Badge>
 			</TooltipTrigger>
 			<TooltipContent side="bottom" className="max-w-xs">
-				This workspace has not been used for{" "}
-				{relativeTimeWithoutSuffix(workspace.last_used_at)} and has been marked
-				dormant. It is not scheduled for auto-deletion but will become a
-				candidate if auto-deletion is enabled on this template.
+				{tI18n(
+					"workspaces.WorkspaceDormantBadge.WorkspaceDormantBadge.this_workspace_has_not_been_used_for_ac55990c",
+				)}{" "}
+				{relativeTimeWithoutSuffix(workspace.last_used_at)}
+				{tI18n(
+					"workspaces.WorkspaceDormantBadge.WorkspaceDormantBadge.and_has_been_marked_dormant_it_is_not_scheduled__ac8f6739",
+				)}
 			</TooltipContent>
 		</Tooltip>
 	);

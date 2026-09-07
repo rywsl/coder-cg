@@ -1,6 +1,7 @@
 import { cn } from "cn";
 import { ChevronRightIcon, InfoIcon, LoaderIcon } from "lucide-react";
 import { type FC, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type {
 	AgentFirewallLog,
 	AIBridgeAgenticAction,
@@ -38,6 +39,8 @@ const ExpandableText: FC<ExpandableTextProps> = ({
 	text,
 	className,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const contentRef = useRef<HTMLParagraphElement>(null);
 	const [isExpandable, setIsExpandable] = useState(false);
 	const [isExpanded, setIsExpanded] = useState(false);
@@ -87,7 +90,13 @@ const ExpandableText: FC<ExpandableTextProps> = ({
 						className="bg-surface-primary shadow-xs"
 						onClick={() => setIsExpanded((v) => !v)}
 					>
-						{isExpanded ? "Collapse" : "Show more"}
+						{isExpanded
+							? tI18n(
+									"AIBridgePage.SessionThreadsPage.SessionTimeline.SessionTimeline.collapse_be6eb1fc",
+								)
+							: tI18n(
+									"AIBridgePage.SessionThreadsPage.SessionTimeline.SessionTimeline.show_more_f5c9bd13",
+								)}
 					</Button>
 				</div>
 			)}
@@ -106,24 +115,38 @@ const CollapseButton: FC<CollapseButtonProps> = ({
 	isOpen,
 	onClick,
 	children,
-}) => (
-	<Button
-		type="button"
-		variant="subtle"
-		onClick={onClick}
-		className="border-none bg-transparent text-content-secondary flex items-center"
-		size="sm"
-	>
-		<ChevronRightIcon
-			className={cn(
-				"mr-4 transition-transform size-3.5",
-				isOpen && "rotate-90",
-			)}
-		/>
-		<span className="sr-only">({isOpen ? "Hide" : "Show more"})</span>
-		{children}
-	</Button>
-);
+}) => {
+	const { t: tI18n } = useTranslation("agents");
+
+	return (
+		<Button
+			type="button"
+			variant="subtle"
+			onClick={onClick}
+			className="border-none bg-transparent text-content-secondary flex items-center"
+			size="sm"
+		>
+			<ChevronRightIcon
+				className={cn(
+					"mr-4 transition-transform size-3.5",
+					isOpen && "rotate-90",
+				)}
+			/>
+			<span className="sr-only">
+				(
+				{isOpen
+					? tI18n(
+							"AIBridgePage.SessionThreadsPage.SessionTimeline.SessionTimeline.hide_ac20a57b",
+						)
+					: tI18n(
+							"AIBridgePage.SessionThreadsPage.SessionTimeline.SessionTimeline.show_more_f5c9bd13",
+						)}
+				)
+			</span>
+			{children}
+		</Button>
+	);
+};
 
 // Wraps content with a visual left-bracket connector: two rounded corner lines
 // that flank the content row, creating an indented visual grouping.
@@ -166,19 +189,27 @@ interface ThinkingBlockProps {
 	text: string;
 }
 
-const ThinkingBlock: FC<ThinkingBlockProps> = ({ text }) => (
-	<BracketConnector contentClassName="mt-5 pl-2 pr-4 text-sm text-content-secondary">
-		<div className="flex items-center">
-			<LoaderIcon className="size-icon-xs text-content-secondary" />
-			<span className="font-mono ml-2 text-xs">Thinking...</span>
-		</div>
-		<ExpandableText
-			maxHeight={50}
-			text={text}
-			className="text-sm text-pretty font-normal m-0"
-		/>
-	</BracketConnector>
-);
+const ThinkingBlock: FC<ThinkingBlockProps> = ({ text }) => {
+	const { t: tI18n } = useTranslation("agents");
+
+	return (
+		<BracketConnector contentClassName="mt-5 pl-2 pr-4 text-sm text-content-secondary">
+			<div className="flex items-center">
+				<LoaderIcon className="size-icon-xs text-content-secondary" />
+				<span className="font-mono ml-2 text-xs">
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionTimeline.SessionTimeline.thinking_b4739a4f",
+					)}
+				</span>
+			</div>
+			<ExpandableText
+				maxHeight={50}
+				text={text}
+				className="text-sm text-pretty font-normal m-0"
+			/>
+		</BracketConnector>
+	);
+};
 
 interface ToolCallBlockProps {
 	tool: string;
@@ -201,13 +232,19 @@ const ToolCallBlock: FC<ToolCallBlockProps> = ({
 	tokenUsageMetadata,
 	expandedByDefault = false,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [isOpen, setIsOpen] = useState(expandedByDefault);
 
 	return (
 		<BracketConnector contentClassName="mt-2 mr-4 border border-solid rounded-md overflow-x-auto">
 			<div className="flex items-center">
 				<CollapseButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
-					<span className="text-sm font-normal">Tool call</span>
+					<span className="text-sm font-normal">
+						{tI18n(
+							"AIBridgePage.SessionThreadsPage.SessionTimeline.SessionTimeline.tool_call_17011048",
+						)}
+					</span>
 					<Badge size="xs" className="font-mono ml-1">
 						{tool}
 					</Badge>
@@ -270,6 +307,8 @@ interface ThreadItemProps {
 }
 
 const ThreadItem: FC<ThreadItemProps> = ({ thread, initiator }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const [agenticLoopOpen, setAgenticLoopOpen] = useState(false);
 
 	const durationInMs =
@@ -304,7 +343,9 @@ const ThreadItem: FC<ThreadItemProps> = ({ thread, initiator }) => {
 					{thread.prompt && (
 						<>
 							<div className="text-sm text-content-secondary font-normal my-1 flex items-center gap-1">
-								Prompt
+								{tI18n(
+									"AIBridgePage.SessionThreadsPage.SessionTimeline.SessionTimeline.prompt_5c391238",
+								)}
 								<TooltipProvider>
 									<Tooltip>
 										<TooltipTrigger asChild>
@@ -316,8 +357,9 @@ const ThreadItem: FC<ThreadItemProps> = ({ thread, initiator }) => {
 											side="top"
 										>
 											<p className="text-content-secondary m-0 mb-1">
-												Prompt origin cannot be reliably determined. This may
-												have been authored by a human or generated by an agent.{" "}
+												{tI18n(
+													"AIBridgePage.SessionThreadsPage.SessionTimeline.SessionTimeline.prompt_origin_cannot_be_reliably_determined_this_bf6e9acc",
+												)}{" "}
 											</p>
 											<Link
 												href={docs(
@@ -326,7 +368,9 @@ const ThreadItem: FC<ThreadItemProps> = ({ thread, initiator }) => {
 												target="_blank"
 												className="text-sm"
 											>
-												Learn about human vs. agent attribution
+												{tI18n(
+													"AIBridgePage.SessionThreadsPage.SessionTimeline.SessionTimeline.learn_about_human_vs_agent_attribution_8eae2eab",
+												)}
 											</Link>
 										</TooltipContent>
 									</Tooltip>
@@ -350,7 +394,6 @@ const ThreadItem: FC<ThreadItemProps> = ({ thread, initiator }) => {
 					tokenUsageMetadata={thread.token_usage.metadata}
 				/>
 			</div>
-
 			{hasAgenticLoop ? (
 				<BracketConnector
 					firstRowHeight="60px"
@@ -363,7 +406,11 @@ const ThreadItem: FC<ThreadItemProps> = ({ thread, initiator }) => {
 								isOpen={agenticLoopOpen}
 								onClick={() => setAgenticLoopOpen(!agenticLoopOpen)}
 							>
-								<span className="text-sm font-normal">Agentic loop</span>
+								<span className="text-sm font-normal">
+									{tI18n(
+										"AIBridgePage.SessionThreadsPage.SessionTimeline.SessionTimeline.agentic_loop_941141ee",
+									)}
+								</span>
 							</CollapseButton>
 						</div>
 
@@ -391,7 +438,9 @@ const ThreadItem: FC<ThreadItemProps> = ({ thread, initiator }) => {
 								<div className="flex flex-row items-center ml-2">
 									<StatusIndicatorDot variant="success" />
 									<span className="text-content-success font-normal ml-2 text-sm py-1">
-										Agentic loop completed
+										{tI18n(
+											"AIBridgePage.SessionThreadsPage.SessionTimeline.SessionTimeline.agentic_loop_completed_c85ed8a3",
+										)}
 									</span>
 								</div>
 							</BracketConnector>
@@ -430,6 +479,8 @@ export const SessionTimeline: FC<SessionTimelineProps> = ({
 	isFetchingNextPage,
 	onFetchNextPage,
 }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const sentinelRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -467,7 +518,9 @@ export const SessionTimeline: FC<SessionTimelineProps> = ({
 				</div>
 				<div className="row-start-1 col-start-4 col-span-2 flex items-center h-10">
 					<span className="text-content-secondary font-normal ml-4 py-1 text-sm">
-						Session started
+						{tI18n(
+							"AIBridgePage.SessionThreadsPage.SessionTimeline.SessionTimeline.session_started_a6a7c4b6",
+						)}
 					</span>
 				</div>
 
@@ -483,7 +536,9 @@ export const SessionTimeline: FC<SessionTimelineProps> = ({
 
 				{/* row 3/4: AI Governance tooltip */}
 				<div className="row-start-3 col-start-5 row-span-2 flex items-center text-sm text-content-secondary font-normal px-2 pt-1">
-					AI Governance
+					{tI18n(
+						"AIBridgePage.SessionThreadsPage.SessionTimeline.SessionTimeline.ai_governance_2ab040bd",
+					)}
 					<TooltipProvider>
 						<Tooltip>
 							<TooltipTrigger asChild>
@@ -495,8 +550,9 @@ export const SessionTimeline: FC<SessionTimelineProps> = ({
 								side="top"
 							>
 								<div className="text-content-secondary mb-1">
-									Controls and logs AI tooling so AI use stays secure,
-									compliant, and visible.
+									{tI18n(
+										"AIBridgePage.SessionThreadsPage.SessionTimeline.SessionTimeline.controls_and_logs_ai_tooling_so_ai_use_stays_sec_ee002143",
+									)}
 								</div>
 								<div>
 									<Link
@@ -504,7 +560,9 @@ export const SessionTimeline: FC<SessionTimelineProps> = ({
 										target="_blank"
 										className="text-sm"
 									>
-										More about AI Governance
+										{tI18n(
+											"AIBridgePage.SessionThreadsPage.SessionTimeline.SessionTimeline.more_about_ai_governance_d5e40e01",
+										)}
 									</Link>
 								</div>
 							</TooltipContent>
@@ -601,7 +659,9 @@ export const SessionTimeline: FC<SessionTimelineProps> = ({
 						</div>
 						<div className="row-start-8 col-start-4 flex items-center">
 							<span className="text-content-success font-normal ml-4 text-sm py-1">
-								Session completed
+								{tI18n(
+									"AIBridgePage.SessionThreadsPage.SessionTimeline.SessionTimeline.session_completed_c29f6797",
+								)}
 							</span>
 						</div>
 					</>

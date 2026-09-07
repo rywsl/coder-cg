@@ -1,6 +1,7 @@
 import { isAxiosError } from "axios";
 import { ExternalLinkIcon } from "lucide-react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import type { ApiErrorResponse } from "#/api/errors";
 import type { ExternalAuthDevice } from "#/api/typesGenerated";
 import { Alert, AlertDescription, AlertTitle } from "#/components/Alert/Alert";
@@ -71,10 +72,14 @@ export const GitDeviceAuth: FC<GitDeviceAuthProps> = ({
 	externalAuthDevice,
 	deviceExchangeError,
 }) => {
+	const { t: tI18n } = useTranslation("components");
+
 	let status = (
 		<p className="flex items-center justify-center gap-2 text-content-disabled">
 			<Spinner size="sm" loading />
-			Checking for authentication...
+			{tI18n(
+				"GitDeviceAuth.GitDeviceAuth.checking_for_authentication_6215755a",
+			)}
 		</p>
 	);
 	if (deviceExchangeError) {
@@ -87,7 +92,9 @@ export const GitDeviceAuth: FC<GitDeviceAuthProps> = ({
 					<div>
 						{status}
 						<Alert severity="warning">
-							Rate limit reached. Waiting a few seconds before retrying...
+							{tI18n(
+								"GitDeviceAuth.GitDeviceAuth.rate_limit_reached_waiting_a_few_seconds_before__d5fd2796",
+							)}
 						</Alert>
 					</div>
 				);
@@ -95,14 +102,18 @@ export const GitDeviceAuth: FC<GitDeviceAuthProps> = ({
 			case DeviceExchangeError.ExpiredToken:
 				status = (
 					<Alert severity="error">
-						The one-time code has expired. Refresh to get a new one!
+						{tI18n(
+							"GitDeviceAuth.GitDeviceAuth.the_one_time_code_has_expired_refresh_to_get_a_n_cdb4a54f",
+						)}
 					</Alert>
 				);
 				break;
 			case DeviceExchangeError.AccessDenied:
 				status = (
 					<Alert severity="error" prominent>
-						Access to the Git provider was denied.
+						{tI18n(
+							"GitDeviceAuth.GitDeviceAuth.access_to_the_git_provider_was_denied_854f0636",
+						)}
 					</Alert>
 				);
 				break;
@@ -132,7 +143,7 @@ export const GitDeviceAuth: FC<GitDeviceAuthProps> = ({
 	return (
 		<div>
 			<p className="m-0 text-center text-base leading-relaxed text-content-secondary">
-				Copy your one-time code:&nbsp;
+				{tI18n("GitDeviceAuth.GitDeviceAuth.copy_your_one_time_code_8f558624")}
 				<span className="inline-flex items-center">
 					<span className="font-bold text-content-primary">
 						{externalAuthDevice.user_code}
@@ -140,11 +151,13 @@ export const GitDeviceAuth: FC<GitDeviceAuthProps> = ({
 					&nbsp;{" "}
 					<CopyButton
 						text={externalAuthDevice.user_code}
-						label="Copy user code"
+						label={tI18n("GitDeviceAuth.GitDeviceAuth.copy_user_code_c2e493d4")}
 					/>
 				</span>
 				<br />
-				Then open the link below and paste it:
+				{tI18n(
+					"GitDeviceAuth.GitDeviceAuth.then_open_the_link_below_and_paste_it_2132630a",
+				)}
 			</p>
 			<div className="m-4 flex justify-center">
 				<Link
@@ -155,10 +168,9 @@ export const GitDeviceAuth: FC<GitDeviceAuthProps> = ({
 					showExternalIcon={false}
 				>
 					<ExternalLinkIcon className="size-icon-xs" />
-					Open and Paste
+					{tI18n("GitDeviceAuth.GitDeviceAuth.open_and_paste_5ae36793")}
 				</Link>
 			</div>
-
 			{status}
 		</div>
 	);

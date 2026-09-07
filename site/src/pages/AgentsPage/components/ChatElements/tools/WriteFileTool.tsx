@@ -1,6 +1,7 @@
 import type { FileDiffMetadata } from "@pierre/diffs";
 import { FileDiff } from "@pierre/diffs/react";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import type * as TypesGen from "#/api/typesGenerated";
 import { ScrollArea } from "#/components/ScrollArea/ScrollArea";
 import { useTheme } from "#/theme/context";
@@ -29,6 +30,8 @@ export const WriteFileTool: React.FC<{
 	errorMessage?: string;
 	codeDiffDisplayMode?: TypesGen.AgentDisplayMode;
 }> = ({ path, diff, status, isError, errorMessage, codeDiffDisplayMode }) => {
+	const { t: tI18n } = useTranslation("agents");
+
 	const theme = useTheme();
 	const isDark = theme.palette.mode === "dark";
 	const hasDiff = diff !== null;
@@ -39,11 +42,26 @@ export const WriteFileTool: React.FC<{
 	);
 
 	const filename = getPathBasename(path);
-	let label = `Wrote ${filename}`;
+	let label = tI18n(
+		"AgentsPage.components.ChatElements.tools.WriteFileTool.wrote_value0_b3fe24e2",
+		{
+			value0: filename,
+		},
+	);
 	if (isRunning) {
-		label = `Writing ${filename}…`;
+		label = tI18n(
+			"AgentsPage.components.ChatElements.tools.WriteFileTool.writing_value0_ed5ed473",
+			{
+				value0: filename,
+			},
+		);
 	} else if (isError) {
-		label = `Failed to write ${filename}`;
+		label = tI18n(
+			"AgentsPage.components.ChatElements.tools.WriteFileTool.failed_to_write_value0_bca84a6b",
+			{
+				value0: filename,
+			},
+		);
 	}
 	// The diff is synthesized from tool args, so showing it on error could
 	// misrepresent the content as written.
@@ -56,7 +74,12 @@ export const WriteFileTool: React.FC<{
 			className="w-full"
 			status={status}
 			isError={isError}
-			errorMessage={errorMessage || "Failed to write file"}
+			errorMessage={
+				errorMessage ||
+				tI18n(
+					"AgentsPage.components.ChatElements.tools.WriteFileTool.failed_to_write_file_c08165e4",
+				)
+			}
 			hasContent={showDiff || Boolean(errorDetail)}
 			defaultView={displayState}
 		>
@@ -77,7 +100,12 @@ export const WriteFileTool: React.FC<{
 								: "max-h-64"
 						}
 						viewportTabIndex={0}
-						viewportAriaLabel={`Diff of ${path}`}
+						viewportAriaLabel={tI18n(
+							"AgentsPage.components.ChatElements.tools.WriteFileTool.diff_of_value0_2fc4d190",
+							{
+								value0: path,
+							},
+						)}
 						scrollBarClassName="w-1.5"
 					>
 						<FileDiff
