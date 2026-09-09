@@ -436,6 +436,21 @@ func (mr *MockStoreMockRecorder) ClearChatDiffStatusPR(ctx, arg any) *gomock.Cal
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ClearChatDiffStatusPR", reflect.TypeOf((*MockStore)(nil).ClearChatDiffStatusPR), ctx, arg)
 }
 
+// CompleteWorkspaceSSHKeyEnrollment mocks base method.
+func (m *MockStore) CompleteWorkspaceSSHKeyEnrollment(ctx context.Context, arg database.CompleteWorkspaceSSHKeyEnrollmentParams) (database.WorkspaceSshKeyEnrollment, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CompleteWorkspaceSSHKeyEnrollment", ctx, arg)
+	ret0, _ := ret[0].(database.WorkspaceSshKeyEnrollment)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CompleteWorkspaceSSHKeyEnrollment indicates an expected call of CompleteWorkspaceSSHKeyEnrollment.
+func (mr *MockStoreMockRecorder) CompleteWorkspaceSSHKeyEnrollment(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CompleteWorkspaceSSHKeyEnrollment", reflect.TypeOf((*MockStore)(nil).CompleteWorkspaceSSHKeyEnrollment), ctx, arg)
+}
+
 // CountAIBridgeSessions mocks base method.
 func (m *MockStore) CountAIBridgeSessions(ctx context.Context, arg database.CountAIBridgeSessionsParams) (int64, error) {
 	m.ctrl.T.Helper()
@@ -977,6 +992,20 @@ func (m *MockStore) DeleteExpiredAPIKeys(ctx context.Context, arg database.Delet
 func (mr *MockStoreMockRecorder) DeleteExpiredAPIKeys(ctx, arg any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteExpiredAPIKeys", reflect.TypeOf((*MockStore)(nil).DeleteExpiredAPIKeys), ctx, arg)
+}
+
+// DeleteExpiredWorkspaceSSHKeyEnrollments mocks base method.
+func (m *MockStore) DeleteExpiredWorkspaceSSHKeyEnrollments(ctx context.Context, now time.Time) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteExpiredWorkspaceSSHKeyEnrollments", ctx, now)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteExpiredWorkspaceSSHKeyEnrollments indicates an expected call of DeleteExpiredWorkspaceSSHKeyEnrollments.
+func (mr *MockStoreMockRecorder) DeleteExpiredWorkspaceSSHKeyEnrollments(ctx, now any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteExpiredWorkspaceSSHKeyEnrollments", reflect.TypeOf((*MockStore)(nil).DeleteExpiredWorkspaceSSHKeyEnrollments), ctx, now)
 }
 
 // DeleteExternalAuthLink mocks base method.
@@ -1711,6 +1740,21 @@ func (m *MockStore) DeleteWorkspaceAgentPortSharesByTemplate(ctx context.Context
 func (mr *MockStoreMockRecorder) DeleteWorkspaceAgentPortSharesByTemplate(ctx, templateID any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteWorkspaceAgentPortSharesByTemplate", reflect.TypeOf((*MockStore)(nil).DeleteWorkspaceAgentPortSharesByTemplate), ctx, templateID)
+}
+
+// DeleteWorkspaceSSHKeyByID mocks base method.
+func (m *MockStore) DeleteWorkspaceSSHKeyByID(ctx context.Context, arg database.DeleteWorkspaceSSHKeyByIDParams) (database.WorkspaceSshKey, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteWorkspaceSSHKeyByID", ctx, arg)
+	ret0, _ := ret[0].(database.WorkspaceSshKey)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteWorkspaceSSHKeyByID indicates an expected call of DeleteWorkspaceSSHKeyByID.
+func (mr *MockStoreMockRecorder) DeleteWorkspaceSSHKeyByID(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteWorkspaceSSHKeyByID", reflect.TypeOf((*MockStore)(nil).DeleteWorkspaceSSHKeyByID), ctx, arg)
 }
 
 // DeleteWorkspaceSubAgentByID mocks base method.
@@ -7543,6 +7587,126 @@ func (mr *MockStoreMockRecorder) GetWorkspaceResourcesCreatedAfter(ctx, createdA
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspaceResourcesCreatedAfter", reflect.TypeOf((*MockStore)(nil).GetWorkspaceResourcesCreatedAfter), ctx, createdAt)
 }
 
+// GetWorkspaceSSHBootstrapTargetByAgentID mocks base method.
+func (m *MockStore) GetWorkspaceSSHBootstrapTargetByAgentID(ctx context.Context, id uuid.UUID) (database.GetWorkspaceSSHBootstrapTargetByAgentIDRow, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetWorkspaceSSHBootstrapTargetByAgentID", ctx, id)
+	ret0, _ := ret[0].(database.GetWorkspaceSSHBootstrapTargetByAgentIDRow)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetWorkspaceSSHBootstrapTargetByAgentID indicates an expected call of GetWorkspaceSSHBootstrapTargetByAgentID.
+func (mr *MockStoreMockRecorder) GetWorkspaceSSHBootstrapTargetByAgentID(ctx, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspaceSSHBootstrapTargetByAgentID", reflect.TypeOf((*MockStore)(nil).GetWorkspaceSSHBootstrapTargetByAgentID), ctx, id)
+}
+
+// GetWorkspaceSSHGatewayTarget mocks base method.
+func (m *MockStore) GetWorkspaceSSHGatewayTarget(ctx context.Context, arg database.GetWorkspaceSSHGatewayTargetParams) (database.GetWorkspaceSSHGatewayTargetRow, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetWorkspaceSSHGatewayTarget", ctx, arg)
+	ret0, _ := ret[0].(database.GetWorkspaceSSHGatewayTargetRow)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetWorkspaceSSHGatewayTarget indicates an expected call of GetWorkspaceSSHGatewayTarget.
+func (mr *MockStoreMockRecorder) GetWorkspaceSSHGatewayTarget(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspaceSSHGatewayTarget", reflect.TypeOf((*MockStore)(nil).GetWorkspaceSSHGatewayTarget), ctx, arg)
+}
+
+// GetWorkspaceSSHKeyByID mocks base method.
+func (m *MockStore) GetWorkspaceSSHKeyByID(ctx context.Context, id uuid.UUID) (database.WorkspaceSshKey, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetWorkspaceSSHKeyByID", ctx, id)
+	ret0, _ := ret[0].(database.WorkspaceSshKey)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetWorkspaceSSHKeyByID indicates an expected call of GetWorkspaceSSHKeyByID.
+func (mr *MockStoreMockRecorder) GetWorkspaceSSHKeyByID(ctx, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspaceSSHKeyByID", reflect.TypeOf((*MockStore)(nil).GetWorkspaceSSHKeyByID), ctx, id)
+}
+
+// GetWorkspaceSSHKeyByOrganizationAndFingerprint mocks base method.
+func (m *MockStore) GetWorkspaceSSHKeyByOrganizationAndFingerprint(ctx context.Context, arg database.GetWorkspaceSSHKeyByOrganizationAndFingerprintParams) (database.WorkspaceSshKey, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetWorkspaceSSHKeyByOrganizationAndFingerprint", ctx, arg)
+	ret0, _ := ret[0].(database.WorkspaceSshKey)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetWorkspaceSSHKeyByOrganizationAndFingerprint indicates an expected call of GetWorkspaceSSHKeyByOrganizationAndFingerprint.
+func (mr *MockStoreMockRecorder) GetWorkspaceSSHKeyByOrganizationAndFingerprint(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspaceSSHKeyByOrganizationAndFingerprint", reflect.TypeOf((*MockStore)(nil).GetWorkspaceSSHKeyByOrganizationAndFingerprint), ctx, arg)
+}
+
+// GetWorkspaceSSHKeyByUserOrganizationAndFingerprint mocks base method.
+func (m *MockStore) GetWorkspaceSSHKeyByUserOrganizationAndFingerprint(ctx context.Context, arg database.GetWorkspaceSSHKeyByUserOrganizationAndFingerprintParams) (database.WorkspaceSshKey, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetWorkspaceSSHKeyByUserOrganizationAndFingerprint", ctx, arg)
+	ret0, _ := ret[0].(database.WorkspaceSshKey)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetWorkspaceSSHKeyByUserOrganizationAndFingerprint indicates an expected call of GetWorkspaceSSHKeyByUserOrganizationAndFingerprint.
+func (mr *MockStoreMockRecorder) GetWorkspaceSSHKeyByUserOrganizationAndFingerprint(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspaceSSHKeyByUserOrganizationAndFingerprint", reflect.TypeOf((*MockStore)(nil).GetWorkspaceSSHKeyByUserOrganizationAndFingerprint), ctx, arg)
+}
+
+// GetWorkspaceSSHKeyEnrollmentByID mocks base method.
+func (m *MockStore) GetWorkspaceSSHKeyEnrollmentByID(ctx context.Context, id uuid.UUID) (database.WorkspaceSshKeyEnrollment, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetWorkspaceSSHKeyEnrollmentByID", ctx, id)
+	ret0, _ := ret[0].(database.WorkspaceSshKeyEnrollment)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetWorkspaceSSHKeyEnrollmentByID indicates an expected call of GetWorkspaceSSHKeyEnrollmentByID.
+func (mr *MockStoreMockRecorder) GetWorkspaceSSHKeyEnrollmentByID(ctx, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspaceSSHKeyEnrollmentByID", reflect.TypeOf((*MockStore)(nil).GetWorkspaceSSHKeyEnrollmentByID), ctx, id)
+}
+
+// GetWorkspaceSSHKeyEnrollmentForUpdate mocks base method.
+func (m *MockStore) GetWorkspaceSSHKeyEnrollmentForUpdate(ctx context.Context, arg database.GetWorkspaceSSHKeyEnrollmentForUpdateParams) (database.WorkspaceSshKeyEnrollment, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetWorkspaceSSHKeyEnrollmentForUpdate", ctx, arg)
+	ret0, _ := ret[0].(database.WorkspaceSshKeyEnrollment)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetWorkspaceSSHKeyEnrollmentForUpdate indicates an expected call of GetWorkspaceSSHKeyEnrollmentForUpdate.
+func (mr *MockStoreMockRecorder) GetWorkspaceSSHKeyEnrollmentForUpdate(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspaceSSHKeyEnrollmentForUpdate", reflect.TypeOf((*MockStore)(nil).GetWorkspaceSSHKeyEnrollmentForUpdate), ctx, arg)
+}
+
+// GetWorkspaceSSHKeysByUserAndOrganization mocks base method.
+func (m *MockStore) GetWorkspaceSSHKeysByUserAndOrganization(ctx context.Context, arg database.GetWorkspaceSSHKeysByUserAndOrganizationParams) ([]database.WorkspaceSshKey, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetWorkspaceSSHKeysByUserAndOrganization", ctx, arg)
+	ret0, _ := ret[0].([]database.WorkspaceSshKey)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetWorkspaceSSHKeysByUserAndOrganization indicates an expected call of GetWorkspaceSSHKeysByUserAndOrganization.
+func (mr *MockStoreMockRecorder) GetWorkspaceSSHKeysByUserAndOrganization(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspaceSSHKeysByUserAndOrganization", reflect.TypeOf((*MockStore)(nil).GetWorkspaceSSHKeysByUserAndOrganization), ctx, arg)
+}
+
 // GetWorkspaceUniqueOwnerCountByTemplateIDs mocks base method.
 func (m *MockStore) GetWorkspaceUniqueOwnerCountByTemplateIDs(ctx context.Context, templateIds []uuid.UUID) ([]database.GetWorkspaceUniqueOwnerCountByTemplateIDsRow, error) {
 	m.ctrl.T.Helper()
@@ -8964,6 +9128,36 @@ func (m *MockStore) InsertWorkspaceResourceMetadata(ctx context.Context, arg dat
 func (mr *MockStoreMockRecorder) InsertWorkspaceResourceMetadata(ctx, arg any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertWorkspaceResourceMetadata", reflect.TypeOf((*MockStore)(nil).InsertWorkspaceResourceMetadata), ctx, arg)
+}
+
+// InsertWorkspaceSSHKey mocks base method.
+func (m *MockStore) InsertWorkspaceSSHKey(ctx context.Context, arg database.InsertWorkspaceSSHKeyParams) (database.WorkspaceSshKey, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "InsertWorkspaceSSHKey", ctx, arg)
+	ret0, _ := ret[0].(database.WorkspaceSshKey)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// InsertWorkspaceSSHKey indicates an expected call of InsertWorkspaceSSHKey.
+func (mr *MockStoreMockRecorder) InsertWorkspaceSSHKey(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertWorkspaceSSHKey", reflect.TypeOf((*MockStore)(nil).InsertWorkspaceSSHKey), ctx, arg)
+}
+
+// InsertWorkspaceSSHKeyEnrollment mocks base method.
+func (m *MockStore) InsertWorkspaceSSHKeyEnrollment(ctx context.Context, arg database.InsertWorkspaceSSHKeyEnrollmentParams) (database.WorkspaceSshKeyEnrollment, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "InsertWorkspaceSSHKeyEnrollment", ctx, arg)
+	ret0, _ := ret[0].(database.WorkspaceSshKeyEnrollment)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// InsertWorkspaceSSHKeyEnrollment indicates an expected call of InsertWorkspaceSSHKeyEnrollment.
+func (mr *MockStoreMockRecorder) InsertWorkspaceSSHKeyEnrollment(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertWorkspaceSSHKeyEnrollment", reflect.TypeOf((*MockStore)(nil).InsertWorkspaceSSHKeyEnrollment), ctx, arg)
 }
 
 // IsChatHeartbeatStale mocks base method.
@@ -11849,6 +12043,20 @@ func (m *MockStore) UpdateWorkspaceProxyDeleted(ctx context.Context, arg databas
 func (mr *MockStoreMockRecorder) UpdateWorkspaceProxyDeleted(ctx, arg any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateWorkspaceProxyDeleted", reflect.TypeOf((*MockStore)(nil).UpdateWorkspaceProxyDeleted), ctx, arg)
+}
+
+// UpdateWorkspaceSSHKeyLastUsedAt mocks base method.
+func (m *MockStore) UpdateWorkspaceSSHKeyLastUsedAt(ctx context.Context, arg database.UpdateWorkspaceSSHKeyLastUsedAtParams) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateWorkspaceSSHKeyLastUsedAt", ctx, arg)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateWorkspaceSSHKeyLastUsedAt indicates an expected call of UpdateWorkspaceSSHKeyLastUsedAt.
+func (mr *MockStoreMockRecorder) UpdateWorkspaceSSHKeyLastUsedAt(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateWorkspaceSSHKeyLastUsedAt", reflect.TypeOf((*MockStore)(nil).UpdateWorkspaceSSHKeyLastUsedAt), ctx, arg)
 }
 
 // UpdateWorkspaceTTL mocks base method.

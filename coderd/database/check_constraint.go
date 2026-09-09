@@ -80,4 +80,9 @@ const (
 	CheckWorkspaceBuildOrchestrationsCompletedChildCheck     CheckConstraint = "workspace_build_orchestrations_completed_child_check"      // workspace_build_orchestrations
 	CheckWorkspaceBuildOrchestrationsNextRetryAfterCheck     CheckConstraint = "workspace_build_orchestrations_next_retry_after_check"     // workspace_build_orchestrations
 	CheckWorkspaceBuildOrchestrationsStatusCheck             CheckConstraint = "workspace_build_orchestrations_status_check"               // workspace_build_orchestrations
+	CheckWorkspaceSshKeyEnrollmentsCheck                     CheckConstraint = "workspace_ssh_key_enrollments_check"                       // workspace_ssh_key_enrollments
+	CheckWorkspaceSshKeyEnrollmentsConsumptionCheck          CheckConstraint = "workspace_ssh_key_enrollments_consumption_check"           // workspace_ssh_key_enrollments
+	CheckWorkspaceSshKeyEnrollmentsLocaleCheck               CheckConstraint = "workspace_ssh_key_enrollments_locale_check"                // workspace_ssh_key_enrollments
+	CheckWorkspaceSshKeyEnrollmentsTokenHashCheck            CheckConstraint = "workspace_ssh_key_enrollments_token_hash_check"            // workspace_ssh_key_enrollments
+	CheckWorkspaceSshKeysDeviceNameCheck                     CheckConstraint = "workspace_ssh_keys_device_name_check"                      // workspace_ssh_keys
 )

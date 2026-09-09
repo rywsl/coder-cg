@@ -6991,6 +6991,22 @@ CreateWorkspaceRequest provides options for creating a new workspace. Only one o
 | `template_version_preset_id` | string                                                                        | false    |              |                                                                                                         |
 | `ttl_ms`                     | integer                                                                       | false    |              |                                                                                                         |
 
+## codersdk.CreateWorkspaceSSHKeyRequest
+
+```json
+{
+  "device_name": "string",
+  "public_key": "string"
+}
+```
+
+### Properties
+
+| Name          | Type   | Required | Restrictions | Description |
+|---------------|--------|----------|--------------|-------------|
+| `device_name` | string | true     |              |             |
+| `public_key`  | string | true     |              |             |
+
 ## codersdk.CryptoKey
 
 ```json
@@ -7875,6 +7891,23 @@ CreateWorkspaceRequest provides options for creating a new workspace. Only one o
       "reconciliation_backoff_lookback": 0,
       "reconciliation_interval": 0
     },
+    "workspace_ssh_gateway": {
+      "advertise_host": "string",
+      "advertise_port": 0,
+      "auth_attempts_burst": 0,
+      "auth_attempts_per_minute": 0,
+      "codex_api_key": "string",
+      "codex_base_url": "string",
+      "codex_model": "string",
+      "enabled": true,
+      "host_key_file": "string",
+      "listen_address": "string",
+      "max_channels_per_connection": 0,
+      "max_connections": 0,
+      "max_connections_per_user": 0,
+      "max_pending_connections": 0,
+      "max_pending_connections_per_ip": 0
+    },
     "write_config": true
   },
   "options": [
@@ -8508,6 +8541,23 @@ CreateWorkspaceRequest provides options for creating a new workspace. Only one o
     "reconciliation_backoff_lookback": 0,
     "reconciliation_interval": 0
   },
+  "workspace_ssh_gateway": {
+    "advertise_host": "string",
+    "advertise_port": 0,
+    "auth_attempts_burst": 0,
+    "auth_attempts_per_minute": 0,
+    "codex_api_key": "string",
+    "codex_base_url": "string",
+    "codex_model": "string",
+    "enabled": true,
+    "host_key_file": "string",
+    "listen_address": "string",
+    "max_channels_per_connection": 0,
+    "max_connections": 0,
+    "max_connections_per_user": 0,
+    "max_pending_connections": 0,
+    "max_pending_connections_per_ip": 0
+  },
   "write_config": true
 }
 ```
@@ -8593,6 +8643,7 @@ CreateWorkspaceRequest provides options for creating a new workspace. Only one o
 | `wildcard_access_url`                          | string                                                                                               | false    |              |                                                                           |
 | `workspace_hostname_suffix`                    | string                                                                                               | false    |              |                                                                           |
 | `workspace_prebuilds`                          | [codersdk.PrebuildsConfig](#codersdkprebuildsconfig)                                                 | false    |              |                                                                           |
+| `workspace_ssh_gateway`                        | [codersdk.WorkspaceSSHGatewayConfig](#codersdkworkspacesshgatewayconfig)                             | false    |              |                                                                           |
 | `write_config`                                 | boolean                                                                                              | false    |              |                                                                           |
 
 ## codersdk.DiagnosticExtra
@@ -8962,6 +9013,22 @@ CreateWorkspaceRequest provides options for creating a new workspace. Only one o
 | `message`             | [codersdk.ChatMessage](#codersdkchatmessage)          | false    |              |                                                                                                                                                                                   |
 | `messages`            | array of [codersdk.ChatMessage](#codersdkchatmessage) | false    |              | Messages holds every user-visible message inserted by the edit, in insertion order. Hook-generated suffix messages may follow Message, so clients must upsert the full batch.     |
 | `warnings`            | array of string                                       | false    |              |                                                                                                                                                                                   |
+
+## codersdk.EnrollWorkspaceSSHKeyRequest
+
+```json
+{
+  "device_name": "string",
+  "public_key": "string"
+}
+```
+
+### Properties
+
+| Name          | Type   | Required | Restrictions | Description |
+|---------------|--------|----------|--------------|-------------|
+| `device_name` | string | true     |              |             |
+| `public_key`  | string | true     |              |             |
 
 ## codersdk.Entitlement
 
@@ -13303,9 +13370,9 @@ Git clone makes use of this by parsing the URL from: 'Username for "https://gith
 
 #### Enumerated Values
 
-| Value(s)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `ai_gateway_key`, `ai_provider`, `ai_provider_key`, `ai_seat`, `api_key`, `chat`, `chat_instruction_settings`, `chat_model_config`, `chat_operational_settings`, `convert_login`, `custom_role`, `git_ssh_key`, `group`, `group_ai_budget`, `health_settings`, `idp_sync_settings_group`, `idp_sync_settings_organization`, `idp_sync_settings_role`, `license`, `mcp_server_config`, `notification_template`, `notifications_settings`, `oauth2_provider_app`, `oauth2_provider_app_secret`, `oauth2_provider_settings`, `organization`, `organization_member`, `prebuilds_settings`, `task`, `template`, `template_version`, `user`, `user_ai_budget_override`, `user_secret`, `user_skill`, `workspace`, `workspace_agent`, `workspace_app`, `workspace_build`, `workspace_proxy` |
+| Value(s)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `ai_gateway_key`, `ai_provider`, `ai_provider_key`, `ai_seat`, `api_key`, `chat`, `chat_instruction_settings`, `chat_model_config`, `chat_operational_settings`, `convert_login`, `custom_role`, `git_ssh_key`, `group`, `group_ai_budget`, `health_settings`, `idp_sync_settings_group`, `idp_sync_settings_organization`, `idp_sync_settings_role`, `license`, `mcp_server_config`, `notification_template`, `notifications_settings`, `oauth2_provider_app`, `oauth2_provider_app_secret`, `oauth2_provider_settings`, `organization`, `organization_member`, `prebuilds_settings`, `task`, `template`, `template_version`, `user`, `user_ai_budget_override`, `user_secret`, `user_skill`, `workspace`, `workspace_agent`, `workspace_app`, `workspace_build`, `workspace_proxy`, `workspace_ssh_key` |
 
 ## codersdk.Response
 
@@ -13453,18 +13520,28 @@ Git clone makes use of this by parsing the URL from: 'Username for "https://gith
   "ssh_config_options": {
     "property1": "string",
     "property2": "string"
+  },
+  "workspace_ssh_gateway": {
+    "alias_suffix": "string",
+    "chatgpt_desktop_available": true,
+    "enabled": true,
+    "host": "string",
+    "host_key_fingerprint": "string",
+    "host_public_key": "string",
+    "port": 0
   }
 }
 ```
 
 ### Properties
 
-| Name                 | Type   | Required | Restrictions | Description                                                                                                           |
-|----------------------|--------|----------|--------------|-----------------------------------------------------------------------------------------------------------------------|
-| `hostname_prefix`    | string | false    |              | Hostname prefix is the prefix we append to workspace names for SSH hostnames. Deprecated: use HostnameSuffix instead. |
-| `hostname_suffix`    | string | false    |              | Hostname suffix is the suffix to append to workspace names for SSH hostnames.                                         |
-| `ssh_config_options` | object | false    |              |                                                                                                                       |
-| » `[any property]`   | string | false    |              |                                                                                                                       |
+| Name                    | Type                                                                 | Required | Restrictions | Description                                                                                                           |
+|-------------------------|----------------------------------------------------------------------|----------|--------------|-----------------------------------------------------------------------------------------------------------------------|
+| `hostname_prefix`       | string                                                               | false    |              | Hostname prefix is the prefix we append to workspace names for SSH hostnames. Deprecated: use HostnameSuffix instead. |
+| `hostname_suffix`       | string                                                               | false    |              | Hostname suffix is the suffix to append to workspace names for SSH hostnames.                                         |
+| `ssh_config_options`    | object                                                               | false    |              |                                                                                                                       |
+| » `[any property]`      | string                                                               | false    |              |                                                                                                                       |
+| `workspace_ssh_gateway` | [codersdk.WorkspaceSSHGatewayInfo](#codersdkworkspacesshgatewayinfo) | false    |              |                                                                                                                       |
 
 ## codersdk.SecretsFileFormat
 
@@ -19345,6 +19422,191 @@ If the schedule is empty, the user will be updated to use the default schedule.|
 | Value(s)           |
 |--------------------|
 | ``, `admin`, `use` |
+
+## codersdk.WorkspaceSSHBootstrapResponse
+
+```json
+{
+  "alias": "string",
+  "bash_command": "string",
+  "deep_link": "string",
+  "enrollment_id": "cd8e6b59-f5cf-4894-8850-4dc2dc1aaf8e",
+  "expires_at": "2019-08-24T14:15:22Z",
+  "powershell_command": "string",
+  "project_path": "string"
+}
+```
+
+### Properties
+
+| Name                 | Type   | Required | Restrictions | Description |
+|----------------------|--------|----------|--------------|-------------|
+| `alias`              | string | false    |              |             |
+| `bash_command`       | string | false    |              |             |
+| `deep_link`          | string | false    |              |             |
+| `enrollment_id`      | string | false    |              |             |
+| `expires_at`         | string | false    |              |             |
+| `powershell_command` | string | false    |              |             |
+| `project_path`       | string | false    |              |             |
+
+## codersdk.WorkspaceSSHEnrollmentResponse
+
+```json
+{
+  "alias": "string",
+  "deep_link": "string",
+  "key": {
+    "created_at": "2019-08-24T14:15:22Z",
+    "device_name": "string",
+    "fingerprint": "string",
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "last_used_at": "2019-08-24T14:15:22Z",
+    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+    "public_key": "string",
+    "user_id": "a169451c-8525-4352-b8ca-070dd449a1a5"
+  },
+  "project_path": "string"
+}
+```
+
+### Properties
+
+| Name           | Type                                                 | Required | Restrictions | Description |
+|----------------|------------------------------------------------------|----------|--------------|-------------|
+| `alias`        | string                                               | false    |              |             |
+| `deep_link`    | string                                               | false    |              |             |
+| `key`          | [codersdk.WorkspaceSSHKey](#codersdkworkspacesshkey) | false    |              |             |
+| `project_path` | string                                               | false    |              |             |
+
+## codersdk.WorkspaceSSHEnrollmentStatus
+
+```json
+"pending"
+```
+
+### Properties
+
+#### Enumerated Values
+
+| Value(s)                         |
+|----------------------------------|
+| `complete`, `expired`, `pending` |
+
+## codersdk.WorkspaceSSHEnrollmentStatusResponse
+
+```json
+{
+  "enrollment_id": "cd8e6b59-f5cf-4894-8850-4dc2dc1aaf8e",
+  "expires_at": "2019-08-24T14:15:22Z",
+  "status": "pending",
+  "workspace_ssh_key_id": "4272796a-ebc0-4f14-9afa-b803128bc222"
+}
+```
+
+### Properties
+
+| Name                   | Type                                                                           | Required | Restrictions | Description |
+|------------------------|--------------------------------------------------------------------------------|----------|--------------|-------------|
+| `enrollment_id`        | string                                                                         | false    |              |             |
+| `expires_at`           | string                                                                         | false    |              |             |
+| `status`               | [codersdk.WorkspaceSSHEnrollmentStatus](#codersdkworkspacesshenrollmentstatus) | false    |              |             |
+| `workspace_ssh_key_id` | string                                                                         | false    |              |             |
+
+## codersdk.WorkspaceSSHGatewayConfig
+
+```json
+{
+  "advertise_host": "string",
+  "advertise_port": 0,
+  "auth_attempts_burst": 0,
+  "auth_attempts_per_minute": 0,
+  "codex_api_key": "string",
+  "codex_base_url": "string",
+  "codex_model": "string",
+  "enabled": true,
+  "host_key_file": "string",
+  "listen_address": "string",
+  "max_channels_per_connection": 0,
+  "max_connections": 0,
+  "max_connections_per_user": 0,
+  "max_pending_connections": 0,
+  "max_pending_connections_per_ip": 0
+}
+```
+
+### Properties
+
+| Name                             | Type    | Required | Restrictions | Description |
+|----------------------------------|---------|----------|--------------|-------------|
+| `advertise_host`                 | string  | false    |              |             |
+| `advertise_port`                 | integer | false    |              |             |
+| `auth_attempts_burst`            | integer | false    |              |             |
+| `auth_attempts_per_minute`       | integer | false    |              |             |
+| `codex_api_key`                  | string  | false    |              |             |
+| `codex_base_url`                 | string  | false    |              |             |
+| `codex_model`                    | string  | false    |              |             |
+| `enabled`                        | boolean | false    |              |             |
+| `host_key_file`                  | string  | false    |              |             |
+| `listen_address`                 | string  | false    |              |             |
+| `max_channels_per_connection`    | integer | false    |              |             |
+| `max_connections`                | integer | false    |              |             |
+| `max_connections_per_user`       | integer | false    |              |             |
+| `max_pending_connections`        | integer | false    |              |             |
+| `max_pending_connections_per_ip` | integer | false    |              |             |
+
+## codersdk.WorkspaceSSHGatewayInfo
+
+```json
+{
+  "alias_suffix": "string",
+  "chatgpt_desktop_available": true,
+  "enabled": true,
+  "host": "string",
+  "host_key_fingerprint": "string",
+  "host_public_key": "string",
+  "port": 0
+}
+```
+
+### Properties
+
+| Name                        | Type    | Required | Restrictions | Description |
+|-----------------------------|---------|----------|--------------|-------------|
+| `alias_suffix`              | string  | false    |              |             |
+| `chatgpt_desktop_available` | boolean | false    |              |             |
+| `enabled`                   | boolean | false    |              |             |
+| `host`                      | string  | false    |              |             |
+| `host_key_fingerprint`      | string  | false    |              |             |
+| `host_public_key`           | string  | false    |              |             |
+| `port`                      | integer | false    |              |             |
+
+## codersdk.WorkspaceSSHKey
+
+```json
+{
+  "created_at": "2019-08-24T14:15:22Z",
+  "device_name": "string",
+  "fingerprint": "string",
+  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+  "last_used_at": "2019-08-24T14:15:22Z",
+  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+  "public_key": "string",
+  "user_id": "a169451c-8525-4352-b8ca-070dd449a1a5"
+}
+```
+
+### Properties
+
+| Name              | Type   | Required | Restrictions | Description |
+|-------------------|--------|----------|--------------|-------------|
+| `created_at`      | string | false    |              |             |
+| `device_name`     | string | false    |              |             |
+| `fingerprint`     | string | false    |              |             |
+| `id`              | string | false    |              |             |
+| `last_used_at`    | string | false    |              |             |
+| `organization_id` | string | false    |              |             |
+| `public_key`      | string | false    |              |             |
+| `user_id`         | string | false    |              |             |
 
 ## codersdk.WorkspaceSharingSettings
 

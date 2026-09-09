@@ -320,6 +320,14 @@ func (m queryMetricsStore) ClearChatDiffStatusPR(ctx context.Context, arg databa
 	return r0
 }
 
+func (m queryMetricsStore) CompleteWorkspaceSSHKeyEnrollment(ctx context.Context, arg database.CompleteWorkspaceSSHKeyEnrollmentParams) (database.WorkspaceSshKeyEnrollment, error) {
+	start := time.Now()
+	r0, r1 := m.s.CompleteWorkspaceSSHKeyEnrollment(ctx, arg)
+	m.queryLatencies.WithLabelValues("CompleteWorkspaceSSHKeyEnrollment").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "CompleteWorkspaceSSHKeyEnrollment").Inc()
+	return r0, r1
+}
+
 func (m queryMetricsStore) CountAIBridgeSessions(ctx context.Context, arg database.CountAIBridgeSessionsParams) (int64, error) {
 	start := time.Now()
 	r0, r1 := m.s.CountAIBridgeSessions(ctx, arg)
@@ -590,6 +598,14 @@ func (m queryMetricsStore) DeleteExpiredAPIKeys(ctx context.Context, arg databas
 	m.queryLatencies.WithLabelValues("DeleteExpiredAPIKeys").Observe(time.Since(start).Seconds())
 	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "DeleteExpiredAPIKeys").Inc()
 	return r0, r1
+}
+
+func (m queryMetricsStore) DeleteExpiredWorkspaceSSHKeyEnrollments(ctx context.Context, now time.Time) error {
+	start := time.Now()
+	r0 := m.s.DeleteExpiredWorkspaceSSHKeyEnrollments(ctx, now)
+	m.queryLatencies.WithLabelValues("DeleteExpiredWorkspaceSSHKeyEnrollments").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "DeleteExpiredWorkspaceSSHKeyEnrollments").Inc()
+	return r0
 }
 
 func (m queryMetricsStore) DeleteExternalAuthLink(ctx context.Context, arg database.DeleteExternalAuthLinkParams) error {
@@ -990,6 +1006,14 @@ func (m queryMetricsStore) DeleteWorkspaceAgentPortSharesByTemplate(ctx context.
 	m.queryLatencies.WithLabelValues("DeleteWorkspaceAgentPortSharesByTemplate").Observe(time.Since(start).Seconds())
 	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "DeleteWorkspaceAgentPortSharesByTemplate").Inc()
 	return r0
+}
+
+func (m queryMetricsStore) DeleteWorkspaceSSHKeyByID(ctx context.Context, arg database.DeleteWorkspaceSSHKeyByIDParams) (database.WorkspaceSshKey, error) {
+	start := time.Now()
+	r0, r1 := m.s.DeleteWorkspaceSSHKeyByID(ctx, arg)
+	m.queryLatencies.WithLabelValues("DeleteWorkspaceSSHKeyByID").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "DeleteWorkspaceSSHKeyByID").Inc()
+	return r0, r1
 }
 
 func (m queryMetricsStore) DeleteWorkspaceSubAgentByID(ctx context.Context, id uuid.UUID) error {
@@ -4008,6 +4032,70 @@ func (m queryMetricsStore) GetWorkspaceResourcesCreatedAfter(ctx context.Context
 	return r0, r1
 }
 
+func (m queryMetricsStore) GetWorkspaceSSHBootstrapTargetByAgentID(ctx context.Context, id uuid.UUID) (database.GetWorkspaceSSHBootstrapTargetByAgentIDRow, error) {
+	start := time.Now()
+	r0, r1 := m.s.GetWorkspaceSSHBootstrapTargetByAgentID(ctx, id)
+	m.queryLatencies.WithLabelValues("GetWorkspaceSSHBootstrapTargetByAgentID").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "GetWorkspaceSSHBootstrapTargetByAgentID").Inc()
+	return r0, r1
+}
+
+func (m queryMetricsStore) GetWorkspaceSSHGatewayTarget(ctx context.Context, arg database.GetWorkspaceSSHGatewayTargetParams) (database.GetWorkspaceSSHGatewayTargetRow, error) {
+	start := time.Now()
+	r0, r1 := m.s.GetWorkspaceSSHGatewayTarget(ctx, arg)
+	m.queryLatencies.WithLabelValues("GetWorkspaceSSHGatewayTarget").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "GetWorkspaceSSHGatewayTarget").Inc()
+	return r0, r1
+}
+
+func (m queryMetricsStore) GetWorkspaceSSHKeyByID(ctx context.Context, id uuid.UUID) (database.WorkspaceSshKey, error) {
+	start := time.Now()
+	r0, r1 := m.s.GetWorkspaceSSHKeyByID(ctx, id)
+	m.queryLatencies.WithLabelValues("GetWorkspaceSSHKeyByID").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "GetWorkspaceSSHKeyByID").Inc()
+	return r0, r1
+}
+
+func (m queryMetricsStore) GetWorkspaceSSHKeyByOrganizationAndFingerprint(ctx context.Context, arg database.GetWorkspaceSSHKeyByOrganizationAndFingerprintParams) (database.WorkspaceSshKey, error) {
+	start := time.Now()
+	r0, r1 := m.s.GetWorkspaceSSHKeyByOrganizationAndFingerprint(ctx, arg)
+	m.queryLatencies.WithLabelValues("GetWorkspaceSSHKeyByOrganizationAndFingerprint").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "GetWorkspaceSSHKeyByOrganizationAndFingerprint").Inc()
+	return r0, r1
+}
+
+func (m queryMetricsStore) GetWorkspaceSSHKeyByUserOrganizationAndFingerprint(ctx context.Context, arg database.GetWorkspaceSSHKeyByUserOrganizationAndFingerprintParams) (database.WorkspaceSshKey, error) {
+	start := time.Now()
+	r0, r1 := m.s.GetWorkspaceSSHKeyByUserOrganizationAndFingerprint(ctx, arg)
+	m.queryLatencies.WithLabelValues("GetWorkspaceSSHKeyByUserOrganizationAndFingerprint").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "GetWorkspaceSSHKeyByUserOrganizationAndFingerprint").Inc()
+	return r0, r1
+}
+
+func (m queryMetricsStore) GetWorkspaceSSHKeyEnrollmentByID(ctx context.Context, id uuid.UUID) (database.WorkspaceSshKeyEnrollment, error) {
+	start := time.Now()
+	r0, r1 := m.s.GetWorkspaceSSHKeyEnrollmentByID(ctx, id)
+	m.queryLatencies.WithLabelValues("GetWorkspaceSSHKeyEnrollmentByID").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "GetWorkspaceSSHKeyEnrollmentByID").Inc()
+	return r0, r1
+}
+
+func (m queryMetricsStore) GetWorkspaceSSHKeyEnrollmentForUpdate(ctx context.Context, arg database.GetWorkspaceSSHKeyEnrollmentForUpdateParams) (database.WorkspaceSshKeyEnrollment, error) {
+	start := time.Now()
+	r0, r1 := m.s.GetWorkspaceSSHKeyEnrollmentForUpdate(ctx, arg)
+	m.queryLatencies.WithLabelValues("GetWorkspaceSSHKeyEnrollmentForUpdate").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "GetWorkspaceSSHKeyEnrollmentForUpdate").Inc()
+	return r0, r1
+}
+
+func (m queryMetricsStore) GetWorkspaceSSHKeysByUserAndOrganization(ctx context.Context, arg database.GetWorkspaceSSHKeysByUserAndOrganizationParams) ([]database.WorkspaceSshKey, error) {
+	start := time.Now()
+	r0, r1 := m.s.GetWorkspaceSSHKeysByUserAndOrganization(ctx, arg)
+	m.queryLatencies.WithLabelValues("GetWorkspaceSSHKeysByUserAndOrganization").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "GetWorkspaceSSHKeysByUserAndOrganization").Inc()
+	return r0, r1
+}
+
 func (m queryMetricsStore) GetWorkspaceUniqueOwnerCountByTemplateIDs(ctx context.Context, templateIds []uuid.UUID) ([]database.GetWorkspaceUniqueOwnerCountByTemplateIDsRow, error) {
 	start := time.Now()
 	r0, r1 := m.s.GetWorkspaceUniqueOwnerCountByTemplateIDs(ctx, templateIds)
@@ -4765,6 +4853,22 @@ func (m queryMetricsStore) InsertWorkspaceResourceMetadata(ctx context.Context, 
 	r0, r1 := m.s.InsertWorkspaceResourceMetadata(ctx, arg)
 	m.queryLatencies.WithLabelValues("InsertWorkspaceResourceMetadata").Observe(time.Since(start).Seconds())
 	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "InsertWorkspaceResourceMetadata").Inc()
+	return r0, r1
+}
+
+func (m queryMetricsStore) InsertWorkspaceSSHKey(ctx context.Context, arg database.InsertWorkspaceSSHKeyParams) (database.WorkspaceSshKey, error) {
+	start := time.Now()
+	r0, r1 := m.s.InsertWorkspaceSSHKey(ctx, arg)
+	m.queryLatencies.WithLabelValues("InsertWorkspaceSSHKey").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "InsertWorkspaceSSHKey").Inc()
+	return r0, r1
+}
+
+func (m queryMetricsStore) InsertWorkspaceSSHKeyEnrollment(ctx context.Context, arg database.InsertWorkspaceSSHKeyEnrollmentParams) (database.WorkspaceSshKeyEnrollment, error) {
+	start := time.Now()
+	r0, r1 := m.s.InsertWorkspaceSSHKeyEnrollment(ctx, arg)
+	m.queryLatencies.WithLabelValues("InsertWorkspaceSSHKeyEnrollment").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "InsertWorkspaceSSHKeyEnrollment").Inc()
 	return r0, r1
 }
 
@@ -6285,6 +6389,14 @@ func (m queryMetricsStore) UpdateWorkspaceProxyDeleted(ctx context.Context, arg 
 	r0 := m.s.UpdateWorkspaceProxyDeleted(ctx, arg)
 	m.queryLatencies.WithLabelValues("UpdateWorkspaceProxyDeleted").Observe(time.Since(start).Seconds())
 	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "UpdateWorkspaceProxyDeleted").Inc()
+	return r0
+}
+
+func (m queryMetricsStore) UpdateWorkspaceSSHKeyLastUsedAt(ctx context.Context, arg database.UpdateWorkspaceSSHKeyLastUsedAtParams) error {
+	start := time.Now()
+	r0 := m.s.UpdateWorkspaceSSHKeyLastUsedAt(ctx, arg)
+	m.queryLatencies.WithLabelValues("UpdateWorkspaceSSHKeyLastUsedAt").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "UpdateWorkspaceSSHKeyLastUsedAt").Inc()
 	return r0
 }
 

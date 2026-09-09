@@ -5,17 +5,22 @@
 			content = r.content[ct];
 			break;
 		}
-		if (!content) {
-			return "";
-		}
+			if (!content) {
+				return "";
+			}
 
-		var ref = content.schema["x-widdershins-oldRef"];
-		if (!ref) {
-			ref = content.schema.items["x-widdershins-oldRef"];
-		}
-		if (!ref) {
-			return content.schema.items.type;
-		}
+			var schema = content.schema;
+			if (!schema) {
+				return "";
+			}
+
+			var ref = schema["x-widdershins-oldRef"];
+			if (!ref && schema.items) {
+				ref = schema.items["x-widdershins-oldRef"];
+			}
+			if (!ref) {
+				return schema.items ? schema.items.type : schema.type;
+			}
 		const aType = ref.replace("#/components/schemas/","");
 		const href = aType.replace(".","").toLowerCase();
 		return "[" + aType + "](schemas.md#" + href + ")";
@@ -52,7 +57,7 @@
 {{ data.responses = data.utils.getResponses(data); }}
 {{ data.responseSchemas = false; }}
 {{~ data.responses :response }}
-{{ if (response.content) data.responseSchemas = true; }}
+{{ if (response.content && !data.utils.isPrimitive(response.type)) data.responseSchemas = true; }}
 {{~}}
 
 {{? data.responseSchemas }}

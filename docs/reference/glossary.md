@@ -582,6 +582,11 @@ A regional proxy that terminates user connections closer to the developer to low
 This is a Premium feature.
 Refer to [Workspace proxies](../admin/networking/workspace-proxies.md).
 
+### Workspace SSH Gateway
+
+A deployment-managed OpenSSH endpoint that authenticates registered user keys and proxies authorized connections to workspace agents without requiring the Coder CLI.
+Refer to [Workspace SSH Gateway](../admin/networking/workspace-ssh-gateway.md).
+
 ## Learn more
 
 - [Architecture](../admin/infrastructure/architecture.md)

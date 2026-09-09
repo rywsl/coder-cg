@@ -385,6 +385,24 @@ var (
 		Scope: rbac.ScopeAll,
 	}.WithCachedASTValue()
 
+	subjectWorkspaceSSHAuditor = rbac.Subject{
+		Type:         rbac.SubjectTypeWorkspaceSSHAuditor,
+		FriendlyName: "Workspace SSH Auditor",
+		ID:           uuid.Nil.String(),
+		Roles: rbac.Roles([]rbac.Role{
+			{
+				Identifier:  rbac.RoleIdentifier{Name: "workspace-ssh-auditor"},
+				DisplayName: "Workspace SSH Auditor",
+				Site: rbac.Permissions(map[string][]policy.Action{
+					rbac.ResourceAuditLog.Type: {policy.ActionCreate},
+				}),
+				User:    []rbac.Permission{},
+				ByOrgID: map[string]rbac.OrgPermissions{},
+			},
+		}),
+		Scope: rbac.ScopeAll,
+	}.WithCachedASTValue()
+
 	subjectNotifier = rbac.Subject{
 		Type:         rbac.SubjectTypeNotifier,
 		FriendlyName: "Notifier",
@@ -930,6 +948,12 @@ func AsKeyReader(ctx context.Context) context.Context {
 
 func AsConnectionLogger(ctx context.Context) context.Context {
 	return As(ctx, subjectConnectionLogger)
+}
+
+// AsWorkspaceSSHAuditor returns a context that can only persist audit logs for
+// the community Workspace SSH audit sink.
+func AsWorkspaceSSHAuditor(ctx context.Context) context.Context {
+	return As(ctx, subjectWorkspaceSSHAuditor)
 }
 
 // AsNotifier returns a context with an actor that has permissions required for
@@ -2004,6 +2028,13 @@ func (q *querier) ClearChatDiffStatusPR(ctx context.Context, arg database.ClearC
 	return q.db.ClearChatDiffStatusPR(ctx, arg)
 }
 
+func (q *querier) CompleteWorkspaceSSHKeyEnrollment(ctx context.Context, arg database.CompleteWorkspaceSSHKeyEnrollmentParams) (database.WorkspaceSshKeyEnrollment, error) {
+	if err := q.authorizeContext(ctx, policy.ActionUpdate, rbac.ResourceSystem); err != nil {
+		return database.WorkspaceSshKeyEnrollment{}, err
+	}
+	return q.db.CompleteWorkspaceSSHKeyEnrollment(ctx, arg)
+}
+
 func (q *querier) CountAIBridgeSessions(ctx context.Context, arg database.CountAIBridgeSessionsParams) (int64, error) {
 	prep, err := prepareSQLFilter(ctx, q.auth, policy.ActionRead, rbac.ResourceAibridgeInterception.Type)
 	if err != nil {
@@ -2316,6 +2347,13 @@ func (q *querier) DeleteExpiredAPIKeys(ctx context.Context, arg database.DeleteE
 	}
 
 	return q.db.DeleteExpiredAPIKeys(ctx, arg)
+}
+
+func (q *querier) DeleteExpiredWorkspaceSSHKeyEnrollments(ctx context.Context, now time.Time) error {
+	if err := q.authorizeContext(ctx, policy.ActionDelete, rbac.ResourceSystem); err != nil {
+		return err
+	}
+	return q.db.DeleteExpiredWorkspaceSSHKeyEnrollments(ctx, now)
 }
 
 func (q *querier) DeleteExternalAuthLink(ctx context.Context, arg database.DeleteExternalAuthLinkParams) error {
@@ -2750,6 +2788,13 @@ func (q *querier) DeleteWorkspaceAgentPortSharesByTemplate(ctx context.Context, 
 	}
 
 	return q.db.DeleteWorkspaceAgentPortSharesByTemplate(ctx, templateID)
+}
+
+func (q *querier) DeleteWorkspaceSSHKeyByID(ctx context.Context, arg database.DeleteWorkspaceSSHKeyByIDParams) (database.WorkspaceSshKey, error) {
+	if err := q.authorizeContext(ctx, policy.ActionUpdatePersonal, rbac.ResourceUserObject(arg.UserID)); err != nil {
+		return database.WorkspaceSshKey{}, err
+	}
+	return q.db.DeleteWorkspaceSSHKeyByID(ctx, arg)
 }
 
 func (q *querier) DeleteWorkspaceSubAgentByID(ctx context.Context, id uuid.UUID) error {
@@ -6015,6 +6060,66 @@ func (q *querier) GetWorkspaceResourcesCreatedAfter(ctx context.Context, created
 	return q.db.GetWorkspaceResourcesCreatedAfter(ctx, createdAt)
 }
 
+func (q *querier) GetWorkspaceSSHBootstrapTargetByAgentID(ctx context.Context, id uuid.UUID) (database.GetWorkspaceSSHBootstrapTargetByAgentIDRow, error) {
+	if err := q.authorizeContext(ctx, policy.ActionRead, rbac.ResourceSystem); err != nil {
+		return database.GetWorkspaceSSHBootstrapTargetByAgentIDRow{}, err
+	}
+	return q.db.GetWorkspaceSSHBootstrapTargetByAgentID(ctx, id)
+}
+
+func (q *querier) GetWorkspaceSSHGatewayTarget(ctx context.Context, arg database.GetWorkspaceSSHGatewayTargetParams) (database.GetWorkspaceSSHGatewayTargetRow, error) {
+	if err := q.authorizeContext(ctx, policy.ActionRead, rbac.ResourceSystem); err != nil {
+		return database.GetWorkspaceSSHGatewayTargetRow{}, err
+	}
+	return q.db.GetWorkspaceSSHGatewayTarget(ctx, arg)
+}
+
+func (q *querier) GetWorkspaceSSHKeyByID(ctx context.Context, id uuid.UUID) (database.WorkspaceSshKey, error) {
+	key, err := q.db.GetWorkspaceSSHKeyByID(ctx, id)
+	if err != nil {
+		return database.WorkspaceSshKey{}, err
+	}
+	if err := q.authorizeContext(ctx, policy.ActionReadPersonal, rbac.ResourceUserObject(key.UserID)); err != nil {
+		return database.WorkspaceSshKey{}, err
+	}
+	return key, nil
+}
+
+func (q *querier) GetWorkspaceSSHKeyByOrganizationAndFingerprint(ctx context.Context, arg database.GetWorkspaceSSHKeyByOrganizationAndFingerprintParams) (database.WorkspaceSshKey, error) {
+	if err := q.authorizeContext(ctx, policy.ActionRead, rbac.ResourceSystem); err != nil {
+		return database.WorkspaceSshKey{}, err
+	}
+	return q.db.GetWorkspaceSSHKeyByOrganizationAndFingerprint(ctx, arg)
+}
+
+func (q *querier) GetWorkspaceSSHKeyByUserOrganizationAndFingerprint(ctx context.Context, arg database.GetWorkspaceSSHKeyByUserOrganizationAndFingerprintParams) (database.WorkspaceSshKey, error) {
+	if err := q.authorizeContext(ctx, policy.ActionReadPersonal, rbac.ResourceUserObject(arg.UserID)); err != nil {
+		return database.WorkspaceSshKey{}, err
+	}
+	return q.db.GetWorkspaceSSHKeyByUserOrganizationAndFingerprint(ctx, arg)
+}
+
+func (q *querier) GetWorkspaceSSHKeyEnrollmentByID(ctx context.Context, id uuid.UUID) (database.WorkspaceSshKeyEnrollment, error) {
+	if err := q.authorizeContext(ctx, policy.ActionRead, rbac.ResourceSystem); err != nil {
+		return database.WorkspaceSshKeyEnrollment{}, err
+	}
+	return q.db.GetWorkspaceSSHKeyEnrollmentByID(ctx, id)
+}
+
+func (q *querier) GetWorkspaceSSHKeyEnrollmentForUpdate(ctx context.Context, arg database.GetWorkspaceSSHKeyEnrollmentForUpdateParams) (database.WorkspaceSshKeyEnrollment, error) {
+	if err := q.authorizeContext(ctx, policy.ActionUpdate, rbac.ResourceSystem); err != nil {
+		return database.WorkspaceSshKeyEnrollment{}, err
+	}
+	return q.db.GetWorkspaceSSHKeyEnrollmentForUpdate(ctx, arg)
+}
+
+func (q *querier) GetWorkspaceSSHKeysByUserAndOrganization(ctx context.Context, arg database.GetWorkspaceSSHKeysByUserAndOrganizationParams) ([]database.WorkspaceSshKey, error) {
+	if err := q.authorizeContext(ctx, policy.ActionReadPersonal, rbac.ResourceUserObject(arg.UserID)); err != nil {
+		return nil, err
+	}
+	return q.db.GetWorkspaceSSHKeysByUserAndOrganization(ctx, arg)
+}
+
 func (q *querier) GetWorkspaceUniqueOwnerCountByTemplateIDs(ctx context.Context, templateIDs []uuid.UUID) ([]database.GetWorkspaceUniqueOwnerCountByTemplateIDsRow, error) {
 	if err := q.authorizeContext(ctx, policy.ActionRead, rbac.ResourceSystem); err != nil {
 		return nil, err
@@ -6911,6 +7016,20 @@ func (q *querier) InsertWorkspaceResourceMetadata(ctx context.Context, arg datab
 		return nil, err
 	}
 	return q.db.InsertWorkspaceResourceMetadata(ctx, arg)
+}
+
+func (q *querier) InsertWorkspaceSSHKey(ctx context.Context, arg database.InsertWorkspaceSSHKeyParams) (database.WorkspaceSshKey, error) {
+	if err := q.authorizeContext(ctx, policy.ActionUpdatePersonal, rbac.ResourceUserObject(arg.UserID)); err != nil {
+		return database.WorkspaceSshKey{}, err
+	}
+	return q.db.InsertWorkspaceSSHKey(ctx, arg)
+}
+
+func (q *querier) InsertWorkspaceSSHKeyEnrollment(ctx context.Context, arg database.InsertWorkspaceSSHKeyEnrollmentParams) (database.WorkspaceSshKeyEnrollment, error) {
+	if err := q.authorizeWorkspaceByAgentID(ctx, arg.WorkspaceAgentID, policy.ActionSSH); err != nil {
+		return database.WorkspaceSshKeyEnrollment{}, err
+	}
+	return q.db.InsertWorkspaceSSHKeyEnrollment(ctx, arg)
 }
 
 func (q *querier) IsChatHeartbeatStale(ctx context.Context, arg database.IsChatHeartbeatStaleParams) (bool, error) {
@@ -9023,6 +9142,13 @@ func (q *querier) UpdateWorkspaceProxyDeleted(ctx context.Context, arg database.
 		return q.db.GetWorkspaceProxyByID(ctx, arg.ID)
 	}
 	return deleteQ(q.log, q.auth, fetch, q.db.UpdateWorkspaceProxyDeleted)(ctx, arg)
+}
+
+func (q *querier) UpdateWorkspaceSSHKeyLastUsedAt(ctx context.Context, arg database.UpdateWorkspaceSSHKeyLastUsedAtParams) error {
+	if err := q.authorizeContext(ctx, policy.ActionUpdate, rbac.ResourceSystem); err != nil {
+		return err
+	}
+	return q.db.UpdateWorkspaceSSHKeyLastUsedAt(ctx, arg)
 }
 
 func (q *querier) UpdateWorkspaceTTL(ctx context.Context, arg database.UpdateWorkspaceTTLParams) error {

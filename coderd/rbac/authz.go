@@ -67,6 +67,7 @@ const (
 	SubjectTypeProvisionerd                 SubjectType = "provisionerd"
 	SubjectTypeAutostart                    SubjectType = "autostart"
 	SubjectTypeConnectionLogger             SubjectType = "connection_logger"
+	SubjectTypeWorkspaceSSHAuditor          SubjectType = "workspace_ssh_auditor"
 	SubjectTypeJobReaper                    SubjectType = "job_reaper"
 	SubjectTypeResourceMonitor              SubjectType = "resource_monitor"
 	SubjectTypeCryptoKeyRotator             SubjectType = "crypto_key_rotator"

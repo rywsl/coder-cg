@@ -19,6 +19,26 @@ func TestTranslate(t *testing.T) {
 	require.Equal(t, "Unknown upstream error", Translate(LocaleSimplifiedChinese, "Unknown upstream error"))
 	require.Equal(t, "缺少必需参数：client_id", Translate(LocaleSimplifiedChinese, fmt.Sprintf("Missing required parameter: %s", "client_id")))
 	require.Equal(t, "标签 \"required\" 的值 \"\" 验证失败", Translate(LocaleSimplifiedChinese, fmt.Sprintf("Validation failed for tag %q with value: \"%v\"", "required", "")))
+	for _, test := range []struct {
+		source string
+		want   string
+	}{
+		{"Agent must be connected before configuring ChatGPT Desktop.", "配置 ChatGPT Desktop 前，Agent 必须已连接。"},
+		{"Agent must be ready before configuring ChatGPT Desktop.", "配置 ChatGPT Desktop 前，Agent 必须已就绪。"},
+		{"Agent must belong to the latest workspace build.", "Agent 必须属于工作区的最新构建。"},
+		{"Invalid enrollment form.", "设备注册表单无效。"},
+		{"Platform must be bash or powershell.", "平台必须是 bash 或 PowerShell。"},
+		{"device name must contain between 1 and 255 characters", "设备名称必须包含 1 至 255 个字符"},
+		{"public key must be Ed25519", "公钥必须使用 Ed25519 算法"},
+		{"public key must be one valid OpenSSH public key", "公钥必须是一个有效的 OpenSSH 公钥。"},
+		{"This SSH key is already registered in the organization.", "此 SSH 密钥已在该组织中注册。"},
+		{"Workspace SSH gateway currently supports Linux agents only.", "工作区 SSH 网关目前仅支持 Linux Agent。"},
+		{"Workspace SSH gateway is disabled.", "工作区 SSH 网关未启用。"},
+		{"Workspace SSH key ID must be a UUID.", "工作区 SSH 密钥 ID 必须是 UUID。"},
+		{"Workspace must be running before configuring ChatGPT Desktop.", "配置 ChatGPT Desktop 前，工作区必须处于运行状态。"},
+	} {
+		require.Equal(t, test.want, Translate(LocaleSimplifiedChinese, test.source))
+	}
 }
 
 func TestLocalizeResponse(t *testing.T) {

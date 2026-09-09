@@ -9312,6 +9312,123 @@ const docTemplate = `{
                 ]
             }
         },
+        "/api/v2/organizations/{organization}/workspace-ssh-keys": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SSH"
+                ],
+                "summary": "List workspace SSH keys",
+                "operationId": "list-workspace-ssh-keys",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Organization ID or name",
+                        "name": "organization",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/codersdk.WorkspaceSSHKey"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "CoderSessionToken": []
+                    }
+                ]
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SSH"
+                ],
+                "summary": "Register a workspace SSH key",
+                "operationId": "create-workspace-ssh-key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Organization ID or name",
+                        "name": "organization",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Key registration",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.CreateWorkspaceSSHKeyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.WorkspaceSSHKey"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "CoderSessionToken": []
+                    }
+                ]
+            }
+        },
+        "/api/v2/organizations/{organization}/workspace-ssh-keys/{key}": {
+            "delete": {
+                "tags": [
+                    "SSH"
+                ],
+                "summary": "Delete a workspace SSH key",
+                "operationId": "delete-workspace-ssh-key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Organization ID or name",
+                        "name": "organization",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Workspace SSH key ID",
+                        "name": "key",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "security": [
+                    {
+                        "CoderSessionToken": []
+                    }
+                ]
+            }
+        },
         "/api/v2/prebuilds/settings": {
             "get": {
                 "produces": [
@@ -13859,6 +13976,133 @@ const docTemplate = `{
                 ]
             }
         },
+        "/api/v2/workspace-ssh/enrollments/{enrollment}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SSH"
+                ],
+                "summary": "Get workspace SSH enrollment status",
+                "operationId": "get-workspace-ssh-enrollment-status",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Enrollment ID",
+                        "name": "enrollment",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.WorkspaceSSHEnrollmentStatusResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "CoderSessionToken": []
+                    }
+                ]
+            },
+            "post": {
+                "consumes": [
+                    "application/json",
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SSH"
+                ],
+                "summary": "Complete a one-time workspace SSH key enrollment",
+                "operationId": "enroll-workspace-ssh-key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Enrollment ID",
+                        "name": "enrollment",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Bearer enrollment token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Key enrollment",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.EnrollWorkspaceSSHKeyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.WorkspaceSSHEnrollmentResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/workspace-ssh/enrollments/{enrollment}/script": {
+            "get": {
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "SSH"
+                ],
+                "summary": "Get a one-time workspace SSH setup script",
+                "operationId": "get-workspace-ssh-enrollment-script",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Enrollment ID",
+                        "name": "enrollment",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Bearer enrollment token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "bash or powershell",
+                        "name": "platform",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v2/workspaceagents/aws-instance-identity": {
             "post": {
                 "consumes": [
@@ -14830,6 +15074,41 @@ const docTemplate = `{
                 "x-apidocgen": {
                     "skip": true
                 }
+            }
+        },
+        "/api/v2/workspaceagents/{workspaceagent}/workspace-ssh-bootstrap": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SSH"
+                ],
+                "summary": "Create a workspace SSH bootstrap command",
+                "operationId": "create-workspace-ssh-bootstrap",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Workspace agent ID",
+                        "name": "workspaceagent",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.WorkspaceSSHBootstrapResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "CoderSessionToken": []
+                    }
+                ]
             }
         },
         "/api/v2/workspacebuilds/{workspacebuild}": {
@@ -22698,6 +22977,22 @@ const docTemplate = `{
                 }
             }
         },
+        "codersdk.CreateWorkspaceSSHKeyRequest": {
+            "type": "object",
+            "required": [
+                "device_name",
+                "public_key"
+            ],
+            "properties": {
+                "device_name": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "public_key": {
+                    "type": "string"
+                }
+            }
+        },
         "codersdk.CryptoKey": {
             "type": "object",
             "properties": {
@@ -23233,6 +23528,9 @@ const docTemplate = `{
                 "workspace_prebuilds": {
                     "$ref": "#/definitions/codersdk.PrebuildsConfig"
                 },
+                "workspace_ssh_gateway": {
+                    "$ref": "#/definitions/codersdk.WorkspaceSSHGatewayConfig"
+                },
                 "write_config": {
                     "type": "boolean"
                 }
@@ -23384,6 +23682,22 @@ const docTemplate = `{
                     "items": {
                         "type": "string"
                     }
+                }
+            }
+        },
+        "codersdk.EnrollWorkspaceSSHKeyRequest": {
+            "type": "object",
+            "required": [
+                "device_name",
+                "public_key"
+            ],
+            "properties": {
+                "device_name": {
+                    "type": "string",
+                    "maxLength": 255
+                },
+                "public_key": {
+                    "type": "string"
                 }
             }
         },
@@ -27483,6 +27797,7 @@ const docTemplate = `{
                 "workspace",
                 "workspace_build",
                 "git_ssh_key",
+                "workspace_ssh_key",
                 "api_key",
                 "group",
                 "license",
@@ -27525,6 +27840,7 @@ const docTemplate = `{
                 "ResourceTypeWorkspace",
                 "ResourceTypeWorkspaceBuild",
                 "ResourceTypeGitSSHKey",
+                "ResourceTypeWorkspaceSSHKey",
                 "ResourceTypeAPIKey",
                 "ResourceTypeGroup",
                 "ResourceTypeLicense",
@@ -27698,6 +28014,9 @@ const docTemplate = `{
                     "additionalProperties": {
                         "type": "string"
                     }
+                },
+                "workspace_ssh_gateway": {
+                    "$ref": "#/definitions/codersdk.WorkspaceSSHGatewayInfo"
                 }
             }
         },
@@ -32259,6 +32578,194 @@ const docTemplate = `{
                 "WorkspaceRoleUse",
                 "WorkspaceRoleDeleted"
             ]
+        },
+        "codersdk.WorkspaceSSHBootstrapResponse": {
+            "type": "object",
+            "properties": {
+                "alias": {
+                    "type": "string"
+                },
+                "bash_command": {
+                    "type": "string"
+                },
+                "deep_link": {
+                    "type": "string"
+                },
+                "enrollment_id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "expires_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "powershell_command": {
+                    "type": "string"
+                },
+                "project_path": {
+                    "type": "string"
+                }
+            }
+        },
+        "codersdk.WorkspaceSSHEnrollmentResponse": {
+            "type": "object",
+            "properties": {
+                "alias": {
+                    "type": "string"
+                },
+                "deep_link": {
+                    "type": "string"
+                },
+                "key": {
+                    "$ref": "#/definitions/codersdk.WorkspaceSSHKey"
+                },
+                "project_path": {
+                    "type": "string"
+                }
+            }
+        },
+        "codersdk.WorkspaceSSHEnrollmentStatus": {
+            "type": "string",
+            "enum": [
+                "pending",
+                "complete",
+                "expired"
+            ],
+            "x-enum-varnames": [
+                "WorkspaceSSHEnrollmentStatusPending",
+                "WorkspaceSSHEnrollmentStatusComplete",
+                "WorkspaceSSHEnrollmentStatusExpired"
+            ]
+        },
+        "codersdk.WorkspaceSSHEnrollmentStatusResponse": {
+            "type": "object",
+            "properties": {
+                "enrollment_id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "expires_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "status": {
+                    "$ref": "#/definitions/codersdk.WorkspaceSSHEnrollmentStatus"
+                },
+                "workspace_ssh_key_id": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            }
+        },
+        "codersdk.WorkspaceSSHGatewayConfig": {
+            "type": "object",
+            "properties": {
+                "advertise_host": {
+                    "type": "string"
+                },
+                "advertise_port": {
+                    "type": "integer"
+                },
+                "auth_attempts_burst": {
+                    "type": "integer"
+                },
+                "auth_attempts_per_minute": {
+                    "type": "integer"
+                },
+                "codex_api_key": {
+                    "type": "string"
+                },
+                "codex_base_url": {
+                    "type": "string"
+                },
+                "codex_model": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "host_key_file": {
+                    "type": "string"
+                },
+                "listen_address": {
+                    "type": "string"
+                },
+                "max_channels_per_connection": {
+                    "type": "integer"
+                },
+                "max_connections": {
+                    "type": "integer"
+                },
+                "max_connections_per_user": {
+                    "type": "integer"
+                },
+                "max_pending_connections": {
+                    "type": "integer"
+                },
+                "max_pending_connections_per_ip": {
+                    "type": "integer"
+                }
+            }
+        },
+        "codersdk.WorkspaceSSHGatewayInfo": {
+            "type": "object",
+            "properties": {
+                "alias_suffix": {
+                    "type": "string"
+                },
+                "chatgpt_desktop_available": {
+                    "type": "boolean"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "host": {
+                    "type": "string"
+                },
+                "host_key_fingerprint": {
+                    "type": "string"
+                },
+                "host_public_key": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                }
+            }
+        },
+        "codersdk.WorkspaceSSHKey": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "device_name": {
+                    "type": "string"
+                },
+                "fingerprint": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "last_used_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "organization_id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "public_key": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            }
         },
         "codersdk.WorkspaceSharingSettings": {
             "type": "object",

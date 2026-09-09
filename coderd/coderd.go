@@ -97,6 +97,7 @@ import (
 	"github.com/coder/coder/v2/coderd/workspaceapps"
 	"github.com/coder/coder/v2/coderd/workspaceapps/appurl"
 	"github.com/coder/coder/v2/coderd/workspaceconnwatcher"
+	"github.com/coder/coder/v2/coderd/workspacessh"
 	"github.com/coder/coder/v2/coderd/workspacestats"
 	"github.com/coder/coder/v2/coderd/wsbuilder"
 	"github.com/coder/coder/v2/coderd/wsbuildorchestrator"
@@ -881,6 +882,10 @@ func New(options *Options) *API {
 		panic("failed to setup server tailnet: " + err.Error())
 	}
 	api.agentProvider = stn
+	if err := api.startWorkspaceSSHGateway(); err != nil {
+		_ = stn.Close()
+		panic("failed to setup workspace SSH gateway: " + err.Error())
+	}
 
 	{ // Chat daemon and git sync worker initialization.
 		maxChatsPerAcquire := options.DeploymentValues.AI.Chat.AcquireBatchSize.Value()
@@ -1445,6 +1450,11 @@ func New(options *Options) *API {
 			r.Get("/user-secrets/capabilities", api.userSecretsCapabilities)
 			r.Post("/premium-funnel-events", api.postPremiumFunnelEvent)
 		})
+		r.Route("/workspace-ssh/enrollments/{enrollment}", func(r chi.Router) {
+			r.Get("/script", api.workspaceSSHEnrollmentScript)
+			r.Post("/", api.enrollWorkspaceSSHKey)
+			r.With(apiKeyMiddleware).Get("/", api.workspaceSSHEnrollmentStatus)
+		})
 		r.Route("/experiments", func(r chi.Router) {
 			r.Use(apiKeyMiddleware)
 			r.Get("/available", handleExperimentsAvailable)
@@ -1520,6 +1530,11 @@ func New(options *Options) *API {
 				)
 				api.registerOrganizationChatRoutes(r, chatAPIPrefixV2)
 				r.Get("/", api.organization)
+				r.Route("/workspace-ssh-keys", func(r chi.Router) {
+					r.Get("/", api.workspaceSSHKeys)
+					r.Post("/", api.createWorkspaceSSHKey)
+					r.Delete("/{key}", api.deleteWorkspaceSSHKey)
+				})
 				r.Post("/templateversions", api.postTemplateVersionsByOrganization)
 				r.Route("/templates", func(r chi.Router) {
 					r.Post("/", api.postTemplateByOrganization)
@@ -1786,6 +1801,7 @@ func New(options *Options) *API {
 			r.Post("/azure-instance-identity", api.postWorkspaceAuthAzureInstanceIdentity)
 			r.Post("/aws-instance-identity", api.postWorkspaceAuthAWSInstanceIdentity)
 			r.Post("/google-instance-identity", api.postWorkspaceAuthGoogleInstanceIdentity)
+			r.With(apiKeyMiddleware).Post("/{workspaceagent}/workspace-ssh-bootstrap", api.workspaceSSHBootstrap)
 			r.With(
 				apiKeyMiddlewareOptional,
 				httpmw.ExtractWorkspaceProxy(httpmw.ExtractWorkspaceProxyConfig{
@@ -2309,6 +2325,7 @@ type API struct {
 	WorkspaceAppsProvider workspaceapps.SignedTokenProvider
 	workspaceAppServer    *workspaceapps.Server
 	agentProvider         workspaceapps.AgentProvider
+	workspaceSSHGateway   *workspacessh.Gateway
 
 	// Experiments contains the list of experiments currently enabled.
 	// This is used to gate features that are not yet ready for production.
@@ -2371,8 +2388,15 @@ func (api *API) Close() error {
 	case <-api.ctx.Done():
 		return xerrors.New("API already closed")
 	default:
-		api.cancel()
 	}
+	if api.workspaceSSHGateway != nil {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		if err := api.CloseWorkspaceSSHGateway(ctx); err != nil {
+			api.Logger.Warn(context.Background(), "workspace SSH gateway shutdown did not drain", slog.Error(err))
+		}
+		cancel()
+	}
+	api.cancel()
 
 	wsDone := make(chan struct{})
 	timer := time.NewTimer(10 * time.Second)
@@ -2442,6 +2466,17 @@ func (api *API) Close() error {
 	}
 
 	return nil
+}
+
+// CloseWorkspaceSSHGateway stops new gateway connections and drains existing
+// connections before other transport and logging dependencies are closed.
+func (api *API) CloseWorkspaceSSHGateway(ctx context.Context) error {
+	if api.workspaceSSHGateway == nil {
+		return nil
+	}
+	gateway := api.workspaceSSHGateway
+	api.workspaceSSHGateway = nil
+	return gateway.Close(ctx)
 }
 
 func compressHandler(h http.Handler) http.Handler {

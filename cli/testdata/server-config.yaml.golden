@@ -204,6 +204,51 @@ networking:
     # Hostname or (more commonly) IP to reach this replica for clustering.
     # (default: <unset>, type: string)
     clusterHost: ""
+  # Expose workspace agents through a deployment-managed OpenSSH endpoint.
+  workspaceSSHGateway:
+    # Whether to accept system OpenSSH connections and proxy them to workspace agents.
+    # (default: false, type: bool)
+    enabled: false
+    # TCP address on which the workspace SSH gateway listens.
+    # (default: 0.0.0.0:2222, type: string)
+    listenAddress: 0.0.0.0:2222
+    # Public DNS name or IP address used by SSH clients.
+    # (default: <unset>, type: string)
+    advertiseHost: ""
+    # Public TCP port used by SSH clients.
+    # (default: 2222, type: int)
+    advertisePort: 2222
+    # Path to an Ed25519 private host key shared by every coderd replica.
+    # (default: <unset>, type: string)
+    hostKeyFile: ""
+    # Base URL of the OpenAI Responses compatible provider used by remote Codex.
+    # (default: <unset>, type: string)
+    codexBaseURL: ""
+    # Model selected for remote codex app-server processes.
+    # (default: <unset>, type: string)
+    codexModel: ""
+    # Maximum total number of accepted workspace SSH gateway connections.
+    # (default: 1024, type: int)
+    maxConnections: 1024
+    # Maximum number of connections awaiting workspace SSH gateway authentication.
+    # (default: 128, type: int)
+    maxPendingConnections: 128
+    # Maximum number of connections awaiting authentication from one source IP.
+    # (default: 16, type: int)
+    maxPendingConnectionsPerIP: 16
+    # Maximum number of authenticated gateway connections for one user.
+    # (default: 32, type: int)
+    maxConnectionsPerUser: 32
+    # Maximum number of simultaneous SSH channels in either direction for one
+    # connection.
+    # (default: 64, type: int)
+    maxChannelsPerConnection: 64
+    # Sustained public key authentication attempt rate allowed for one source IP.
+    # (default: 120, type: int)
+    authAttemptsPerMinute: 120
+    # Maximum burst of public key authentication attempts allowed for one source IP.
+    # (default: 20, type: int)
+    authAttemptsBurst: 20
 # Interval to poll for scheduled workspace builds.
 # (default: 1m0s, type: duration)
 autobuildPollInterval: 1m0s

@@ -166,6 +166,33 @@ coder_servertailnet_connections_total{network=""} 0
 # HELP coder_servertailnet_open_connections Total number of TCP connections currently open to workspace agents.
 # TYPE coder_servertailnet_open_connections gauge
 coder_servertailnet_open_connections{network=""} 0
+# HELP coder_workspace_ssh_gateway_authentication_failures_total Number of workspace SSH gateway authentication failures.
+# TYPE coder_workspace_ssh_gateway_authentication_failures_total counter
+coder_workspace_ssh_gateway_authentication_failures_total{reason=""} 0
+# HELP coder_workspace_ssh_gateway_authentication_rate_limited_total Number of workspace SSH gateway authentication attempts rejected by source IP rate limits.
+# TYPE coder_workspace_ssh_gateway_authentication_rate_limited_total counter
+coder_workspace_ssh_gateway_authentication_rate_limited_total 0
+# HELP coder_workspace_ssh_gateway_capacity_rejections_total Number of workspace SSH gateway operations rejected by a configured capacity limit.
+# TYPE coder_workspace_ssh_gateway_capacity_rejections_total counter
+coder_workspace_ssh_gateway_capacity_rejections_total{reason=""} 0
+# HELP coder_workspace_ssh_gateway_connection_duration_seconds Duration of authenticated workspace SSH gateway connections.
+# TYPE coder_workspace_ssh_gateway_connection_duration_seconds histogram
+coder_workspace_ssh_gateway_connection_duration_seconds{result=""} 0
+# HELP coder_workspace_ssh_gateway_connections Number of active authenticated workspace SSH gateway connections.
+# TYPE coder_workspace_ssh_gateway_connections gauge
+coder_workspace_ssh_gateway_connections 0
+# HELP coder_workspace_ssh_gateway_events_dropped_total Number of workspace SSH gateway events dropped before recording.
+# TYPE coder_workspace_ssh_gateway_events_dropped_total counter
+coder_workspace_ssh_gateway_events_dropped_total{event=""} 0
+# HELP coder_workspace_ssh_gateway_pending_connections Number of workspace SSH gateway connections awaiting authentication.
+# TYPE coder_workspace_ssh_gateway_pending_connections gauge
+coder_workspace_ssh_gateway_pending_connections 0
+# HELP coder_workspace_ssh_gateway_target_unreachable_total Number of workspace SSH gateway connections rejected because the target was unavailable.
+# TYPE coder_workspace_ssh_gateway_target_unreachable_total counter
+coder_workspace_ssh_gateway_target_unreachable_total{reason=""} 0
+# HELP coder_workspace_ssh_gateway_timeouts_total Number of workspace SSH gateway operations that reached their deadline.
+# TYPE coder_workspace_ssh_gateway_timeouts_total counter
+coder_workspace_ssh_gateway_timeouts_total{operation=""} 0
 # HELP coderd_agentapi_metadata_batch_size Total number of metadata entries in each batch, updated before flushes.
 # TYPE coderd_agentapi_metadata_batch_size histogram
 coderd_agentapi_metadata_batch_size 0

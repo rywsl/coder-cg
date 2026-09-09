@@ -5974,6 +5974,34 @@
 					"value0_icon_456d71b2": "{{value0}} 图标"
 				}
 			},
+			"ChatGPTDesktopButton": {
+				"ChatGPTDesktopButton": {
+					"browser_only_disables_chatgpt_desktop_connections_22b66fd7": "仅浏览器模式策略已禁用 ChatGPT Desktop 连接。",
+					"chatgpt_desktop_connection_is_unavailable_658f94d5": "ChatGPT Desktop 连接不可用。",
+					"chatgpt_desktop_did_not_open_28b8157a": "ChatGPT Desktop 未能打开",
+					"chatgpt_desktop_requires_a_running_ready_linux_a_3b60630f": "ChatGPT Desktop 需要正在运行且已就绪的 Linux Agent。",
+					"close_7d9eb7ac": "关闭",
+					"could_not_create_the_setup_command_40adc2d2": "无法创建设置命令",
+					"creating_setup_command_694feed1": "正在创建设置命令",
+					"failed_to_revoke_ssh_device_fec6a7e0": "无法撤销 SSH 设备。",
+					"install_or_update_0c05bbb8": "安装或更新",
+					"install_or_update_chatgpt_desktop_then_add_the_s_1d6a3376": "请安装或更新 ChatGPT Desktop，然后在连接设置中添加此 SSH 连接。",
+					"loading_chatgpt_desktop_connection_8f33f012": "正在加载 ChatGPT Desktop 连接。",
+					"macos_or_linux_ceb9e091": "macOS 或 Linux",
+					"manage_chatgpt_desktop_connection_bebd01cc": "管理 ChatGPT Desktop 连接",
+					"open_connections_e7e09d34": "打开连接设置",
+					"open_in_chatgpt_c27a47a5": "在 ChatGPT 中打开",
+					"operating_system_0fcabfe6": "操作系统",
+					"project_path_080c6857": "项目路径",
+					"retry_942087cc": "重试",
+					"revoke_8da69e19": "撤销 ",
+					"revoked_value0_9dd5929e": "已撤销 {{value0}}。",
+					"run_one_command_on_this_device_it_creates_a_dedi_b0c36ca4": "只需在此设备上运行一条命令。该命令会创建专用 SSH 密钥，并在 ChatGPT Desktop 中打开此工作区。",
+					"set_up_chatgpt_desktop_b99efbff": "设置 ChatGPT Desktop",
+					"set_up_this_device_8f199176": "配置此设备",
+					"ssh_alias_0228bb76": "SSH 主机别名"
+				}
+			},
 			"DownloadSelectedAgentLogsButton": {
 				"download_37722639": "下载 ",
 				"download_agent_logs_39def46c": "下载 Agent 日志",

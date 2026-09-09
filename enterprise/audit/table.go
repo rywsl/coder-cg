@@ -19,10 +19,11 @@ import (
 // depends upon it.
 var AuditActionMap = map[string][]codersdk.AuditAction{
 	"GitSSHKey":                     {codersdk.AuditActionCreate},
+	"WorkspaceSshKey":               {codersdk.AuditActionCreate, codersdk.AuditActionDelete},
 	"Template":                      {codersdk.AuditActionWrite, codersdk.AuditActionDelete},
 	"TemplateVersion":               {codersdk.AuditActionCreate, codersdk.AuditActionWrite},
 	"User":                          {codersdk.AuditActionCreate, codersdk.AuditActionWrite, codersdk.AuditActionDelete},
-	"Workspace":                     {codersdk.AuditActionCreate, codersdk.AuditActionWrite, codersdk.AuditActionDelete},
+	"Workspace":                     {codersdk.AuditActionCreate, codersdk.AuditActionWrite, codersdk.AuditActionDelete, codersdk.AuditActionConnect},
 	"WorkspaceBuild":                {codersdk.AuditActionStart, codersdk.AuditActionStop},
 	"Group":                         {codersdk.AuditActionCreate, codersdk.AuditActionWrite, codersdk.AuditActionDelete},
 	"APIKey":                        {codersdk.AuditActionLogin, codersdk.AuditActionLogout, codersdk.AuditActionRegister, codersdk.AuditActionCreate, codersdk.AuditActionWrite, codersdk.AuditActionDelete},
@@ -95,6 +96,16 @@ var auditableResourcesTypes = map[any]map[string]Action{
 		"private_key":        ActionSecret, // We don't want to expose private keys in diffs.
 		"private_key_key_id": ActionIgnore, // Internal dbcrypt metadata, not useful in audit diffs.
 		"public_key":         ActionTrack,  // Public keys are ok to expose in a diff.
+	},
+	&database.WorkspaceSshKey{}: {
+		"id":              ActionIgnore,
+		"user_id":         ActionTrack,
+		"organization_id": ActionIgnore,
+		"device_name":     ActionTrack,
+		"public_key":      ActionSecret,
+		"fingerprint":     ActionTrack,
+		"created_at":      ActionIgnore,
+		"last_used_at":    ActionIgnore,
 	},
 	&database.Template{}: {
 		"id":                                ActionTrack,

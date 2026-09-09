@@ -1211,6 +1211,139 @@ Minimum supported version of TLS. Accepted values are "tls10", "tls11", "tls12" 
 - YAML key: `networking.tls.minVersion`
 - Default value: `tls12`
 
+### Workspace SSH gateway
+
+Expose workspace agents through a deployment-managed OpenSSH endpoint.
+
+#### Advertise host
+
+Public DNS name or IP address used by SSH clients.
+
+- Environment variable: `CODER_WORKSPACE_SSH_GATEWAY_ADVERTISE_HOST`
+- CLI flag: [`--advertise-host`](../../reference/cli/server.md#--advertise-host)
+- YAML key: `networking.workspaceSSHGateway.advertiseHost`
+
+#### Advertise port
+
+Public TCP port used by SSH clients.
+
+- Environment variable: `CODER_WORKSPACE_SSH_GATEWAY_ADVERTISE_PORT`
+- CLI flag: [`--advertise-port`](../../reference/cli/server.md#--advertise-port)
+- YAML key: `networking.workspaceSSHGateway.advertisePort`
+- Default value: `2222`
+
+#### Authentication attempt burst
+
+Maximum burst of public key authentication attempts allowed for one source IP.
+
+- Environment variable: `CODER_WORKSPACE_SSH_GATEWAY_AUTH_ATTEMPTS_BURST`
+- CLI flag: [`--workspace-ssh-gateway-auth-attempts-burst`](../../reference/cli/server.md#--workspace-ssh-gateway-auth-attempts-burst)
+- YAML key: `networking.workspaceSSHGateway.authAttemptsBurst`
+- Default value: `20`
+
+#### Authentication attempts per minute
+
+Sustained public key authentication attempt rate allowed for one source IP.
+
+- Environment variable: `CODER_WORKSPACE_SSH_GATEWAY_AUTH_ATTEMPTS_PER_MINUTE`
+- CLI flag: [`--workspace-ssh-gateway-auth-attempts-per-minute`](../../reference/cli/server.md#--workspace-ssh-gateway-auth-attempts-per-minute)
+- YAML key: `networking.workspaceSSHGateway.authAttemptsPerMinute`
+- Default value: `120`
+
+#### Codex API key
+
+API key placed only in the remote codex app-server process environment.
+
+- Environment variable: `CODER_WORKSPACE_SSH_GATEWAY_CODEX_API_KEY`
+- CLI flag: [`--codex-api-key`](../../reference/cli/server.md#--codex-api-key)
+
+#### Codex base URL
+
+Base URL of the OpenAI Responses compatible provider used by remote Codex.
+
+- Environment variable: `CODER_WORKSPACE_SSH_GATEWAY_CODEX_BASE_URL`
+- CLI flag: [`--codex-base-url`](../../reference/cli/server.md#--codex-base-url)
+- YAML key: `networking.workspaceSSHGateway.codexBaseURL`
+
+#### Codex model
+
+Model selected for remote codex app-server processes.
+
+- Environment variable: `CODER_WORKSPACE_SSH_GATEWAY_CODEX_MODEL`
+- CLI flag: [`--codex-model`](../../reference/cli/server.md#--codex-model)
+- YAML key: `networking.workspaceSSHGateway.codexModel`
+
+#### Enabled
+
+Whether to accept system OpenSSH connections and proxy them to workspace agents.
+
+- Environment variable: `CODER_WORKSPACE_SSH_GATEWAY_ENABLED`
+- CLI flag: [`--workspace-ssh-gateway-enabled`](../../reference/cli/server.md#--workspace-ssh-gateway-enabled)
+- YAML key: `networking.workspaceSSHGateway.enabled`
+- Default value: `false`
+
+#### Host key file
+
+Path to an Ed25519 private host key shared by every coderd replica.
+
+- Environment variable: `CODER_WORKSPACE_SSH_GATEWAY_HOST_KEY_FILE`
+- CLI flag: [`--host-key-file`](../../reference/cli/server.md#--host-key-file)
+- YAML key: `networking.workspaceSSHGateway.hostKeyFile`
+
+#### Listen address
+
+TCP address on which the workspace SSH gateway listens.
+
+- Environment variable: `CODER_WORKSPACE_SSH_GATEWAY_LISTEN_ADDRESS`
+- CLI flag: [`--listen-address`](../../reference/cli/server.md#--listen-address)
+- YAML key: `networking.workspaceSSHGateway.listenAddress`
+- Default value: `0.0.0.0:2222`
+
+#### Maximum channels per connection
+
+Maximum number of simultaneous SSH channels in either direction for one connection.
+
+- Environment variable: `CODER_WORKSPACE_SSH_GATEWAY_MAX_CHANNELS_PER_CONNECTION`
+- CLI flag: [`--workspace-ssh-gateway-max-channels-per-connection`](../../reference/cli/server.md#--workspace-ssh-gateway-max-channels-per-connection)
+- YAML key: `networking.workspaceSSHGateway.maxChannelsPerConnection`
+- Default value: `64`
+
+#### Maximum connections
+
+Maximum total number of accepted workspace SSH gateway connections.
+
+- Environment variable: `CODER_WORKSPACE_SSH_GATEWAY_MAX_CONNECTIONS`
+- CLI flag: [`--workspace-ssh-gateway-max-connections`](../../reference/cli/server.md#--workspace-ssh-gateway-max-connections)
+- YAML key: `networking.workspaceSSHGateway.maxConnections`
+- Default value: `1024`
+
+#### Maximum connections per user
+
+Maximum number of authenticated gateway connections for one user.
+
+- Environment variable: `CODER_WORKSPACE_SSH_GATEWAY_MAX_CONNECTIONS_PER_USER`
+- CLI flag: [`--workspace-ssh-gateway-max-connections-per-user`](../../reference/cli/server.md#--workspace-ssh-gateway-max-connections-per-user)
+- YAML key: `networking.workspaceSSHGateway.maxConnectionsPerUser`
+- Default value: `32`
+
+#### Maximum pending connections
+
+Maximum number of connections awaiting workspace SSH gateway authentication.
+
+- Environment variable: `CODER_WORKSPACE_SSH_GATEWAY_MAX_PENDING_CONNECTIONS`
+- CLI flag: [`--workspace-ssh-gateway-max-pending-connections`](../../reference/cli/server.md#--workspace-ssh-gateway-max-pending-connections)
+- YAML key: `networking.workspaceSSHGateway.maxPendingConnections`
+- Default value: `128`
+
+#### Maximum pending connections per IP
+
+Maximum number of connections awaiting authentication from one source IP.
+
+- Environment variable: `CODER_WORKSPACE_SSH_GATEWAY_MAX_PENDING_CONNECTIONS_PER_IP`
+- CLI flag: [`--workspace-ssh-gateway-max-pending-connections-per-ip`](../../reference/cli/server.md#--workspace-ssh-gateway-max-pending-connections-per-ip)
+- YAML key: `networking.workspaceSSHGateway.maxPendingConnectionsPerIP`
+- Default value: `16`
+
 ## Notifications
 
 Configure how notifications are processed and delivered.

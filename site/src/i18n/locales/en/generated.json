@@ -5974,6 +5974,34 @@
 					"value0_icon_456d71b2": "{{value0}} Icon"
 				}
 			},
+			"ChatGPTDesktopButton": {
+				"ChatGPTDesktopButton": {
+					"browser_only_disables_chatgpt_desktop_connections_22b66fd7": "Browser Only policy disables ChatGPT Desktop connections.",
+					"chatgpt_desktop_connection_is_unavailable_658f94d5": "ChatGPT Desktop connection is unavailable.",
+					"chatgpt_desktop_did_not_open_28b8157a": "ChatGPT Desktop did not open",
+					"chatgpt_desktop_requires_a_running_ready_linux_a_3b60630f": "ChatGPT Desktop requires a running, ready Linux agent.",
+					"close_7d9eb7ac": "Close",
+					"could_not_create_the_setup_command_40adc2d2": "Could not create the setup command",
+					"creating_setup_command_694feed1": "Creating setup command",
+					"failed_to_revoke_ssh_device_fec6a7e0": "Failed to revoke SSH device.",
+					"install_or_update_0c05bbb8": "Install or update",
+					"install_or_update_chatgpt_desktop_then_add_the_s_1d6a3376": "Install or update ChatGPT Desktop, then add the SSH connection from Connections.",
+					"loading_chatgpt_desktop_connection_8f33f012": "Loading ChatGPT Desktop connection.",
+					"macos_or_linux_ceb9e091": "macOS or Linux",
+					"manage_chatgpt_desktop_connection_bebd01cc": "Manage ChatGPT Desktop connection",
+					"open_connections_e7e09d34": "Open Connections",
+					"open_in_chatgpt_c27a47a5": "Open in ChatGPT",
+					"operating_system_0fcabfe6": "Operating system",
+					"project_path_080c6857": "Project path",
+					"retry_942087cc": "Retry",
+					"revoke_8da69e19": "Revoke ",
+					"revoked_value0_9dd5929e": "Revoked {{value0}}.",
+					"run_one_command_on_this_device_it_creates_a_dedi_b0c36ca4": "Run one command on this device. It creates a dedicated SSH key and opens the workspace in ChatGPT Desktop.",
+					"set_up_chatgpt_desktop_b99efbff": "Set up ChatGPT Desktop",
+					"set_up_this_device_8f199176": "Set up this device",
+					"ssh_alias_0228bb76": "SSH alias"
+				}
+			},
 			"DownloadSelectedAgentLogsButton": {
 				"download_37722639": "Download ",
 				"download_agent_logs_39def46c": "Download agent logs",

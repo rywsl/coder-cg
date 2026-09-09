@@ -92,6 +92,8 @@ func ResourceTarget[T Auditable](tgt T) string {
 		return ""
 	case database.GitSSHKey:
 		return typed.PublicKey
+	case database.WorkspaceSshKey:
+		return typed.DeviceName
 	case database.AuditableGroup:
 		return typed.Name
 	case database.APIKey:
@@ -209,6 +211,8 @@ func ResourceID[T Auditable](tgt T) uuid.UUID {
 		return typed.ID
 	case database.GitSSHKey:
 		return typed.UserID
+	case database.WorkspaceSshKey:
+		return typed.ID
 	case database.AuditableGroup:
 		return typed.ID
 	case database.APIKey:
@@ -298,6 +302,8 @@ func ResourceType[T Auditable](tgt T) database.ResourceType {
 		return database.ResourceTypeWorkspaceBuild
 	case database.GitSSHKey:
 		return database.ResourceTypeGitSshKey
+	case database.WorkspaceSshKey:
+		return database.ResourceTypeWorkspaceSshKey
 	case database.AuditableGroup:
 		return database.ResourceTypeGroup
 	case database.APIKey:
@@ -382,6 +388,8 @@ func ResourceRequiresOrgID[T Auditable]() bool {
 		return false
 	case database.GitSSHKey:
 		return false
+	case database.WorkspaceSshKey:
+		return true
 	case database.APIKey:
 		return false
 	case database.License:

@@ -890,6 +890,11 @@
 					"icon_path": "./images/icons/networking.svg",
 					"children": [
 						{
+							"title": "Workspace SSH Gateway",
+							"description": "Connect ChatGPT Desktop and system OpenSSH clients directly to workspace agents without the Coder CLI.",
+							"path": "./admin/networking/workspace-ssh-gateway.md"
+						},
+						{
 							"title": "Port Forwarding",
 							"description": "Learn how port forwarding works in Coder and how to expose workspace ports to users.",
 							"path": "./admin/networking/port-forwarding.md"
@@ -1633,6 +1638,10 @@
 						{
 							"title": "Provisioning",
 							"path": "./reference/api/provisioning.md"
+						},
+						{
+							"title": "SSH",
+							"path": "./reference/api/ssh.md"
 						},
 						{
 							"title": "Schemas",

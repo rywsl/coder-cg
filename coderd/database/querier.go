@@ -94,6 +94,7 @@ type sqlcQuerier interface {
 	CleanTailnetTunnels(ctx context.Context) error
 	CleanupDeletedMCPServerIDsFromChats(ctx context.Context) error
 	ClearChatDiffStatusPR(ctx context.Context, arg ClearChatDiffStatusPRParams) error
+	CompleteWorkspaceSSHKeyEnrollment(ctx context.Context, arg CompleteWorkspaceSSHKeyEnrollmentParams) (WorkspaceSshKeyEnrollment, error)
 	CountAIBridgeSessions(ctx context.Context, arg CountAIBridgeSessionsParams) (int64, error)
 	CountAuditLogs(ctx context.Context, arg CountAuditLogsParams) (int64, error)
 	// Excluding the candidate keeps ownership takeover capacity-neutral.
@@ -163,6 +164,7 @@ type sqlcQuerier interface {
 	DeleteCryptoKey(ctx context.Context, arg DeleteCryptoKeyParams) (CryptoKey, error)
 	DeleteCustomRole(ctx context.Context, arg DeleteCustomRoleParams) error
 	DeleteExpiredAPIKeys(ctx context.Context, arg DeleteExpiredAPIKeysParams) (int64, error)
+	DeleteExpiredWorkspaceSSHKeyEnrollments(ctx context.Context, now time.Time) error
 	DeleteExternalAuthLink(ctx context.Context, arg DeleteExternalAuthLinkParams) error
 	DeleteGroupAIBudget(ctx context.Context, groupID uuid.UUID) (GroupAIBudget, error)
 	DeleteGroupByID(ctx context.Context, id uuid.UUID) error
@@ -244,6 +246,7 @@ type sqlcQuerier interface {
 	DeleteWorkspaceACLsByOrganization(ctx context.Context, arg DeleteWorkspaceACLsByOrganizationParams) error
 	DeleteWorkspaceAgentPortShare(ctx context.Context, arg DeleteWorkspaceAgentPortShareParams) error
 	DeleteWorkspaceAgentPortSharesByTemplate(ctx context.Context, templateID uuid.UUID) error
+	DeleteWorkspaceSSHKeyByID(ctx context.Context, arg DeleteWorkspaceSSHKeyByIDParams) (WorkspaceSshKey, error)
 	// Soft-deletes a single sub-agent (a child agent such as a devcontainer
 	// agent). Called from the DeleteSubAgent RPC when a sub-agent is torn
 	// down, which can happen mid-build without a full workspace rebuild.
@@ -1087,6 +1090,14 @@ type sqlcQuerier interface {
 	GetWorkspaceResourcesByJobID(ctx context.Context, jobID uuid.UUID) ([]WorkspaceResource, error)
 	GetWorkspaceResourcesByJobIDs(ctx context.Context, ids []uuid.UUID) ([]WorkspaceResource, error)
 	GetWorkspaceResourcesCreatedAfter(ctx context.Context, createdAt time.Time) ([]WorkspaceResource, error)
+	GetWorkspaceSSHBootstrapTargetByAgentID(ctx context.Context, id uuid.UUID) (GetWorkspaceSSHBootstrapTargetByAgentIDRow, error)
+	GetWorkspaceSSHGatewayTarget(ctx context.Context, arg GetWorkspaceSSHGatewayTargetParams) (GetWorkspaceSSHGatewayTargetRow, error)
+	GetWorkspaceSSHKeyByID(ctx context.Context, id uuid.UUID) (WorkspaceSshKey, error)
+	GetWorkspaceSSHKeyByOrganizationAndFingerprint(ctx context.Context, arg GetWorkspaceSSHKeyByOrganizationAndFingerprintParams) (WorkspaceSshKey, error)
+	GetWorkspaceSSHKeyByUserOrganizationAndFingerprint(ctx context.Context, arg GetWorkspaceSSHKeyByUserOrganizationAndFingerprintParams) (WorkspaceSshKey, error)
+	GetWorkspaceSSHKeyEnrollmentByID(ctx context.Context, id uuid.UUID) (WorkspaceSshKeyEnrollment, error)
+	GetWorkspaceSSHKeyEnrollmentForUpdate(ctx context.Context, arg GetWorkspaceSSHKeyEnrollmentForUpdateParams) (WorkspaceSshKeyEnrollment, error)
+	GetWorkspaceSSHKeysByUserAndOrganization(ctx context.Context, arg GetWorkspaceSSHKeysByUserAndOrganizationParams) ([]WorkspaceSshKey, error)
 	GetWorkspaceUniqueOwnerCountByTemplateIDs(ctx context.Context, templateIds []uuid.UUID) ([]GetWorkspaceUniqueOwnerCountByTemplateIDsRow, error)
 	// build_params is used to filter by build parameters if present.
 	// It has to be a CTE because the set returning function 'unnest' cannot
@@ -1249,6 +1260,8 @@ type sqlcQuerier interface {
 	InsertWorkspaceProxy(ctx context.Context, arg InsertWorkspaceProxyParams) (WorkspaceProxy, error)
 	InsertWorkspaceResource(ctx context.Context, arg InsertWorkspaceResourceParams) (WorkspaceResource, error)
 	InsertWorkspaceResourceMetadata(ctx context.Context, arg InsertWorkspaceResourceMetadataParams) ([]WorkspaceResourceMetadatum, error)
+	InsertWorkspaceSSHKey(ctx context.Context, arg InsertWorkspaceSSHKeyParams) (WorkspaceSshKey, error)
+	InsertWorkspaceSSHKeyEnrollment(ctx context.Context, arg InsertWorkspaceSSHKeyEnrollmentParams) (WorkspaceSshKeyEnrollment, error)
 	// Returns true when there is no heartbeat row for (chat_id, runner_id)
 	// or the existing row is older than @stale_seconds seconds by database
 	// time. chatstate calls this in a single query so the staleness check
@@ -1657,6 +1670,7 @@ type sqlcQuerier interface {
 	// This allows editing the properties of a workspace proxy.
 	UpdateWorkspaceProxy(ctx context.Context, arg UpdateWorkspaceProxyParams) (WorkspaceProxy, error)
 	UpdateWorkspaceProxyDeleted(ctx context.Context, arg UpdateWorkspaceProxyDeletedParams) error
+	UpdateWorkspaceSSHKeyLastUsedAt(ctx context.Context, arg UpdateWorkspaceSSHKeyLastUsedAtParams) error
 	UpdateWorkspaceTTL(ctx context.Context, arg UpdateWorkspaceTTLParams) error
 	UpdateWorkspacesDormantDeletingAtByTemplateID(ctx context.Context, arg UpdateWorkspacesDormantDeletingAtByTemplateIDParams) ([]WorkspaceTable, error)
 	UpdateWorkspacesTTLByTemplateID(ctx context.Context, arg UpdateWorkspacesTTLByTemplateIDParams) error

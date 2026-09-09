@@ -3691,6 +3691,7 @@ const (
 	ResourceTypeMCPServerConfig             ResourceType = "mcp_server_config"
 	ResourceTypeChatModelConfig             ResourceType = "chat_model_config"
 	ResourceTypeChatOperationalSettings     ResourceType = "chat_operational_settings"
+	ResourceTypeWorkspaceSshKey             ResourceType = "workspace_ssh_key"
 )
 
 func (e *ResourceType) Scan(src interface{}) error {
@@ -3769,7 +3770,8 @@ func (e ResourceType) Valid() bool {
 		ResourceTypeChatInstructionSettings,
 		ResourceTypeMCPServerConfig,
 		ResourceTypeChatModelConfig,
-		ResourceTypeChatOperationalSettings:
+		ResourceTypeChatOperationalSettings,
+		ResourceTypeWorkspaceSshKey:
 		return true
 	}
 	return false
@@ -3817,6 +3819,7 @@ func AllResourceTypeValues() []ResourceType {
 		ResourceTypeMCPServerConfig,
 		ResourceTypeChatModelConfig,
 		ResourceTypeChatOperationalSettings,
+		ResourceTypeWorkspaceSshKey,
 	}
 }
 
@@ -6988,6 +6991,30 @@ type WorkspaceResourceMetadatum struct {
 	Value               sql.NullString `db:"value" json:"value"`
 	Sensitive           bool           `db:"sensitive" json:"sensitive"`
 	ID                  int64          `db:"id" json:"id"`
+}
+
+type WorkspaceSshKey struct {
+	ID             uuid.UUID    `db:"id" json:"id"`
+	UserID         uuid.UUID    `db:"user_id" json:"user_id"`
+	OrganizationID uuid.UUID    `db:"organization_id" json:"organization_id"`
+	DeviceName     string       `db:"device_name" json:"device_name"`
+	PublicKey      string       `db:"public_key" json:"public_key"`
+	Fingerprint    string       `db:"fingerprint" json:"fingerprint"`
+	CreatedAt      time.Time    `db:"created_at" json:"created_at"`
+	LastUsedAt     sql.NullTime `db:"last_used_at" json:"last_used_at"`
+}
+
+type WorkspaceSshKeyEnrollment struct {
+	ID                uuid.UUID     `db:"id" json:"id"`
+	TokenHash         []byte        `db:"token_hash" json:"token_hash"`
+	UserID            uuid.UUID     `db:"user_id" json:"user_id"`
+	OrganizationID    uuid.UUID     `db:"organization_id" json:"organization_id"`
+	WorkspaceAgentID  uuid.UUID     `db:"workspace_agent_id" json:"workspace_agent_id"`
+	Locale            string        `db:"locale" json:"locale"`
+	CreatedAt         time.Time     `db:"created_at" json:"created_at"`
+	ExpiresAt         time.Time     `db:"expires_at" json:"expires_at"`
+	ConsumedAt        sql.NullTime  `db:"consumed_at" json:"consumed_at"`
+	WorkspaceSshKeyID uuid.NullUUID `db:"workspace_ssh_key_id" json:"workspace_ssh_key_id"`
 }
 
 type WorkspaceTable struct {

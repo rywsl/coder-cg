@@ -935,6 +935,13 @@ func (api *API) Close() error {
 	if api.replicaManager != nil {
 		_ = api.replicaManager.Close()
 	}
+	if api.AGPL != nil {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		if err := api.AGPL.CloseWorkspaceSSHGateway(ctx); err != nil {
+			api.Logger.Warn(context.Background(), "workspace SSH gateway shutdown did not drain", slog.Error(err))
+		}
+		cancel()
+	}
 	api.cancel()
 	if api.derpMesh != nil {
 		_ = api.derpMesh.Close()

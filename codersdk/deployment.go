@@ -5,7 +5,9 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"net"
 	"net/http"
+	"net/netip"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -18,7 +20,9 @@ import (
 
 	"github.com/coreos/go-oidc/v3/oidc"
 	"github.com/google/uuid"
+	"golang.org/x/crypto/ssh"
 	"golang.org/x/mod/semver"
+	"golang.org/x/net/idna"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 	"golang.org/x/xerrors"
@@ -733,6 +737,7 @@ type DeploymentValues struct {
 	ExternalAuthConfigs                     serpent.Struct[[]ExternalAuthConfig] `json:"external_auth,omitempty" typescript:",notnull"`
 	ExternalAuthGithubDefaultProviderEnable serpent.Bool                         `json:"external_auth_github_default_provider_enable,omitempty" typescript:",notnull"`
 	SSHConfig                               SSHConfig                            `json:"config_ssh,omitempty" typescript:",notnull"`
+	WorkspaceSSHGateway                     WorkspaceSSHGatewayConfig            `json:"workspace_ssh_gateway,omitempty" typescript:",notnull"`
 	WgtunnelHost                            serpent.String                       `json:"wgtunnel_host,omitempty" typescript:",notnull"`
 	DisableOwnerWorkspaceExec               serpent.Bool                         `json:"disable_owner_workspace_exec,omitempty" typescript:",notnull"`
 	DisableWorkspaceSharing                 serpent.Bool                         `json:"disable_workspace_sharing,omitempty" typescript:",notnull"`
@@ -776,6 +781,26 @@ type SSHConfig struct {
 	SSHConfigOptions serpent.StringArray
 }
 
+// WorkspaceSSHGatewayConfig configures the deployment-level OpenSSH gateway
+// used by clients that cannot run the Coder CLI.
+type WorkspaceSSHGatewayConfig struct {
+	Enabled                    serpent.Bool   `json:"enabled" typescript:",notnull"`
+	ListenAddress              serpent.String `json:"listen_address" typescript:",notnull"`
+	AdvertiseHost              serpent.String `json:"advertise_host" typescript:",notnull"`
+	AdvertisePort              serpent.Int64  `json:"advertise_port" typescript:",notnull"`
+	HostKeyFile                serpent.String `json:"host_key_file" typescript:",notnull"`
+	CodexBaseURL               serpent.String `json:"codex_base_url" typescript:",notnull"`
+	CodexAPIKey                serpent.String `json:"codex_api_key,omitempty" typescript:",notnull"`
+	CodexModel                 serpent.String `json:"codex_model" typescript:",notnull"`
+	MaxConnections             serpent.Int64  `json:"max_connections" typescript:",notnull"`
+	MaxPendingConnections      serpent.Int64  `json:"max_pending_connections" typescript:",notnull"`
+	MaxPendingConnectionsPerIP serpent.Int64  `json:"max_pending_connections_per_ip" typescript:",notnull"`
+	MaxConnectionsPerUser      serpent.Int64  `json:"max_connections_per_user" typescript:",notnull"`
+	MaxChannelsPerConnection   serpent.Int64  `json:"max_channels_per_connection" typescript:",notnull"`
+	AuthAttemptsPerMinute      serpent.Int64  `json:"auth_attempts_per_minute" typescript:",notnull"`
+	AuthAttemptsBurst          serpent.Int64  `json:"auth_attempts_burst" typescript:",notnull"`
+}
+
 func (c SSHConfig) ParseOptions() (map[string]string, error) {
 	m := make(map[string]string)
 	for _, opt := range c.SSHConfigOptions {
@@ -811,6 +836,38 @@ func isSingleHostPatternToken(s string) bool {
 	return !strings.ContainsFunc(s, func(r rune) bool {
 		return unicode.IsSpace(r) || unicode.IsControl(r)
 	})
+}
+
+func validWorkspaceSSHGatewayHost(host string) bool {
+	if host == "" || strings.TrimSpace(host) != host {
+		return false
+	}
+	if address, err := netip.ParseAddr(host); err == nil {
+		return address.Zone() == ""
+	}
+	if len(host) > 253 || strings.HasPrefix(host, ".") || strings.HasSuffix(host, ".") {
+		return false
+	}
+	for _, char := range host {
+		if char > unicode.MaxASCII {
+			return false
+		}
+	}
+	ascii, err := idna.Lookup.ToASCII(host)
+	if err != nil || !strings.EqualFold(ascii, host) {
+		return false
+	}
+	for _, label := range strings.Split(host, ".") {
+		if label == "" || len(label) > 63 || label[0] == '-' || label[len(label)-1] == '-' {
+			return false
+		}
+		for _, char := range label {
+			if char != '-' && (char < '0' || char > '9') && (char < 'A' || char > 'Z') && (char < 'a' || char > 'z') {
+				return false
+			}
+		}
+	}
+	return true
 }
 
 // ValidateWorkspaceHostnameSuffix validates a deployment-provided SSH hostname
@@ -1553,6 +1610,12 @@ func (c *DeploymentValues) Options() serpent.OptionSet {
 communicating directly.`,
 			YAML: "cluster",
 		}
+		deploymentGroupNetworkingWorkspaceSSHGateway = serpent.Group{
+			Parent:      &deploymentGroupNetworking,
+			Name:        "Workspace SSH Gateway",
+			Description: "Expose workspace agents through a deployment-managed OpenSSH endpoint.",
+			YAML:        "workspaceSSHGateway",
+		}
 		deploymentGroupMCP = serpent.Group{
 			Name: "MCP",
 			YAML: "mcp",
@@ -1919,6 +1982,153 @@ communicating directly.`,
 		Value:       &c.WorkspaceHostnameSuffix,
 		Hidden:      false,
 		Default:     "coder",
+	}
+	workspaceSSHGatewayOptions := serpent.OptionSet{
+		{
+			Name:        "Workspace SSH Gateway Enabled",
+			Description: "Whether to accept system OpenSSH connections and proxy them to workspace agents.",
+			Flag:        "workspace-ssh-gateway-enabled",
+			Env:         "CODER_WORKSPACE_SSH_GATEWAY_ENABLED",
+			YAML:        "enabled",
+			Group:       &deploymentGroupNetworkingWorkspaceSSHGateway,
+			Value:       &c.WorkspaceSSHGateway.Enabled,
+			Default:     "false",
+		},
+		{
+			Name:        "Workspace SSH Gateway Listen Address",
+			Description: "TCP address on which the workspace SSH gateway listens.",
+			Flag:        "listen-address",
+			Env:         "CODER_WORKSPACE_SSH_GATEWAY_LISTEN_ADDRESS",
+			YAML:        "listenAddress",
+			Group:       &deploymentGroupNetworkingWorkspaceSSHGateway,
+			Value:       &c.WorkspaceSSHGateway.ListenAddress,
+			Default:     "0.0.0.0:2222",
+		},
+		{
+			Name:        "Workspace SSH Gateway Advertise Host",
+			Description: "Public DNS name or IP address used by SSH clients.",
+			Flag:        "advertise-host",
+			Env:         "CODER_WORKSPACE_SSH_GATEWAY_ADVERTISE_HOST",
+			YAML:        "advertiseHost",
+			Group:       &deploymentGroupNetworkingWorkspaceSSHGateway,
+			Value:       &c.WorkspaceSSHGateway.AdvertiseHost,
+		},
+		{
+			Name:        "Workspace SSH Gateway Advertise Port",
+			Description: "Public TCP port used by SSH clients.",
+			Flag:        "advertise-port",
+			Env:         "CODER_WORKSPACE_SSH_GATEWAY_ADVERTISE_PORT",
+			YAML:        "advertisePort",
+			Group:       &deploymentGroupNetworkingWorkspaceSSHGateway,
+			Value:       &c.WorkspaceSSHGateway.AdvertisePort,
+			Default:     "2222",
+		},
+		{
+			Name:        "Workspace SSH Gateway Host Key File",
+			Description: "Path to an Ed25519 private host key shared by every coderd replica.",
+			Flag:        "host-key-file",
+			Env:         "CODER_WORKSPACE_SSH_GATEWAY_HOST_KEY_FILE",
+			YAML:        "hostKeyFile",
+			Group:       &deploymentGroupNetworkingWorkspaceSSHGateway,
+			Value:       &c.WorkspaceSSHGateway.HostKeyFile,
+		},
+		{
+			Name:        "Workspace SSH Gateway Codex Base URL",
+			Description: "Base URL of the OpenAI Responses compatible provider used by remote Codex.",
+			Flag:        "codex-base-url",
+			Env:         "CODER_WORKSPACE_SSH_GATEWAY_CODEX_BASE_URL",
+			YAML:        "codexBaseURL",
+			Group:       &deploymentGroupNetworkingWorkspaceSSHGateway,
+			Value:       &c.WorkspaceSSHGateway.CodexBaseURL,
+		},
+		{
+			Name:        "Workspace SSH Gateway Codex API Key",
+			Description: "API key placed only in the remote codex app-server process environment.",
+			Flag:        "codex-api-key",
+			Env:         "CODER_WORKSPACE_SSH_GATEWAY_CODEX_API_KEY",
+			Group:       &deploymentGroupNetworkingWorkspaceSSHGateway,
+			Value:       &c.WorkspaceSSHGateway.CodexAPIKey,
+			Annotations: serpent.Annotations{}.Mark(annotationSecretKey, "true"),
+		},
+		{
+			Name:        "Workspace SSH Gateway Codex Model",
+			Description: "Model selected for remote codex app-server processes.",
+			Flag:        "codex-model",
+			Env:         "CODER_WORKSPACE_SSH_GATEWAY_CODEX_MODEL",
+			YAML:        "codexModel",
+			Group:       &deploymentGroupNetworkingWorkspaceSSHGateway,
+			Value:       &c.WorkspaceSSHGateway.CodexModel,
+		},
+		{
+			Name:        "Workspace SSH Gateway Maximum Connections",
+			Description: "Maximum total number of accepted workspace SSH gateway connections.",
+			Flag:        "workspace-ssh-gateway-max-connections",
+			Env:         "CODER_WORKSPACE_SSH_GATEWAY_MAX_CONNECTIONS",
+			YAML:        "maxConnections",
+			Group:       &deploymentGroupNetworkingWorkspaceSSHGateway,
+			Value:       &c.WorkspaceSSHGateway.MaxConnections,
+			Default:     "1024",
+		},
+		{
+			Name:        "Workspace SSH Gateway Maximum Pending Connections",
+			Description: "Maximum number of connections awaiting workspace SSH gateway authentication.",
+			Flag:        "workspace-ssh-gateway-max-pending-connections",
+			Env:         "CODER_WORKSPACE_SSH_GATEWAY_MAX_PENDING_CONNECTIONS",
+			YAML:        "maxPendingConnections",
+			Group:       &deploymentGroupNetworkingWorkspaceSSHGateway,
+			Value:       &c.WorkspaceSSHGateway.MaxPendingConnections,
+			Default:     "128",
+		},
+		{
+			Name:        "Workspace SSH Gateway Maximum Pending Connections Per IP",
+			Description: "Maximum number of connections awaiting authentication from one source IP.",
+			Flag:        "workspace-ssh-gateway-max-pending-connections-per-ip",
+			Env:         "CODER_WORKSPACE_SSH_GATEWAY_MAX_PENDING_CONNECTIONS_PER_IP",
+			YAML:        "maxPendingConnectionsPerIP",
+			Group:       &deploymentGroupNetworkingWorkspaceSSHGateway,
+			Value:       &c.WorkspaceSSHGateway.MaxPendingConnectionsPerIP,
+			Default:     "16",
+		},
+		{
+			Name:        "Workspace SSH Gateway Maximum Connections Per User",
+			Description: "Maximum number of authenticated gateway connections for one user.",
+			Flag:        "workspace-ssh-gateway-max-connections-per-user",
+			Env:         "CODER_WORKSPACE_SSH_GATEWAY_MAX_CONNECTIONS_PER_USER",
+			YAML:        "maxConnectionsPerUser",
+			Group:       &deploymentGroupNetworkingWorkspaceSSHGateway,
+			Value:       &c.WorkspaceSSHGateway.MaxConnectionsPerUser,
+			Default:     "32",
+		},
+		{
+			Name:        "Workspace SSH Gateway Maximum Channels Per Connection",
+			Description: "Maximum number of simultaneous SSH channels in either direction for one connection.",
+			Flag:        "workspace-ssh-gateway-max-channels-per-connection",
+			Env:         "CODER_WORKSPACE_SSH_GATEWAY_MAX_CHANNELS_PER_CONNECTION",
+			YAML:        "maxChannelsPerConnection",
+			Group:       &deploymentGroupNetworkingWorkspaceSSHGateway,
+			Value:       &c.WorkspaceSSHGateway.MaxChannelsPerConnection,
+			Default:     "64",
+		},
+		{
+			Name:        "Workspace SSH Gateway Authentication Attempts Per Minute",
+			Description: "Sustained public key authentication attempt rate allowed for one source IP.",
+			Flag:        "workspace-ssh-gateway-auth-attempts-per-minute",
+			Env:         "CODER_WORKSPACE_SSH_GATEWAY_AUTH_ATTEMPTS_PER_MINUTE",
+			YAML:        "authAttemptsPerMinute",
+			Group:       &deploymentGroupNetworkingWorkspaceSSHGateway,
+			Value:       &c.WorkspaceSSHGateway.AuthAttemptsPerMinute,
+			Default:     "120",
+		},
+		{
+			Name:        "Workspace SSH Gateway Authentication Attempt Burst",
+			Description: "Maximum burst of public key authentication attempts allowed for one source IP.",
+			Flag:        "workspace-ssh-gateway-auth-attempts-burst",
+			Env:         "CODER_WORKSPACE_SSH_GATEWAY_AUTH_ATTEMPTS_BURST",
+			YAML:        "authAttemptsBurst",
+			Group:       &deploymentGroupNetworkingWorkspaceSSHGateway,
+			Value:       &c.WorkspaceSSHGateway.AuthAttemptsBurst,
+			Default:     "20",
+		},
 	}
 
 	// AI Gateway options
@@ -5025,6 +5235,7 @@ Write out the current server config as YAML to stdout.`,
 		},
 	}
 
+	opts = append(opts, workspaceSSHGatewayOptions...)
 	return opts
 }
 
@@ -5213,6 +5424,52 @@ func (c *DeploymentValues) Validate() error {
 			"default OAuth refresh lifetime (%s) must be strictly greater than session duration (%s); set --default-oauth-refresh-lifetime to a value greater than --session-duration",
 			refresh, access,
 		)
+	}
+
+	if c.WorkspaceSSHGateway.Enabled.Value() {
+		gateway := c.WorkspaceSSHGateway
+		if _, _, err := net.SplitHostPort(gateway.ListenAddress.Value()); err != nil {
+			return xerrors.Errorf("workspace SSH gateway listen address: %w", err)
+		}
+		if !validWorkspaceSSHGatewayHost(gateway.AdvertiseHost.Value()) {
+			return xerrors.New("workspace SSH gateway advertise host is required and must be one hostname or IP address")
+		}
+		if port := gateway.AdvertisePort.Value(); port < 1 || port > 65535 {
+			return xerrors.New("workspace SSH gateway advertise port must be between 1 and 65535")
+		}
+		if strings.TrimSpace(gateway.HostKeyFile.Value()) == "" {
+			return xerrors.New("workspace SSH gateway host key file is required")
+		}
+		baseURL, err := url.Parse(gateway.CodexBaseURL.Value())
+		if err != nil || baseURL.Scheme == "" || baseURL.Host == "" || (baseURL.Scheme != "http" && baseURL.Scheme != "https") {
+			return xerrors.New("workspace SSH gateway Codex base URL must be an absolute HTTP or HTTPS URL")
+		}
+		if gateway.CodexAPIKey.Value() == "" {
+			return xerrors.New("workspace SSH gateway Codex API key is required")
+		}
+		if strings.TrimSpace(gateway.CodexModel.Value()) == "" {
+			return xerrors.New("workspace SSH gateway Codex model is required")
+		}
+		limits := []struct {
+			name  string
+			value int64
+		}{
+			{"maximum connections", gateway.MaxConnections.Value()},
+			{"maximum pending connections", gateway.MaxPendingConnections.Value()},
+			{"maximum pending connections per IP", gateway.MaxPendingConnectionsPerIP.Value()},
+			{"maximum connections per user", gateway.MaxConnectionsPerUser.Value()},
+			{"maximum channels per connection", gateway.MaxChannelsPerConnection.Value()},
+			{"authentication attempts per minute", gateway.AuthAttemptsPerMinute.Value()},
+			{"authentication attempt burst", gateway.AuthAttemptsBurst.Value()},
+		}
+		for _, limit := range limits {
+			if limit.value <= 0 {
+				return xerrors.Errorf("workspace SSH gateway %s must be positive", limit.name)
+			}
+		}
+		if gateway.MaxPendingConnections.Value() > gateway.MaxConnections.Value() {
+			return xerrors.New("workspace SSH gateway maximum pending connections must not exceed maximum connections")
+		}
 	}
 
 	// Disabled hooks must not validate inert settings.
@@ -5730,6 +5987,19 @@ type SSHConfigResponse struct {
 	// HostnameSuffix is the suffix to append to workspace names for SSH hostnames.
 	HostnameSuffix   string            `json:"hostname_suffix"`
 	SSHConfigOptions map[string]string `json:"ssh_config_options"`
+
+	WorkspaceSSHGateway *WorkspaceSSHGatewayInfo `json:"workspace_ssh_gateway,omitempty"`
+}
+
+// WorkspaceSSHGatewayInfo describes the deployment-managed OpenSSH endpoint.
+type WorkspaceSSHGatewayInfo struct {
+	Enabled                 bool   `json:"enabled"`
+	Host                    string `json:"host"`
+	Port                    int64  `json:"port"`
+	HostPublicKey           string `json:"host_public_key"`
+	HostKeyFingerprint      string `json:"host_key_fingerprint"`
+	AliasSuffix             string `json:"alias_suffix"`
+	ChatGPTDesktopAvailable bool   `json:"chatgpt_desktop_available"`
 }
 
 // Validate checks that the deployment-provided SSH configuration is safe to
@@ -5744,6 +6014,27 @@ func (r SSHConfigResponse) Validate() error {
 	if r.HostnameSuffix != "" {
 		if err := ValidateWorkspaceHostnameSuffix(r.HostnameSuffix); err != nil {
 			return err
+		}
+	}
+	if gateway := r.WorkspaceSSHGateway; gateway != nil && gateway.Enabled {
+		if !validWorkspaceSSHGatewayHost(gateway.Host) {
+			return xerrors.New("workspace SSH gateway host is invalid")
+		}
+		if gateway.Port < 1 || gateway.Port > 65535 {
+			return xerrors.New("workspace SSH gateway port is invalid")
+		}
+		if gateway.AliasSuffix == "" {
+			return xerrors.New("workspace SSH gateway alias suffix is required")
+		}
+		if err := ValidateWorkspaceHostnameSuffix(gateway.AliasSuffix); err != nil {
+			return xerrors.Errorf("workspace SSH gateway alias suffix: %w", err)
+		}
+		hostKey, _, _, rest, err := ssh.ParseAuthorizedKey([]byte(gateway.HostPublicKey))
+		if err != nil || len(strings.TrimSpace(string(rest))) != 0 || hostKey.Type() != ssh.KeyAlgoED25519 {
+			return xerrors.New("workspace SSH gateway host public key must be one Ed25519 public key")
+		}
+		if ssh.FingerprintSHA256(hostKey) != gateway.HostKeyFingerprint {
+			return xerrors.New("workspace SSH gateway host key fingerprint does not match its public key")
 		}
 	}
 	return ValidateSSHConfigOptions(r.SSHConfigOptions)

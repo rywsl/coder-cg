@@ -4559,6 +4559,116 @@ func (s *MethodTestSuite) TestWorkspace() {
 	}))
 }
 
+func (s *MethodTestSuite) TestWorkspaceSSHKeys() {
+	s.Run("CompleteWorkspaceSSHKeyEnrollment", s.Mocked(func(dbm *dbmock.MockStore, faker *gofakeit.Faker, check *expects) {
+		enrollment := testutil.Fake(s.T(), faker, database.WorkspaceSshKeyEnrollment{})
+		arg := testutil.Fake(s.T(), faker, database.CompleteWorkspaceSSHKeyEnrollmentParams{})
+		dbm.EXPECT().CompleteWorkspaceSSHKeyEnrollment(gomock.Any(), arg).Return(enrollment, nil).AnyTimes()
+		check.Args(arg).Asserts(rbac.ResourceSystem, policy.ActionUpdate).Returns(enrollment)
+	}))
+	s.Run("DeleteExpiredWorkspaceSSHKeyEnrollments", s.Mocked(func(dbm *dbmock.MockStore, _ *gofakeit.Faker, check *expects) {
+		now := time.Date(2026, time.January, 2, 3, 4, 5, 0, time.UTC)
+		dbm.EXPECT().DeleteExpiredWorkspaceSSHKeyEnrollments(gomock.Any(), now).Return(nil).AnyTimes()
+		check.Args(now).Asserts(rbac.ResourceSystem, policy.ActionDelete).Returns()
+	}))
+	s.Run("DeleteWorkspaceSSHKeyByID", s.Mocked(func(dbm *dbmock.MockStore, faker *gofakeit.Faker, check *expects) {
+		key := testutil.Fake(s.T(), faker, database.WorkspaceSshKey{})
+		arg := database.DeleteWorkspaceSSHKeyByIDParams{
+			ID:             key.ID,
+			UserID:         key.UserID,
+			OrganizationID: key.OrganizationID,
+		}
+		dbm.EXPECT().DeleteWorkspaceSSHKeyByID(gomock.Any(), arg).Return(key, nil).AnyTimes()
+		check.Args(arg).Asserts(rbac.ResourceUserObject(key.UserID), policy.ActionUpdatePersonal).Returns(key)
+	}))
+	s.Run("GetWorkspaceSSHBootstrapTargetByAgentID", s.Mocked(func(dbm *dbmock.MockStore, faker *gofakeit.Faker, check *expects) {
+		target := testutil.Fake(s.T(), faker, database.GetWorkspaceSSHBootstrapTargetByAgentIDRow{})
+		dbm.EXPECT().GetWorkspaceSSHBootstrapTargetByAgentID(gomock.Any(), target.WorkspaceAgent.ID).Return(target, nil).AnyTimes()
+		check.Args(target.WorkspaceAgent.ID).Asserts(rbac.ResourceSystem, policy.ActionRead).Returns(target)
+	}))
+	s.Run("GetWorkspaceSSHGatewayTarget", s.Mocked(func(dbm *dbmock.MockStore, faker *gofakeit.Faker, check *expects) {
+		arg := testutil.Fake(s.T(), faker, database.GetWorkspaceSSHGatewayTargetParams{})
+		target := testutil.Fake(s.T(), faker, database.GetWorkspaceSSHGatewayTargetRow{})
+		dbm.EXPECT().GetWorkspaceSSHGatewayTarget(gomock.Any(), arg).Return(target, nil).AnyTimes()
+		check.Args(arg).Asserts(rbac.ResourceSystem, policy.ActionRead).Returns(target)
+	}))
+	s.Run("GetWorkspaceSSHKeyByID", s.Mocked(func(dbm *dbmock.MockStore, faker *gofakeit.Faker, check *expects) {
+		key := testutil.Fake(s.T(), faker, database.WorkspaceSshKey{})
+		dbm.EXPECT().GetWorkspaceSSHKeyByID(gomock.Any(), key.ID).Return(key, nil).AnyTimes()
+		check.Args(key.ID).Asserts(rbac.ResourceUserObject(key.UserID), policy.ActionReadPersonal).Returns(key)
+	}))
+	s.Run("GetWorkspaceSSHKeyByOrganizationAndFingerprint", s.Mocked(func(dbm *dbmock.MockStore, faker *gofakeit.Faker, check *expects) {
+		key := testutil.Fake(s.T(), faker, database.WorkspaceSshKey{})
+		arg := database.GetWorkspaceSSHKeyByOrganizationAndFingerprintParams{
+			OrganizationID: key.OrganizationID,
+			Fingerprint:    key.Fingerprint,
+		}
+		dbm.EXPECT().GetWorkspaceSSHKeyByOrganizationAndFingerprint(gomock.Any(), arg).Return(key, nil).AnyTimes()
+		check.Args(arg).Asserts(rbac.ResourceSystem, policy.ActionRead).Returns(key)
+	}))
+	s.Run("GetWorkspaceSSHKeyByUserOrganizationAndFingerprint", s.Mocked(func(dbm *dbmock.MockStore, faker *gofakeit.Faker, check *expects) {
+		key := testutil.Fake(s.T(), faker, database.WorkspaceSshKey{})
+		arg := database.GetWorkspaceSSHKeyByUserOrganizationAndFingerprintParams{
+			UserID:         key.UserID,
+			OrganizationID: key.OrganizationID,
+			Fingerprint:    key.Fingerprint,
+		}
+		dbm.EXPECT().GetWorkspaceSSHKeyByUserOrganizationAndFingerprint(gomock.Any(), arg).Return(key, nil).AnyTimes()
+		check.Args(arg).Asserts(rbac.ResourceUserObject(key.UserID), policy.ActionReadPersonal).Returns(key)
+	}))
+	s.Run("GetWorkspaceSSHKeyEnrollmentByID", s.Mocked(func(dbm *dbmock.MockStore, faker *gofakeit.Faker, check *expects) {
+		enrollment := testutil.Fake(s.T(), faker, database.WorkspaceSshKeyEnrollment{})
+		dbm.EXPECT().GetWorkspaceSSHKeyEnrollmentByID(gomock.Any(), enrollment.ID).Return(enrollment, nil).AnyTimes()
+		check.Args(enrollment.ID).Asserts(rbac.ResourceSystem, policy.ActionRead).Returns(enrollment)
+	}))
+	s.Run("GetWorkspaceSSHKeyEnrollmentForUpdate", s.Mocked(func(dbm *dbmock.MockStore, faker *gofakeit.Faker, check *expects) {
+		enrollment := testutil.Fake(s.T(), faker, database.WorkspaceSshKeyEnrollment{})
+		arg := database.GetWorkspaceSSHKeyEnrollmentForUpdateParams{
+			ID:        enrollment.ID,
+			TokenHash: enrollment.TokenHash,
+			Now:       enrollment.ExpiresAt.Add(-time.Minute),
+		}
+		dbm.EXPECT().GetWorkspaceSSHKeyEnrollmentForUpdate(gomock.Any(), arg).Return(enrollment, nil).AnyTimes()
+		check.Args(arg).Asserts(rbac.ResourceSystem, policy.ActionUpdate).Returns(enrollment)
+	}))
+	s.Run("GetWorkspaceSSHKeysByUserAndOrganization", s.Mocked(func(dbm *dbmock.MockStore, faker *gofakeit.Faker, check *expects) {
+		key := testutil.Fake(s.T(), faker, database.WorkspaceSshKey{})
+		arg := database.GetWorkspaceSSHKeysByUserAndOrganizationParams{
+			UserID:         key.UserID,
+			OrganizationID: key.OrganizationID,
+		}
+		keys := []database.WorkspaceSshKey{key}
+		dbm.EXPECT().GetWorkspaceSSHKeysByUserAndOrganization(gomock.Any(), arg).Return(keys, nil).AnyTimes()
+		check.Args(arg).Asserts(rbac.ResourceUserObject(key.UserID), policy.ActionReadPersonal).Returns(keys)
+	}))
+	s.Run("InsertWorkspaceSSHKey", s.Mocked(func(dbm *dbmock.MockStore, faker *gofakeit.Faker, check *expects) {
+		arg := testutil.Fake(s.T(), faker, database.InsertWorkspaceSSHKeyParams{})
+		key := testutil.Fake(s.T(), faker, database.WorkspaceSshKey{
+			ID:             arg.ID,
+			UserID:         arg.UserID,
+			OrganizationID: arg.OrganizationID,
+		})
+		dbm.EXPECT().InsertWorkspaceSSHKey(gomock.Any(), arg).Return(key, nil).AnyTimes()
+		check.Args(arg).Asserts(rbac.ResourceUserObject(arg.UserID), policy.ActionUpdatePersonal).Returns(key)
+	}))
+	s.Run("InsertWorkspaceSSHKeyEnrollment", s.Mocked(func(dbm *dbmock.MockStore, faker *gofakeit.Faker, check *expects) {
+		workspace := testutil.Fake(s.T(), faker, database.Workspace{})
+		arg := testutil.Fake(s.T(), faker, database.InsertWorkspaceSSHKeyEnrollmentParams{})
+		enrollment := testutil.Fake(s.T(), faker, database.WorkspaceSshKeyEnrollment{
+			ID:               arg.ID,
+			WorkspaceAgentID: arg.WorkspaceAgentID,
+		})
+		dbm.EXPECT().GetWorkspaceByAgentID(gomock.Any(), arg.WorkspaceAgentID).Return(workspace, nil).AnyTimes()
+		dbm.EXPECT().InsertWorkspaceSSHKeyEnrollment(gomock.Any(), arg).Return(enrollment, nil).AnyTimes()
+		check.Args(arg).Asserts(workspace, policy.ActionSSH).Returns(enrollment)
+	}))
+	s.Run("UpdateWorkspaceSSHKeyLastUsedAt", s.Mocked(func(dbm *dbmock.MockStore, faker *gofakeit.Faker, check *expects) {
+		arg := testutil.Fake(s.T(), faker, database.UpdateWorkspaceSSHKeyLastUsedAtParams{})
+		dbm.EXPECT().UpdateWorkspaceSSHKeyLastUsedAt(gomock.Any(), arg).Return(nil).AnyTimes()
+		check.Args(arg).Asserts(rbac.ResourceSystem, policy.ActionUpdate).Returns()
+	}))
+}
+
 func (s *MethodTestSuite) TestWorkspacePortSharing() {
 	s.Run("UpsertWorkspaceAgentPortShare", s.Mocked(func(dbm *dbmock.MockStore, faker *gofakeit.Faker, check *expects) {
 		ws := testutil.Fake(s.T(), faker, database.Workspace{})
@@ -7825,6 +7935,21 @@ func TestAsChatdKeyMinter(t *testing.T) {
 		require.Error(t, auth.Authorize(ctx, actor, action, rbac.ResourceApiKey.WithOwner(uuid.NewString())))
 	}
 	require.NoError(t, auth.Authorize(ctx, actor, policy.ActionReadPersonal, rbac.ResourceUserObject(userID)))
+}
+
+func TestAsWorkspaceSSHAuditor(t *testing.T) {
+	t.Parallel()
+
+	ctx := dbauthz.AsWorkspaceSSHAuditor(context.Background())
+	actor, ok := dbauthz.ActorFromContext(ctx)
+	require.True(t, ok)
+	require.Equal(t, rbac.SubjectTypeWorkspaceSSHAuditor, actor.Type)
+
+	auth := rbac.NewStrictCachingAuthorizer(prometheus.NewRegistry())
+	require.NoError(t, auth.Authorize(ctx, actor, policy.ActionCreate, rbac.ResourceAuditLog))
+	require.Error(t, auth.Authorize(ctx, actor, policy.ActionRead, rbac.ResourceAuditLog))
+	require.Error(t, auth.Authorize(ctx, actor, policy.ActionCreate, rbac.ResourceWorkspace))
+	require.Error(t, auth.Authorize(ctx, actor, policy.ActionRead, rbac.ResourceWorkspace))
 }
 
 func TestAsChatd(t *testing.T) {

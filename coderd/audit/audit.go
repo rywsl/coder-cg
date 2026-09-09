@@ -38,6 +38,28 @@ func (nop) diff(any, any) Map {
 	return Map{}
 }
 
+type workspaceSSHCommunityAuditor struct {
+	export func(context.Context, database.AuditLog) error
+}
+
+func (a workspaceSSHCommunityAuditor) Export(ctx context.Context, log database.AuditLog) error {
+	return a.export(ctx, log)
+}
+
+func (workspaceSSHCommunityAuditor) diff(any, any) Map {
+	return Map{}
+}
+
+// WorkspaceSSHCommunityAuditor persists Workspace SSH events when the active
+// deployment auditor is the community no-op implementation. Enterprise
+// auditors pass through unchanged to avoid duplicate records.
+func WorkspaceSSHCommunityAuditor(current Auditor, export func(context.Context, database.AuditLog) error) Auditor {
+	if _, ok := current.(nop); !ok {
+		return current
+	}
+	return workspaceSSHCommunityAuditor{export: export}
+}
+
 func NewMock() *MockAuditor {
 	return &MockAuditor{}
 }

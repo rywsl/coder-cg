@@ -33053,6 +33053,596 @@ func (q *sqlQuerier) ValidateUserIDs(ctx context.Context, userIds []uuid.UUID) (
 	return i, err
 }
 
+const completeWorkspaceSSHKeyEnrollment = `-- name: CompleteWorkspaceSSHKeyEnrollment :one
+UPDATE workspace_ssh_key_enrollments
+SET
+	consumed_at = $1,
+	workspace_ssh_key_id = $2
+WHERE id = $3
+	AND consumed_at IS NULL
+RETURNING id, token_hash, user_id, organization_id, workspace_agent_id, locale, created_at, expires_at, consumed_at, workspace_ssh_key_id
+`
+
+type CompleteWorkspaceSSHKeyEnrollmentParams struct {
+	ConsumedAt        sql.NullTime  `db:"consumed_at" json:"consumed_at"`
+	WorkspaceSshKeyID uuid.NullUUID `db:"workspace_ssh_key_id" json:"workspace_ssh_key_id"`
+	ID                uuid.UUID     `db:"id" json:"id"`
+}
+
+func (q *sqlQuerier) CompleteWorkspaceSSHKeyEnrollment(ctx context.Context, arg CompleteWorkspaceSSHKeyEnrollmentParams) (WorkspaceSshKeyEnrollment, error) {
+	row := q.db.QueryRowContext(ctx, completeWorkspaceSSHKeyEnrollment, arg.ConsumedAt, arg.WorkspaceSshKeyID, arg.ID)
+	var i WorkspaceSshKeyEnrollment
+	err := row.Scan(
+		&i.ID,
+		&i.TokenHash,
+		&i.UserID,
+		&i.OrganizationID,
+		&i.WorkspaceAgentID,
+		&i.Locale,
+		&i.CreatedAt,
+		&i.ExpiresAt,
+		&i.ConsumedAt,
+		&i.WorkspaceSshKeyID,
+	)
+	return i, err
+}
+
+const deleteExpiredWorkspaceSSHKeyEnrollments = `-- name: DeleteExpiredWorkspaceSSHKeyEnrollments :exec
+DELETE FROM workspace_ssh_key_enrollments
+WHERE expires_at <= $1
+`
+
+func (q *sqlQuerier) DeleteExpiredWorkspaceSSHKeyEnrollments(ctx context.Context, now time.Time) error {
+	_, err := q.db.ExecContext(ctx, deleteExpiredWorkspaceSSHKeyEnrollments, now)
+	return err
+}
+
+const deleteWorkspaceSSHKeyByID = `-- name: DeleteWorkspaceSSHKeyByID :one
+DELETE FROM workspace_ssh_keys
+WHERE id = $1
+	AND user_id = $2
+	AND organization_id = $3
+RETURNING id, user_id, organization_id, device_name, public_key, fingerprint, created_at, last_used_at
+`
+
+type DeleteWorkspaceSSHKeyByIDParams struct {
+	ID             uuid.UUID `db:"id" json:"id"`
+	UserID         uuid.UUID `db:"user_id" json:"user_id"`
+	OrganizationID uuid.UUID `db:"organization_id" json:"organization_id"`
+}
+
+func (q *sqlQuerier) DeleteWorkspaceSSHKeyByID(ctx context.Context, arg DeleteWorkspaceSSHKeyByIDParams) (WorkspaceSshKey, error) {
+	row := q.db.QueryRowContext(ctx, deleteWorkspaceSSHKeyByID, arg.ID, arg.UserID, arg.OrganizationID)
+	var i WorkspaceSshKey
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.OrganizationID,
+		&i.DeviceName,
+		&i.PublicKey,
+		&i.Fingerprint,
+		&i.CreatedAt,
+		&i.LastUsedAt,
+	)
+	return i, err
+}
+
+const getWorkspaceSSHBootstrapTargetByAgentID = `-- name: GetWorkspaceSSHBootstrapTargetByAgentID :one
+SELECT
+	workspace_agents.id, workspace_agents.created_at, workspace_agents.updated_at, workspace_agents.name, workspace_agents.first_connected_at, workspace_agents.last_connected_at, workspace_agents.disconnected_at, workspace_agents.resource_id, workspace_agents.auth_token, workspace_agents.auth_instance_id, workspace_agents.architecture, workspace_agents.environment_variables, workspace_agents.operating_system, workspace_agents.instance_metadata, workspace_agents.resource_metadata, workspace_agents.directory, workspace_agents.version, workspace_agents.last_connected_replica_id, workspace_agents.connection_timeout_seconds, workspace_agents.troubleshooting_url, workspace_agents.motd_file, workspace_agents.lifecycle_state, workspace_agents.expanded_directory, workspace_agents.logs_length, workspace_agents.logs_overflowed, workspace_agents.started_at, workspace_agents.ready_at, workspace_agents.subsystems, workspace_agents.display_apps, workspace_agents.api_version, workspace_agents.display_order, workspace_agents.parent_id, workspace_agents.api_key_scope, workspace_agents.deleted,
+	workspaces.id, workspaces.created_at, workspaces.updated_at, workspaces.owner_id, workspaces.organization_id, workspaces.template_id, workspaces.deleted, workspaces.name, workspaces.autostart_schedule, workspaces.ttl, workspaces.last_used_at, workspaces.dormant_at, workspaces.deleting_at, workspaces.automatic_updates, workspaces.favorite, workspaces.next_start_at, workspaces.group_acl, workspaces.user_acl,
+	users.username AS owner_username
+FROM workspace_agents
+JOIN workspace_resources ON workspace_agents.resource_id = workspace_resources.id
+JOIN provisioner_jobs ON workspace_resources.job_id = provisioner_jobs.id
+JOIN workspace_builds ON provisioner_jobs.id = workspace_builds.job_id
+JOIN workspaces ON workspace_builds.workspace_id = workspaces.id
+JOIN users ON workspaces.owner_id = users.id
+WHERE workspace_agents.id = $1
+	AND workspace_agents.deleted = FALSE
+	AND provisioner_jobs.type = 'workspace_build'::provisioner_job_type
+	AND workspaces.deleted = FALSE
+	AND users.deleted = FALSE
+LIMIT 1
+`
+
+type GetWorkspaceSSHBootstrapTargetByAgentIDRow struct {
+	WorkspaceAgent WorkspaceAgent `db:"workspace_agent" json:"workspace_agent"`
+	WorkspaceTable WorkspaceTable `db:"workspace_table" json:"workspace_table"`
+	OwnerUsername  string         `db:"owner_username" json:"owner_username"`
+}
+
+func (q *sqlQuerier) GetWorkspaceSSHBootstrapTargetByAgentID(ctx context.Context, id uuid.UUID) (GetWorkspaceSSHBootstrapTargetByAgentIDRow, error) {
+	row := q.db.QueryRowContext(ctx, getWorkspaceSSHBootstrapTargetByAgentID, id)
+	var i GetWorkspaceSSHBootstrapTargetByAgentIDRow
+	err := row.Scan(
+		&i.WorkspaceAgent.ID,
+		&i.WorkspaceAgent.CreatedAt,
+		&i.WorkspaceAgent.UpdatedAt,
+		&i.WorkspaceAgent.Name,
+		&i.WorkspaceAgent.FirstConnectedAt,
+		&i.WorkspaceAgent.LastConnectedAt,
+		&i.WorkspaceAgent.DisconnectedAt,
+		&i.WorkspaceAgent.ResourceID,
+		&i.WorkspaceAgent.AuthToken,
+		&i.WorkspaceAgent.AuthInstanceID,
+		&i.WorkspaceAgent.Architecture,
+		&i.WorkspaceAgent.EnvironmentVariables,
+		&i.WorkspaceAgent.OperatingSystem,
+		&i.WorkspaceAgent.InstanceMetadata,
+		&i.WorkspaceAgent.ResourceMetadata,
+		&i.WorkspaceAgent.Directory,
+		&i.WorkspaceAgent.Version,
+		&i.WorkspaceAgent.LastConnectedReplicaID,
+		&i.WorkspaceAgent.ConnectionTimeoutSeconds,
+		&i.WorkspaceAgent.TroubleshootingURL,
+		&i.WorkspaceAgent.MOTDFile,
+		&i.WorkspaceAgent.LifecycleState,
+		&i.WorkspaceAgent.ExpandedDirectory,
+		&i.WorkspaceAgent.LogsLength,
+		&i.WorkspaceAgent.LogsOverflowed,
+		&i.WorkspaceAgent.StartedAt,
+		&i.WorkspaceAgent.ReadyAt,
+		pq.Array(&i.WorkspaceAgent.Subsystems),
+		pq.Array(&i.WorkspaceAgent.DisplayApps),
+		&i.WorkspaceAgent.APIVersion,
+		&i.WorkspaceAgent.DisplayOrder,
+		&i.WorkspaceAgent.ParentID,
+		&i.WorkspaceAgent.APIKeyScope,
+		&i.WorkspaceAgent.Deleted,
+		&i.WorkspaceTable.ID,
+		&i.WorkspaceTable.CreatedAt,
+		&i.WorkspaceTable.UpdatedAt,
+		&i.WorkspaceTable.OwnerID,
+		&i.WorkspaceTable.OrganizationID,
+		&i.WorkspaceTable.TemplateID,
+		&i.WorkspaceTable.Deleted,
+		&i.WorkspaceTable.Name,
+		&i.WorkspaceTable.AutostartSchedule,
+		&i.WorkspaceTable.Ttl,
+		&i.WorkspaceTable.LastUsedAt,
+		&i.WorkspaceTable.DormantAt,
+		&i.WorkspaceTable.DeletingAt,
+		&i.WorkspaceTable.AutomaticUpdates,
+		&i.WorkspaceTable.Favorite,
+		&i.WorkspaceTable.NextStartAt,
+		&i.WorkspaceTable.GroupACL,
+		&i.WorkspaceTable.UserACL,
+		&i.OwnerUsername,
+	)
+	return i, err
+}
+
+const getWorkspaceSSHGatewayTarget = `-- name: GetWorkspaceSSHGatewayTarget :one
+SELECT
+	workspaces.id, workspaces.created_at, workspaces.updated_at, workspaces.owner_id, workspaces.organization_id, workspaces.template_id, workspaces.deleted, workspaces.name, workspaces.autostart_schedule, workspaces.ttl, workspaces.last_used_at, workspaces.dormant_at, workspaces.deleting_at, workspaces.automatic_updates, workspaces.favorite, workspaces.next_start_at, workspaces.group_acl, workspaces.user_acl,
+	workspace_agents.id, workspace_agents.created_at, workspace_agents.updated_at, workspace_agents.name, workspace_agents.first_connected_at, workspace_agents.last_connected_at, workspace_agents.disconnected_at, workspace_agents.resource_id, workspace_agents.auth_token, workspace_agents.auth_instance_id, workspace_agents.architecture, workspace_agents.environment_variables, workspace_agents.operating_system, workspace_agents.instance_metadata, workspace_agents.resource_metadata, workspace_agents.directory, workspace_agents.version, workspace_agents.last_connected_replica_id, workspace_agents.connection_timeout_seconds, workspace_agents.troubleshooting_url, workspace_agents.motd_file, workspace_agents.lifecycle_state, workspace_agents.expanded_directory, workspace_agents.logs_length, workspace_agents.logs_overflowed, workspace_agents.started_at, workspace_agents.ready_at, workspace_agents.subsystems, workspace_agents.display_apps, workspace_agents.api_version, workspace_agents.display_order, workspace_agents.parent_id, workspace_agents.api_key_scope, workspace_agents.deleted,
+	users.username AS owner_username,
+	latest_workspace_build.build_number AS latest_build_number,
+	latest_workspace_build.transition AS latest_build_transition,
+	target_agent.build_number AS agent_build_number
+FROM workspaces
+JOIN users ON users.id = workspaces.owner_id
+JOIN workspace_builds AS latest_workspace_build ON latest_workspace_build.workspace_id = workspaces.id
+	AND latest_workspace_build.build_number = (
+		SELECT MAX(latest_build.build_number)
+		FROM workspace_builds AS latest_build
+		WHERE latest_build.workspace_id = workspaces.id
+	)
+JOIN LATERAL (
+	SELECT
+		workspace_agents.id,
+		agent_build.build_number
+	FROM workspace_builds AS agent_build
+	JOIN workspace_resources ON workspace_resources.job_id = agent_build.job_id
+	JOIN workspace_agents ON workspace_agents.resource_id = workspace_resources.id
+	WHERE agent_build.workspace_id = workspaces.id
+		AND LOWER(workspace_agents.name) = LOWER($1)
+		AND workspace_agents.deleted = FALSE
+	ORDER BY agent_build.build_number DESC
+	LIMIT 1
+) AS target_agent ON TRUE
+JOIN workspace_agents ON workspace_agents.id = target_agent.id
+WHERE LOWER(users.username) = LOWER($2)
+	AND LOWER(workspaces.name) = LOWER($3)
+	AND workspaces.deleted = FALSE
+	AND users.deleted = FALSE
+`
+
+type GetWorkspaceSSHGatewayTargetParams struct {
+	AgentName     string `db:"agent_name" json:"agent_name"`
+	OwnerUsername string `db:"owner_username" json:"owner_username"`
+	WorkspaceName string `db:"workspace_name" json:"workspace_name"`
+}
+
+type GetWorkspaceSSHGatewayTargetRow struct {
+	WorkspaceTable        WorkspaceTable      `db:"workspace_table" json:"workspace_table"`
+	WorkspaceAgent        WorkspaceAgent      `db:"workspace_agent" json:"workspace_agent"`
+	OwnerUsername         string              `db:"owner_username" json:"owner_username"`
+	LatestBuildNumber     int32               `db:"latest_build_number" json:"latest_build_number"`
+	LatestBuildTransition WorkspaceTransition `db:"latest_build_transition" json:"latest_build_transition"`
+	AgentBuildNumber      int32               `db:"agent_build_number" json:"agent_build_number"`
+}
+
+func (q *sqlQuerier) GetWorkspaceSSHGatewayTarget(ctx context.Context, arg GetWorkspaceSSHGatewayTargetParams) (GetWorkspaceSSHGatewayTargetRow, error) {
+	row := q.db.QueryRowContext(ctx, getWorkspaceSSHGatewayTarget, arg.AgentName, arg.OwnerUsername, arg.WorkspaceName)
+	var i GetWorkspaceSSHGatewayTargetRow
+	err := row.Scan(
+		&i.WorkspaceTable.ID,
+		&i.WorkspaceTable.CreatedAt,
+		&i.WorkspaceTable.UpdatedAt,
+		&i.WorkspaceTable.OwnerID,
+		&i.WorkspaceTable.OrganizationID,
+		&i.WorkspaceTable.TemplateID,
+		&i.WorkspaceTable.Deleted,
+		&i.WorkspaceTable.Name,
+		&i.WorkspaceTable.AutostartSchedule,
+		&i.WorkspaceTable.Ttl,
+		&i.WorkspaceTable.LastUsedAt,
+		&i.WorkspaceTable.DormantAt,
+		&i.WorkspaceTable.DeletingAt,
+		&i.WorkspaceTable.AutomaticUpdates,
+		&i.WorkspaceTable.Favorite,
+		&i.WorkspaceTable.NextStartAt,
+		&i.WorkspaceTable.GroupACL,
+		&i.WorkspaceTable.UserACL,
+		&i.WorkspaceAgent.ID,
+		&i.WorkspaceAgent.CreatedAt,
+		&i.WorkspaceAgent.UpdatedAt,
+		&i.WorkspaceAgent.Name,
+		&i.WorkspaceAgent.FirstConnectedAt,
+		&i.WorkspaceAgent.LastConnectedAt,
+		&i.WorkspaceAgent.DisconnectedAt,
+		&i.WorkspaceAgent.ResourceID,
+		&i.WorkspaceAgent.AuthToken,
+		&i.WorkspaceAgent.AuthInstanceID,
+		&i.WorkspaceAgent.Architecture,
+		&i.WorkspaceAgent.EnvironmentVariables,
+		&i.WorkspaceAgent.OperatingSystem,
+		&i.WorkspaceAgent.InstanceMetadata,
+		&i.WorkspaceAgent.ResourceMetadata,
+		&i.WorkspaceAgent.Directory,
+		&i.WorkspaceAgent.Version,
+		&i.WorkspaceAgent.LastConnectedReplicaID,
+		&i.WorkspaceAgent.ConnectionTimeoutSeconds,
+		&i.WorkspaceAgent.TroubleshootingURL,
+		&i.WorkspaceAgent.MOTDFile,
+		&i.WorkspaceAgent.LifecycleState,
+		&i.WorkspaceAgent.ExpandedDirectory,
+		&i.WorkspaceAgent.LogsLength,
+		&i.WorkspaceAgent.LogsOverflowed,
+		&i.WorkspaceAgent.StartedAt,
+		&i.WorkspaceAgent.ReadyAt,
+		pq.Array(&i.WorkspaceAgent.Subsystems),
+		pq.Array(&i.WorkspaceAgent.DisplayApps),
+		&i.WorkspaceAgent.APIVersion,
+		&i.WorkspaceAgent.DisplayOrder,
+		&i.WorkspaceAgent.ParentID,
+		&i.WorkspaceAgent.APIKeyScope,
+		&i.WorkspaceAgent.Deleted,
+		&i.OwnerUsername,
+		&i.LatestBuildNumber,
+		&i.LatestBuildTransition,
+		&i.AgentBuildNumber,
+	)
+	return i, err
+}
+
+const getWorkspaceSSHKeyByID = `-- name: GetWorkspaceSSHKeyByID :one
+SELECT id, user_id, organization_id, device_name, public_key, fingerprint, created_at, last_used_at
+FROM workspace_ssh_keys
+WHERE id = $1
+`
+
+func (q *sqlQuerier) GetWorkspaceSSHKeyByID(ctx context.Context, id uuid.UUID) (WorkspaceSshKey, error) {
+	row := q.db.QueryRowContext(ctx, getWorkspaceSSHKeyByID, id)
+	var i WorkspaceSshKey
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.OrganizationID,
+		&i.DeviceName,
+		&i.PublicKey,
+		&i.Fingerprint,
+		&i.CreatedAt,
+		&i.LastUsedAt,
+	)
+	return i, err
+}
+
+const getWorkspaceSSHKeyByOrganizationAndFingerprint = `-- name: GetWorkspaceSSHKeyByOrganizationAndFingerprint :one
+SELECT id, user_id, organization_id, device_name, public_key, fingerprint, created_at, last_used_at
+FROM workspace_ssh_keys
+WHERE organization_id = $1
+	AND fingerprint = $2
+`
+
+type GetWorkspaceSSHKeyByOrganizationAndFingerprintParams struct {
+	OrganizationID uuid.UUID `db:"organization_id" json:"organization_id"`
+	Fingerprint    string    `db:"fingerprint" json:"fingerprint"`
+}
+
+func (q *sqlQuerier) GetWorkspaceSSHKeyByOrganizationAndFingerprint(ctx context.Context, arg GetWorkspaceSSHKeyByOrganizationAndFingerprintParams) (WorkspaceSshKey, error) {
+	row := q.db.QueryRowContext(ctx, getWorkspaceSSHKeyByOrganizationAndFingerprint, arg.OrganizationID, arg.Fingerprint)
+	var i WorkspaceSshKey
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.OrganizationID,
+		&i.DeviceName,
+		&i.PublicKey,
+		&i.Fingerprint,
+		&i.CreatedAt,
+		&i.LastUsedAt,
+	)
+	return i, err
+}
+
+const getWorkspaceSSHKeyByUserOrganizationAndFingerprint = `-- name: GetWorkspaceSSHKeyByUserOrganizationAndFingerprint :one
+SELECT id, user_id, organization_id, device_name, public_key, fingerprint, created_at, last_used_at
+FROM workspace_ssh_keys
+WHERE user_id = $1
+	AND organization_id = $2
+	AND fingerprint = $3
+`
+
+type GetWorkspaceSSHKeyByUserOrganizationAndFingerprintParams struct {
+	UserID         uuid.UUID `db:"user_id" json:"user_id"`
+	OrganizationID uuid.UUID `db:"organization_id" json:"organization_id"`
+	Fingerprint    string    `db:"fingerprint" json:"fingerprint"`
+}
+
+func (q *sqlQuerier) GetWorkspaceSSHKeyByUserOrganizationAndFingerprint(ctx context.Context, arg GetWorkspaceSSHKeyByUserOrganizationAndFingerprintParams) (WorkspaceSshKey, error) {
+	row := q.db.QueryRowContext(ctx, getWorkspaceSSHKeyByUserOrganizationAndFingerprint, arg.UserID, arg.OrganizationID, arg.Fingerprint)
+	var i WorkspaceSshKey
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.OrganizationID,
+		&i.DeviceName,
+		&i.PublicKey,
+		&i.Fingerprint,
+		&i.CreatedAt,
+		&i.LastUsedAt,
+	)
+	return i, err
+}
+
+const getWorkspaceSSHKeyEnrollmentByID = `-- name: GetWorkspaceSSHKeyEnrollmentByID :one
+SELECT id, token_hash, user_id, organization_id, workspace_agent_id, locale, created_at, expires_at, consumed_at, workspace_ssh_key_id
+FROM workspace_ssh_key_enrollments
+WHERE id = $1
+`
+
+func (q *sqlQuerier) GetWorkspaceSSHKeyEnrollmentByID(ctx context.Context, id uuid.UUID) (WorkspaceSshKeyEnrollment, error) {
+	row := q.db.QueryRowContext(ctx, getWorkspaceSSHKeyEnrollmentByID, id)
+	var i WorkspaceSshKeyEnrollment
+	err := row.Scan(
+		&i.ID,
+		&i.TokenHash,
+		&i.UserID,
+		&i.OrganizationID,
+		&i.WorkspaceAgentID,
+		&i.Locale,
+		&i.CreatedAt,
+		&i.ExpiresAt,
+		&i.ConsumedAt,
+		&i.WorkspaceSshKeyID,
+	)
+	return i, err
+}
+
+const getWorkspaceSSHKeyEnrollmentForUpdate = `-- name: GetWorkspaceSSHKeyEnrollmentForUpdate :one
+SELECT id, token_hash, user_id, organization_id, workspace_agent_id, locale, created_at, expires_at, consumed_at, workspace_ssh_key_id
+FROM workspace_ssh_key_enrollments
+WHERE id = $1
+	AND token_hash = $2
+	AND consumed_at IS NULL
+	AND expires_at > $3
+FOR UPDATE
+`
+
+type GetWorkspaceSSHKeyEnrollmentForUpdateParams struct {
+	ID        uuid.UUID `db:"id" json:"id"`
+	TokenHash []byte    `db:"token_hash" json:"token_hash"`
+	Now       time.Time `db:"now" json:"now"`
+}
+
+func (q *sqlQuerier) GetWorkspaceSSHKeyEnrollmentForUpdate(ctx context.Context, arg GetWorkspaceSSHKeyEnrollmentForUpdateParams) (WorkspaceSshKeyEnrollment, error) {
+	row := q.db.QueryRowContext(ctx, getWorkspaceSSHKeyEnrollmentForUpdate, arg.ID, arg.TokenHash, arg.Now)
+	var i WorkspaceSshKeyEnrollment
+	err := row.Scan(
+		&i.ID,
+		&i.TokenHash,
+		&i.UserID,
+		&i.OrganizationID,
+		&i.WorkspaceAgentID,
+		&i.Locale,
+		&i.CreatedAt,
+		&i.ExpiresAt,
+		&i.ConsumedAt,
+		&i.WorkspaceSshKeyID,
+	)
+	return i, err
+}
+
+const getWorkspaceSSHKeysByUserAndOrganization = `-- name: GetWorkspaceSSHKeysByUserAndOrganization :many
+SELECT id, user_id, organization_id, device_name, public_key, fingerprint, created_at, last_used_at
+FROM workspace_ssh_keys
+WHERE user_id = $1
+	AND organization_id = $2
+ORDER BY created_at DESC
+`
+
+type GetWorkspaceSSHKeysByUserAndOrganizationParams struct {
+	UserID         uuid.UUID `db:"user_id" json:"user_id"`
+	OrganizationID uuid.UUID `db:"organization_id" json:"organization_id"`
+}
+
+func (q *sqlQuerier) GetWorkspaceSSHKeysByUserAndOrganization(ctx context.Context, arg GetWorkspaceSSHKeysByUserAndOrganizationParams) ([]WorkspaceSshKey, error) {
+	rows, err := q.db.QueryContext(ctx, getWorkspaceSSHKeysByUserAndOrganization, arg.UserID, arg.OrganizationID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []WorkspaceSshKey
+	for rows.Next() {
+		var i WorkspaceSshKey
+		if err := rows.Scan(
+			&i.ID,
+			&i.UserID,
+			&i.OrganizationID,
+			&i.DeviceName,
+			&i.PublicKey,
+			&i.Fingerprint,
+			&i.CreatedAt,
+			&i.LastUsedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const insertWorkspaceSSHKey = `-- name: InsertWorkspaceSSHKey :one
+INSERT INTO workspace_ssh_keys (
+	id,
+	user_id,
+	organization_id,
+	device_name,
+	public_key,
+	fingerprint,
+	created_at
+) VALUES (
+	$1,
+	$2,
+	$3,
+	$4,
+	$5,
+	$6,
+	$7
+)
+RETURNING id, user_id, organization_id, device_name, public_key, fingerprint, created_at, last_used_at
+`
+
+type InsertWorkspaceSSHKeyParams struct {
+	ID             uuid.UUID `db:"id" json:"id"`
+	UserID         uuid.UUID `db:"user_id" json:"user_id"`
+	OrganizationID uuid.UUID `db:"organization_id" json:"organization_id"`
+	DeviceName     string    `db:"device_name" json:"device_name"`
+	PublicKey      string    `db:"public_key" json:"public_key"`
+	Fingerprint    string    `db:"fingerprint" json:"fingerprint"`
+	CreatedAt      time.Time `db:"created_at" json:"created_at"`
+}
+
+func (q *sqlQuerier) InsertWorkspaceSSHKey(ctx context.Context, arg InsertWorkspaceSSHKeyParams) (WorkspaceSshKey, error) {
+	row := q.db.QueryRowContext(ctx, insertWorkspaceSSHKey,
+		arg.ID,
+		arg.UserID,
+		arg.OrganizationID,
+		arg.DeviceName,
+		arg.PublicKey,
+		arg.Fingerprint,
+		arg.CreatedAt,
+	)
+	var i WorkspaceSshKey
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.OrganizationID,
+		&i.DeviceName,
+		&i.PublicKey,
+		&i.Fingerprint,
+		&i.CreatedAt,
+		&i.LastUsedAt,
+	)
+	return i, err
+}
+
+const insertWorkspaceSSHKeyEnrollment = `-- name: InsertWorkspaceSSHKeyEnrollment :one
+INSERT INTO workspace_ssh_key_enrollments (
+	id,
+	token_hash,
+	user_id,
+	organization_id,
+	workspace_agent_id,
+	locale,
+	created_at,
+	expires_at
+) VALUES (
+	$1,
+	$2,
+	$3,
+	$4,
+	$5,
+	$6,
+	$7,
+	$8
+)
+RETURNING id, token_hash, user_id, organization_id, workspace_agent_id, locale, created_at, expires_at, consumed_at, workspace_ssh_key_id
+`
+
+type InsertWorkspaceSSHKeyEnrollmentParams struct {
+	ID               uuid.UUID `db:"id" json:"id"`
+	TokenHash        []byte    `db:"token_hash" json:"token_hash"`
+	UserID           uuid.UUID `db:"user_id" json:"user_id"`
+	OrganizationID   uuid.UUID `db:"organization_id" json:"organization_id"`
+	WorkspaceAgentID uuid.UUID `db:"workspace_agent_id" json:"workspace_agent_id"`
+	Locale           string    `db:"locale" json:"locale"`
+	CreatedAt        time.Time `db:"created_at" json:"created_at"`
+	ExpiresAt        time.Time `db:"expires_at" json:"expires_at"`
+}
+
+func (q *sqlQuerier) InsertWorkspaceSSHKeyEnrollment(ctx context.Context, arg InsertWorkspaceSSHKeyEnrollmentParams) (WorkspaceSshKeyEnrollment, error) {
+	row := q.db.QueryRowContext(ctx, insertWorkspaceSSHKeyEnrollment,
+		arg.ID,
+		arg.TokenHash,
+		arg.UserID,
+		arg.OrganizationID,
+		arg.WorkspaceAgentID,
+		arg.Locale,
+		arg.CreatedAt,
+		arg.ExpiresAt,
+	)
+	var i WorkspaceSshKeyEnrollment
+	err := row.Scan(
+		&i.ID,
+		&i.TokenHash,
+		&i.UserID,
+		&i.OrganizationID,
+		&i.WorkspaceAgentID,
+		&i.Locale,
+		&i.CreatedAt,
+		&i.ExpiresAt,
+		&i.ConsumedAt,
+		&i.WorkspaceSshKeyID,
+	)
+	return i, err
+}
+
+const updateWorkspaceSSHKeyLastUsedAt = `-- name: UpdateWorkspaceSSHKeyLastUsedAt :exec
+UPDATE workspace_ssh_keys
+SET last_used_at = $1
+WHERE id = $2
+`
+
+type UpdateWorkspaceSSHKeyLastUsedAtParams struct {
+	LastUsedAt sql.NullTime `db:"last_used_at" json:"last_used_at"`
+	ID         uuid.UUID    `db:"id" json:"id"`
+}
+
+func (q *sqlQuerier) UpdateWorkspaceSSHKeyLastUsedAt(ctx context.Context, arg UpdateWorkspaceSSHKeyLastUsedAtParams) error {
+	_, err := q.db.ExecContext(ctx, updateWorkspaceSSHKeyLastUsedAt, arg.LastUsedAt, arg.ID)
+	return err
+}
+
 const deleteStaleWorkspaceAgentContextResources = `-- name: DeleteStaleWorkspaceAgentContextResources :exec
 DELETE FROM workspace_agent_context_resources
 WHERE workspace_agent_id = $1

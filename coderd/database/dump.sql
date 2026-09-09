@@ -624,7 +624,8 @@ CREATE TYPE resource_type AS ENUM (
     'chat_instruction_settings',
     'mcp_server_config',
     'chat_model_config',
-    'chat_operational_settings'
+    'chat_operational_settings',
+    'workspace_ssh_key'
 );
 
 CREATE TYPE shareable_workspace_owners AS ENUM (
@@ -4301,6 +4302,35 @@ CREATE SEQUENCE workspace_resource_metadata_id_seq
 
 ALTER SEQUENCE workspace_resource_metadata_id_seq OWNED BY workspace_resource_metadata.id;
 
+CREATE TABLE workspace_ssh_key_enrollments (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    token_hash bytea NOT NULL,
+    user_id uuid NOT NULL,
+    organization_id uuid NOT NULL,
+    workspace_agent_id uuid NOT NULL,
+    locale text NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    expires_at timestamp with time zone NOT NULL,
+    consumed_at timestamp with time zone,
+    workspace_ssh_key_id uuid,
+    CONSTRAINT workspace_ssh_key_enrollments_check CHECK ((expires_at > created_at)),
+    CONSTRAINT workspace_ssh_key_enrollments_consumption_check CHECK ((((consumed_at IS NULL) AND (workspace_ssh_key_id IS NULL)) OR ((consumed_at IS NOT NULL) AND (workspace_ssh_key_id IS NOT NULL)))),
+    CONSTRAINT workspace_ssh_key_enrollments_locale_check CHECK ((locale = ANY (ARRAY['en'::text, 'zh-CN'::text]))),
+    CONSTRAINT workspace_ssh_key_enrollments_token_hash_check CHECK ((octet_length(token_hash) = 32))
+);
+
+CREATE TABLE workspace_ssh_keys (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    user_id uuid NOT NULL,
+    organization_id uuid NOT NULL,
+    device_name text NOT NULL,
+    public_key text NOT NULL,
+    fingerprint text NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    last_used_at timestamp with time zone,
+    CONSTRAINT workspace_ssh_keys_device_name_check CHECK (((length(device_name) >= 1) AND (length(device_name) <= 255)))
+);
+
 CREATE VIEW workspaces_expanded AS
  SELECT workspaces.id,
     workspaces.created_at,
@@ -4796,6 +4826,18 @@ ALTER TABLE ONLY workspace_resource_metadata
 ALTER TABLE ONLY workspace_resources
     ADD CONSTRAINT workspace_resources_pkey PRIMARY KEY (id);
 
+ALTER TABLE ONLY workspace_ssh_key_enrollments
+    ADD CONSTRAINT workspace_ssh_key_enrollments_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY workspace_ssh_key_enrollments
+    ADD CONSTRAINT workspace_ssh_key_enrollments_token_hash_key UNIQUE (token_hash);
+
+ALTER TABLE ONLY workspace_ssh_keys
+    ADD CONSTRAINT workspace_ssh_keys_organization_id_fingerprint_key UNIQUE (organization_id, fingerprint);
+
+ALTER TABLE ONLY workspace_ssh_keys
+    ADD CONSTRAINT workspace_ssh_keys_pkey PRIMARY KEY (id);
+
 ALTER TABLE ONLY workspaces
     ADD CONSTRAINT workspaces_pkey PRIMARY KEY (id);
 
@@ -5130,6 +5172,10 @@ CREATE INDEX workspace_next_start_at_idx ON workspaces USING btree (next_start_a
 CREATE UNIQUE INDEX workspace_proxies_lower_name_idx ON workspace_proxies USING btree (lower(name)) WHERE (deleted = false);
 
 CREATE INDEX workspace_resources_job_id_idx ON workspace_resources USING btree (job_id);
+
+CREATE INDEX workspace_ssh_key_enrollments_expires_at_idx ON workspace_ssh_key_enrollments USING btree (expires_at);
+
+CREATE INDEX workspace_ssh_keys_user_organization_idx ON workspace_ssh_keys USING btree (user_id, organization_id);
 
 CREATE INDEX workspace_template_id_idx ON workspaces USING btree (template_id) WHERE (deleted = false);
 
@@ -5728,6 +5774,21 @@ ALTER TABLE ONLY workspace_resource_metadata
 
 ALTER TABLE ONLY workspace_resources
     ADD CONSTRAINT workspace_resources_job_id_fkey FOREIGN KEY (job_id) REFERENCES provisioner_jobs(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY workspace_ssh_key_enrollments
+    ADD CONSTRAINT workspace_ssh_key_enrollments_organization_id_fkey FOREIGN KEY (organization_id) REFERENCES organizations(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY workspace_ssh_key_enrollments
+    ADD CONSTRAINT workspace_ssh_key_enrollments_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY workspace_ssh_key_enrollments
+    ADD CONSTRAINT workspace_ssh_key_enrollments_workspace_agent_id_fkey FOREIGN KEY (workspace_agent_id) REFERENCES workspace_agents(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY workspace_ssh_keys
+    ADD CONSTRAINT workspace_ssh_keys_organization_id_fkey FOREIGN KEY (organization_id) REFERENCES organizations(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY workspace_ssh_keys
+    ADD CONSTRAINT workspace_ssh_keys_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY workspaces
     ADD CONSTRAINT workspaces_organization_id_fkey FOREIGN KEY (organization_id) REFERENCES organizations(id) ON DELETE RESTRICT;

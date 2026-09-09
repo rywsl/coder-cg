@@ -683,6 +683,23 @@ curl -X GET http://coder-server:8080/api/v2/deployment/config \
       "reconciliation_backoff_lookback": 0,
       "reconciliation_interval": 0
     },
+    "workspace_ssh_gateway": {
+      "advertise_host": "string",
+      "advertise_port": 0,
+      "auth_attempts_burst": 0,
+      "auth_attempts_per_minute": 0,
+      "codex_api_key": "string",
+      "codex_base_url": "string",
+      "codex_model": "string",
+      "enabled": true,
+      "host_key_file": "string",
+      "listen_address": "string",
+      "max_channels_per_connection": 0,
+      "max_connections": 0,
+      "max_connections_per_user": 0,
+      "max_pending_connections": 0,
+      "max_pending_connections_per_ip": 0
+    },
     "write_config": true
   },
   "options": [
@@ -753,6 +770,15 @@ curl -X GET http://coder-server:8080/api/v2/deployment/ssh \
   "ssh_config_options": {
     "property1": "string",
     "property2": "string"
+  },
+  "workspace_ssh_gateway": {
+    "alias_suffix": "string",
+    "chatgpt_desktop_available": true,
+    "enabled": true,
+    "host": "string",
+    "host_key_fingerprint": "string",
+    "host_public_key": "string",
+    "port": 0
   }
 }
 ```

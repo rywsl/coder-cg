@@ -4500,6 +4500,15 @@ export interface CreateWorkspaceRequest {
 	readonly template_version_preset_id?: string;
 }
 
+// From codersdk/workspace_ssh.go
+/**
+ * CreateWorkspaceSSHKeyRequest registers a device public key.
+ */
+export interface CreateWorkspaceSSHKeyRequest {
+	readonly device_name: string;
+	readonly public_key: string;
+}
+
 // From codersdk/deployment.go
 export interface CryptoKey {
 	readonly feature: CryptoKeyFeature;
@@ -4836,6 +4845,7 @@ export interface DeploymentValues {
 	readonly external_auth?: SerpentStruct<ExternalAuthConfig[]>;
 	readonly external_auth_github_default_provider_enable?: boolean;
 	readonly config_ssh?: SSHConfig;
+	readonly workspace_ssh_gateway?: WorkspaceSSHGatewayConfig;
 	readonly wgtunnel_host?: string;
 	readonly disable_owner_workspace_exec?: boolean;
 	readonly disable_workspace_sharing?: boolean;
@@ -5065,6 +5075,15 @@ export const EnhancedExternalAuthProviders: EnhancedExternalAuthProvider[] = [
 	"jfrog",
 	"slack",
 ];
+
+// From codersdk/workspace_ssh.go
+/**
+ * EnrollWorkspaceSSHKeyRequest completes a one-time device enrollment.
+ */
+export interface EnrollWorkspaceSSHKeyRequest {
+	readonly device_name: string;
+	readonly public_key: string;
+}
 
 // From codersdk/deployment.go
 export type Entitlement = "entitled" | "grace_period" | "not_entitled";
@@ -8198,7 +8217,8 @@ export type ResourceType =
 	| "workspace_agent"
 	| "workspace_app"
 	| "workspace_build"
-	| "workspace_proxy";
+	| "workspace_proxy"
+	| "workspace_ssh_key";
 
 export const ResourceTypes: ResourceType[] = [
 	"ai_gateway_key",
@@ -8241,6 +8261,7 @@ export const ResourceTypes: ResourceType[] = [
 	"workspace_app",
 	"workspace_build",
 	"workspace_proxy",
+	"workspace_ssh_key",
 ];
 
 // From codersdk/client.go
@@ -8465,6 +8486,7 @@ export interface SSHConfigResponse {
 	 */
 	readonly hostname_suffix: string;
 	readonly ssh_config_options: Record<string, string>;
+	readonly workspace_ssh_gateway?: WorkspaceSSHGatewayInfo;
 }
 
 // From healthsdk/healthsdk.go
@@ -11845,6 +11867,105 @@ export interface WorkspaceResourceMetadata {
 export type WorkspaceRole = "admin" | "" | "use";
 
 export const WorkspaceRoles: WorkspaceRole[] = ["admin", "", "use"];
+
+// From codersdk/workspace_ssh.go
+/**
+ * WorkspaceSSHBootstrapResponse contains one-time setup commands and the
+ * resulting ChatGPT Desktop workspace target.
+ */
+export interface WorkspaceSSHBootstrapResponse {
+	readonly enrollment_id: string;
+	readonly bash_command: string;
+	readonly powershell_command: string;
+	readonly alias: string;
+	readonly project_path: string;
+	readonly deep_link: string;
+	readonly expires_at: string;
+}
+
+// From codersdk/workspace_ssh.go
+/**
+ * WorkspaceSSHEnrollmentResponse is returned after a key is enrolled.
+ */
+export interface WorkspaceSSHEnrollmentResponse {
+	readonly key: WorkspaceSSHKey;
+	readonly alias: string;
+	readonly project_path: string;
+	readonly deep_link: string;
+}
+
+// From codersdk/workspace_ssh.go
+export type WorkspaceSSHEnrollmentStatus = "complete" | "expired" | "pending";
+
+// From codersdk/workspace_ssh.go
+/**
+ * WorkspaceSSHEnrollmentStatusResponse reports the key created by one setup
+ * attempt without exposing its enrollment credential.
+ */
+export interface WorkspaceSSHEnrollmentStatusResponse {
+	readonly enrollment_id: string;
+	readonly status: WorkspaceSSHEnrollmentStatus;
+	readonly workspace_ssh_key_id?: string;
+	readonly expires_at: string;
+}
+
+export const WorkspaceSSHEnrollmentStatuses: WorkspaceSSHEnrollmentStatus[] = [
+	"complete",
+	"expired",
+	"pending",
+];
+
+// From codersdk/deployment.go
+/**
+ * WorkspaceSSHGatewayConfig configures the deployment-level OpenSSH gateway
+ * used by clients that cannot run the Coder CLI.
+ */
+export interface WorkspaceSSHGatewayConfig {
+	readonly enabled: boolean;
+	readonly listen_address: string;
+	readonly advertise_host: string;
+	readonly advertise_port: number;
+	readonly host_key_file: string;
+	readonly codex_base_url: string;
+	readonly codex_api_key?: string;
+	readonly codex_model: string;
+	readonly max_connections: number;
+	readonly max_pending_connections: number;
+	readonly max_pending_connections_per_ip: number;
+	readonly max_connections_per_user: number;
+	readonly max_channels_per_connection: number;
+	readonly auth_attempts_per_minute: number;
+	readonly auth_attempts_burst: number;
+}
+
+// From codersdk/deployment.go
+/**
+ * WorkspaceSSHGatewayInfo describes the deployment-managed OpenSSH endpoint.
+ */
+export interface WorkspaceSSHGatewayInfo {
+	readonly enabled: boolean;
+	readonly host: string;
+	readonly port: number;
+	readonly host_public_key: string;
+	readonly host_key_fingerprint: string;
+	readonly alias_suffix: string;
+	readonly chatgpt_desktop_available: boolean;
+}
+
+// From codersdk/workspace_ssh.go
+/**
+ * WorkspaceSSHKey is a public key registered for the workspace SSH gateway.
+ */
+export interface WorkspaceSSHKey {
+	readonly id: string;
+	readonly user_id: string;
+	readonly organization_id: string;
+	readonly device_name: string;
+	readonly public_key: string;
+	readonly fingerprint: string;
+	readonly created_at: string;
+	readonly last_used_at?: string;
+}
 
 // From codersdk/workspacesharing.go
 /**

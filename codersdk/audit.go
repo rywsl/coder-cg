@@ -20,6 +20,7 @@ const (
 	ResourceTypeWorkspace              ResourceType = "workspace"
 	ResourceTypeWorkspaceBuild         ResourceType = "workspace_build"
 	ResourceTypeGitSSHKey              ResourceType = "git_ssh_key"
+	ResourceTypeWorkspaceSSHKey        ResourceType = "workspace_ssh_key"
 	ResourceTypeAPIKey                 ResourceType = "api_key"
 	ResourceTypeGroup                  ResourceType = "group"
 	ResourceTypeLicense                ResourceType = "license"
@@ -77,6 +78,8 @@ func (r ResourceType) FriendlyString() string {
 		return "workspace"
 	case ResourceTypeGitSSHKey:
 		return "git ssh key"
+	case ResourceTypeWorkspaceSSHKey:
+		return "workspace ssh key"
 	case ResourceTypeAPIKey:
 		return "token"
 	case ResourceTypeGroup:

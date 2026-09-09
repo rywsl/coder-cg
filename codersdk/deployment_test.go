@@ -2,6 +2,8 @@ package codersdk_test
 
 import (
 	"bytes"
+	"crypto/ed25519"
+	"crypto/rand"
 	"embed"
 	"encoding/json"
 	"fmt"
@@ -14,6 +16,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"golang.org/x/crypto/ssh"
 	"gopkg.in/yaml.v3"
 
 	"github.com/coder/coder/v2/codersdk"
@@ -99,6 +102,9 @@ func TestDeploymentValues_HighlyConfigurable(t *testing.T) {
 			yaml: true,
 		},
 		"AI Gateway Bedrock Access Key Secret": {
+			yaml: true,
+		},
+		"Workspace SSH Gateway Codex API Key": {
 			yaml: true,
 		},
 	}
@@ -379,6 +385,16 @@ func TestValidateSSHConfigOptions(t *testing.T) {
 
 func TestSSHConfigResponse_Validate(t *testing.T) {
 	t.Parallel()
+	_, privateKey, err := ed25519.GenerateKey(rand.Reader)
+	require.NoError(t, err)
+	signer, err := ssh.NewSignerFromKey(privateKey)
+	require.NoError(t, err)
+	hostPublicKey := strings.TrimSpace(string(ssh.MarshalAuthorizedKey(signer.PublicKey())))
+	validGateway := &codersdk.WorkspaceSSHGatewayInfo{
+		Enabled: true, Host: "ssh.coder.example.test", Port: 2222,
+		HostPublicKey: hostPublicKey, HostKeyFingerprint: ssh.FingerprintSHA256(signer.PublicKey()),
+		AliasSuffix: "coder", ChatGPTDesktopAvailable: true,
+	}
 
 	testCases := []struct {
 		name     string
@@ -396,6 +412,44 @@ func TestSSHConfigResponse_Validate(t *testing.T) {
 		{
 			name:     "Empty",
 			response: codersdk.SSHConfigResponse{},
+		},
+		{
+			name: "ValidGateway",
+			response: codersdk.SSHConfigResponse{
+				HostnameSuffix: "coder", WorkspaceSSHGateway: validGateway,
+			},
+		},
+		{
+			name: "GatewayHostWhitespace",
+			response: codersdk.SSHConfigResponse{WorkspaceSSHGateway: &codersdk.WorkspaceSSHGatewayInfo{
+				Enabled: true, Host: "ssh.example.test extra", Port: 2222,
+				HostPublicKey: hostPublicKey, HostKeyFingerprint: ssh.FingerprintSHA256(signer.PublicKey()), AliasSuffix: "coder",
+			}},
+			wantErr: "host is invalid",
+		},
+		{
+			name: "GatewayMissingAliasSuffix",
+			response: codersdk.SSHConfigResponse{WorkspaceSSHGateway: &codersdk.WorkspaceSSHGatewayInfo{
+				Enabled: true, Host: "ssh.example.test", Port: 2222,
+				HostPublicKey: hostPublicKey, HostKeyFingerprint: ssh.FingerprintSHA256(signer.PublicKey()),
+			}},
+			wantErr: "alias suffix is required",
+		},
+		{
+			name: "GatewayInvalidHostKey",
+			response: codersdk.SSHConfigResponse{WorkspaceSSHGateway: &codersdk.WorkspaceSSHGatewayInfo{
+				Enabled: true, Host: "ssh.example.test", Port: 2222,
+				HostPublicKey: "not-a-public-key", HostKeyFingerprint: "SHA256:invalid", AliasSuffix: "coder",
+			}},
+			wantErr: "host public key",
+		},
+		{
+			name: "GatewayFingerprintMismatch",
+			response: codersdk.SSHConfigResponse{WorkspaceSSHGateway: &codersdk.WorkspaceSSHGatewayInfo{
+				Enabled: true, Host: "ssh.example.test", Port: 2222,
+				HostPublicKey: hostPublicKey, HostKeyFingerprint: "SHA256:invalid", AliasSuffix: "coder",
+			}},
+			wantErr: "fingerprint does not match",
 		},
 		{
 			name:     "PrefixUnsafe",
@@ -424,6 +478,100 @@ func TestSSHConfigResponse_Validate(t *testing.T) {
 				return
 			}
 			require.NoError(t, err)
+		})
+	}
+}
+
+func TestDeploymentValues_Validate_WorkspaceSSHGateway(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name    string
+		mutate  func(*codersdk.WorkspaceSSHGatewayConfig)
+		wantErr string
+	}{
+		{name: "Valid"},
+		{name: "InvalidListenAddress", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.ListenAddress = "127.0.0.1"
+		}, wantErr: "listen address"},
+		{name: "MissingAdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.AdvertiseHost = ""
+		}, wantErr: "advertise host"},
+		{name: "InvalidAdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.AdvertiseHost = "ssh.example.test extra"
+		}, wantErr: "advertise host"},
+		{name: "IPv4AdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.AdvertiseHost = "192.0.2.10"
+		}},
+		{name: "IPv6AdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.AdvertiseHost = "2001:db8::10"
+		}},
+		{name: "PunycodeAdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.AdvertiseHost = "xn--fiqs8s.example"
+		}},
+		{name: "AdvertiseHostWithScheme", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.AdvertiseHost = "ssh://gateway.example.test"
+		}, wantErr: "advertise host"},
+		{name: "AdvertiseHostWithPort", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.AdvertiseHost = "gateway.example.test:2222"
+		}, wantErr: "advertise host"},
+		{name: "AdvertiseHostWithPath", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.AdvertiseHost = "gateway.example.test/path"
+		}, wantErr: "advertise host"},
+		{name: "AdvertiseHostWithUserInfo", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.AdvertiseHost = "user@gateway.example.test"
+		}, wantErr: "advertise host"},
+		{name: "AdvertiseHostWithWildcard", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.AdvertiseHost = "*.example.test"
+		}, wantErr: "advertise host"},
+		{name: "AdvertiseHostWithPercentExpansion", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.AdvertiseHost = "%n"
+		}, wantErr: "advertise host"},
+		{name: "IPv6AdvertiseHostWithZone", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.AdvertiseHost = "fe80::1%eth0"
+		}, wantErr: "advertise host"},
+		{name: "UnicodeAdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.AdvertiseHost = "中国.example"
+		}, wantErr: "advertise host"},
+		{name: "InvalidAdvertisePort", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.AdvertisePort = 65536
+		}, wantErr: "advertise port"},
+		{name: "MissingHostKeyFile", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.HostKeyFile = ""
+		}, wantErr: "host key file"},
+		{name: "InvalidCodexBaseURL", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.CodexBaseURL = "/v1"
+		}, wantErr: "Codex base URL"},
+		{name: "MissingCodexAPIKey", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.CodexAPIKey = ""
+		}, wantErr: "Codex API key"},
+		{name: "MissingCodexModel", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+			config.CodexModel = ""
+		}, wantErr: "Codex model"},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			values := &codersdk.DeploymentValues{}
+			options := values.Options()
+			require.NoError(t, options.SetDefaults())
+			values.WorkspaceSSHGateway.Enabled = true
+			values.WorkspaceSSHGateway.AdvertiseHost = "ssh.example.test"
+			values.WorkspaceSSHGateway.HostKeyFile = "/run/secrets/workspace-ssh-host-key"
+			values.WorkspaceSSHGateway.CodexBaseURL = "https://responses.example.test/v1"
+			values.WorkspaceSSHGateway.CodexAPIKey = "test-only-api-key"
+			values.WorkspaceSSHGateway.CodexModel = "gpt-test"
+			if test.mutate != nil {
+				test.mutate(&values.WorkspaceSSHGateway)
+			}
+
+			err := values.Validate()
+			if test.wantErr == "" {
+				require.NoError(t, err)
+				return
+			}
+			require.ErrorContains(t, err, test.wantErr)
 		})
 	}
 }

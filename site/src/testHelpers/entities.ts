@@ -3871,6 +3871,31 @@ export const MockDeploymentSSH: TypesGen.SSHConfigResponse = {
 	hostname_suffix: "coder",
 };
 
+const MockWorkspaceSSHGateway: TypesGen.WorkspaceSSHGatewayInfo = {
+	enabled: true,
+	host: "ssh.coder.example.com",
+	port: 2222,
+	host_public_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAITest",
+	host_key_fingerprint: "SHA256:workspace-ssh-gateway-test",
+	alias_suffix: "ssh.coder",
+	chatgpt_desktop_available: true,
+};
+
+export const MockDeploymentWorkspaceSSH: TypesGen.SSHConfigResponse = {
+	...MockDeploymentSSH,
+	workspace_ssh_gateway: MockWorkspaceSSHGateway,
+};
+
+export const MockWorkspaceSSHKey: TypesGen.WorkspaceSSHKey = {
+	id: "e7167a72-18a2-4f8e-86de-49c55dc539a4",
+	user_id: MockUserOwner.id,
+	organization_id: MockWorkspace.organization_id,
+	device_name: "开发笔记本",
+	public_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDevice",
+	fingerprint: "SHA256:workspace-ssh-device-test",
+	created_at: "2026-09-08T00:00:00Z",
+};
+
 export const MockWorkspaceAgentLogs: TypesGen.WorkspaceAgentLog[] = [
 	{
 		id: 166663,

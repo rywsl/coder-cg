@@ -30,7 +30,7 @@ coder {{version}}
 {{- "\n" }}
 {{- end }}
 {{- range $index, $group := optionGroups . }}
-{{ with $group.Name }} {{- print $group.Name " Options" | prettyHeader }} {{ else -}} {{ prettyHeader "Options"}}{{- end -}}
+{{ with $group.Name }} {{- print $group.Name " Options" | prettyHeader }} {{- else -}} {{ prettyHeader "Options"}}{{- end -}}
 {{- with $group.Description }}
 {{ formatGroupDescription . }}
 {{- else }}

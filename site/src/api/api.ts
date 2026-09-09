@@ -2463,6 +2463,53 @@ class ApiMethods {
 		return response.data;
 	};
 
+	getWorkspaceSSHKeys = async (
+		organization: string,
+	): Promise<TypesGen.WorkspaceSSHKey[]> => {
+		const response = await this.axios.get(
+			`/api/v2/organizations/${encodeURIComponent(organization)}/workspace-ssh-keys`,
+		);
+		return response.data;
+	};
+
+	createWorkspaceSSHKey = async (
+		organization: string,
+		request: TypesGen.CreateWorkspaceSSHKeyRequest,
+	): Promise<TypesGen.WorkspaceSSHKey> => {
+		const response = await this.axios.post(
+			`/api/v2/organizations/${encodeURIComponent(organization)}/workspace-ssh-keys`,
+			request,
+		);
+		return response.data;
+	};
+
+	deleteWorkspaceSSHKey = async (
+		organization: string,
+		keyID: string,
+	): Promise<void> => {
+		await this.axios.delete(
+			`/api/v2/organizations/${encodeURIComponent(organization)}/workspace-ssh-keys/${encodeURIComponent(keyID)}`,
+		);
+	};
+
+	createWorkspaceSSHBootstrap = async (
+		agentID: string,
+	): Promise<TypesGen.WorkspaceSSHBootstrapResponse> => {
+		const response = await this.axios.post(
+			`/api/v2/workspaceagents/${encodeURIComponent(agentID)}/workspace-ssh-bootstrap`,
+		);
+		return response.data;
+	};
+
+	getWorkspaceSSHEnrollmentStatus = async (
+		enrollmentID: string,
+	): Promise<TypesGen.WorkspaceSSHEnrollmentStatusResponse> => {
+		const response = await this.axios.get(
+			`/api/v2/workspace-ssh/enrollments/${encodeURIComponent(enrollmentID)}`,
+		);
+		return response.data;
+	};
+
 	getDeploymentConfig = async (): Promise<DeploymentConfig> => {
 		const response = await this.axios.get("/api/v2/deployment/config");
 		return response.data;

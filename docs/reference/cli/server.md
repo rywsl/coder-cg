@@ -2175,3 +2175,162 @@ Disable the template builder feature for guided template creation. When disabled
 | Default     | <code>registry.coder.com</code>                   |
 
 The module registry host the template builder uses for module source paths (for example, "registry.coder.com" or "mirror.internal:8443"). An http(s):// scheme and trailing slash are stripped; a path, query, fragment, or credentials is rejected.
+
+### --workspace-ssh-gateway-enabled
+
+|             |                                                     |
+|-------------|-----------------------------------------------------|
+| Type        | <code>bool</code>                                   |
+| Environment | <code>$CODER_WORKSPACE_SSH_GATEWAY_ENABLED</code>   |
+| YAML        | <code>networking.workspaceSSHGateway.enabled</code> |
+| Default     | <code>false</code>                                  |
+
+Whether to accept system OpenSSH connections and proxy them to workspace agents.
+
+### --listen-address
+
+|             |                                                           |
+|-------------|-----------------------------------------------------------|
+| Type        | <code>string</code>                                       |
+| Environment | <code>$CODER_WORKSPACE_SSH_GATEWAY_LISTEN_ADDRESS</code>  |
+| YAML        | <code>networking.workspaceSSHGateway.listenAddress</code> |
+| Default     | <code>0.0.0.0:2222</code>                                 |
+
+TCP address on which the workspace SSH gateway listens.
+
+### --advertise-host
+
+|             |                                                           |
+|-------------|-----------------------------------------------------------|
+| Type        | <code>string</code>                                       |
+| Environment | <code>$CODER_WORKSPACE_SSH_GATEWAY_ADVERTISE_HOST</code>  |
+| YAML        | <code>networking.workspaceSSHGateway.advertiseHost</code> |
+
+Public DNS name or IP address used by SSH clients.
+
+### --advertise-port
+
+|             |                                                           |
+|-------------|-----------------------------------------------------------|
+| Type        | <code>int</code>                                          |
+| Environment | <code>$CODER_WORKSPACE_SSH_GATEWAY_ADVERTISE_PORT</code>  |
+| YAML        | <code>networking.workspaceSSHGateway.advertisePort</code> |
+| Default     | <code>2222</code>                                         |
+
+Public TCP port used by SSH clients.
+
+### --host-key-file
+
+|             |                                                         |
+|-------------|---------------------------------------------------------|
+| Type        | <code>string</code>                                     |
+| Environment | <code>$CODER_WORKSPACE_SSH_GATEWAY_HOST_KEY_FILE</code> |
+| YAML        | <code>networking.workspaceSSHGateway.hostKeyFile</code> |
+
+Path to an Ed25519 private host key shared by every coderd replica.
+
+### --codex-base-url
+
+|             |                                                          |
+|-------------|----------------------------------------------------------|
+| Type        | <code>string</code>                                      |
+| Environment | <code>$CODER_WORKSPACE_SSH_GATEWAY_CODEX_BASE_URL</code> |
+| YAML        | <code>networking.workspaceSSHGateway.codexBaseURL</code> |
+
+Base URL of the OpenAI Responses compatible provider used by remote Codex.
+
+### --codex-api-key
+
+|             |                                                         |
+|-------------|---------------------------------------------------------|
+| Type        | <code>string</code>                                     |
+| Environment | <code>$CODER_WORKSPACE_SSH_GATEWAY_CODEX_API_KEY</code> |
+
+API key placed only in the remote codex app-server process environment.
+
+### --codex-model
+
+|             |                                                        |
+|-------------|--------------------------------------------------------|
+| Type        | <code>string</code>                                    |
+| Environment | <code>$CODER_WORKSPACE_SSH_GATEWAY_CODEX_MODEL</code>  |
+| YAML        | <code>networking.workspaceSSHGateway.codexModel</code> |
+
+Model selected for remote codex app-server processes.
+
+### --workspace-ssh-gateway-max-connections
+
+|             |                                                            |
+|-------------|------------------------------------------------------------|
+| Type        | <code>int</code>                                           |
+| Environment | <code>$CODER_WORKSPACE_SSH_GATEWAY_MAX_CONNECTIONS</code>  |
+| YAML        | <code>networking.workspaceSSHGateway.maxConnections</code> |
+| Default     | <code>1024</code>                                          |
+
+Maximum total number of accepted workspace SSH gateway connections.
+
+### --workspace-ssh-gateway-max-pending-connections
+
+|             |                                                                   |
+|-------------|-------------------------------------------------------------------|
+| Type        | <code>int</code>                                                  |
+| Environment | <code>$CODER_WORKSPACE_SSH_GATEWAY_MAX_PENDING_CONNECTIONS</code> |
+| YAML        | <code>networking.workspaceSSHGateway.maxPendingConnections</code> |
+| Default     | <code>128</code>                                                  |
+
+Maximum number of connections awaiting workspace SSH gateway authentication.
+
+### --workspace-ssh-gateway-max-pending-connections-per-ip
+
+|             |                                                                          |
+|-------------|--------------------------------------------------------------------------|
+| Type        | <code>int</code>                                                         |
+| Environment | <code>$CODER_WORKSPACE_SSH_GATEWAY_MAX_PENDING_CONNECTIONS_PER_IP</code> |
+| YAML        | <code>networking.workspaceSSHGateway.maxPendingConnectionsPerIP</code>   |
+| Default     | <code>16</code>                                                          |
+
+Maximum number of connections awaiting authentication from one source IP.
+
+### --workspace-ssh-gateway-max-connections-per-user
+
+|             |                                                                    |
+|-------------|--------------------------------------------------------------------|
+| Type        | <code>int</code>                                                   |
+| Environment | <code>$CODER_WORKSPACE_SSH_GATEWAY_MAX_CONNECTIONS_PER_USER</code> |
+| YAML        | <code>networking.workspaceSSHGateway.maxConnectionsPerUser</code>  |
+| Default     | <code>32</code>                                                    |
+
+Maximum number of authenticated gateway connections for one user.
+
+### --workspace-ssh-gateway-max-channels-per-connection
+
+|             |                                                                       |
+|-------------|-----------------------------------------------------------------------|
+| Type        | <code>int</code>                                                      |
+| Environment | <code>$CODER_WORKSPACE_SSH_GATEWAY_MAX_CHANNELS_PER_CONNECTION</code> |
+| YAML        | <code>networking.workspaceSSHGateway.maxChannelsPerConnection</code>  |
+| Default     | <code>64</code>                                                       |
+
+Maximum number of simultaneous SSH channels in either direction for one connection.
+
+### --workspace-ssh-gateway-auth-attempts-per-minute
+
+|             |                                                                    |
+|-------------|--------------------------------------------------------------------|
+| Type        | <code>int</code>                                                   |
+| Environment | <code>$CODER_WORKSPACE_SSH_GATEWAY_AUTH_ATTEMPTS_PER_MINUTE</code> |
+| YAML        | <code>networking.workspaceSSHGateway.authAttemptsPerMinute</code>  |
+| Default     | <code>120</code>                                                   |
+
+Sustained public key authentication attempt rate allowed for one source IP.
+
+### --workspace-ssh-gateway-auth-attempts-burst
+
+|             |                                                               |
+|-------------|---------------------------------------------------------------|
+| Type        | <code>int</code>                                              |
+| Environment | <code>$CODER_WORKSPACE_SSH_GATEWAY_AUTH_ATTEMPTS_BURST</code> |
+| YAML        | <code>networking.workspaceSSHGateway.authAttemptsBurst</code> |
+| Default     | <code>20</code>                                               |
+
+Maximum burst of public key authentication attempts allowed for one source IP.
