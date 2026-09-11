@@ -45,7 +45,7 @@ export const Page: Story = {
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
 
-		await expect(canvas.getByRole("cell", { name: "GitHub" })).toBeVisible();
+		await expect(canvas.getByRole("cell", { name: "0000-1111" })).toBeVisible();
 		await expect(
 			canvas.queryByRole("link", { name: "Start trial for free" }),
 		).not.toBeInTheDocument();

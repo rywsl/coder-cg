@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within } from "storybook/test";
+import { expect, userEvent, waitFor, within } from "storybook/test";
 import { reactRouterParameters } from "storybook-addon-remix-react-router";
 import { AuthProvider } from "#/contexts/auth/AuthProvider";
 import { DashboardContext } from "#/modules/dashboard/DashboardProvider";
@@ -70,9 +70,9 @@ export const ForAdmin: Story = {
 			canvas.getByRole("button", { name: "Admin settings" }),
 		);
 		const body = within(canvasElement.ownerDocument.body);
-		await expect(
-			body.getByRole("menuitem", { name: "Deployment" }),
-		).toBeVisible();
+		await waitFor(() => {
+			expect(body.getByRole("menuitem", { name: "Deployment" })).toBeVisible();
+		});
 		await expect(
 			body.queryByRole("menuitem", { name: /audit/i }),
 		).not.toBeInTheDocument();
