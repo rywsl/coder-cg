@@ -262,7 +262,7 @@ export const WorkspaceSSHGatewaySection: FC<
 					</AlertDescription>
 				</Alert>
 			)}
-			{error !== undefined && <ErrorAlert error={error} />}
+			{error != null && <ErrorAlert error={error} />}
 			{status.configured && (
 				<div className="grid gap-3 text-sm sm:grid-cols-2">
 					<div>

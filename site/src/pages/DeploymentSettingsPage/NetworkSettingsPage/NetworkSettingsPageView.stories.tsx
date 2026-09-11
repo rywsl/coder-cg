@@ -97,6 +97,7 @@ const meta: Meta<typeof NetworkSettingsPageView> = {
 			},
 		],
 		gateway: stoppedGateway,
+		gatewayError: null,
 		isGatewayLoading: false,
 		isGatewaySaving: false,
 		isGatewayStarting: false,
@@ -113,6 +114,7 @@ type Story = StoryObj<typeof NetworkSettingsPageView>;
 export const Stopped: Story = {
 	play: async ({ canvasElement, args }) => {
 		const canvas = within(canvasElement);
+		await expect(canvas.queryByRole("alert")).not.toBeInTheDocument();
 		const docsLinks = canvas.getAllByRole("link", { name: /View docs/ });
 		await expect(docsLinks).toHaveLength(2);
 		await expect(docsLinks[0]).toHaveAttribute(

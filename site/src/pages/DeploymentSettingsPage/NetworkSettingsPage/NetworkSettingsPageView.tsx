@@ -101,7 +101,7 @@ export const NetworkSettingsPageView: FC<NetworkSettingsPageViewProps> = ({
 					onStart={onStartGateway}
 					onStop={onStopGateway}
 				/>
-			) : gatewayError !== undefined ? (
+			) : gatewayError != null ? (
 				<ErrorAlert error={gatewayError} />
 			) : null}
 			<div>
