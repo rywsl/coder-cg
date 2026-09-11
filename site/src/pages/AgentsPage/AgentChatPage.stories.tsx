@@ -3489,6 +3489,13 @@ export const SlashCompactYieldsToPersonalSkill: Story = {
 			).toBeVisible();
 		});
 		await userEvent.keyboard("{Enter}");
+		await waitFor(() => {
+			expect(
+				within(document.body).queryByRole("option", {
+					name: /personal compact skill/i,
+				}),
+			).not.toBeInTheDocument();
+		});
 		await userEvent.keyboard("{Enter}");
 
 		await waitFor(() => {
