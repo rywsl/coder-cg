@@ -1157,7 +1157,6 @@ func New(options *Options) *API {
 		httpmw.WithProfilingLabels,
 		tracing.StatusWriterMiddleware,
 		options.DeploymentValues.HTTPCookies.Middleware,
-		i18n.Middleware,
 		tracing.Middleware(api.TracerProvider, tracing.DefaultRoutePatterns, "coderd"),
 		httpmw.AttachRequestID,
 		httpmw.ExtractRealIP(api.RealIPConfig),
@@ -1191,6 +1190,7 @@ func New(options *Options) *API {
 		// Workspace apps do their own auth and CORS and must be BEFORE the auth
 		// and CORS middleware.
 		api.workspaceAppServer.HandleSubdomain(apiRateLimiter),
+		i18n.Middleware,
 		cors,
 		// This header stops a browser from trying to MIME-sniff the content type and
 		// forces it to stick with the declared content-type. This is the only valid

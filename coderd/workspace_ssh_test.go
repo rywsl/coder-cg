@@ -105,7 +105,7 @@ printf '%s' "$CODER_CODEX_API_KEY" > "$FAKE_CODEX_API_KEY_FILE"
 			"FAKE_CODEX_API_KEY_FILE":   fakeCodexAPIKeyFile,
 		}
 	})
-	_ = coderdtest.NewWorkspaceAgentWaiter(t, ownerClient, workspaceBuild.Workspace.ID).Wait()
+	coderdtest.NewWorkspaceAgentWaiter(t, ownerClient, workspaceBuild.Workspace.ID).WaitFor(coderdtest.AgentsReady)
 	projectPath := "/home/coder/项目 工作区"
 	setWorkspaceSSHAgentState(t, db, agent.ID, projectPath, workspaceSSHAgentState{ready: true, connected: true})
 
@@ -295,6 +295,15 @@ printf '%s' "$CODER_CODEX_API_KEY" > "$FAKE_CODEX_API_KEY_FILE"
 		require.NoError(t, err)
 		require.NoError(t, client.Close())
 	})
+
+	// Complete an owner session even when only a child test is selected.
+	auditClient, err := dialWorkspaceSSHGateway(listenAddress, alias, ownerKey, hostSigner.PublicKey())
+	require.NoError(t, err)
+	defer auditClient.Close()
+	auditSession, err := auditClient.NewSession()
+	require.NoError(t, err)
+	require.NoError(t, auditSession.Run("true"))
+	require.NoError(t, auditClient.Close())
 
 	require.Eventually(t, func() bool {
 		return connectionLogger.Contains(t, database.UpsertConnectionLogParams{

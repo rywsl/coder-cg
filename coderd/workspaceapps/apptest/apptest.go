@@ -2268,6 +2268,7 @@ func Run(t *testing.T, appHostIsPrimary bool, factory DeploymentFactory) {
 		appDetails := setupProxyTest(t, &DeploymentOptions{
 			headers: http.Header{
 				"X-Foobar":                         []string{"baz"},
+				"Content-Language":                 []string{"fr"},
 				"Access-Control-Allow-Origin":      []string{"http://localhost"},
 				"access-control-allow-origin":      []string{"http://localhost"},
 				"Access-Control-Allow-Credentials": []string{"true"},
@@ -2317,6 +2318,7 @@ func Run(t *testing.T, appHostIsPrimary bool, factory DeploymentFactory) {
 		}
 		require.Equal(t, []string{"Origin", "X-Foobar"}, deduped)
 		require.Equal(t, []string{"baz"}, resp.Header.Values("X-Foobar"))
+		require.Equal(t, []string{"fr"}, resp.Header.Values("Content-Language"))
 	})
 
 	t.Run("ReportStats", func(t *testing.T) {
