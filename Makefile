@@ -25,7 +25,8 @@ SHELL := bash
 # duration. Ad-hoc usage: make MAKE_TIMED=1 test
 ifdef MAKE_TIMED
 SHELL := $(CURDIR)/scripts/lib/timed-shell.sh
-.SHELLFLAGS = $@ -ceu
+# Prefix target names so Make does not parse names like test as shell builtins.
+.SHELLFLAGS = target/$@ -ceu
 export MAKE_TIMED
 export MAKE_LOGDIR
 endif
