@@ -8,6 +8,7 @@ import {
 import { type FC, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { Link } from "react-router";
 import { toast } from "sonner";
 import { getErrorDetail, getErrorMessage, isApiError } from "#/api/errors";
 import { deploymentSSHConfig } from "#/api/queries/deployment";
@@ -54,6 +55,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
+import { useAuthenticated } from "#/hooks/useAuthenticated";
 
 const CHATGPT_DESKTOP_DOWNLOAD_URL = "https://openai.com/chatgpt/desktop/";
 const CHATGPT_CONNECTIONS_DEEP_LINK = "codex://settings/connections";
@@ -93,6 +95,7 @@ export const ChatGPTDesktopButton: FC<ChatGPTDesktopButtonProps> = ({
 }) => {
 	const { t: tI18n } = useTranslation("workspaces");
 	const queryClient = useQueryClient();
+	const { permissions } = useAuthenticated();
 	const [setupOpen, setSetupOpen] = useState(false);
 	const [setupPending, setSetupPending] = useState(false);
 	const [fallbackOpen, setFallbackOpen] = useState(false);
@@ -111,7 +114,10 @@ export const ChatGPTDesktopButton: FC<ChatGPTDesktopButtonProps> = ({
 		gateway?.enabled && gateway.chatgpt_desktop_available,
 	);
 	const keysQuery = useQuery({
-		...workspaceSSHKeys(workspace.organization_name, gatewayAvailable),
+		...workspaceSSHKeys(
+			workspace.organization_name,
+			deploymentSSHQuery.isSuccess,
+		),
 	});
 	const enrollmentQuery = useQuery(
 		workspaceSSHEnrollmentStatus(
@@ -182,14 +188,6 @@ export const ChatGPTDesktopButton: FC<ChatGPTDesktopButtonProps> = ({
 		workspace.organization_name,
 	]);
 
-	if (
-		!deploymentSSHQuery.isLoading &&
-		!deploymentSSHQuery.error &&
-		!gatewayAvailable
-	) {
-		return null;
-	}
-
 	const alias = gateway
 		? `${agent.name}.${workspace.name}.${workspace.owner_name}.${gateway.alias_suffix}`
 		: "";
@@ -204,7 +202,11 @@ export const ChatGPTDesktopButton: FC<ChatGPTDesktopButtonProps> = ({
 	const isLoading = deploymentSSHQuery.isLoading || keysQuery.isLoading;
 	const error = deploymentSSHQuery.error ?? keysQuery.error;
 	const setupDisabled =
-		isLoading || Boolean(error) || agentUnavailable || browserOnly;
+		isLoading ||
+		Boolean(error) ||
+		!gatewayAvailable ||
+		agentUnavailable ||
+		browserOnly;
 	const managementDisabled = isLoading || Boolean(error);
 
 	const beginSetup = () => {
@@ -243,17 +245,21 @@ export const ChatGPTDesktopButton: FC<ChatGPTDesktopButtonProps> = ({
 		? isApiError(error)
 			? getErrorMessage(error, connectionUnavailableMessage)
 			: connectionUnavailableMessage
-		: browserOnly
+		: !gatewayAvailable && !isLoading
 			? tI18n(
-					"resources.ChatGPTDesktopButton.ChatGPTDesktopButton.browser_only_disables_chatgpt_desktop_connections_22b66fd7",
+					"resources.ChatGPTDesktopButton.ChatGPTDesktopButton.gateway_not_enabled",
 				)
-			: agentUnavailable
+			: browserOnly
 				? tI18n(
-						"resources.ChatGPTDesktopButton.ChatGPTDesktopButton.chatgpt_desktop_requires_a_running_ready_linux_a_3b60630f",
+						"resources.ChatGPTDesktopButton.ChatGPTDesktopButton.browser_only_disables_chatgpt_desktop_connections_22b66fd7",
 					)
-				: tI18n(
-						"resources.ChatGPTDesktopButton.ChatGPTDesktopButton.loading_chatgpt_desktop_connection_8f33f012",
-					);
+				: agentUnavailable
+					? tI18n(
+							"resources.ChatGPTDesktopButton.ChatGPTDesktopButton.chatgpt_desktop_requires_a_running_ready_linux_a_3b60630f",
+						)
+					: tI18n(
+							"resources.ChatGPTDesktopButton.ChatGPTDesktopButton.loading_chatgpt_desktop_connection_8f33f012",
+						);
 
 	return (
 		<>
@@ -301,6 +307,16 @@ export const ChatGPTDesktopButton: FC<ChatGPTDesktopButtonProps> = ({
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end" className="min-w-64">
+						{permissions.editDeploymentConfig && (
+							<DropdownMenuItem asChild>
+								<Link to="/deployment/network">
+									<ExternalLinkIcon />
+									{tI18n(
+										"resources.ChatGPTDesktopButton.ChatGPTDesktopButton.configure_gateway",
+									)}
+								</Link>
+							</DropdownMenuItem>
+						)}
 						<DropdownMenuItem disabled={setupDisabled} onSelect={beginSetup}>
 							<LaptopIcon />
 							{tI18n(

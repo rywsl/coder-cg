@@ -4,11 +4,9 @@ import { useTranslation } from "react-i18next";
 import { NavLink, useLocation } from "react-router";
 import { API } from "#/api/api";
 import type * as TypesGen from "#/api/typesGenerated";
-import { Badge } from "#/components/Badge/Badge";
 import { Button } from "#/components/Button/Button";
 import { ProductLogo } from "#/components/Icons/ProductLogo";
 import { NotificationsInbox } from "#/modules/notifications/NotificationsInbox/NotificationsInbox";
-import { getPrereleaseFlag } from "#/utils/buildInfo";
 import {
 	type AdminSettingsPermissions,
 	canViewAdminSettings,
@@ -43,50 +41,13 @@ export const NavbarView: FC<NavbarViewProps> = ({
 	adminPermissions,
 	canCreateChat,
 }) => {
-	const prerelease = getPrereleaseFlag(buildInfo);
-
 	return (
-		<div
-			className={cn(
-				"sticky top-0 bg-surface-primary z-40 border-0 border-b border-solid h-[72px] min-h-[72px] flex items-center leading-none px-6",
-				prerelease &&
-					cn(
-						"[&:before]:content-[''] [&:before]:absolute [&:before]:left-0",
-						"[&:before]:right-0 [&:before]:h-1 [&:before]:top-0",
-						"[&:before]:bg-[repeating-linear-gradient(-45deg,transparent,transparent_4px,hsl(var(--stripe-color)/0.5)_4px,hsl(var(--stripe-color)/0.5)_8px)]",
-					),
-			)}
-			style={{
-				"--stripe-color":
-					prerelease === "rc"
-						? "var(--border-sky)"
-						: prerelease === "devel"
-							? "var(--content-warning)"
-							: undefined,
-			}}
-		>
+		<div className="sticky top-0 bg-surface-primary z-40 border-0 border-b border-solid h-[72px] min-h-[72px] flex items-center leading-none px-6">
 			<NavLink to="/workspaces">
 				<ProductLogo className="h-7" />
 			</NavLink>
 
 			<NavItems className="ml-4 hidden md:flex" canCreateChat={canCreateChat} />
-
-			{prerelease && buildInfo?.version && (
-				<a
-					href={buildInfo.external_url}
-					target="_blank"
-					rel="noreferrer"
-					className="absolute top-0 left-1/2 -translate-x-1/2 no-underline z-10"
-				>
-					<Badge
-						variant={prerelease === "rc" ? "info" : "warning"}
-						size="sm"
-						className="font-mono rounded-t-none border-t-0"
-					>
-						{buildInfo.version}
-					</Badge>
-				</a>
-			)}
 
 			<div className="flex items-center gap-3 ml-auto">
 				{supportLinks.filter(isNavbarLink).map((link) => (

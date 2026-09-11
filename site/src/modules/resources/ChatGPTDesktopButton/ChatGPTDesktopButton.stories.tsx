@@ -1,16 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, spyOn, userEvent, waitFor, within } from "storybook/test";
+import { reactRouterParameters } from "storybook-addon-remix-react-router";
 import { API } from "#/api/api";
 import { deploymentSSHConfigQueryKey } from "#/api/queries/deployment";
 import { workspaceSSHKeysQueryKey } from "#/api/queries/workspaceSSH";
 import type { WorkspaceSSHBootstrapResponse } from "#/api/typesGenerated";
 import {
 	MockDeploymentWorkspaceSSH,
+	MockNoPermissions,
+	MockUserMember,
+	MockUserOwner,
 	MockWorkspace,
 	MockWorkspaceAgentReady,
 	MockWorkspaceSSHKey,
 } from "#/testHelpers/entities";
-import { withToaster } from "#/testHelpers/storybook";
+import { withAuthProvider, withToaster } from "#/testHelpers/storybook";
 import {
 	ChatGPTDesktopButton,
 	chatGPTDesktopDeepLink,
@@ -53,7 +57,7 @@ const enrolledKey = {
 const meta: Meta<typeof ChatGPTDesktopButton> = {
 	title: "modules/resources/ChatGPTDesktopButton",
 	component: ChatGPTDesktopButton,
-	decorators: [withToaster],
+	decorators: [withAuthProvider, withToaster],
 	globals: { locale: "zh-CN" },
 	args: {
 		agent: workspaceWithUnicodePath,
@@ -65,6 +69,7 @@ const meta: Meta<typeof ChatGPTDesktopButton> = {
 		openDeepLink: fn(),
 	},
 	parameters: {
+		user: MockUserMember,
 		queries: [
 			{
 				key: deploymentSSHConfigQueryKey,
@@ -80,6 +85,92 @@ const meta: Meta<typeof ChatGPTDesktopButton> = {
 
 export default meta;
 type Story = StoryObj<typeof ChatGPTDesktopButton>;
+
+export const GatewayStopped: Story = {
+	parameters: {
+		user: MockUserOwner,
+		permissions: { ...MockNoPermissions, editDeploymentConfig: true },
+		reactRouter: reactRouterParameters({
+			location: { path: "/" },
+			routing: [
+				{ path: "/", useStoryElement: true },
+				{
+					path: "/deployment/network",
+					element: <h1>工作区 SSH 网关</h1>,
+				},
+			],
+		}),
+		queries: [
+			{
+				key: deploymentSSHConfigQueryKey,
+				data: {
+					...MockDeploymentWorkspaceSSH,
+					workspace_ssh_gateway: {
+						...MockDeploymentWorkspaceSSH.workspace_ssh_gateway,
+						enabled: false,
+						chatgpt_desktop_available: false,
+					},
+				},
+			},
+			{
+				key: workspaceSSHKeysQueryKey(MockWorkspace.organization_name),
+				data: [workspaceSSHKey],
+			},
+		],
+	},
+	play: async ({ canvasElement, args }) => {
+		const canvas = within(canvasElement);
+		const button = await canvas.findByRole("button", {
+			name: "在 ChatGPT 中打开",
+		});
+		await expect(button).toHaveAttribute("aria-disabled", "true");
+		await userEvent.hover(button);
+		await expect(
+			await within(document.body).findByRole("tooltip"),
+		).toHaveTextContent("工作区 SSH 网关尚未启用，请联系管理员配置并启动。");
+		await userEvent.click(button);
+		await expect(args.openDeepLink).not.toHaveBeenCalled();
+		await userEvent.click(
+			canvas.getByRole("button", { name: "管理 ChatGPT Desktop 连接" }),
+		);
+		const body = within(document.body);
+		await expect(
+			body.getByRole("menuitem", { name: "配置工作区 SSH 网关" }),
+		).toHaveAttribute("href", "/deployment/network");
+		await expect(
+			body.getByRole("menuitem", { name: "撤销 开发笔记本" }),
+		).not.toHaveAttribute("data-disabled");
+		await userEvent.click(
+			body.getByRole("menuitem", { name: "配置工作区 SSH 网关" }),
+		);
+		await expect(
+			await canvas.findByRole("heading", { name: "工作区 SSH 网关" }),
+		).toBeVisible();
+	},
+};
+
+export const GatewayStoppedForMember: Story = {
+	...GatewayStopped,
+	parameters: {
+		...GatewayStopped.parameters,
+		user: MockUserMember,
+		permissions: MockNoPermissions,
+	},
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		await expect(
+			await canvas.findByRole("button", { name: "在 ChatGPT 中打开" }),
+		).toHaveAttribute("aria-disabled", "true");
+		await userEvent.click(
+			canvas.getByRole("button", { name: "管理 ChatGPT Desktop 连接" }),
+		);
+		await expect(
+			within(document.body).queryByRole("menuitem", {
+				name: "配置工作区 SSH 网关",
+			}),
+		).not.toBeInTheDocument();
+	},
+};
 
 export const Loading: Story = {
 	beforeEach: () => {

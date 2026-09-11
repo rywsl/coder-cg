@@ -374,6 +374,15 @@ export const DevelBuild: Story = {
 			external_url: "https://github.com/coder/coder/commit/abc123",
 		},
 	},
+	play: async ({ canvasElement, args }) => {
+		const canvas = within(canvasElement);
+		const version = args.buildInfo?.version ?? "";
+		await expect(canvas.queryByText(version)).not.toBeInTheDocument();
+		await userEvent.click(canvas.getByRole("button", { name: "User menu" }));
+		await waitFor(() => {
+			expect(within(document.body).getByText(version)).toBeVisible();
+		});
+	},
 };
 
 export const RcBuild: Story = {

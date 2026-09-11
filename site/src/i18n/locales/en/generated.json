@@ -6051,6 +6051,8 @@
 				"ChatGPTDesktopButton": {
 					"browser_only_disables_chatgpt_desktop_connections_22b66fd7": "Browser Only policy disables ChatGPT Desktop connections.",
 					"chatgpt_desktop_connection_is_unavailable_658f94d5": "ChatGPT Desktop connection is unavailable.",
+					"configure_gateway": "Configure workspace SSH gateway",
+					"gateway_not_enabled": "The workspace SSH gateway is not enabled. Ask an administrator to configure and start it.",
 					"chatgpt_desktop_did_not_open_28b8157a": "ChatGPT Desktop did not open",
 					"chatgpt_desktop_requires_a_running_ready_linux_a_3b60630f": "ChatGPT Desktop requires a running, ready Linux agent.",
 					"close_7d9eb7ac": "Close",
