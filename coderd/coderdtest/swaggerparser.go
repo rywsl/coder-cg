@@ -377,6 +377,11 @@ func assertSecurityDefined(t *testing.T, comment SwaggerComment) {
 		assert.Equal(t, "AIGatewayKey", comment.security, "@Security must be AIGatewayKey")
 		return
 	}
+	if comment.router == "/api/v2/workspace-ssh/enrollments/{enrollment}" && comment.method == "post" ||
+		comment.router == "/api/v2/workspace-ssh/enrollments/{enrollment}/script" {
+		assert.Equal(t, "Authorization", comment.security, "@Security must describe the enrollment bearer token")
+		return
+	}
 
 	assert.Containsf(t, authorizedSecurityTags, comment.security, "@Security must be either of these options: %v", authorizedSecurityTags)
 }

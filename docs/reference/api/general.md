@@ -874,7 +874,7 @@ curl -X GET http://coder-server:8080/api/v2/deployment/user-secrets/capabilities
 
 To perform this operation, you must be authenticated. [Learn more](authentication.md).
 
-## Get workspace SSH gateway configuration
+## Get workspace SSH gateway
 
 ### Code samples
 
@@ -926,7 +926,7 @@ curl -X GET http://coder-server:8080/api/v2/deployment/workspace-ssh-gateway \
 
 To perform this operation, you must be authenticated. [Learn more](authentication.md).
 
-## Update workspace SSH gateway configuration
+## Update workspace SSH gateway
 
 ### Code samples
 

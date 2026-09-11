@@ -3918,7 +3918,7 @@ const docTemplate = `{
                 "tags": [
                     "General"
                 ],
-                "summary": "Get workspace SSH gateway configuration",
+                "summary": "Get workspace SSH gateway",
                 "operationId": "get-workspace-ssh-gateway",
                 "responses": {
                     "200": {
@@ -3944,7 +3944,7 @@ const docTemplate = `{
                 "tags": [
                     "General"
                 ],
-                "summary": "Update workspace SSH gateway configuration",
+                "summary": "Update workspace SSH gateway",
                 "operationId": "update-workspace-ssh-gateway",
                 "parameters": [
                     {
@@ -9470,7 +9470,7 @@ const docTemplate = `{
                 "tags": [
                     "SSH"
                 ],
-                "summary": "Register a workspace SSH key",
+                "summary": "Create workspace SSH key",
                 "operationId": "create-workspace-ssh-key",
                 "parameters": [
                     {
@@ -9510,7 +9510,7 @@ const docTemplate = `{
                 "tags": [
                     "SSH"
                 ],
-                "summary": "Delete a workspace SSH key",
+                "summary": "Delete workspace SSH key",
                 "operationId": "delete-workspace-ssh-key",
                 "parameters": [
                     {
@@ -14123,6 +14123,7 @@ const docTemplate = `{
                 ]
             },
             "post": {
+                "description": "Authenticate with a one-time enrollment token using the Bearer scheme in the Authorization header.",
                 "consumes": [
                     "application/json",
                     "application/x-www-form-urlencoded"
@@ -14133,7 +14134,7 @@ const docTemplate = `{
                 "tags": [
                     "SSH"
                 ],
-                "summary": "Complete a one-time workspace SSH key enrollment",
+                "summary": "Enroll workspace SSH key",
                 "operationId": "enroll-workspace-ssh-key",
                 "parameters": [
                     {
@@ -14142,13 +14143,6 @@ const docTemplate = `{
                         "description": "Enrollment ID",
                         "name": "enrollment",
                         "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Bearer enrollment token",
-                        "name": "Authorization",
-                        "in": "header",
                         "required": true
                     },
                     {
@@ -14168,18 +14162,24 @@ const docTemplate = `{
                             "$ref": "#/definitions/codersdk.WorkspaceSSHEnrollmentResponse"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
             }
         },
         "/api/v2/workspace-ssh/enrollments/{enrollment}/script": {
             "get": {
+                "description": "Authenticate with a one-time enrollment token using the Bearer scheme in the Authorization header.",
                 "produces": [
                     "text/plain"
                 ],
                 "tags": [
                     "SSH"
                 ],
-                "summary": "Get a one-time workspace SSH setup script",
+                "summary": "Get workspace SSH enrollment script",
                 "operationId": "get-workspace-ssh-enrollment-script",
                 "parameters": [
                     {
@@ -14188,13 +14188,6 @@ const docTemplate = `{
                         "description": "Enrollment ID",
                         "name": "enrollment",
                         "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Bearer enrollment token",
-                        "name": "Authorization",
-                        "in": "header",
                         "required": true
                     },
                     {
@@ -14212,7 +14205,12 @@ const docTemplate = `{
                             "type": "string"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
             }
         },
         "/api/v2/workspaceagents/aws-instance-identity": {
@@ -15196,7 +15194,7 @@ const docTemplate = `{
                 "tags": [
                     "SSH"
                 ],
-                "summary": "Create a workspace SSH bootstrap command",
+                "summary": "Create workspace SSH bootstrap",
                 "operationId": "create-workspace-ssh-bootstrap",
                 "parameters": [
                     {

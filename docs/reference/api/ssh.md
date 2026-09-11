@@ -67,7 +67,7 @@ Status Code **200**
 
 To perform this operation, you must be authenticated. [Learn more](authentication.md).
 
-## Register a workspace SSH key
+## Create workspace SSH key
 
 ### Code samples
 
@@ -122,7 +122,7 @@ curl -X POST http://coder-server:8080/api/v2/organizations/{organization}/worksp
 
 To perform this operation, you must be authenticated. [Learn more](authentication.md).
 
-## Delete a workspace SSH key
+## Delete workspace SSH key
 
 ### Code samples
 
@@ -189,7 +189,7 @@ curl -X GET http://coder-server:8080/api/v2/workspace-ssh/enrollments/{enrollmen
 
 To perform this operation, you must be authenticated. [Learn more](authentication.md).
 
-## Complete a one-time workspace SSH key enrollment
+## Enroll workspace SSH key
 
 ### Code samples
 
@@ -198,10 +198,12 @@ To perform this operation, you must be authenticated. [Learn more](authenticatio
 curl -X POST http://coder-server:8080/api/v2/workspace-ssh/enrollments/{enrollment} \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: string'
+  -H 'Authorization: API_KEY'
 ```
 
 `POST /api/v2/workspace-ssh/enrollments/{enrollment}`
+
+Authenticate with a one-time enrollment token using the Bearer scheme in the Authorization header.
 
 > Body parameter
 
@@ -220,11 +222,10 @@ public_key: string
 
 ### Parameters
 
-| Name            | In     | Type                                                                                     | Required | Description             |
-|-----------------|--------|------------------------------------------------------------------------------------------|----------|-------------------------|
-| `enrollment`    | path   | string(uuid)                                                                             | true     | Enrollment ID           |
-| `Authorization` | header | string                                                                                   | true     | Bearer enrollment token |
-| `body`          | body   | [codersdk.EnrollWorkspaceSSHKeyRequest](schemas.md#codersdkenrollworkspacesshkeyrequest) | true     | Key enrollment          |
+| Name         | In   | Type                                                                                     | Required | Description    |
+|--------------|------|------------------------------------------------------------------------------------------|----------|----------------|
+| `enrollment` | path | string(uuid)                                                                             | true     | Enrollment ID  |
+| `body`       | body | [codersdk.EnrollWorkspaceSSHKeyRequest](schemas.md#codersdkenrollworkspacesshkeyrequest) | true     | Key enrollment |
 
 ### Example responses
 
@@ -254,7 +255,9 @@ public_key: string
 |--------|--------------------------------------------------------------|-------------|----------------------------------------------------------------------------------------------|
 | 201    | [Created](https://tools.ietf.org/html/rfc7231#section-6.3.2) | Created     | [codersdk.WorkspaceSSHEnrollmentResponse](schemas.md#codersdkworkspacesshenrollmentresponse) |
 
-## Get a one-time workspace SSH setup script
+To perform this operation, you must be authenticated. [Learn more](authentication.md).
+
+## Get workspace SSH enrollment script
 
 ### Code samples
 
@@ -262,18 +265,19 @@ public_key: string
 # Example request using curl
 curl -X GET http://coder-server:8080/api/v2/workspace-ssh/enrollments/{enrollment}/script?platform=string \
   -H 'Accept: text/plain' \
-  -H 'Authorization: string'
+  -H 'Authorization: API_KEY'
 ```
 
 `GET /api/v2/workspace-ssh/enrollments/{enrollment}/script`
 
+Authenticate with a one-time enrollment token using the Bearer scheme in the Authorization header.
+
 ### Parameters
 
-| Name            | In     | Type         | Required | Description             |
-|-----------------|--------|--------------|----------|-------------------------|
-| `enrollment`    | path   | string(uuid) | true     | Enrollment ID           |
-| `Authorization` | header | string       | true     | Bearer enrollment token |
-| `platform`      | query  | string       | true     | bash or powershell      |
+| Name         | In    | Type         | Required | Description        |
+|--------------|-------|--------------|----------|--------------------|
+| `enrollment` | path  | string(uuid) | true     | Enrollment ID      |
+| `platform`   | query | string       | true     | bash or powershell |
 
 ### Responses
 
@@ -281,7 +285,9 @@ curl -X GET http://coder-server:8080/api/v2/workspace-ssh/enrollments/{enrollmen
 |--------|---------------------------------------------------------|-------------|--------|
 | 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | OK          | string |
 
-## Create a workspace SSH bootstrap command
+To perform this operation, you must be authenticated. [Learn more](authentication.md).
+
+## Create workspace SSH bootstrap
 
 ### Code samples
 

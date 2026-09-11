@@ -90,7 +90,7 @@ func (api *API) sshConfig(rw http.ResponseWriter, r *http.Request) {
 	httpapi.Write(r.Context(), rw, http.StatusOK, config)
 }
 
-// @Summary Get workspace SSH gateway configuration
+// @Summary Get workspace SSH gateway
 // @ID get-workspace-ssh-gateway
 // @Security CoderSessionToken
 // @Produce json
@@ -110,7 +110,7 @@ func (api *API) workspaceSSHGatewayStatus(rw http.ResponseWriter, r *http.Reques
 	httpapi.Write(r.Context(), rw, http.StatusOK, status)
 }
 
-// @Summary Update workspace SSH gateway configuration
+// @Summary Update workspace SSH gateway
 // @ID update-workspace-ssh-gateway
 // @Security CoderSessionToken
 // @Accept json

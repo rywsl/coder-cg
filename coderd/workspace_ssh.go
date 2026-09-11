@@ -65,7 +65,7 @@ func (api *API) workspaceSSHKeys(rw http.ResponseWriter, r *http.Request) {
 	httpapi.Write(ctx, rw, http.StatusOK, response)
 }
 
-// @Summary Register a workspace SSH key
+// @Summary Create workspace SSH key
 // @ID create-workspace-ssh-key
 // @Security CoderSessionToken
 // @Accept json
@@ -108,7 +108,7 @@ func (api *API) createWorkspaceSSHKey(rw http.ResponseWriter, r *http.Request) {
 	httpapi.Write(ctx, rw, http.StatusCreated, workspaceSSHKey(key))
 }
 
-// @Summary Delete a workspace SSH key
+// @Summary Delete workspace SSH key
 // @ID delete-workspace-ssh-key
 // @Security CoderSessionToken
 // @Tags SSH
@@ -155,7 +155,7 @@ func (api *API) deleteWorkspaceSSHKey(rw http.ResponseWriter, r *http.Request) {
 	rw.WriteHeader(http.StatusNoContent)
 }
 
-// @Summary Create a workspace SSH bootstrap command
+// @Summary Create workspace SSH bootstrap
 // @ID create-workspace-ssh-bootstrap
 // @Security CoderSessionToken
 // @Produce json
@@ -244,12 +244,13 @@ func (api *API) workspaceSSHBootstrap(rw http.ResponseWriter, r *http.Request) {
 	})
 }
 
-// @Summary Get a one-time workspace SSH setup script
+// @Summary Get workspace SSH enrollment script
 // @ID get-workspace-ssh-enrollment-script
+// @Description Authenticate with a one-time enrollment token using the Bearer scheme in the Authorization header.
+// @Security Authorization
 // @Produce text/plain
 // @Tags SSH
 // @Param enrollment path string true "Enrollment ID" format(uuid)
-// @Param Authorization header string true "Bearer enrollment token"
 // @Param platform query string true "bash or powershell"
 // @Success 200 {string} string
 // @Router /api/v2/workspace-ssh/enrollments/{enrollment}/script [get]
@@ -287,14 +288,15 @@ func (api *API) workspaceSSHEnrollmentScript(rw http.ResponseWriter, r *http.Req
 	_, _ = rw.Write([]byte(script))
 }
 
-// @Summary Complete a one-time workspace SSH key enrollment
+// @Summary Enroll workspace SSH key
 // @ID enroll-workspace-ssh-key
+// @Description Authenticate with a one-time enrollment token using the Bearer scheme in the Authorization header.
+// @Security Authorization
 // @Accept json
 // @Accept application/x-www-form-urlencoded
 // @Produce json
 // @Tags SSH
 // @Param enrollment path string true "Enrollment ID" format(uuid)
-// @Param Authorization header string true "Bearer enrollment token"
 // @Param request body codersdk.EnrollWorkspaceSSHKeyRequest true "Key enrollment"
 // @Success 201 {object} codersdk.WorkspaceSSHEnrollmentResponse
 // @Router /api/v2/workspace-ssh/enrollments/{enrollment} [post]
