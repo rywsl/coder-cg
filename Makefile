@@ -1585,10 +1585,16 @@ test-js: site/node_modules/.installed
 	pnpm test:ci
 .PHONY: test-js
 
+TEST_STORYBOOK_SHARDS ?= 1
+
 test-storybook: site/node_modules/.installed
 	cd site/
 	pnpm playwright:install
-	pnpm exec vitest run --project=storybook
+	shards="$(TEST_STORYBOOK_SHARDS)"
+	[[ "$$shards" =~ ^[1-9][0-9]*$$ ]]
+	for ((shard = 1; shard <= shards; shard++)); do
+		pnpm exec vitest run --project=storybook --shard="$$shard/$$shards"
+	done
 .PHONY: test-storybook
 
 # sqlc-cloud-is-setup will fail if no SQLc auth token is set. Use this as a
