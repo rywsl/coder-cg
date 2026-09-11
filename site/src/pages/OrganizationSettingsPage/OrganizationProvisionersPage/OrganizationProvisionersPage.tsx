@@ -5,9 +5,7 @@ import { useParams, useSearchParams } from "react-router";
 import { buildInfo } from "#/api/queries/buildInfo";
 import { provisionerDaemons } from "#/api/queries/organizations";
 import { EmptyState } from "#/components/EmptyState/EmptyState";
-import { useAuthenticated } from "#/hooks/useAuthenticated";
 import { useEmbeddedMetadata } from "#/hooks/useEmbeddedMetadata";
-import { useDashboard } from "#/modules/dashboard/useDashboard";
 import { useOrganizationSettings } from "#/modules/management/OrganizationSettingsLayout";
 import { RequirePermission } from "#/modules/permissions/RequirePermission";
 import { pageTitle } from "#/utils/page";
@@ -16,7 +14,6 @@ import { OrganizationProvisionersPageView } from "./OrganizationProvisionersPage
 const OrganizationProvisionersPage: FC = () => {
 	const { t: tI18n } = useTranslation("administration");
 
-	const { permissions } = useAuthenticated();
 	const { organization: organizationName } = useParams() as {
 		organization: string;
 	};
@@ -27,7 +24,6 @@ const OrganizationProvisionersPage: FC = () => {
 		offline: searchParams.get("offline") === "true",
 	};
 	const { organization, organizationPermissions } = useOrganizationSettings();
-	const { entitlements } = useDashboard();
 	const { metadata } = useEmbeddedMetadata();
 	const buildInfoQuery = useQuery(buildInfo(metadata["build-info"]));
 	const provisionersQuery = useQuery({
@@ -72,11 +68,9 @@ const OrganizationProvisionersPage: FC = () => {
 		<>
 			{title}
 			<OrganizationProvisionersPageView
-				showPaywall={!entitlements.features.multiple_organizations.enabled}
 				error={provisionersQuery.error}
 				provisioners={provisionersQuery.data}
 				buildVersion={buildInfoQuery.data?.version}
-				permissions={permissions}
 				onRetry={provisionersQuery.refetch}
 				filter={queryParams}
 				onFilterChange={({ ids, offline }) => {

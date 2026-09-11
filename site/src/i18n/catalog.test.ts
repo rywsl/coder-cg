@@ -18,21 +18,14 @@ const protectedTerms = [
 	"Google",
 	"Google Cloud",
 	"OpenRouter",
+	"Vercel",
 	"Vercel AI Gateway",
+	"GitHub Copilot",
+	"Bedrock",
 	"Bedrock Mantle",
 ] as const;
 
 const canonicalTechnicalTerms = [
-	{
-		name: "Workspace",
-		source: /\bworkspaces?\b/i,
-		translation: /\bWorkspaces?\b/i,
-	},
-	{
-		name: "Template",
-		source: /\btemplates?\b/i,
-		translation: /\bTemplates?\b/i,
-	},
 	{ name: "Agent", source: /\bagents?\b/i, translation: /\bAgents?\b/i },
 	{
 		name: "Subagent",
@@ -44,6 +37,21 @@ const canonicalTechnicalTerms = [
 		name: "Provisioner",
 		source: /\bprovisioners?\b/i,
 		translation: /\bProvisioners?\b/i,
+	},
+] as const;
+
+const localizedProductTerms = [
+	{
+		name: "Workspace",
+		source: /\bworkspaces?\b/i,
+		translation: "工作区",
+		untranslated: /\bWorkspaces?\b/i,
+	},
+	{
+		name: "Template",
+		source: /\btemplates?\b/i,
+		translation: "模板",
+		untranslated: /\bTemplates?\b/i,
 	},
 ] as const;
 
@@ -63,7 +71,7 @@ describe("translation catalogs", () => {
 		}
 	});
 
-	it("preserves product and technical terms", () => {
+	it("preserves technical terms and localizes product terminology", () => {
 		for (const [key, source] of english) {
 			const translation = chinese.get(key) ?? "";
 			for (const term of protectedTerms) {
@@ -76,6 +84,28 @@ describe("translation catalogs", () => {
 				if (term.source.test(source)) {
 					expect(translation, `${key}: ${term.name}`).toMatch(term.translation);
 				}
+			}
+			for (const term of localizedProductTerms) {
+				if (term.source.test(source)) {
+					expect(translation, `${key}: ${term.name}`).toContain(
+						term.translation,
+					);
+					expect(translation, `${key}: ${term.name}`).not.toMatch(
+						term.untranslated,
+					);
+				}
+			}
+		}
+	});
+
+	it("rejects known machine-translation errors", () => {
+		for (const [key, source] of english) {
+			const translation = chinese.get(key) ?? "";
+			expect(translation, key).not.toMatch(
+				/女士|救命|已救援|韦尔塞尔|GitHub 副驾驶|基岩/,
+			);
+			if (source.trim() === "ms") {
+				expect(translation, key).toBe("毫秒");
 			}
 		}
 	});

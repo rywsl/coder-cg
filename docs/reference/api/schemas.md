@@ -16357,6 +16357,37 @@ If the schedule is empty, the user will be updated to use the default schedule.|
 |--------|--------|----------|--------------|-------------|
 | `name` | string | false    |              |             |
 
+## codersdk.UpdateWorkspaceSSHGatewayRequest
+
+```json
+{
+  "clear_codex_api_key": true,
+  "codex_api_key": "string",
+  "config": {
+    "advertise_host": "string",
+    "advertise_port": 0,
+    "auth_attempts_burst": 0,
+    "auth_attempts_per_minute": 0,
+    "codex_base_url": "string",
+    "codex_model": "string",
+    "listen_address": "string",
+    "max_channels_per_connection": 0,
+    "max_connections": 0,
+    "max_connections_per_user": 0,
+    "max_pending_connections": 0,
+    "max_pending_connections_per_ip": 0
+  }
+}
+```
+
+### Properties
+
+| Name                  | Type                                                                                   | Required | Restrictions | Description |
+|-----------------------|----------------------------------------------------------------------------------------|----------|--------------|-------------|
+| `clear_codex_api_key` | boolean                                                                                | false    |              |             |
+| `codex_api_key`       | string                                                                                 | false    |              |             |
+| `config`              | [codersdk.WorkspaceSSHGatewayRuntimeConfig](#codersdkworkspacesshgatewayruntimeconfig) | false    |              |             |
+
 ## codersdk.UpdateWorkspaceSharingSettingsRequest
 
 ```json
@@ -19579,6 +19610,99 @@ If the schedule is empty, the user will be updated to use the default schedule.|
 | `host_key_fingerprint`      | string  | false    |              |             |
 | `host_public_key`           | string  | false    |              |             |
 | `port`                      | integer | false    |              |             |
+
+## codersdk.WorkspaceSSHGatewayRuntimeConfig
+
+```json
+{
+  "advertise_host": "string",
+  "advertise_port": 0,
+  "auth_attempts_burst": 0,
+  "auth_attempts_per_minute": 0,
+  "codex_base_url": "string",
+  "codex_model": "string",
+  "listen_address": "string",
+  "max_channels_per_connection": 0,
+  "max_connections": 0,
+  "max_connections_per_user": 0,
+  "max_pending_connections": 0,
+  "max_pending_connections_per_ip": 0
+}
+```
+
+### Properties
+
+| Name                             | Type    | Required | Restrictions | Description |
+|----------------------------------|---------|----------|--------------|-------------|
+| `advertise_host`                 | string  | false    |              |             |
+| `advertise_port`                 | integer | false    |              |             |
+| `auth_attempts_burst`            | integer | false    |              |             |
+| `auth_attempts_per_minute`       | integer | false    |              |             |
+| `codex_base_url`                 | string  | false    |              |             |
+| `codex_model`                    | string  | false    |              |             |
+| `listen_address`                 | string  | false    |              |             |
+| `max_channels_per_connection`    | integer | false    |              |             |
+| `max_connections`                | integer | false    |              |             |
+| `max_connections_per_user`       | integer | false    |              |             |
+| `max_pending_connections`        | integer | false    |              |             |
+| `max_pending_connections_per_ip` | integer | false    |              |             |
+
+## codersdk.WorkspaceSSHGatewayState
+
+```json
+"stopped"
+```
+
+### Properties
+
+#### Enumerated Values
+
+| Value(s)                                              |
+|-------------------------------------------------------|
+| `error`, `running`, `starting`, `stopped`, `stopping` |
+
+## codersdk.WorkspaceSSHGatewayStatus
+
+```json
+{
+  "api_key_configured": true,
+  "bound_address": "string",
+  "config": {
+    "advertise_host": "string",
+    "advertise_port": 0,
+    "auth_attempts_burst": 0,
+    "auth_attempts_per_minute": 0,
+    "codex_base_url": "string",
+    "codex_model": "string",
+    "listen_address": "string",
+    "max_channels_per_connection": 0,
+    "max_connections": 0,
+    "max_connections_per_user": 0,
+    "max_pending_connections": 0,
+    "max_pending_connections_per_ip": 0
+  },
+  "configured": true,
+  "desired_enabled": true,
+  "error_code": "string",
+  "host_key_fingerprint": "string",
+  "host_public_key": "string",
+  "state": "stopped"
+}
+```
+
+### Properties
+
+| Name                   | Type                                                                                   | Required | Restrictions | Description |
+|------------------------|----------------------------------------------------------------------------------------|----------|--------------|-------------|
+| `api_key_configured`   | boolean                                                                                | false    |              |             |
+| `bound_address`        | string                                                                                 | false    |              |             |
+| `config`               | [codersdk.WorkspaceSSHGatewayRuntimeConfig](#codersdkworkspacesshgatewayruntimeconfig) | false    |              |             |
+| `configured`           | boolean                                                                                | false    |              |             |
+| `desired_enabled`      | boolean                                                                                | false    |              |             |
+| `error_code`           | string                                                                                 | false    |              |             |
+| `host_key_fingerprint` | string                                                                                 | false    |              |             |
+| `host_public_key`      | string                                                                                 | false    |              |             |
+| `state`                | [codersdk.WorkspaceSSHGatewayState](#codersdkworkspacesshgatewaystate)                 | false    |              |             |
 
 ## codersdk.WorkspaceSSHKey
 

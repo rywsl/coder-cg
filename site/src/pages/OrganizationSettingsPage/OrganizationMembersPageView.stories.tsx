@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "storybook/test";
 import { mockSuccessResult } from "#/components/PaginationWidget/PaginationContainer.mocks";
 import type { UsePaginatedQueryResult } from "#/hooks/usePaginatedQuery";
 import {
@@ -34,9 +35,8 @@ const meta: Meta<typeof OrganizationMembersPageView> = {
 			{
 				...MockOrganizationMember,
 				global_roles: [MockOwnerRole, MockUserAdminRole],
-				groups: [],
 			},
-			{ ...MockOrganizationMember2, groups: [] },
+			MockOrganizationMember2,
 		],
 		addMembers: () => Promise.resolve(),
 		onEditMemberRoles: () => Promise.resolve(),
@@ -45,14 +45,29 @@ const meta: Meta<typeof OrganizationMembersPageView> = {
 		me: MockUserOwner.id,
 		canEditMembers: true,
 		canViewMembers: true,
-		canViewActivity: false,
 	},
 };
 
 export default meta;
 type Story = StoryObj<typeof OrganizationMembersPageView>;
 
-export const Default: Story = {};
+export const Default: Story = {
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		await expect(
+			canvas.queryByRole("columnheader", { name: "Groups" }),
+		).not.toBeInTheDocument();
+		const [menuButton] = canvas.getAllByRole("button", { name: "Open menu" });
+		if (!menuButton) {
+			throw new Error("Expected a member actions menu");
+		}
+		await userEvent.click(menuButton);
+		const body = within(canvasElement.ownerDocument.body);
+		await expect(
+			body.queryByRole("menuitem", { name: /activity/i }),
+		).not.toBeInTheDocument();
+	},
+};
 
 export const Loading: Story = {
 	args: {

@@ -97,7 +97,6 @@ import (
 	"github.com/coder/coder/v2/coderd/workspaceapps"
 	"github.com/coder/coder/v2/coderd/workspaceapps/appurl"
 	"github.com/coder/coder/v2/coderd/workspaceconnwatcher"
-	"github.com/coder/coder/v2/coderd/workspacessh"
 	"github.com/coder/coder/v2/coderd/workspacestats"
 	"github.com/coder/coder/v2/coderd/wsbuilder"
 	"github.com/coder/coder/v2/coderd/wsbuildorchestrator"
@@ -882,10 +881,12 @@ func New(options *Options) *API {
 		panic("failed to setup server tailnet: " + err.Error())
 	}
 	api.agentProvider = stn
-	if err := api.startWorkspaceSSHGateway(); err != nil {
+	api.workspaceSSHGatewayManager, err = newWorkspaceSSHGatewayManager(api)
+	if err != nil {
 		_ = stn.Close()
-		panic("failed to setup workspace SSH gateway: " + err.Error())
+		panic("failed to initialize workspace SSH gateway manager: " + err.Error())
 	}
+	api.workspaceSSHGatewayManager.initialize(ctx)
 
 	{ // Chat daemon and git sync worker initialization.
 		maxChatsPerAcquire := options.DeploymentValues.AI.Chat.AcquireBatchSize.Value()
@@ -1447,6 +1448,10 @@ func New(options *Options) *API {
 			r.Get("/config", api.deploymentValues)
 			r.Get("/stats", api.deploymentStats)
 			r.Get("/ssh", api.sshConfig)
+			r.Get("/workspace-ssh-gateway", api.workspaceSSHGatewayStatus)
+			r.Put("/workspace-ssh-gateway", api.updateWorkspaceSSHGateway)
+			r.Post("/workspace-ssh-gateway/start", api.startWorkspaceSSHGateway)
+			r.Post("/workspace-ssh-gateway/stop", api.stopWorkspaceSSHGateway)
 			r.Get("/user-secrets/capabilities", api.userSecretsCapabilities)
 			r.Post("/premium-funnel-events", api.postPremiumFunnelEvent)
 		})
@@ -2320,12 +2325,12 @@ type API struct {
 	WebsocketWaitGroup sync.WaitGroup
 	derpCloseFunc      func()
 
-	metricsCache          *metricscache.Cache
-	updateChecker         *updatecheck.Checker
-	WorkspaceAppsProvider workspaceapps.SignedTokenProvider
-	workspaceAppServer    *workspaceapps.Server
-	agentProvider         workspaceapps.AgentProvider
-	workspaceSSHGateway   *workspacessh.Gateway
+	metricsCache               *metricscache.Cache
+	updateChecker              *updatecheck.Checker
+	WorkspaceAppsProvider      workspaceapps.SignedTokenProvider
+	workspaceAppServer         *workspaceapps.Server
+	agentProvider              workspaceapps.AgentProvider
+	workspaceSSHGatewayManager *workspaceSSHGatewayManager
 
 	// Experiments contains the list of experiments currently enabled.
 	// This is used to gate features that are not yet ready for production.
@@ -2389,7 +2394,7 @@ func (api *API) Close() error {
 		return xerrors.New("API already closed")
 	default:
 	}
-	if api.workspaceSSHGateway != nil {
+	if api.workspaceSSHGatewayManager != nil {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		if err := api.CloseWorkspaceSSHGateway(ctx); err != nil {
 			api.Logger.Warn(context.Background(), "workspace SSH gateway shutdown did not drain", slog.Error(err))
@@ -2471,12 +2476,10 @@ func (api *API) Close() error {
 // CloseWorkspaceSSHGateway stops new gateway connections and drains existing
 // connections before other transport and logging dependencies are closed.
 func (api *API) CloseWorkspaceSSHGateway(ctx context.Context) error {
-	if api.workspaceSSHGateway == nil {
+	if api.workspaceSSHGatewayManager == nil {
 		return nil
 	}
-	gateway := api.workspaceSSHGateway
-	api.workspaceSSHGateway = nil
-	return gateway.Close(ctx)
+	return api.workspaceSSHGatewayManager.close(ctx)
 }
 
 func compressHandler(h http.Handler) http.Handler {

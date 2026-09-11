@@ -167,7 +167,7 @@ const TemplateMenu: FC<TemplateMenuProps> = ({
 					isOpen={dialogState.isDeleteDialogOpen}
 					onConfirm={dialogState.confirmDelete}
 					onCancel={dialogState.cancelDeleteConfirmation}
-					entity="template"
+					entity={tI18n("TemplatePage.TemplatePageHeader.template_5cde0f12")}
 					name={templateName}
 				/>
 			) : (

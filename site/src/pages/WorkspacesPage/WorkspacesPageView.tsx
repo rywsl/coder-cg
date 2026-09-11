@@ -127,7 +127,11 @@ export const WorkspacesPageView: FC<WorkspacesPageViewProps> = ({
 							<strong>{checkedWorkspaces.length}</strong>
 							{tI18n("WorkspacesPage.WorkspacesPageView.of_88eb5a7e")}{" "}
 							<strong>{workspaces?.length}</strong>{" "}
-							{workspaces?.length === 1 ? "workspace" : "workspaces"}
+							{workspaces?.length === 1
+								? tI18n("WorkspacesPage.WorkspacesPageView.workspace_21a3230e")
+								: tI18n(
+										"WorkspacesPage.WorkspacesPageView.workspaces_6e8d7998",
+									)}
 						</div>
 
 						<DropdownMenu>

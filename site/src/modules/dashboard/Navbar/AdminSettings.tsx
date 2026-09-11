@@ -16,9 +16,6 @@ export type AdminSettingsPermissions = {
 	canViewDeployment?: boolean;
 	canViewOrganizations?: boolean;
 	canViewAISettings?: boolean;
-	canViewAuditLog?: boolean;
-	canViewConnectionLog?: boolean;
-	canViewAIBridge?: boolean;
 	canViewHealth?: boolean;
 };
 
@@ -52,27 +49,6 @@ export const AdminSettingsItems: React.FC<AdminSettingsItemsProps> = ({
 			{permissions.canViewAISettings && (
 				<DropdownMenuItem asChild className={itemClassName}>
 					<Link to="/ai/settings">AI</Link>
-				</DropdownMenuItem>
-			)}
-			{permissions.canViewAuditLog && (
-				<DropdownMenuItem asChild className={itemClassName}>
-					<Link to="/audit">
-						{tI18n("dashboard.Navbar.AdminSettings.audit_logs_569ef18c")}
-					</Link>
-				</DropdownMenuItem>
-			)}
-			{permissions.canViewConnectionLog && (
-				<DropdownMenuItem asChild className={itemClassName}>
-					<Link to="/connectionlog">
-						{tI18n("dashboard.Navbar.AdminSettings.connection_logs_2c3ec0db")}
-					</Link>
-				</DropdownMenuItem>
-			)}
-			{permissions.canViewAIBridge && (
-				<DropdownMenuItem asChild className={itemClassName}>
-					<Link to="/ai-gateway/sessions">
-						{tI18n("dashboard.Navbar.AdminSettings.ai_sessions_7f790876")}
-					</Link>
 				</DropdownMenuItem>
 			)}
 			{permissions.canViewHealth && (

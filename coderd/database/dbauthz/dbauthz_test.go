@@ -4560,6 +4560,27 @@ func (s *MethodTestSuite) TestWorkspace() {
 }
 
 func (s *MethodTestSuite) TestWorkspaceSSHKeys() {
+	s.Run("DeleteWorkspaceSSHGatewayCodexAPIKey", s.Mocked(func(dbm *dbmock.MockStore, _ *gofakeit.Faker, check *expects) {
+		dbm.EXPECT().DeleteWorkspaceSSHGatewayCodexAPIKey(gomock.Any()).Return(nil).AnyTimes()
+		check.Args().Asserts(rbac.ResourceDeploymentConfig, policy.ActionUpdate).Returns()
+	}))
+	s.Run("GetWorkspaceSSHGatewayConfig", s.Mocked(func(dbm *dbmock.MockStore, faker *gofakeit.Faker, check *expects) {
+		row := testutil.Fake(s.T(), faker, database.GetWorkspaceSSHGatewayConfigRow{})
+		dbm.EXPECT().GetWorkspaceSSHGatewayConfig(gomock.Any()).Return(row, nil).AnyTimes()
+		check.Args().Asserts(rbac.ResourceDeploymentConfig, policy.ActionRead).Returns(row)
+	}))
+	s.Run("UpsertWorkspaceSSHGatewayCodexAPIKey", s.Mocked(func(dbm *dbmock.MockStore, _ *gofakeit.Faker, check *expects) {
+		dbm.EXPECT().UpsertWorkspaceSSHGatewayCodexAPIKey(gomock.Any(), "secret").Return(nil).AnyTimes()
+		check.Args("secret").Asserts(rbac.ResourceDeploymentConfig, policy.ActionUpdate).Returns()
+	}))
+	s.Run("UpsertWorkspaceSSHGatewayConfig", s.Mocked(func(dbm *dbmock.MockStore, _ *gofakeit.Faker, check *expects) {
+		dbm.EXPECT().UpsertWorkspaceSSHGatewayConfig(gomock.Any(), "config").Return(nil).AnyTimes()
+		check.Args("config").Asserts(rbac.ResourceDeploymentConfig, policy.ActionUpdate).Returns()
+	}))
+	s.Run("UpsertWorkspaceSSHGatewayHostPrivateKey", s.Mocked(func(dbm *dbmock.MockStore, _ *gofakeit.Faker, check *expects) {
+		dbm.EXPECT().UpsertWorkspaceSSHGatewayHostPrivateKey(gomock.Any(), "private-key").Return(nil).AnyTimes()
+		check.Args("private-key").Asserts(rbac.ResourceDeploymentConfig, policy.ActionUpdate).Returns()
+	}))
 	s.Run("CompleteWorkspaceSSHKeyEnrollment", s.Mocked(func(dbm *dbmock.MockStore, faker *gofakeit.Faker, check *expects) {
 		enrollment := testutil.Fake(s.T(), faker, database.WorkspaceSshKeyEnrollment{})
 		arg := testutil.Fake(s.T(), faker, database.CompleteWorkspaceSSHKeyEnrollmentParams{})

@@ -1,6 +1,11 @@
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
-import type { SerpentOption } from "#/api/typesGenerated";
+import type {
+	SerpentOption,
+	UpdateWorkspaceSSHGatewayRequest,
+	WorkspaceSSHGatewayStatus,
+} from "#/api/typesGenerated";
+import { ErrorAlert } from "#/components/Alert/ErrorAlert";
 import { BadgeGroup } from "#/components/Badge/Badge";
 import { DisabledBadge, EnabledBadge } from "#/components/Badge/PresetBadges";
 import {
@@ -9,19 +14,42 @@ import {
 	SettingsHeaderDocsLink,
 	SettingsHeaderTitle,
 } from "#/components/SettingsHeader/SettingsHeader";
+import { Skeleton } from "#/components/Skeleton/Skeleton";
 import {
 	deploymentGroupHasParent,
 	useDeploymentOptions,
 } from "#/utils/deployOptions";
 import { docs } from "#/utils/docs";
 import OptionsTable from "../OptionsTable";
+import { WorkspaceSSHGatewaySection } from "./WorkspaceSSHGatewaySection";
 
 type NetworkSettingsPageViewProps = {
 	options: SerpentOption[];
+	gateway?: WorkspaceSSHGatewayStatus;
+	gatewayError?: unknown;
+	isGatewayLoading: boolean;
+	isGatewaySaving: boolean;
+	isGatewayStarting: boolean;
+	isGatewayStopping: boolean;
+	onSaveGateway: (
+		request: UpdateWorkspaceSSHGatewayRequest,
+		onSuccess: () => void,
+	) => void;
+	onStartGateway: () => void;
+	onStopGateway: () => void;
 };
 
 export const NetworkSettingsPageView: FC<NetworkSettingsPageViewProps> = ({
 	options,
+	gateway,
+	gatewayError,
+	isGatewayLoading,
+	isGatewaySaving,
+	isGatewayStarting,
+	isGatewayStopping,
+	onSaveGateway,
+	onStartGateway,
+	onStopGateway,
 }) => {
 	const { t: tI18n } = useTranslation("administration");
 
@@ -51,6 +79,31 @@ export const NetworkSettingsPageView: FC<NetworkSettingsPageViewProps> = ({
 					)}
 				/>
 			</div>
+			{isGatewayLoading ? (
+				<div
+					className="flex flex-col gap-4"
+					role="status"
+					aria-label={tI18n(
+						"DeploymentSettingsPage.NetworkSettingsPage.NetworkSettingsPageView.loading_workspace_ssh_gateway_settings_9b949179",
+					)}
+				>
+					<Skeleton className="h-8 w-64" />
+					<Skeleton className="h-32 w-full" />
+				</div>
+			) : gateway ? (
+				<WorkspaceSSHGatewaySection
+					status={gateway}
+					error={gatewayError}
+					isSaving={isGatewaySaving}
+					isStarting={isGatewayStarting}
+					isStopping={isGatewayStopping}
+					onSave={onSaveGateway}
+					onStart={onStartGateway}
+					onStop={onStopGateway}
+				/>
+			) : gatewayError !== undefined ? (
+				<ErrorAlert error={gatewayError} />
+			) : null}
 			<div>
 				<SettingsHeader>
 					<SettingsHeaderTitle level="h2" hierarchy="secondary">

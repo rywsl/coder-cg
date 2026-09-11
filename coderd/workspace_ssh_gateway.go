@@ -22,81 +22,13 @@ import (
 	"github.com/coder/coder/v2/coderd/rbac"
 	"github.com/coder/coder/v2/coderd/rbac/policy"
 	"github.com/coder/coder/v2/coderd/workspacessh"
-	"github.com/coder/coder/v2/codersdk"
 )
-
-func (api *API) startWorkspaceSSHGateway() error {
-	values := api.DeploymentValues.WorkspaceSSHGateway
-	aliasSuffix := "ssh." + api.DeploymentValues.WorkspaceHostnameSuffix.Value()
-	api.SSHConfig.WorkspaceSSHGateway = &codersdk.WorkspaceSSHGatewayInfo{
-		Enabled:     values.Enabled.Value(),
-		AliasSuffix: aliasSuffix,
-	}
-	if !values.Enabled.Value() {
-		return nil
-	}
-	if api.AccessURL == nil || api.AccessURL.Scheme != "https" {
-		return xerrors.New("workspace SSH gateway requires an HTTPS access URL")
-	}
-	signer, err := workspacessh.LoadHostSigner(values.HostKeyFile.Value())
-	if err != nil {
-		return err
-	}
-	publicKey := strings.TrimSpace(string(ssh.MarshalAuthorizedKey(signer.PublicKey())))
-	api.SSHConfig.WorkspaceSSHGateway = &codersdk.WorkspaceSSHGatewayInfo{
-		Enabled:                 true,
-		Host:                    values.AdvertiseHost.Value(),
-		Port:                    values.AdvertisePort.Value(),
-		HostPublicKey:           publicKey,
-		HostKeyFingerprint:      ssh.FingerprintSHA256(signer.PublicKey()),
-		AliasSuffix:             aliasSuffix,
-		ChatGPTDesktopAvailable: true,
-	}
-	if err := api.SSHConfig.Validate(); err != nil {
-		return xerrors.Errorf("validate advertised workspace SSH gateway configuration: %w", err)
-	}
-	gateway, err := workspacessh.New(workspacessh.Config{
-		ListenAddress: values.ListenAddress.Value(),
-		HostSigner:    signer,
-		Logger:        api.Logger.Named("workspace-ssh-gateway"),
-		Registerer:    api.PrometheusRegistry,
-		Codex: workspacessh.CodexConfig{
-			Model:     values.CodexModel.Value(),
-			BaseURL:   values.CodexBaseURL.Value(),
-			APIKey:    values.CodexAPIKey.Value(),
-			APIKeyEnv: "CODER_CODEX_API_KEY",
-		},
-		Limits: workspacessh.Limits{
-			MaxConnections:             int(values.MaxConnections.Value()),
-			MaxPendingConnections:      int(values.MaxPendingConnections.Value()),
-			MaxPendingConnectionsPerIP: int(values.MaxPendingConnectionsPerIP.Value()),
-			MaxConnectionsPerUser:      int(values.MaxConnectionsPerUser.Value()),
-			MaxChannelsPerConnection:   int(values.MaxChannelsPerConnection.Value()),
-			AuthAttemptsPerMinute:      int(values.AuthAttemptsPerMinute.Value()),
-			AuthAttemptsBurst:          int(values.AuthAttemptsBurst.Value()),
-		},
-		Authenticate: api.authenticateWorkspaceSSH,
-		Verified:     api.verifiedWorkspaceSSHKey,
-		DialAgent:    api.dialWorkspaceSSHAgent,
-		Record:       api.recordWorkspaceSSHConnection,
-	})
-	if err != nil {
-		return err
-	}
-	api.workspaceSSHGateway = gateway
-	api.Logger.Info(context.Background(), "workspace SSH gateway listening",
-		slog.F("listen_address", gateway.Addr().String()),
-		slog.F("advertise_host", values.AdvertiseHost.Value()),
-		slog.F("advertise_port", values.AdvertisePort.Value()),
-	)
-	return nil
-}
 
 func (api *API) authenticateWorkspaceSSH(ctx context.Context, metadata ssh.ConnMetadata, publicKey ssh.PublicKey) (workspacessh.Target, error) {
 	if api.workspaceSSHBrowserOnly() {
 		return workspacessh.Target{}, xerrors.New("public key authentication failed")
 	}
-	alias, err := parseWorkspaceSSHAlias(metadata.User(), api.SSHConfig.WorkspaceSSHGateway.AliasSuffix)
+	alias, err := parseWorkspaceSSHAlias(metadata.User(), api.workspaceSSHGatewayInfo().AliasSuffix)
 	if err != nil {
 		return workspacessh.Target{}, xerrors.New("public key authentication failed")
 	}

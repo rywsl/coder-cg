@@ -65,6 +65,28 @@ export const AddCopilot: Story = {
 	},
 };
 
+export const AddOpenAICompatibleChinese: Story = {
+	globals: { locale: "zh-CN" },
+	args: {
+		provider: { value: "openai-compat", label: "OpenAI 兼容" },
+	},
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		await canvas.findByText("添加 OpenAI 兼容提供商");
+	},
+};
+
+export const AddVercelChinese: Story = {
+	globals: { locale: "zh-CN" },
+	args: {
+		provider: { value: "vercel", label: "Vercel" },
+	},
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		await canvas.findByText("添加 Vercel 提供商");
+	},
+};
+
 // Server base_url errors must render inline on the Endpoint input, not only in the top-of-form ErrorAlert.
 export const WithBaseUrlValidationError: Story = {
 	args: {

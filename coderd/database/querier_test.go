@@ -19676,3 +19676,36 @@ func TestGetChatSiteConfigValue(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, database.GetChatSiteConfigValueRow{}, value)
 }
+
+func TestWorkspaceSSHGatewaySiteConfig(t *testing.T) {
+	t.Parallel()
+
+	ctx := testutil.Context(t, testutil.WaitShort)
+	db, _ := dbtestutil.NewDB(t)
+
+	row, err := db.GetWorkspaceSSHGatewayConfig(ctx)
+	require.NoError(t, err)
+	require.False(t, row.ConfigExists)
+	require.False(t, row.CodexApiKeyExists)
+	require.False(t, row.HostPrivateKeyExists)
+
+	require.NoError(t, db.UpsertWorkspaceSSHGatewayConfig(ctx, `{"desired_enabled":false}`))
+	require.NoError(t, db.UpsertWorkspaceSSHGatewayCodexAPIKey(ctx, "test-api-key"))
+	require.NoError(t, db.UpsertWorkspaceSSHGatewayHostPrivateKey(ctx, "test-host-key"))
+
+	row, err = db.GetWorkspaceSSHGatewayConfig(ctx)
+	require.NoError(t, err)
+	require.Equal(t, `{"desired_enabled":false}`, row.Config)
+	require.True(t, row.ConfigExists)
+	require.Equal(t, "test-api-key", row.CodexApiKey)
+	require.True(t, row.CodexApiKeyExists)
+	require.Equal(t, "test-host-key", row.HostPrivateKey)
+	require.True(t, row.HostPrivateKeyExists)
+
+	require.NoError(t, db.DeleteWorkspaceSSHGatewayCodexAPIKey(ctx))
+	row, err = db.GetWorkspaceSSHGatewayConfig(ctx)
+	require.NoError(t, err)
+	require.True(t, row.ConfigExists)
+	require.False(t, row.CodexApiKeyExists)
+	require.True(t, row.HostPrivateKeyExists)
+}

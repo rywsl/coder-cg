@@ -6,7 +6,6 @@ import (
 	"crypto/rand"
 	"database/sql"
 	"net"
-	"net/url"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -30,21 +29,6 @@ import (
 	"github.com/coder/coder/v2/coderd/workspacessh"
 	"github.com/coder/coder/v2/codersdk"
 )
-
-func TestWorkspaceSSHGatewayRequiresHTTPS(t *testing.T) {
-	t.Parallel()
-	values := &codersdk.DeploymentValues{}
-	values.WorkspaceSSHGateway.Enabled = true
-	api := &API{
-		Options: &Options{
-			AccessURL:        &url.URL{Scheme: "http", Host: "coder.example.test"},
-			DeploymentValues: values,
-		},
-	}
-
-	err := api.startWorkspaceSSHGateway()
-	require.EqualError(t, err, "workspace SSH gateway requires an HTTPS access URL")
-}
 
 func TestParseWorkspaceSSHAlias(t *testing.T) {
 	t.Parallel()

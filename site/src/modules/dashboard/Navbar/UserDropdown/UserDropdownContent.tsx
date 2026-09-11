@@ -55,8 +55,6 @@ interface UserDropdownContentProps {
 	supportLinks: readonly TypesGen.LinkConfig[];
 	codernautsEnabled?: boolean;
 	onSignOut: () => void;
-	/** Premium trial entry, rendered above the build info. */
-	trialCta?: ReactNode;
 }
 
 export const UserDropdownContent: FC<UserDropdownContentProps> = ({
@@ -66,7 +64,6 @@ export const UserDropdownContent: FC<UserDropdownContentProps> = ({
 	supportLinks,
 	codernautsEnabled = true,
 	onSignOut,
-	trialCta,
 }) => {
 	const { t: tI18n } = useTranslation("dashboard");
 
@@ -149,7 +146,6 @@ export const UserDropdownContent: FC<UserDropdownContentProps> = ({
 					</Link>
 				</DropdownMenuItem>
 			)}
-			{trialCta}
 			<DropdownMenuSeparator />
 			<Tooltip disableHoverableContent>
 				<TooltipTrigger asChild>

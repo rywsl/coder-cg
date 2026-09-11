@@ -1,15 +1,8 @@
 import { cn } from "cn";
-import {
-	ChevronRightIcon,
-	CircleHelpIcon,
-	MenuIcon,
-	RadioIcon,
-	XIcon,
-} from "lucide-react";
+import { ChevronRightIcon, MenuIcon, XIcon } from "lucide-react";
 import { type FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import { toast } from "sonner";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Avatar } from "#/components/Avatar/Avatar";
 import { Button } from "#/components/Button/Button";
@@ -25,16 +18,11 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "#/components/DropdownMenu/DropdownMenu";
-import { ExternalImage } from "#/components/ExternalImage/ExternalImage";
-import { Latency } from "#/components/Latency/Latency";
-import type { ProxyContextValue } from "#/contexts/ProxyContext";
-import { getLatencyColor } from "#/utils/latency";
 import {
 	AdminSettingsItems,
 	type AdminSettingsPermissions,
 	canViewAdminSettings,
 } from "./AdminSettings";
-import { sortProxiesByLatency } from "./proxyUtils";
 
 const itemStyles = {
 	default: "px-9 h-10 no-underline",
@@ -43,7 +31,6 @@ const itemStyles = {
 };
 
 type MobileMenuProps = {
-	proxyContextValue?: ProxyContextValue;
 	adminPermissions: AdminSettingsPermissions;
 	user?: TypesGen.User;
 	supportLinks?: readonly TypesGen.LinkConfig[];
@@ -53,7 +40,6 @@ type MobileMenuProps = {
 
 export const MobileMenu: FC<MobileMenuProps> = ({
 	adminPermissions,
-	proxyContextValue,
 	user,
 	supportLinks,
 	onSignOut,
@@ -101,8 +87,6 @@ export const MobileMenu: FC<MobileMenuProps> = ({
 					</Link>
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
-				<ProxySettingsSub proxyContextValue={proxyContextValue} />
-
 				{canViewAdminSettings(adminPermissions) && (
 					<>
 						<DropdownMenuSeparator />
@@ -117,126 +101,6 @@ export const MobileMenu: FC<MobileMenuProps> = ({
 				/>
 			</DropdownMenuContent>
 		</DropdownMenu>
-	);
-};
-
-type ProxySettingsSubProps = {
-	proxyContextValue?: ProxyContextValue;
-};
-
-const ProxySettingsSub: FC<ProxySettingsSubProps> = ({ proxyContextValue }) => {
-	const { t: tI18n } = useTranslation("dashboard");
-
-	const selectedProxy = proxyContextValue?.proxy.proxy;
-	const latency = selectedProxy
-		? proxyContextValue?.proxyLatencies[selectedProxy?.id]
-		: undefined;
-	const [open, setOpen] = useState(false);
-
-	if (!selectedProxy) {
-		return null;
-	}
-
-	return (
-		<Collapsible open={open} onOpenChange={setOpen}>
-			<CollapsibleTrigger asChild>
-				<DropdownMenuItem
-					className={cn(itemStyles.default, open && itemStyles.open)}
-					onClick={(e) => {
-						e.preventDefault();
-						setOpen((prev) => !prev);
-					}}
-				>
-					{tI18n(
-						"dashboard.Navbar.MobileMenu.workspace_proxy_settings_cd80e2a6",
-					)}
-					<span className="leading-none flex items-center gap-1">
-						<span className="sr-only">
-							{tI18n("dashboard.Navbar.MobileMenu.latency_for_82129a3e")}
-							{selectedProxy.display_name || selectedProxy.name}
-						</span>
-						<RadioIcon
-							aria-hidden="true"
-							className={cn("size-4", getLatencyColor(latency?.latencyMS))}
-						/>
-						<Latency
-							className={
-								latency?.latencyMS ? "text-content-primary" : undefined
-							}
-							latency={latency?.latencyMS}
-						/>
-					</span>
-					<ChevronRightIcon
-						className={cn("ml-auto", open ? "rotate-90" : "")}
-					/>
-				</DropdownMenuItem>
-			</CollapsibleTrigger>
-			<CollapsibleContent>
-				{proxyContextValue.proxies &&
-					sortProxiesByLatency(
-						proxyContextValue.proxies,
-						proxyContextValue.proxyLatencies,
-					).map((p) => {
-						const latency = proxyContextValue.proxyLatencies[p.id];
-						return (
-							<DropdownMenuItem
-								className={cn(itemStyles.default, itemStyles.sub)}
-								key={p.id}
-								onClick={(e) => {
-									e.preventDefault();
-
-									if (!p.healthy) {
-										toast.error(
-											tI18n(
-												"dashboard.Navbar.MobileMenu.failed_to_select_proxy_16e7d1f3",
-											),
-											{
-												description: tI18n(
-													"dashboard.Navbar.MobileMenu.please_select_a_healthy_workspace_proxy_25ba0ed8",
-												),
-											},
-										);
-										return;
-									}
-
-									proxyContextValue.setProxy(p);
-									setOpen(false);
-								}}
-							>
-								<ExternalImage
-									className="size-4"
-									src={p.icon_url}
-									alt={p.name}
-								/>
-								{p.display_name || p.name}
-								{latency ? (
-									<Latency className="ml-auto" latency={latency.latencyMS} />
-								) : (
-									<CircleHelpIcon className="ml-auto" />
-								)}
-							</DropdownMenuItem>
-						);
-					})}
-				<DropdownMenuSeparator />
-				<DropdownMenuItem
-					asChild
-					className={cn(itemStyles.default, itemStyles.sub)}
-				>
-					<Link to="/deployment/workspace-proxies">
-						{tI18n("dashboard.Navbar.MobileMenu.proxy_settings_4529dd70")}
-					</Link>
-				</DropdownMenuItem>
-				<DropdownMenuItem
-					className={cn(itemStyles.default, itemStyles.sub)}
-					onClick={(event) => {
-						event.stopPropagation();
-						proxyContextValue.refetchProxyLatencies();
-					}}
-				>
-					{tI18n("dashboard.Navbar.MobileMenu.refresh_latencies_ba8f2209")}
-				</DropdownMenuItem>
-			</CollapsibleContent>
-		</Collapsible>
 	);
 };
 

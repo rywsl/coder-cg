@@ -9,7 +9,6 @@ import {
 	type UpdateTemplateMeta,
 	WorkspaceAppSharingLevels,
 } from "#/api/typesGenerated";
-import { PremiumBadge } from "#/components/Badge/PresetBadges";
 import { Button } from "#/components/Button/Button";
 import { Checkbox } from "#/components/Checkbox/Checkbox";
 import {
@@ -99,9 +98,6 @@ export const TemplateSettingsForm: FC<TemplateSettingsForm> = ({
 	error,
 	isSubmitting,
 	initialTouched,
-	accessControlEnabled,
-	advancedSchedulingEnabled,
-	portSharingControlsEnabled,
 }) => {
 	const { t: tI18n } = useTranslation("templates");
 
@@ -133,12 +129,6 @@ export const TemplateSettingsForm: FC<TemplateSettingsForm> = ({
 		maxLength: MAX_DESCRIPTION_CHAR_LIMIT,
 	});
 	const descriptionHelperId = `${descriptionField.id}-helper`;
-	const maxPortShareField = getFieldHelpers("max_port_share_level", {
-		helperText: tI18n(
-			"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.the_maximum_level_of_port_sharing_allowed_for_wo_9de4a132",
-		),
-	});
-	const maxPortShareHelperId = `${maxPortShareField.id}-helper`;
 	const corsBehaviorField = getFieldHelpers("cors_behavior", {
 		helperText: tI18n(
 			"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.use_passthru_to_bypass_coder_s_built_in_cors_pro_d15662df",
@@ -303,50 +293,6 @@ export const TemplateSettingsForm: FC<TemplateSettingsForm> = ({
 
 					<div className="flex items-start">
 						<Checkbox
-							id="require_active_version"
-							name="require_active_version"
-							checked={form.values.require_active_version}
-							onCheckedChange={(checked) => {
-								form.setFieldValue("require_active_version", checked === true);
-							}}
-							disabled={
-								!template.require_active_version && !advancedSchedulingEnabled
-							}
-						/>
-						<Label htmlFor="require_active_version">
-							<StackLabel>
-								{tI18n(
-									"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.require_workspaces_automatically_update_when_sta_384edbec",
-								)}
-								<StackLabelHelperText>
-									<span>
-										{tI18n(
-											"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.workspaces_that_are_manually_started_or_auto_sta_28706e98",
-										)}{" "}
-										<strong>
-											{tI18n(
-												"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.this_setting_is_not_enforced_for_template_admins_5f569b18",
-											)}
-										</strong>
-									</span>
-
-									{!advancedSchedulingEnabled && (
-										<div className="flex flex-row gap-4 items-center mt-4">
-											<PremiumBadge />
-											<span>
-												{tI18n(
-													"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.premium_license_required_to_be_enabled_06948795",
-												)}
-											</span>
-										</div>
-									)}
-								</StackLabelHelperText>
-							</StackLabel>
-						</Label>
-					</div>
-
-					<div className="flex items-start">
-						<Checkbox
 							id="disable_module_cache"
 							name="disable_module_cache"
 							checked={form.values.disable_module_cache}
@@ -409,135 +355,6 @@ export const TemplateSettingsForm: FC<TemplateSettingsForm> = ({
 							</StackLabel>
 						</Label>
 					</div>
-				</FormFields>
-			</FormSection>
-			<FormSection
-				title={tI18n(
-					"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.deprecate_45284c69",
-				)}
-				description={tI18n(
-					"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.deprecating_a_template_prevents_any_new_workspac_fc8ad990",
-				)}
-			>
-				<FormFields>
-					<FormField
-						field={getFieldHelpers("deprecation_message", {
-							helperText: tI18n(
-								"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.leave_the_message_empty_to_keep_the_template_act_4e637fe5",
-							),
-						})}
-						label={tI18n(
-							"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.deprecation_message_5ccc8f40",
-						)}
-						disabled={
-							isSubmitting || (!template.deprecated && !accessControlEnabled)
-						}
-						className="w-full"
-					/>
-					{!accessControlEnabled && (
-						<div className="flex flex-row gap-4 items-center">
-							<PremiumBadge />
-							<span className="text-xs text-content-secondary">
-								{tI18n(
-									"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.premium_license_required_to_deprecate_templates_da938291",
-								)}
-								{template.deprecated &&
-									tI18n(
-										"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.you_cannot_change_the_message_but_you_may_remove_31623b51",
-									)}
-							</span>
-						</div>
-					)}
-				</FormFields>
-			</FormSection>
-			<FormSection
-				title={tI18n(
-					"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.port_sharing_bfae45f6",
-				)}
-				description={tI18n(
-					"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.shared_ports_with_the_public_sharing_level_can_b_988a8e5a",
-				)}
-			>
-				<FormFields>
-					<div className="flex flex-col gap-2">
-						<Label htmlFor={maxPortShareField.id}>
-							{tI18n(
-								"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.maximum_port_sharing_level_359ae635",
-							)}
-						</Label>
-						<Select
-							value={
-								portSharingControlsEnabled
-									? form.values.max_port_share_level
-									: "public"
-							}
-							onValueChange={(value) => {
-								form.setFieldValue("max_port_share_level", value);
-							}}
-							disabled={isSubmitting || !portSharingControlsEnabled}
-						>
-							<SelectTrigger
-								id={maxPortShareField.id}
-								className={cn(
-									"w-full",
-									maxPortShareField.error && "border-border-destructive",
-								)}
-								aria-invalid={maxPortShareField.error}
-								aria-describedby={
-									maxPortShareField.helperText
-										? maxPortShareHelperId
-										: undefined
-								}
-							>
-								<SelectValue />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="owner">
-									{tI18n(
-										"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.owner_4b1b8aa3",
-									)}
-								</SelectItem>
-								<SelectItem value="organization">
-									{tI18n(
-										"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.organization_d764d425",
-									)}
-								</SelectItem>
-								<SelectItem value="authenticated">
-									{tI18n(
-										"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.authenticated_6ab694cf",
-									)}
-								</SelectItem>
-								<SelectItem value="public">
-									{tI18n(
-										"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.public_591935b1",
-									)}
-								</SelectItem>
-							</SelectContent>
-						</Select>
-						{maxPortShareField.helperText && (
-							<span
-								id={maxPortShareHelperId}
-								className={cn(
-									"text-xs",
-									maxPortShareField.error
-										? "text-content-destructive"
-										: "text-content-secondary",
-								)}
-							>
-								{maxPortShareField.helperText}
-							</span>
-						)}
-					</div>
-					{!portSharingControlsEnabled && (
-						<div className="flex flex-row gap-4 items-center">
-							<PremiumBadge />
-							<span className="text-xs text-content-secondary">
-								{tI18n(
-									"TemplateSettingsPage.TemplateGeneralSettingsPage.TemplateSettingsForm.premium_license_required_to_control_max_port_sha_4063aba7",
-								)}
-							</span>
-						</div>
-					)}
 				</FormFields>
 			</FormSection>
 			<FormSection

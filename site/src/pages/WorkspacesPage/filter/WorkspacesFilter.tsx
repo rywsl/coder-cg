@@ -68,7 +68,9 @@ export const WorkspacesFilter: FC<WorkspaceFilterProps> = ({
 			},
 			{
 				key: "template",
-				label: "Template",
+				label: tI18n(
+					"WorkspacesPage.filter.WorkspacesFilter.template_0575f29d",
+				),
 				icon: <LayoutGridIcon />,
 				getOptions: (query) => getTemplateFilterOptions(query, queryClient),
 			},

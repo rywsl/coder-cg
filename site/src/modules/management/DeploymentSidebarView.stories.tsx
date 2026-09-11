@@ -15,7 +15,6 @@ const meta: Meta<typeof DeploymentSidebarView> = {
 	parameters: { showOrganizations: true },
 	args: {
 		permissions: MockPermissions,
-		hidePremiumTab: false,
 		experiments: [],
 		buildInfo: MockBuildInfo,
 	},
@@ -42,15 +41,6 @@ export const NoAuditLog: Story = {
 	},
 };
 
-export const NoLicenses: Story = {
-	args: {
-		permissions: {
-			...MockPermissions,
-			viewAllLicenses: false,
-		},
-	},
-};
-
 export const NoDeploymentValues: Story = {
 	args: {
 		permissions: {
@@ -67,30 +57,14 @@ export const NoPermissions: Story = {
 	},
 };
 
-export const PremiumTabVisible: Story = {
+export const CommercialEntriesHidden: Story = {
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
-
 		await expect(
-			canvas.getByRole("link", { name: "Trial Upgrade" }),
-		).toHaveAttribute("href", "/deployment/premium");
-	},
-};
-
-// A licensed, non-trialing deployment has nothing to upsell.
-export const PremiumTabHidden: Story = {
-	args: {
-		hidePremiumTab: true,
-	},
-	play: async ({ canvasElement }) => {
-		const canvas = within(canvasElement);
-
-		await expect(
-			canvas.queryByRole("link", { name: "Trial Upgrade" }),
+			canvas.queryByRole("link", { name: /Trial|Premium|License/ }),
 		).not.toBeInTheDocument();
-		// A neighbouring item must survive the change.
 		await expect(
-			canvas.getByRole("link", { name: "Licenses" }),
+			canvas.getByRole("link", { name: "Network" }),
 		).toBeInTheDocument();
 	},
 };

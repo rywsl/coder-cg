@@ -48,14 +48,19 @@ const AddProviderPageView: React.FC<AddProviderPageViewProps> = ({
 				<div className="flex items-center gap-4 min-w-0">
 					<Avatar variant="icon" size="lg" src={icon || defaultIcon} />
 					<SettingsHeaderTitle>
-						{tI18n(
-							"AISettingsPage.ProvidersPage.AddProviderPage.AddProviderPageView.add_value0_value1_provider_b589ed14",
-							{
-								value0: indefiniteArticle(provider.label),
-
-								value1: provider.label,
-							},
-						)}
+						{provider.value === "openai-compat"
+							? tI18n(
+									"AISettingsPage.ProvidersPage.AddProviderPage.AddProviderPageView.add_an_openai_compatible_provider_5d50c1f2",
+								)
+							: indefiniteArticle(provider.label) === "an"
+								? tI18n(
+										"AISettingsPage.ProvidersPage.AddProviderPage.AddProviderPageView.add_an_value0_provider_52cc66ed",
+										{ value0: provider.label },
+									)
+								: tI18n(
+										"AISettingsPage.ProvidersPage.AddProviderPage.AddProviderPageView.add_a_value0_provider_5af7e95b",
+										{ value0: provider.label },
+									)}
 					</SettingsHeaderTitle>
 				</div>
 				<p className="text-sm text-content-secondary m-0">

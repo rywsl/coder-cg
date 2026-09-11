@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { Outlet } from "react-router";
 import type { DeploymentConfig } from "#/api/api";
 import { deploymentConfig } from "#/api/queries/deployment";
+import { isCommunityDeploymentOption } from "#/communityPolicy";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
 import { Loader } from "#/components/Loader/Loader";
 
@@ -35,10 +36,16 @@ const DeploymentConfigProvider: FC = () => {
 	if (!deploymentConfigQuery.data) {
 		return <Loader />;
 	}
+	const filteredDeploymentConfig = {
+		...deploymentConfigQuery.data,
+		options: deploymentConfigQuery.data.options.filter(
+			isCommunityDeploymentOption,
+		),
+	};
 
 	return (
 		<DeploymentConfigContext.Provider
-			value={{ deploymentConfig: deploymentConfigQuery.data }}
+			value={{ deploymentConfig: filteredDeploymentConfig }}
 		>
 			<Outlet />
 		</DeploymentConfigContext.Provider>

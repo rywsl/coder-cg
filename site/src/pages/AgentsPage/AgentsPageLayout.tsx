@@ -857,7 +857,7 @@ const AgentsPageLayout: FC = () => {
 				isOpen={deleteDialogOpen}
 				onConfirm={handleConfirmArchiveAndDelete}
 				onCancel={() => setPendingArchiveAndDelete(null)}
-				entity="workspace"
+				entity={tI18n("AgentsPage.AgentsPageLayout.workspace_21a3230e")}
 				name={pendingWorkspaceName}
 				confirmLoading={archiveAndDeleteMutation.isPending}
 				title={tI18n(

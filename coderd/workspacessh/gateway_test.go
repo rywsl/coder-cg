@@ -586,7 +586,7 @@ func TestGatewayAcceptBackoff(t *testing.T) {
 		config:   Config{Logger: slogtest.Make(t, nil)},
 		listener: listener,
 		ctx:      ctx,
-		metrics:  newMetrics(),
+		metrics:  newGatewayMetrics(),
 	}
 	gateway.wg.Add(1)
 	go gateway.serve()
@@ -631,7 +631,7 @@ func TestGatewayEventRecording(t *testing.T) {
 		t.Parallel()
 		gateway := &Gateway{
 			config:  Config{Record: func(context.Context, ConnectionEvent) {}},
-			metrics: newMetrics(),
+			metrics: newGatewayMetrics(),
 			records: make(chan ConnectionEvent, 1),
 		}
 		gateway.record(ConnectionEvent{})

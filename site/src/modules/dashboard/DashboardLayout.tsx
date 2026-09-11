@@ -5,7 +5,6 @@ import { Outlet } from "react-router";
 import { Loader } from "#/components/Loader/Loader";
 import { useAuthenticated } from "#/hooks/useAuthenticated";
 import { AnnouncementBanners } from "#/modules/dashboard/AnnouncementBanners/AnnouncementBanners";
-import { LicenseBanner } from "#/modules/dashboard/LicenseBanner/LicenseBanner";
 import { DeploymentBanner } from "./DeploymentBanner/DeploymentBanner";
 import { Navbar } from "./Navbar/Navbar";
 import { UpdateCheckNotice } from "./UpdateCheckNotice/UpdateCheckNotice";
@@ -16,11 +15,9 @@ export const DashboardLayout: FC = () => {
 
 	const { permissions } = useAuthenticated();
 	const updateCheck = useUpdateCheck(permissions.viewDeploymentConfig);
-	const canViewDeployment = Boolean(permissions.viewDeploymentConfig);
 
 	return (
 		<>
-			{canViewDeployment && <LicenseBanner />}
 			<AnnouncementBanners />
 			<div className="flex flex-col min-h-screen justify-between">
 				{/* biome-ignore lint/a11y/useValidAnchor: Skip links use fragment anchors by design. */}

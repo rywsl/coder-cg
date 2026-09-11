@@ -583,9 +583,17 @@ func TestWorkspaceSSHDeviceNameCharacterLimit(t *testing.T) {
 
 func TestWorkspaceSSHBootstrapAgentAvailability(t *testing.T) {
 	t.Parallel()
-	client, _, api := coderdtest.NewWithAPI(t, nil)
+	client, _, api := coderdtest.NewWithAPI(t, &coderdtest.Options{
+		AccessURL: &url.URL{Scheme: "https", Host: "coder.example.test"},
+	})
 	user := coderdtest.CreateFirstUser(t, client)
-	api.SSHConfig.WorkspaceSSHGateway = &codersdk.WorkspaceSSHGatewayInfo{Enabled: true, AliasSuffix: "coder"}
+	ctx := testutil.Context(t, testutil.WaitLong)
+	_, err := client.UpdateWorkspaceSSHGateway(ctx, codersdk.UpdateWorkspaceSSHGatewayRequest{
+		Config: testWorkspaceSSHGatewayRuntimeConfig("127.0.0.1:0"), CodexAPIKey: "test-key",
+	})
+	require.NoError(t, err)
+	_, err = client.StartWorkspaceSSHGateway(ctx)
+	require.NoError(t, err)
 	db := api.Database
 
 	tests := []struct {

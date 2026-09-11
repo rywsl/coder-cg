@@ -434,8 +434,8 @@ type workspaceSSHDesktopTarget struct {
 
 func (api *API) workspaceSSHTarget(waws database.GetWorkspaceAgentAndWorkspaceByIDRow) workspaceSSHDesktopTarget {
 	suffix := api.SSHConfig.HostnameSuffix
-	if api.SSHConfig.WorkspaceSSHGateway != nil {
-		suffix = api.SSHConfig.WorkspaceSSHGateway.AliasSuffix
+	if gateway := api.workspaceSSHGatewayInfo(); gateway != nil {
+		suffix = gateway.AliasSuffix
 	}
 	alias := strings.Join([]string{waws.WorkspaceAgent.Name, waws.WorkspaceTable.Name, waws.OwnerUsername, suffix}, ".")
 	query := url.Values{
@@ -519,7 +519,7 @@ func workspaceSSHEnrollmentTokenHash(token string) ([]byte, bool) {
 }
 
 func (api *API) workspaceSSHGatewayEnabled(rw http.ResponseWriter, r *http.Request) bool {
-	gateway := api.SSHConfig.WorkspaceSSHGateway
+	gateway := api.workspaceSSHGatewayInfo()
 	if gateway == nil || !gateway.Enabled {
 		httpapi.Write(r.Context(), rw, http.StatusNotFound, codersdk.Response{Message: "Workspace SSH gateway is disabled."})
 		return false
@@ -674,7 +674,7 @@ func powershellQuote(value string) string {
 }
 
 func (api *API) workspaceSSHBashScript(registrationURL, token, locale string, target workspaceSSHDesktopTarget) string {
-	gateway := api.SSHConfig.WorkspaceSSHGateway
+	gateway := api.workspaceSSHGatewayInfo()
 	marker := "CODER CHATGPT DESKTOP " + api.DeploymentID
 	keyName := "coder_chatgpt_ed25519_" + api.DeploymentID
 	knownHostsName := "coder_chatgpt_known_hosts_" + api.DeploymentID
@@ -741,7 +741,7 @@ fi
 }
 
 func (api *API) workspaceSSHPowerShellScript(registrationURL, token, locale string, target workspaceSSHDesktopTarget) string {
-	gateway := api.SSHConfig.WorkspaceSSHGateway
+	gateway := api.workspaceSSHGatewayInfo()
 	marker := "CODER CHATGPT DESKTOP " + api.DeploymentID
 	keyName := "coder_chatgpt_ed25519_" + api.DeploymentID
 	knownHostsName := "coder_chatgpt_known_hosts_" + api.DeploymentID

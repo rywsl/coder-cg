@@ -1,13 +1,9 @@
 import { EllipsisVerticalIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
-import type {
-	Group,
-	OrganizationMemberWithUserData,
-} from "#/api/typesGenerated";
+import type { OrganizationMemberWithUserData } from "#/api/typesGenerated";
 import { Avatar } from "#/components/Avatar/Avatar";
 import { AvatarData } from "#/components/Avatar/AvatarData";
-import { PremiumBadge } from "#/components/Badge/PresetBadges";
 import { Button } from "#/components/Button/Button";
 import {
 	DropdownMenu,
@@ -26,17 +22,13 @@ import {
 } from "#/components/Table/Table";
 import { TableEmpty } from "#/components/TableEmpty/TableEmpty";
 import { TableLoader } from "#/components/TableLoader/TableLoader";
-import { UserGroupsCell } from "#/modules/users/UserGroupsCell";
-import {
-	GroupsHelpPopover,
-	RolesHelpPopover,
-} from "#/modules/users/UserHelpPopovers";
+import { RolesHelpPopover } from "#/modules/users/UserHelpPopovers";
 import { UserRoleCell } from "#/modules/users/UserRoleCell";
 
 export type OrganizationMembersTableProps = {
 	// State
 	organizationName: string;
-	members: Array<OrganizationMemberTableEntry> | undefined;
+	members: readonly OrganizationMemberWithUserData[] | undefined;
 
 	// Actions
 	onEditMemberRoles: (member: OrganizationMemberWithUserData) => void;
@@ -50,11 +42,6 @@ export type OrganizationMembersTableProps = {
 	 */
 	me: string;
 	canEditMembers: boolean;
-	canViewActivity: boolean;
-};
-
-type OrganizationMemberTableEntry = OrganizationMemberWithUserData & {
-	groups: readonly Group[] | undefined;
 };
 
 export const OrganizationMembersTable: React.FC<
@@ -81,16 +68,6 @@ export const OrganizationMembersTable: React.FC<
 							<RolesHelpPopover />
 						</div>
 					</TableHead>
-					<TableHead className="w-1/6">
-						<div className="flex flex-row items-center gap-2">
-							<span>
-								{tI18n(
-									"OrganizationSettingsPage.OrganizationMembersTable.groups_39bbb719",
-								)}
-							</span>
-							<GroupsHelpPopover />
-						</div>
-					</TableHead>
 				</TableRow>
 			</TableHeader>
 			<TableBody>
@@ -110,7 +87,6 @@ const OrganizationMembersTableBody: React.FC<OrganizationMembersTableProps> = ({
 
 	me,
 	canEditMembers,
-	canViewActivity,
 }) => {
 	const { t: tI18n } = useTranslation("administration");
 
@@ -149,7 +125,6 @@ const OrganizationMembersTableBody: React.FC<OrganizationMembersTableProps> = ({
 						globalRoles={member.global_roles}
 						roles={member.roles}
 					/>
-					<UserGroupsCell userGroups={member.groups} />
 					<TableCell className="w-px whitespace-nowrap text-right">
 						<div className="flex justify-end">
 							{member.user_id !== me && canEditMembers && (
@@ -180,19 +155,6 @@ const OrganizationMembersTableBody: React.FC<OrganizationMembersTableProps> = ({
 												)}
 											</Link>
 										</DropdownMenuItem>
-
-										{canViewActivity && (
-											<DropdownMenuItem asChild disabled={!canViewActivity}>
-												<Link
-													to={`/audit?filter=${encodeURIComponent(`username:${member.username} organization:${organizationName}`)}`}
-												>
-													{tI18n(
-														"OrganizationSettingsPage.OrganizationMembersTable.view_activity_c469de16",
-													)}
-													{!canViewActivity && <PremiumBadge />}
-												</Link>
-											</DropdownMenuItem>
-										)}
 
 										<DropdownMenuItem
 											disabled={isUpdatingMemberRoles}

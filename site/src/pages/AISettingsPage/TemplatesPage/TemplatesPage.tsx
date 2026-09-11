@@ -101,7 +101,9 @@ const TemplatesPage: FC = () => {
 		<RequirePermission isFeatureVisible={canManageTemplates}>
 			<title>
 				{pageTitle(
-					"Templates",
+					tI18n(
+						"AISettingsPage.TemplatesPage.TemplatesPage.templates_56b564b7",
+					),
 					tI18n(
 						"AISettingsPage.TemplatesPage.TemplatesPage.ai_settings_a8e5e2c6",
 					),

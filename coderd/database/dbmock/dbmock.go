@@ -1742,6 +1742,20 @@ func (mr *MockStoreMockRecorder) DeleteWorkspaceAgentPortSharesByTemplate(ctx, t
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteWorkspaceAgentPortSharesByTemplate", reflect.TypeOf((*MockStore)(nil).DeleteWorkspaceAgentPortSharesByTemplate), ctx, templateID)
 }
 
+// DeleteWorkspaceSSHGatewayCodexAPIKey mocks base method.
+func (m *MockStore) DeleteWorkspaceSSHGatewayCodexAPIKey(ctx context.Context) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteWorkspaceSSHGatewayCodexAPIKey", ctx)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteWorkspaceSSHGatewayCodexAPIKey indicates an expected call of DeleteWorkspaceSSHGatewayCodexAPIKey.
+func (mr *MockStoreMockRecorder) DeleteWorkspaceSSHGatewayCodexAPIKey(ctx any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteWorkspaceSSHGatewayCodexAPIKey", reflect.TypeOf((*MockStore)(nil).DeleteWorkspaceSSHGatewayCodexAPIKey), ctx)
+}
+
 // DeleteWorkspaceSSHKeyByID mocks base method.
 func (m *MockStore) DeleteWorkspaceSSHKeyByID(ctx context.Context, arg database.DeleteWorkspaceSSHKeyByIDParams) (database.WorkspaceSshKey, error) {
 	m.ctrl.T.Helper()
@@ -7602,6 +7616,21 @@ func (mr *MockStoreMockRecorder) GetWorkspaceSSHBootstrapTargetByAgentID(ctx, id
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspaceSSHBootstrapTargetByAgentID", reflect.TypeOf((*MockStore)(nil).GetWorkspaceSSHBootstrapTargetByAgentID), ctx, id)
 }
 
+// GetWorkspaceSSHGatewayConfig mocks base method.
+func (m *MockStore) GetWorkspaceSSHGatewayConfig(ctx context.Context) (database.GetWorkspaceSSHGatewayConfigRow, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetWorkspaceSSHGatewayConfig", ctx)
+	ret0, _ := ret[0].(database.GetWorkspaceSSHGatewayConfigRow)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetWorkspaceSSHGatewayConfig indicates an expected call of GetWorkspaceSSHGatewayConfig.
+func (mr *MockStoreMockRecorder) GetWorkspaceSSHGatewayConfig(ctx any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspaceSSHGatewayConfig", reflect.TypeOf((*MockStore)(nil).GetWorkspaceSSHGatewayConfig), ctx)
+}
+
 // GetWorkspaceSSHGatewayTarget mocks base method.
 func (m *MockStore) GetWorkspaceSSHGatewayTarget(ctx context.Context, arg database.GetWorkspaceSSHGatewayTargetParams) (database.GetWorkspaceSSHGatewayTargetRow, error) {
 	m.ctrl.T.Helper()
@@ -12846,6 +12875,48 @@ func (m *MockStore) UpsertWorkspaceAppAuditSession(ctx context.Context, arg data
 func (mr *MockStoreMockRecorder) UpsertWorkspaceAppAuditSession(ctx, arg any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpsertWorkspaceAppAuditSession", reflect.TypeOf((*MockStore)(nil).UpsertWorkspaceAppAuditSession), ctx, arg)
+}
+
+// UpsertWorkspaceSSHGatewayCodexAPIKey mocks base method.
+func (m *MockStore) UpsertWorkspaceSSHGatewayCodexAPIKey(ctx context.Context, codexApiKey string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpsertWorkspaceSSHGatewayCodexAPIKey", ctx, codexApiKey)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpsertWorkspaceSSHGatewayCodexAPIKey indicates an expected call of UpsertWorkspaceSSHGatewayCodexAPIKey.
+func (mr *MockStoreMockRecorder) UpsertWorkspaceSSHGatewayCodexAPIKey(ctx, codexApiKey any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpsertWorkspaceSSHGatewayCodexAPIKey", reflect.TypeOf((*MockStore)(nil).UpsertWorkspaceSSHGatewayCodexAPIKey), ctx, codexApiKey)
+}
+
+// UpsertWorkspaceSSHGatewayConfig mocks base method.
+func (m *MockStore) UpsertWorkspaceSSHGatewayConfig(ctx context.Context, config string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpsertWorkspaceSSHGatewayConfig", ctx, config)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpsertWorkspaceSSHGatewayConfig indicates an expected call of UpsertWorkspaceSSHGatewayConfig.
+func (mr *MockStoreMockRecorder) UpsertWorkspaceSSHGatewayConfig(ctx, config any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpsertWorkspaceSSHGatewayConfig", reflect.TypeOf((*MockStore)(nil).UpsertWorkspaceSSHGatewayConfig), ctx, config)
+}
+
+// UpsertWorkspaceSSHGatewayHostPrivateKey mocks base method.
+func (m *MockStore) UpsertWorkspaceSSHGatewayHostPrivateKey(ctx context.Context, hostPrivateKey string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpsertWorkspaceSSHGatewayHostPrivateKey", ctx, hostPrivateKey)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpsertWorkspaceSSHGatewayHostPrivateKey indicates an expected call of UpsertWorkspaceSSHGatewayHostPrivateKey.
+func (mr *MockStoreMockRecorder) UpsertWorkspaceSSHGatewayHostPrivateKey(ctx, hostPrivateKey any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpsertWorkspaceSSHGatewayHostPrivateKey", reflect.TypeOf((*MockStore)(nil).UpsertWorkspaceSSHGatewayHostPrivateKey), ctx, hostPrivateKey)
 }
 
 // UsageEventExistsByID mocks base method.

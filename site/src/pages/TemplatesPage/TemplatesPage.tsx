@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router";
 import { checkAuthorization } from "#/api/queries/authCheck";
@@ -13,6 +14,8 @@ import { useTemplatesFilter } from "./TemplatesFilter";
 import { TemplatesPageView } from "./TemplatesPageView";
 
 const TemplatesPage: FC = () => {
+	const { t: tI18n } = useTranslation("templates");
+
 	const { permissions, user: me } = useAuthenticated();
 	const { organizations, showOrganizations } = useDashboard();
 
@@ -66,7 +69,9 @@ const TemplatesPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Templates")}</title>
+			<title>
+				{pageTitle(tI18n("TemplatesPage.TemplatesPage.templates_56b564b7"))}
+			</title>
 			<TemplatesPageView
 				error={error}
 				filterState={filterState}

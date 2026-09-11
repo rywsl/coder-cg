@@ -19,7 +19,6 @@ import type {
 } from "#/api/typesGenerated";
 import { ErrorAlert } from "#/components/Alert/ErrorAlert";
 import { useProxy } from "#/contexts/ProxyContext";
-import { useAuthenticated } from "#/hooks/useAuthenticated";
 import {
 	getAgentBrowserApp,
 	isWorkspaceAppEmbeddable,
@@ -419,7 +418,6 @@ export const AgentChatPageView: FC<AgentChatPageViewProps> = ({
 	const queryClient = useQueryClient();
 	const { proxy } = useProxy();
 	const { entitlements } = useDashboard();
-	const { permissions } = useAuthenticated();
 	const wildcardHostname = proxy.preferredWildcardHostname;
 
 	const canOpenChatSharing = canShareChat && organizationId !== undefined;
@@ -902,8 +900,6 @@ export const AgentChatPageView: FC<AgentChatPageViewProps> = ({
 			)
 		: undefined;
 
-	const hasLicense = entitlements.has_license;
-	const canManageLicenses = permissions.viewAllLicenses;
 	const runtimeHours = entitlements.features.agent_runtime_hours;
 	const agentHoursHardLimit =
 		runtimeHours.enabled &&
@@ -1053,8 +1049,6 @@ export const AgentChatPageView: FC<AgentChatPageViewProps> = ({
 								footer={
 									queuedForCapacity ? (
 										<QueuedForCapacityCallout
-											hasLicense={hasLicense}
-											canManageLicenses={canManageLicenses}
 											agentHoursHardLimit={agentHoursHardLimit}
 										/>
 									) : undefined

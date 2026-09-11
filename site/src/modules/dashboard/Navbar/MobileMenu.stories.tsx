@@ -1,31 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { FC } from "react";
-import { fn, userEvent, within } from "storybook/test";
+import { expect, fn, userEvent, within } from "storybook/test";
 import {
-	MockPrimaryWorkspaceProxy,
-	MockProxyLatencies,
 	MockSupportLinks,
 	MockUserMember,
 	MockUserOwner,
-	MockWorkspaceProxies,
 } from "#/testHelpers/entities";
 import { MobileMenu } from "./MobileMenu";
-
-const defaultProxyContextValue = {
-	latenciesLoaded: true,
-	proxy: {
-		preferredPathAppURL: "",
-		preferredWildcardHostname: "",
-		proxy: MockPrimaryWorkspaceProxy,
-	},
-	isLoading: false,
-	isFetched: true,
-	setProxy: fn(),
-	clearProxy: fn(),
-	refetchProxyLatencies: fn(),
-	proxyLatencies: MockProxyLatencies,
-	proxies: MockWorkspaceProxies,
-};
 
 const meta: Meta<typeof MobileMenu> = {
 	title: "modules/dashboard/MobileMenu",
@@ -37,7 +18,6 @@ const meta: Meta<typeof MobileMenu> = {
 	},
 	component: MobileMenu,
 	args: {
-		proxyContextValue: defaultProxyContextValue,
 		user: MockUserOwner,
 		supportLinks: MockSupportLinks,
 		onSignOut: fn(),
@@ -46,9 +26,6 @@ const meta: Meta<typeof MobileMenu> = {
 			canViewDeployment: true,
 			canViewOrganizations: true,
 			canViewAISettings: true,
-			canViewAuditLog: true,
-			canViewConnectionLog: true,
-			canViewAIBridge: true,
 			canViewHealth: true,
 		},
 	},
@@ -65,24 +42,20 @@ export const Closed: Story = {
 };
 
 export const Admin: Story = {
-	play: openAdminSettings,
-};
-
-export const Auditor: Story = {
-	args: {
-		user: MockUserMember,
-		adminPermissions: {
-			canViewAuditLog: true,
-		},
+	play: async (context) => {
+		await openAdminSettings(context);
+		const body = within(context.canvasElement.ownerDocument.body);
+		await expect(body.queryByText(/workspace proxy/i)).not.toBeInTheDocument();
+		await expect(body.queryByText(/audit/i)).not.toBeInTheDocument();
+		await expect(body.queryByText(/connection log/i)).not.toBeInTheDocument();
+		await expect(body.queryByText(/AI sessions/i)).not.toBeInTheDocument();
 	},
-	play: openAdminSettings,
 };
 
 export const OrgAdmin: Story = {
 	args: {
 		user: MockUserMember,
 		adminPermissions: {
-			canViewAuditLog: true,
 			canViewOrganizations: true,
 		},
 	},
@@ -93,64 +66,6 @@ export const Member: Story = {
 	args: {
 		user: MockUserMember,
 		adminPermissions: {},
-	},
-};
-
-export const ProxySettings: Story = {
-	play: async ({ canvasElement }) => {
-		const user = userEvent.setup();
-		const body = within(canvasElement.ownerDocument.body);
-		const menuItem = await body.findByRole("menuitem", {
-			name: /workspace proxy settings/i,
-		});
-		await user.click(menuItem);
-	},
-};
-
-export const ProxyWarningLatency: Story = {
-	args: {
-		proxyContextValue: {
-			...defaultProxyContextValue,
-			proxyLatencies: {
-				...MockProxyLatencies,
-				[MockPrimaryWorkspaceProxy.id]: {
-					accurate: true,
-					latencyMS: 224,
-					at: new Date(),
-					nextHopProtocol: "h2",
-				},
-			},
-		},
-	},
-};
-
-export const ProxyCriticalLatency: Story = {
-	args: {
-		proxyContextValue: {
-			...defaultProxyContextValue,
-			proxyLatencies: {
-				...MockProxyLatencies,
-				[MockPrimaryWorkspaceProxy.id]: {
-					accurate: true,
-					latencyMS: 471,
-					at: new Date(),
-					nextHopProtocol: "h2",
-				},
-			},
-		},
-	},
-};
-
-export const ProxyNoLatency: Story = {
-	args: {
-		proxyContextValue: {
-			...defaultProxyContextValue,
-			proxyLatencies: Object.fromEntries(
-				Object.entries(MockProxyLatencies).filter(
-					([id]) => id !== MockPrimaryWorkspaceProxy.id,
-				),
-			),
-		},
 	},
 };
 

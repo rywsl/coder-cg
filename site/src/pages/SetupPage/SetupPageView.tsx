@@ -3,7 +3,6 @@ import { type FormikContextType, useFormik } from "formik";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
-import { countries } from "#/api/countriesGenerated";
 import type * as TypesGen from "#/api/typesGenerated";
 import { Alert, AlertDescription, AlertTitle } from "#/components/Alert/Alert";
 import { Button } from "#/components/Button/Button";
@@ -13,16 +12,9 @@ import { FormField } from "#/components/FormField/FormField";
 import { ProductLogo } from "#/components/Icons/ProductLogo";
 import { LanguageMenu } from "#/components/LanguageMenu/LanguageMenu";
 import { PasswordField } from "#/components/PasswordField/PasswordField";
-import { SelectItem } from "#/components/Select/Select";
-import { SelectField } from "#/components/SelectField/SelectField";
 import { Spinner } from "#/components/Spinner/Spinner";
 import { i18n } from "#/i18n";
 import { PrivacyPolicyNotice } from "#/modules/licenses/PrivacyPolicyNotice";
-import {
-	CONTACT_SALES_LINK,
-	numberOfDevelopersOptions,
-	trialInfoValidationSchema,
-} from "#/modules/licenses/trialLicense";
 import {
 	getFormHelpers,
 	nameValidator,
@@ -64,11 +56,6 @@ const validationSchema = Yup.object({
 		i18n.t("auth:SetupPage.SetupPageView.please_enter_a_password_6c1a47f3"),
 	),
 	username: usernameValidator,
-	trial: Yup.bool(),
-	trial_info: Yup.object().when("trial", {
-		is: true,
-		then: () => trialInfoValidationSchema,
-	}),
 	onboarding_info: Yup.object().shape({
 		newsletter_marketing: Yup.bool(),
 		newsletter_releases: Yup.bool(),
@@ -182,118 +169,6 @@ export const SetupPageView: FC<SetupPageViewProps> = ({
 						disabled={isLoading}
 					/>
 
-					{/* Premium trial toggle */}
-					<label
-						htmlFor="trial"
-						className="flex cursor-pointer gap-2 items-start"
-					>
-						<Checkbox
-							id="trial"
-							name="trial"
-							checked={form.values.trial}
-							onCheckedChange={(checked) =>
-								form.setFieldValue("trial", checked === true)
-							}
-							data-testid="trial"
-							className="mt-0.5"
-							disabled={isLoading}
-						/>
-						<div className="flex flex-col items-start gap-0.5">
-							<span className="text-sm font-semibold">
-								{tI18n(
-									"SetupPage.SetupPageView.start_an_unlimited_30_day_coder_trial_27c16ec9",
-								)}
-							</span>
-							<span className="text-xs text-content-secondary leading-relaxed">
-								{tI18n(
-									"SetupPage.SetupPageView.get_access_to_high_availability_template_rbac_au_d3e0fa76",
-								)}
-							</span>
-							<a
-								href="https://coder.com/pricing"
-								target="_blank"
-								rel="noreferrer"
-								className="text-xs text-content-link hover:underline mt-0.5"
-								aria-label={tI18n(
-									"SetupPage.SetupPageView.learn_more_about_coder_premium_pricing_5ca4ba54",
-								)}
-							>
-								{tI18n("SetupPage.SetupPageView.learn_more_1445799c")}
-							</a>
-						</div>
-					</label>
-
-					{/* Conditional trial info fields */}
-					{form.values.trial && (
-						<div className="flex flex-col gap-4">
-							<div className="grid grid-cols-2 gap-3">
-								<FormField
-									label={tI18n("SetupPage.SetupPageView.first_name_702ef921")}
-									field={getFieldHelpers("trial_info.first_name")}
-									disabled={isLoading}
-								/>
-								<FormField
-									label={tI18n("SetupPage.SetupPageView.last_name_7b488804")}
-									field={getFieldHelpers("trial_info.last_name")}
-									disabled={isLoading}
-								/>
-							</div>
-
-							<div className="grid grid-cols-2 gap-3">
-								<FormField
-									label={tI18n("SetupPage.SetupPageView.company_de4743c8")}
-									field={getFieldHelpers("trial_info.company_name")}
-									disabled={isLoading}
-								/>
-								<SelectField
-									label={tI18n(
-										"SetupPage.SetupPageView.number_of_developers_adc0f6fb",
-									)}
-									field={getFieldHelpers("trial_info.developers")}
-									onValueChange={(value) =>
-										form.setFieldValue("trial_info.developers", value)
-									}
-									placeholder={tI18n("SetupPage.SetupPageView.select_1339bddc")}
-									disabled={isLoading}
-								>
-									{numberOfDevelopersOptions.map((opt) => (
-										<SelectItem key={opt} value={opt}>
-											{opt}
-										</SelectItem>
-									))}
-								</SelectField>
-							</div>
-							<FormField
-								label={tI18n("SetupPage.SetupPageView.job_title_86db80a8")}
-								field={getFieldHelpers("trial_info.job_title")}
-								disabled={isLoading}
-							/>
-
-							<div className="grid grid-cols-2 gap-3">
-								<FormField
-									label={tI18n("SetupPage.SetupPageView.phone_number_306f1bb2")}
-									field={getFieldHelpers("trial_info.phone_number")}
-									disabled={isLoading}
-								/>
-								<SelectField
-									label={tI18n("SetupPage.SetupPageView.country_701d021d")}
-									field={getFieldHelpers("trial_info.country")}
-									onValueChange={(value) =>
-										form.setFieldValue("trial_info.country", value)
-									}
-									placeholder={tI18n("SetupPage.SetupPageView.select_1339bddc")}
-									disabled={isLoading}
-								>
-									{countries.map((c) => (
-										<SelectItem key={c.name} value={c.name}>
-											{c.flag} {c.name}
-										</SelectItem>
-									))}
-								</SelectField>
-							</div>
-						</div>
-					)}
-
 					{/* Sign up for updates */}
 					<div className="flex flex-col gap-3">
 						<span className="text-sm font-semibold">
@@ -381,15 +256,6 @@ export const SetupPageView: FC<SetupPageViewProps> = ({
 							{error.response.data.detail && (
 								<AlertDescription>
 									{error.response.data.detail}
-									<br />
-									<a
-										target="_blank"
-										rel="noreferrer"
-										href={CONTACT_SALES_LINK}
-										className="text-content-link hover:underline"
-									>
-										{tI18n("SetupPage.SetupPageView.contact_sales_484aa053")}
-									</a>
 								</AlertDescription>
 							)}
 						</Alert>

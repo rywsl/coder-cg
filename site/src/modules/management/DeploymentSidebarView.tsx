@@ -1,8 +1,6 @@
-import { ArrowUpRightIcon } from "lucide-react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import type { BuildInfoResponse, Experiment } from "#/api/typesGenerated";
-import { PREMIUM_PAGE_PATH } from "#/components/Paywall/Paywall";
 import {
 	Sidebar as BaseSidebar,
 	SettingsSidebarNavItem as SidebarNavItem,
@@ -13,8 +11,6 @@ import { getPrereleaseFlag } from "#/utils/buildInfo";
 interface DeploymentSidebarViewProps {
 	/** Site-wide permissions. */
 	permissions: Permissions;
-	showOrganizations: boolean;
-	hidePremiumTab: boolean;
 	experiments: Experiment[];
 	buildInfo: BuildInfoResponse;
 }
@@ -25,8 +21,6 @@ interface DeploymentSidebarViewProps {
  */
 export const DeploymentSidebarView: FC<DeploymentSidebarViewProps> = ({
 	permissions,
-	showOrganizations,
-	hidePremiumTab,
 	experiments,
 	buildInfo,
 }) => {
@@ -38,11 +32,6 @@ export const DeploymentSidebarView: FC<DeploymentSidebarViewProps> = ({
 				{permissions.viewDeploymentConfig && (
 					<SidebarNavItem href="/deployment/overview">
 						{tI18n("management.DeploymentSidebarView.overview_d4b1ea57")}
-					</SidebarNavItem>
-				)}
-				{permissions.viewAllLicenses && (
-					<SidebarNavItem href="/deployment/licenses">
-						{tI18n("management.DeploymentSidebarView.licenses_6d5d9004")}
 					</SidebarNavItem>
 				)}
 				{permissions.editDeploymentConfig && (
@@ -78,13 +67,6 @@ export const DeploymentSidebarView: FC<DeploymentSidebarViewProps> = ({
 						{tI18n("management.DeploymentSidebarView.network_1744b964")}
 					</SidebarNavItem>
 				)}
-				{permissions.readWorkspaceProxies && (
-					<SidebarNavItem href="/deployment/workspace-proxies">
-						{tI18n(
-							"management.DeploymentSidebarView.workspace_proxies_62ee3d16",
-						)}
-					</SidebarNavItem>
-				)}
 				{permissions.viewDeploymentConfig && (
 					<SidebarNavItem href="/deployment/security">
 						{tI18n("management.DeploymentSidebarView.security_8f6fb4eb")}
@@ -101,21 +83,6 @@ export const DeploymentSidebarView: FC<DeploymentSidebarViewProps> = ({
 						{tI18n("management.DeploymentSidebarView.users_6b0cc904")}
 					</SidebarNavItem>
 				)}
-				{permissions.viewAnyGroup && (
-					<SidebarNavItem href="/deployment/groups">
-						<div className="flex flex-row items-center gap-1">
-							{tI18n("management.DeploymentSidebarView.groups_ffcf21b5")}
-							{showOrganizations && <ArrowUpRightIcon size={16} />}
-						</div>
-					</SidebarNavItem>
-				)}
-				{permissions.viewOrganizationIDPSyncSettings && (
-					<SidebarNavItem href="/deployment/idp-org-sync">
-						{tI18n(
-							"management.DeploymentSidebarView.idp_organization_sync_9d6641db",
-						)}
-					</SidebarNavItem>
-				)}
 				{permissions.viewNotificationTemplate && (
 					<SidebarNavItem href="/deployment/notifications">
 						<div className="flex flex-row items-center gap-2">
@@ -125,11 +92,6 @@ export const DeploymentSidebarView: FC<DeploymentSidebarViewProps> = ({
 								)}
 							</span>
 						</div>
-					</SidebarNavItem>
-				)}
-				{!hidePremiumTab && (
-					<SidebarNavItem href={PREMIUM_PAGE_PATH}>
-						{tI18n("management.DeploymentSidebarView.trial_upgrade_ee470e67")}
 					</SidebarNavItem>
 				)}
 			</div>

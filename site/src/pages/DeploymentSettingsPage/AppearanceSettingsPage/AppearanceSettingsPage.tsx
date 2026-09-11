@@ -14,14 +14,10 @@ import { RequirePermission } from "#/modules/permissions/RequirePermission";
 import { pageTitle } from "#/utils/page";
 import { AppearanceSettingsPageView } from "./AppearanceSettingsPageView";
 
-// ServiceBanner is unlike the other Deployment Settings pages because it
-// implements a form, whereas the others are read-only. We make this
-// exception because the Service Banner is visual, and configuring it from
-// the command line would be a significantly worse user experience.
 const AppearanceSettingsPage: FC = () => {
 	const { t: tI18n } = useTranslation("administration");
 
-	const { appearance, entitlements } = useDashboard();
+	const { appearance } = useDashboard();
 	const queryClient = useQueryClient();
 	const updateAppearanceMutation = useMutation(updateAppearance(queryClient));
 	const { permissions } = useAuthenticated();
@@ -70,10 +66,6 @@ const AppearanceSettingsPage: FC = () => {
 				<AppearanceSettingsPageView
 					appearance={appearance}
 					onSaveAppearance={onSaveAppearance}
-					isEntitled={
-						entitlements.features.appearance.entitlement !== "not_entitled"
-					}
-					canViewPremium={permissions.viewAllLicenses}
 				/>
 			</RequirePermission>
 		</>

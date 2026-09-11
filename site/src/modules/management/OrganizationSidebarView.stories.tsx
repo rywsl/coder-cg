@@ -3,11 +3,9 @@ import { expect, userEvent, waitFor, within } from "storybook/test";
 import type { Organization } from "#/api/typesGenerated";
 import {
 	MockNoOrganizationPermissions,
-	MockNoPermissions,
 	MockOrganization,
 	MockOrganization2,
 	MockOrganizationPermissions,
-	MockPermissions,
 } from "#/testHelpers/entities";
 import { withDashboardProvider } from "#/testHelpers/storybook";
 import { OrganizationSidebarView } from "./OrganizationSidebarView";
@@ -20,21 +18,16 @@ const meta: Meta<typeof OrganizationSidebarView> = {
 	args: {
 		activeOrganization: undefined,
 		organizations: [MockOrganization, MockOrganization2],
-		permissions: MockPermissions,
 	},
 };
 
 export default meta;
 type Story = StoryObj<typeof OrganizationSidebarView>;
 
-export const NoCreateOrg: Story = {
+export const CommercialEntriesHidden: Story = {
 	args: {
 		activeOrganization: MockOrganization,
-		orgPermissions: MockNoOrganizationPermissions,
-		permissions: {
-			...MockPermissions,
-			createOrganization: false,
-		},
+		orgPermissions: MockOrganizationPermissions,
 	},
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
@@ -44,6 +37,18 @@ export const NoCreateOrg: Story = {
 		await waitFor(() =>
 			expect(canvas.queryByText("Create Organization")).not.toBeInTheDocument(),
 		);
+		expect(
+			canvas.queryByRole("link", { name: "Groups" }),
+		).not.toBeInTheDocument();
+		expect(
+			canvas.queryByRole("link", { name: "Roles" }),
+		).not.toBeInTheDocument();
+		expect(
+			canvas.queryByRole("link", { name: "IdP Sync" }),
+		).not.toBeInTheDocument();
+		expect(
+			canvas.queryByRole("link", { name: "Provisioner Keys" }),
+		).not.toBeInTheDocument();
 	},
 };
 
@@ -51,10 +56,6 @@ export const OverflowDropdown: Story = {
 	args: {
 		activeOrganization: MockOrganization,
 		orgPermissions: MockOrganizationPermissions,
-		permissions: {
-			...MockPermissions,
-			createOrganization: true,
-		},
 		organizations: [
 			MockOrganization,
 			MockOrganization2,
@@ -128,7 +129,6 @@ export const NoOrganizations: Story = {
 		organizations: [],
 		activeOrganization: undefined,
 		orgPermissions: MockNoOrganizationPermissions,
-		permissions: MockNoPermissions,
 	},
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
@@ -143,7 +143,6 @@ export const NoOtherOrganizations: Story = {
 		organizations: [MockOrganization],
 		activeOrganization: MockOrganization,
 		orgPermissions: MockNoOrganizationPermissions,
-		permissions: MockNoPermissions,
 	},
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
@@ -157,7 +156,6 @@ export const NoPermissions: Story = {
 	args: {
 		activeOrganization: MockOrganization,
 		orgPermissions: MockNoOrganizationPermissions,
-		permissions: MockNoPermissions,
 	},
 };
 
@@ -181,10 +179,6 @@ export const SelectedOrgAuditor: Story = {
 	args: {
 		activeOrganization: MockOrganization,
 		orgPermissions: MockNoOrganizationPermissions,
-		permissions: {
-			...MockPermissions,
-			createOrganization: false,
-		},
 		organizations: [MockOrganization],
 	},
 };
@@ -199,10 +193,6 @@ export const SelectedOrgUserAdmin: Story = {
 			viewOrgRoles: true,
 			viewProvisioners: true,
 			viewIdpSyncSettings: true,
-		},
-		permissions: {
-			...MockPermissions,
-			createOrganization: false,
 		},
 		organizations: [MockOrganization],
 	},
@@ -225,10 +215,6 @@ export const OrgsSortedAlphabetically: Story = {
 	args: {
 		activeOrganization,
 		orgPermissions: MockOrganizationPermissions,
-		permissions: {
-			...MockPermissions,
-			createOrganization: true,
-		},
 		organizations: [
 			{
 				...MockOrganization,
@@ -254,7 +240,6 @@ export const OrgsSortedAlphabetically: Story = {
 export const SearchForOrg: Story = {
 	args: {
 		activeOrganization,
-		permissions: MockPermissions,
 		organizations: [
 			{
 				...MockOrganization,

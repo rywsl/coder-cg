@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { action } from "storybook/actions";
+import { expect, within } from "storybook/test";
 import { MockTemplate, mockApiError } from "#/testHelpers/entities";
 import { withDashboardProvider } from "#/testHelpers/storybook";
 import { TemplateSettingsPageView } from "./TemplateSettingsPageView";
@@ -19,7 +20,19 @@ const meta: Meta<typeof TemplateSettingsPageView> = {
 export default meta;
 type Story = StoryObj<typeof TemplateSettingsPageView>;
 
-export const Example: Story = {};
+export const Example: Story = {
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		await expect(canvas.getByRole("textbox", { name: "Name" })).toBeVisible();
+		await expect(canvas.queryByText(/premium/i)).not.toBeInTheDocument();
+		await expect(
+			canvas.queryByText(/deprecation message/i),
+		).not.toBeInTheDocument();
+		await expect(
+			canvas.queryByText(/maximum port sharing level/i),
+		).not.toBeInTheDocument();
+	},
+};
 
 export const AgentsNotAllowed: Story = {
 	args: {
@@ -44,25 +57,5 @@ export const SaveTemplateSettingsError: Story = {
 		initialTouched: {
 			allow_user_cancel_workspace_jobs: true,
 		},
-	},
-};
-
-export const NoEntitlements: Story = {
-	args: {
-		accessControlEnabled: false,
-		advancedSchedulingEnabled: false,
-	},
-};
-
-export const NoEntitlementsExpiredSettings: Story = {
-	args: {
-		template: {
-			...MockTemplate,
-			deprecated: true,
-			deprecation_message: "This template tastes bad",
-			require_active_version: true,
-		},
-		accessControlEnabled: false,
-		advancedSchedulingEnabled: false,
 	},
 };

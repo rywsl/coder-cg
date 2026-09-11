@@ -3,6 +3,7 @@ package i18n //nolint:testpackage // Verifies package-private embedded catalogs.
 import (
 	"fmt"
 	"reflect"
+	"regexp"
 	"sort"
 	"testing"
 
@@ -26,6 +27,9 @@ func TestTranslate(t *testing.T) {
 		{"Agent must be connected before configuring ChatGPT Desktop.", "配置 ChatGPT Desktop 前，Agent 必须已连接。"},
 		{"Agent must be ready before configuring ChatGPT Desktop.", "配置 ChatGPT Desktop 前，Agent 必须已就绪。"},
 		{"Agent must belong to the latest workspace build.", "Agent 必须属于工作区的最新构建。"},
+		{"A template with this name already exists in the organization.", "组织中已存在同名模板。"},
+		{"Failed to get workspace.", "获取工作区失败。"},
+		{"Unknown base template.", "未知基础模板。"},
 		{"Invalid enrollment form.", "设备注册表单无效。"},
 		{"Platform must be bash or powershell.", "平台必须是 bash 或 PowerShell。"},
 		{"device name must contain between 1 and 255 characters", "设备名称必须包含 1 至 255 个字符"},
@@ -87,13 +91,35 @@ func TestCatalogsMatch(t *testing.T) {
 	for key, value := range chinese.Messages {
 		require.NotEmpty(t, value, key)
 		require.NotContains(t, value, "zxqplaceholder", key)
+		assertLocalizedProductTerms(t, key, value)
+		require.NotContains(t, value, "碱基", key)
 	}
 	for _, entry := range chinese.Templates {
 		require.NotEmpty(t, entry.Translation, entry.Source)
 		require.NotContains(t, entry.Translation, "zxqplaceholder", entry.Source)
 		require.NotContains(t, entry.Translation, "ZXQTERM", entry.Source)
+		assertLocalizedProductTerms(t, entry.Source, entry.Translation)
+		require.NotContains(t, entry.Translation, "碱基", entry.Source)
 		englishEntry := findTemplate(t, english, entry.Source)
 		require.Equal(t, templateVariables(englishEntry.Translation), templateVariables(entry.Translation), entry.Source)
+	}
+}
+
+func assertLocalizedProductTerms(t *testing.T, source, translation string) {
+	t.Helper()
+	for _, term := range []struct {
+		source       *regexp.Regexp
+		untranslated *regexp.Regexp
+		translation  string
+	}{
+		{regexp.MustCompile(`(?i)\bworkspaces?\b`), regexp.MustCompile(`(?i)\bworkspaces?\b`), "工作区"},
+		{regexp.MustCompile(`(?i)\btemplates?\b`), regexp.MustCompile(`(?i)\btemplates?\b`), "模板"},
+	} {
+		if !term.source.MatchString(source) {
+			continue
+		}
+		require.Contains(t, translation, term.translation, source)
+		require.NotRegexp(t, term.untranslated, translation, source)
 	}
 }
 

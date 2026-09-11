@@ -801,6 +801,103 @@ type WorkspaceSSHGatewayConfig struct {
 	AuthAttemptsBurst          serpent.Int64  `json:"auth_attempts_burst" typescript:",notnull"`
 }
 
+// WorkspaceSSHGatewayRuntimeConfig is the deployment-managed configuration
+// for the workspace SSH gateway. Secrets and generated host key material are
+// intentionally excluded.
+type WorkspaceSSHGatewayRuntimeConfig struct {
+	ListenAddress              string `json:"listen_address"`
+	AdvertiseHost              string `json:"advertise_host"`
+	AdvertisePort              int64  `json:"advertise_port"`
+	CodexBaseURL               string `json:"codex_base_url"`
+	CodexModel                 string `json:"codex_model"`
+	MaxConnections             int64  `json:"max_connections"`
+	MaxPendingConnections      int64  `json:"max_pending_connections"`
+	MaxPendingConnectionsPerIP int64  `json:"max_pending_connections_per_ip"`
+	MaxConnectionsPerUser      int64  `json:"max_connections_per_user"`
+	MaxChannelsPerConnection   int64  `json:"max_channels_per_connection"`
+	AuthAttemptsPerMinute      int64  `json:"auth_attempts_per_minute"`
+	AuthAttemptsBurst          int64  `json:"auth_attempts_burst"`
+}
+
+// WorkspaceSSHGatewayState describes the local replica's gateway lifecycle.
+type WorkspaceSSHGatewayState string
+
+const (
+	WorkspaceSSHGatewayStateStopped  WorkspaceSSHGatewayState = "stopped"
+	WorkspaceSSHGatewayStateStarting WorkspaceSSHGatewayState = "starting"
+	WorkspaceSSHGatewayStateRunning  WorkspaceSSHGatewayState = "running"
+	WorkspaceSSHGatewayStateStopping WorkspaceSSHGatewayState = "stopping"
+	WorkspaceSSHGatewayStateError    WorkspaceSSHGatewayState = "error"
+)
+
+// WorkspaceSSHGatewayStatus is the administrator-facing gateway state. It
+// never contains the Codex API key or SSH host private key.
+type WorkspaceSSHGatewayStatus struct {
+	Config             WorkspaceSSHGatewayRuntimeConfig `json:"config"`
+	Configured         bool                             `json:"configured"`
+	DesiredEnabled     bool                             `json:"desired_enabled"`
+	State              WorkspaceSSHGatewayState         `json:"state"`
+	APIKeyConfigured   bool                             `json:"api_key_configured"`
+	HostPublicKey      string                           `json:"host_public_key"`
+	HostKeyFingerprint string                           `json:"host_key_fingerprint"`
+	BoundAddress       string                           `json:"bound_address"`
+	ErrorCode          string                           `json:"error_code"`
+}
+
+// UpdateWorkspaceSSHGatewayRequest updates a stopped gateway. An omitted or
+// empty Codex API key preserves the stored value. ClearCodexAPIKey explicitly
+// removes it.
+type UpdateWorkspaceSSHGatewayRequest struct {
+	Config           WorkspaceSSHGatewayRuntimeConfig `json:"config"`
+	CodexAPIKey      string                           `json:"codex_api_key,omitempty"`
+	ClearCodexAPIKey bool                             `json:"clear_codex_api_key"`
+}
+
+// Validate checks the non-secret runtime configuration.
+func (c WorkspaceSSHGatewayRuntimeConfig) Validate() error {
+	_, port, err := net.SplitHostPort(c.ListenAddress)
+	if err != nil {
+		return xerrors.Errorf("workspace SSH gateway listen address: %w", err)
+	}
+	if _, err := strconv.ParseUint(port, 10, 16); err != nil {
+		return xerrors.New("workspace SSH gateway listen port must be between 0 and 65535")
+	}
+	if !validWorkspaceSSHGatewayHost(c.AdvertiseHost) {
+		return xerrors.New("workspace SSH gateway advertise host is required and must be one hostname or IP address")
+	}
+	if c.AdvertisePort < 1 || c.AdvertisePort > 65535 {
+		return xerrors.New("workspace SSH gateway advertise port must be between 1 and 65535")
+	}
+	baseURL, err := url.Parse(c.CodexBaseURL)
+	if err != nil || baseURL.Scheme == "" || baseURL.Host == "" || baseURL.Hostname() == "" || baseURL.User != nil || baseURL.RawQuery != "" || baseURL.Fragment != "" || (baseURL.Scheme != "http" && baseURL.Scheme != "https") {
+		return xerrors.New("workspace SSH gateway Codex base URL must be an absolute HTTP or HTTPS URL")
+	}
+	if strings.TrimSpace(c.CodexModel) == "" {
+		return xerrors.New("workspace SSH gateway Codex model is required")
+	}
+	limits := []struct {
+		name  string
+		value int64
+	}{
+		{"maximum connections", c.MaxConnections},
+		{"maximum pending connections", c.MaxPendingConnections},
+		{"maximum pending connections per IP", c.MaxPendingConnectionsPerIP},
+		{"maximum connections per user", c.MaxConnectionsPerUser},
+		{"maximum channels per connection", c.MaxChannelsPerConnection},
+		{"authentication attempts per minute", c.AuthAttemptsPerMinute},
+		{"authentication attempt burst", c.AuthAttemptsBurst},
+	}
+	for _, limit := range limits {
+		if limit.value <= 0 {
+			return xerrors.Errorf("workspace SSH gateway %s must be positive", limit.name)
+		}
+	}
+	if c.MaxPendingConnections > c.MaxConnections {
+		return xerrors.New("workspace SSH gateway maximum pending connections must not exceed maximum connections")
+	}
+	return nil
+}
+
 func (c SSHConfig) ParseOptions() (map[string]string, error) {
 	m := make(map[string]string)
 	for _, opt := range c.SSHConfigOptions {
@@ -5426,52 +5523,6 @@ func (c *DeploymentValues) Validate() error {
 		)
 	}
 
-	if c.WorkspaceSSHGateway.Enabled.Value() {
-		gateway := c.WorkspaceSSHGateway
-		if _, _, err := net.SplitHostPort(gateway.ListenAddress.Value()); err != nil {
-			return xerrors.Errorf("workspace SSH gateway listen address: %w", err)
-		}
-		if !validWorkspaceSSHGatewayHost(gateway.AdvertiseHost.Value()) {
-			return xerrors.New("workspace SSH gateway advertise host is required and must be one hostname or IP address")
-		}
-		if port := gateway.AdvertisePort.Value(); port < 1 || port > 65535 {
-			return xerrors.New("workspace SSH gateway advertise port must be between 1 and 65535")
-		}
-		if strings.TrimSpace(gateway.HostKeyFile.Value()) == "" {
-			return xerrors.New("workspace SSH gateway host key file is required")
-		}
-		baseURL, err := url.Parse(gateway.CodexBaseURL.Value())
-		if err != nil || baseURL.Scheme == "" || baseURL.Host == "" || (baseURL.Scheme != "http" && baseURL.Scheme != "https") {
-			return xerrors.New("workspace SSH gateway Codex base URL must be an absolute HTTP or HTTPS URL")
-		}
-		if gateway.CodexAPIKey.Value() == "" {
-			return xerrors.New("workspace SSH gateway Codex API key is required")
-		}
-		if strings.TrimSpace(gateway.CodexModel.Value()) == "" {
-			return xerrors.New("workspace SSH gateway Codex model is required")
-		}
-		limits := []struct {
-			name  string
-			value int64
-		}{
-			{"maximum connections", gateway.MaxConnections.Value()},
-			{"maximum pending connections", gateway.MaxPendingConnections.Value()},
-			{"maximum pending connections per IP", gateway.MaxPendingConnectionsPerIP.Value()},
-			{"maximum connections per user", gateway.MaxConnectionsPerUser.Value()},
-			{"maximum channels per connection", gateway.MaxChannelsPerConnection.Value()},
-			{"authentication attempts per minute", gateway.AuthAttemptsPerMinute.Value()},
-			{"authentication attempt burst", gateway.AuthAttemptsBurst.Value()},
-		}
-		for _, limit := range limits {
-			if limit.value <= 0 {
-				return xerrors.Errorf("workspace SSH gateway %s must be positive", limit.name)
-			}
-		}
-		if gateway.MaxPendingConnections.Value() > gateway.MaxConnections.Value() {
-			return xerrors.New("workspace SSH gateway maximum pending connections must not exceed maximum connections")
-		}
-	}
-
 	// Disabled hooks must not validate inert settings.
 	if c.AI.Chat.HookEnabled.Value() {
 		if c.AI.Chat.HookURL.String() != "" {
@@ -6055,6 +6106,40 @@ func (c *Client) SSHConfiguration(ctx context.Context) (SSHConfigResponse, error
 
 	var sshConfig SSHConfigResponse
 	return sshConfig, ReadBodyAsJSON(res, &sshConfig)
+}
+
+// WorkspaceSSHGateway returns the deployment-managed workspace SSH gateway
+// configuration and local replica state.
+func (c *Client) WorkspaceSSHGateway(ctx context.Context) (WorkspaceSSHGatewayStatus, error) {
+	return c.workspaceSSHGatewayRequest(ctx, http.MethodGet, "/api/v2/deployment/workspace-ssh-gateway", nil)
+}
+
+// UpdateWorkspaceSSHGateway replaces the stopped gateway configuration.
+func (c *Client) UpdateWorkspaceSSHGateway(ctx context.Context, req UpdateWorkspaceSSHGatewayRequest) (WorkspaceSSHGatewayStatus, error) {
+	return c.workspaceSSHGatewayRequest(ctx, http.MethodPut, "/api/v2/deployment/workspace-ssh-gateway", req)
+}
+
+// StartWorkspaceSSHGateway starts the gateway on all deployment replicas.
+func (c *Client) StartWorkspaceSSHGateway(ctx context.Context) (WorkspaceSSHGatewayStatus, error) {
+	return c.workspaceSSHGatewayRequest(ctx, http.MethodPost, "/api/v2/deployment/workspace-ssh-gateway/start", nil)
+}
+
+// StopWorkspaceSSHGateway stops and drains the gateway on all deployment replicas.
+func (c *Client) StopWorkspaceSSHGateway(ctx context.Context) (WorkspaceSSHGatewayStatus, error) {
+	return c.workspaceSSHGatewayRequest(ctx, http.MethodPost, "/api/v2/deployment/workspace-ssh-gateway/stop", nil)
+}
+
+func (c *Client) workspaceSSHGatewayRequest(ctx context.Context, method, path string, body any) (WorkspaceSSHGatewayStatus, error) {
+	res, err := c.Request(ctx, method, path, body)
+	if err != nil {
+		return WorkspaceSSHGatewayStatus{}, err
+	}
+	defer res.Body.Close()
+	if res.StatusCode != http.StatusOK {
+		return WorkspaceSSHGatewayStatus{}, ReadBodyAsError(res)
+	}
+	var status WorkspaceSSHGatewayStatus
+	return status, ReadBodyAsJSON(res, &status)
 }
 
 type CryptoKeyFeature string

@@ -874,6 +874,244 @@ curl -X GET http://coder-server:8080/api/v2/deployment/user-secrets/capabilities
 
 To perform this operation, you must be authenticated. [Learn more](authentication.md).
 
+## Get workspace SSH gateway configuration
+
+### Code samples
+
+```sh
+# Example request using curl
+curl -X GET http://coder-server:8080/api/v2/deployment/workspace-ssh-gateway \
+  -H 'Accept: application/json' \
+  -H 'Coder-Session-Token: API_KEY'
+```
+
+`GET /api/v2/deployment/workspace-ssh-gateway`
+
+### Example responses
+
+> 200 Response
+
+```json
+{
+  "api_key_configured": true,
+  "bound_address": "string",
+  "config": {
+    "advertise_host": "string",
+    "advertise_port": 0,
+    "auth_attempts_burst": 0,
+    "auth_attempts_per_minute": 0,
+    "codex_base_url": "string",
+    "codex_model": "string",
+    "listen_address": "string",
+    "max_channels_per_connection": 0,
+    "max_connections": 0,
+    "max_connections_per_user": 0,
+    "max_pending_connections": 0,
+    "max_pending_connections_per_ip": 0
+  },
+  "configured": true,
+  "desired_enabled": true,
+  "error_code": "string",
+  "host_key_fingerprint": "string",
+  "host_public_key": "string",
+  "state": "stopped"
+}
+```
+
+### Responses
+
+| Status | Meaning                                                 | Description | Schema                                                                             |
+|--------|---------------------------------------------------------|-------------|------------------------------------------------------------------------------------|
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | OK          | [codersdk.WorkspaceSSHGatewayStatus](schemas.md#codersdkworkspacesshgatewaystatus) |
+
+To perform this operation, you must be authenticated. [Learn more](authentication.md).
+
+## Update workspace SSH gateway configuration
+
+### Code samples
+
+```sh
+# Example request using curl
+curl -X PUT http://coder-server:8080/api/v2/deployment/workspace-ssh-gateway \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -H 'Coder-Session-Token: API_KEY'
+```
+
+`PUT /api/v2/deployment/workspace-ssh-gateway`
+
+> Body parameter
+
+```json
+{
+  "clear_codex_api_key": true,
+  "codex_api_key": "string",
+  "config": {
+    "advertise_host": "string",
+    "advertise_port": 0,
+    "auth_attempts_burst": 0,
+    "auth_attempts_per_minute": 0,
+    "codex_base_url": "string",
+    "codex_model": "string",
+    "listen_address": "string",
+    "max_channels_per_connection": 0,
+    "max_connections": 0,
+    "max_connections_per_user": 0,
+    "max_pending_connections": 0,
+    "max_pending_connections_per_ip": 0
+  }
+}
+```
+
+### Parameters
+
+| Name   | In   | Type                                                                                             | Required | Description                         |
+|--------|------|--------------------------------------------------------------------------------------------------|----------|-------------------------------------|
+| `body` | body | [codersdk.UpdateWorkspaceSSHGatewayRequest](schemas.md#codersdkupdateworkspacesshgatewayrequest) | true     | Workspace SSH gateway configuration |
+
+### Example responses
+
+> 200 Response
+
+```json
+{
+  "api_key_configured": true,
+  "bound_address": "string",
+  "config": {
+    "advertise_host": "string",
+    "advertise_port": 0,
+    "auth_attempts_burst": 0,
+    "auth_attempts_per_minute": 0,
+    "codex_base_url": "string",
+    "codex_model": "string",
+    "listen_address": "string",
+    "max_channels_per_connection": 0,
+    "max_connections": 0,
+    "max_connections_per_user": 0,
+    "max_pending_connections": 0,
+    "max_pending_connections_per_ip": 0
+  },
+  "configured": true,
+  "desired_enabled": true,
+  "error_code": "string",
+  "host_key_fingerprint": "string",
+  "host_public_key": "string",
+  "state": "stopped"
+}
+```
+
+### Responses
+
+| Status | Meaning                                                 | Description | Schema                                                                             |
+|--------|---------------------------------------------------------|-------------|------------------------------------------------------------------------------------|
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | OK          | [codersdk.WorkspaceSSHGatewayStatus](schemas.md#codersdkworkspacesshgatewaystatus) |
+
+To perform this operation, you must be authenticated. [Learn more](authentication.md).
+
+## Start workspace SSH gateway
+
+### Code samples
+
+```sh
+# Example request using curl
+curl -X POST http://coder-server:8080/api/v2/deployment/workspace-ssh-gateway/start \
+  -H 'Accept: application/json' \
+  -H 'Coder-Session-Token: API_KEY'
+```
+
+`POST /api/v2/deployment/workspace-ssh-gateway/start`
+
+### Example responses
+
+> 200 Response
+
+```json
+{
+  "api_key_configured": true,
+  "bound_address": "string",
+  "config": {
+    "advertise_host": "string",
+    "advertise_port": 0,
+    "auth_attempts_burst": 0,
+    "auth_attempts_per_minute": 0,
+    "codex_base_url": "string",
+    "codex_model": "string",
+    "listen_address": "string",
+    "max_channels_per_connection": 0,
+    "max_connections": 0,
+    "max_connections_per_user": 0,
+    "max_pending_connections": 0,
+    "max_pending_connections_per_ip": 0
+  },
+  "configured": true,
+  "desired_enabled": true,
+  "error_code": "string",
+  "host_key_fingerprint": "string",
+  "host_public_key": "string",
+  "state": "stopped"
+}
+```
+
+### Responses
+
+| Status | Meaning                                                 | Description | Schema                                                                             |
+|--------|---------------------------------------------------------|-------------|------------------------------------------------------------------------------------|
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | OK          | [codersdk.WorkspaceSSHGatewayStatus](schemas.md#codersdkworkspacesshgatewaystatus) |
+
+To perform this operation, you must be authenticated. [Learn more](authentication.md).
+
+## Stop workspace SSH gateway
+
+### Code samples
+
+```sh
+# Example request using curl
+curl -X POST http://coder-server:8080/api/v2/deployment/workspace-ssh-gateway/stop \
+  -H 'Accept: application/json' \
+  -H 'Coder-Session-Token: API_KEY'
+```
+
+`POST /api/v2/deployment/workspace-ssh-gateway/stop`
+
+### Example responses
+
+> 200 Response
+
+```json
+{
+  "api_key_configured": true,
+  "bound_address": "string",
+  "config": {
+    "advertise_host": "string",
+    "advertise_port": 0,
+    "auth_attempts_burst": 0,
+    "auth_attempts_per_minute": 0,
+    "codex_base_url": "string",
+    "codex_model": "string",
+    "listen_address": "string",
+    "max_channels_per_connection": 0,
+    "max_connections": 0,
+    "max_connections_per_user": 0,
+    "max_pending_connections": 0,
+    "max_pending_connections_per_ip": 0
+  },
+  "configured": true,
+  "desired_enabled": true,
+  "error_code": "string",
+  "host_key_fingerprint": "string",
+  "host_public_key": "string",
+  "state": "stopped"
+}
+```
+
+### Responses
+
+| Status | Meaning                                                 | Description | Schema                                                                             |
+|--------|---------------------------------------------------------|-------------|------------------------------------------------------------------------------------|
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | OK          | [codersdk.WorkspaceSSHGatewayStatus](schemas.md#codersdkworkspacesshgatewaystatus) |
+
+To perform this operation, you must be authenticated. [Learn more](authentication.md).
+
 ## Get enabled experiments
 
 ### Code samples

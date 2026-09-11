@@ -9,6 +9,54 @@
 	],
 	"tags": ["-lintignore"],
 	"ignore": ["**/*Generated.ts"],
+	// Commercial UI source remains available for upstream compatibility, but the
+	// community router intentionally leaves these modules unreachable.
+	"ignoreIssues": {
+		"src/api/queries/{aiBridge,aiGatewayKeys,idpsync}.ts": ["files"],
+		"src/api/queries/{deployment,groups,licenses,organizations,roles,templates}.ts": [
+			"exports"
+		],
+		"src/components/Command/Command.tsx": ["exports"],
+		"src/modules/dashboard/Navbar/UserDropdown/UserDropdownPremiumTrialCTA.tsx": [
+			"exports"
+		],
+		"src/modules/dashboard/Navbar/UserDropdown/UserDropdownAISpend.tsx": [
+			"files"
+		],
+		"src/pages/AIBridgePage/**": ["files", "exports"],
+		"src/pages/AISettingsPage/GatewayKeysPage/GatewayKeysPage.tsx": ["files"],
+		"src/pages/DeploymentSettingsPage/AIGovernanceSettingsPage/AIGovernanceSettingsPage.tsx": [
+			"files"
+		],
+		"src/pages/DeploymentSettingsPage/AppearanceSettingsPage/AnnouncementBanner*.tsx": [
+			"files"
+		],
+		"src/pages/DeploymentSettingsPage/IdpOrgSyncPage/IdpOrgSyncPage.tsx": [
+			"files"
+		],
+		"src/pages/DeploymentSettingsPage/LicensesSettingsPage/AddNewLicensePage.tsx": [
+			"files"
+		],
+		"src/pages/DeploymentSettingsPage/PremiumPage/PremiumPage.tsx": ["files"],
+		"src/pages/GroupsPage/**": ["files", "exports"],
+		"src/pages/OrganizationSettingsPage/CreateOrganizationPage.tsx": ["files"],
+		"src/pages/OrganizationSettingsPage/CustomRolesPage/CustomRolesPage.tsx": [
+			"files"
+		],
+		"src/pages/OrganizationSettingsPage/IdpSyncPage/IdpSyncPage.tsx": ["files"],
+		"src/pages/OrganizationSettingsPage/OrganizationProvisionerKeysPage/OrganizationProvisionerKeysPage.tsx": [
+			"files"
+		],
+		"src/pages/TemplatePage/TemplatePrebuildsPage/TemplatePrebuildsPage.tsx": [
+			"exports"
+		],
+		"src/pages/TemplateSettingsPage/TemplatePermissionsPage/TemplatePermissionsPage.tsx": [
+			"files"
+		],
+		"src/pages/UserSettingsPage/WorkspaceProxyPage/WorkspaceProxyPage.tsx": [
+			"files"
+		]
+	},
 	"ignoreBinaries": ["make", "protoc"],
 	"ignoreDependencies": [
 		"@babel/plugin-syntax-typescript",

@@ -10,8 +10,8 @@
 				"git_ssh_key_e23a9943": "Git SSH 密钥",
 				"select_a_resource_type_ae11a03f": "选择资源类型",
 				"select_an_action_537bfe79": "选择一个操作",
-				"template_version_1e335c28": "Template 版本",
-				"workspace_build_65dbaa41": "Workspace 构建"
+				"template_version_1e335c28": "模板版本",
+				"workspace_build_65dbaa41": "工作区构建"
 			},
 			"AuditHelpPopover": {
 				"an_audit_log_is_a_record_of_events_and_changes_m_3ef70f91": "审核日志是整个系统中的事件和更改的记录。",
@@ -25,10 +25,10 @@
 						"opened_50236627": "打开",
 						"s_edc00d4d": "的",
 						"session_to_add0c80c": " 会话到 ",
-						"workspace_21a3230e": "Workspace"
+						"workspace_21a3230e": "工作区"
 					},
 					"BuildAuditDescription": {
-						"workspace_4be0369b": " Workspace"
+						"workspace_4be0369b": " 工作区"
 					}
 				},
 				"AuditLogRow": {
@@ -56,7 +56,7 @@
 				"meets_soc_2_hipaa_audit_requirements_2ef21a94": "符合 SOC 2 和 HIPAA 审核要求",
 				"no_audit_logs_available_ac0929aa": "没有可用的审核日志",
 				"no_audit_logs_available_on_this_page_1297d7e7": "此页面上没有可用的审核日志",
-				"see_exactly_who_changed_what_and_when_with_every_9f61d583": "通过记录每个 Workspace、Template 和用户操作，准确了解谁更改了什么以及何时更改，以确保合规性和事件响应。",
+				"see_exactly_who_changed_what_and_when_with_every_9f61d583": "通过记录每个工作区、模板和用户操作，准确了解谁更改了什么以及何时更改，以确保合规性和事件响应。",
 				"view_events_in_your_audit_log_a2177edb": "查看审核日志中的事件。"
 			}
 		},
@@ -252,7 +252,7 @@
 				"CoderWorkspacesProductCard": {
 					"active_seat_usage_4ad8cf3a": "活跃席位用量",
 					"active_seat_usage_information_28a4cd11": "活跃席位用量信息",
-					"coder_workspaces_fb3853a7": "Coder Workspaces",
+					"coder_workspaces_fb3853a7": "Coder 工作区",
 					"only_active_user_accounts_consume_license_seats__a879c4d0": "只有活动用户账户才会消耗许可证席位。休眠和暂停的账户不计入总数。",
 					"unlimited_11dde17d": "无限"
 				},
@@ -321,25 +321,25 @@
 				},
 				"ManagedAgentsConsumption": {
 					"actual_9c723441": "实际：",
-					"agent_workspace_builds_1c7057cf": "Agent Workspace 构建",
-					"agent_workspace_builds_are_measured_when_you_sta_7955747b": "Agent Workspace 构建是在您启动临时 Workspace 时测量的，纯粹是为了运行代理工作负载。开发者日常开发中使用的 Workspaces 不算在内，即使涉及到 AI 工具。",
-					"agent_workspace_builds_are_not_included_in_your__66cd4378": "Agent Workspace 版本不包含在您当前的许可证中。联系方式 ",
-					"agent_workspace_builds_disabled_60182a1c": "Agent Workspace 构建已禁用",
-					"amount_of_started_workspaces_with_an_ai_agent_8f34a51f": "带有 AI Agent 的启动 Workspaces 的数量。",
+					"agent_workspace_builds_1c7057cf": "Agent 工作区构建",
+					"agent_workspace_builds_are_measured_when_you_sta_7955747b": "Agent 工作区构建是在您启动临时工作区时测量的，纯粹是为了运行代理工作负载。开发者日常开发中使用的工作区不算在内，即使涉及到 AI 工具。",
+					"agent_workspace_builds_are_not_included_in_your__66cd4378": "Agent 工作区版本不包含在您当前的许可证中。联系方式 ",
+					"agent_workspace_builds_disabled_60182a1c": "Agent 工作区构建已禁用",
+					"amount_of_started_workspaces_with_an_ai_agent_8f34a51f": "带有 AI Agent 的启动工作区的数量。",
 					"coder_agents_19b8e154": "Coder Agents",
 					"included_194beab0": "包括：",
 					"invalid_license_usage_limits_dcc0f71b": "无效的许可证使用限制",
 					"invalid_license_usage_period_d0597685": "许可证使用期限无效",
 					"invalid_usage_data_d7e597fe": "使用数据无效",
 					"learn_more_1445799c": "了解更多",
-					"legend_for_started_workspaces_b171f4f6": "启动 Workspaces 的图例",
+					"legend_for_started_workspaces_b171f4f6": "启动工作区的图例",
 					"legend_for_usage_exceeding_included_allowance_e4dc9ac9": "使用超出所含限额的图例",
 					"missing_license_usage_period_2b89bf84": "缺少许可证使用期限",
 					"sales_e04eb290": "销售",
 					"to_upgrade_your_license_and_unlock_this_feature_c4ce1cc5": " 升级您的许可证并解锁此功能。",
 					"usage_has_exceeded_included_allowance_from_your__2ba08578": "使用量已超出当前许可计划中包含的限额。",
 					"view_docs_61479fda": "查看文档",
-					"workspaces_count_towards_your_agent_workspace_bu_cdd9d6a8": "Workspaces 计入您的 Agent Workspace 构建限制。随着标准的出现，可能会支持其他协议和 API。"
+					"workspaces_count_towards_your_agent_workspace_bu_cdd9d6a8": "工作区计入您的 Agent 工作区构建限制。随着标准的出现，可能会支持其他协议和 API。"
 				},
 				"SeatUsageBarCard": {
 					"active_de2433e0": "活跃： ",
@@ -355,8 +355,8 @@
 					"n_a_e2f79e5b": "不适用",
 					"total_agent_hours_805ff874": "总计 Agent 小时",
 					"total_agent_hours_information_d38fed49": "总计 Agent 小时信息",
-					"total_time_agents_have_been_working_across_all_w_0335ba0f": "Agents 在此许可证的所有 Workspaces 上工作的总时间。 {{value0}}% 处出现软限制警告",
-					"total_time_agents_have_been_working_across_all_w_3e5bad5c": "Agents 在此许可证的所有 Workspaces 上工作的总时间。",
+					"total_time_agents_have_been_working_across_all_w_0335ba0f": "Agents 在此许可证的所有工作区上工作的总时间。 {{value0}}% 处出现软限制警告",
+					"total_time_agents_have_been_working_across_all_w_3e5bad5c": "Agents 在此许可证的所有工作区上工作的总时间。",
 					"unlimited_11dde17d": "无限",
 					"used_ef192128": "使用： ",
 					"warning_63ea8236": "警告：",
@@ -371,9 +371,65 @@
 				},
 				"NetworkSettingsPageView": {
 					"configure_your_deployment_connectivity_9af71f82": "配置您的部署连接。",
+					"loading_workspace_ssh_gateway_settings_9b949179": "正在加载工作区 SSH 网关设置",
 					"network_1744b964": "网络",
 					"port_forwarding_2f9a490c": "端口转发",
-					"port_forwarding_lets_developers_securely_access__c62b9724": "端口转发使开发人员可以从本地计算机安全地访问 Coder Workspace 上的进程。"
+					"port_forwarding_lets_developers_securely_access__c62b9724": "端口转发使开发人员可以从本地计算机安全地访问 Coder 工作区上的进程。"
+				},
+				"WorkspaceSSHGatewaySection": {
+					"api_key_already_stored_f034be6e": "已保存 API Key。留空即可保留现有值。",
+					"api_key_secret_notice_30247d93": "API Key 将作为部署 Secret 保存，API 不会返回其内容。",
+					"authentication_attempts_per_ip_per_minute_6635bea7": "单个 IP 每分钟认证尝试次数",
+					"authentication_burst_5b71b236": "认证突发上限",
+					"bound_address_f204f25a": "实际监听地址",
+					"channels_per_connection_fdd340d4": "单连接 Channel 数",
+					"clear_the_stored_api_key_when_saving_98ea6779": "保存时清除已有 API Key",
+					"codex_api_key_8f00562a": "Codex API key",
+					"codex_provider_49721de8": "Codex 提供商",
+					"configure_a_codex_api_key_before_starting_the_ga_5d83efad": "请先配置 Codex API Key，再启动网关。",
+					"configure_an_https_access_url_before_starting_th_10d07e18": "请先配置 HTTPS 访问 URL，再启动网关。",
+					"configure_the_local_listener_and_the_public_addr_f9abe926": "配置本地监听地址和用户连接时使用的公网地址。",
+					"configure_the_responses_compatible_sub2_endpoint_37e4c27f": "配置远程 Codex app-server 进程使用的 Responses 兼容 Sub2 端点。",
+					"connection_639a40e8": "连接",
+					"connections_per_user_e903dbdf": "单用户连接数",
+					"enter_a_positive_integer_30d16661": "输入正整数",
+					"enter_an_api_key_8f4f3375": "输入 API Key",
+					"error_54a0e8c1": "错误",
+					"gateway_could_not_start_ac7729ed": "网关启动失败",
+					"gpt_5_3_codex_a3da4ff8": "gpt-5.3-codex",
+					"host_key_fingerprint_1e9d2ba6": "Host Key 指纹",
+					"leave_blank_to_keep_the_stored_key_f1c1936f": "留空以保留现有 Key",
+					"limit_connection_authentication_and_ssh_channel__ff47a005": "限制连接、认证和 SSH Channel 的资源使用量。",
+					"listen_address_edc8737a": "监听地址",
+					"manage_the_openssh_entry_point_used_by_chatgpt_d_74afc5cd": "管理 ChatGPT Desktop 访问工作区时使用的 OpenSSH 入口。",
+					"model_5e2c614c": "模型",
+					"not_generated_baae3f6e": "尚未生成",
+					"not_listening_0cf2b8dd": "未监听",
+					"pending_authentication_connections_c58ee74c": "待认证连接数",
+					"pending_connections_per_ip_c72654b9": "单个 IP 待认证连接数",
+					"public_host_802d5b67": "公网主机",
+					"public_port_32a480f3": "公网端口",
+					"retry_942087cc": "重试",
+					"review_the_gateway_configuration_and_save_it_aga_405d04c8": "请检查网关配置并重新保存。",
+					"running_f4ccae29": "运行中",
+					"save_configuration_b2b158f2": "保存配置",
+					"security_limits_9add98ae": "安全限制",
+					"ssh_example_com_8d2adc0e": "SSH.example.com",
+					"start_e4bb9f1e": "启动",
+					"starting_aeed4d26": "正在启动",
+					"stop_cae7d57b": "停止",
+					"stopped_1a4f630a": "已停止",
+					"stopping_a71ee1d4": "正在停止",
+					"sub2_base_url_7da7f59a": "Sub2 Base URL",
+					"the_gateway_configuration_could_not_be_saved_8d46d799": "无法保存网关配置。",
+					"the_gateway_encountered_an_unknown_error_review__8906ec55": "网关发生未知错误，请检查配置后重试。",
+					"the_listening_address_is_unavailable_stop_the_co_35cea57c": "监听地址不可用。请停止冲突的服务或选择其他端口，然后重试。",
+					"the_ssh_host_key_is_missing_save_the_configurati_5b7eca4f": "SSH Host Key 缺失，请重新保存配置。",
+					"the_stored_gateway_configuration_is_invalid_6e6d199c": "已保存的网关配置无效。",
+					"the_stored_ssh_host_key_is_invalid_f7c98720": "已保存的 SSH Host Key 无效。",
+					"total_connections_b919c747": "总连接数",
+					"workspace_ssh_gateway_924863a4": "工作区 SSH 网关",
+					"workspace_ssh_gateway_settings_020be30c": "工作区 SSH 网关设置"
 				}
 			},
 			"NotificationsPage": {
@@ -473,7 +529,7 @@
 					"the_name_of_your_coder_app_f93f1d8b": "您的 Coder 应用程序的名称。",
 					"unsaved_changes_a710c2b9": "未保存的更改",
 					"update_application_c24f1ba4": "更新应用程序",
-					"your_updates_haven_t_been_saved_leave_anyway_0230d6de": "您的更新尚未保存。还是离开吧？"
+					"your_updates_haven_t_been_saved_leave_anyway_0230d6de": "更改尚未保存。仍要离开吗？"
 				},
 				"OAuth2AppsSettingsPage": {
 					"oauth2_applications_5e9425a3": "OAuth2 应用程序"
@@ -535,7 +591,8 @@
 					"the_documentation_a0030756": "文档"
 				},
 				"UserEngagementChart": {
-					"a_user_is_considered_engaged_if_they_initiate_a__70d06ac4": "如果用户通过应用程序、Web 终端或 SSH 发起与其 Workspace 的连接，则被视为“已参与”。该图表显示每日至少参与一次的唯一用户数量，并可通过以下方式获得更多见解：",
+					"a_user_is_considered_engaged_when_they_interact_360b37cf": "用户与工作区、模板或 Agent 交互时会被视为活跃用户。",
+					"a_user_is_considered_engaged_if_they_initiate_a__70d06ac4": "如果用户通过应用程序、Web 终端或 SSH 发起与其工作区的连接，则被视为“已参与”。该图表显示每日至少参与一次的唯一用户数量，并可通过以下方式获得更多见解：",
 					"activity_audit_11dfc62e": "活动审核",
 					"and_6201111b": "和",
 					"how_we_calculate_engaged_users_a9a80eac": "我们如何计算活跃用户",
@@ -562,7 +619,7 @@
 				"PremiumPageView": {
 					"contact_your_deployment_administrator_for_premiu_e349ee15": "请联系您的 Premium 部署管理员。",
 					"start_an_unlimited_30_day_coder_trial_27c16ec9": "开始 30 天 Coder 无限试用",
-					"unlock_unlimited_coder_agents_usage_and_enterpri_d7e0d0a6": "解锁无限的 Coder Agents 使用和企业 AI 治理。控制 Agents 可以访问的内容，管理谁可以使用 Templates 和基础设施，并通过基于角色的访问控制和高可用性运行您的自托管开发平台。"
+					"unlock_unlimited_coder_agents_usage_and_enterpri_d7e0d0a6": "解锁无限的 Coder Agents 使用和企业 AI 治理。控制 Agents 可以访问的内容，管理谁可以使用模板和基础设施，并通过基于角色的访问控制和高可用性运行您的自托管开发平台。"
 				},
 				"TrialActivePanel": {
 					"contact_our_sales_team_to_extend_your_trial_6d9c8781": "请联系我们的销售团队以延长您的试用期。",
@@ -602,7 +659,7 @@
 					"security_settings_170ded24": "安全设置"
 				},
 				"SecuritySettingsPageView": {
-					"block_all_workspace_access_via_ssh_port_forward__95e73275": "阻止所有通过 SSH、端口转发和其他非浏览器连接进行的 Workspace 访问。",
+					"block_all_workspace_access_via_ssh_port_forward__95e73275": "阻止所有通过 SSH、端口转发和其他非浏览器连接进行的工作区访问。",
 					"block_ssh_and_port_forward_entirely_72d11e71": "完全阻止 SSH 和端口转发",
 					"browser_only_connections_642ab2ae": "仅浏览器连接",
 					"enforce_browser_only_compliance_policies_52d99a4f": "强制执行仅限浏览器的合规策略",
@@ -750,7 +807,7 @@
 				"no_groups_match_your_search_912c257c": "没有符合您搜索条件的群组",
 				"no_groups_yet_07514d06": "还没有群组",
 				"organization_af3a1bb3": "组织",
-				"run_isolated_business_units_on_one_deployment_ea_3b4f63c9": "在一个部署上运行独立的业务单元，每个单元都有自己的用户、Templates、Provisioner 和基础设施。",
+				"run_isolated_business_units_on_one_deployment_ea_3b4f63c9": "在一个部署上运行独立的业务单元，每个单元都有自己的用户、模板、Provisioner 和基础设施。",
 				"sync_org_membership_from_your_idp_48008951": "从您的 IdP 同步组织成员资格",
 				"try_a_different_search_term_36b89662": "尝试不同的搜索词。",
 				"users_6b0cc904": "用户",
@@ -797,7 +854,7 @@
 				"mcp_servers_22a7559f": "MCP 服务器",
 				"models_d17d2d78": "模型",
 				"providers_996c32b3": "提供商",
-				"templates_56b564b7": "Templates"
+				"templates_56b564b7": "模板"
 			},
 			"DeploymentSettingsLayout": {
 				"admin_settings_bf478a00": "管理设置",
@@ -818,7 +875,7 @@
 				"trial_upgrade_ee470e67": "试用升级",
 				"user_authentication_35610171": "用户认证",
 				"users_6b0cc904": "用户",
-				"workspace_proxies_62ee3d16": "Workspace 代理"
+				"workspace_proxies_62ee3d16": "工作区代理"
 			},
 			"OrganizationSettingsLayout": {
 				"admin_settings_bf478a00": "管理设置",
@@ -850,7 +907,7 @@
 				"description_526e0087": "描述",
 				"display_name_2b7f6a84": "显示名称",
 				"friendly_name_defaults_to_the_slug_if_blank_00e6a878": "友好的名字。如果为空，则默认为 slug。",
-				"isolate_members_templates_and_provisioners_for_a_59c2f444": "隔离团队或项目的成员、Templates 和 Provisioner。",
+				"isolate_members_templates_and_provisioners_for_a_59c2f444": "隔离团队或项目的成员、模板和 Provisioner。",
 				"isolate_provisioners_infrastructure_b9bf8bb0": "隔离 Provisioners 和基础设施",
 				"manage_orgs_at_scale_via_terraform_5dea644c": "通过 Terraform 大规模管理组织",
 				"name_dcd1d522": "名称",
@@ -861,7 +918,7 @@
 				"organization_value0_created_successfully_1b622eb2": "组织“{{value0}}”创建成功。",
 				"organizations_2730183d": "组织",
 				"please_enter_a_description_that_is_no_longer_tha_41a269dc": "请输入不超过 {{value0}} 个字符的描述。",
-				"run_isolated_business_units_on_one_deployment_ea_3b4f63c9": "在一个部署上运行独立的业务单元，每个单元都有自己的用户、Templates、Provisioner 和基础设施。",
+				"run_isolated_business_units_on_one_deployment_ea_3b4f63c9": "在一个部署上运行独立的业务单元，每个单元都有自己的用户、模板、Provisioner 和基础设施。",
 				"slug_d15387ec": "蛞蝓",
 				"sync_org_membership_from_your_idp_48008951": "从您的 IdP 同步组织成员资格",
 				"unique_identifier_used_in_urls_d00e951c": "URL 中使用的唯一标识符。"
@@ -927,7 +984,7 @@
 					"go_beyond_the_built_in_role_set_84002d02": "超越内置角色集",
 					"name_dcd1d522": "名称",
 					"no_custom_roles_yet_7ff860eb": "还没有自定义角色",
-					"no_default_roles_members_have_only_the_permissio_52075c35": "没有默认角色。成员仅拥有其直接分配的角色的权限，不包括创建和使用 Workspaces。",
+					"no_default_roles_members_have_only_the_permissio_52075c35": "没有默认角色。成员仅拥有其直接分配的角色的权限，不包括创建和使用工作区。",
 					"open_menu_b40b3713": "打开菜单",
 					"permissions_abccc78c": "权限",
 					"roles_granted_to_every_member_of_this_organizati_6b092ace": "除了直接分配的任何角色之外，还授予该组织当前和未来的每个成员的角色。在此处删除角色会将其从未直接分配该角色的所有成员中删除。",
@@ -936,7 +993,7 @@
 				},
 				"DefaultRolesDialog": {
 					"edit_default_roles_6b1ab2b8": "编辑默认角色",
-					"these_roles_are_granted_to_every_member_of_this__8bde8419": "这些角色被授予该组织当前和未来的每个成员。删除角色会将其从未直接分配该角色的所有成员中删除。如果没有组织 Workspace 访问权限，成员无法创建或使用 Workspaces。"
+					"these_roles_are_granted_to_every_member_of_this__8bde8419": "这些角色被授予该组织当前和未来的每个成员。删除角色会将其从未直接分配该角色的所有成员中删除。如果没有组织工作区访问权限，成员无法创建或使用工作区。"
 				},
 				"PermissionPillsList": {
 					"more_226ba18b": " 更多",
@@ -955,20 +1012,20 @@
 				"cancel_19766ed6": "取消",
 				"currently_shared_eceeff13": " 目前已共享。",
 				"disable_sharing_7b1511aa": "禁用共享",
-				"disable_workspace_sharing_0a74542e": "禁用 Workspace 共享",
-				"disabling_workspace_sharing_will_immediately_rem_b0328bde": "禁用 Workspace 共享将立即删除该组织中所有用户的所有现有 Workspace 共享权限。",
+				"disable_workspace_sharing_0a74542e": "禁用工作区共享",
+				"disabling_workspace_sharing_will_immediately_rem_b0328bde": "禁用工作区共享将立即删除该组织中所有用户的所有现有工作区共享权限。",
 				"is_fa51fd49": "是",
-				"no_workspaces_are_currently_shared_in_this_organ_972db800": "此组织中当前没有共享 Workspaces。",
+				"no_workspaces_are_currently_shared_in_this_organ_972db800": "此组织中当前没有共享工作区。",
 				"not_restore_d455f0f6": "不恢复",
-				"re_enabling_workspace_sharing_will_84041437": "重新启用 Workspace 共享将",
+				"re_enabling_workspace_sharing_will_84041437": "重新启用工作区共享将",
 				"restrict_sharing_aacb9d73": "限制共享",
 				"restrict_sharing_to_service_accounts_77249135": "限制共享到服务账户",
-				"restricting_workspace_sharing_to_service_account_f8d50470": "仅限制 Workspace 共享到服务账户将立即取消共享非服务账户当前共享的任何 Workspaces。",
+				"restricting_workspace_sharing_to_service_account_f8d50470": "仅限制工作区共享到服务账户将立即取消共享非服务账户当前共享的任何工作区。",
 				"s_043a7187": "s",
 				"that_a0496121": "那个 ",
 				"these_permissions_7d675017": "这些权限。",
 				"this_action_will_affect_8874be80": "此行动将影响",
-				"workspace_4be0369b": " Workspace"
+				"workspace_4be0369b": " 工作区"
 			},
 			"IdpSyncPage": {
 				"ExportPolicyButton": {
@@ -1063,7 +1120,7 @@
 				"failed_to_remove_value0_from_value1_9227ee44": "无法从“{{value1}}”中删除“{{value0}}”。",
 				"members_1044a4c0": "成员",
 				"organization_not_found_00c50f7a": "未找到组织",
-				"orphan_all_the_member_s_workspaces_associated_wi_dc60c5b1": "孤立与该组织关联的所有成员的 Workspaces",
+				"orphan_all_the_member_s_workspaces_associated_wi_dc60c5b1": "孤立与该组织关联的所有成员的工作区",
 				"remove_all_user_role_assignments_4d8b95c1": "删除所有用户角色分配",
 				"remove_c3812fc4": "移除",
 				"remove_member_9438e0ba": "删除成员",
@@ -1090,14 +1147,14 @@
 				"roles_c2533705": "角色",
 				"user_b512d97e": "用户",
 				"view_activity_c469de16": "查看活动 ",
-				"view_workspaces_8cf7e8d0": "查看 Workspaces"
+				"view_workspaces_8cf7e8d0": "查看工作区"
 			},
 			"OrganizationProvisionerJobsPage": {
 				"CancelJobButton": {
 					"cancel_job_a5032d26": "取消作业"
 				},
 				"CancelJobConfirmationDialog": {
-					"are_you_sure_you_want_to_cancel_the_provisioner__e392543a": "您确定要取消 Provisioner 任务“{{value0}}”吗？此操作将导致相关 Workspaces 无法创建。",
+					"are_you_sure_you_want_to_cancel_the_provisioner__e392543a": "您确定要取消 Provisioner 任务“{{value0}}”吗？此操作将导致相关工作区无法创建。",
 					"cancel_19766ed6": "取消",
 					"cancel_provisioner_job_be5194f2": "取消 Provisioner 作业",
 					"canceling_provisioner_job_value0_5f10845b": "正在取消 Provisioner 任务“{{value0}}”...",
@@ -1106,7 +1163,7 @@
 					"provisioner_job_value0_canceled_successfully_b666a3a3": "已成功取消 Provisioner 任务“{{value0}}”。"
 				},
 				"JobRow": {
-					"associated_workspace_cc2e492b": "关联 Workspace：",
+					"associated_workspace_cc2e492b": "关联工作区：",
 					"available_provisioners_633faded": "可用 Provisioner：",
 					"completed_by_provisioner_2f6a28eb": "由 Provisioner 完成：",
 					"creation_time_e087974b": "创建时间：",
@@ -1126,12 +1183,12 @@
 					"error_loading_the_provisioner_jobs_c06b62fc": "加载 Provisioner 作业时出错",
 					"no_provisioner_jobs_found_a6dc6e49": "未找到 Provisioner 职位",
 					"organization_not_found_00c50f7a": "未找到组织",
-					"provisioner_jobs_are_the_individual_tasks_assign_edb6176d": "Provisioner 作业是构建 Workspaces 时分配给 Provisioner 的单独任务。",
+					"provisioner_jobs_are_the_individual_tasks_assign_edb6176d": "Provisioner 作业是构建工作区时分配给 Provisioner 的单独任务。",
 					"provisioner_jobs_e4be4fbf": "Provisioner 任务",
 					"retry_942087cc": "重试",
 					"status_920e413c": "状态",
 					"tags_1331275b": "标签",
-					"template_0575f29d": "Template",
+					"template_0575f29d": "模板",
 					"type_baaddf70": "类型",
 					"view_docs_61479fda": "查看文档"
 				}
@@ -1143,7 +1200,7 @@
 				},
 				"OrganizationProvisionerKeysPageView": {
 					"active_provisioners_0cc63c4e": "主动 Provisioner",
-					"create_your_first_provisioner_key_to_authenticat_c041923a": "创建您的第一个 Provisioner 密钥以验证外部 Provisioner 守护程序。",
+					"create_your_first_provisioner_key_to_authenticat_c041923a": "创建您的第一个 Provisioner 密钥以验证外部 Provisioner 守护进程。",
 					"created_d70b9e24": "已创建",
 					"error_loading_provisioner_keys_3b4d253e": "加载 Provisioner 密钥时出错",
 					"fully_isolated_per_organization_897f8b10": "每个组织完全隔离",
@@ -1180,9 +1237,9 @@
 					"provisioners_82d4a12e": "Provisioner"
 				},
 				"OrganizationProvisionersPageView": {
-					"a_provisioner_is_required_before_you_can_create__94114ee5": "在创建 Templates 和 Workspaces 之前，需要有一个 Provisioner。您可以按照我们的文档连接您的第一个 Provisioner。",
+					"a_provisioner_is_required_before_you_can_create__94114ee5": "在创建模板和工作区之前，需要有一个 Provisioner。您可以按照我们的文档连接您的第一个 Provisioner。",
 					"clear_id_9537d728": "清除ID",
-					"coder_server_runs_provisioner_daemons_which_exec_8f8bec6c": "Coder 服务器运行 Provisioner 守护程序，该守护程序在 Workspace 和 Template 构建期间执行 Terraform。",
+					"coder_server_runs_provisioner_daemons_which_exec_8f8bec6c": "Coder 服务器运行 Provisioner 守护进程，该守护进程在工作区和模板构建期间执行 Terraform。",
 					"create_a_provisioner_8365116e": "创建 Provisioner",
 					"error_loading_the_provisioner_jobs_c06b62fc": "加载 Provisioner 作业时出错",
 					"include_offline_provisioners_616cce9e": "包括离线 Provisioner",
@@ -1192,7 +1249,7 @@
 					"name_dcd1d522": "名称",
 					"no_provisioners_found_6a5751fd": "未找到 Provisioner",
 					"provisioners_82d4a12e": "Provisioner",
-					"provisioners_run_your_terraform_to_create_templa_09060a53": "Provisioner 运行 Terraform 以创建 Templates 和 Workspaces。",
+					"provisioners_run_your_terraform_to_create_templa_09060a53": "Provisioner 运行 Terraform 以创建模板和工作区。",
 					"reduce_server_load_and_queue_times_af610661": "减少服务器负载和排队时间",
 					"retry_942087cc": "重试",
 					"run_build_jobs_in_isolation_172531de": "隔离运行构建作业",
@@ -1234,29 +1291,29 @@
 			},
 			"OrganizationSettingsPage": {
 				"failed_to_delete_organization_value0_c06c5897": "无法删除组织“{{value0}}”。",
-				"failed_to_update_workspace_sharing_settings_2536c853": "无法更新 Workspace 共享设置。",
+				"failed_to_update_workspace_sharing_settings_2536c853": "无法更新工作区共享设置。",
 				"organization_not_found_00c50f7a": "未找到组织",
 				"organization_value0_deleted_successfully_2f4b7347": "组织“{{value0}}”已成功删除。",
 				"organization_value0_settings_updated_successfull_c0ada6b3": "组织“{{value0}}”设置已成功更新。",
 				"settings_74a883a0": "设置",
-				"updating_workspace_sharing_settings_9567c85b": "正在更新 Workspace 共享设置...",
-				"workspace_sharing_disabled_9bc03401": "Workspace 共享已禁用。",
-				"workspace_sharing_enabled_for_all_users_79181914": "Workspace 为所有用户启用共享。",
-				"workspace_sharing_restricted_to_service_accounts_27d09164": "Workspace 共享仅限于服务账户。"
+				"updating_workspace_sharing_settings_9567c85b": "正在更新工作区共享设置...",
+				"workspace_sharing_disabled_9bc03401": "工作区共享已禁用。",
+				"workspace_sharing_enabled_for_all_users_79181914": "工作区为所有用户启用共享。",
+				"workspace_sharing_restricted_to_service_accounts_27d09164": "工作区共享仅限于服务账户。"
 			},
 			"OrganizationSettingsPageView": {
 				"settings_74a883a0": "设置"
 			},
 			"WorkspaceSharingSection": {
-				"all_members_can_share_workspaces_f2a10adc": "所有成员均可分享 Workspaces",
-				"allow_workspace_sharing_60d64ade": "允许 Workspace 共享",
-				"control_whether_workspace_owners_can_share_their_e4760fc9": "控制 Workspace 所有者是否可以共享其 Workspaces。",
+				"all_members_can_share_workspaces_f2a10adc": "所有成员均可分享工作区",
+				"allow_workspace_sharing_60d64ade": "允许工作区共享",
+				"control_whether_workspace_owners_can_share_their_e4760fc9": "控制工作区所有者是否可以共享其工作区。",
 				"disabled_by_deployment_settings_7267a26f": "通过部署设置禁用",
-				"only_service_accounts_can_share_workspaces_50726efa": "仅服务账户可以共享 Workspaces",
+				"only_service_accounts_can_share_workspaces_50726efa": "仅服务账户可以共享工作区",
 				"service_accounts_are_non_login_accounts_typicall_7fb7b8c3": "服务账户是非登录账户，通常用于自动化、CI/CD 管道和集中管理的共享环境。",
-				"when_enabled_workspace_owners_can_share_their_wo_6d874593": "启用后，Workspace 所有者可以与该组织中的其他用户共享其 Workspaces。",
-				"workspace_sharing_3eee503a": "Workspace 分享",
-				"workspace_sharing_has_been_disallowed_by_an_admi_73a16962": "Workspace 共享已被管理员禁止。共享必须先获得管理员的允许，然后才能在此组织中使用共享。"
+				"when_enabled_workspace_owners_can_share_their_wo_6d874593": "启用后，工作区所有者可以与该组织中的其他用户共享其工作区。",
+				"workspace_sharing_3eee503a": "工作区分享",
+				"workspace_sharing_has_been_disallowed_by_an_admi_73a16962": "工作区共享已被管理员禁止。共享必须先获得管理员的允许，然后才能在此组织中使用共享。"
 			}
 		},
 		"provisioners": {
@@ -1326,7 +1383,7 @@
 			"UserHelpPopovers": {
 				"coder_role_based_access_control_rbac_provides_fi_54881386": "Coder 基于角色的访问控制 (RBAC) 提供细粒度的访问管理。查看我们有关如何使用可用角色的文档。",
 				"groups_39bbb719": "团体",
-				"groups_can_be_used_with_template_rbac_to_give_gr_beb396f6": "组可以与 Template RBAC 一起使用，以授予用户组对特定 Templates 的访问权限。查看我们有关如何使用组的文档。",
+				"groups_can_be_used_with_template_rbac_to_give_gr_beb396f6": "组可以与模板 RBAC 一起使用，以授予用户组对特定模板的访问权限。查看我们有关如何使用组的文档。",
 				"user_roles_d729ab99": "用户角色",
 				"what_is_a_group_778ba59d": "什么是团体？",
 				"what_is_a_role_84804555": "什么是角色？"
@@ -1340,7 +1397,7 @@
 				"reset_password_d220a78f": "重置密码...",
 				"suspend_bfdb01ed": "暂停…",
 				"view_activity_4bf3f8dd": "查看活动",
-				"view_workspaces_8cf7e8d0": "查看 Workspaces"
+				"view_workspaces_8cf7e8d0": "查看工作区"
 			},
 			"UserRoleCell": {
 				"more_226ba18b": " 更多",
@@ -1356,7 +1413,7 @@
 				"failed_to_clear_chat_fd47750f": "无法清除聊天记录。",
 				"failed_to_compact_chat_5588755b": "无法压缩聊天。",
 				"failed_to_update_plan_mode_8f2faf06": "更新计划模式失败。",
-				"failed_to_update_workspace_def40bab": "更新 Workspace 失败。"
+				"failed_to_update_workspace_def40bab": "更新工作区失败。"
 			},
 			"AgentChatPageErrorView": {
 				"failed_to_load_chat_d8b99a0a": "无法加载聊天内容",
@@ -1372,11 +1429,11 @@
 				"summary_8e76a94a": "总结",
 				"terminal_e0926fda": "终端",
 				"terminal_value0_825eef14": "终端 {{value0}}",
-				"terminal_will_be_available_once_the_workspace_ag_341c3585": "Workspace Agent 准备就绪后，终端即可使用。",
+				"terminal_will_be_available_once_the_workspace_ag_341c3585": "工作区 Agent 准备就绪后，终端即可使用。",
 				"this_agent_has_been_archived_and_is_read_only_9a29426a": "此 Agent 已存档且只读。",
 				"this_chat_is_owned_by_value0_it_is_read_only_175ccc93": "该聊天记录归 {{value0}} 所有。它是只读的。",
 				"this_port_preview_tab_is_no_longer_available_4c67d820": "此端口预览选项卡不再可用。",
-				"this_workspace_app_is_no_longer_available_as_a_r_09eb2ca1": "此 Workspace 应用程序不再作为右侧面板选项卡提供。"
+				"this_workspace_app_is_no_longer_available_as_a_r_09eb2ca1": "此工作区应用程序不再作为右侧面板选项卡提供。"
 			},
 			"AgentCreatePage": {
 				"failed_to_value0_notifications_ed6c5fe0": "{{value0}} 通知失败。"
@@ -1469,7 +1526,7 @@
 				"personal_skills_4907a3e2": "个人技能",
 				"personal_skills_delete_a_skill_before_creating_a_aa3ac4f0": "个人技能。在创建另一项技能之前删除一项技能。",
 				"retry_942087cc": "重试",
-				"reusable_instructions_your_agents_can_pick_when__cf248082": "您的 Agents 在需要专门指导时可以选择可重复使用的说明。个人技能保存在一个 SKILL.md 文件中。要获得更丰富的技能和支持文件，请将它们添加到“.Agents/skills/”下的存储库中，或从 Workspace 加载它们。",
+				"reusable_instructions_your_agents_can_pick_when__cf248082": "您的 Agents 在需要专门指导时可以选择可重复使用的说明。个人技能保存在一个 SKILL.md 文件中。要获得更丰富的技能和支持文件，请将它们添加到“.Agents/skills/”下的存储库中，或从工作区加载它们。",
 				"the_saved_content_could_not_be_parsed_as_skill_m_1e40d1c6": "无法将保存的内容解析为 SKILL.md。",
 				"the_skill_could_not_be_loaded_for_editing_209016f8": "无法加载技能进行编辑。",
 				"unable_to_load_personal_skill_bc31bdcb": "无法加载个人技能",
@@ -1496,16 +1553,17 @@
 				"the_selected_organization_has_no_available_chat__7cdd1fe9": "所选组织没有可用的聊天模型。仍然可以保存默认选项。在选择特定模型之前，请组织管理员添加并启用模型。"
 			},
 			"AgentsPageLayout": {
-				"archive_agent_delete_workspace_97cdec8f": "存档 Agent 并删除 Workspace",
+				"archive_agent_delete_workspace_97cdec8f": "存档 Agent 并删除工作区",
 				"archiving_and_deleting_3220c299": "正在归档并删除",
 				"failed_to_archive_agent_fb91b900": "无法存档 Agent。",
-				"failed_to_look_up_workspace_for_deletion_5e511818": "无法查找 Workspace 进行删除。",
+				"failed_to_look_up_workspace_for_deletion_5e511818": "无法查找工作区进行删除。",
 				"failed_to_pin_agent_b613f830": "无法固定 Agent。",
 				"failed_to_rename_chat_83b70214": "无法重命名聊天。",
 				"failed_to_reorder_pinned_agents_7eb930b5": "无法对固定的 Agents 重新排序。",
 				"failed_to_unarchive_agent_2b394aed": "无法取消存档 Agent。",
 				"failed_to_unpin_agent_1314376d": "无法取消固定 Agent。",
-				"this_will_archive_the_agent_and_permanently_dele_728e797b": "这将存档 Agent 并永久删除关联的 Workspace 及其所有资源。"
+				"this_will_archive_the_agent_and_permanently_dele_728e797b": "这将存档 Agent 并永久删除关联的工作区及其所有资源。",
+				"workspace_21a3230e": "工作区"
 			},
 			"components": {
 				"AdminChatDebugLoggingSettings": {
@@ -1529,12 +1587,12 @@
 				"AgentChatInput": {
 					"accept_voice_input_68802a55": "接受语音输入",
 					"attach_file_87fbe4fb": "附加文件",
-					"attach_workspace_84e20f9e": "附上 Workspace",
+					"attach_workspace_84e20f9e": "附上工作区",
 					"auth_8eb3ea9b": "授权",
 					"back_76900f1b": "返回",
 					"cancel_editing_d07a5a69": "取消编辑",
 					"cancel_voice_input_a25b089a": "取消语音输入",
-					"chat_and_workspace_must_be_in_the_same_organizat_fe057b4d": "Chat 和 Workspace 必须位于同一组织中",
+					"chat_and_workspace_must_be_in_the_same_organizat_fe057b4d": "Chat 和工作区必须位于同一组织中",
 					"chat_message_f6820511": "聊天消息",
 					"cmd_ctrl_enter_6e751187": "Cmd/Ctrl+Enter",
 					"disable_b7e3e4aa": "禁用",
@@ -1553,14 +1611,14 @@
 					"mcp_server_d938c816": "MCP 服务器",
 					"mic_access_denied_1d1ebd15": "麦克风访问被拒绝",
 					"more_options_bc79cdff": "更多选择",
-					"no_workspaces_found_1507d637": "未找到 Workspaces",
+					"no_workspaces_found_1507d637": "未找到工作区",
 					"plan_first_810bcb5b": "先计划",
 					"planning_21cc3050": "规划",
 					"remove_value0_e224cf24": "删除 {{value0}}",
-					"remove_workspace_value0_71507d25": "删除 Workspace {{value0}}",
+					"remove_workspace_value0_71507d25": "删除工作区 {{value0}}",
 					"s_043a7187": "s",
 					"save_edit_3e66f99d": "保存编辑",
-					"search_workspaces_5c192a3e": "搜索 Workspaces...",
+					"search_workspaces_5c192a3e": "搜索工作区...",
 					"send_f6f4688f": "发送",
 					"stop_cae7d57b": "停止",
 					"that_could_hide_content_review_carefully_before__568b55d8": " 这可能会隐藏内容。发送前请仔细检查。",
@@ -1621,7 +1679,7 @@
 				},
 				"ChatActionsMenuItems": {
 					"archive_agent_0246898e": "存档 Agent",
-					"archive_delete_workspace_20504a2a": "归档并删除 Workspace",
+					"archive_delete_workspace_20504a2a": "归档并删除工作区",
 					"hide_subagents_cd4a549a": "隐藏子 Agent",
 					"interrupt_or_wait_for_the_agent_to_finish_first_b529b3df": "首先中断或等待 Agent 完成。",
 					"pin_agent_1cc8db8b": "引脚 Agent",
@@ -1687,6 +1745,7 @@
 						"value0_value1_ab500f8f": "{{value0}} 至 {{value1}}"
 					},
 					"QueuedForCapacityCallout": {
+						"all_available_agent_capacity_is_currently_in_use_de2b1fa5": "当前所有 Agent 容量均在使用中。",
 						"contact_your_coder_account_team_or_da9222ce": "联系您的 Coder 客户团队或",
 						"learn_more_1445799c": "了解更多",
 						"learn_more_d20312bc": "了解更多",
@@ -1789,12 +1848,12 @@
 						},
 						"CreateWorkspaceTool": {
 							"created_value0_4bc4d3b0": "创建 {{value0}}",
-							"created_workspace_9ed48b44": "创建 Workspace",
-							"creating_workspace_afb0bf22": "创建 Workspace...",
+							"created_workspace_9ed48b44": "创建工作区",
+							"creating_workspace_afb0bf22": "创建工作区...",
 							"failed_to_create_value0_598ad5f6": "创建 {{value0}} 失败",
-							"failed_to_create_workspace_0a8d4fd6": "创建 Workspace 失败",
-							"view_workspace_ea77e961": "查看 Workspace",
-							"workspace_value0_already_exists_ee9d183d": "Workspace {{value0}} 已存在"
+							"failed_to_create_workspace_0a8d4fd6": "创建工作区失败",
+							"view_workspace_ea77e961": "查看工作区",
+							"workspace_value0_already_exists_ee9d183d": "工作区 {{value0}} 已存在"
 						},
 						"EditFilesTool": {
 							"diff_of_value0_2fc4d190": "{{value0}} 的差异",
@@ -1839,10 +1898,10 @@
 							"models_8edcc26c": "模型"
 						},
 						"ListTemplatesTool": {
-							"failed_to_list_templates_05046944": "列出 Templates 失败",
-							"listed_1_template_19a9a163": "列出 1 Template",
-							"listed_value0_templates_219fa462": "上市 {{value0}} Templates",
-							"listing_templates_22595816": "列表 Templates…"
+							"failed_to_list_templates_05046944": "列出模板失败",
+							"listed_1_template_19a9a163": "列出 1 模板",
+							"listed_value0_templates_219fa462": "上市 {{value0}} 模板",
+							"listing_templates_22595816": "列表模板…"
 						},
 						"ProcessOutputTool": {
 							"checking_value0_45df8f77": "检查{{value0}}",
@@ -1883,10 +1942,10 @@
 							"skill_contents_6aa970b8": "技能内容"
 						},
 						"ReadTemplateTool": {
-							"failed_to_read_template_15dfbf50": "读取 Template 失败",
-							"read_template_4783232c": "读取 Template",
-							"read_template_value0_a7dfc289": "读取 Template {{value0}}",
-							"reading_template_4bbfee20": "正在读取 Template..."
+							"failed_to_read_template_15dfbf50": "读取模板失败",
+							"read_template_4783232c": "读取模板",
+							"read_template_value0_a7dfc289": "读取模板 {{value0}}",
+							"reading_template_4bbfee20": "正在读取模板..."
 						},
 						"RecordingPreview": {
 							"recording_thumbnail_21e1ac13": "录制缩略图",
@@ -1895,10 +1954,10 @@
 						},
 						"StartWorkspaceTool": {
 							"failed_to_start_value0_403611e9": "启动失败 {{value0}}",
-							"failed_to_start_workspace_7a5b7ed2": "启动失败 Workspace",
+							"failed_to_start_workspace_7a5b7ed2": "启动失败工作区",
 							"started_value0_281dff47": "开始 {{value0}}",
-							"started_workspace_4530ffc2": "开始 Workspace",
-							"starting_workspace_3339e32b": "开始 Workspace…"
+							"started_workspace_4530ffc2": "开始工作区",
+							"starting_workspace_3339e32b": "开始工作区…"
 						},
 						"SubagentTool": {
 							"failed_to_interrupt_df3ec33e": "打断失败 ",
@@ -1956,7 +2015,7 @@
 							"failed_to_load_build_logs_5521b6c9": "无法加载构建日志。",
 							"loading_build_logs_10527910": "正在加载构建日志...",
 							"no_build_logs_available_36984af2": "没有可用的构建日志。",
-							"workspace_build_log_a7ee203b": "Workspace 构建日志"
+							"workspace_build_log_a7ee203b": "工作区构建日志"
 						},
 						"WriteFileTool": {
 							"diff_of_value0_2fc4d190": "{{value0}} 的差异",
@@ -1979,12 +2038,12 @@
 					},
 					"SkillsTriggerMenu": {
 						"commands_b269dc4e": "命令",
-						"no_personal_or_workspace_skills_found_aaf5aeed": "未找到个人或 Workspace 技能。",
+						"no_personal_or_workspace_skills_found_aaf5aeed": "未找到个人或工作区技能。",
 						"no_personal_skills_found_c15c4e92": "没有发现个人技能。",
 						"no_personal_skills_match_that_query_97156b78": "没有任何个人技能符合该查询。",
 						"no_skills_match_that_query_4cf7dbe6": "没有与该查询匹配的技能。",
 						"personal_skills_4907a3e2": "个人技能",
-						"workspace_skills_10657f7b": "Workspace 技能"
+						"workspace_skills_10657f7b": "工作区技能"
 					},
 					"storyHelpers": {
 						"draft_docs_for_user_facing_behavior_920aff4f": "面向用户的行为的草稿文档。",
@@ -2246,7 +2305,7 @@
 					"refresh_context_f79efc38": "刷新上下文",
 					"skill_9c53c074": "技能",
 					"skills_66d0f523": "技能",
-					"the_workspace_context_changed_since_this_chat_wa_fa9b38d8": "自此聊天被固定以来，Workspace 上下文发生了变化。",
+					"the_workspace_context_changed_since_this_chat_wa_fa9b38d8": "自此聊天被固定以来，工作区上下文发生了变化。",
 					"value0_9ab75be0": "({{value0}})",
 					"value0_value1_value2_context_used_5051e7e8": "{{value0}} - 使用 {{value1}} / {{value2}} 上下文"
 				},
@@ -2380,7 +2439,7 @@
 					"nname_my_skill_ndescription_n_n_nbody_6847cff4": "---\\n名称：我的技能\\n描述：...\\n---\\n\\n身体...",
 					"of_88eb5a7e": " 的",
 					"paste_a_full_skill_md_file_with_frontmatter_to_a_553bf72d": "粘贴包含 frontmatter 的完整 SKILL.md 文件以自动填充下面的字段。",
-					"personal_skills_are_available_to_your_agents_and_e12442f9": "个人技能可用于您的 Agents 并存储为带有 frontmatter 的单个 SKILL.md 文件。要获得更丰富的技能和支持文件，请将它们添加到“.Agents/skills/”下的存储库中，或从 Workspace 加载它们。",
+					"personal_skills_are_available_to_your_agents_and_e12442f9": "个人技能可用于您的 Agents 并存储为带有 frontmatter 的单个 SKILL.md 文件。要获得更丰富的技能和支持文件，请将它们添加到“.Agents/skills/”下的存储库中，或从工作区加载它们。",
 					"review_database_query_ca1dca2d": "评论数据库查询",
 					"save_skill_1d92b781": "保存技能",
 					"updated_description_and_body_fields_kept_the_exi_af7ace05": "更新了描述和正文字段。保留现有名称。",
@@ -2534,7 +2593,7 @@
 					},
 					"PortPreviewPanel": {
 						"open_port_in_new_tab_e0d5c04f": "在新选项卡中打开端口",
-						"port_preview_will_be_available_once_the_workspac_d287032d": "Workspace Agent 重新连接后即可使用端口预览。",
+						"port_preview_will_be_available_once_the_workspac_d287032d": "工作区 Agent 重新连接后即可使用端口预览。",
 						"port_previews_require_a_wildcard_access_url_c023812a": "端口预览需要通配符访问 URL。",
 						"the_wildcard_access_url_produced_an_invalid_prev_846953f0": "通配符访问 URL 生成无效预览 URL。检查部署的通配符访问 URL 配置。"
 					},
@@ -2545,11 +2604,11 @@
 					}
 				},
 				"StatusIcon": {
-					"workspace_value0_1a86d83e": "Workspace {{value0}}",
-					"workspace_value0_unhealthy_ddea792f": "Workspace {{value0}}（不健康）"
+					"workspace_value0_1a86d83e": "工作区 {{value0}}",
+					"workspace_value0_unhealthy_ddea792f": "工作区 {{value0}}（不健康）"
 				},
 				"TerminalPanel": {
-					"terminal_will_be_available_once_the_workspace_ag_341c3585": "Workspace Agent 准备就绪后，终端即可使用。"
+					"terminal_will_be_available_once_the_workspace_ag_341c3585": "工作区 Agent 准备就绪后，终端即可使用。"
 				},
 				"TextPreviewDialog": {
 					"pasted_text_39cfc32b": "粘贴的文本"
@@ -2562,11 +2621,11 @@
 					"usage_8d59829c": "用途",
 					"used_f8391613": "使用过的",
 					"value0_help_07383552": "{{value0}} 帮助",
-					"workspace_quota_21bfe1a8": "Workspace 配额",
-					"workspace_quota_usage_4e6f7177": "Workspace 配额使用情况",
-					"workspaces_stopped_or_running_may_consume_credit_16f4fdcf": "Workspaces，停止或运行，可能会消耗积分。停止或删除未使用的以释放配额。",
-					"workspaces_value0_9dfe49d5": "Workspaces {{value0}}",
-					"workspaces_value0_value1_304a009b": "Workspaces {{value0}}/{{value1}}"
+					"workspace_quota_21bfe1a8": "工作区配额",
+					"workspace_quota_usage_4e6f7177": "工作区配额使用情况",
+					"workspaces_stopped_or_running_may_consume_credit_16f4fdcf": "工作区，停止或运行，可能会消耗积分。停止或删除未使用的以释放配额。",
+					"workspaces_value0_9dfe49d5": "工作区 {{value0}}",
+					"workspaces_value0_value1_304a009b": "工作区 {{value0}}/{{value1}}"
 				},
 				"UserChatDebugLoggingSettings": {
 					"an_administrator_has_enabled_debug_logging_for_e_dc2dff9e": "管理员已为此部署中的每个聊天启用调试日志记录，因此此开关已锁定。",
@@ -2606,14 +2665,14 @@
 					"recording_playback_708c8c8d": "录音回放"
 				},
 				"VirtualDesktopSettings": {
-					"allow_agents_to_use_a_virtual_graphical_desktop__5e7e17d5": "允许 Agents 使用 Workspaces 内的虚拟图形桌面。需要",
+					"allow_agents_to_use_a_virtual_graphical_desktop__5e7e17d5": "允许 Agents 使用工作区内的虚拟图形桌面。需要",
 					"anthropic_744205e4": "Anthropic",
 					"computer_use_provider_10f0fae9": "计算机使用提供商",
 					"failed_to_save_computer_use_provider_dfa28fcc": "无法保存计算机使用提供商。",
 					"openai_8b7d1a31": "OpenAI",
 					"portabledesktop_module_d33a8a56": "便携式桌面模块",
 					"select_provider_644c6aae": "选择提供商",
-					"to_be_installed_in_the_workspace_and_a_computer__79a46bc9": "安装在 Workspace 中并配置计算机使用提供商。",
+					"to_be_installed_in_the_workspace_and_a_computer__79a46bc9": "安装在工作区中并配置计算机使用提供商。",
 					"virtual_desktop_009e9166": "虚拟桌面"
 				},
 				"WebPushButton": {
@@ -2623,11 +2682,11 @@
 				},
 				"WorkspacePill": {
 					"copy_ssh_command_2de818c8": "复制 SSH 命令",
-					"detach_workspace_0bb92a25": "分离 Workspace",
+					"detach_workspace_0bb92a25": "分离工作区",
 					"failed_to_open_value0_d661e3e4": "无法打开 {{value0}}。",
 					"terminal_e0926fda": "终端",
-					"value0_workspace_menu_88824265": "{{value0}} Workspace 菜单",
-					"view_workspace_8244f5ad": "查看 Workspace",
+					"value0_workspace_menu_88824265": "{{value0}} 工作区菜单",
+					"view_workspace_8244f5ad": "查看工作区",
 					"vs_code_af437cf8": "VS Code",
 					"vs_code_insiders_e0f962db": "VS Code 内部人士"
 				},
@@ -2663,12 +2722,12 @@
 			},
 			"utils": {
 				"agentWorkspaceUtils": {
-					"delete_enqueued_for_value0_but_no_matching_provi_60fb1c12": "已将“{{value0}}”加入删除队列，但当前没有匹配的 Provisioner。Provisioner 上线后将删除该 Workspace。",
-					"failed_to_delete_workspace_f06ebbe9": "删除 Workspace 失败。",
-					"failed_to_delete_workspace_value0_7c221751": "删除 Workspace“{{value0}}”失败。",
-					"open_workspace_b3e34b18": "打开 Workspace",
-					"the_chat_was_archived_but_the_workspace_delete_f_b8b6731b": "聊天已存档，但 Workspace 删除失败。从存档过滤器中取消存档，或打开 Workspace 手动删除它。",
-					"the_workspace_e93d11f7": "Workspace"
+					"delete_enqueued_for_value0_but_no_matching_provi_60fb1c12": "已将“{{value0}}”加入删除队列，但当前没有匹配的 Provisioner。Provisioner 上线后将删除该工作区。",
+					"failed_to_delete_workspace_f06ebbe9": "删除工作区失败。",
+					"failed_to_delete_workspace_value0_7c221751": "删除工作区“{{value0}}”失败。",
+					"open_workspace_b3e34b18": "打开工作区",
+					"the_chat_was_archived_but_the_workspace_delete_f_b8b6731b": "聊天已存档，但工作区删除失败。从存档过滤器中取消存档，或打开工作区手动删除它。",
+					"the_workspace_e93d11f7": "工作区"
 				},
 				"chatAttachments": {
 					"couldn_t_download_value0_7210249d": "无法下载 {{value0}}",
@@ -2757,7 +2816,7 @@
 					"client_0c77fe09": "客户",
 					"in_out_tokens_ba5f636c": "输入/输出 Token",
 					"last_prompt_2cf8a798": "最后提示词",
-					"last_prompt_at_utc_e7f08c95": "最后提示时间 [UTC",
+					"last_prompt_at_utc_e7f08c95": "最后提示词时间 [UTC",
 					"network_requests_0b9921c8": "网络请求",
 					"no_session_logs_available_50487da8": "没有可用的会话日志",
 					"provider_472590ae": "提供商",
@@ -3066,8 +3125,8 @@
 						"failed_to_load_autostop_setting_7f5671e4": "无法加载自动停止设置。",
 						"failed_to_save_autostop_setting_bff2b28d": "无法保存自动停止设置。",
 						"must_not_exceed_30_days_720_hours_46a4a49c": "不得超过 30 天（720 小时）。",
-						"set_a_default_autostop_for_agent_created_workspa_84af8ca8": "为 Agent 创建的 Workspaces（其 Template 中未定义自动停止）设置默认自动停止。 Template 定义的自动停止规则始终优先。积极的对话会延长停止时间。",
-						"workspace_autostop_fallback_be8a2dc2": "Workspace 自动停止回退"
+						"set_a_default_autostop_for_agent_created_workspa_84af8ca8": "为 Agent 创建的工作区（其模板中未定义自动停止）设置默认自动停止。 模板定义的自动停止规则始终优先。积极的对话会延长停止时间。",
+						"workspace_autostop_fallback_be8a2dc2": "工作区自动停止回退"
 					}
 				},
 				"LifecyclePage": {
@@ -3075,7 +3134,7 @@
 					"lifecycle_46459b1f": "生命周期"
 				},
 				"LifecyclePageView": {
-					"control_workspace_lifecycle_and_conversation_ret_e4251442": "控制 Workspace 生命周期和对话保留。",
+					"control_workspace_lifecycle_and_conversation_ret_e4251442": "控制工作区生命周期和对话保留。",
 					"lifecycle_46459b1f": "生命周期"
 				}
 			},
@@ -3115,7 +3174,7 @@
 					"MCPServerBehaviorSection": {
 						"allow_all_tools_from_this_mcp_server_in_root_pla_d8f994af": "在根计划模式下允许此 MCP 服务器中的所有工具",
 						"allows_this_server_to_be_used_for_model_intent_t_c3c59254": "允许此服务器用于模型意图工具。",
-						"allows_tools_during_planning_workspace_mcp_and_p_2f8e0f21": "在规划期间允许使用工具。 Workspace MCP 和计划模式控制仍然适用。",
+						"allows_tools_during_planning_workspace_mcp_and_p_2f8e0f21": "在规划期间允许使用工具。 工作区 MCP 和计划模式控制仍然适用。",
 						"availability_12f67f85": "可用性",
 						"comma_separated_empty_all_allowed_436208b6": "以逗号分隔。空=全部允许。",
 						"comma_separated_names_to_block_fe8783d6": "要阻止的以逗号分隔的名称。",
@@ -3134,7 +3193,7 @@
 						"delete_mcp_server_1a969bef": "删除 MCP 服务器",
 						"delete_value0_agents_will_no_longer_be_able_to_u_7f15e6a9": "删除“{{value0}}”？ Agents 将无法再使用该服务器。",
 						"unsaved_changes_a710c2b9": "未保存的更改",
-						"your_updates_haven_t_been_saved_leave_anyway_0230d6de": "您的更新尚未保存。还是离开吧？"
+						"your_updates_haven_t_been_saved_leave_anyway_0230d6de": "更改尚未保存。仍要离开吗？"
 					},
 					"MCPServerFormFields": {
 						"add_server_1099b2a9": "添加服务器",
@@ -3289,7 +3348,7 @@
 						"is_currently_the_default_replace_it_4f6d113d": "目前是默认值。更换吗？",
 						"replace_default_model_259a3b74": "替换默认模型",
 						"unsaved_changes_a710c2b9": "未保存的更改",
-						"your_updates_haven_t_been_saved_leave_anyway_0230d6de": "您的更新尚未保存。还是离开吧？"
+						"your_updates_haven_t_been_saved_leave_anyway_0230d6de": "更改尚未保存。仍要离开吗？"
 					},
 					"ModelFormFields": {
 						"add_model_7060e824": "添加模型",
@@ -3392,7 +3451,9 @@
 						"the_provider_type_you_are_trying_to_add_is_not_v_9715c781": "您尝试添加的提供商类型无效。请再试一次。"
 					},
 					"AddProviderPageView": {
-						"add_value0_value1_provider_b589ed14": "添加 {{value0}} {{value1}} 提供商",
+						"add_a_value0_provider_5af7e95b": "添加 {{value0}} 提供商",
+						"add_an_openai_compatible_provider_5d50c1f2": "添加 OpenAI 兼容提供商",
+						"add_an_value0_provider_52cc66ed": "添加 {{value0}} 提供商",
 						"back_to_providers_efe5419c": "返回提供商",
 						"configure_connection_details_and_credentials_9a3956c2": "配置连接详细信息和凭据。",
 						"provider_value0_added_0573a800": "添加了提供商“{{value0}}”。"
@@ -3403,19 +3464,19 @@
 						"anthropic_744205e4": "Anthropic",
 						"aws_bedrock_d3ba7b97": "AWS Bedrock",
 						"azure_openai_76977023": "Azure OpenAI",
-						"github_copilot_ed249d41": "GitHub 副驾驶",
+						"github_copilot_ed249d41": "GitHub Copilot",
 						"google_ce770667": "Google",
 						"openai_8b7d1a31": "OpenAI",
-						"openai_compatible_790d883a": "OpenAI-compatible",
+						"openai_compatible_790d883a": "OpenAI 兼容",
 						"openrouter_eb70c3bc": "OpenRouter",
-						"vercel_68edc75c": "韦尔塞尔"
+						"vercel_68edc75c": "Vercel"
 					},
 					"ProviderForm": {
 						"access_key_8663b0d4": "访问密钥",
-						"access_key_secret_96cc3983": "访问密钥密钥",
+						"access_key_secret_96cc3983": "Secret Access Key",
 						"add_provider_8cd1856b": "添加提供商",
 						"api_key_16f0ee47": "API 密钥",
-						"api_key_is_required_59b831ea": "API 需要密钥",
+						"api_key_is_required_59b831ea": "API 密钥为必填项",
 						"arn_aws_iam_123456789012_role_bedrockrole_6b155a5b": "arn:aws:iam::123456789012:role/BedrockRole",
 						"aws_bedrock_model_cards_b8ebdfad": "AWS Bedrock 模型卡",
 						"cancel_19766ed6": "取消",
@@ -3425,22 +3486,22 @@
 						"display_name_2b7f6a84": "显示名称",
 						"endpoint_3df9726c": "端点",
 						"endpoint_is_required_e644e085": "端点为必填项",
-						"endpoint_must_be_a_bedrock_invokemodel_url_https_ea6b03d0": "端点必须是 Bedrock InvokeModel URL (https://bedrock-runtime.{region}.amazonaws.com)。",
-						"endpoint_must_be_a_bedrock_mantle_url_https_bedr_8852084b": "端点必须是 Bedrock Mantle URL (https://bedrock-mantle.{region}.api.aws/anthropic)。",
+						"endpoint_must_be_a_bedrock_invokemodel_url_https_ea6b03d0": "端点必须是 Bedrock InvokeModel URL (URL}.amazonaws.com)。",
+						"endpoint_must_be_a_bedrock_mantle_url_https_bedr_8852084b": "端点必须是 Bedrock Mantle URL (https://bedrock-mantle.{region}.API.aws/anthropic)。",
 						"enter_both_access_key_and_secret_or_leave_both_b_cf872347": "请同时输入 Access Key 和 Secret，或将两者留空以使用 AWS 环境凭据。",
-						"external_id_69da56ba": "外部ID",
-						"find_available_bedrock_model_ids_in_the_f1c0575b": "在中查找可用的基岩模型 ID",
-						"friendly_name_defaults_to_name_if_blank_212d32e4": "友好的名字。如果为空则默认为名称。",
+						"external_id_69da56ba": "外部 ID",
+						"find_available_bedrock_model_ids_in_the_f1c0575b": "如需查看可用的 Bedrock 模型 ID，请参阅",
+						"friendly_name_defaults_to_name_if_blank_212d32e4": "显示名称。留空时默认使用名称。",
 						"icon_a35abcd6": "图标",
 						"in_the_format_of_f3674a02": "格式为",
-						"invokemodel_c72cf967": "调用模型",
-						"legacy_bedrock_runtime_api_still_supported_mantl_7a3ea598": "旧版基岩运行时 API。仍然支持；建议将 Mantle 用于新部署。",
-						"mantle_ae66fdba": "地幔",
+						"invokemodel_c72cf967": "InvokeModel",
+						"legacy_bedrock_runtime_api_still_supported_mantl_7a3ea598": "旧版 Bedrock 运行时 API。仍然支持；建议将 Mantle 用于新部署。",
+						"mantle_ae66fdba": "Mantle",
 						"model_5e2c614c": "模型",
 						"model_is_required_58221dcf": "模型为必填项",
 						"name_dcd1d522": "名称",
-						"name_is_required_604fd1b2": "姓名为必填项",
-						"name_must_be_lowercase_hyphen_separated_e_g_my_a_0d4201a7": "名称必须小写，并用连字符分隔（例如“my-Anthropic”）。",
+						"name_is_required_604fd1b2": "名称为必填项",
+						"name_must_be_lowercase_hyphen_separated_e_g_my_a_0d4201a7": "名称必须使用小写字母并以连字符分隔（例如“my-anthropic”）。",
 						"newer_anthropic_compatible_bedrock_endpoint_reco_f327a00f": "较新的与 Anthropic 兼容的 Bedrock 端点，AWS 推荐用于新部署。",
 						"optional_leave_both_fields_blank_to_authenticate_5716ca65": "可选。将这两个字段留空以通过 AWS 环境（IAM 角色、实例配置文件、AWS_PROFILE）进行身份验证。",
 						"optional_url_or_emoji_shown_for_this_provider_0a51f6a1": "可选。显示此提供商的 URL 或表情符号。",
@@ -3449,15 +3510,15 @@
 						"protocol_cf088334": "协议",
 						"role_arn_6cbb6f1d": "角色 ARN",
 						"server_generated_add_it_to_the_assumed_role_s_tr_ca2c5302": "服务器生成。将其添加到假定角色的信任策略中作为 ",
-						"small_fast_model_45d78430": "小快模型",
-						"small_fast_model_is_required_f6ea5400": "需要小快模型",
+						"small_fast_model_45d78430": "小型快速模型",
+						"small_fast_model_is_required_f6ea5400": "必须填写小型快速模型",
 						"the_base_url_for_your_copilot_tier_baad719f": "Copilot 级别的基本 URL：",
 						"the_base_url_where_the_provider_s_api_is_hosted_a25deddf": "托管提供商的 API 的基本 URL。",
 						"unique_identifier_used_in_urls_can_t_be_changed_637196f5": "唯一标识符（在 URL 中使用，不能更改）",
 						"unsaved_changes_a710c2b9": "未保存的更改",
 						"update_provider_09ab4ff0": "更新提供商",
 						"view_docs_61479fda": "查看文档",
-						"your_updates_haven_t_been_saved_leave_anyway_0230d6de": "您的更新尚未保存。还是离开吧？"
+						"your_updates_haven_t_been_saved_leave_anyway_0230d6de": "更改尚未保存。仍要离开吗？"
 					},
 					"ProviderRow": {
 						"disabled_75081b59": "已禁用",
@@ -3507,21 +3568,22 @@
 			"TemplatesPage": {
 				"TemplatesPage": {
 					"ai_settings_a8e5e2c6": "AI 设置",
-					"failed_to_update_whether_coder_agents_can_create_7267745e": "无法更新 Coder Agents 是否可以创建 Workspaces。",
+					"failed_to_update_whether_coder_agents_can_create_7267745e": "无法更新 Coder Agents 是否可以创建工作区。",
+					"templates_56b564b7": "模板",
 					"value0_in_value1_value2_3bf30ed9": "{{value0}} 在 {{value1}}: {{value2}}"
 				},
 				"TemplatesPageView": {
-					"allow_coder_agents_to_create_workspaces_using_va_c91b9cb4": "允许 Coder Agents 在 {{value1}} 中使用 {{value0}} 创建 Workspaces",
-					"choose_which_templates_coder_agents_can_use_to_c_47790183": "选择可以使用哪个 Templates Coder Agents 来创建 Workspaces。",
-					"coder_agents_workspace_creation_8f9e12ff": "Coder Agents Workspace 创建",
-					"create_a_template_before_configuring_whether_cod_4860480d": "在配置 Coder Agents 是否可以创建 Workspaces 之前，先创建一个 Template。",
+					"allow_coder_agents_to_create_workspaces_using_va_c91b9cb4": "允许 Coder Agents 在 {{value1}} 中使用 {{value0}} 创建工作区",
+					"choose_which_templates_coder_agents_can_use_to_c_47790183": "选择可以使用哪个模板 Coder Agents 来创建工作区。",
+					"coder_agents_workspace_creation_8f9e12ff": "Coder Agents 工作区创建",
+					"create_a_template_before_configuring_whether_cod_4860480d": "在配置 Coder Agents 是否可以创建工作区之前，先创建一个模板。",
 					"last_updated_382ac5f3": "最后更新",
 					"no_results_matched_your_search_cf13a234": "没有结果与您的搜索相符。",
-					"no_templates_found_821a89da": "未找到 Templates。",
+					"no_templates_found_821a89da": "未找到模板。",
 					"retry_942087cc": "重试",
-					"template_0575f29d": "Template",
-					"templates_56b564b7": "Templates",
-					"templates_coder_agents_can_use_to_create_workspa_96a70ae0": "Templates Coder Agents 可以用来创建 Workspaces",
+					"template_0575f29d": "模板",
+					"templates_56b564b7": "模板",
+					"templates_coder_agents_can_use_to_create_workspa_96a70ae0": "模板 Coder Agents 可以用来创建工作区",
 					"used_by_681bf81a": "使用者"
 				}
 			}
@@ -3535,7 +3597,7 @@
 			"CliAuthPageView": {
 				"copy_session_token_50342d72": "复制会话 Token",
 				"copy_the_session_token_below_and_d055ea69": "复制下面的会话 Token 并",
-				"go_to_workspaces_38ce977a": "转到 Workspaces",
+				"go_to_workspaces_38ce977a": "转到工作区",
 				"paste_it_in_your_terminal_bd724733": "将其粘贴到您的终端中。",
 				"session_token_65fdc7ba": "会话 Token",
 				"session_token_copied_eb1a9718": "会话 Token 已复制！"
@@ -3619,7 +3681,7 @@
 				"country_701d021d": "国家",
 				"email_969ccbd3": "电子邮件",
 				"first_name_702ef921": "名字",
-				"get_access_to_high_availability_template_rbac_au_d3e0fa76": "获取高可用性、Template RBAC、审核日志记录、配额等。",
+				"get_access_to_high_availability_template_rbac_au_d3e0fa76": "获取高可用性、模板 RBAC、审核日志记录、配额等。",
 				"github_f911e414": "GitHub",
 				"job_title_86db80a8": "职称",
 				"last_name_7b488804": "姓氏",
@@ -3653,7 +3715,7 @@
 				"dismiss_48845bff": "关闭"
 			},
 			"ErrorAlert": {
-				"go_to_workspaces_38ce977a": "转到 Workspaces",
+				"go_to_workspaces_38ce977a": "转到工作区",
 				"response_data_8fe2091a": "响应数据",
 				"something_went_wrong_0c953ab3": "出现错误。",
 				"stack_trace_916cdab8": "堆栈跟踪"
@@ -3805,7 +3867,7 @@
 					"couldn_t_load_results_973d2a38": "无法加载结果。",
 					"couldn_t_load_suggestions_6a76c6ce": "无法加载建议。",
 					"couldn_t_load_value0_options_0174e866": "无法加载 {{value0}} 选项",
-					"couldn_t_load_workspace_previews_b36ab7fe": "无法加载 Workspace 预览。",
+					"couldn_t_load_workspace_previews_b36ab7fe": "无法加载工作区预览。",
 					"filtering_by_value0_f4ffcd7e": "按 {{value0}} 过滤",
 					"loading_value0_options_a6575326": "加载 {{value0}} 选项",
 					"no_filters_found_43863a1c": "没有找到过滤器",
@@ -3886,7 +3948,7 @@
 				"latency_not_available_cea65bce": "延迟不可用",
 				"loading_latency_92da998c": "加载延迟...",
 				"milliseconds_c7fa2402": "毫秒",
-				"ms_f785c3ce": "女士"
+				"ms_f785c3ce": "毫秒"
 			}
 		},
 		"licenses": {
@@ -3962,7 +4024,7 @@
 		"Paywall": {
 			"Paywall": {
 				"24x7_global_support_with_sla_ede4f1cd": "通过 SLA 提供 24x7 全球支持",
-				"high_availability_workspace_proxies_7f66cc1c": "高可用性和 Workspace 代理",
+				"high_availability_workspace_proxies_7f66cc1c": "高可用性和工作区代理",
 				"multi_org_role_based_access_control_15ad953f": "多组织和基于角色的访问控制",
 				"unlimited_git_external_auth_integrations_522013a4": "无限制的 Git 和外部身份验证集成",
 				"you_need_a_premium_license_to_use_this_feature_96d5bfce": "您需要 Premium 许可证才能使用此功能。"
@@ -3984,7 +4046,7 @@
 		},
 		"permissions": {
 			"RequirePermission": {
-				"go_to_workspaces_38ce977a": "转到 Workspaces",
+				"go_to_workspaces_38ce977a": "转到工作区",
 				"if_you_believe_this_is_a_mistake_please_contact__c519a6f1": "如果您认为这是一个错误，请联系您的管理员或尝试使用不同的凭据登录。",
 				"you_don_t_have_permission_to_view_this_page_99d2f046": "您没有权限查看此页面"
 			}
@@ -3995,11 +4057,11 @@
 				"everybody_is_a_member_this_is_a_shared_and_defau_6ec0044c": "每个人都是成员。这是所有用户共享的默认角色。",
 				"organization_admin_can_manage_all_resources_with_356c5361": "组织管理员可以管理该组织内的所有资源。",
 				"organization_auditor_can_access_audit_logs_for_t_915c6dd7": "组织审核员可以访问该组织的审核日志。",
-				"organization_template_admin_can_manage_templates_f40e390d": "组织 Template 管理员可以管理该组织内的 Templates 和 Workspaces。",
+				"organization_template_admin_can_manage_templates_f40e390d": "组织模板管理员可以管理该组织内的模板和工作区。",
 				"organization_user_admin_can_manage_members_and_g_f19a35c2": "组织用户管理员可以管理该组织内的成员和组。",
-				"owner_can_manage_all_resources_including_users_g_8a93d4a4": "所有者可以管理所有资源，包括用户、组、Templates 和 Workspaces。",
-				"prevents_this_user_from_creating_new_workspaces__fffbc52a": "阻止该用户在此组织中创建新的 Workspaces。",
-				"template_admin_can_manage_all_templates_and_work_aff81d64": "Template 管理员可以管理所有 Templates 和 Workspaces。",
+				"owner_can_manage_all_resources_including_users_g_8a93d4a4": "所有者可以管理所有资源，包括用户、组、模板和工作区。",
+				"prevents_this_user_from_creating_new_workspaces__fffbc52a": "阻止该用户在此组织中创建新的工作区。",
+				"template_admin_can_manage_all_templates_and_work_aff81d64": "模板管理员可以管理所有模板和工作区。",
 				"user_admin_can_manage_all_users_and_groups_fc983e6e": "用户管理员可以管理所有用户和组。"
 			},
 			"RoleSelector": {
@@ -4041,8 +4103,8 @@
 				"never_seen_5b9c95c2": "没见过",
 				"not_reachable_5ad99230": "无法到达",
 				"unhealthy_317b1fbc": "不健康",
-				"workspace_proxy_has_never_come_online_and_needs__10df83c0": "Workspace 代理从未上线，需要启动。",
-				"workspace_proxy_not_responding_to_http_s_request_42d029d4": "Workspace 代理未响应 http 请求。"
+				"workspace_proxy_has_never_come_online_and_needs__10df83c0": "工作区代理从未上线，需要启动。",
+				"workspace_proxy_not_responding_to_http_s_request_42d029d4": "工作区代理未响应 HTTP 请求。"
 			}
 		},
 		"tableFiltering": {
@@ -4081,12 +4143,12 @@
 				"session_was_started_before_the_startup_scripts_f_d639fbbd": "会话在启动脚本完成之前启动",
 				"startup_script_has_exited_with_an_error_45b27cbe": "启动脚本已退出并出现错误",
 				"startup_scripts_are_still_running_you_can_contin_d92b7fd0": "启动脚本仍在运行。您可以继续使用该终端，但是",
-				"startup_scripts_have_completed_successfully_the__47b00667": "启动脚本已成功完成。 Workspace 已准备就绪，但这",
-				"the_workspace_ee8dc98c": "Workspace",
+				"startup_scripts_have_completed_successfully_the__47b00667": "启动脚本已成功完成。 工作区已准备就绪，但这",
+				"the_workspace_ee8dc98c": "工作区",
 				"to_ensure_your_shell_environment_is_up_to_date_w_a2dda7e7": "为了确保您的 shell 环境是最新的，我们建议重新加载此会话。",
 				"trying_to_connect_8aa585d3": "正在尝试连接...",
 				"we_recommend_reloading_this_session_and_243078c0": "，我们建议重新加载此会话并且",
-				"your_workspace_may_be_incomplete_b00f06ec": "您的 Workspace 可能不完整。"
+				"your_workspace_may_be_incomplete_b00f06ec": "您的工作区可能不完整。"
 			}
 		},
 		"Welcome": {
@@ -4106,25 +4168,25 @@
 					"active_connections_fa1f0a72": "活跃连接数",
 					"activity_in_the_last_value0_minutes_30d6721d": "最后 ~{{value0}} 分钟的活动",
 					"building_87c5912f": "建筑",
-					"data_sent_from_workspaces_d5366774": "从 Workspaces 发送的数据",
-					"data_sent_to_workspaces_d18f7495": "数据发送至 Workspaces",
+					"data_sent_from_workspaces_d5366774": "从工作区发送的数据",
+					"data_sent_to_workspaces_d18f7495": "数据发送至工作区",
 					"jetbrains_editors_ddab2dcd": "JetBrains 编辑",
-					"no_recent_workspace_connections_have_been_made_1578c2c2": "最近没有建立 Workspace 连接",
+					"no_recent_workspace_connections_have_been_made_1578c2c2": "最近没有建立工作区连接",
 					"s_043a7187": "s",
 					"ssh_sessions_1d3b9f49": "SSH 会话",
 					"status_of_your_coder_deployment_only_visible_for_3243bff3": "Coder 部署的状态。仅管理员可见！",
-					"the_average_latency_of_user_connections_to_works_560c9d2f": "用户连接到 Workspaces 的平均延迟",
-					"the_last_time_stats_were_aggregated_workspaces_r_e291293d": "上次统计统计数据的时间。 Workspaces 会定期报告统计数据，因此更新可能需要一些时间！",
+					"the_average_latency_of_user_connections_to_works_560c9d2f": "用户连接到工作区的平均延迟",
+					"the_last_time_stats_were_aggregated_workspaces_r_e291293d": "上次统计统计数据的时间。 工作区会定期报告统计数据，因此更新可能需要一些时间！",
 					"transmission_3e101342": "传输",
 					"value0_ms_55077da6": "{{value0}} 毫秒",
-					"value0_workspaces_87fbdfd2": "{{value0}} Workspaces",
+					"value0_workspaces_87fbdfd2": "{{value0}} 工作区",
 					"vs_code_editors_with_the_coder_remote_extension_95239140": "使用 Coder 远程扩展的 VS Code 编辑器",
 					"we_have_detected_problems_with_your_coder_deploy_4240f143": "我们检测到您的 Coder 部署存在问题。",
 					"we_re_noticing_derp_proxy_issues_93b36b22": "我们注意到 DERP 代理问题。",
 					"we_re_noticing_websocket_issues_3d3375f8": "我们注意到 WebSocket 问题。",
-					"we_re_noticing_workspace_proxy_issues_1f8bd73f": "我们注意到 Workspace 代理问题。",
+					"we_re_noticing_workspace_proxy_issues_1f8bd73f": "我们注意到工作区代理问题。",
 					"web_terminal_sessions_d6052b2d": "Web 终端会话",
-					"workspaces_1377264b": "Workspaces",
+					"workspaces_1377264b": "工作区",
 					"your_access_url_may_be_configured_incorrectly_eda49d5d": "您的访问 URL 可能配置不正确。",
 					"your_database_is_unhealthy_44ead0ae": "您的数据库不健康。"
 				}
@@ -4164,32 +4226,32 @@
 					"failed_to_select_proxy_16e7d1f3": "选择代理失败。",
 					"latency_for_82129a3e": "延迟为 ",
 					"open_menu_b40b3713": "打开菜单",
-					"please_select_a_healthy_workspace_proxy_25ba0ed8": "请选择一个健康的 Workspace 代理。",
+					"please_select_a_healthy_workspace_proxy_25ba0ed8": "请选择一个健康的工作区代理。",
 					"proxy_settings_4529dd70": "代理设置",
 					"refresh_latencies_ba8f2209": "刷新延迟",
 					"sign_out_48f0d3d3": "退出",
-					"templates_56b564b7": "Templates",
+					"templates_56b564b7": "模板",
 					"user_settings_2b363e87": "用户设置",
-					"workspace_proxy_settings_cd80e2a6": "Workspace 代理设置：",
-					"workspaces_1377264b": "Workspaces"
+					"workspace_proxy_settings_cd80e2a6": "工作区代理设置：",
+					"workspaces_1377264b": "工作区"
 				},
 				"NavbarView": {
 					"agents_279b44d2": "Agents",
 					"link_opens_in_new_tab_20897869": " （链接在新选项卡中打开）",
-					"templates_56b564b7": "Templates",
-					"workspaces_1377264b": "Workspaces"
+					"templates_56b564b7": "模板",
+					"workspaces_1377264b": "工作区"
 				},
 				"ProxyMenu": {
 					"command_line_interface_db96c4f5": "命令行界面",
 					"connections_are_unaffected_if_no_region_is_selec_2c8404d5": "连接不受影响。如果未选择区域，则将使用主要区域。",
 					"failed_to_select_proxy_value0_d7077442": "无法选择代理“{{value0}}”。",
 					"latency_for_82129a3e": "延迟为 ",
-					"please_select_a_healthy_workspace_proxy_25ba0ed8": "请选择一个健康的 Workspace 代理。",
+					"please_select_a_healthy_workspace_proxy_25ba0ed8": "请选择一个健康的工作区代理。",
 					"proxy_settings_4529dd70": "代理设置",
 					"refresh_latencies_ba8f2209": "刷新延迟",
 					"select_a_region_nearest_to_you_5f2d9fac": "选择离您最近的地区",
 					"select_proxy_02b1bace": "选择代理",
-					"workspace_proxies_improve_terminal_and_web_app_c_6f88285e": "Workspace 代理改进了终端和 Web 应用程序连接。",
+					"workspace_proxies_improve_terminal_and_web_app_c_6f88285e": "工作区代理改进了终端和 Web 应用程序连接。",
 					"your_region_927d4d96": "您所在的地区"
 				},
 				"UserDropdown": {
@@ -4268,7 +4330,7 @@
 			"azure_openai_76977023": "Azure OpenAI",
 			"google_ce770667": "Google",
 			"openai_8b7d1a31": "OpenAI",
-			"openai_compatible_790d883a": "OpenAI-compatible",
+			"openai_compatible_790d883a": "OpenAI 兼容",
 			"openrouter_eb70c3bc": "OpenRouter",
 			"unknown_b764cdc0": "未知",
 			"vercel_ai_gateway_7ddb0704": "Vercel AI Gateway"
@@ -4287,7 +4349,7 @@
 			"CliInstallPageView": {
 				"coder_technologies_inc_6f4648e4": " Coder 技术有限公司",
 				"copy_the_command_below_and_e5c1ea05": "复制下面的命令并",
-				"go_to_workspaces_38ce977a": "转到 Workspaces",
+				"go_to_workspaces_38ce977a": "转到工作区",
 				"install_the_coder_cli_b07a20ac": "安装 Coder CLI",
 				"paste_it_in_your_terminal_bd724733": "将其粘贴到您的终端中。"
 			}
@@ -4306,17 +4368,17 @@
 				"everyone_saved_here_37383721": "大家都得救了！",
 				"fuel_0e2f3c16": "燃料",
 				"get_ready_value0_637b8653": "准备好... {{value0}}",
-				"help_37a6760f": "救命",
+				"help_37a6760f": "帮助",
 				"i_am_already_saved_de893f15": "我已经得救了！",
 				"it_s_me_7e729c85": "是我！",
 				"onto_the_next_base_dcb756f1": "前往下一个基地...",
 				"press_for_main_thruster_20f23add": "按 ↓ 主推进器",
 				"press_to_rotate_left_press_to_rotate_right_514cbff6": "按←向左旋转，按→向右旋转",
 				"save_all_f766b3da": "全部保存",
-				"saved_d10036cc": "已救援",
+				"saved_d10036cc": "已保存",
 				"tada_8023b926": "田田！",
 				"travel_to_save_value0_6415de21": "旅行拯救{{value0}}？",
-				"value0_unoccupied_6a9f74d2": "{{value0}}: ---- 无人 ----",
+				"value0_unoccupied_6a9f74d2": "{{value0}}：---- 空闲 ----",
 				"velocity_b64b06c8": "速度",
 				"warning_2649de28": "⚠ 警告",
 				"yaw_4316c003": "偏航"
@@ -4326,7 +4388,7 @@
 			"port_forwarding_2f9a490c": "端口转发",
 			"tunnel_cf23f35d": "隧道",
 			"web_terminal_608c7d29": "网络终端",
-			"workspace_app_832757fe": "Workspace 应用程序"
+			"workspace_app_832757fe": "工作区应用程序"
 		},
 		"ConnectionLogPage": {
 			"ConnectionLogFilter": {
@@ -4338,7 +4400,7 @@
 			},
 			"ConnectionLogHelpPopover": {
 				"connection_log_documentation_5464f12a": "连接日志文档",
-				"the_connection_log_is_a_best_effort_log_of_works_1c074b73": "连接日志是 Workspace 访问的尽力日志。某些事件由 Workspace Agents 报告，并且不保证服务器收到这些事件。",
+				"the_connection_log_is_a_best_effort_log_of_works_1c074b73": "连接日志是工作区访问的尽力日志。某些事件由工作区 Agents 报告，并且不保证服务器收到这些事件。",
 				"why_are_some_events_missing_72fe9b21": "为什么有些事件丢失了？"
 			},
 			"ConnectionLogPage": {
@@ -4354,7 +4416,7 @@
 				"no_connection_logs_available_da36b6db": "没有可用的连接日志",
 				"no_connection_logs_available_on_this_page_406017f5": "此页面上没有可用的连接日志",
 				"track_every_ssh_ide_port_forward_connection_f9d8dce9": "跟踪每个 SSH、IDE 和端口转发连接。",
-				"view_workspace_connection_events_4d73c16c": "查看 Workspace 连接事件。"
+				"view_workspace_connection_events_4d73c16c": "查看工作区连接事件。"
 			},
 			"ConnectionLogRow": {
 				"ConnectionLogDescription": {
@@ -4368,7 +4430,7 @@
 						"unsuccessfully_attempted_to_74b09bdf": "尝试失败 ",
 						"value0_s_db9a5fb7": "{{value0}} 的",
 						"was_redirected_attempting_to_679dbe34": "被重定向尝试 ",
-						"workspace_21a3230e": "Workspace"
+						"workspace_21a3230e": "工作区"
 					}
 				},
 				"ConnectionLogRow": {
@@ -4437,7 +4499,7 @@
 				"database_fa7fe671": "数据库",
 				"database_health_45b28a28": "数据库 - 健康",
 				"latency_e0e7d293": "延迟",
-				"ms_f785c3ce": "女士",
+				"ms_f785c3ce": "毫秒",
 				"no_1ea442a1": "否",
 				"reachable_f94b5f3d": "可达",
 				"threshold_0da627ad": "阈值",
@@ -4484,7 +4546,7 @@
 				"embedded_relay_02893ba1": "嵌入式继电器",
 				"exchange_messages_fbbadfb1": "交换消息",
 				"health_55898449": "健康",
-				"ms_f785c3ce": "女士",
+				"ms_f785c3ce": "毫秒",
 				"none_dc937b59": "无",
 				"region_code_da692a86": "地区代码",
 				"region_id_4bd985c8": "区域ID",
@@ -4534,8 +4596,8 @@
 				"ok_565339bc": "确定",
 				"version_dd167905": "版本",
 				"wildcard_hostname_f01935a3": "通配符主机名",
-				"workspace_proxy_588f1002": "Workspace 代理",
-				"workspace_proxy_health_08279469": "Workspace 代理 - 运行状况"
+				"workspace_proxy_588f1002": "工作区代理",
+				"workspace_proxy_health_08279469": "工作区代理 - 运行状况"
 			}
 		},
 		"IconsPage": {
@@ -4588,18 +4650,18 @@
 		},
 		"schedule": {
 			"autostop_schedule_a7778164": "自动停止时间表",
-			"because_this_workspace_has_enabled_autostop_you__7b608106": "因为这个 Workspace 已经启用了自动停止。您可以从此 Workspace 禁用自动停止",
+			"because_this_workspace_has_enabled_autostop_you__7b608106": "因为这个工作区已经启用了自动停止。您可以从此工作区禁用自动停止",
 			"manual_b0b9fe24": "手册",
 			"required_to_stop_soon_424e7fd3": "要求尽快停止",
 			"schedule_settings_2972bc7b": "日程设置",
 			"stop_value0_after_start_d4b3b7f6": "启动后停止{{value0}}",
 			"stop_value0_ef47536e": "停止 {{value0}}",
-			"template_autostop_requirement_8bc5771a": "Template 自动停止要求",
-			"this_workspace_will_be_required_to_stop_by_0f5607b6": "此 Workspace 将需要停下来",
-			"this_workspace_will_be_stopped_on_9d765e99": "此 Workspace 将停止于",
+			"template_autostop_requirement_8bc5771a": "模板自动停止要求",
+			"this_workspace_will_be_required_to_stop_by_0f5607b6": "此工作区将需要停下来",
+			"this_workspace_will_be_stopped_on_9d765e99": "此工作区将停止于",
 			"upcoming_stop_required_69160888": "需要即将停靠",
-			"workspace_is_shutting_down_361cba69": "Workspace 正在关闭",
-			"you_can_restart_your_workspace_before_then_to_av_1784720d": "。您可以在此之前重新启动 Workspace 以避免中断。"
+			"workspace_is_shutting_down_361cba69": "工作区正在关闭",
+			"you_can_restart_your_workspace_before_then_to_av_1784720d": "。您可以在此之前重新启动工作区以避免中断。"
 		},
 		"templates": {
 			"value0_developer_value1_136f2915": "{{value0}} 开发者{{value1}}"
@@ -4614,10 +4676,10 @@
 			},
 			"TerminalPage": {
 				"latency_4774635c": "延迟： ",
-				"ms_f785c3ce": "女士",
+				"ms_f785c3ce": "毫秒",
 				"terminal_e0926fda": "终端",
-				"unable_to_fetch_workspace_agent_no_agent_found_w_80fe465b": "无法获取 Workspace Agent：未找到对应 ID 的 Agent，Workspace 是否已启动？",
-				"unable_to_fetch_workspace_value0_70a19834": "无法获取 Workspace：{{value0}}",
+				"unable_to_fetch_workspace_agent_no_agent_found_w_80fe465b": "无法获取工作区 Agent：未找到对应 ID 的 Agent，工作区是否已启动？",
+				"unable_to_fetch_workspace_value0_70a19834": "无法获取工作区：{{value0}}",
 				"value0_value1_68ee1a5b": "{{value0}}/{{value1}}"
 			}
 		},
@@ -4643,37 +4705,37 @@
 	"templates": {
 		"CreateTemplateGalleryPage": {
 			"CreateTemplateGalleryPage": {
-				"create_a_template_c0794aff": "创建 Template"
+				"create_a_template_c0794aff": "创建模板"
 			},
 			"CreateTemplateGalleryPageView": {
-				"browse_other_templates_on_the_coder_registry_d375756b": "浏览 Coder 注册表上的其他 Templates",
-				"choose_a_starting_point_for_your_new_template_16732005": "为您的新 Template 选择一个起点",
-				"create_a_template_c0794aff": "创建 Template",
-				"get_started_by_uploading_an_existing_template_044d0296": "首先上传现有的 Template",
-				"upload_template_3e79263d": "上传 Template",
-				"use_our_template_agent_skill_2a2460f8": "使用我们的 Template Agent 技能"
+				"browse_other_templates_on_the_coder_registry_d375756b": "浏览 Coder 注册表上的其他模板",
+				"choose_a_starting_point_for_your_new_template_16732005": "为您的新模板选择一个起点",
+				"create_a_template_c0794aff": "创建模板",
+				"get_started_by_uploading_an_existing_template_044d0296": "首先上传现有的模板",
+				"upload_template_3e79263d": "上传模板",
+				"use_our_template_agent_skill_2a2460f8": "使用我们的模板 Agent 技能"
 			},
 			"StarterTemplates": {
-				"choose_a_starter_template_10c54464": "选择启动器 Template",
+				"choose_a_starter_template_10c54464": "选择启动器模板",
 				"filter_638e249f": "筛选"
 			}
 		},
 		"CreateTemplatePage": {
 			"BuildLogsDrawer": {
 				"close_build_logs_1292e798": "关闭构建日志",
-				"creating_template_df6c9040": "正在创建 Template...",
+				"creating_template_df6c9040": "正在创建模板...",
 				"during_the_build_process_we_identified_some_miss_06929d61": "在构建过程中，我们发现了一些缺失的变量。请放心，我们已自动将它们添加到您的表单中。",
 				"fill_variables_0cb49954": "填充变量",
 				"missing_variables_80ec03a4": "缺失变量"
 			},
 			"CreateTemplateForm": {
-				"a_friendly_name_description_and_icon_to_help_dev_7a9cbfe1": "友好的名称、描述和图标可帮助开发人员识别您的 Template。",
+				"a_friendly_name_description_and_icon_to_help_dev_7a9cbfe1": "友好的名称、描述和图标可帮助开发人员识别您的模板。",
 				"cancel_19766ed6": "取消",
 				"description_526e0087": "描述",
 				"display_34e108c0": "显示",
 				"display_name_2b7f6a84": "显示名称",
 				"general_c910d474": "一般",
-				"input_variables_allow_you_to_customize_templates_c9db4de8": "输入变量允许您自定义 Templates，而无需更改其源代码。",
+				"input_variables_allow_you_to_customize_templates_c9db4de8": "输入变量允许您自定义模板，而无需更改其源代码。",
 				"learn_more_0bfa7ffe": "了解更多...",
 				"name_dcd1d522": "名称",
 				"organization_d764d425": "组织",
@@ -4684,25 +4746,25 @@
 				"see_our_documentation_ff74e6ec": "请参阅我们的文档。",
 				"show_build_logs_94b3249a": "显示构建日志",
 				"tags_are_a_way_to_control_which_provisioner_daem_8b7d64ff": "标签是一种控制哪些 Provisioner 守护进程完成哪些构建作业的方法。",
-				"the_name_is_used_to_identify_the_template_in_url_0035a189": "该名称用于标识 URL 中的 Template 和 API。",
-				"this_organization_does_not_have_any_provisioners_21515c68": "该组织没有任何 Provisioner。在创建 Template 之前，您需要配置一个 Provisioner。",
+				"the_name_is_used_to_identify_the_template_in_url_0035a189": "该名称用于标识 URL 中的模板和 API。",
+				"this_organization_does_not_have_any_provisioners_21515c68": "该组织没有任何 Provisioner。在创建模板之前，您需要配置一个 Provisioner。",
 				"variables_02db55ba": "变量"
 			},
 			"CreateTemplatePage": {
-				"create_template_b79296f1": "创建 Template"
+				"create_template_b79296f1": "创建模板"
 			},
 			"DuplicateTemplateView": {
 				"prebuild_5d1831c5": "预构建",
 				"prebuilds_1d1362ce": "预构建",
-				"this_template_has_prebuilds_configured_duplicati_9684c874": "此 Template 已配置预构建。复制此 Template 将自动导致 ",
+				"this_template_has_prebuilds_configured_duplicati_9684c874": "此模板已配置预构建。复制此模板将自动导致 ",
 				"to_be_created_e59c437c": " 待创建。"
 			},
 			"TemplateUpload": {
 				"remove_file_fffa2e32": "删除文件",
-				"starter_templates_4eb0be2c": "启动器 Templates",
-				"the_template_has_to_be_a_tar_or_zip_file_you_can_b24b8c8e": "Template 必须是 .tar 或 .zip 文件。您还可以使用我们的",
+				"starter_templates_4eb0be2c": "启动器模板",
+				"the_template_has_to_be_a_tar_or_zip_file_you_can_b24b8c8e": "模板必须是 .tar 或 .zip 文件。您还可以使用我们的",
 				"to_get_started_with_coder_395731b5": "开始使用 Coder。",
-				"upload_template_48297e89": "上传 Template"
+				"upload_template_48297e89": "上传模板"
 			},
 			"UploadTemplateView": {
 				"failed_to_upload_file_c6ec4a0f": "上传文件失败。"
@@ -4716,24 +4778,24 @@
 		},
 		"StarterTemplatePage": {
 			"StarterTemplatePageView": {
-				"use_template_351dd54e": "使用 Template",
+				"use_template_351dd54e": "使用模板",
 				"view_source_code_a46e92d0": "查看源代码"
 			}
 		},
 		"TemplateBuilder": {
 			"BaseInfraSelectStep": {
-				"base_infrastructure_templates_213855e0": "基础设施 Templates",
-				"pick_a_base_template_8b0c22af": "选择底座 Template",
+				"base_infrastructure_templates_213855e0": "基础设施模板",
+				"pick_a_base_template_8b0c22af": "选择底座模板",
 				"select_your_infrastructure_foundation_9c27e199": "选择您的基础设施基础。"
 			},
 			"BaseTemplateParametersStep": {
-				"configure_base_template_589526ec": "配置底座 Template",
+				"configure_base_template_589526ec": "配置底座模板",
 				"optional_59be7133": "可选",
 				"required_4850b174": "必填",
-				"your_base_template_requires_customizations_81ee6aff": "您的基础 Template 需要自定义。"
+				"your_base_template_requires_customizations_81ee6aff": "您的基础模板需要自定义。"
 			},
 			"BuildingTemplateLoader": {
-				"building_your_template_def8fa21": "构建您的 Template"
+				"building_your_template_def8fa21": "构建您的模板"
 			},
 			"ConfigurationField": {
 				"optional_0059798b": "（可选）",
@@ -4746,15 +4808,15 @@
 				"additional_settings_1e99b90f": "附加设置",
 				"no_configuration_required_633d62b5": "无需配置。",
 				"remove_value0_e224cf24": "删除 {{value0}}",
-				"will_be_collected_from_developers_at_workspace_c_9e5ac4b0": "将在 Workspace 创建时从开发人员处收集。"
+				"will_be_collected_from_developers_at_workspace_c_9e5ac4b0": "将在工作区创建时从开发人员处收集。"
 			},
 			"ModuleSelectStep": {
 				"add_pre_built_tools_and_integrations_module_vers_5b765e12": "添加预构建的工具和集成。模块版本在选择时固定。",
 				"and_2e5f7696": " 和",
-				"are_conflicting_modules_you_can_still_continue_b_a0ca95ae": " 是冲突的模块。您仍然可以继续，但需要在发布 Template 之前删除冲突的模块之一。",
+				"are_conflicting_modules_you_can_still_continue_b_a0ca95ae": " 是冲突的模块。您仍然可以继续，但需要在发布模板之前删除冲突的模块之一。",
 				"conflicting_modules_selected_d0375d1d": "选择了冲突的模块",
 				"no_module_matched_your_search_be27e8af": "没有模块与您的搜索匹配",
-				"no_modules_available_for_this_base_template_67f50d26": "没有适用于此底座 Template 的模块",
+				"no_modules_available_for_this_base_template_67f50d26": "没有适用于此底座模板的模块",
 				"search_modules_6919d5ac": "搜索模块...",
 				"select_modules_7aaaaa6c": "选择模块"
 			},
@@ -4765,7 +4827,7 @@
 				"set_values_for_module_variables_802eec58": "设置模块变量的值。"
 			},
 			"SelectionSummary": {
-				"base_template_2357e68c": "底座 Template",
+				"base_template_2357e68c": "底座模板",
 				"configure_value0_6698cf14": "配置{{value0}}",
 				"customizations_2213674d": "定制",
 				"go_to_value0_865f936d": "转到 {{value0}}",
@@ -4774,24 +4836,24 @@
 				"step_value0_e15dc4e4": "步骤 {{value0}}"
 			},
 			"TemplateAlternatives": {
-				"alternatives_to_create_a_template_e25d2987": "创建 Template 的替代方法：",
-				"browse_community_templates_4ffb46ad": "浏览社区 Templates",
+				"alternatives_to_create_a_template_e25d2987": "创建模板的替代方法：",
+				"browse_community_templates_4ffb46ad": "浏览社区模板",
 				"start_from_scratch_a4822ffe": "从头开始",
-				"upload_an_existing_template_2458de77": "上传现有的 Template",
-				"use_template_agent_skill_d1945632": "使用 Template Agent 技能"
+				"upload_an_existing_template_2458de77": "上传现有的模板",
+				"use_template_agent_skill_d1945632": "使用模板 Agent 技能"
 			},
 			"TemplateBuilderAvatarData": {
 				"view_details_d1bf045b": "查看详情"
 			},
 			"TemplateBuilderPage": {
-				"create_template_b79296f1": "创建 Template"
+				"create_template_b79296f1": "创建模板"
 			},
 			"TemplateBuilderPageView": {
-				"a_terraform_blueprint_for_reproducible_workspace_59cbb36d": "可重现的 Workspaces 的 Terraform 蓝图。",
+				"a_terraform_blueprint_for_reproducible_workspace_59cbb36d": "可重现的工作区的 Terraform 蓝图。",
 				"back_76900f1b": "返回",
 				"continue_31fbef16": "继续",
-				"create_new_template_4dbf15ff": "创建新的 Template",
-				"create_template_b79296f1": "创建 Template",
+				"create_new_template_4dbf15ff": "创建新的模板",
+				"create_template_b79296f1": "创建模板",
 				"view_docs_61479fda": "查看文档"
 			},
 			"TemplateCard": {
@@ -4800,21 +4862,21 @@
 			"TemplateCustomizationsStep": {
 				"add_additional_configurations_5f7aeaca": "添加额外的配置。",
 				"customizations_2213674d": "定制",
-				"describe_what_this_template_is_for_16834a9a": "描述一下这个 Template 的用途",
+				"describe_what_this_template_is_for_16834a9a": "描述一下这个模板的用途",
 				"description_526e0087": "描述",
 				"display_name_2b7f6a84": "显示名称",
 				"id_3843971d": "ID",
-				"my_template_0870055b": "我的 Template",
-				"my_template_79f2d122": "我的-Template",
+				"my_template_0870055b": "我的模板",
+				"my_template_79f2d122": "我的-模板",
 				"organization_d764d425": "组织",
 				"please_enter_a_description_that_is_less_than_or__7d20ad93": "请输入小于或等于 128 个字符的描述。",
-				"preset_based_on_base_template_10fbd60c": "基于 Template 的预设",
+				"preset_based_on_base_template_10fbd60c": "基于模板的预设",
 				"see_our_documentation_cb5a6292": "请参阅我们的文档",
 				"select_an_organization_to_continue_7664962a": "选择一个组织以继续。",
-				"template_id_ef4b6c0a": "Template ID",
-				"this_organization_does_not_have_any_provisioners_21515c68": "该组织没有任何 Provisioner。在创建 Template 之前，您需要配置一个 Provisioner。",
-				"used_by_both_humans_and_agents_to_identify_templ_ba0d23c6": "人类和 Agents 都使用它来识别 Templates。",
-				"used_to_identify_the_template_in_urls_and_the_ap_6d941fd5": "用于识别 URL 中的 Template 和 API。"
+				"template_id_ef4b6c0a": "模板 ID",
+				"this_organization_does_not_have_any_provisioners_21515c68": "该组织没有任何 Provisioner。在创建模板之前，您需要配置一个 Provisioner。",
+				"used_by_both_humans_and_agents_to_identify_templ_ba0d23c6": "人类和 Agents 都使用它来识别模板。",
+				"used_to_identify_the_template_in_urls_and_the_ap_6d941fd5": "用于识别 URL 中的模板和 API。"
 			}
 		},
 		"TemplatePage": {
@@ -4831,21 +4893,21 @@
 					"copy_button_markdown_1b17df3f": " 复制按钮 Markdown",
 					"creation_mode_bedbc0ba": "创作模式",
 					"manual_b0b9fe24": "手册",
-					"note_even_if_you_have_set_creation_mode_to_auto__94c5ba82": "注意：即使您将创建模式设置为自动，此按钮也不会自动创建 Workspace，以便您有机会检查参数并检查是否有错误。",
+					"note_even_if_you_have_set_creation_mode_to_auto__94c5ba82": "注意：即使您将创建模式设置为自动，此按钮也不会自动创建工作区，以便您有机会检查参数并检查是否有错误。",
 					"open_in_coder_36d6a061": "在 Coder 中打开",
 					"open_in_coder_button_cbf07d6b": "在 Coder 按钮中打开",
-					"templates_open_in_coder_a1317a42": "Templates: 在 Coder 中打开",
+					"templates_open_in_coder_a1317a42": "模板: 在 Coder 中打开",
 					"test_532eaabd": "测试",
 					"testing_your_open_in_coder_settings_c6510bf6": "在 Coder 设置中测试您的打开",
-					"this_button_will_open_the_workspace_creation_pag_e64d1a9d": "此按钮将在新选项卡中使用您提供的参数打开 Workspace 创建页面。用它来调试你的",
-					"when_set_to_automatic_mode_clicking_the_button_w_8299923b": "当设置为自动模式时，单击该按钮将自动创建 Workspace，而不向用户显示表单。"
+					"this_button_will_open_the_workspace_creation_pag_e64d1a9d": "此按钮将在新选项卡中使用您提供的参数打开工作区创建页面。用它来调试你的",
+					"when_set_to_automatic_mode_clicking_the_button_w_8299923b": "当设置为自动模式时，单击该按钮将自动创建工作区，而不向用户显示表单。"
 				}
 			},
 			"TemplateFilesPage": {
 				"TemplateFilesPage": {
-					"awesome_you_just_created_a_new_template_2703d822": "太棒了，您刚刚创建了一个新的 Template！",
+					"awesome_you_just_created_a_new_template_2703d822": "太棒了，您刚刚创建了一个新的模板！",
 					"source_code_bc47da66": "源代码",
-					"to_customize_it_further_you_can_edit_the_terrafo_be8fc05f": "要进一步自定义，您可以直接编辑 Terraform 或 Coder Template。您可以使用我们的 Template Agent 技能来帮助您。",
+					"to_customize_it_further_you_can_edit_the_terrafo_be8fc05f": "要进一步自定义，您可以直接编辑 Terraform 或 Coder 模板。您可以使用我们的模板 Agent 技能来帮助您。",
 					"view_agent_skill_9b39b289": "查看 Agent 技能",
 					"view_docs_61479fda": "查看文档"
 				}
@@ -4870,20 +4932,20 @@
 					"how_is_latency_calculated_41e3dc3e": "延迟是如何计算的？",
 					"insights_2a932f90": "见解",
 					"latency_by_user_6d774537": "用户延迟",
-					"ms_f785c3ce": "女士",
+					"ms_f785c3ce": "毫秒",
 					"no_data_available_d2d2d48c": "无可用数据",
 					"opened_bc2405b2": "已开通 ",
 					"parameters_usage_5f4adfc3": "参数使用",
-					"the_median_round_trip_time_of_user_connections_t_732738a7": "用户连接到 Workspaces 的中位往返时间。",
-					"the_number_of_workspaces_using_this_value_0ba749ba": "使用该值的 Workspaces 的数量",
+					"the_median_round_trip_time_of_user_connections_t_732738a7": "用户连接到工作区的中位往返时间。",
+					"the_number_of_workspaces_using_this_value_0ba749ba": "使用该值的工作区的数量",
 					"time_33607480": "时间",
 					"times_2bf61a3b": "次",
 					"true_3cbc87c7": "真实",
 					"unable_to_fetch_insights_cca49071": "无法获取见解",
 					"value_8e37953d": "价值",
 					"weekly_29751324": "每周",
-					"when_a_connection_is_initiated_to_a_user_s_works_c3b2fba2": "当启动到用户的 Workspace 的连接时，他们被视为活动用户。例如应用程序、网络终端、SSH",
-					"when_a_connection_is_initiated_to_a_user_s_works_d5df95e4": "当启动到用户的 Workspace 的连接时，他们被视为活动用户。例如应用程序、网络终端、SSH。这是为了衡量用户活动，与许可证消耗无关。"
+					"when_a_connection_is_initiated_to_a_user_s_works_c3b2fba2": "当启动到用户的工作区的连接时，他们被视为活动用户。例如应用程序、网络终端、SSH",
+					"when_a_connection_is_initiated_to_a_user_s_works_d5df95e4": "当启动到用户的工作区的连接时，他们被视为活动用户。例如应用程序、网络终端、SSH。这是为了衡量用户活动，与许可证消耗无关。"
 				},
 				"WeekPicker": {
 					"last_69862ac1": "最后 ",
@@ -4900,32 +4962,38 @@
 				"versions_f89ea270": "版本"
 			},
 			"TemplatePageHeader": {
-				"create_workspace_c63c14cf": "创建 Workspace",
+				"create_workspace_c63c14cf": "创建工作区",
 				"delete_9ce78fe3": "删除...",
 				"duplicate_5d202208": "重复…",
 				"edit_files_562123f8": "编辑文件",
 				"export_as_tar_41900c57": "导出为 TAR",
 				"export_as_zip_b1ceca2a": "导出为 ZIP",
-				"failed_to_export_template_6ff60f15": "导出 Template 失败。",
-				"loading_information_about_workspaces_used_by_thi_2612fd65": "正在加载有关此 Template 使用的 Workspaces 的信息。",
+				"failed_to_export_template_6ff60f15": "导出模板失败。",
+				"loading_information_about_workspaces_used_by_thi_2612fd65": "正在加载有关此模板使用的工作区的信息。",
 				"open_menu_b40b3713": "打开菜单",
-				"please_delete_all_related_workspaces_before_dele_38081dca": "。请先删除所有相关的 Workspaces，然后再删除此 Template。",
+				"please_delete_all_related_workspaces_before_dele_38081dca": "。请先删除所有相关的工作区，然后再删除此模板。",
 				"s_043a7187": "s",
-				"see_workspaces_d10011e1": "参见 Workspaces",
+				"see_workspaces_d10011e1": "参见工作区",
 				"settings_74a883a0": "设置",
-				"this_template_is_used_by_b6bed58d": "该 Template 由",
+				"template_5cde0f12": "模板",
+				"this_template_is_used_by_b6bed58d": "该模板由",
 				"unable_to_delete_7947dd5a": "无法删除",
-				"unable_to_determine_workspaces_used_by_this_temp_1f1ff23c": "无法确定此 Template 使用的 Workspaces。",
-				"workspace_4be0369b": " Workspace"
+				"unable_to_determine_workspaces_used_by_this_temp_1f1ff23c": "无法确定此模板使用的工作区。",
+				"workspace_4be0369b": " 工作区"
 			},
 			"TemplatePrebuildsPage": {
 				"TemplatePrebuildsPage": {
-					"all_prebuilt_workspaces_for_the_active_template__10ea0a3d": "活动 Template 版本的所有预构建 Workspaces 均被标记为无效。当预构建由于存储库更改或基础设施更新而变得过时并且需要回收时，这非常有用。",
+					"all_prebuilt_workspaces_for_the_active_template__10ea0a3d": "活动模板版本的所有预构建工作区均被标记为无效。当预构建由于存储库更改或基础设施更新而变得过时并且需要回收时，这非常有用。",
 					"invalidate_now_03f4edd7": "立即失效",
 					"invalidate_presets_bfb31fd9": "使预设无效",
 					"invalidated_value0_value1_for_version_value2_7900e169": "版本“{{value2}}”的 {{value0}} {{value1}} 无效。",
-					"no_template_presets_required_invalidation_3592f047": "没有 Template 预设需要失效。",
+					"no_template_presets_required_invalidation_3592f047": "没有模板预设需要失效。",
 					"value0_prebuilds_b1d4842c": "{{value0}} - 预构建"
+				}
+			},
+			"TemplateResourcesPage": {
+				"TemplateResourcesPage": {
+					"template_0575f29d": "模板"
 				}
 			},
 			"TemplateStats": {
@@ -4947,12 +5015,12 @@
 					"failed_to_promote_version_value0_7351d1c9": "升级版本“{{value0}}”失败。",
 					"promote_5834dab0": "推广",
 					"promote_version_0a906639": "推广版本",
-					"this_is_reversible_archived_versions_cannot_be_u_8ce1ff59": "？这是可逆的。 Workspaces 无法使用存档版本。",
+					"this_is_reversible_archived_versions_cannot_be_u_8ce1ff59": "？这是可逆的。 工作区无法使用存档版本。",
 					"version_value0_archived_successfully_811473d1": "版本“{{value0}}”已成功存档。",
 					"version_value0_promoted_successfully_77e01d3b": "版本“{{value0}}”升级成功。",
 					"versions_f89ea270": "版本",
-					"view_template_b6532e54": "查看 Template",
-					"workspaces_will_be_prompted_to_update_to_this_ve_4905cb63": "？ Workspaces 升级后会提示“更新”到该版本。"
+					"view_template_b6532e54": "查看模板",
+					"workspaces_will_be_prompted_to_update_to_this_ve_4905cb63": "？ 工作区升级后会提示“更新”到该版本。"
 				},
 				"VersionRow": {
 					"active_92340695": "当前生效",
@@ -4971,9 +5039,9 @@
 				}
 			},
 			"useDeletionDialogState": {
-				"deleting_template_value0_b2252c56": "正在删除 Template{{value0}}...",
-				"failed_to_delete_template_value0_afd6d675": "删除 Template{{value0}} 失败。",
-				"template_value0_deleted_successfully_1ffb0a52": "已成功删除 Template{{value0}}。"
+				"deleting_template_value0_b2252c56": "正在删除模板{{value0}}...",
+				"failed_to_delete_template_value0_afd6d675": "删除模板{{value0}} 失败。",
+				"template_value0_deleted_successfully_1ffb0a52": "已成功删除模板{{value0}}。"
 			},
 			"utils": {
 				"value0_value1_11a196e1": "{{value0}} · {{value1}}"
@@ -4983,7 +5051,7 @@
 			"TemplateExampleCard": {
 				"TemplateExampleCard": {
 					"read_more_83b79414": "了解更多",
-					"use_template_351dd54e": "使用 Template"
+					"use_template_351dd54e": "使用模板"
 				}
 			},
 			"TemplateFiles": {
@@ -5011,17 +5079,17 @@
 			},
 			"TemplateGeneralSettingsPage": {
 				"TemplateSettingsForm": {
-					"a_friendly_name_description_and_icon_to_help_dev_7a9cbfe1": "友好的名称、描述和图标可帮助开发人员识别您的 Template。",
-					"allow_coder_agents_to_create_workspaces_using_th_eb9e8d23": "允许 Coder Agents 使用此 Template 创建 Workspaces",
-					"allow_users_to_cancel_in_progress_workspace_jobs_57c58235": "允许用户取消正在进行的 Workspace 作业。",
-					"allow_users_to_rename_their_workspaces_ed7ef9e0": "允许用户重命名其 Workspaces。",
+					"a_friendly_name_description_and_icon_to_help_dev_7a9cbfe1": "友好的名称、描述和图标可帮助开发人员识别您的模板。",
+					"allow_coder_agents_to_create_workspaces_using_th_eb9e8d23": "允许 Coder Agents 使用此模板创建工作区",
+					"allow_users_to_cancel_in_progress_workspace_jobs_57c58235": "允许用户取消正在进行的工作区作业。",
+					"allow_users_to_rename_their_workspaces_ed7ef9e0": "允许用户重命名其工作区。",
 					"authenticated_6ab694cf": "已认证",
 					"cancel_19766ed6": "取消",
 					"control_how_cross_origin_resource_sharing_cors_r_37cfc8c5": "控制如何处理所有共享端口的跨源资源共享 (CORS) 请求。",
 					"cors_behavior_b1fcce04": "CORS 行为",
-					"depending_on_your_template_canceling_builds_may__a2852157": "根据您的 Template，取消构建可能会使 Workspaces 处于不健康状态。对于大多数用例，不建议使用此选项。",
+					"depending_on_your_template_canceling_builds_may__a2852157": "根据您的模板，取消构建可能会使工作区处于不健康状态。对于大多数用例，不建议使用此选项。",
 					"deprecate_45284c69": "弃用",
-					"deprecating_a_template_prevents_any_new_workspac_fc8ad990": "弃用 Template 会阻止创建任何新的 Workspaces。现有的 Workspaces 将继续发挥作用。",
+					"deprecating_a_template_prevents_any_new_workspac_fc8ad990": "弃用模板会阻止创建任何新的工作区。现有的工作区将继续发挥作用。",
 					"deprecation_message_5ccc8f40": "弃用消息",
 					"description_526e0087": "描述",
 					"disable_terraform_module_caching_da0077c2": "禁用 Terraform 模块缓存",
@@ -5029,12 +5097,12 @@
 					"display_name_2b7f6a84": "显示名称",
 					"general_info_9df01657": "一般信息",
 					"icon_a35abcd6": "图标",
-					"if_checked_users_may_be_able_to_corrupt_their_wo_0c813c7e": "如果选中，用户可能会损坏其 Workspace。",
+					"if_checked_users_may_be_able_to_corrupt_their_wo_0c813c7e": "如果选中，用户可能会损坏其工作区。",
 					"learn_more_1445799c": "了解更多",
-					"leave_the_message_empty_to_keep_the_template_act_4e637fe5": "将消息留空以使 Template 保持活动状态。提供的任何消息都会将 Template 标记为已弃用。使用此消息通知用户弃用以及如何迁移到新的 Template。",
+					"leave_the_message_empty_to_keep_the_template_act_4e637fe5": "将消息留空以使模板保持活动状态。提供的任何消息都会将模板标记为已弃用。使用此消息通知用户弃用以及如何迁移到新的模板。",
 					"maximum_port_sharing_level_359ae635": "最大端口共享级别",
 					"name_dcd1d522": "名称",
-					"only_enable_this_if_your_template_does_not_use_t_47747245": "仅当您的 Template 未以更改名称可能会破坏/重新创建资源的方式使用 Workspace 名称时才启用此选项。",
+					"only_enable_this_if_your_template_does_not_use_t_47747245": "仅当您的模板未以更改名称可能会破坏/重新创建资源的方式使用工作区名称时才启用此选项。",
 					"operations_358cc201": "运营",
 					"organization_d764d425": "组织",
 					"owner_4b1b8aa3": "所有者",
@@ -5043,58 +5111,58 @@
 					"port_sharing_bfae45f6": "端口共享",
 					"premium_license_required_to_be_enabled_06948795": "需要启用 Premium 许可证。",
 					"premium_license_required_to_control_max_port_sha_4063aba7": "控制最大端口共享级别需要 Premium 许可证。",
-					"premium_license_required_to_deprecate_templates_da938291": "弃用 Templates 需要 Premium 许可证。",
+					"premium_license_required_to_deprecate_templates_da938291": "弃用模板需要 Premium 许可证。",
 					"public_591935b1": "公共",
-					"regulate_actions_allowed_on_workspaces_created_f_c953eaa8": "规范从此 Template 创建的 Workspaces 上允许的操作。",
-					"require_workspaces_automatically_update_when_sta_384edbec": "要求 Workspaces 启动时自动更新。",
+					"regulate_actions_allowed_on_workspaces_created_f_c953eaa8": "规范从此模板创建的工作区上允许的操作。",
+					"require_workspaces_automatically_update_when_sta_384edbec": "要求工作区启动时自动更新。",
 					"save_1509f561": "保存",
-					"shared_ports_with_the_public_sharing_level_can_b_988a8e5a": "任何人都可以访问具有公共共享级别的共享端口，\n          而认证共享级别的端口只能访问\n          由经过身份验证的 Coder 用户。具有所有者共享级别的端口可以\n          只能由 Workspace 所有者访问。",
+					"shared_ports_with_the_public_sharing_level_can_b_988a8e5a": "任何人都可以访问具有公共共享级别的共享端口，\n          而认证共享级别的端口只能访问\n          由经过身份验证的 Coder 用户。具有所有者共享级别的端口可以\n          只能由工作区所有者访问。",
 					"simple_recommended_e3650e9f": "简单（推荐）",
-					"template_settings_form_ffeb1444": "Template 设置表格",
-					"the_maximum_level_of_port_sharing_allowed_for_wo_9de4a132": "Workspaces 允许的最大端口共享级别。",
-					"the_name_is_used_to_identify_the_template_in_url_0035a189": "该名称用于标识 URL 中的 Template 和 API。",
-					"this_setting_is_not_enforced_for_template_admins_5f569b18": "对于 Template 管理员，不强制执行此设置。",
+					"template_settings_form_ffeb1444": "模板设置表格",
+					"the_maximum_level_of_port_sharing_allowed_for_wo_9de4a132": "工作区允许的最大端口共享级别。",
+					"the_name_is_used_to_identify_the_template_in_url_0035a189": "该名称用于标识 URL 中的模板和 API。",
+					"this_setting_is_not_enforced_for_template_admins_5f569b18": "对于模板管理员，不强制执行此设置。",
 					"use_passthru_to_bypass_coder_s_built_in_cors_pro_d15662df": "使用Passthru绕过 Coder 的内置CORS保护。",
-					"warning_this_makes_workspace_builds_less_predict_43b726b0": "警告：这使得 Workspace 构建的可预测性更差，不建议用于生产 Templates。",
-					"when_checked_terraform_modules_are_re_downloaded_1169c00c": "选中后，将为每个 Workspace 版本重新下载 Terraform 模块，而不是使用缓存版本。",
-					"workspaces_that_are_manually_started_or_auto_sta_28706e98": "手动启动或自动启动的 Workspaces 将使用活动的 Template 版本。",
-					"you_cannot_change_the_message_but_you_may_remove_31623b51": " 您无法更改该消息，但可以将其删除以将此 Template 标记为不再弃用。"
+					"warning_this_makes_workspace_builds_less_predict_43b726b0": "警告：这使得工作区构建的可预测性更差，不建议用于生产模板。",
+					"when_checked_terraform_modules_are_re_downloaded_1169c00c": "选中后，将为每个工作区版本重新下载 Terraform 模块，而不是使用缓存版本。",
+					"workspaces_that_are_manually_started_or_auto_sta_28706e98": "手动启动或自动启动的工作区将使用活动的模板版本。",
+					"you_cannot_change_the_message_but_you_may_remove_31623b51": " 您无法更改该消息，但可以将其删除以将此模板标记为不再弃用。"
 				},
 				"TemplateSettingsPage": {
-					"failed_to_update_template_value0_2b242a34": "无法更新 Template“{{value0}}”。",
+					"failed_to_update_template_value0_2b242a34": "无法更新模板“{{value0}}”。",
 					"general_settings_de322f87": "常规设置",
-					"template_value0_updated_successfully_0d1a056b": "Template“{{value0}}”更新成功。"
+					"template_value0_updated_successfully_0d1a056b": "模板“{{value0}}”更新成功。"
 				},
 				"TemplateSettingsPageView": {
 					"general_c910d474": "一般",
-					"update_template_metadata_and_workspace_policies_3e01219a": "更新 Template 元数据和 Workspace 策略。"
+					"update_template_metadata_and_workspace_policies_3e01219a": "更新模板元数据和工作区策略。"
 				}
 			},
 			"TemplateParametersPage": {
 				"TemplateParametersPage": {
 					"parameters_e68b36b1": "参数",
-					"template_value0_data_refreshed_successfully_1795e2a4": "Template “{{value0}}”数据刷新成功。"
+					"template_value0_data_refreshed_successfully_1795e2a4": "模板 “{{value0}}”数据刷新成功。"
 				},
 				"TemplateParametersPageView": {
 					"active_version_44e1ea1c": "活动版本",
-					"and_makes_it_the_active_version_new_workspaces_w_71f20bb1": " 并使其成为活动版本。新的 Workspaces 将立即使用它。现有的 Workspaces 继续运行，直到更新为止。",
+					"and_makes_it_the_active_version_new_workspaces_w_71f20bb1": " 并使其成为活动版本。新的工作区将立即使用它。现有的工作区继续运行，直到更新为止。",
 					"coder_caches_certain_values_like_terraform_59f63b6a": "Coder 缓存某些值（如 Terraform ",
-					"control_how_this_template_s_parameters_are_resol_4f1ce625": "控制创建 Workspace 时如何解析此 Template 的参数。",
+					"control_how_this_template_s_parameters_are_resol_4f1ce625": "控制创建工作区时如何解析此模板的参数。",
 					"deprecated_6b2e8f83": "已弃用",
-					"dynamic_parameters_are_the_default_since_coder_2_9aa2ee5a": "自 Coder 2.25 起，动态参数是默认参数，允许您使用其他表单类型、身份感知参数值、条件参数和数据源。在某些情况下，可能需要刷新 Template 数据才能使动态参数正常工作。",
+					"dynamic_parameters_are_the_default_since_coder_2_9aa2ee5a": "自 Coder 2.25 起，动态参数是默认参数，允许您使用其他表单类型、身份感知参数值、条件参数和数据源。在某些情况下，可能需要刷新模板数据才能使动态参数正常工作。",
 					"last_imported_74ffc732": "上次导入",
 					"learn_more_1445799c": "了解更多",
 					"parameters_e68b36b1": "参数",
 					"refresh_0e916101": "刷新",
-					"refresh_template_data_31dc6d66": "刷新 Template 数据",
+					"refresh_template_data_31dc6d66": "刷新模板数据",
 					"saving_parameter_compatibility_mode_497f0679": "保存参数兼容模式",
-					"sources_when_a_new_template_version_is_created_a_3ebfb414": " 源），当创建新的 Template 版本时，从该版本构建的每个 Workspace 将重用相同的结果。刷新将创建新的 Template 版本，允许更新缓存的值。",
-					"template_data_4aed743d": "Template 数据",
-					"this_creates_a_new_template_version_from_the_sam_d6116c27": "这将创建一个新的 Template 版本，其来源与",
-					"turn_this_on_only_if_this_template_does_not_work_8756d1e3": "仅当 Template 不适用于动态参数时才打开此选项。兼容模式将强制 Workspace 构建回退到旧的“丰富参数”策略，该策略已弃用并将在未来版本中删除。",
+					"sources_when_a_new_template_version_is_created_a_3ebfb414": " 源），当创建新的模板版本时，从该版本构建的每个工作区将重用相同的结果。刷新将创建新的模板版本，允许更新缓存的值。",
+					"template_data_4aed743d": "模板数据",
+					"this_creates_a_new_template_version_from_the_sam_d6116c27": "这将创建一个新的模板版本，其来源与",
+					"turn_this_on_only_if_this_template_does_not_work_8756d1e3": "仅当模板不适用于动态参数时才打开此选项。兼容模式将强制工作区构建回退到旧的“丰富参数”策略，该策略已弃用并将在未来版本中删除。",
 					"unknown_b764cdc0": "未知",
-					"use_parameter_compatibility_mode_for_workspace_b_282bd94b": "对 Workspace 构建使用参数兼容模式",
-					"you_need_permission_to_update_this_template_to_c_3a82a2f7": "您需要更新此 Template 的权限才能更改这些设置。"
+					"use_parameter_compatibility_mode_for_workspace_b_282bd94b": "对工作区构建使用参数兼容模式",
+					"you_need_permission_to_update_this_template_to_c_3a82a2f7": "您需要更新此模板的权限才能更改这些设置。"
 				}
 			},
 			"TemplatePermissionsPage": {
@@ -5104,21 +5172,21 @@
 					"failed_to_remove_user_value0_51b0d1c5": "无法删除用户“{{value0}}”。",
 					"failed_to_update_role_for_value0_93a20247": "无法更新“{{value0}}”的角色。",
 					"group_value0_removed_successfully_2b8bc601": "组“{{value0}}”已成功删除。",
-					"let_teams_self_serve_templates_without_admin_bot_ad94d1ee": "让团队自助服务 Templates，没有管理瓶颈",
-					"manage_which_members_and_groups_can_use_this_tem_3ba9a607": "管理哪些成员和组可以使用此 Template。",
+					"let_teams_self_serve_templates_without_admin_bot_ad94d1ee": "让团队自助服务模板，没有管理瓶颈",
+					"manage_which_members_and_groups_can_use_this_tem_3ba9a607": "管理哪些成员和组可以使用此模板。",
 					"permissions_abccc78c": "权限",
-					"prevent_unauthorized_template_use_a1d6c048": "防止未经授权的 Template 使用",
-					"restrict_template_access_by_user_or_group_915c58fd": "限制用户或组的 Template 访问。",
+					"prevent_unauthorized_template_use_a1d6c048": "防止未经授权的模板使用",
+					"restrict_template_access_by_user_or_group_915c58fd": "限制用户或组的模板访问。",
 					"role_for_value0_updated_to_value1_successfully_6c424737": "“{{value0}}”的角色已成功更新为“{{value1}}”。",
-					"template_permissions_c09a9049": "Template 权限",
+					"template_permissions_c09a9049": "模板权限",
 					"user_value0_removed_successfully_eae0bc24": "用户“{{value0}}”已成功删除。"
 				},
 				"TemplatePermissionsPageView": {
 					"add_9fd728c6": "添加",
 					"add_a_member_using_the_controls_above_2559665e": "使用上面的控件添加成员",
 					"admin_c1c224b0": "管理员",
-					"can_modify_all_aspects_of_this_template_includin_e02f02ed": "可以修改此 Template 的所有方面，包括权限、元数据和 Template 版本。",
-					"can_read_and_use_this_template_to_create_workspa_7efeb28c": "可以读取并使用这个 Template 来创建 Workspaces。",
+					"can_modify_all_aspects_of_this_template_includin_e02f02ed": "可以修改此模板的所有方面，包括权限、元数据和模板版本。",
+					"can_read_and_use_this_template_to_create_workspa_7efeb28c": "可以读取并使用这个模板来创建工作区。",
 					"member_7c968fb7": "成员",
 					"no_members_yet_669a52e9": "还没有成员",
 					"open_menu_b40b3713": "打开菜单",
@@ -5135,12 +5203,12 @@
 				"AutostopRequirementHelperText": {
 					"weeks_between_required_stops_cannot_be_set_unles_ae2ca2f8": "除非所需停靠点之间的天数是周六或周日，否则无法设置所需停靠点之间的周数。",
 					"weeks_on_the_specified_day_in_the_user_s_quiet_h_e35d73a1": " 用户安静时间和时区中指定日期的几周。",
-					"workspaces_are_not_required_to_stop_periodically_7982b248": "Workspaces 不需要定期停止。",
-					"workspaces_are_required_to_be_automatically_stop_29bbb6d6": "Workspaces 要求每周在用户安静时间和时区的指定日期自动停止。",
-					"workspaces_are_required_to_be_automatically_stop_4b78f718": "Workspaces 需要每次自动停止 ",
-					"workspaces_are_required_to_be_automatically_stop_556ff9b0": "Workspaces 要求每周日在用户安静时间和时区自动停止。",
-					"workspaces_are_required_to_be_automatically_stop_716bcd99": "Workspaces 需要每天在用户安静的时间和时区自动停止。",
-					"workspaces_are_required_to_be_automatically_stop_ced12b70": "Workspaces 要求每周六在用户安静的时间和时区自动停止。"
+					"workspaces_are_not_required_to_stop_periodically_7982b248": "工作区不需要定期停止。",
+					"workspaces_are_required_to_be_automatically_stop_29bbb6d6": "工作区要求每周在用户安静时间和时区的指定日期自动停止。",
+					"workspaces_are_required_to_be_automatically_stop_4b78f718": "工作区需要每次自动停止 ",
+					"workspaces_are_required_to_be_automatically_stop_556ff9b0": "工作区要求每周日在用户安静时间和时区自动停止。",
+					"workspaces_are_required_to_be_automatically_stop_716bcd99": "工作区需要每天在用户安静的时间和时区自动停止。",
+					"workspaces_are_required_to_be_automatically_stop_ced12b70": "工作区要求每周六在用户安静的时间和时区自动停止。"
 				},
 				"formHelpers": {
 					"activity_bump_must_be_an_integer_6f5b0cf8": "活动延长时间必须为整数。",
@@ -5167,83 +5235,85 @@
 					"being_immediately_transitioned_to_the_dormant_st_3788c2de": "立即转变为休眠状态并且",
 					"dormancy_auto_deletion_c77d7e63": "休眠自动删除",
 					"dormancy_threshold_8558e0a1": "休眠阈值",
-					"over_the_next_7_days_to_prevent_this_do_you_want_1e29716f": "在接下来的 7 天内。为了防止这种情况，是否要重置所有 Template Workspaces 的休眠期？",
-					"over_the_next_7_days_to_prevent_this_do_you_want_9fa52bc7": "在接下来的 7 天内。为防止出现这种情况，是否要重置所有 Template Workspaces 的不活动期？",
-					"prevent_deletion_reset_all_workspace_dormancy_pe_40b67213": "防止删除 - 重置所有 Workspace 休眠期",
-					"prevent_dormancy_reset_all_workspace_inactivity__c7e2822d": "防止休眠 - 重置所有 Workspace 不活动期",
+					"over_the_next_7_days_to_prevent_this_do_you_want_1e29716f": "在接下来的 7 天内。为了防止这种情况，是否要重置所有模板工作区的休眠期？",
+					"over_the_next_7_days_to_prevent_this_do_you_want_9fa52bc7": "在接下来的 7 天内。为防止出现这种情况，是否要重置所有模板工作区的不活动期？",
+					"prevent_deletion_reset_all_workspace_dormancy_pe_40b67213": "防止删除 - 重置所有工作区休眠期",
+					"prevent_dormancy_reset_all_workspace_inactivity__c7e2822d": "防止休眠 - 重置所有工作区不活动期",
 					"submit_155f816c": "提交",
-					"this_change_will_result_in_7381e7f3": "这一变化将导致"
+					"this_change_will_result_in_7381e7f3": "这一变化将导致",
+					"workspace_21a3230e": "工作区",
+					"workspaces_6e8d7998": "工作区"
 				},
 				"TemplateScheduleAutostart": {
 					"these_days_are_relative_to_the_user_s_timezone_749c43a4": " 这些天是相对于用户的时区而言的。",
-					"workspaces_are_allowed_to_auto_start_on_any_day_f7455434": "Workspaces 允许在任何一天自动启动。",
-					"workspaces_are_not_allowed_to_auto_start_9470dad4": "Workspaces 不允许自动启动。",
-					"workspaces_will_never_auto_start_this_is_effecti_46145a80": "Workspaces 永远不会自动启动。这实际上与禁用自动启动相同。"
+					"workspaces_are_allowed_to_auto_start_on_any_day_f7455434": "工作区允许在任何一天自动启动。",
+					"workspaces_are_not_allowed_to_auto_start_9470dad4": "工作区不允许自动启动。",
+					"workspaces_will_never_auto_start_this_is_effecti_46145a80": "工作区永远不会自动启动。这实际上与禁用自动启动相同。"
 				},
 				"TemplateScheduleForm": {
 					"activity_bump_hours_962ed151": "活动高峰（小时）",
-					"allow_users_to_automatically_start_workspaces_on_2b9285e2": "允许用户按计划自动启动 Workspaces。",
-					"allow_users_to_customize_autostop_duration_for_w_b868b87e": "允许用户自定义 Workspaces 的自动停止持续时间。",
-					"allow_users_to_set_custom_autostart_and_autostop_0ba22369": "允许用户为从此 Template 创建的 Workspaces 设置自定义自动启动和自动停止调度选项。",
+					"allow_users_to_automatically_start_workspaces_on_2b9285e2": "允许用户按计划自动启动工作区。",
+					"allow_users_to_customize_autostop_duration_for_w_b868b87e": "允许用户自定义工作区的自动停止持续时间。",
+					"allow_users_to_set_custom_autostart_and_autostop_0ba22369": "允许用户为从此模板创建的工作区设置自定义自动启动和自动停止调度选项。",
 					"autostart_5a6ab379": "自动启动",
 					"autostop_f7816a97": "自动停止",
 					"autostop_reminder_hours_3f5f7d05": "自动停止提醒（小时）",
-					"by_default_workspaces_will_inherit_the_autostop__d412880d": "默认情况下，Workspaces 将从该 Template 继承自动停止定时器。启用此选项允许用户在 Workspaces 上设置自定义自动停止计时器或关闭计时器。",
+					"by_default_workspaces_will_inherit_the_autostop__d412880d": "默认情况下，工作区将从该模板继承自动停止定时器。启用此选项允许用户在工作区上设置自定义自动停止计时器或关闭计时器。",
 					"cancel_19766ed6": "取消",
 					"daily_b36c2611": "每日",
 					"days_with_required_stop_69326cb0": "需要停留的天数",
 					"default_autostop_hours_373e9d3e": "默认自动停止（小时）",
-					"define_when_workspaces_created_from_this_templat_73db978f": "定义从此 Template 创建的 Workspaces 何时停止。",
+					"define_when_workspaces_created_from_this_templat_73db978f": "定义从此模板创建的工作区何时停止。",
 					"dormancy_de2899a5": "休眠",
 					"enable_dormancy_auto_deletion_e96e485d": "启用休眠自动删除",
 					"enable_dormancy_threshold_bc00438b": "启用休眠阈值",
 					"enable_failure_cleanup_fef02042": "启用故障清理",
 					"off_ca7981b4": "关闭",
-					"once_a_workspace_is_deleted_it_cannot_be_recover_acd02e5f": "Workspace 一旦删除就无法恢复。",
+					"once_a_workspace_is_deleted_it_cannot_be_recover_acd02e5f": "工作区一旦删除就无法恢复。",
 					"saturday_dbe35c73": "星期六",
 					"save_1509f561": "保存",
 					"sunday_873fef76": "周日",
-					"template_settings_form_ffeb1444": "Template 设置表格",
+					"template_settings_form_ffeb1444": "模板设置表格",
 					"time_until_cleanup_b4d5bbad": "清理前的时间",
 					"time_until_deletion_d44afa86": "删除前的时间",
 					"time_until_dormant_73bfdf8a": "休眠时间",
 					"weeks_between_required_stops_cf5d26ec": "所需停靠点之间的周数",
-					"when_enabled_coder_will_attempt_to_stop_workspac_98a03c5e": "启用后，Coder 将在一段时间后尝试停止处于失败状态的 Workspaces。",
-					"when_enabled_coder_will_mark_workspaces_as_dorma_6d0060a3": "启用后，在一段时间没有连接后，Coder 会将 Workspaces 标记为休眠。休眠的 Workspaces 可以自动删除（见下文），也可以由 Workspace 所有者或管理员手动审核。",
-					"when_enabled_coder_will_permanently_delete_dorma_4e307a86": "启用后，Coder 将在一段时间后永久删除休眠的 Workspaces。",
-					"workspace_scheduling_193644b8": "Workspace 调度"
+					"when_enabled_coder_will_attempt_to_stop_workspac_98a03c5e": "启用后，Coder 将在一段时间后尝试停止处于失败状态的工作区。",
+					"when_enabled_coder_will_mark_workspaces_as_dorma_6d0060a3": "启用后，在一段时间没有连接后，Coder 会将工作区标记为休眠。休眠的工作区可以自动删除（见下文），也可以由工作区所有者或管理员手动审核。",
+					"when_enabled_coder_will_permanently_delete_dorma_4e307a86": "启用后，Coder 将在一段时间后永久删除休眠的工作区。",
+					"workspace_scheduling_193644b8": "工作区调度"
 				},
 				"TemplateSchedulePage": {
 					"schedule_f4830a1d": "时间表",
-					"template_value0_schedule_updated_successfully_f7e3a81a": "Template“{{value0}}”时间表已成功更新。"
+					"template_value0_schedule_updated_successfully_f7e3a81a": "模板“{{value0}}”时间表已成功更新。"
 				},
 				"TemplateSchedulePageView": {
-					"configure_workspace_schedule_defaults_for_this_t_2cb3eb77": "为此 Template 配置 Workspace 计划默认值。",
+					"configure_workspace_schedule_defaults_for_this_t_2cb3eb77": "为此模板配置工作区计划默认值。",
 					"schedule_f4830a1d": "时间表"
 				},
 				"TTLHelperText": {
-					"activity_bump_only_applies_when_default_autostop_dafa661c": "仅当配置“默认自动停止”或允许用户自定义自动停止时，活动冲击才适用。设置上面的“默认自动停止”或选中下面的“允许用户自定义 Workspaces 的自动停止持续时间”以启用活动碰撞。",
+					"activity_bump_only_applies_when_default_autostop_dafa661c": "仅当配置“默认自动停止”或允许用户自定义自动停止时，活动冲击才适用。设置上面的“默认自动停止”或选中下面的“允许用户自定义工作区的自动停止持续时间”以启用活动碰撞。",
 					"after_being_started_d7458552": " 启动后。",
-					"autostop_reminders_only_apply_when_an_autostop_d_8c2129a8": "自动停止提醒仅在配置了自动停止截止时间后适用。设置“默认自动停止”（自动停止要求），或选中“允许用户自定义 Workspaces 的自动停止持续时间”以启用提醒。",
-					"before_their_workspace_is_automatically_stopped_c298f2e2": " 在其 Workspace 自动停止之前。",
-					"coder_will_attempt_to_stop_failed_workspaces_aft_4b9493bd": "Coder 将尝试停止失败的 Workspaces ",
-					"coder_will_automatically_delete_dormant_workspac_63f9e066": "Coder 后会自动删除休眠的 Workspaces",
-					"coder_will_mark_workspaces_as_dormant_after_9b630b5f": "Coder 将在之后将 Workspaces 标记为休眠 ",
-					"coder_will_not_automatically_delete_dormant_work_bebbb6a5": "Coder 不会自动删除休眠的 Workspaces。",
-					"coder_will_not_automatically_stop_failed_workspa_6c55a743": "Coder 不会自动停止失败的 Workspaces。",
-					"coder_will_not_mark_workspaces_as_dormant_9d4fc780": "Coder 不会将 Workspaces 标记为休眠。",
+					"autostop_reminders_only_apply_when_an_autostop_d_8c2129a8": "自动停止提醒仅在配置了自动停止截止时间后适用。设置“默认自动停止”（自动停止要求），或选中“允许用户自定义工作区的自动停止持续时间”以启用提醒。",
+					"before_their_workspace_is_automatically_stopped_c298f2e2": " 在其工作区自动停止之前。",
+					"coder_will_attempt_to_stop_failed_workspaces_aft_4b9493bd": "Coder 将尝试停止失败的工作区 ",
+					"coder_will_automatically_delete_dormant_workspac_63f9e066": "Coder 后会自动删除休眠的工作区",
+					"coder_will_mark_workspaces_as_dormant_after_9b630b5f": "Coder 将在之后将工作区标记为休眠 ",
+					"coder_will_not_automatically_delete_dormant_work_bebbb6a5": "Coder 不会自动删除休眠的工作区。",
+					"coder_will_not_automatically_stop_failed_workspa_6c55a743": "Coder 不会自动停止失败的工作区。",
+					"coder_will_not_mark_workspaces_as_dormant_9d4fc780": "Coder 不会将工作区标记为休眠。",
 					"when_user_activity_is_detected_43e68aee": " 当检测到用户活动时。",
 					"without_user_connections_cb7aa85e": " 无需用户连接。",
-					"workspace_owners_will_be_reminded_a8f79f43": "Workspace 所有者将收到提醒 ",
-					"workspace_owners_will_not_be_reminded_before_the_4fae1101": "在 Workspace 自动停止之前，不会提醒 Workspace 用户。",
-					"workspaces_will_be_automatically_bumped_by_e5be9c3a": "Workspaces 将自动被碰撞 ",
-					"workspaces_will_default_to_stopping_after_3fe57255": "Workspaces 将默认停止 ",
-					"workspaces_will_not_have_their_stop_time_automat_6825f13d": "Workspaces 不会根据用户活动自动延长停止时间。用户仍然可以手动延迟停止时间。",
-					"workspaces_will_run_until_stopped_manually_8ed199e7": "Workspaces 将一直运行直至手动停止。"
+					"workspace_owners_will_be_reminded_a8f79f43": "工作区所有者将收到提醒 ",
+					"workspace_owners_will_not_be_reminded_before_the_4fae1101": "在工作区自动停止之前，不会提醒工作区用户。",
+					"workspaces_will_be_automatically_bumped_by_e5be9c3a": "工作区将自动被碰撞 ",
+					"workspaces_will_default_to_stopping_after_3fe57255": "工作区将默认停止 ",
+					"workspaces_will_not_have_their_stop_time_automat_6825f13d": "工作区不会根据用户活动自动延长停止时间。用户仍然可以手动延迟停止时间。",
+					"workspaces_will_run_until_stopped_manually_8ed199e7": "工作区将一直运行直至手动停止。"
 				}
 			},
 			"TemplateSettingsLayout": {
-				"template_settings_4cb79836": "Template 设置"
+				"template_settings_4cb79836": "模板设置"
 			},
 			"TemplateVariablesPage": {
 				"TemplateVariableField": {
@@ -5254,55 +5324,58 @@
 				"TemplateVariablesForm": {
 					"cancel_19766ed6": "取消",
 					"save_1509f561": "保存",
-					"template_variables_ff084774": "Template 变量",
+					"template_variables_ff084774": "模板变量",
 					"variable_is_required_9000d3a6": "必须填写变量。"
 				},
 				"TemplateVariablesPage": {
-					"template_value0_variables_updated_successfully_1502f5fc": "Template “{{value0}}”变量已成功更新。",
-					"template_variables_ff084774": "Template 变量"
+					"template_value0_variables_updated_successfully_1502f5fc": "模板 “{{value0}}”变量已成功更新。",
+					"template_variables_ff084774": "模板变量"
 				},
 				"TemplateVariablesPageView": {
-					"this_template_does_not_use_managed_variables_b4bd2c16": "此 Template 不使用托管变量。",
-					"update_the_variables_used_by_this_template_fd7a6664": "更新此 Template 使用的变量。",
+					"this_template_does_not_use_managed_variables_b4bd2c16": "此模板不使用托管变量。",
+					"update_the_variables_used_by_this_template_fd7a6664": "更新此模板使用的变量。",
 					"variables_02db55ba": "变量"
 				}
 			}
 		},
 		"TemplatesPage": {
 			"EmptyTemplates": {
-				"contact_your_coder_administrator_to_create_a_tem_45f484f3": "请联系您的 Coder 管理员以创建 Template。您可以分享下面的代码。",
-				"create_a_template_c0794aff": "创建 Template",
-				"create_your_first_template_805e8f3e": "创建您的第一个 Template",
+				"contact_your_coder_administrator_to_create_a_tem_45f484f3": "请联系您的 Coder 管理员以创建模板。您可以分享下面的代码。",
+				"create_a_template_c0794aff": "创建模板",
+				"create_your_first_template_805e8f3e": "创建您的第一个模板",
 				"create_your_own_e1fa9c04": "创建你自己的",
 				"no_results_matched_your_search_c229583b": "没有与您的搜索匹配的结果",
-				"templates_are_written_in_terraform_and_describe__e7622c26": "Templates 是用 Terraform 编写的，描述了 Workspaces 的基础结构。您可以开始使用下面的启动器 Template 或",
-				"view_all_starter_templates_fc3ad991": "查看所有启动器 Templates"
+				"templates_are_written_in_terraform_and_describe__e7622c26": "模板是用 Terraform 编写的，描述了工作区的基础结构。您可以开始使用下面的启动器模板或",
+				"view_all_starter_templates_fc3ad991": "查看所有启动器模板"
 			},
 			"TemplatesFilter": {
 				"all_organizations_e3002b23": "所有组织",
 				"select_an_organization_48326f52": "选择一个组织"
 			},
+			"TemplatesPage": {
+				"templates_56b564b7": "模板"
+			},
 			"TemplatesPageView": {
-				"1_template_still_uses_classic_parameters_fe34d2de": "1 Template 依然采用经典参数",
+				"1_template_still_uses_classic_parameters_fe34d2de": "1 模板依然采用经典参数",
 				"build_time_8e28a482": "构建时间",
 				"classic_parameters_are_deprecated_switch_to_dyna_9f7cbdf2": "经典参数已被弃用。切换到动态参数进行实时验证、条件参数和更丰富的输入类型。",
-				"create_a_workspace_using_the_value0_template_4b56eaa3": "使用 {{value0}} Template 创建 Workspace",
-				"create_workspace_c63c14cf": "创建 Workspace",
+				"create_a_workspace_using_the_value0_template_4b56eaa3": "使用 {{value0}} 模板创建工作区",
+				"create_workspace_c63c14cf": "创建工作区",
 				"deprecated_6b2e8f83": "已弃用",
 				"last_updated_382ac5f3": "最后更新",
-				"manage_templates_cb930c76": "管理 Templates",
+				"manage_templates_cb930c76": "管理模板",
 				"name_dcd1d522": "名称",
-				"new_template_30d87ec4": "新 Template",
+				"new_template_30d87ec4": "新模板",
 				"opens_in_new_tab_541f18a6": " （在新选项卡中打开）",
 				"organization_d764d425": "组织",
-				"select_a_template_to_create_a_workspace_8b30fe76": "选择 Template 来创建 Workspace。",
-				"templates_56b564b7": "Templates",
+				"select_a_template_to_create_a_workspace_8b30fe76": "选择模板来创建工作区。",
+				"templates_56b564b7": "模板",
 				"used_by_681bf81a": "使用者",
 				"used_by_value0_2401cb33": "由 {{value0}} 使用",
-				"value0_templates_still_use_classic_parameters_de9d39dc": "{{value0}} 个 Templates 仍使用经典参数",
+				"value0_templates_still_use_classic_parameters_de9d39dc": "{{value0}} 个模板仍使用经典参数",
 				"view_docs_61479fda": "查看文档",
-				"what_is_a_template_00a8b592": "什么是 Template？",
-				"with_templates_you_can_create_a_common_configura_f5e85c91": "通过 Templates，您可以使用 Terraform 为 Workspaces 创建通用配置。"
+				"what_is_a_template_00a8b592": "什么是模板？",
+				"with_templates_you_can_create_a_common_configura_f5e85c91": "通过模板，您可以使用 Terraform 为工作区创建通用配置。"
 			}
 		},
 		"TemplateVersionEditorPage": {
@@ -5324,8 +5397,8 @@
 			"MissingTemplateVariablesDialog": {
 				"cancel_19766ed6": "取消",
 				"submit_155f816c": "提交",
-				"template_variables_ff084774": "Template 变量",
-				"there_are_a_few_missing_template_variable_values_d63469f2": "缺少一些 Template 变量值。请填写。"
+				"template_variables_ff084774": "模板变量",
+				"there_are_a_few_missing_template_variable_values_d63469f2": "缺少一些模板变量值。请填写。"
 			},
 			"ProvisionerTagsPopover": {
 				"expand_provisioner_tags_f11a0d4c": "展开 Provisioner 标签",
@@ -5341,35 +5414,35 @@
 				"publish_859390eb": "发布",
 				"publish_new_version_2d25c9b1": "发布新版本",
 				"review_the_documentation_aa0f2c23": "查看文档",
-				"templates_can_enforce_that_the_active_version_be_ffee1e41": "Templates 可以强制将活动版本用于所有 Workspaces ",
+				"templates_can_enforce_that_the_active_version_be_ffee1e41": "模板可以强制将活动版本用于所有工作区 ",
 				"version_name_c5be1c55": "版本名称",
 				"write_a_short_message_about_the_changes_you_made_25e75970": "写一条关于您所做的更改的简短消息...",
-				"you_are_about_to_publish_a_new_version_of_this_t_debd40ff": "您即将发布此 Template 的新版本。"
+				"you_are_about_to_publish_a_new_version_of_this_t_debd40ff": "您即将发布此模板的新版本。"
 			},
 			"TemplateVersionEditor": {
-				"back_to_the_template_79d3f3df": "返回 Template",
+				"back_to_the_template_79d3f3df": "返回模板",
 				"browse_the_coder_registry_e8b55341": "浏览 Coder 注册表",
 				"build_bdd254b6": "构建",
-				"build_template_ctrl_enter_7e5225d6": "构建 Template（Ctrl + Enter）",
-				"create_a_workspace_954bd1fe": "创建 Workspace",
+				"build_template_ctrl_enter_7e5225d6": "构建模板（Ctrl + Enter）",
+				"create_a_workspace_954bd1fe": "创建工作区",
 				"create_file_f1eb5a82": "创建文件",
 				"error_during_the_build_f68af1e2": "构建过程中出错",
-				"error_on_previewing_the_template_e65da07e": "预览 Template 时出错。",
+				"error_on_previewing_the_template_e65da07e": "预览模板时出错。",
 				"files_abc7e989": "文件",
 				"no_file_opened_37fa1f8b": "没有打开文件",
 				"output_b2439bcb": "输出",
 				"publish_859390eb": "发布",
 				"resources_e89b30aa": "资源",
 				"successfully_published_1680e6c0": "成功发布 ",
-				"template_version_value0_built_successfully_c8aaee62": "Template 版本“{{value0}}”构建成功。",
+				"template_version_value0_built_successfully_c8aaee62": "模板版本“{{value0}}”构建成功。",
 				"the_file_is_not_displayed_in_the_text_editor_bec_c649b8ff": "该文件不会显示在文本编辑器中，因为它是二进制文件或使用不受支持的文本编码。",
 				"view_raw_logs_ed3f405c": "查看原始日志",
-				"view_template_b6532e54": "查看 Template",
+				"view_template_b6532e54": "查看模板",
 				"you_have_unpublished_changes_are_you_sure_you_wa_1da66002": "您有未发布的更改。确定要离开吗？"
 			},
 			"TemplateVersionEditorPage": {
 				"error_on_initializing_the_editor_4e57490a": "初始化编辑器时出错。",
-				"template_editor_a3fc59dd": "Template 编辑"
+				"template_editor_a3fc59dd": "模板编辑"
 			},
 			"TemplateVersionStatusBadge": {
 				"build_status_is_value0_2493e016": "构建状态为 {{value0}}"
@@ -5377,11 +5450,11 @@
 		},
 		"TemplateVersionPage": {
 			"TemplateVersionPageView": {
-				"create_workspace_4b892277": "创建 Workspace",
+				"create_workspace_4b892277": "创建工作区",
 				"created_by_374cd9d2": "创建者：",
 				"created_d70b9e24": "已创建",
 				"edit_464c4ffd": "编辑",
-				"template_0575f29d": "Template",
+				"template_0575f29d": "模板",
 				"version_dd167905": "版本",
 				"view_raw_logs_ed3f405c": "查看原始日志"
 			}
@@ -5443,7 +5516,7 @@
 				"AccountForm": {
 					"email_969ccbd3": "电子邮件",
 					"name_dcd1d522": "名称",
-					"the_human_readable_name_is_optional_and_can_be_a_34bf86a1": "人类可读的名称是可选的，可以通过“data.coder_workspace_owner.me.full_name”属性在 Template 中访问。",
+					"the_human_readable_name_is_optional_and_can_be_a_34bf86a1": "人类可读的名称是可选的，可以通过“data.coder_workspace_owner.me.full_name”属性在模板中访问。",
 					"update_account_79bd50e1": "更新账户",
 					"username_e3b89e9d": "用户名"
 				},
@@ -5561,13 +5634,13 @@
 				"SchedulePage": {
 					"quiet_hours_bf0671dd": "安静时间",
 					"schedule_updated_successfully_5ae2e998": "时间表更新成功。",
-					"workspaces_may_be_automatically_updated_during_y_2ee81f31": "根据管理员的配置，Workspaces 可能会在您安静的时间自动更新。"
+					"workspaces_may_be_automatically_updated_during_y_2ee81f31": "根据管理员的配置，工作区可能会在您安静的时间自动更新。"
 				}
 			},
 			"SecretsPage": {
 				"SecretDialog": {
 					"add_secret_f57a23c6": "添加密钥",
-					"api_key_txt_fdbbd460": "〜/API-key.txt",
+					"api_key_txt_fdbbd460": "~/api-key.txt",
 					"cancel_19766ed6": "取消",
 					"clear_83b12c22": "清除",
 					"description_526e0087": "描述",
@@ -5584,8 +5657,8 @@
 					"leave_blank_to_keep_the_existing_value_37e1207c": "留空以保留现有值。",
 					"name_dcd1d522": "名称",
 					"optional_59be7133": "可选",
-					"optional_exposes_the_secret_as_a_file_at_this_pa_8a07d70a": "可选。将机密作为 Workspace 中此路径中的文件公开。路径必须以 ~/ 或 / 开头。",
-					"optional_exposes_the_secret_as_an_environment_va_cee2139f": "可选。将机密公开为 Workspace 中具有此名称的环境变量。",
+					"optional_exposes_the_secret_as_a_file_at_this_pa_8a07d70a": "可选。将机密作为工作区中此路径中的文件公开。路径必须以 ~/ 或 / 开头。",
+					"optional_exposes_the_secret_as_an_environment_va_cee2139f": "可选。将机密公开为工作区中具有此名称的环境变量。",
 					"or_add_individually_fce85069": "或单独添加",
 					"remove_file_fffa2e32": "删除文件",
 					"save_1509f561": "保存",
@@ -5593,7 +5666,7 @@
 					"secret_name_5cdf573b": "密钥名字",
 					"secret_values_cannot_be_retrieved_once_saved_b82a8b54": "密钥值一旦保存就无法检索。",
 					"undo_a8283ade": "撤消",
-					"unsupported_file_type_import_a_env_json_yaml_or__813e37a5": "不支持此文件类型。请导入 .env、.json、.yaml 或 .yml 文件。",
+					"unsupported_file_type_import_a_env_json_yaml_or__813e37a5": "不支持此文件类型。请导入 .env、.JSON、.YAML 或 .yml 文件。",
 					"update_c1c1009d": "更新",
 					"value_8e37953d": "价值"
 				},
@@ -5613,12 +5686,12 @@
 				"SecretsPageView": {
 					"add_secret_f57a23c6": "添加密钥",
 					"secrets_d8707d41": "密钥",
-					"secrets_with_an_environment_variable_or_file_pat_eef0f2b0": "带有环境变量或文件路径的机密在启动时会被注入到您拥有的 Workspaces 中。每个环境变量和文件路径必须是唯一的。"
+					"secrets_with_an_environment_variable_or_file_pat_eef0f2b0": "带有环境变量或文件路径的机密在启动时会被注入到您拥有的工作区中。每个环境变量和文件路径必须是唯一的。"
 				},
 				"SecretsTable": {
 					"add_an_environment_variable_or_file_path_before__38f59ca6": "在启用此机密之前添加环境变量或文件路径。",
 					"add_secret_f57a23c6": "添加密钥",
-					"create_a_secret_to_inject_it_into_workspaces_you_efcbd454": "创建一个密钥，将其注入到您拥有的 Workspaces 中。",
+					"create_a_secret_to_inject_it_into_workspaces_you_efcbd454": "创建一个密钥，将其注入到您拥有的工作区中。",
 					"delete_e2d0a549": "删除",
 					"delete_secret_1a48c8c8": "删除密钥",
 					"deleting_8c4133b4": "正在删除 ",
@@ -5629,7 +5702,7 @@
 					"env_var_file_448cf068": "环境变量 + 文件",
 					"file_3b9c358f": "文件",
 					"file_path_2fb6d386": "文件路径",
-					"is_irreversible_workspaces_that_depend_on_this_s_11c78669": " 是不可逆转的。依赖此密钥的 Workspaces 在以后启动时将不再收到它。",
+					"is_irreversible_workspaces_that_depend_on_this_s_11c78669": " 是不可逆转的。依赖此密钥的工作区在以后启动时将不再收到它。",
 					"name_dcd1d522": "名称",
 					"no_description_bcd8cc53": "无描述",
 					"no_secrets_yet_5aa40906": "还没有密钥",
@@ -5694,11 +5767,11 @@
 					"regenerate_ssh_key_0a4bb7a8": "重新生成 SSH 密钥？",
 					"ssh_key_regenerated_successfully_1cf1a3cc": "SSH 密钥重新生成成功。",
 					"ssh_keys_f9a7470a": "SSH 键",
-					"you_will_need_to_replace_the_public_ssh_key_on_s_2d0f1412": "您将需要替换所使用的服务上的公共 SSH 密钥，并且需要重建现有的 Workspaces。"
+					"you_will_need_to_replace_the_public_ssh_key_on_s_2d0f1412": "您将需要替换所使用的服务上的公共 SSH 密钥，并且需要重建现有的工作区。"
 				},
 				"SSHKeysPageView": {
 					"regenerate_37eb952e": "再生…",
-					"the_following_public_key_is_used_to_authenticate_a5d6183d": "以下公钥用于验证 Workspaces 中的 Git。您可以将其添加到您需要从 Workspace 访问的 Git 服务（例如 GitHub）。 Coder 配置身份验证"
+					"the_following_public_key_is_used_to_authenticate_a5d6183d": "以下公钥用于验证工作区中的 Git。您可以将其添加到您需要从工作区访问的 Git 服务（例如 GitHub）。 Coder 配置身份验证"
 				}
 			},
 			"TokensPage": {
@@ -5735,14 +5808,14 @@
 					"automatic_lowest_latency_proxy_selection_9a2b5f28": "自动最低延迟代理选择",
 					"latency_e0e7d293": "延迟",
 					"low_latency_connections_for_global_teams_82872a96": "为全球团队提供低延迟连接",
-					"no_workspace_proxies_found_8d45be26": "未找到 Workspace 代理",
+					"no_workspace_proxies_found_8d45be26": "未找到工作区代理",
 					"per_proxy_latency_and_health_metrics_31413af3": "每个代理的延迟和运行状况指标",
 					"provide_low_latency_connections_for_geo_distribu_94a04038": "为地理分散的团队提供低延迟连接。",
 					"proxy_a68ee416": "代理",
 					"relay_for_ssh_apps_and_ports_bae88b12": "SSH、应用程序和端口的中继",
 					"status_920e413c": "状态",
-					"workspace_proxies_62ee3d16": "Workspace 代理",
-					"workspace_proxies_improve_terminal_and_web_app_c_074d8faa": "Workspace 代理改进了终端和 Web 应用程序与 Workspaces 的连接。"
+					"workspace_proxies_62ee3d16": "工作区代理",
+					"workspace_proxies_improve_terminal_and_web_app_c_074d8faa": "工作区代理改进了终端和 Web 应用程序与工作区的连接。"
 				}
 			}
 		},
@@ -5786,13 +5859,13 @@
 				"for_more_information_c761f7a6": "”了解更多信息。",
 				"here_are_some_troubleshooting_steps_you_can_take_23bb194b": "以下是您可以采取的一些故障排除步骤：",
 				"home_3a786953": "首页",
-				"inside_your_workspace_f3cf38c9": "在你的 Workspace 里面”",
+				"inside_your_workspace_f3cf38c9": "在你的工作区里面”",
 				"is_unhealthy_a275e158": "“是不健康的",
 				"more_options_bc79cdff": "更多选择",
 				"open_app_in_new_tab_afeffd83": "在新选项卡中打开应用程序",
 				"see_6863067e": "参见",
 				"the_app_is_in_an_unknown_health_state_c4b0f3e5": "该应用程序处于未知的健康状态。",
-				"try_running_the_following_inside_your_workspace_7b03376c": "尝试在 Workspace 中运行以下命令：",
+				"try_running_the_following_inside_your_workspace_7b03376c": "尝试在工作区中运行以下命令：",
 				"verify_healthcheck_d521d0a9": "验证健康检查"
 			},
 			"WorkspaceWildcardWarning": {
@@ -5806,35 +5879,35 @@
 		},
 		"CreateWorkspacePage": {
 			"AutoCreateConsentDialog": {
-				"a_link_is_attempting_to_automatically_create_a_w_39ce95ea": "链接正在尝试使用以下外部配置自动创建 Workspace。从不受信任的来源运行脚本可能很危险。",
+				"a_link_is_attempting_to_automatically_create_a_w_39ce95ea": "链接正在尝试使用以下外部配置自动创建工作区。从不受信任的来源运行脚本可能很危险。",
 				"cancel_19766ed6": "取消",
 				"confirm_and_create_37502394": "确认并创建",
 				"parameters_03acaf78": "参数：",
 				"preset_4336d942": "预设：",
-				"warning_automatic_workspace_creation_d5419492": "警告：自动创建 Workspace"
+				"warning_automatic_workspace_creation_d5419492": "警告：自动创建工作区"
 			},
 			"CreateWorkspacePage": {
 				"auto_creation_has_been_disabled_d097b4d7": "已禁用自动创建。",
 				"auto_creation_has_been_disabled_please_connect_a_98b97762": "已禁用自动创建。请先连接所有必需的外部身份验证提供商，然后再继续。",
-				"create_workspace_4b892277": "创建 Workspace",
-				"creating_workspace_388150b3": "正在创建 Workspace...",
-				"this_template_requires_value0_not_connected_7ede8be3": "此 Template 需要尚未连接的{{value0}}。"
+				"create_workspace_4b892277": "创建工作区",
+				"creating_workspace_388150b3": "正在创建工作区...",
+				"this_template_requires_value0_not_connected_7ede8be3": "此模板需要尚未连接的{{value0}}。"
 			},
 			"CreateWorkspacePageView": {
-				"create_workspace_4b892277": "创建 Workspace",
-				"create_workspace_form_53922a4c": "创建 Workspace 表格",
+				"create_workspace_4b892277": "创建工作区",
+				"create_workspace_form_53922a4c": "创建工作区表格",
 				"deprecated_6b2e8f83": "已弃用",
-				"duplicating_a_workspace_only_copies_its_paramete_ff3e7a40": "复制 Workspace 仅复制其参数。旧 Workspace 中的状态不会被复制。",
+				"duplicating_a_workspace_only_copies_its_paramete_ff3e7a40": "复制工作区仅复制其参数。旧工作区中的状态不会被复制。",
 				"dynamic_parameters_enhances_coder_s_existing_par_58661a17": "动态参数通过实时验证、条件参数行为和更丰富的输入类型增强了 Coder 的现有参数系统。",
 				"external_authentication_1b308ef4": "外部认证",
 				"general_c910d474": "一般",
 				"go_back_6aadac2f": "返回",
 				"need_a_suggestion_2a72e622": "需要建议吗？",
-				"new_workspace_df0caf1b": "新 Workspace",
+				"new_workspace_df0caf1b": "新工作区",
 				"none_dc937b59": "无",
 				"not_both_1c755013": "，不是两者。",
-				"only_admins_can_create_workspaces_for_other_user_624d5e89": "只有管理员才能为其他用户创建 Workspaces。",
-				"open_template_settings_6ef057ef": "打开 Template 设置",
+				"only_admins_can_create_workspaces_for_other_user_624d5e89": "只有管理员才能为其他用户创建工作区。",
+				"open_template_settings_6ef057ef": "打开模板设置",
 				"opens_in_new_tab_541f18a6": " （在新选项卡中打开）",
 				"or_e1a3e78c": " 或 ",
 				"owner_4b1b8aa3": "所有者",
@@ -5843,22 +5916,22 @@
 				"preset_selected_c294532c": "已选择预设。 ",
 				"select_a_preset_7b64acc8": "选择预设",
 				"show_preset_parameters_66d4189d": "显示预设参数",
-				"some_features_like_real_time_validation_and_cond_290806f2": "在 Template 切换到动态参数之前，实时验证和条件参数等某些功能将无法在此处工作。",
-				"the_name_of_your_new_workspace_a5328103": "新 Workspace 的名称。",
-				"these_are_the_settings_used_by_your_template_imm_7a61d218": "这些是 Template 使用的设置。 Workspace 一旦创建，就无法修改不可变参数。",
+				"some_features_like_real_time_validation_and_cond_290806f2": "在模板切换到动态参数之前，实时验证和条件参数等某些功能将无法在此处工作。",
+				"the_name_of_your_new_workspace_a5328103": "新工作区的名称。",
+				"these_are_the_settings_used_by_your_template_imm_7a61d218": "这些是模板使用的设置。 工作区一旦创建，就无法修改不可变参数。",
 				"they_must_connect_any_required_providers_themsel_4a0ce5dc": "。他们必须自己连接任何所需的提供商；您无法代表他们进行身份验证。",
 				"this_parameter_has_been_preset_and_cannot_be_mod_3df8760e": "该参数已预先设定，不可修改。",
 				"this_shows_the_external_authentication_state_for_cdf90ec7": "这显示了外部身份验证状态",
-				"this_template_uses_deprecated_parameters_700efe5b": "此 Template 使用已弃用的参数",
-				"this_template_uses_external_services_for_authent_4d1de52e": "此 Template 使用外部服务进行身份验证。",
-				"to_create_a_workspace_using_this_template_please_6d2b2dd0": "要使用此 Template 创建 Workspace，请连接到下面列出的所有必需的外部身份验证提供商。",
+				"this_template_uses_deprecated_parameters_700efe5b": "此模板使用已弃用的参数",
+				"this_template_uses_external_services_for_authent_4d1de52e": "此模板使用外部服务进行身份验证。",
+				"to_create_a_workspace_using_this_template_please_6d2b2dd0": "要使用此模板创建工作区，请连接到下面列出的所有必需的外部身份验证提供商。",
 				"url_parameters_have_been_ignored_use_either_4d8980d8": " URL 参数已被忽略。使用任一 ",
 				"value0_default_5f4eaa09": "{{value0}}（默认）",
 				"version_id_727fd609": "版本号",
 				"view_docs_61479fda": "查看文档",
 				"view_source_6ee818aa": "查看源码",
-				"workspace_name_6fa5a5b1": "Workspace 姓名",
-				"workspace_name_9619649d": "Workspace 名称"
+				"workspace_name_6fa5a5b1": "工作区姓名",
+				"workspace_name_9619649d": "工作区名称"
 			},
 			"ExternalAuthButton": {
 				"authenticated_6ab694cf": "已认证",
@@ -5893,19 +5966,19 @@
 			},
 			"AgentExternal": {
 				"please_run_the_following_command_to_attach_an_ag_ef79fa65": "请运行以下命令将 Agent 附加到",
-				"workspace_718ec194": " Workspace："
+				"workspace_718ec194": " 工作区："
 			},
 			"AgentLatency": {
 				"latency_3fdb7e87": "延迟",
 				"latency_e0e7d293": "延迟",
-				"ms_f785c3ce": "女士",
+				"ms_f785c3ce": "毫秒",
 				"this_is_the_latency_overhead_on_non_peer_to_peer_514e91f9": "这是非对等连接上的延迟开销。第一行是首选继电器。"
 			},
 			"AgentLogs": {
 				"AgentLogs": {
 					"1mb_fe81b4d1": "1MB",
 					"and_will_not_continue_to_be_written_to_the_datab_d0454bef": "，并且不会继续写入数据库。日志将继续写入",
-					"file_in_the_workspace_d73fcd56": "Workspace 中的文件。",
+					"file_in_the_workspace_d73fcd56": "工作区中的文件。",
 					"logs_overflowed_c512766f": "日志溢出",
 					"no_icon_specified_8a35e7ea": "没有指定图标！",
 					"startup_logs_exceeded_the_max_size_of_d6637fb6": "启动日志超出了最大大小"
@@ -5925,7 +5998,7 @@
 				"deprecated_6b2e8f83": "已弃用",
 				"outdated_c759f42e": "过时的",
 				"server_version_3f34bb23": "服务器版本",
-				"update_workspace_397e1c3f": "更新 Workspace"
+				"update_workspace_397e1c3f": "更新工作区"
 			},
 			"AgentRow": {
 				"all_logs_03f1acb9": "所有日志",
@@ -5962,11 +6035,11 @@
 					"configuration_2baa3a4a": " 配置。",
 					"documentation_caf9f906": "文档",
 					"for_more_details_4c7148e4": "了解更多详情",
-					"in_the_template_s_52204cf4": " 在 Template 的",
+					"in_the_template_s_52204cf4": " 在模板的",
 					"initializing_6f191ff7": "正在初始化...",
 					"open_external_url_22f414a5": "打开外部 URL",
 					"port_forwarding_will_not_work_because_hostname_i_fa237ff3": "由于主机名太长，端口转发将不起作用，请参阅",
-					"this_app_has_an_invalid_url_and_can_t_be_opened__005b2dad": "此应用程序的 URL 无效，无法打开。请您的 Template 管理员修复该应用程序的问题 ",
+					"this_app_has_an_invalid_url_and_can_t_be_opened__005b2dad": "此应用程序的 URL 无效，无法打开。请您的模板管理员修复该应用程序的问题 ",
 					"unhealthy_317b1fbc": "不健康",
 					"your_admin_has_not_configured_subdomain_applicat_1091ca11": "您的管理员尚未配置子域应用程序访问权限"
 				},
@@ -6033,9 +6106,9 @@
 				"sharing_level_b01766a2": "共享级别",
 				"sharing_level_for_port_value0_e3ac5d18": "端口 {{value0}} 的共享级别",
 				"the_listening_ports_are_exclusively_accessible_t_e526f657": "侦听端口仅供您访问。选择 HTTP/S 将更改所有侦听端口的协议。",
-				"this_workspace_template_does_not_allow_sharing_p_59911159": "此 Workspace Template 不允许共享端口。请联系 Template 管理员以启用端口共享。",
-				"this_workspace_template_does_not_allow_sharing_p_5fab79f4": "此 Workspace Template 不允许公开共享端口。",
-				"this_workspace_template_does_not_allow_sharing_p_f2ae63aa": "此 Workspace Template 不允许在其组织外部共享端口。"
+				"this_workspace_template_does_not_allow_sharing_p_59911159": "此工作区模板不允许共享端口。请联系模板管理员以启用端口共享。",
+				"this_workspace_template_does_not_allow_sharing_p_5fab79f4": "此工作区模板不允许公开共享端口。",
+				"this_workspace_template_does_not_allow_sharing_p_f2ae63aa": "此工作区模板不允许在其组织外部共享端口。"
 			},
 			"ResourceCard": {
 				"daily_cost_77086c01": "每日费用",
@@ -6093,9 +6166,9 @@
 				"but_subdomain_applications_are_not_configured_us_3cc93122": "，但未配置子域应用程序。在您配置之前，用户将无法访问这些应用程序",
 				"flag_when_starting_the_coder_server_cb2c744c": "启动 Coder 服务器时的标志。",
 				"learn_more_about_wildcard_access_url_7114e668": "了解有关通配符访问 URL 的更多信息",
-				"one_or_more_apps_in_this_workspace_have_fd711f21": "此 Workspace 中的一个或多个应用程序具有",
-				"some_workspace_applications_will_not_work_764fe964": "某些 Workspace 应用程序将无法运行",
-				"this_template_contains_coder_app_resources_with_5128716b": "此 Template 包含 coder_app 资源",
+				"one_or_more_apps_in_this_workspace_have_fd711f21": "此工作区中的一个或多个应用程序具有",
+				"some_workspace_applications_will_not_work_764fe964": "某些工作区应用程序将无法运行",
+				"this_template_contains_coder_app_resources_with_5128716b": "此模板包含 coder_app 资源",
 				"which_requires_a_coder_deployment_with_a_wildcar_871d6cb6": "，这需要配置通配符访问 URL 的 Coder 部署。请联系您的管理员。"
 			}
 		},
@@ -6114,13 +6187,13 @@
 				"builds_6a3fe887": "构建",
 				"coder_agent_2f95f276": "coder_agent.",
 				"duration_4fc52a3c": "持续时间",
-				"provisioner_logs_exceeded_the_max_size_of_1mb_wi_4ff17fd2": "Provisioner 日志超出了 1MB 的最大大小。不会继续为 Workspace 构建写入 Provisioner 日志。",
+				"provisioner_logs_exceeded_the_max_size_of_1mb_wi_4ff17fd2": "Provisioner 日志超出了 1MB 的最大大小。不会继续为工作区构建写入 Provisioner 日志。",
 				"started_at_fe752875": "开始于",
-				"template_version_1c5f9189": "Template 版本",
-				"the_workspace_may_have_failed_to_delete_due_to_a_a9f02a29": "由于 Terraform 状态不匹配，Workspace 可能无法删除。 Template 管理员可以运行",
-				"to_delete_the_workspace_skipping_resource_destru_06e98d48": "删除 Workspace 跳过资源破坏。",
+				"template_version_1c5f9189": "模板版本",
+				"the_workspace_may_have_failed_to_delete_due_to_a_a9f02a29": "由于 Terraform 状态不匹配，工作区可能无法删除。 模板管理员可以运行",
+				"to_delete_the_workspace_skipping_resource_destru_06e98d48": "删除工作区跳过资源破坏。",
 				"view_raw_logs_ed3f405c": "查看原始日志",
-				"workspace_87bb59ba": "Workspace"
+				"workspace_87bb59ba": "工作区"
 			}
 		},
 		"WorkspacePage": {
@@ -6130,7 +6203,7 @@
 			"AppStatuses": {
 				"hide_statuses_16c9a8b3": "隐藏状态",
 				"show_statuses_158646a5": "显示状态",
-				"this_file_is_located_in_your_workspace_34e04596": "该文件位于您的 Workspace"
+				"this_file_is_located_in_your_workspace_34e04596": "该文件位于您的工作区"
 			},
 			"HistorySidebar": {
 				"history_0e769600": "历史",
@@ -6138,21 +6211,21 @@
 			},
 			"ResourcesSidebar": {
 				"resources_e89b30aa": "资源",
-				"your_workspace_build_failed_so_the_necessary_res_5700d562": "您的 Workspace 构建失败，因此无法创建必要的资源。"
+				"your_workspace_build_failed_so_the_necessary_res_5700d562": "您的工作区构建失败，因此无法创建必要的资源。"
 			},
 			"Workspace": {
 				"history_0e769600": "历史",
 				"no_agents_are_currently_assigned_to_this_resourc_6ca7f15a": "当前没有将 Agents 分配给该资源。",
 				"resources_e89b30aa": "资源",
-				"workspace_build_failed_891d2461": "Workspace 构建失败"
+				"workspace_build_failed_891d2461": "工作区构建失败"
 			},
 			"WorkspaceActions": {
 				"BuildParametersPopover": {
 					"build_options_e2604caf": "构建选项",
-					"go_to_workspace_parameters_1986a430": "转到 Workspace 参数",
+					"go_to_workspace_parameters_1986a430": "转到工作区参数",
 					"read_the_docs_559b1cc4": "阅读文档",
-					"this_template_has_no_ephemeral_build_options_9782bb29": "此 Template 没有临时构建选项。",
-					"this_workspace_has_ephemeral_parameters_which_ma_d81c5f9c": "该 Workspace 具有临时参数，可以在 Workspace 启动时使用临时值。在 Workspace 设置中配置以下参数。"
+					"this_template_has_no_ephemeral_build_options_9782bb29": "此模板没有临时构建选项。",
+					"this_workspace_has_ephemeral_parameters_which_ma_d81c5f9c": "该工作区具有临时参数，可以在工作区启动时使用临时值。在工作区设置中配置以下参数。"
 				},
 				"Buttons": {
 					"activate_24433c70": "激活",
@@ -6164,12 +6237,12 @@
 					"restarting_75d0f146": "正在重新启动...",
 					"start_e4bb9f1e": "启动",
 					"start_with_build_parameters_54d3f10b": "从构建参数开始",
-					"start_workspace_with_the_latest_template_version_42d08e85": "使用最新的 Template 版本启动 Workspace。",
+					"start_workspace_with_the_latest_template_version_42d08e85": "使用最新的模板版本启动工作区。",
 					"starting_bbe5fc3b": "开始…",
 					"stop_cae7d57b": "停止",
-					"stop_workspace_and_restart_it_with_the_latest_te_9ca06809": "停止 Workspace 并使用最新的 Template 版本重新启动它。",
+					"stop_workspace_and_restart_it_with_the_latest_te_9ca06809": "停止工作区并使用最新的模板版本重新启动它。",
 					"stopping_bbe85741": "停止…",
-					"this_template_requires_automatic_updates_on_work_2b6b3f60": "此 Template 需要在 Workspace 启动时自动更新。如果您想保留 Template 版本，请联系您的管理员。",
+					"this_template_requires_automatic_updates_on_work_2b6b3f60": "此模板需要在工作区启动时自动更新。如果您想保留模板版本，请联系您的管理员。",
 					"unfavorite_5e87a7bd": "不喜欢",
 					"update_and_restart_9450cfaf": "更新并重新启动...",
 					"update_and_start_b5b2f526": "更新并开始...",
@@ -6185,65 +6258,65 @@
 				},
 				"ShareButton": {
 					"share_29887a5f": "分享",
-					"workspace_sharing_3eee503a": "Workspace 分享"
+					"workspace_sharing_3eee503a": "工作区分享"
 				},
 				"WorkspaceActions": {
-					"automatic_updates_are_enabled_for_this_workspace_425de450": "此 Workspace 已启用自动更新。如果要保留 Template 版本，请修改 Workspace 设置中的更新策略。",
+					"automatic_updates_are_enabled_for_this_workspace_425de450": "此工作区已启用自动更新。如果要保留模板版本，请修改工作区设置中的更新策略。",
 					"canceling_37b4fbc5": "正在取消...",
 					"deleted_b48ff39c": "已删除",
 					"deleting_21ed2f9e": "正在删除",
 					"pending_e2018b95": "待定...",
-					"this_template_requires_automatic_updates_on_work_c41153e2": "此 Template 要求在 Workspace 启动时自动更新，但 Template 管理员可以忽略此策略。"
+					"this_template_requires_automatic_updates_on_work_c41153e2": "此模板要求在工作区启动时自动更新，但模板管理员可以忽略此策略。"
 				}
 			},
 			"WorkspaceBuildLogsSection": {
 				"build_logs_8884ec6d": "构建日志"
 			},
 			"WorkspaceBuildProgress": {
-				"workspace_db407a49": " Workspace..."
+				"workspace_db407a49": " 工作区..."
 			},
 			"WorkspaceDeletedBanner": {
 				"create_another_from_ce2e7d95": "创建另一个来自 ",
-				"this_workspace_has_been_deleted_7c935851": "此 Workspace 已被删除。"
+				"this_workspace_has_been_deleted_7c935851": "此工作区已被删除。"
 			},
 			"WorkspaceNotifications": {
 				"WorkspaceNotifications": {
 					"a_startup_script_has_failed_4c1d3704": "启动脚本失败",
 					"activate_24433c70": "激活",
-					"an_update_is_available_for_your_workspace_870d6c03": "您的 Workspace 有可用更新",
+					"an_update_is_available_for_your_workspace_870d6c03": "您的工作区有可用更新",
 					"and_was_marked_dormant_on_a8bc8a38": " 并被标记为休眠 ",
-					"autostart_has_been_disabled_for_your_workspace_89971730": "您的 Workspace 的自动启动已被禁用。",
-					"autostart_is_unable_to_automatically_update_your_fa2675b2": "自动启动无法自动更新 Workspace。请手动更新 Workspace 以重新启用自动启动。",
+					"autostart_has_been_disabled_for_your_workspace_89971730": "您的工作区的自动启动已被禁用。",
+					"autostart_is_unable_to_automatically_update_your_fa2675b2": "自动启动无法自动更新工作区。请手动更新工作区以重新启用自动启动。",
 					"expand_an_agent_s_logs_to_view_per_agent_health__598391cc": "展开 Agent 日志以查看各 Agent 的健康状态详情。",
-					"it_is_not_scheduled_for_auto_deletion_but_will_b_680b2960": "。未计划自动删除，但如果在此 Template 上启用自动删除，则它将成为候选。要保留它，您必须激活 Workspace。",
+					"it_is_not_scheduled_for_auto_deletion_but_will_b_680b2960": "。未计划自动删除，但如果在此模板上启用自动删除，则它将成为候选。要保留它，您必须激活工作区。",
 					"it_is_scheduled_to_be_deleted_on_cdd98e41": "。预计删除时间为 ",
-					"one_or_more_workspace_agents_need_attention_436c9ece": "一台或多台 Workspace Agents 需要注意",
+					"one_or_more_workspace_agents_need_attention_436c9ece": "一台或多台工作区 Agents 需要注意",
 					"position_in_queue_7f05c4b1": "在队列中的位置：",
 					"restart_6b983a81": "重新启动",
-					"the_workspace_agent_is_running_but_a_startup_scr_8e3f1049": "Workspace Agent 正在运行，但有启动脚本因错误退出。",
-					"this_workspace_build_job_is_waiting_for_a_provis_462d45a7": "此 Workspace 构建作业正在等待 Provisioner 可用。如果您等待时间较长，请联系您的管理员寻求帮助。",
-					"this_workspace_has_not_been_used_for_ac55990c": "该 Workspace 尚未用于",
-					"this_workspace_uses_a_deprecated_template_d634763c": "此 Workspace 使用已弃用的 Template",
-					"to_keep_it_you_must_activate_the_workspace_9951b971": "。要保留它，您必须激活 Workspace。",
+					"the_workspace_agent_is_running_but_a_startup_scr_8e3f1049": "工作区 Agent 正在运行，但有启动脚本因错误退出。",
+					"this_workspace_build_job_is_waiting_for_a_provis_462d45a7": "此工作区构建作业正在等待 Provisioner 可用。如果您等待时间较长，请联系您的管理员寻求帮助。",
+					"this_workspace_has_not_been_used_for_ac55990c": "该工作区尚未用于",
+					"this_workspace_uses_a_deprecated_template_d634763c": "此工作区使用已弃用的模板",
+					"to_keep_it_you_must_activate_the_workspace_9951b971": "。要保留它，您必须激活工作区。",
 					"troubleshooting_c3af076f": "故障排除",
 					"update_c1c1009d": "更新",
-					"workspace_build_is_pending_965cf1fd": "Workspace 构建正在等待中",
-					"workspace_is_dormant_92f03ac0": "Workspace 处于休眠状态"
+					"workspace_build_is_pending_965cf1fd": "工作区构建正在等待中",
+					"workspace_is_dormant_92f03ac0": "工作区处于休眠状态"
 				}
 			},
 			"WorkspacePage": {
 				"connection_has_been_closed_21dfe564": "连接已关闭。",
 				"please_try_refreshing_the_page_ed111497": "请尝试刷新页面。",
-				"unable_to_get_changes_for_workspace_value0_00452e5b": "无法获取 Workspace“{{value0}}”的更改。",
-				"unable_to_process_latest_data_for_workspace_valu_a9c3299c": "无法处理 Workspace“{{value0}}”的最新数据。"
+				"unable_to_get_changes_for_workspace_value0_00452e5b": "无法获取工作区“{{value0}}”的更改。",
+				"unable_to_process_latest_data_for_workspace_valu_a9c3299c": "无法处理工作区“{{value0}}”的最新数据。"
 			},
 			"WorkspaceReadyPage": {
 				"delete_non_persistent_data_4a841ebd": "删除非持久数据",
-				"error_activating_workspace_value0_0c6f4298": "激活 Workspace“{{value0}}”时出错。",
-				"failed_to_build_workspace_value0_658a8c3c": "无法构建 Workspace“{{value0}}”。",
+				"error_activating_workspace_value0_0c6f4298": "激活工作区“{{value0}}”时出错。",
+				"failed_to_build_workspace_value0_658a8c3c": "无法构建工作区“{{value0}}”。",
 				"restart_6b983a81": "重新启动",
-				"restart_your_workspace_914f3b52": "重启你的 Workspace？",
-				"restarting_your_workspace_will_stop_all_running__66ce2826": "重新启动 Workspace 将停止所有正在运行的进程，并且",
+				"restart_your_workspace_914f3b52": "重启你的工作区？",
+				"restarting_your_workspace_will_stop_all_running__66ce2826": "重新启动工作区将停止所有正在运行的进程，并且",
 				"value0_value1_68ee1a5b": "{{value0}}/{{value1}}"
 			},
 			"WorkspaceScheduleControls": {
@@ -6255,8 +6328,8 @@
 				"subtract_1_hour_from_deadline_78e67387": "距离截止日期减去 1 小时"
 			},
 			"WorkspaceTopbar": {
-				"back_to_workspaces_17474371": "返回 Workspaces",
-				"copy_workspace_name_ba63192e": "复制 Workspace 名称",
+				"back_to_workspaces_17474371": "返回工作区",
+				"copy_workspace_name_ba63192e": "复制工作区名称",
 				"credits_of_466458a5": "的学分",
 				"daily_usage_4e830b73": "日常使用",
 				"deletion_on_d02bd02f": "删除于 ",
@@ -6264,8 +6337,8 @@
 				"organization_d764d425": "组织",
 				"owner_4b1b8aa3": "所有者",
 				"schedule_settings_7da983ff": "日程设置",
-				"see_affected_workspaces_a81b73a3": "查看受影响的 Workspaces",
-				"see_affected_workspaces_for_value0_a10454fc": "请参阅受影响的 Workspaces 以了解 {{value0}}",
+				"see_affected_workspaces_a81b73a3": "查看受影响的工作区",
+				"see_affected_workspaces_for_value0_a10454fc": "请参阅受影响的工作区以了解 {{value0}}",
 				"version_74f20322": "版本： "
 			}
 		},
@@ -6284,8 +6357,8 @@
 					"required_parameter_a0bd6e69": "必填参数",
 					"select_option_02fa0b89": "选择选项",
 					"show_value_fad206e2": "显示价值",
-					"this_parameter_is_ephemeral_and_will_reset_to_th_fbe3a286": "该参数是临时参数，在 Workspace 重新启动时将重置为 Template 默认值。",
-					"this_value_cannot_be_modified_after_the_workspac_3a2f85ea": "创建 Workspace 后，无法修改该值。",
+					"this_parameter_is_ephemeral_and_will_reset_to_th_fbe3a286": "该参数是临时参数，在工作区重新启动时将重置为模板默认值。",
+					"this_value_cannot_be_modified_after_the_workspac_3a2f85ea": "创建工作区后，无法修改该值。",
 					"url_autofill_f5de17ed": "URL 自动填充",
 					"value_must_only_ever_decrease_last_value_was_val_0037f4cf": "该值只能减少（上一个值为 {{value0}}）",
 					"value_must_only_ever_increase_last_value_was_val_d2df2265": "该值只能增加（上一个值为 {{value0}}）"
@@ -6296,9 +6369,9 @@
 					"continue_31fbef16": "继续",
 					"ephemeral_parameters_detected_b2f94cbb": "检测到短暂参数",
 					"ephemeral_parameters_that_will_be_reset_to_their_b25fa9a2": "将重置为其默认值的临时参数",
-					"go_to_workspace_parameters_1986a430": "转到 Workspace 参数",
-					"this_workspace_template_has_2dc1735e": "此 Workspace Template 有",
-					"would_you_like_to_go_to_the_workspace_parameters_eafe61e8": "您想在继续之前转到 Workspace 参数页面查看并更新这些参数吗？"
+					"go_to_workspace_parameters_1986a430": "转到工作区参数",
+					"this_workspace_template_has_2dc1735e": "此工作区模板有",
+					"would_you_like_to_go_to_the_workspace_parameters_eafe61e8": "您想在继续之前转到工作区参数页面查看并更新这些参数吗？"
 				}
 			},
 			"ErrorDialog": {
@@ -6307,11 +6380,11 @@
 					"deleting_8901f3f8": "删除",
 					"detail_fb5f27d5": "详情",
 					"error_4a5f25a6": "错误 ",
-					"failed_to_build_workspace_18777c6b": "无法构建 Workspace。",
+					"failed_to_build_workspace_18777c6b": "无法构建工作区。",
 					"message_2f77668a": "留言",
-					"review_workspace_settings_fe1e12fe": "查看 Workspace 设置",
+					"review_workspace_settings_fe1e12fe": "查看工作区设置",
 					"validations_9bab08a2": "验证",
-					"workspace_4be0369b": " Workspace"
+					"workspace_4be0369b": " 工作区"
 				}
 			},
 			"health": {
@@ -6321,29 +6394,29 @@
 				"a_startup_script_has_exceeded_the_expected_time__68b6212b": "启动脚本已超过预期运行时间。请查看 Agent 日志了解详情。",
 				"agent_is_taking_longer_than_expected_to_connect_4bf35e2d": "Agent 连接时间比预期要长",
 				"check_the_agent_logs_for_details_516741c0": "请查看 Agent 日志了解详情。",
-				"check_the_log_output_for_errors_if_agents_do_not_df36abf7": "请检查日志输出中的错误。如果 Agent 未重新连接，请尝试重启 Workspace。",
-				"continue_to_wait_and_check_the_log_output_for_er_6a0a605b": "请继续等待并检查日志输出中的错误。如果 Agent 未连接，请尝试重启 Workspace。",
+				"check_the_log_output_for_errors_if_agents_do_not_df36abf7": "请检查日志输出中的错误。如果 Agent 未重新连接，请尝试重启工作区。",
+				"continue_to_wait_and_check_the_log_output_for_er_6a0a605b": "请继续等待并检查日志输出中的错误。如果 Agent 未连接，请尝试重启工作区。",
 				"shutdown_script_failed_7ab20100": "关闭脚本失败",
 				"shutdown_script_is_taking_longer_than_expected_244d247e": "关闭脚本花费的时间比预期的要长",
 				"startup_script_failed_e21378a6": "启动脚本失败",
 				"startup_script_is_taking_longer_than_expected_60a26e90": "启动脚本花费的时间比预期的要长",
-				"the_workspace_agent_has_not_connected_yet_wait_f_dd2878f5": "Workspace Agent 尚未连接。请等待其连接；如果一直未连接，请查看日志。",
-				"the_workspace_is_not_available_while_agents_shut_fe596802": "Agent 关闭期间，Workspace 不可用。",
+				"the_workspace_agent_has_not_connected_yet_wait_f_dd2878f5": "工作区 Agent 尚未连接。请等待其连接；如果一直未连接，请查看日志。",
+				"the_workspace_is_not_available_while_agents_shut_fe596802": "Agent 关闭期间，工作区不可用。",
 				"value0_exited_with_value1_check_the_agent_logs_f_e2e3ea20": "“{{value0}}”已退出，退出码为 {{value1}}。请查看 Agent 日志了解详情。",
 				"value0_failed_eca3057d": "“{{value0}}”失败",
 				"value0_has_exceeded_the_expected_time_check_the__eb095b63": "“{{value0}}”已超过预期运行时间。请查看 Agent 日志了解详情。",
 				"value0_has_exited_with_an_error_check_the_agent__10648efc": "“{{value0}}”因错误退出。请查看 Agent 日志了解详情。",
 				"value0_is_taking_longer_than_expected_d3723604": "“{{value0}}”花费的时间比预期的要长",
 				"value0_left_pipes_open_4b31b1c2": "“{{value0}}”左管道打开",
-				"workspace_agent_has_disconnected_6e158a18": "Workspace Agent 已断开连接",
-				"workspace_agent_is_connecting_fd9c7084": "Workspace Agent 正在连接",
-				"workspace_agent_is_shutting_down_c0beef22": "Workspace Agent 正在关闭"
+				"workspace_agent_has_disconnected_6e158a18": "工作区 Agent 已断开连接",
+				"workspace_agent_is_connecting_fd9c7084": "工作区 Agent 正在连接",
+				"workspace_agent_is_shutting_down_c0beef22": "工作区 Agent 正在关闭"
 			},
 			"WorkspaceBuildCancelDialog": {
 				"WorkspaceBuildCancelDialog": {
-					"are_you_sure_you_want_to_cancel_the_build_for_wo_cb488208": "您确定要取消 Workspace“{{value0}}”的构建吗？这将是 {{value1}}。",
+					"are_you_sure_you_want_to_cancel_the_build_for_wo_cb488208": "您确定要取消工作区“{{value0}}”的构建吗？这将是 {{value1}}。",
 					"cancel_19766ed6": "取消",
-					"cancel_workspace_build_dd8ead6c": "取消 Workspace 构建",
+					"cancel_workspace_build_dd8ead6c": "取消工作区构建",
 					"confirm_eebdd24a": "确认"
 				}
 			},
@@ -6359,11 +6432,11 @@
 			},
 			"WorkspaceDormantBadge": {
 				"WorkspaceDormantBadge": {
-					"and_has_been_marked_dormant_it_is_not_scheduled__ac8f6739": " 并已标记为休眠状态。它没有计划自动删除，但如果在此 Template 上启用自动删除，它将成为候选。",
+					"and_has_been_marked_dormant_it_is_not_scheduled__ac8f6739": " 并已标记为休眠状态。它没有计划自动删除，但如果在此模板上启用自动删除，它将成为候选。",
 					"and_has_been_marked_dormant_it_is_scheduled_to_b_6364b391": " 并已标记为休眠状态。预计删除时间为",
 					"deletion_pending_a0542172": "待删除",
 					"dormant_027d0e4c": "休眠状态",
-					"this_workspace_has_not_been_used_for_ac55990c": "该 Workspace 尚未用于"
+					"this_workspace_has_not_been_used_for_ac55990c": "该工作区尚未用于"
 				}
 			},
 			"WorkspaceMoreActions": {
@@ -6372,54 +6445,54 @@
 					"cancel_19766ed6": "取消",
 					"change_c0bf75bd": "改变",
 					"change_version_b8b6c8ad": "更改版本",
-					"no_template_versions_found_16001385": "未找到 Template 版本",
+					"no_template_versions_found_16001385": "未找到模板版本",
 					"published_by_277cd83f": "发布者： ",
 					"search_versions_978ac74d": "搜索版本...",
-					"template_version_1c5f9189": "Template 版本",
-					"template_version_name_f9d2028f": "Template 版本名称",
-					"you_are_about_to_change_the_version_of_this_work_90f15bcb": "您即将更改此 Workspace 的版本。"
+					"template_version_1c5f9189": "模板版本",
+					"template_version_name_f9d2028f": "模板版本名称",
+					"you_are_about_to_change_the_version_of_this_work_90f15bcb": "您即将更改此工作区的版本。"
 				},
 				"DownloadLogsDialog": {
 					"download_d6eafe82": "下载",
 					"download_logs_9af63d68": "下载日志",
-					"downloading_logs_will_create_a_zip_file_containi_e86f727f": "下载日志将创建一个 zip 文件，其中包含此 Workspace 中所有作业的所有日志。这可能需要一段时间。",
-					"error_downloading_workspace_value0_logs_d1ffe842": "下载 Workspace“{{value0}}”日志时出错。",
+					"downloading_logs_will_create_a_zip_file_containi_e86f727f": "下载日志将创建一个 zip 文件，其中包含此工作区中所有作业的所有日志。这可能需要一段时间。",
+					"error_downloading_workspace_value0_logs_d1ffe842": "下载工作区“{{value0}}”日志时出错。",
 					"not_available_67a926f7": "不可用",
-					"your_workspace_is_unhealthy_some_logs_may_be_una_65e6701c": "您的 Workspace 不健康。某些日志可能无法下载。"
+					"your_workspace_is_unhealthy_some_logs_may_be_una_65e6701c": "您的工作区不健康。某些日志可能无法下载。"
 				},
 				"WorkspaceDeleteDialog": {
-					"as_a_template_admin_you_may_skip_resource_cleanu_f8e7db5c": "作为 Template 管理员，您可以跳过资源清理来删除失败的 Workspace。卷和虚拟机等资源不会被破坏。",
+					"as_a_template_admin_you_may_skip_resource_cleanu_f8e7db5c": "作为模板管理员，您可以跳过资源清理来删除失败的工作区。卷和虚拟机等资源不会被破坏。",
 					"below_to_confirm_6df37f29": "”下面确认：",
 					"created_406effb1": "创建",
-					"delete_workspace_9efc82d7": "删除 Workspace",
-					"deleting_this_workspace_is_irreversible_9798773c": "删除此 Workspace 是不可逆的！",
-					"does_not_match_the_name_of_this_workspace_0c2c746d": " 与此 Workspace 的名称不匹配",
+					"delete_workspace_9efc82d7": "删除工作区",
+					"deleting_this_workspace_is_irreversible_9798773c": "删除此工作区是不可逆的！",
+					"does_not_match_the_name_of_this_workspace_0c2c746d": " 与此工作区的名称不匹配",
 					"learn_more_1445799c": "了解更多",
 					"orphan_resources_9944a309": "孤儿资源",
 					"type_800cb1d7": "输入“",
-					"workspace_21a3230e": "Workspace",
-					"workspace_name_9619649d": "Workspace 名称"
+					"workspace_21a3230e": "工作区",
+					"workspace_name_9619649d": "工作区名称"
 				},
 				"WorkspaceMoreActions": {
 					"change_version_1ed5322e": "更改版本...",
 					"delete_9ce78fe3": "删除...",
 					"download_logs_6213204d": "下载日志...",
 					"duplicate_5d202208": "重复…",
-					"failed_to_delete_workspace_value0_7c221751": "删除 Workspace“{{value0}}”失败。",
+					"failed_to_delete_workspace_value0_7c221751": "删除工作区“{{value0}}”失败。",
 					"settings_74a883a0": "设置",
 					"stop_6b4c3354": "停止…",
-					"workspace_actions_66f56cc7": "Workspace 操作"
+					"workspace_actions_66f56cc7": "工作区操作"
 				}
 			},
 			"WorkspaceOutdatedTooltip": {
 				"WorkspaceOutdatedTooltip": {
-					"error_updating_workspace_value0_5d8f4fb2": "更新 Workspace“{{value0}}”时出错。",
+					"error_updating_workspace_value0_5d8f4fb2": "更新工作区“{{value0}}”时出错。",
 					"message_2f77668a": "留言",
 					"new_version_7246e01b": "新版本",
 					"no_message_f4e72a06": "没有消息",
 					"outdated_c759f42e": "过时的",
 					"outdated_info_0740ff9f": "过时的信息",
-					"this_workspace_version_is_outdated_and_a_newer_v_e48d03ce": "此 Workspace 版本已过时，有更新的版本可用。",
+					"this_workspace_version_is_outdated_and_a_newer_v_e48d03ce": "此工作区版本已过时，有更新的版本可用。",
 					"update_c1c1009d": "更新"
 				}
 			},
@@ -6429,11 +6502,11 @@
 					"search_for_user_or_group_0aa07b31": "搜索用户或组"
 				},
 				"useWorkspaceSharing": {
-					"adding_value0_to_workspace_73dce64a": "正在将 {{value0}} 添加到 Workspace...",
+					"adding_value0_to_workspace_73dce64a": "正在将 {{value0}} 添加到工作区...",
 					"group_role_value0_updated_successfully_2e3b870a": "组角色“{{value0}}”已成功更新。",
-					"group_value0_added_to_workspace_successfully_70662b2c": "已成功将组“{{value0}}”添加到 Workspace。",
+					"group_value0_added_to_workspace_successfully_70662b2c": "已成功将组“{{value0}}”添加到工作区。",
 					"group_value0_removed_successfully_2b8bc601": "组“{{value0}}”已成功删除。",
-					"value0_added_to_workspace_successfully_59667c2d": "已成功将“{{value0}}”添加到 Workspace。",
+					"value0_added_to_workspace_successfully_59667c2d": "已成功将“{{value0}}”添加到工作区。",
 					"value0_removed_successfully_fa2f26d1": "“{{value0}}”已成功删除。",
 					"value0_role_updated_successfully_b176c6b1": "“{{value0}}”角色更新成功。"
 				},
@@ -6441,23 +6514,23 @@
 					"add_a_member_or_group_using_the_controls_above_694a1dc1": "使用上面的控件添加成员或组。",
 					"add_member_17108415": "添加成员",
 					"admin_c1c224b0": "管理员",
-					"can_manage_workspace_metadata_permissions_and_se_4adf17c9": "可以管理 Workspace 元数据、权限和设置。",
-					"can_read_access_start_and_stop_this_workspace_7c8039dc": "可以读取、访问、启动和停止此 Workspace。",
+					"can_manage_workspace_metadata_permissions_and_se_4adf17c9": "可以管理工作区元数据、权限和设置。",
+					"can_read_access_start_and_stop_this_workspace_7c8039dc": "可以读取、访问、启动和停止此工作区。",
 					"member_7c968fb7": "成员",
 					"no_shared_members_or_groups_yet_95df21c4": "还没有共享成员或群组",
 					"open_menu_b40b3713": "打开菜单",
 					"remove_c3812fc4": "移除",
 					"role_14736a2e": "角色",
-					"this_workspace_cannot_be_shared_bad4b075": "此 Workspace 无法共享",
+					"this_workspace_cannot_be_shared_bad4b075": "此工作区无法共享",
 					"use_c36d819e": "使用",
-					"workspace_restart_required_for_the_removal_to_ta_549abb7b": "Workspace 需要重新启动才能使删除生效。",
-					"workspace_sharing_has_been_disabled_for_this_org_a1870104": "Workspace 共享已为此组织禁用。"
+					"workspace_restart_required_for_the_removal_to_ta_549abb7b": "工作区需要重新启动才能使删除生效。",
+					"workspace_sharing_has_been_disabled_for_this_org_a1870104": "工作区共享已为此组织禁用。"
 				}
 			},
 			"WorkspaceStatusIndicator": {
 				"WorkspaceStatusIndicator": {
-					"one_or_more_workspace_agents_need_attention_expa_95b5589b": "需要关注一个或多个 Workspace Agents。展开 Agent 的日志以获取详细信息。",
-					"workspace_status_7e474491": "Workspace 状态："
+					"one_or_more_workspace_agents_need_attention_expa_95b5589b": "需要关注一个或多个工作区 Agents。展开 Agent 的日志以获取详细信息。",
+					"workspace_status_7e474491": "工作区状态："
 				}
 			},
 			"WorkspaceTiming": {
@@ -6470,7 +6543,7 @@
 					"stage_545870f5": " 舞台",
 					"state_refresh_a559b47c": "状态刷新",
 					"total_stage_duration_6f585227": "总阶段持续时间",
-					"view_template_ebc3e89c": "查看 Template"
+					"view_template_ebc3e89c": "查看模板"
 				},
 				"ScriptsChart": {
 					"code_aacf0b42": "代码 ",
@@ -6504,16 +6577,16 @@
 			"WorkspaceUpdateDialogs": {
 				"cancel_19766ed6": "取消",
 				"delete_non_persistent_data_4a841ebd": "删除非持久数据",
-				"go_to_workspace_parameters_1986a430": "转到 Workspace 参数",
+				"go_to_workspace_parameters_1986a430": "转到工作区参数",
 				"parameter_956de17a": " 参数",
 				"s_043a7187": "s",
 				"that_must_be_configured_to_complete_the_update_55204867": "必须进行配置才能完成更新。",
-				"this_workspace_has_72a46463": "此 Workspace 有",
+				"this_workspace_has_72a46463": "此工作区有",
 				"update_c1c1009d": "更新",
-				"update_workspace_8aac5ce8": "更新 Workspace 吗？",
-				"update_workspace_parameters_baee9b3e": "更新 Workspace 参数",
-				"updating_your_workspace_will_start_the_workspace_fb5564bd": "更新您的 Workspace 将在最新的 Template 版本上启动 Workspace。这个可以",
-				"would_you_like_to_go_to_the_workspace_parameters_eafe61e8": "您想在继续之前转到 Workspace 参数页面查看并更新这些参数吗？"
+				"update_workspace_8aac5ce8": "更新工作区吗？",
+				"update_workspace_parameters_baee9b3e": "更新工作区参数",
+				"updating_your_workspace_will_start_the_workspace_fb5564bd": "更新您的工作区将在最新的模板版本上启动工作区。这个可以",
+				"would_you_like_to_go_to_the_workspace_parameters_eafe61e8": "您想在继续之前转到工作区参数页面查看并更新这些参数吗？"
 			}
 		},
 		"WorkspaceSettingsPage": {
@@ -6530,41 +6603,41 @@
 					"learn_more_about_parameters_aeea0d60": "了解更多参数信息",
 					"parameters_e68b36b1": "参数",
 					"restart_6b983a81": "重新启动",
-					"restart_your_workspace_914f3b52": "重启你的 Workspace？",
-					"restarting_your_workspace_will_stop_all_running__66ce2826": "重新启动 Workspace 将停止所有正在运行的进程，并且",
-					"starting_workspace_7212fa79": "开始 Workspace",
-					"stopping_workspace_2001edfd": "停止 Workspace",
-					"this_workspace_has_no_parameters_31548265": "此 Workspace 无参数",
+					"restart_your_workspace_914f3b52": "重启你的工作区？",
+					"restarting_your_workspace_will_stop_all_running__66ce2826": "重新启动工作区将停止所有正在运行的进程，并且",
+					"starting_workspace_7212fa79": "开始工作区",
+					"stopping_workspace_2001edfd": "停止工作区",
+					"this_workspace_has_no_parameters_31548265": "此工作区无参数",
 					"update_and_restart_853c6a3c": "更新并重启",
 					"update_and_start_2503b010": "更新并启动",
-					"update_the_build_parameters_for_this_workspace_1eb58734": "更新此 Workspace 的构建参数。",
+					"update_the_build_parameters_for_this_workspace_1eb58734": "更新此工作区的构建参数。",
 					"view_docs_61479fda": "查看文档"
 				},
 				"WorkspaceParametersPageView": {
 					"cancel_19766ed6": "取消",
 					"changes_to_e6694ea7": "更改为 ",
-					"consider_supplying_defaults_for_new_parameters_o_80b9952c": "考虑为新参数提供默认值或根据先前的 Workspace 状态验证条件逻辑。",
+					"consider_supplying_defaults_for_new_parameters_o_80b9952c": "考虑为新参数提供默认值或根据先前的工作区状态验证条件逻辑。",
 					"for_existing_parameters_db963f73": " 对于现有参数",
 					"logic_changes_that_conflict_with_previously_sele_4f020521": "与先前选择的值冲突的逻辑更改",
 					"new_277e39a2": "新 ",
 					"parameters_e68b36b1": "参数",
-					"parameters_that_cannot_be_provided_after_workspa_f4f75427": " 创建 Workspace 后不能提供的参数",
+					"parameters_that_cannot_be_provided_after_workspa_f4f75427": " 创建工作区后不能提供的参数",
 					"please_contact_the_5a1f1f34": "请联系 ",
 					"required_d0a36305": "必填",
-					"template_administrator_bdc00e1f": "Template 管理员",
-					"the_new_template_version_includes_parameter_chan_8c22138c": "新的 Template 版本包括与此 Workspace 的现有参数值不兼容的参数更改。这可能是由以下原因引起的：",
-					"the_template_for_this_workspace_requires_automat_c80f1153": "此 Workspace 的 Template 需要自动更新。更新 Workspace 以编辑参数。",
-					"these_are_the_settings_used_by_your_template_imm_7a61d218": "这些是 Template 使用的设置。 Workspace 一旦创建，就无法修改不可变参数。",
-					"to_review_the_changes_and_ensure_compatibility_f_a78ca067": " 检查更改并确保现有 Workspaces 的兼容性。",
+					"template_administrator_bdc00e1f": "模板管理员",
+					"the_new_template_version_includes_parameter_chan_8c22138c": "新的模板版本包括与此工作区的现有参数值不兼容的参数更改。这可能是由以下原因引起的：",
+					"the_template_for_this_workspace_requires_automat_c80f1153": "此工作区的模板需要自动更新。更新工作区以编辑参数。",
+					"these_are_the_settings_used_by_your_template_imm_7a61d218": "这些是模板使用的设置。 工作区一旦创建，就无法修改不可变参数。",
+					"to_review_the_changes_and_ensure_compatibility_f_a78ca067": " 检查更改并确保现有工作区的兼容性。",
 					"valid_options_or_validations_d9ce5f5a": "有效的选项或验证",
 					"version_id_727fd609": "版本号",
 					"view_docs_61479fda": "查看文档",
-					"workspace_update_blocked_2db85b3a": "Workspace 更新被阻止"
+					"workspace_update_blocked_2db85b3a": "工作区更新被阻止"
 				}
 			},
 			"WorkspaceSchedulePage": {
 				"WorkspaceScheduleForm": {
-					"after_last_activity_in_the_workspace_was_detecte_c6b73c06": " 检测到 Workspace 中的最后一个活动后。",
+					"after_last_activity_in_the_workspace_was_detecte_c6b73c06": " 检测到工作区中的最后一个活动后。",
 					"autostart_5a6ab379": "自动启动",
 					"autostop_f7816a97": "自动停止",
 					"cancel_19766ed6": "取消",
@@ -6578,13 +6651,13 @@
 					"please_enter_a_limit_that_is_less_than_or_equal__6f7e6ac3": "请输入小于或等于 30 天（720 小时）的限制。",
 					"sat_fdeb71b5": "星期六",
 					"save_1509f561": "保存",
-					"select_the_time_and_days_of_week_on_which_you_wa_1c2129b9": "选择您希望 Workspace 自动启动的时间和星期几。",
-					"set_how_many_hours_should_elapse_after_the_works_0917b4b4": "设置 Workspace 启动后经过多少小时后 Workspace 自动关闭。这将延长至",
+					"select_the_time_and_days_of_week_on_which_you_wa_1c2129b9": "选择您希望工作区自动启动的时间和星期几。",
+					"set_how_many_hours_should_elapse_after_the_works_0917b4b4": "设置工作区启动后经过多少小时后工作区自动关闭。这将延长至",
 					"start_time_babe9dda": "开始时间",
 					"start_time_is_required_when_autostart_is_enabled_b49388bf": "启用自动启动时，必须填写启动时间。",
 					"sun_db18f17f": "太阳",
-					"the_template_for_this_workspace_does_not_allow_m_8e0a5c14": "此 Workspace 的 Template 不允许修改自动停止。",
-					"the_template_for_this_workspace_does_not_allow_m_df83b5c7": "此 Workspace 的 Template 不允许修改自动启动。",
+					"the_template_for_this_workspace_does_not_allow_m_8e0a5c14": "此工作区的模板不允许修改自动停止。",
+					"the_template_for_this_workspace_does_not_allow_m_df83b5c7": "此工作区的模板不允许修改自动启动。",
 					"thu_7da11212": "星期四",
 					"time_must_be_in_hh_mm_format_b252adb4": "时间必须采用 HH:mm 格式。",
 					"time_until_shutdown_hours_0f1e4fb1": "直至关闭时间（小时）",
@@ -6595,74 +6668,74 @@
 				},
 				"WorkspaceSchedulePage": {
 					"apply_later_ec4934f4": "稍后申请",
-					"configure_when_this_workspace_starts_and_stops_a_0c29a87e": "配置此 Workspace 何时自动启动和停止。",
+					"configure_when_this_workspace_starts_and_stops_a_0c29a87e": "配置此工作区何时自动启动和停止。",
 					"documentation_page_c064490e": "文档页面。",
-					"failed_to_update_schedule_for_workspace_value0_f9a57470": "无法更新 Workspace“{{value0}}”的计划。",
-					"prebuilt_workspaces_ignore_workspace_level_sched_1859aaa0": "预构建的 Workspaces 会忽略 Workspace 级别的调度，直到它们被声明为止。对于预建的 Workspace 具体调度请参阅",
-					"prebuilt_workspaces_scheduling_ade4d9fd": "预建 Workspaces 调度",
+					"failed_to_update_schedule_for_workspace_value0_f9a57470": "无法更新工作区“{{value0}}”的计划。",
+					"prebuilt_workspaces_ignore_workspace_level_sched_1859aaa0": "预构建的工作区会忽略工作区级别的调度，直到它们被声明为止。对于预建的工作区具体调度请参阅",
+					"prebuilt_workspaces_scheduling_ade4d9fd": "预建工作区调度",
 					"restart_6b983a81": "重新启动",
-					"restart_workspace_55e09b3f": "重启 Workspace？",
+					"restart_workspace_55e09b3f": "重启工作区？",
 					"schedule_f4830a1d": "时间表",
-					"schedule_for_workspace_value0_updated_successful_197faf57": "Workspace“{{value0}}”的时间表已成功更新。",
-					"would_you_like_to_restart_your_workspace_now_to__6940dbf5": "您想立即重新启动 Workspace 以应用新的自动停止设置，还是让它在下次 Workspace 启动后应用？",
-					"you_don_t_have_permissions_to_update_the_schedul_75e126d2": "您无权更新此 Workspace 的计划。"
+					"schedule_for_workspace_value0_updated_successful_197faf57": "工作区“{{value0}}”的时间表已成功更新。",
+					"would_you_like_to_restart_your_workspace_now_to__6940dbf5": "您想立即重新启动工作区以应用新的自动停止设置，还是让它在下次工作区启动后应用？",
+					"you_don_t_have_permissions_to_update_the_schedul_75e126d2": "您无权更新此工作区的计划。"
 				}
 			},
 			"WorkspaceSettingsForm": {
 				"automatic_updates_e8287a1a": "自动更新",
 				"cancel_19766ed6": "取消",
-				"configure_your_workspace_to_automatically_update_271dbfdd": "将您的 Workspace 配置为在启动时自动更新。",
-				"depending_on_the_template_renaming_your_workspac_bf87b1f2": "根据 Template，重命名 Workspace 可能具有破坏性",
+				"configure_your_workspace_to_automatically_update_271dbfdd": "将您的工作区配置为在启动时自动更新。",
+				"depending_on_the_template_renaming_your_workspac_bf87b1f2": "根据模板，重命名工作区可能具有破坏性",
 				"name_dcd1d522": "名称",
 				"save_1509f561": "保存",
-				"the_template_for_this_workspace_requires_automat_39483add": "此 Workspace 的 Template 需要自动更新。",
+				"the_template_for_this_workspace_requires_automat_39483add": "此工作区的模板需要自动更新。",
 				"update_policy_829fd2b1": "更新政策",
-				"update_the_name_of_your_workspace_9e8775b9": "更新您的 Workspace 的名称。",
-				"workspace_name_6fa5a5b1": "Workspace 姓名"
+				"update_the_name_of_your_workspace_9e8775b9": "更新您的工作区的名称。",
+				"workspace_name_6fa5a5b1": "工作区姓名"
 			},
 			"WorkspaceSettingsLayout": {
-				"workspace_settings_8e258324": "Workspace 设置"
+				"workspace_settings_8e258324": "工作区设置"
 			},
 			"WorkspaceSettingsPage": {
 				"settings_74a883a0": "设置",
-				"workspace_value0_updated_successfully_e1979094": "Workspace“{{value0}}”更新成功。"
+				"workspace_value0_updated_successfully_e1979094": "工作区“{{value0}}”更新成功。"
 			},
 			"WorkspaceSettingsPageView": {
 				"general_c910d474": "一般",
-				"update_the_name_and_automatic_update_behavior_fo_ccf9f3ef": "更新此 Workspace 的名称和自动更新行为。"
+				"update_the_name_and_automatic_update_behavior_fo_ccf9f3ef": "更新此工作区的名称和自动更新行为。"
 			},
 			"WorkspaceSharingPage": {
 				"WorkspaceSharingPage": {
 					"sharing_bbedc70e": "分享"
 				},
 				"WorkspaceSharingPageView": {
-					"share_this_workspace_with_other_users_and_groups_a5da66dd": "与其他用户和组共享此 Workspace。",
+					"share_this_workspace_with_other_users_and_groups_a5da66dd": "与其他用户和组共享此工作区。",
 					"sharing_bbedc70e": "分享"
 				}
 			}
 		},
 		"WorkspacesPage": {
 			"batchActions": {
-				"failed_to_delete_some_workspaces_8cb8a270": "删除某些 Workspaces 失败。",
-				"failed_to_favorite_some_workspaces_ee9e28d9": "无法收藏某些 Workspaces。",
-				"failed_to_start_workspaces_4518344a": "无法启动 Workspaces。",
-				"failed_to_stop_workspaces_e9878454": "无法停止 Workspaces。",
-				"failed_to_unfavorite_some_workspaces_fca4023a": "无法取消收藏某些 Workspaces。",
-				"failed_to_update_some_workspaces_4f7e5b1b": "无法更新某些 Workspaces。"
+				"failed_to_delete_some_workspaces_8cb8a270": "删除某些工作区失败。",
+				"failed_to_favorite_some_workspaces_ee9e28d9": "无法收藏某些工作区。",
+				"failed_to_start_workspaces_4518344a": "无法启动工作区。",
+				"failed_to_stop_workspaces_e9878454": "无法停止工作区。",
+				"failed_to_unfavorite_some_workspaces_fca4023a": "无法取消收藏某些工作区。",
+				"failed_to_update_some_workspaces_4f7e5b1b": "无法更新某些工作区。"
 			},
 			"BatchDeleteConfirmation": {
 				"and_e3ee915a": " 和 ",
-				"any_data_stored_in_the_workspace_will_be_permane_cd59d3eb": "Workspace 中存储的任何数据都将被永久删除。",
+				"any_data_stored_in_the_workspace_will_be_permane_cd59d3eb": "工作区中存储的任何数据都将被永久删除。",
 				"confirm_cb98700a": "确认 ",
 				"delete_85941fb9": "删除 ",
 				"delete_value0_50256b39": "删除 {{value0}}",
 				"deleting_21ed2f9e": "正在删除",
-				"deleting_workspaces_is_irreversible_3688372c": "删除 Workspaces 是不可逆的！",
+				"deleting_workspaces_is_irreversible_3688372c": "删除工作区是不可逆的！",
 				"last_used_d18c1db4": "上次使用 ",
-				"review_selected_workspaces_0beb56b3": "查看选定的 Workspaces...",
-				"terraform_resources_belonging_to_deleted_workspa_39726340": "属于删除的 Workspaces 的 Terraform 资源将被销毁。",
-				"these_workspaces_92f72fe8": "这些 Workspaces",
-				"this_workspace_3afd67e2": "这个 Workspace",
+				"review_selected_workspaces_0beb56b3": "查看选定的工作区...",
+				"terraform_resources_belonging_to_deleted_workspa_39726340": "属于删除的工作区的 Terraform 资源将被销毁。",
+				"these_workspaces_92f72fe8": "这些工作区",
+				"this_workspace_3afd67e2": "这个工作区",
 				"will_also_permanently_destroy_f2f6f3de": " 也将永久摧毁……"
 			},
 			"BatchStopConfirmation": {
@@ -6671,34 +6744,34 @@
 				"stop_value0_ef47536e": "停止 {{value0}}"
 			},
 			"BatchUpdateModalForm": {
-				"all_workspaces_up_to_date_9bba86eb": "所有 Workspaces 均为最新",
+				"all_workspaces_up_to_date_9bba86eb": "所有工作区均为最新",
 				"already_updated_5ac1639b": "已经更新了",
 				"any_unsaved_data_will_be_lost_5c78c491": "任何未保存的数据都将丢失。",
-				"anyone_connected_to_a_running_workspace_will_be__790103a4": "连接到正在运行的 Workspace 的任何人都将断开连接，直到更新完成。",
+				"anyone_connected_to_a_running_workspace_will_be__790103a4": "连接到正在运行的工作区的任何人都将断开连接，直到更新完成。",
 				"cancel_19766ed6": "取消",
 				"close_7d9eb7ac": "关闭",
-				"dormant_workspaces_2cd778ed": "休眠 Workspaces",
-				"dormant_workspaces_cannot_be_updated_without_fir_ba45b86c": "如果不首先激活 Workspace，则无法更新休眠的 Workspaces。在批量更新期间它们将始终被跳过。",
+				"dormant_workspaces_2cd778ed": "休眠工作区",
+				"dormant_workspaces_cannot_be_updated_without_fir_ba45b86c": "如果不首先激活工作区，则无法更新休眠的工作区。在批量更新期间它们将始终被跳过。",
 				"getting_latest_status_f5335f35": "获取最新状态",
 				"i_acknowledge_these_risks_eae855c0": "我了解并接受这些风险。",
-				"no_workspaces_selected_7a1e86f7": "未选择 Workspaces",
+				"no_workspaces_selected_7a1e86f7": "未选择工作区",
 				"none_of_the_401aa131": "没有一个",
 				"nothing_to_update_8ac25817": "无需更新。",
 				"please_acknowledge_risks_to_continue_40c2ebee": "请确认已了解这些风险后继续。",
 				"ready_to_update_f9375030": "准备更新",
 				"review_updates_accd9093": "查看更新",
 				"running_f4ccae29": "运行中",
-				"running_workspaces_detected_855f6736": "检测到正在运行 Workspaces",
-				"selected_workspaces_need_updates_7e27afc1": "选择的 Workspaces 需要更新。",
-				"the_following_workspaces_will_be_updated_d73adc8c": "以下 Workspaces 将更新：",
-				"these_workspaces_are_already_updated_and_will_be_9b73548b": "这些 Workspaces 已更新，将被跳过。",
-				"these_workspaces_will_be_updated_to_the_latest_t_c7815a32": "这些 Workspaces 将更新到最新的 Template 版本。",
+				"running_workspaces_detected_855f6736": "检测到正在运行工作区",
+				"selected_workspaces_need_updates_7e27afc1": "选择的工作区需要更新。",
+				"the_following_workspaces_will_be_updated_d73adc8c": "以下工作区将更新：",
+				"these_workspaces_are_already_updated_and_will_be_9b73548b": "这些工作区已更新，将被跳过。",
+				"these_workspaces_will_be_updated_to_the_latest_t_c7815a32": "这些工作区将更新到最新的模板版本。",
 				"to_version_806a5951": " 到版本",
-				"unable_to_complete_batch_update_because_of_works_3d1506d5": "由于 Workspace 错误，无法完成批量更新",
+				"unable_to_complete_batch_update_because_of_works_3d1506d5": "由于工作区错误，无法完成批量更新",
 				"update_c1c1009d": "更新",
-				"updating_a_workspace_will_start_it_on_its_latest_a69ea744": "更新 Workspace 将在其最新的 Template 版本上启动。这可以删除非持久数据。",
-				"waiting_for_workspaces_to_finish_processing_46f66994": "等待 Workspaces 处理完成",
-				"workspace_will_go_from_version_fcd81750": "Workspace 将从版本开始 "
+				"updating_a_workspace_will_start_it_on_its_latest_a69ea744": "更新工作区将在其最新的模板版本上启动。这可以删除非持久数据。",
+				"waiting_for_workspaces_to_finish_processing_46f66994": "等待工作区处理完成",
+				"workspace_will_go_from_version_fcd81750": "工作区将从版本开始 "
 			},
 			"filter": {
 				"categoryOptions": {
@@ -6709,53 +6782,55 @@
 				},
 				"WorkspacesFilter": {
 					"attributes_4b0ed88f": "属性",
-					"jump_to_workspace_4a2a404a": "跳转至 Workspace",
+					"jump_to_workspace_4a2a404a": "跳转至工作区",
 					"organization_d764d425": "组织",
 					"owner_4b1b8aa3": "所有者",
-					"search_and_filter_workspaces_d8922d05": "搜索并过滤 Workspaces...",
-					"status_920e413c": "状态"
+					"search_and_filter_workspaces_d8922d05": "搜索并过滤工作区...",
+					"status_920e413c": "状态",
+					"template_0575f29d": "模板"
 				}
 			},
 			"WorkspaceHelpPopover": {
-				"a_workspace_is_your_development_environment_in_t_b4e28a02": "Workspace 是您在云中的开发环境。它包括您开展项目所需的基础设施和工具。",
+				"a_workspace_is_your_development_environment_in_t_b4e28a02": "工作区是您在云中的开发环境。它包括您开展项目所需的基础设施和工具。",
 				"connect_with_ssh_97beca79": "连接 SSH",
-				"create_workspaces_ca9fcf97": "创建 Workspaces",
-				"what_is_a_workspace_140e3cae": "什么是 Workspace？"
+				"create_workspaces_ca9fcf97": "创建工作区",
+				"what_is_a_workspace_140e3cae": "什么是工作区？"
 			},
 			"WorkspacesButton": {
 				"create_one_now_f9fed17b": "立即创建一个。",
-				"no_templates_found_186e4883": "未找到 Templates",
-				"no_templates_yet_faeba14b": "还没有 Templates。",
-				"see_all_templates_b852c331": "查看全部 Templates",
-				"template_select_for_workspace_72d55597": "Workspace Template 选择器",
-				"type_select_a_workspace_template_b982e548": "输入或选择 Workspace Template",
+				"no_templates_found_186e4883": "未找到模板",
+				"no_templates_yet_faeba14b": "还没有模板。",
+				"see_all_templates_b852c331": "查看全部模板",
+				"template_select_for_workspace_72d55597": "工作区模板选择器",
+				"type_select_a_workspace_template_b982e548": "输入或选择工作区模板",
 				"unnamed_1c562bcd": "[未命名]"
 			},
 			"WorkspacesEmpty": {
-				"a_workspace_is_your_personal_customizable_develo_128fbf22": "Workspace 是您的个人可定制开发环境。",
-				"create_a_template_39b06be6": "创建 Template",
-				"create_a_workspace_954bd1fe": "创建 Workspace",
+				"a_workspace_is_your_personal_customizable_develo_128fbf22": "工作区是您的个人可定制开发环境。",
+				"create_a_template_39b06be6": "创建模板",
+				"create_a_workspace_954bd1fe": "创建工作区",
 				"no_results_matched_your_search_c229583b": "没有与您的搜索匹配的结果",
-				"no_workspaces_3e9f82e1": "无 Workspaces",
-				"see_all_templates_b852c331": "查看全部 Templates",
-				"value0_select_one_template_below_to_start_a336ffb3": "{{value0}} 选择下面的一个 Template 启动。",
-				"value0_there_are_no_templates_available_but_you__52f37992": "{{value0}} 没有可用的 Templates，但一旦管理员添加它们，您就会在此处看到它们。",
-				"value0_to_create_a_workspace_you_first_need_to_c_6d90c81d": "{{value0}} 要创建 Workspace，首先需要创建 Template。",
-				"you_don_t_have_permission_to_create_workspaces_c_51983e9c": "您无权创建 Workspaces。如果您需要 Workspace 访问权限，请联系您的管理员。"
+				"no_workspaces_3e9f82e1": "无工作区",
+				"see_all_templates_b852c331": "查看全部模板",
+				"value0_select_one_template_below_to_start_a336ffb3": "{{value0}} 选择下面的一个模板启动。",
+				"value0_there_are_no_templates_available_but_you__52f37992": "{{value0}} 没有可用的模板，但一旦管理员添加它们，您就会在此处看到它们。",
+				"value0_to_create_a_workspace_you_first_need_to_c_6d90c81d": "{{value0}} 要创建工作区，首先需要创建模板。",
+				"you_don_t_have_permission_to_create_workspaces_c_51983e9c": "您无权创建工作区。如果您需要工作区访问权限，请联系您的管理员。"
 			},
 			"WorkspaceSharingIndicator": {
 				"admin_c1c224b0": "管理员",
 				"change_permissions_9bc98ccd": "更改权限",
-				"workspace_permissions_32f5fedc": "Workspace 权限"
+				"workspace_permissions_32f5fedc": "工作区权限"
 			},
 			"WorkspacesPage": {
-				"failed_to_perform_action_6f51f6b1": "无法执行操作。"
+				"failed_to_perform_action_6f51f6b1": "无法执行操作。",
+				"workspaces_1377264b": "工作区"
 			},
 			"WorkspacesPageView": {
 				"back_to_the_first_page_5492a2c4": "返回第一页",
 				"bulk_actions_19f0dd9a": "批量操作",
 				"delete_c91ff404": " 删除...",
-				"new_workspace_df0caf1b": "新 Workspace",
+				"new_workspace_df0caf1b": "新工作区",
 				"of_88eb5a7e": " 的",
 				"page_not_found_a469ab4c": "找不到页面",
 				"selected_da550194": "已选择 ",
@@ -6763,12 +6838,14 @@
 				"stop_af6785b0": " 停止",
 				"the_page_you_are_trying_to_access_does_not_exist_79743f1b": "您尝试访问的页面不存在。",
 				"update_ca6b4901": "更新…",
-				"workspaces_1377264b": "Workspaces"
+				"workspace_21a3230e": "工作区",
+				"workspaces_1377264b": "工作区",
+				"workspaces_6e8d7998": "工作区"
 			},
 			"WorkspacesTable": {
 				"actions_ff8059dc": "操作",
 				"agent_11b39c93": "Agent",
-				"are_you_sure_you_want_to_stop_the_workspace_valu_2403eed2": "您确定要停止 Workspace“{{value0}}”吗？这将终止所有正在运行的进程并断开所有活动会话。",
+				"are_you_sure_you_want_to_stop_the_workspace_valu_2403eed2": "您确定要停止工作区“{{value0}}”吗？这将终止所有正在运行的进程并断开所有活动会话。",
 				"cancel_build_880dc4fb": "取消构建",
 				"name_dcd1d522": "名称",
 				"open_terminal_ae088e14": "打开终端",
@@ -6778,17 +6855,17 @@
 				"organization_5300e286": "组织：",
 				"owner_60d5bbcb": "所有者： ",
 				"retry_build_90b37eb6": "重试构建",
-				"select_all_workspaces_a9c70b1d": "选择全部 Workspaces",
-				"select_workspace_value0_02968ddc": "选择 Workspace {{value0}}",
-				"start_workspace_0e6b0b29": "启动 Workspace",
+				"select_all_workspaces_a9c70b1d": "选择全部工作区",
+				"select_workspace_value0_02968ddc": "选择工作区 {{value0}}",
+				"start_workspace_0e6b0b29": "启动工作区",
 				"status_920e413c": "状态",
 				"stop_cae7d57b": "停止",
-				"stop_workspace_d7dca2f6": "停止 Workspace",
-				"template_0575f29d": "Template",
-				"this_template_requires_automatic_updates_on_work_2b6b3f60": "此 Template 需要在 Workspace 启动时自动更新。如果您想保留 Template 版本，请联系您的管理员。",
-				"this_template_requires_automatic_updates_on_work_b8d892e8": "此 Template 需要在 Workspace 重新启动时自动更新。如果您想保留 Template 版本，请联系您的管理员。",
-				"update_and_restart_workspace_e9cf8d0e": "更新并重启 Workspace",
-				"update_and_start_workspace_5b42a2a3": "更新并启动 Workspace",
+				"stop_workspace_d7dca2f6": "停止工作区",
+				"template_0575f29d": "模板",
+				"this_template_requires_automatic_updates_on_work_2b6b3f60": "此模板需要在工作区启动时自动更新。如果您想保留模板版本，请联系您的管理员。",
+				"this_template_requires_automatic_updates_on_work_b8d892e8": "此模板需要在工作区重新启动时自动更新。如果您想保留模板版本，请联系您的管理员。",
+				"update_and_restart_workspace_e9cf8d0e": "更新并重启工作区",
+				"update_and_start_workspace_5b42a2a3": "更新并启动工作区",
 				"value0_has_an_invalid_url_846df5cb": "{{value0}} 的 URL 无效",
 				"view_agent_conversation_for_value0_9caa9f45": "查看 {{value0}} 的 Agent 对话"
 			}

@@ -173,7 +173,9 @@ const WorkspacesPage: FC = () => {
 
 	return (
 		<>
-			<title>{pageTitle("Workspaces")}</title>
+			<title>
+				{pageTitle(tI18n("WorkspacesPage.WorkspacesPage.workspaces_1377264b"))}
+			</title>
 			<WorkspacesPageView
 				canCreateTemplate={permissions.createTemplates}
 				canCreateWorkspace={permissions.createWorkspace}

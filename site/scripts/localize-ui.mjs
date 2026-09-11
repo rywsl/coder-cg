@@ -139,12 +139,13 @@ const protectedTerms = [
 	"JetBrains Mono",
 	"Source Code Pro",
 	"IBM Plex Mono",
+	"GitHub Copilot",
 	"GitHub",
+	"Vercel",
+	"Bedrock",
 	"Bedrock Mantle",
-	"Workspaces",
-	"Workspace",
-	"Templates",
-	"Template",
+	"Mantle",
+	"InvokeModel",
 	"Agents",
 	"Agent",
 	"Coder",
@@ -224,7 +225,7 @@ const exactTranslations = new Map([
 	["From", "从"],
 	["Google", "Google"],
 	["Google Cloud", "Google Cloud"],
-	["HELP", "救命"],
+	["HELP", "帮助"],
 	["ID", "ID"],
 	["IP:", "IP:"],
 	["Loading", "正在加载"],
@@ -237,7 +238,7 @@ const exactTranslations = new Map([
 	["OK", "确定"],
 	["Open", "打开"],
 	["OpenAI", "OpenAI"],
-	["OpenAI-compatible", "OpenAI-compatible"],
+	["OpenAI-compatible", "OpenAI 兼容"],
 	["OpenRouter", "OpenRouter"],
 	["Organization", "组织"],
 	["Organizations", "组织"],
@@ -256,7 +257,7 @@ const exactTranslations = new Map([
 	["Retry", "重试"],
 	["Running", "运行中"],
 	["Save", "保存"],
-	["SAVED", "已救援"],
+	["SAVED", "已保存"],
 	["Saving", "正在保存"],
 	["Search", "搜索"],
 	["Select", "选择"],
@@ -273,11 +274,34 @@ const exactTranslations = new Map([
 	["USD", "USD"],
 	["VELOCITY", "速度"],
 	["Vercel AI Gateway", "Vercel AI Gateway"],
+	["Vercel", "Vercel"],
+	["GitHub Copilot", "GitHub Copilot"],
+	["Mantle", "Mantle"],
+	["InvokeModel", "InvokeModel"],
+	["ms", "毫秒"],
 	["YAW", "偏航"],
 	["Yes", "是"],
 ]);
 const translationCorrections = new Map([
 	["you@company.com", "you@company.com"],
+	["~/api-key.txt", "~/api-key.txt"],
+	["{{value0}}: ---- unoccupied ----", "{{value0}}：---- 空闲 ----"],
+	["Access key secret", "Secret Access Key"],
+	["API key is required", "API 密钥为必填项"],
+	["External ID", "外部 ID"],
+	["Friendly name. Defaults to name if blank.", "显示名称。留空时默认使用名称。"],
+	["Name is required", "名称为必填项"],
+	[
+		"Name must be lowercase, hyphen-separated (e.g. 'my-anthropic').",
+		"名称必须使用小写字母并以连字符分隔（例如“my-anthropic”）。",
+	],
+	[
+		"Find available Bedrock model IDs in the",
+		"如需查看可用的 Bedrock 模型 ID，请参阅",
+	],
+	["Small-fast model", "小型快速模型"],
+	["Small-fast model is required", "必须填写小型快速模型"],
+	["Your updates haven't been saved. Leave anyway?", "更改尚未保存。仍要离开吗？"],
 	["Subagent report", "Subagent 报告"],
 	["CODERNAUTS", "Codernauts"],
 	["Onto the next base...", "前往下一个基地..."],
@@ -709,6 +733,10 @@ const translationCorrections = new Map([
 	["App", "应用"],
 	["Available provisioners:", "可用 Provisioner："],
 	["No provisioners", "无 Provisioner"],
+	[
+		"All available agent capacity is currently in use.",
+		"当前所有 Agent 容量均在使用中。",
+	],
 	[
 		"Are you sure you want to cancel the provisioner job \"{{value0}}\"? This operation will result in the associated workspaces not getting created.",
 		"您确定要取消 Provisioner 任务“{{value0}}”吗？此操作将导致相关 Workspaces 无法创建。",
@@ -1830,9 +1858,30 @@ function normalizeTranslations(en, zh) {
 
 function normalizeTranslation(source, translated) {
 	const correction = translationCorrections.get(source);
-	if (correction !== undefined) return correction;
 	if (isTechnicalIdentifier(source)) return source;
-	let normalized = translated;
+	let normalized = correction ?? translated;
+	if (/\bworkspaces?\b/i.test(source)) {
+		normalized = normalized
+			.replace(/\bworkspaces?\b/gi, "工作区")
+			.replaceAll("工作空间", "工作区");
+	}
+	if (/\btemplates?\b/i.test(source)) {
+		normalized = normalized.replace(/\btemplates?\b/gi, "模板");
+	}
+	if (/\bOpenAI-compatible\b/i.test(source)) {
+		normalized = normalized.replace(/\bOpenAI-compatible\b/gi, "OpenAI 兼容");
+	}
+	if (/\bVercel\b/i.test(source)) {
+		normalized = normalized.replaceAll("韦尔塞尔", "Vercel");
+	}
+	if (/\bCopilot\b/i.test(source)) {
+		normalized = normalized.replaceAll("副驾驶", "Copilot");
+	}
+	if (/\bBedrock\b/i.test(source)) {
+		normalized = normalized.replaceAll("基岩", "Bedrock");
+	}
+	const protectedValue = protect(normalized);
+	normalized = protectedValue.text;
 	if (/\btokens?\b/i.test(source)) {
 		normalized = normalized.replaceAll("令牌", "Token").replaceAll("标记", "Token");
 	}
@@ -1877,6 +1926,7 @@ function normalizeTranslation(source, translated) {
 		.replaceAll("帐户", "账户")
 		.replaceAll("路线", "路由")
 		.replaceAll("配置程序", "Provisioner")
+		.replaceAll("守护程序", "守护进程")
 		.replaceAll("预制件", "预构建")
 		.replaceAll("提供程序", "提供商")
 		.replaceAll("提供者", "提供商")
@@ -1885,13 +1935,16 @@ function normalizeTranslation(source, translated) {
 		.replaceAll("主动座位", "活跃席位")
 		.replaceAll("座位", "席位")
 		.replaceAll("VSCode 内部人员", "VSCode Insiders");
+	normalized = normalized
+		.replace(/([\p{Script=Han}])\s+(工作区|模板)/gu, "$1$2")
+		.replace(/(工作区|模板)\s+([\p{Script=Han}])/gu, "$1$2");
 	for (const term of [...protectedTerms, "SKILL.md"]) {
 		const escaped = escapeRegExp(term);
 		normalized = normalized
 			.replace(new RegExp(`([\\p{Script=Han}])(${escaped})`, "giu"), "$1 $2")
 			.replace(new RegExp(`(${escaped})([\\p{Script=Han}])`, "giu"), "$1 $2");
 	}
-	return normalized;
+	return restore(normalized, protectedValue.terms);
 }
 
 function isTechnicalIdentifier(value) {
@@ -2011,12 +2064,22 @@ function protect(value) {
 	let text = value;
 	const terms = [];
 	const patterns = [
-		...protectedTerms.map(
-			(term) => ({
+		{ pattern: /https?:\/\/[^\s)\]}>,]+/gi },
+		{ pattern: /--[a-z0-9-]+/gi },
+		{ pattern: /\b[A-Z][A-Z0-9_]{2,}\b/g },
+		{ pattern: /\b[a-z][a-z0-9]*_[a-z0-9_]+\b/g },
+		{ pattern: /\b[a-z0-9]+(?:-[a-z0-9]+)+\b/g },
+		{ pattern: /\/[a-z0-9_{}./~-]+/gi },
+		{
+			pattern:
+				/\b(?:ns|us|ms|KiB|MiB|GiB|TiB|KB|MB|GB|TB|kHz|MHz|GHz|Kbps|Mbps|Gbps)\b/g,
+		},
+		...[...protectedTerms]
+			.sort((left, right) => right.length - left.length)
+			.map((term) => ({
 				canonical: term,
 				pattern: new RegExp(`\\b${escapeRegExp(term)}\\b`, "gi"),
-			}),
-		),
+			})),
 		{ pattern: /\{\{[^}]+\}\}/g },
 	];
 	for (const { canonical, pattern } of patterns) {
@@ -2031,7 +2094,8 @@ function protect(value) {
 
 function restore(value, terms) {
 	let restored = value;
-	for (const [token, term] of terms) {
+	for (let index = terms.length - 1; index >= 0; index--) {
+		const [token, term] = terms[index];
 		restored = restored.replaceAll(token, term);
 	}
 	return restored;

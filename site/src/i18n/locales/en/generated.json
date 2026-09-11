@@ -371,9 +371,65 @@
 				},
 				"NetworkSettingsPageView": {
 					"configure_your_deployment_connectivity_9af71f82": "Configure your deployment connectivity.",
+					"loading_workspace_ssh_gateway_settings_9b949179": "Loading Workspace SSH Gateway settings",
 					"network_1744b964": "Network",
 					"port_forwarding_2f9a490c": "Port Forwarding",
 					"port_forwarding_lets_developers_securely_access__c62b9724": "Port forwarding lets developers securely access processes on their Coder workspace from a local machine."
+				},
+				"WorkspaceSSHGatewaySection": {
+					"api_key_already_stored_f034be6e": "An API key is already stored. Leave this field blank to keep it.",
+					"api_key_secret_notice_30247d93": "The API key is stored as a deployment secret and is never returned by the API.",
+					"authentication_attempts_per_ip_per_minute_6635bea7": "Authentication attempts per IP per minute",
+					"authentication_burst_5b71b236": "Authentication burst",
+					"bound_address_f204f25a": "Bound address",
+					"channels_per_connection_fdd340d4": "Channels per connection",
+					"clear_the_stored_api_key_when_saving_98ea6779": "Clear the stored API key when saving",
+					"codex_api_key_8f00562a": "Codex API key",
+					"codex_provider_49721de8": "Codex provider",
+					"configure_a_codex_api_key_before_starting_the_ga_5d83efad": "Configure a Codex API key before starting the gateway.",
+					"configure_an_https_access_url_before_starting_th_10d07e18": "Configure an HTTPS access URL before starting the gateway.",
+					"configure_the_local_listener_and_the_public_addr_f9abe926": "Configure the local listener and the public address users connect to.",
+					"configure_the_responses_compatible_sub2_endpoint_37e4c27f": "Configure the Responses-compatible Sub2 endpoint used by remote Codex app-server processes.",
+					"connection_639a40e8": "Connection",
+					"connections_per_user_e903dbdf": "Connections per user",
+					"enter_a_positive_integer_30d16661": "Enter a positive integer",
+					"enter_an_api_key_8f4f3375": "Enter an API key",
+					"error_54a0e8c1": "Error",
+					"gateway_could_not_start_ac7729ed": "Gateway could not start",
+					"gpt_5_3_codex_a3da4ff8": "gpt-5.3-codex",
+					"host_key_fingerprint_1e9d2ba6": "Host key fingerprint",
+					"leave_blank_to_keep_the_stored_key_f1c1936f": "Leave blank to keep the stored key",
+					"limit_connection_authentication_and_ssh_channel__ff47a005": "Limit connection, authentication, and SSH channel resource usage.",
+					"listen_address_edc8737a": "Listen address",
+					"manage_the_openssh_entry_point_used_by_chatgpt_d_74afc5cd": "Manage the OpenSSH entry point used by ChatGPT Desktop to access workspaces.",
+					"model_5e2c614c": "Model",
+					"not_generated_baae3f6e": "Not generated",
+					"not_listening_0cf2b8dd": "Not listening",
+					"pending_authentication_connections_c58ee74c": "Pending authentication connections",
+					"pending_connections_per_ip_c72654b9": "Pending connections per IP",
+					"public_host_802d5b67": "Public host",
+					"public_port_32a480f3": "Public port",
+					"retry_942087cc": "Retry",
+					"review_the_gateway_configuration_and_save_it_aga_405d04c8": "Review the gateway configuration and save it again.",
+					"running_f4ccae29": "Running",
+					"save_configuration_b2b158f2": "Save configuration",
+					"security_limits_9add98ae": "Security limits",
+					"ssh_example_com_8d2adc0e": "ssh.example.com",
+					"start_e4bb9f1e": "Start",
+					"starting_aeed4d26": "Starting",
+					"stop_cae7d57b": "Stop",
+					"stopped_1a4f630a": "Stopped",
+					"stopping_a71ee1d4": "Stopping",
+					"sub2_base_url_7da7f59a": "Sub2 Base URL",
+					"the_gateway_configuration_could_not_be_saved_8d46d799": "The gateway configuration could not be saved.",
+					"the_gateway_encountered_an_unknown_error_review__8906ec55": "The gateway encountered an unknown error. Review the configuration and retry.",
+					"the_listening_address_is_unavailable_stop_the_co_35cea57c": "The listening address is unavailable. Stop the conflicting service or choose another port, then retry.",
+					"the_ssh_host_key_is_missing_save_the_configurati_5b7eca4f": "The SSH host key is missing. Save the configuration again.",
+					"the_stored_gateway_configuration_is_invalid_6e6d199c": "The stored gateway configuration is invalid.",
+					"the_stored_ssh_host_key_is_invalid_f7c98720": "The stored SSH host key is invalid.",
+					"total_connections_b919c747": "Total connections",
+					"workspace_ssh_gateway_924863a4": "Workspace SSH Gateway",
+					"workspace_ssh_gateway_settings_020be30c": "Workspace SSH Gateway settings"
 				}
 			},
 			"NotificationsPage": {
@@ -535,6 +591,7 @@
 					"the_documentation_a0030756": "the documentation"
 				},
 				"UserEngagementChart": {
+					"a_user_is_considered_engaged_when_they_interact_360b37cf": "A user is considered engaged when they interact with a workspace, template, or agent.",
 					"a_user_is_considered_engaged_if_they_initiate_a__70d06ac4": "A user is considered \"engaged\" if they initiate a connection to their workspace via apps, web terminal, or SSH. The graph displays the daily count of unique users who engaged at least once, with additional insights available through the",
 					"activity_audit_11dfc62e": "Activity Audit",
 					"and_6201111b": "and",
@@ -1505,7 +1562,8 @@
 				"failed_to_reorder_pinned_agents_7eb930b5": "Failed to reorder pinned agents.",
 				"failed_to_unarchive_agent_2b394aed": "Failed to unarchive agent.",
 				"failed_to_unpin_agent_1314376d": "Failed to unpin agent.",
-				"this_will_archive_the_agent_and_permanently_dele_728e797b": "This will archive the agent and permanently delete the associated workspace and all its resources."
+				"this_will_archive_the_agent_and_permanently_dele_728e797b": "This will archive the agent and permanently delete the associated workspace and all its resources.",
+				"workspace_21a3230e": "workspace"
 			},
 			"components": {
 				"AdminChatDebugLoggingSettings": {
@@ -1687,6 +1745,7 @@
 						"value0_value1_ab500f8f": "{{value0}} to {{value1}}"
 					},
 					"QueuedForCapacityCallout": {
+						"all_available_agent_capacity_is_currently_in_use_de2b1fa5": "All available agent capacity is currently in use.",
 						"contact_your_coder_account_team_or_da9222ce": "Contact your Coder account team or",
 						"learn_more_1445799c": "Learn more",
 						"learn_more_d20312bc": "learn more",
@@ -3392,7 +3451,9 @@
 						"the_provider_type_you_are_trying_to_add_is_not_v_9715c781": "The provider type you are trying to add is not valid. Please try again."
 					},
 					"AddProviderPageView": {
-						"add_value0_value1_provider_b589ed14": "Add {{value0}} {{value1}} provider",
+						"add_a_value0_provider_5af7e95b": "Add a {{value0}} provider",
+						"add_an_openai_compatible_provider_5d50c1f2": "Add an OpenAI-compatible provider",
+						"add_an_value0_provider_52cc66ed": "Add an {{value0}} provider",
 						"back_to_providers_efe5419c": "Back to providers",
 						"configure_connection_details_and_credentials_9a3956c2": "Configure connection details and credentials.",
 						"provider_value0_added_0573a800": "Provider \"{{value0}}\" added."
@@ -3508,6 +3569,7 @@
 				"TemplatesPage": {
 					"ai_settings_a8e5e2c6": "AI Settings",
 					"failed_to_update_whether_coder_agents_can_create_7267745e": "Failed to update whether Coder Agents can create workspaces.",
+					"templates_56b564b7": "Templates",
 					"value0_in_value1_value2_3bf30ed9": "{{value0}} in {{value1}}: {{value2}}"
 				},
 				"TemplatesPageView": {
@@ -4913,6 +4975,7 @@
 				"s_043a7187": "s",
 				"see_workspaces_d10011e1": "See workspaces",
 				"settings_74a883a0": "Settings",
+				"template_5cde0f12": "template",
 				"this_template_is_used_by_b6bed58d": "This template is used by",
 				"unable_to_delete_7947dd5a": "Unable to delete",
 				"unable_to_determine_workspaces_used_by_this_temp_1f1ff23c": "Unable to determine workspaces used by this template.",
@@ -4926,6 +4989,11 @@
 					"invalidated_value0_value1_for_version_value2_7900e169": "Invalidated {{value0}} {{value1}} for version \"{{value2}}\".",
 					"no_template_presets_required_invalidation_3592f047": "No template presets required invalidation.",
 					"value0_prebuilds_b1d4842c": "{{value0}} - Prebuilds"
+				}
+			},
+			"TemplateResourcesPage": {
+				"TemplateResourcesPage": {
+					"template_0575f29d": "Template"
 				}
 			},
 			"TemplateStats": {
@@ -5172,7 +5240,9 @@
 					"prevent_deletion_reset_all_workspace_dormancy_pe_40b67213": "Prevent Deletion - Reset all workspace dormancy periods",
 					"prevent_dormancy_reset_all_workspace_inactivity__c7e2822d": "Prevent Dormancy - Reset all workspace inactivity periods",
 					"submit_155f816c": "Submit",
-					"this_change_will_result_in_7381e7f3": "This change will result in"
+					"this_change_will_result_in_7381e7f3": "This change will result in",
+					"workspace_21a3230e": "workspace",
+					"workspaces_6e8d7998": "workspaces"
 				},
 				"TemplateScheduleAutostart": {
 					"these_days_are_relative_to_the_user_s_timezone_749c43a4": " These days are relative to the user's timezone.",
@@ -5281,6 +5351,9 @@
 			"TemplatesFilter": {
 				"all_organizations_e3002b23": "All organizations",
 				"select_an_organization_48326f52": "Select an organization"
+			},
+			"TemplatesPage": {
+				"templates_56b564b7": "Templates"
 			},
 			"TemplatesPageView": {
 				"1_template_still_uses_classic_parameters_fe34d2de": "1 template still uses classic parameters",
@@ -6713,7 +6786,8 @@
 					"organization_d764d425": "Organization",
 					"owner_4b1b8aa3": "Owner",
 					"search_and_filter_workspaces_d8922d05": "Search and filter workspaces…",
-					"status_920e413c": "Status"
+					"status_920e413c": "Status",
+					"template_0575f29d": "Template"
 				}
 			},
 			"WorkspaceHelpPopover": {
@@ -6749,7 +6823,8 @@
 				"workspace_permissions_32f5fedc": "Workspace permissions"
 			},
 			"WorkspacesPage": {
-				"failed_to_perform_action_6f51f6b1": "Failed to perform action."
+				"failed_to_perform_action_6f51f6b1": "Failed to perform action.",
+				"workspaces_1377264b": "Workspaces"
 			},
 			"WorkspacesPageView": {
 				"back_to_the_first_page_5492a2c4": "Back to the first page",
@@ -6763,7 +6838,9 @@
 				"stop_af6785b0": " Stop",
 				"the_page_you_are_trying_to_access_does_not_exist_79743f1b": "The page you are trying to access does not exist.",
 				"update_ca6b4901": "Update…",
-				"workspaces_1377264b": "Workspaces"
+				"workspace_21a3230e": "workspace",
+				"workspaces_1377264b": "Workspaces",
+				"workspaces_6e8d7998": "workspaces"
 			},
 			"WorkspacesTable": {
 				"actions_ff8059dc": "Actions",

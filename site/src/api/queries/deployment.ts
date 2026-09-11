@@ -1,4 +1,6 @@
+import type { QueryClient } from "react-query";
 import { API } from "#/api/api";
+import type { UpdateWorkspaceSSHGatewayRequest } from "#/api/typesGenerated";
 import { disabledRefetchOptions } from "./util";
 
 export const deploymentConfigQueryKey = ["deployment", "config"];
@@ -36,6 +38,51 @@ export const deploymentSSHConfig = () => {
 		queryFn: API.getDeploymentSSHConfig,
 	};
 };
+
+const workspaceSSHGatewayQueryKey = ["deployment", "workspaceSSHGateway"];
+
+export const workspaceSSHGateway = () => ({
+	queryKey: workspaceSSHGatewayQueryKey,
+	queryFn: API.getWorkspaceSSHGateway,
+	refetchInterval: 5000,
+});
+
+const refreshWorkspaceSSHGateway = (queryClient: QueryClient) =>
+	Promise.all([
+		queryClient.invalidateQueries({ queryKey: workspaceSSHGatewayQueryKey }),
+		queryClient.invalidateQueries({ queryKey: deploymentSSHConfigQueryKey }),
+	]);
+
+export const updateWorkspaceSSHGateway = (queryClient: QueryClient) => ({
+	onSettled: () => refreshWorkspaceSSHGateway(queryClient),
+	mutationFn: (request: UpdateWorkspaceSSHGatewayRequest) =>
+		API.updateWorkspaceSSHGateway(request),
+	onSuccess: (
+		status: Awaited<ReturnType<typeof API.updateWorkspaceSSHGateway>>,
+	) => {
+		queryClient.setQueryData(workspaceSSHGatewayQueryKey, status);
+	},
+});
+
+export const startWorkspaceSSHGateway = (queryClient: QueryClient) => ({
+	onSettled: () => refreshWorkspaceSSHGateway(queryClient),
+	mutationFn: API.startWorkspaceSSHGateway,
+	onSuccess: (
+		status: Awaited<ReturnType<typeof API.startWorkspaceSSHGateway>>,
+	) => {
+		queryClient.setQueryData(workspaceSSHGatewayQueryKey, status);
+	},
+});
+
+export const stopWorkspaceSSHGateway = (queryClient: QueryClient) => ({
+	onSettled: () => refreshWorkspaceSSHGateway(queryClient),
+	mutationFn: API.stopWorkspaceSSHGateway,
+	onSuccess: (
+		status: Awaited<ReturnType<typeof API.stopWorkspaceSSHGateway>>,
+	) => {
+		queryClient.setQueryData(workspaceSSHGatewayQueryKey, status);
+	},
+});
 
 export const deploymentIdpSyncFieldValues = (field: string) => {
 	return {

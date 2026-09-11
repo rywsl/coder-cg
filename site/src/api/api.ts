@@ -2463,6 +2463,40 @@ class ApiMethods {
 		return response.data;
 	};
 
+	getWorkspaceSSHGateway =
+		async (): Promise<TypesGen.WorkspaceSSHGatewayStatus> => {
+			const response = await this.axios.get(
+				"/api/v2/deployment/workspace-ssh-gateway",
+			);
+			return response.data;
+		};
+
+	updateWorkspaceSSHGateway = async (
+		request: TypesGen.UpdateWorkspaceSSHGatewayRequest,
+	): Promise<TypesGen.WorkspaceSSHGatewayStatus> => {
+		const response = await this.axios.put(
+			"/api/v2/deployment/workspace-ssh-gateway",
+			request,
+		);
+		return response.data;
+	};
+
+	startWorkspaceSSHGateway =
+		async (): Promise<TypesGen.WorkspaceSSHGatewayStatus> => {
+			const response = await this.axios.post(
+				"/api/v2/deployment/workspace-ssh-gateway/start",
+			);
+			return response.data;
+		};
+
+	stopWorkspaceSSHGateway =
+		async (): Promise<TypesGen.WorkspaceSSHGatewayStatus> => {
+			const response = await this.axios.post(
+				"/api/v2/deployment/workspace-ssh-gateway/stop",
+			);
+			return response.data;
+		};
+
 	getWorkspaceSSHKeys = async (
 		organization: string,
 	): Promise<TypesGen.WorkspaceSSHKey[]> => {

@@ -482,91 +482,105 @@ func TestSSHConfigResponse_Validate(t *testing.T) {
 	}
 }
 
-func TestDeploymentValues_Validate_WorkspaceSSHGateway(t *testing.T) {
+func TestWorkspaceSSHGatewayRuntimeConfigValidate(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
 		name    string
-		mutate  func(*codersdk.WorkspaceSSHGatewayConfig)
+		mutate  func(*codersdk.WorkspaceSSHGatewayRuntimeConfig)
 		wantErr string
 	}{
 		{name: "Valid"},
-		{name: "InvalidListenAddress", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+		{name: "InvalidListenAddress", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.ListenAddress = "127.0.0.1"
 		}, wantErr: "listen address"},
-		{name: "MissingAdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+		{name: "NonNumericListenPort", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
+			config.ListenAddress = "127.0.0.1:ssh"
+		}, wantErr: "listen port"},
+		{name: "OutOfRangeListenPort", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
+			config.ListenAddress = "127.0.0.1:65536"
+		}, wantErr: "listen port"},
+		{name: "MissingListenPort", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
+			config.ListenAddress = "127.0.0.1:"
+		}, wantErr: "listen port"},
+		{name: "MissingAdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.AdvertiseHost = ""
 		}, wantErr: "advertise host"},
-		{name: "InvalidAdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+		{name: "InvalidAdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.AdvertiseHost = "ssh.example.test extra"
 		}, wantErr: "advertise host"},
-		{name: "IPv4AdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+		{name: "IPv4AdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.AdvertiseHost = "192.0.2.10"
 		}},
-		{name: "IPv6AdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+		{name: "IPv6AdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.AdvertiseHost = "2001:db8::10"
 		}},
-		{name: "PunycodeAdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+		{name: "PunycodeAdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.AdvertiseHost = "xn--fiqs8s.example"
 		}},
-		{name: "AdvertiseHostWithScheme", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+		{name: "AdvertiseHostWithScheme", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.AdvertiseHost = "ssh://gateway.example.test"
 		}, wantErr: "advertise host"},
-		{name: "AdvertiseHostWithPort", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+		{name: "AdvertiseHostWithPort", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.AdvertiseHost = "gateway.example.test:2222"
 		}, wantErr: "advertise host"},
-		{name: "AdvertiseHostWithPath", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+		{name: "AdvertiseHostWithPath", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.AdvertiseHost = "gateway.example.test/path"
 		}, wantErr: "advertise host"},
-		{name: "AdvertiseHostWithUserInfo", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+		{name: "AdvertiseHostWithUserInfo", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.AdvertiseHost = "user@gateway.example.test"
 		}, wantErr: "advertise host"},
-		{name: "AdvertiseHostWithWildcard", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+		{name: "AdvertiseHostWithWildcard", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.AdvertiseHost = "*.example.test"
 		}, wantErr: "advertise host"},
-		{name: "AdvertiseHostWithPercentExpansion", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+		{name: "AdvertiseHostWithPercentExpansion", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.AdvertiseHost = "%n"
 		}, wantErr: "advertise host"},
-		{name: "IPv6AdvertiseHostWithZone", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+		{name: "IPv6AdvertiseHostWithZone", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.AdvertiseHost = "fe80::1%eth0"
 		}, wantErr: "advertise host"},
-		{name: "UnicodeAdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+		{name: "UnicodeAdvertiseHost", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.AdvertiseHost = "中国.example"
 		}, wantErr: "advertise host"},
-		{name: "InvalidAdvertisePort", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+		{name: "InvalidAdvertisePort", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.AdvertisePort = 65536
 		}, wantErr: "advertise port"},
-		{name: "MissingHostKeyFile", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
-			config.HostKeyFile = ""
-		}, wantErr: "host key file"},
-		{name: "InvalidCodexBaseURL", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+		{name: "InvalidCodexBaseURL", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.CodexBaseURL = "/v1"
 		}, wantErr: "Codex base URL"},
-		{name: "MissingCodexAPIKey", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
-			config.CodexAPIKey = ""
-		}, wantErr: "Codex API key"},
-		{name: "MissingCodexModel", mutate: func(config *codersdk.WorkspaceSSHGatewayConfig) {
+		{name: "MissingCodexModel", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.CodexModel = ""
 		}, wantErr: "Codex model"},
+		{name: "InvalidLimit", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
+			config.MaxConnections = 0
+		}, wantErr: "maximum connections"},
+		{name: "PendingExceedsConnections", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
+			config.MaxPendingConnections = 2048
+		}, wantErr: "must not exceed"},
 	}
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
-			values := &codersdk.DeploymentValues{}
-			options := values.Options()
-			require.NoError(t, options.SetDefaults())
-			values.WorkspaceSSHGateway.Enabled = true
-			values.WorkspaceSSHGateway.AdvertiseHost = "ssh.example.test"
-			values.WorkspaceSSHGateway.HostKeyFile = "/run/secrets/workspace-ssh-host-key"
-			values.WorkspaceSSHGateway.CodexBaseURL = "https://responses.example.test/v1"
-			values.WorkspaceSSHGateway.CodexAPIKey = "test-only-api-key"
-			values.WorkspaceSSHGateway.CodexModel = "gpt-test"
+			config := codersdk.WorkspaceSSHGatewayRuntimeConfig{
+				ListenAddress:              "0.0.0.0:2222",
+				AdvertiseHost:              "ssh.example.test",
+				AdvertisePort:              2222,
+				CodexBaseURL:               "https://responses.example.test/v1",
+				CodexModel:                 "gpt-test",
+				MaxConnections:             1024,
+				MaxPendingConnections:      128,
+				MaxPendingConnectionsPerIP: 16,
+				MaxConnectionsPerUser:      32,
+				MaxChannelsPerConnection:   64,
+				AuthAttemptsPerMinute:      120,
+				AuthAttemptsBurst:          20,
+			}
 			if test.mutate != nil {
-				test.mutate(&values.WorkspaceSSHGateway)
+				test.mutate(&config)
 			}
 
-			err := values.Validate()
+			err := config.Validate()
 			if test.wantErr == "" {
 				require.NoError(t, err)
 				return

@@ -100,6 +100,7 @@ type Config struct {
 	HostSigner    ssh.Signer
 	Logger        slog.Logger
 	Registerer    prometheus.Registerer
+	Metrics       *Metrics
 	Codex         CodexConfig
 	Limits        Limits
 	Timeouts      Timeouts
@@ -130,7 +131,7 @@ func (e *TargetUnavailableError) Unwrap() error { return e.Err }
 type Gateway struct {
 	config   Config
 	listener net.Listener
-	metrics  metrics
+	metrics  *Metrics
 	ctx      context.Context
 	cancel   context.CancelFunc
 
@@ -163,7 +164,9 @@ type authLimiter struct {
 	lastSeen time.Time
 }
 
-type metrics struct {
+// Metrics contains the process-wide workspace SSH gateway collectors. Reuse
+// one instance when a listener may be stopped and started again.
+type Metrics struct {
 	active            prometheus.Gauge
 	pending           prometheus.Gauge
 	authFailures      *prometheus.CounterVec
@@ -189,6 +192,11 @@ func LoadHostSigner(path string) (ssh.Signer, error) {
 	if err != nil {
 		return nil, xerrors.Errorf("read workspace SSH gateway host key: %w", err)
 	}
+	return ParseHostSigner(key)
+}
+
+// ParseHostSigner parses an Ed25519 OpenSSH private host key.
+func ParseHostSigner(key []byte) (ssh.Signer, error) {
 	signer, err := ssh.ParsePrivateKey(key)
 	if err != nil {
 		return nil, xerrors.Errorf("parse workspace SSH gateway host key: %w", err)
@@ -226,7 +234,7 @@ func New(config Config) (*Gateway, error) {
 	gateway := &Gateway{
 		config:       config,
 		listener:     listener,
-		metrics:      newMetrics(),
+		metrics:      config.Metrics,
 		connections:  make(map[*connectionState]struct{}),
 		pendingByIP:  make(map[string]int),
 		activeByUser: make(map[uuid.UUID]int),
@@ -234,7 +242,10 @@ func New(config Config) (*Gateway, error) {
 		records:      make(chan ConnectionEvent, defaultRecordQueueSize),
 		closed:       make(chan struct{}),
 	}
-	if config.Registerer != nil {
+	if gateway.metrics == nil {
+		gateway.metrics = newGatewayMetrics()
+	}
+	if config.Metrics == nil && config.Registerer != nil {
 		if err := gateway.metrics.register(config.Registerer); err != nil {
 			_ = listener.Close()
 			return nil, xerrors.Errorf("register workspace SSH gateway metrics: %w", err)
@@ -294,8 +305,8 @@ func withDefaultTimeouts(timeouts Timeouts) Timeouts {
 // Addr returns the bound listener address.
 func (g *Gateway) Addr() net.Addr { return g.listener.Addr() }
 
-func newMetrics() metrics {
-	return metrics{
+func newGatewayMetrics() *Metrics {
+	return &Metrics{
 		active: prometheus.NewGauge(prometheus.GaugeOpts{
 			Namespace: "coder",
 			Subsystem: "workspace_ssh_gateway",
@@ -354,7 +365,19 @@ func newMetrics() metrics {
 	}
 }
 
-func (m metrics) register(registerer prometheus.Registerer) error {
+// NewMetrics registers and returns a reusable set of gateway metrics.
+func NewMetrics(registerer prometheus.Registerer) (*Metrics, error) {
+	metrics := newGatewayMetrics()
+	if registerer == nil {
+		return metrics, nil
+	}
+	if err := metrics.register(registerer); err != nil {
+		return nil, err
+	}
+	return metrics, nil
+}
+
+func (m *Metrics) register(registerer prometheus.Registerer) error {
 	for _, collector := range []prometheus.Collector{
 		m.active,
 		m.pending,

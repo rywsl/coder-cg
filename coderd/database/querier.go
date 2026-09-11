@@ -246,6 +246,7 @@ type sqlcQuerier interface {
 	DeleteWorkspaceACLsByOrganization(ctx context.Context, arg DeleteWorkspaceACLsByOrganizationParams) error
 	DeleteWorkspaceAgentPortShare(ctx context.Context, arg DeleteWorkspaceAgentPortShareParams) error
 	DeleteWorkspaceAgentPortSharesByTemplate(ctx context.Context, templateID uuid.UUID) error
+	DeleteWorkspaceSSHGatewayCodexAPIKey(ctx context.Context) error
 	DeleteWorkspaceSSHKeyByID(ctx context.Context, arg DeleteWorkspaceSSHKeyByIDParams) (WorkspaceSshKey, error)
 	// Soft-deletes a single sub-agent (a child agent such as a devcontainer
 	// agent). Called from the DeleteSubAgent RPC when a sub-agent is torn
@@ -1091,6 +1092,10 @@ type sqlcQuerier interface {
 	GetWorkspaceResourcesByJobIDs(ctx context.Context, ids []uuid.UUID) ([]WorkspaceResource, error)
 	GetWorkspaceResourcesCreatedAfter(ctx context.Context, createdAt time.Time) ([]WorkspaceResource, error)
 	GetWorkspaceSSHBootstrapTargetByAgentID(ctx context.Context, id uuid.UUID) (GetWorkspaceSSHBootstrapTargetByAgentIDRow, error)
+	// GetWorkspaceSSHGatewayConfig returns the deployment-managed gateway config
+	// and its separately stored secrets. The boolean fields distinguish an absent
+	// value from an explicitly cleared value.
+	GetWorkspaceSSHGatewayConfig(ctx context.Context) (GetWorkspaceSSHGatewayConfigRow, error)
 	GetWorkspaceSSHGatewayTarget(ctx context.Context, arg GetWorkspaceSSHGatewayTargetParams) (GetWorkspaceSSHGatewayTargetRow, error)
 	GetWorkspaceSSHKeyByID(ctx context.Context, id uuid.UUID) (WorkspaceSshKey, error)
 	GetWorkspaceSSHKeyByOrganizationAndFingerprint(ctx context.Context, arg GetWorkspaceSSHKeyByOrganizationAndFingerprintParams) (WorkspaceSshKey, error)
@@ -1762,6 +1767,9 @@ type sqlcQuerier interface {
 	// was started. This means that a new row was inserted (no previous session) or
 	// the updated_at is older than stale interval.
 	UpsertWorkspaceAppAuditSession(ctx context.Context, arg UpsertWorkspaceAppAuditSessionParams) (bool, error)
+	UpsertWorkspaceSSHGatewayCodexAPIKey(ctx context.Context, codexApiKey string) error
+	UpsertWorkspaceSSHGatewayConfig(ctx context.Context, config string) error
+	UpsertWorkspaceSSHGatewayHostPrivateKey(ctx context.Context, hostPrivateKey string) error
 	UsageEventExistsByID(ctx context.Context, id string) (bool, error)
 	ValidateGroupIDs(ctx context.Context, groupIds []uuid.UUID) (ValidateGroupIDsRow, error)
 	ValidateUserIDs(ctx context.Context, userIds []uuid.UUID) (ValidateUserIDsRow, error)

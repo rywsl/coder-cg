@@ -2,13 +2,11 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
 import {
 	MockBuildInfo,
-	MockPermissions,
 	MockProvisioner,
 	MockProvisionerWithTags,
 	MockUserProvisioner,
 	mockApiError,
 } from "#/testHelpers/entities";
-import { docs } from "#/utils/docs";
 import { OrganizationProvisionersPageView } from "./OrganizationProvisionersPageView";
 
 const meta: Meta<typeof OrganizationProvisionersPageView> = {
@@ -35,14 +33,22 @@ const meta: Meta<typeof OrganizationProvisionersPageView> = {
 			ids: "",
 			offline: true,
 		},
-		permissions: MockPermissions,
 	},
 };
 
 export default meta;
 type Story = StoryObj<typeof OrganizationProvisionersPageView>;
 
-export const Loaded: Story = {};
+export const Loaded: Story = {
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		await expect(canvas.getByRole("table")).toBeVisible();
+		await expect(canvas.queryByText(/premium/i)).not.toBeInTheDocument();
+		await expect(
+			canvas.queryByRole("link", { name: "Start trial for free" }),
+		).not.toBeInTheDocument();
+	},
+};
 
 export const Loading: Story = {
 	args: {
@@ -63,40 +69,6 @@ export const WithError: Story = {
 			message: "Fern is mad",
 			detail: "Frieren slept in and didn't get groceries",
 		}),
-	},
-};
-
-export const Paywall: Story = {
-	args: {
-		provisioners: undefined,
-		showPaywall: true,
-	},
-	play: async ({ canvasElement }) => {
-		const canvas = within(canvasElement);
-
-		const cta = canvas.getByRole("link", { name: "Start trial for free" });
-		await expect(cta).toHaveAttribute("href", "/deployment/premium");
-		await expect(
-			canvas.getByRole("link", { name: /View docs/ }),
-		).toHaveAttribute("href", docs("/admin/provisioners"));
-	},
-};
-
-export const PaywallWithoutLicenseAccess: Story = {
-	args: {
-		provisioners: undefined,
-		showPaywall: true,
-		permissions: { ...MockPermissions, viewAllLicenses: false },
-	},
-	play: async ({ canvasElement }) => {
-		const canvas = within(canvasElement);
-
-		await expect(
-			canvas.getByText(/contact your deployment administrator/i),
-		).toBeVisible();
-		await expect(
-			canvas.queryByRole("link", { name: "Start trial for free" }),
-		).not.toBeInTheDocument();
 	},
 };
 

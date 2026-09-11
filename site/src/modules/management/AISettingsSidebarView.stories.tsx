@@ -46,10 +46,21 @@ type Story = StoryObj<typeof AISettingsSidebarView>;
 export const CoderAgentsActive: Story = {
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
+		await expect(
+			canvas.queryByRole("link", { name: "AI Governance" }),
+		).not.toBeInTheDocument();
+		await expect(
+			canvas.queryByRole("link", { name: "AI Gateway Keys" }),
+		).not.toBeInTheDocument();
 		await expect(canvas.getByRole("link", { name: "Models" })).toBeVisible();
 		await expect(
 			canvas.queryByRole("link", { name: "Spend" }),
 		).not.toBeInTheDocument();
+		await userEvent.click(canvas.getByRole("link", { name: "Models" }));
+		await expect(canvas.getByRole("link", { name: "Models" })).toHaveAttribute(
+			"aria-current",
+			"page",
+		);
 	},
 };
 

@@ -51,13 +51,9 @@ const meta: Meta<typeof NavbarView> = {
 			canViewDeployment: true,
 			canViewOrganizations: true,
 			canViewAISettings: true,
-			canViewAuditLog: true,
-			canViewConnectionLog: true,
-			canViewAIBridge: true,
 			canViewHealth: true,
 		},
 		canCreateChat: true,
-		canViewLicenses: false,
 		supportLinks: [],
 	},
 	decorators: [withDashboardProvider],
@@ -73,22 +69,22 @@ export const ForAdmin: Story = {
 		await userEvent.click(
 			canvas.getByRole("button", { name: "Admin settings" }),
 		);
-	},
-};
-
-export const ForAuditor: Story = {
-	parameters: { pixel: { matrix: pixelWithDesktop } },
-	args: {
-		user: MockUserMember,
-		adminPermissions: {
-			canViewAuditLog: true,
-		},
-	},
-	play: async ({ canvasElement }) => {
-		const canvas = within(canvasElement);
-		await userEvent.click(
-			canvas.getByRole("button", { name: "Admin settings" }),
-		);
+		const body = within(canvasElement.ownerDocument.body);
+		await expect(
+			body.getByRole("menuitem", { name: "Deployment" }),
+		).toBeVisible();
+		await expect(
+			body.queryByRole("menuitem", { name: /audit/i }),
+		).not.toBeInTheDocument();
+		await expect(
+			body.queryByRole("menuitem", { name: /connection/i }),
+		).not.toBeInTheDocument();
+		await expect(
+			body.queryByRole("menuitem", { name: /AI sessions/i }),
+		).not.toBeInTheDocument();
+		await expect(
+			canvas.queryByText(/workspace proxy/i),
+		).not.toBeInTheDocument();
 	},
 };
 
@@ -97,7 +93,6 @@ export const ForOrgAdmin: Story = {
 	args: {
 		user: MockUserMember,
 		adminPermissions: {
-			canViewAuditLog: true,
 			canViewOrganizations: true,
 		},
 	},

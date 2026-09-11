@@ -1,4 +1,4 @@
-import { CheckIcon, PlusIcon } from "lucide-react";
+import { CheckIcon } from "lucide-react";
 import { type FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
@@ -13,7 +13,6 @@ import {
 	CommandInput,
 	CommandItem,
 	CommandList,
-	CommandSeparator,
 } from "#/components/Command/Command";
 import {
 	Popover,
@@ -21,7 +20,6 @@ import {
 	PopoverTrigger,
 } from "#/components/Popover/Popover";
 import { SettingsSidebarNavItem } from "#/components/Sidebar/Sidebar";
-import type { Permissions } from "#/modules/permissions";
 import type { OrganizationPermissions } from "#/modules/permissions/organizations";
 
 interface OrganizationsSettingsNavigationProps {
@@ -31,8 +29,6 @@ interface OrganizationsSettingsNavigationProps {
 	orgPermissions: OrganizationPermissions | undefined;
 	/** Organizations and their permissions or undefined if still fetching. */
 	organizations: readonly Organization[];
-	/** Site-wide permissions. */
-	permissions: Permissions;
 }
 
 /**
@@ -43,7 +39,7 @@ interface OrganizationsSettingsNavigationProps {
  */
 export const OrganizationSidebarView: FC<
 	OrganizationsSettingsNavigationProps
-> = ({ activeOrganization, orgPermissions, organizations, permissions }) => {
+> = ({ activeOrganization, orgPermissions, organizations }) => {
 	const { t: tI18n } = useTranslation("administration");
 
 	const sortedOrganizations = [...organizations].sort((a, b) => {
@@ -131,27 +127,6 @@ export const OrganizationSidebarView: FC<
 									))}
 								</div>
 							</CommandGroup>
-							{permissions.createOrganization && (
-								<>
-									{organizations.length > 1 && <CommandSeparator />}
-									<CommandGroup>
-										<CommandItem
-											className="flex justify-center data-[selected=true]:bg-transparent"
-											onSelect={() => {
-												setIsPopoverOpen(false);
-												setTimeout(() => {
-													navigate("/organizations/new");
-												}, 200);
-											}}
-										>
-											<PlusIcon />
-											{tI18n(
-												"management.OrganizationSidebarView.create_organization_80ba4eb9",
-											)}
-										</CommandItem>
-									</CommandGroup>
-								</>
-							)}
 						</CommandList>
 					</Command>
 				</PopoverContent>
@@ -188,20 +163,6 @@ const OrganizationSettingsNavigation: FC<
 			<SettingsSidebarNavItem end href={urlForSubpage(organization.name)}>
 				{tI18n("management.OrganizationSidebarView.members_1044a4c0")}
 			</SettingsSidebarNavItem>
-			{orgPermissions.viewGroups && (
-				<SettingsSidebarNavItem
-					href={urlForSubpage(organization.name, "groups")}
-				>
-					{tI18n("management.OrganizationSidebarView.groups_39bbb719")}
-				</SettingsSidebarNavItem>
-			)}
-			{orgPermissions.viewOrgRoles && (
-				<SettingsSidebarNavItem
-					href={urlForSubpage(organization.name, "roles")}
-				>
-					{tI18n("management.OrganizationSidebarView.roles_c2533705")}
-				</SettingsSidebarNavItem>
-			)}
 			{orgPermissions.viewProvisioners &&
 				orgPermissions.viewProvisionerJobs && (
 					<>
@@ -213,13 +174,6 @@ const OrganizationSettingsNavigation: FC<
 							)}
 						</SettingsSidebarNavItem>
 						<SettingsSidebarNavItem
-							href={urlForSubpage(organization.name, "provisioner-keys")}
-						>
-							{tI18n(
-								"management.OrganizationSidebarView.provisioner_keys_3c2d4e86",
-							)}
-						</SettingsSidebarNavItem>
-						<SettingsSidebarNavItem
 							href={urlForSubpage(organization.name, "provisioner-jobs")}
 						>
 							{tI18n(
@@ -228,13 +182,6 @@ const OrganizationSettingsNavigation: FC<
 						</SettingsSidebarNavItem>
 					</>
 				)}
-			{orgPermissions.viewIdpSyncSettings && (
-				<SettingsSidebarNavItem
-					href={urlForSubpage(organization.name, "idp-sync")}
-				>
-					{tI18n("management.OrganizationSidebarView.idp_sync_4af5d734")}
-				</SettingsSidebarNavItem>
-			)}
 			{orgPermissions.editSettings && (
 				<SettingsSidebarNavItem
 					href={urlForSubpage(organization.name, "settings")}

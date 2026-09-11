@@ -83,20 +83,6 @@ test("hides AI Governance seat warnings for non-admin users", async () => {
 	).not.toBeInTheDocument();
 });
 
-test("shows AI Governance over-limit warning in LicenseBanner for admin users", async () => {
-	await renderDashboardLayout({
-		actual: 110,
-		limit: 100,
-		permissions: MockPermissions,
-	});
-
-	expect(
-		screen.getByText(
-			/110 of 100 AI Governance add-on seats \(10 over the limit\)/,
-		),
-	).toBeInTheDocument();
-});
-
 test("renders a skip link before navigation content", async () => {
 	renderWithAuth(<DashboardLayout />, {
 		children: [{ element: <h1>Test page</h1> }],

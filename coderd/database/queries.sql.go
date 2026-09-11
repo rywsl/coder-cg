@@ -25857,6 +25857,16 @@ func (q *sqlQuerier) DeleteRuntimeConfig(ctx context.Context, key string) error 
 	return err
 }
 
+const deleteWorkspaceSSHGatewayCodexAPIKey = `-- name: DeleteWorkspaceSSHGatewayCodexAPIKey :exec
+DELETE FROM site_configs
+WHERE key = 'workspace_ssh_gateway_codex_api_key'
+`
+
+func (q *sqlQuerier) DeleteWorkspaceSSHGatewayCodexAPIKey(ctx context.Context) error {
+	_, err := q.db.ExecContext(ctx, deleteWorkspaceSSHGatewayCodexAPIKey)
+	return err
+}
+
 const getAnnouncementBanners = `-- name: GetAnnouncementBanners :one
 SELECT value FROM site_configs WHERE key = 'announcement_banners'
 `
@@ -26301,6 +26311,48 @@ func (q *sqlQuerier) GetWebpushVAPIDKeys(ctx context.Context) (GetWebpushVAPIDKe
 	return i, err
 }
 
+const getWorkspaceSSHGatewayConfig = `-- name: GetWorkspaceSSHGatewayConfig :one
+SELECT
+    COALESCE(MAX(value) FILTER (WHERE key = 'workspace_ssh_gateway_config'), '')::text AS config,
+    COUNT(*) FILTER (WHERE key = 'workspace_ssh_gateway_config') > 0 AS config_exists,
+    COALESCE(MAX(value) FILTER (WHERE key = 'workspace_ssh_gateway_codex_api_key'), '')::text AS codex_api_key,
+    COUNT(*) FILTER (WHERE key = 'workspace_ssh_gateway_codex_api_key') > 0 AS codex_api_key_exists,
+    COALESCE(MAX(value) FILTER (WHERE key = 'workspace_ssh_gateway_host_private_key'), '')::text AS host_private_key,
+    COUNT(*) FILTER (WHERE key = 'workspace_ssh_gateway_host_private_key') > 0 AS host_private_key_exists
+FROM site_configs
+WHERE key IN (
+    'workspace_ssh_gateway_config',
+    'workspace_ssh_gateway_codex_api_key',
+    'workspace_ssh_gateway_host_private_key'
+)
+`
+
+type GetWorkspaceSSHGatewayConfigRow struct {
+	Config               string `db:"config" json:"config"`
+	ConfigExists         bool   `db:"config_exists" json:"config_exists"`
+	CodexApiKey          string `db:"codex_api_key" json:"codex_api_key"`
+	CodexApiKeyExists    bool   `db:"codex_api_key_exists" json:"codex_api_key_exists"`
+	HostPrivateKey       string `db:"host_private_key" json:"host_private_key"`
+	HostPrivateKeyExists bool   `db:"host_private_key_exists" json:"host_private_key_exists"`
+}
+
+// GetWorkspaceSSHGatewayConfig returns the deployment-managed gateway config
+// and its separately stored secrets. The boolean fields distinguish an absent
+// value from an explicitly cleared value.
+func (q *sqlQuerier) GetWorkspaceSSHGatewayConfig(ctx context.Context) (GetWorkspaceSSHGatewayConfigRow, error) {
+	row := q.db.QueryRowContext(ctx, getWorkspaceSSHGatewayConfig)
+	var i GetWorkspaceSSHGatewayConfigRow
+	err := row.Scan(
+		&i.Config,
+		&i.ConfigExists,
+		&i.CodexApiKey,
+		&i.CodexApiKeyExists,
+		&i.HostPrivateKey,
+		&i.HostPrivateKeyExists,
+	)
+	return i, err
+}
+
 const insertDERPMeshKey = `-- name: InsertDERPMeshKey :exec
 INSERT INTO site_configs (key, value) VALUES ('derp_mesh_key', $1)
 `
@@ -26693,6 +26745,42 @@ type UpsertWebpushVAPIDKeysParams struct {
 
 func (q *sqlQuerier) UpsertWebpushVAPIDKeys(ctx context.Context, arg UpsertWebpushVAPIDKeysParams) error {
 	_, err := q.db.ExecContext(ctx, upsertWebpushVAPIDKeys, arg.VapidPublicKey, arg.VapidPrivateKey)
+	return err
+}
+
+const upsertWorkspaceSSHGatewayCodexAPIKey = `-- name: UpsertWorkspaceSSHGatewayCodexAPIKey :exec
+INSERT INTO site_configs (key, value)
+VALUES ('workspace_ssh_gateway_codex_api_key', $1::text)
+ON CONFLICT (key) DO UPDATE SET value = $1::text
+WHERE site_configs.key = 'workspace_ssh_gateway_codex_api_key'
+`
+
+func (q *sqlQuerier) UpsertWorkspaceSSHGatewayCodexAPIKey(ctx context.Context, codexApiKey string) error {
+	_, err := q.db.ExecContext(ctx, upsertWorkspaceSSHGatewayCodexAPIKey, codexApiKey)
+	return err
+}
+
+const upsertWorkspaceSSHGatewayConfig = `-- name: UpsertWorkspaceSSHGatewayConfig :exec
+INSERT INTO site_configs (key, value)
+VALUES ('workspace_ssh_gateway_config', $1::text)
+ON CONFLICT (key) DO UPDATE SET value = $1::text
+WHERE site_configs.key = 'workspace_ssh_gateway_config'
+`
+
+func (q *sqlQuerier) UpsertWorkspaceSSHGatewayConfig(ctx context.Context, config string) error {
+	_, err := q.db.ExecContext(ctx, upsertWorkspaceSSHGatewayConfig, config)
+	return err
+}
+
+const upsertWorkspaceSSHGatewayHostPrivateKey = `-- name: UpsertWorkspaceSSHGatewayHostPrivateKey :exec
+INSERT INTO site_configs (key, value)
+VALUES ('workspace_ssh_gateway_host_private_key', $1::text)
+ON CONFLICT (key) DO UPDATE SET value = $1::text
+WHERE site_configs.key = 'workspace_ssh_gateway_host_private_key'
+`
+
+func (q *sqlQuerier) UpsertWorkspaceSSHGatewayHostPrivateKey(ctx context.Context, hostPrivateKey string) error {
+	_, err := q.db.ExecContext(ctx, upsertWorkspaceSSHGatewayHostPrivateKey, hostPrivateKey)
 	return err
 }
 

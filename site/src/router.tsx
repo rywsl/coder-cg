@@ -6,16 +6,14 @@ import {
 	Outlet,
 	Route,
 	ScrollRestoration,
-	useParams,
 } from "react-router";
+import { communityUIHiddenRoutes } from "./communityPolicy";
 import { GlobalErrorBoundary } from "./components/ErrorBoundary/GlobalErrorBoundary";
 import { Loader } from "./components/Loader/Loader";
 import { RequireAuth } from "./contexts/auth/RequireAuth";
 import { DashboardLayout } from "./modules/dashboard/DashboardLayout";
 import { AISettingsIndexRedirect } from "./pages/AISettingsPage/AISettingsIndexRedirect";
 import { ModelDefaultsRedirect } from "./pages/AISettingsPage/ModelsPage/ModelDefaultsRedirect";
-import AuditPage from "./pages/AuditPage/AuditPage";
-import ConnectionLogPage from "./pages/ConnectionLogPage/ConnectionLogPage";
 import { HealthLayout } from "./pages/HealthPage/HealthLayout";
 import LoginOAuthDevicePage from "./pages/LoginOAuthDevicePage/LoginOAuthDevicePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
@@ -70,10 +68,6 @@ const TokensPage = lazy(
 const SecretsPage = lazy(
 	() => import("./pages/UserSettingsPage/SecretsPage/SecretsPage"),
 );
-const WorkspaceProxyPage = lazy(
-	() =>
-		import("./pages/UserSettingsPage/WorkspaceProxyPage/WorkspaceProxyPage"),
-);
 const CreateUserPage = lazy(
 	() => import("./pages/CreateUserPage/CreateUserPage"),
 );
@@ -101,12 +95,6 @@ const WorkspaceSharingPage = lazy(
 		),
 );
 const TerminalPage = lazy(() => import("./pages/TerminalPage/TerminalPage"));
-const TemplatePermissionsPage = lazy(
-	() =>
-		import(
-			"./pages/TemplateSettingsPage/TemplatePermissionsPage/TemplatePermissionsPage"
-		),
-);
 const TemplateResourcesPage = lazy(
 	() =>
 		import("./pages/TemplatePage/TemplateResourcesPage/TemplateResourcesPage"),
@@ -169,12 +157,6 @@ const ObservabilitySettingsPage = lazy(
 	() =>
 		import(
 			"./pages/DeploymentSettingsPage/ObservabilitySettingsPage/ObservabilitySettingsPage"
-		),
-);
-const AIGovernanceSettingsPage = lazy(
-	() =>
-		import(
-			"./pages/DeploymentSettingsPage/AIGovernanceSettingsPage/AIGovernanceSettingsPage"
 		),
 );
 const ExternalAuthPage = lazy(
@@ -245,57 +227,15 @@ const TemplateSettingsPage = lazy(
 			"./pages/TemplateSettingsPage/TemplateGeneralSettingsPage/TemplateSettingsPage"
 		),
 );
-const LicensesSettingsPage = lazy(
-	() =>
-		import(
-			"./pages/DeploymentSettingsPage/LicensesSettingsPage/LicensesSettingsPage"
-		),
-);
-const AddNewLicensePage = lazy(
-	() =>
-		import(
-			"./pages/DeploymentSettingsPage/LicensesSettingsPage/AddNewLicensePage"
-		),
-);
 const OrganizationRedirect = lazy(
 	() => import("./pages/OrganizationSettingsPage/OrganizationRedirect"),
 );
 
-const CreateOrganizationPage = lazy(
-	() => import("./pages/OrganizationSettingsPage/CreateOrganizationPage"),
-);
 const OrganizationSettingsPage = lazy(
 	() => import("./pages/OrganizationSettingsPage/OrganizationSettingsPage"),
 );
-const GroupsPageProvider = lazy(
-	() => import("./pages/GroupsPage/GroupsPageProvider"),
-);
-const GroupsPage = lazy(() => import("./pages/GroupsPage/GroupsPage"));
-const CreateGroupPage = lazy(
-	() => import("./pages/GroupsPage/CreateGroupPage"),
-);
-const GroupPage = lazy(() => import("./pages/GroupsPage/GroupPage"));
-const GroupMembersPage = lazy(
-	() => import("./pages/GroupsPage/GroupMembersPage"),
-);
-const GroupSettingsPage = lazy(
-	() => import("./pages/GroupsPage/GroupSettingsPage"),
-);
 const OrganizationMembersPage = lazy(
 	() => import("./pages/OrganizationSettingsPage/OrganizationMembersPage"),
-);
-const OrganizationCustomRolesPage = lazy(
-	() =>
-		import("./pages/OrganizationSettingsPage/CustomRolesPage/CustomRolesPage"),
-);
-const OrganizationIdPSyncPage = lazy(
-	() => import("./pages/OrganizationSettingsPage/IdpSyncPage/IdpSyncPage"),
-);
-const CreateEditRolePage = lazy(
-	() =>
-		import(
-			"./pages/OrganizationSettingsPage/CustomRolesPage/CreateEditRolePage"
-		),
 );
 const ProvisionersPage = lazy(
 	() =>
@@ -310,22 +250,12 @@ const TemplateInsightsPage = lazy(
 	() =>
 		import("./pages/TemplatePage/TemplateInsightsPage/TemplateInsightsPage"),
 );
-const TemplatePrebuildsPage = lazy(
-	() =>
-		import("./pages/TemplatePage/TemplatePrebuildsPage/TemplatePrebuildsPage"),
-);
-const PremiumPage = lazy(
-	() => import("./pages/DeploymentSettingsPage/PremiumPage/PremiumPage"),
-);
 const IconsPage = lazy(() => import("./pages/IconsPage/IconsPage"));
 const AccessURLPage = lazy(() => import("./pages/HealthPage/AccessURLPage"));
 const DatabasePage = lazy(() => import("./pages/HealthPage/DatabasePage"));
 const DERPPage = lazy(() => import("./pages/HealthPage/DERPPage"));
 const DERPRegionPage = lazy(() => import("./pages/HealthPage/DERPRegionPage"));
 const WebsocketPage = lazy(() => import("./pages/HealthPage/WebsocketPage"));
-const WorkspaceProxyHealthPage = lazy(
-	() => import("./pages/HealthPage/WorkspaceProxyPage"),
-);
 const ProvisionerDaemonsHealthPage = lazy(
 	() => import("./pages/HealthPage/ProvisionerDaemonsPage"),
 );
@@ -343,15 +273,6 @@ const RequestOTPPage = lazy(
 );
 const ChangePasswordPage = lazy(
 	() => import("./pages/ResetPasswordPage/ChangePasswordPage"),
-);
-const IdpOrgSyncPage = lazy(
-	() => import("./pages/DeploymentSettingsPage/IdpOrgSyncPage/IdpOrgSyncPage"),
-);
-const ProvisionerKeysPage = lazy(
-	() =>
-		import(
-			"./pages/OrganizationSettingsPage/OrganizationProvisionerKeysPage/OrganizationProvisionerKeysPage"
-		),
 );
 const ProvisionerJobsPage = lazy(
 	() =>
@@ -402,19 +323,6 @@ import {
 } from "./pages/AgentsPage/components/AgentsSkeletons";
 
 const CoderCupPage = lazy(() => import("./pages/CoderCupPage/CoderCupPage"));
-const AIBridgeLayout = lazy(
-	() => import("./pages/AIBridgePage/AIBridgeLayout"),
-);
-const AIBridgeSessionsLayout = lazy(
-	() => import("./pages/AIBridgePage/AIBridgeSessionsLayout"),
-);
-
-const AIBridgeListSessionsPage = lazy(
-	() => import("./pages/AIBridgePage/ListSessionsPage/ListSessionsPage"),
-);
-const AIBridgeSessionThreadsPage = lazy(
-	() => import("./pages/AIBridgePage/SessionThreadsPage/SessionThreadsPage"),
-);
 
 const AISettingsLayout = lazy(
 	() => import("./pages/AISettingsPage/AISettingsLayout"),
@@ -433,9 +341,6 @@ const AISettingsAddProviderPage = lazy(
 		import(
 			"./pages/AISettingsPage/ProvidersPage/AddProviderPage/AddProviderPage"
 		),
-);
-const AISettingsGatewayKeysPage = lazy(
-	() => import("./pages/AISettingsPage/GatewayKeysPage/GatewayKeysPage"),
 );
 const AISettingsModelsPage = lazy(
 	() => import("./pages/AISettingsPage/ModelsPage/ModelsPage"),
@@ -493,14 +398,12 @@ const templateRouter = () => {
 					<Route path="versions" element={<TemplateVersionsPage />} />
 					<Route path="embed" element={<TemplateEmbedPage />} />
 					<Route path="insights" element={<TemplateInsightsPage />} />
-					<Route path="prebuilds" element={<TemplatePrebuildsPage />} />
 				</Route>
 
 				<Route path="workspace" element={<CreateWorkspacePage />} />
 
 				<Route path="settings" element={<TemplateSettingsLayout />}>
 					<Route index element={<TemplateSettingsPage />} />
-					<Route path="permissions" element={<TemplatePermissionsPage />} />
 					<Route path="variables" element={<TemplateVariablesPage />} />
 					<Route path="parameters" element={<TemplateParametersPage />} />
 					<Route path="schedule" element={<TemplateSchedulePage />} />
@@ -514,28 +417,6 @@ const templateRouter = () => {
 			</Route>
 		</Route>
 	);
-};
-
-const groupsRouter = () => {
-	return (
-		<Route path="groups">
-			<Route element={<GroupsPageProvider />}>
-				<Route index element={<GroupsPage />} />
-
-				<Route path="create" element={<CreateGroupPage />} />
-				<Route path=":groupName" element={<GroupPage />}>
-					<Route index element={<GroupMembersPage />} />
-					<Route path="settings" element={<GroupSettingsPage />} />
-				</Route>
-			</Route>
-		</Route>
-	);
-};
-
-/** Redirect /aibridge/sessions/:sessionId to /ai-gateway/sessions/:sessionId. */
-const RedirectAIBridgeSession = () => {
-	const { sessionId } = useParams() as { sessionId: string };
-	return <Navigate to={`/ai-gateway/sessions/${sessionId}`} replace />;
 };
 
 export const router = createBrowserRouter(
@@ -553,6 +434,9 @@ export const router = createBrowserRouter(
 			<Route element={<RequireAuth />}>
 				<Route element={<DashboardLayout />}>
 					<Route index element={<Navigate to="/workspaces" replace />} />
+					{communityUIHiddenRoutes.map((path) => (
+						<Route key={path} path={path} element={<NotFoundPage />} />
+					))}
 
 					<Route
 						path="/external-auth/:provider"
@@ -581,39 +465,17 @@ export const router = createBrowserRouter(
 						element={<Navigate to="/deployment/users" replace />}
 					/>
 
-					<Route
-						path="/groups/*"
-						element={<Navigate to="/deployment/groups" replace />}
-					/>
-
-					<Route path="/audit" element={<AuditPage />} />
-
-					<Route path="/connectionlog" element={<ConnectionLogPage />} />
-
 					<Route path="/organizations" element={<OrganizationSettingsLayout />}>
-						<Route path="new" element={<CreateOrganizationPage />} />
-
 						{/* General settings for the default org can omit the organization name */}
 						<Route index element={<OrganizationRedirect />} />
 
 						<Route path=":organization" element={<OrganizationSidebarLayout />}>
 							<Route index element={<OrganizationMembersPage />} />
-							{groupsRouter()}
-							<Route path="roles">
-								<Route index element={<OrganizationCustomRolesPage />} />
-								<Route path="create" element={<CreateEditRolePage />} />
-								<Route path=":roleName" element={<CreateEditRolePage />} />
-							</Route>
 							<Route path="provisioners" element={<ProvisionersPage />} />
 							<Route
 								path="provisioner-jobs"
 								element={<ProvisionerJobsPage />}
 							/>
-							<Route
-								path="provisioner-keys"
-								element={<ProvisionerKeysPage />}
-							/>
-							<Route path="idp-sync" element={<OrganizationIdPSyncPage />} />
 							<Route path="settings" element={<OrganizationSettingsPage />} />
 						</Route>
 					</Route>
@@ -640,12 +502,7 @@ export const router = createBrowserRouter(
 							/>
 						</Route>
 
-						<Route path="licenses">
-							<Route index element={<LicensesSettingsPage />} />
-							<Route path="add" element={<AddNewLicensePage />} />
-						</Route>
 						<Route path="appearance" element={<AppearanceSettingsPage />} />
-						<Route path="workspace-proxies" element={<WorkspaceProxyPage />} />
 						<Route path="oauth2-provider">
 							<Route index element={<NotFoundPage />} />
 							<Route path="apps">
@@ -660,11 +517,6 @@ export const router = createBrowserRouter(
 							<Route path="create" element={<CreateUserPage />} />
 							<Route path=":user" element={<EditUserPage />} />
 						</Route>
-
-						{groupsRouter()}
-
-						<Route path="idp-org-sync" element={<IdpOrgSyncPage />} />
-						<Route path="premium" element={<PremiumPage />} />
 					</Route>
 
 					<Route path="/settings" element={<UserSettingsLayout />}>
@@ -705,43 +557,7 @@ export const router = createBrowserRouter(
 						</Route>
 					</Route>
 
-					<Route path="/ai-gateway" element={<AIBridgeLayout />}>
-						<Route
-							index
-							element={<Navigate to="/ai-gateway/sessions" replace />}
-						/>
-					</Route>
-
-					<Route
-						path="/ai-gateway/sessions"
-						element={<AIBridgeSessionsLayout />}
-					>
-						<Route index element={<AIBridgeListSessionsPage />} />
-						<Route path=":sessionId" element={<AIBridgeSessionThreadsPage />} />
-					</Route>
-
-					{/* Legacy /aibridge routes redirect to /ai-gateway */}
-					<Route
-						path="/aibridge"
-						element={<Navigate to="/ai-gateway" replace />}
-					/>
-					<Route
-						path="/aibridge/sessions"
-						element={<Navigate to="/ai-gateway/sessions" replace />}
-					/>
-					<Route
-						path="/aibridge/sessions/:sessionId"
-						element={<RedirectAIBridgeSession />}
-					/>
-
 					<Route path="/ai/settings" element={<AISettingsLayout />}>
-						<Route element={<DeploymentConfigProvider />}>
-							<Route path="governance" element={<AIGovernanceSettingsPage />} />
-						</Route>
-						<Route
-							path="gateway-keys"
-							element={<AISettingsGatewayKeysPage />}
-						/>
 						<Route index element={<AISettingsIndexRedirect />} />
 						<Route path="models/defaults" element={<ModelDefaultsRedirect />} />
 						<Route
@@ -786,10 +602,6 @@ export const router = createBrowserRouter(
 						<Route path="derp" element={<DERPPage />} />
 						<Route path="derp/regions/:regionId" element={<DERPRegionPage />} />
 						<Route path="websocket" element={<WebsocketPage />} />
-						<Route
-							path="workspace-proxy"
-							element={<WorkspaceProxyHealthPage />}
-						/>
 						<Route
 							path="provisioner-daemons"
 							element={<ProvisionerDaemonsHealthPage />}

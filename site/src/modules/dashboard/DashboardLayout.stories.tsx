@@ -75,6 +75,9 @@ export default meta;
 type Story = StoryObj<typeof DashboardLayout>;
 
 export const Default: Story = {
+	parameters: {
+		features: [{ name: "ai_governance_user_limit", actual: 110, limit: 100 }],
+	},
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
 		await expect(
@@ -83,6 +86,14 @@ export const Default: Story = {
 		await expect(
 			canvas.getByRole("link", { name: "Skip to main content" }),
 		).toBeInTheDocument();
+		await expect(
+			canvas.queryByText(/license notices/i),
+		).not.toBeInTheDocument();
+		await expect(canvas.queryByText(/trial/i)).not.toBeInTheDocument();
+		await expect(canvas.queryByText(/premium/i)).not.toBeInTheDocument();
+		await expect(
+			canvas.queryByText(/AI Governance add-on seats/),
+		).not.toBeInTheDocument();
 	},
 };
 

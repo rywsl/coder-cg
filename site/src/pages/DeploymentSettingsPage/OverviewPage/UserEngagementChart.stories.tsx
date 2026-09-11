@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "storybook/test";
 import { UserEngagementChart } from "./UserEngagementChart";
 
 const meta: Meta<typeof UserEngagementChart> = {
@@ -20,7 +21,20 @@ const meta: Meta<typeof UserEngagementChart> = {
 export default meta;
 type Story = StoryObj<typeof UserEngagementChart>;
 
-export const Loaded: Story = {};
+export const Loaded: Story = {
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		await userEvent.click(
+			canvas.getByRole("button", { name: "How we calculate engaged users" }),
+		);
+		await expect(
+			canvas.getByText(/interact with a workspace, template, or agent/i),
+		).toBeVisible();
+		await expect(
+			canvas.queryByRole("link", { name: /audit|license/i }),
+		).not.toBeInTheDocument();
+	},
+};
 
 export const Empty: Story = {
 	args: {

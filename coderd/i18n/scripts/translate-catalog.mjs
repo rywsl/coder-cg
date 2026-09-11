@@ -23,11 +23,12 @@ const protectedTerms = [
 	"Terraform",
 	"PostgreSQL",
 	"JetBrains",
+	"GitHub Copilot",
 	"GitHub",
-	"Workspaces",
-	"Workspace",
-	"Templates",
-	"Template",
+	"Vercel",
+	"Bedrock",
+	"Mantle",
+	"InvokeModel",
 	"Agents",
 	"Agent",
 	"Coder",
@@ -153,14 +154,22 @@ function protect(value) {
 	const terms = [];
 	const patterns = [
 		{ pattern: /\{\{[0-9]+\}\}/g },
+		{ pattern: /https?:\/\/[^\s)\]}>,]+/gi },
 		{ pattern: /--[a-z0-9-]+/gi },
 		{ pattern: /\b[A-Z][A-Z0-9_]{2,}\b/g },
 		{ pattern: /\b[a-z][a-z0-9]*_[a-z0-9_]+\b/g },
+		{ pattern: /\b[a-z0-9]+(?:-[a-z0-9]+)+\b/g },
 		{ pattern: /\/[a-z0-9_{}./-]+/gi },
-		...protectedTerms.map((term) => ({
-			canonical: term,
-			pattern: new RegExp(`\\b${escapeRegExp(term)}\\b`, "gi"),
-		})),
+		{
+			pattern:
+				/\b(?:ns|us|ms|KiB|MiB|GiB|TiB|KB|MB|GB|TB|kHz|MHz|GHz|Kbps|Mbps|Gbps)\b/g,
+		},
+		...[...protectedTerms]
+			.sort((left, right) => right.length - left.length)
+			.map((term) => ({
+				canonical: term,
+				pattern: new RegExp(`\\b${escapeRegExp(term)}\\b`, "gi"),
+			})),
 	];
 	for (const { canonical, pattern } of patterns) {
 		text = text.replace(pattern, (term) => {
@@ -183,6 +192,14 @@ function restore(value, terms) {
 
 function normalizeTranslation(value) {
 	let normalized = value
+		.replace(/\bworkspaces?\b/gi, "工作区")
+		.replaceAll("工作空间", "工作区")
+		.replace(/\btemplates?\b/gi, "模板")
+		.replace(/\bOpenAI-compatible\b/gi, "OpenAI 兼容")
+		.replaceAll("韦尔塞尔", "Vercel")
+		.replaceAll("副驾驶", "Copilot")
+		.replaceAll("基岩", "Bedrock")
+		.replaceAll("碱基", "基础")
 		.replaceAll("型号", "模型")
 		.replaceAll("代币", "Token")
 		.replaceAll("秘密", "密钥")
@@ -192,6 +209,10 @@ function normalizeTranslation(value) {
 		.replaceAll("配置程序", "Provisioner")
 		.replaceAll("守护程序", "守护进程")
 		.replaceAll("提供程序", "提供商");
+	normalized = normalized
+		.replace(/([\p{Script=Han}])\s+(工作区|模板)/gu, "$1$2")
+		.replace(/(工作区|模板)\s+([\p{Script=Han}])/gu, "$1$2")
+		.replaceAll("具有此名称的模板", "同名模板");
 	for (const term of protectedTerms) {
 		const escaped = escapeRegExp(term);
 		normalized = normalized

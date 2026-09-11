@@ -115,6 +115,46 @@ ON CONFLICT (key) DO UPDATE SET value = $2 WHERE site_configs.key = $1;
 DELETE FROM site_configs
 WHERE site_configs.key = $1;
 
+-- GetWorkspaceSSHGatewayConfig returns the deployment-managed gateway config
+-- and its separately stored secrets. The boolean fields distinguish an absent
+-- value from an explicitly cleared value.
+-- name: GetWorkspaceSSHGatewayConfig :one
+SELECT
+    COALESCE(MAX(value) FILTER (WHERE key = 'workspace_ssh_gateway_config'), '')::text AS config,
+    COUNT(*) FILTER (WHERE key = 'workspace_ssh_gateway_config') > 0 AS config_exists,
+    COALESCE(MAX(value) FILTER (WHERE key = 'workspace_ssh_gateway_codex_api_key'), '')::text AS codex_api_key,
+    COUNT(*) FILTER (WHERE key = 'workspace_ssh_gateway_codex_api_key') > 0 AS codex_api_key_exists,
+    COALESCE(MAX(value) FILTER (WHERE key = 'workspace_ssh_gateway_host_private_key'), '')::text AS host_private_key,
+    COUNT(*) FILTER (WHERE key = 'workspace_ssh_gateway_host_private_key') > 0 AS host_private_key_exists
+FROM site_configs
+WHERE key IN (
+    'workspace_ssh_gateway_config',
+    'workspace_ssh_gateway_codex_api_key',
+    'workspace_ssh_gateway_host_private_key'
+);
+
+-- name: UpsertWorkspaceSSHGatewayConfig :exec
+INSERT INTO site_configs (key, value)
+VALUES ('workspace_ssh_gateway_config', @config::text)
+ON CONFLICT (key) DO UPDATE SET value = @config::text
+WHERE site_configs.key = 'workspace_ssh_gateway_config';
+
+-- name: UpsertWorkspaceSSHGatewayCodexAPIKey :exec
+INSERT INTO site_configs (key, value)
+VALUES ('workspace_ssh_gateway_codex_api_key', @codex_api_key::text)
+ON CONFLICT (key) DO UPDATE SET value = @codex_api_key::text
+WHERE site_configs.key = 'workspace_ssh_gateway_codex_api_key';
+
+-- name: DeleteWorkspaceSSHGatewayCodexAPIKey :exec
+DELETE FROM site_configs
+WHERE key = 'workspace_ssh_gateway_codex_api_key';
+
+-- name: UpsertWorkspaceSSHGatewayHostPrivateKey :exec
+INSERT INTO site_configs (key, value)
+VALUES ('workspace_ssh_gateway_host_private_key', @host_private_key::text)
+ON CONFLICT (key) DO UPDATE SET value = @host_private_key::text
+WHERE site_configs.key = 'workspace_ssh_gateway_host_private_key';
+
 -- name: GetOAuth2GithubDefaultEligible :one
 SELECT
 	CASE

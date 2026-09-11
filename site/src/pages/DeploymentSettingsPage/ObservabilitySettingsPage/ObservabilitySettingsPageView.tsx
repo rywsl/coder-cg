@@ -7,20 +7,17 @@ import {
 	SettingsHeaderDocsLink,
 	SettingsHeaderTitle,
 } from "#/components/SettingsHeader/SettingsHeader";
-import { PremiumPaywall } from "#/modules/paywall/PremiumPaywall";
 import { deploymentGroupHasParent } from "#/utils/deployOptions";
 import { docs } from "#/utils/docs";
 import OptionsTable from "../OptionsTable";
 
 type ObservabilitySettingsPageViewProps = {
 	options: SerpentOption[];
-	featureAuditLogEnabled: boolean;
-	canViewPremium: boolean;
 };
 
 export const ObservabilitySettingsPageView: FC<
 	ObservabilitySettingsPageViewProps
-> = ({ options, featureAuditLogEnabled, canViewPremium }) => {
+> = ({ options }) => {
 	const { t: tI18n } = useTranslation("administration");
 
 	return (
@@ -33,56 +30,6 @@ export const ObservabilitySettingsPageView: FC<
 						)}
 					</SettingsHeaderTitle>
 				</SettingsHeader>
-
-				<SettingsHeader>
-					<SettingsHeaderTitle hierarchy="secondary" level="h2">
-						{tI18n(
-							"DeploymentSettingsPage.ObservabilitySettingsPage.ObservabilitySettingsPageView.audit_logging_06fcaf01",
-						)}
-					</SettingsHeaderTitle>
-					<SettingsHeaderDescription>
-						{tI18n(
-							"DeploymentSettingsPage.ObservabilitySettingsPage.ObservabilitySettingsPageView.allow_auditors_to_monitor_user_operations_in_you_2314f0f1",
-						)}{" "}
-						<SettingsHeaderDocsLink
-							href={docs("/admin/security/audit-logs")}
-							context="about audit logging"
-						/>
-					</SettingsHeaderDescription>
-				</SettingsHeader>
-
-				{featureAuditLogEnabled ? (
-					<OptionsTable
-						options={options.filter((o) => o.name === "Audit Logs Retention")}
-					/>
-				) : (
-					<PremiumPaywall
-						source="observability"
-						message={tI18n(
-							"DeploymentSettingsPage.ObservabilitySettingsPage.ObservabilitySettingsPageView.audit_logging_06fcaf01",
-						)}
-						description={tI18n(
-							"DeploymentSettingsPage.ObservabilitySettingsPage.ObservabilitySettingsPageView.monitor_user_operations_across_your_deployment_3d6e74f2",
-						)}
-						features={[
-							tI18n(
-								"DeploymentSettingsPage.ObservabilitySettingsPage.ObservabilitySettingsPageView.track_user_actions_across_deployment_be71b28b",
-							),
-							tI18n(
-								"DeploymentSettingsPage.ObservabilitySettingsPage.ObservabilitySettingsPageView.observe_developer_and_agent_activity_ebd79f38",
-							),
-							tI18n(
-								"DeploymentSettingsPage.ObservabilitySettingsPage.ObservabilitySettingsPageView.configurable_audit_log_retention_period_49e913b6",
-							),
-							tI18n(
-								"DeploymentSettingsPage.ObservabilitySettingsPage.ObservabilitySettingsPageView.support_compliance_and_security_reviews_8a5edb81",
-							),
-						]}
-						canViewPremium={canViewPremium}
-					/>
-				)}
-			</div>
-			<div>
 				<SettingsHeader>
 					<SettingsHeaderTitle hierarchy="secondary" level="h2">
 						{tI18n(

@@ -1398,7 +1398,7 @@ coderd/apidoc/.gen: \
 		mv "$$tmpdir/manifest.json" _gen/manifest-staging.json && \
 		mv "$$swagtmp/docs.go" coderd/apidoc/docs.go && \
 		mv "$$swagtmp/swagger.json" coderd/apidoc/swagger.json && \
-		rm -rf "$$tmpdir" "$$swagtmp"
+		rm -rf "$$tmpdir" "$$swagtmp" && \
 	touch "$@"
 
 docs/manifest.json: site/node_modules/.installed coderd/apidoc/.gen docs/reference/cli/index.md | _gen

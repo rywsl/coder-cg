@@ -10430,6 +10430,18 @@ export interface UpdateWorkspaceRequest {
 	readonly name?: string;
 }
 
+// From codersdk/deployment.go
+/**
+ * UpdateWorkspaceSSHGatewayRequest updates a stopped gateway. An omitted or
+ * empty Codex API key preserves the stored value. ClearCodexAPIKey explicitly
+ * removes it.
+ */
+export interface UpdateWorkspaceSSHGatewayRequest {
+	readonly config: WorkspaceSSHGatewayRuntimeConfig;
+	readonly codex_api_key?: string;
+	readonly clear_codex_api_key: boolean;
+}
+
 // From codersdk/workspacesharing.go
 /**
  * UpdateWorkspaceSharingSettingsRequest represents workspace sharing settings
@@ -11950,6 +11962,60 @@ export interface WorkspaceSSHGatewayInfo {
 	readonly host_key_fingerprint: string;
 	readonly alias_suffix: string;
 	readonly chatgpt_desktop_available: boolean;
+}
+
+// From codersdk/deployment.go
+/**
+ * WorkspaceSSHGatewayRuntimeConfig is the deployment-managed configuration
+ * for the workspace SSH gateway. Secrets and generated host key material are
+ * intentionally excluded.
+ */
+export interface WorkspaceSSHGatewayRuntimeConfig {
+	readonly listen_address: string;
+	readonly advertise_host: string;
+	readonly advertise_port: number;
+	readonly codex_base_url: string;
+	readonly codex_model: string;
+	readonly max_connections: number;
+	readonly max_pending_connections: number;
+	readonly max_pending_connections_per_ip: number;
+	readonly max_connections_per_user: number;
+	readonly max_channels_per_connection: number;
+	readonly auth_attempts_per_minute: number;
+	readonly auth_attempts_burst: number;
+}
+
+// From codersdk/deployment.go
+export type WorkspaceSSHGatewayState =
+	| "error"
+	| "running"
+	| "starting"
+	| "stopped"
+	| "stopping";
+
+export const WorkspaceSSHGatewayStates: WorkspaceSSHGatewayState[] = [
+	"error",
+	"running",
+	"starting",
+	"stopped",
+	"stopping",
+];
+
+// From codersdk/deployment.go
+/**
+ * WorkspaceSSHGatewayStatus is the administrator-facing gateway state. It
+ * never contains the Codex API key or SSH host private key.
+ */
+export interface WorkspaceSSHGatewayStatus {
+	readonly config: WorkspaceSSHGatewayRuntimeConfig;
+	readonly configured: boolean;
+	readonly desired_enabled: boolean;
+	readonly state: WorkspaceSSHGatewayState;
+	readonly api_key_configured: boolean;
+	readonly host_public_key: string;
+	readonly host_key_fingerprint: string;
+	readonly bound_address: string;
+	readonly error_code: string;
 }
 
 // From codersdk/workspace_ssh.go

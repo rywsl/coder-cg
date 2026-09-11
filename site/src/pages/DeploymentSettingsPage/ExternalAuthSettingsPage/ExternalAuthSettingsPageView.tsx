@@ -19,19 +19,15 @@ import {
 	TableRow,
 } from "#/components/Table/Table";
 import { TableEmpty } from "#/components/TableEmpty/TableEmpty";
-import { PremiumPaywallSmall } from "#/modules/paywall/PremiumPaywallSmall";
 import { docs } from "#/utils/docs";
 
 type ExternalAuthSettingsPageViewProps = {
 	config: DeploymentValues;
-	/** True when the deployment may configure more than one provider. */
-	isEntitled: boolean;
-	canViewPremium: boolean;
 };
 
 export const ExternalAuthSettingsPageView: FC<
 	ExternalAuthSettingsPageViewProps
-> = ({ config, isEntitled, canViewPremium }) => {
+> = ({ config }) => {
 	const { t: tI18n } = useTranslation("administration");
 
 	return (
@@ -60,31 +56,6 @@ export const ExternalAuthSettingsPageView: FC<
 					borderRadius: 4,
 				}}
 			/>
-			{!isEntitled && (
-				<div className="mt-6 mb-6">
-					<PremiumPaywallSmall
-						source="external_auth"
-						message={tI18n(
-							"DeploymentSettingsPage.ExternalAuthSettingsPage.ExternalAuthSettingsPageView.external_authentication_1b308ef4",
-						)}
-						description={tI18n(
-							"DeploymentSettingsPage.ExternalAuthSettingsPage.ExternalAuthSettingsPageView.connect_multiple_git_and_oauth_providers_at_once_af4660cc",
-						)}
-						features={[
-							tI18n(
-								"DeploymentSettingsPage.ExternalAuthSettingsPage.ExternalAuthSettingsPageView.connect_multiple_git_providers_at_once_987c6711",
-							),
-							tI18n(
-								"DeploymentSettingsPage.ExternalAuthSettingsPage.ExternalAuthSettingsPageView.match_providers_by_regex_per_host_4d8094a2",
-							),
-							tI18n(
-								"DeploymentSettingsPage.ExternalAuthSettingsPage.ExternalAuthSettingsPageView.separate_credentials_for_each_provider_07812dac",
-							),
-						]}
-						canViewPremium={canViewPremium}
-					/>
-				</div>
-			)}
 			<Table className="[&_td]:py-6 [&_td:last-child]:pl-8 [&_th:last-child]:pl-8">
 				<TableHeader>
 					<TableRow>

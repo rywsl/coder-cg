@@ -1008,6 +1008,14 @@ func (m queryMetricsStore) DeleteWorkspaceAgentPortSharesByTemplate(ctx context.
 	return r0
 }
 
+func (m queryMetricsStore) DeleteWorkspaceSSHGatewayCodexAPIKey(ctx context.Context) error {
+	start := time.Now()
+	r0 := m.s.DeleteWorkspaceSSHGatewayCodexAPIKey(ctx)
+	m.queryLatencies.WithLabelValues("DeleteWorkspaceSSHGatewayCodexAPIKey").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "DeleteWorkspaceSSHGatewayCodexAPIKey").Inc()
+	return r0
+}
+
 func (m queryMetricsStore) DeleteWorkspaceSSHKeyByID(ctx context.Context, arg database.DeleteWorkspaceSSHKeyByIDParams) (database.WorkspaceSshKey, error) {
 	start := time.Now()
 	r0, r1 := m.s.DeleteWorkspaceSSHKeyByID(ctx, arg)
@@ -4040,6 +4048,14 @@ func (m queryMetricsStore) GetWorkspaceSSHBootstrapTargetByAgentID(ctx context.C
 	return r0, r1
 }
 
+func (m queryMetricsStore) GetWorkspaceSSHGatewayConfig(ctx context.Context) (database.GetWorkspaceSSHGatewayConfigRow, error) {
+	start := time.Now()
+	r0, r1 := m.s.GetWorkspaceSSHGatewayConfig(ctx)
+	m.queryLatencies.WithLabelValues("GetWorkspaceSSHGatewayConfig").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "GetWorkspaceSSHGatewayConfig").Inc()
+	return r0, r1
+}
+
 func (m queryMetricsStore) GetWorkspaceSSHGatewayTarget(ctx context.Context, arg database.GetWorkspaceSSHGatewayTargetParams) (database.GetWorkspaceSSHGatewayTargetRow, error) {
 	start := time.Now()
 	r0, r1 := m.s.GetWorkspaceSSHGatewayTarget(ctx, arg)
@@ -6838,6 +6854,30 @@ func (m queryMetricsStore) UpsertWorkspaceAppAuditSession(ctx context.Context, a
 	m.queryLatencies.WithLabelValues("UpsertWorkspaceAppAuditSession").Observe(time.Since(start).Seconds())
 	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "UpsertWorkspaceAppAuditSession").Inc()
 	return r0, r1
+}
+
+func (m queryMetricsStore) UpsertWorkspaceSSHGatewayCodexAPIKey(ctx context.Context, codexApiKey string) error {
+	start := time.Now()
+	r0 := m.s.UpsertWorkspaceSSHGatewayCodexAPIKey(ctx, codexApiKey)
+	m.queryLatencies.WithLabelValues("UpsertWorkspaceSSHGatewayCodexAPIKey").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "UpsertWorkspaceSSHGatewayCodexAPIKey").Inc()
+	return r0
+}
+
+func (m queryMetricsStore) UpsertWorkspaceSSHGatewayConfig(ctx context.Context, config string) error {
+	start := time.Now()
+	r0 := m.s.UpsertWorkspaceSSHGatewayConfig(ctx, config)
+	m.queryLatencies.WithLabelValues("UpsertWorkspaceSSHGatewayConfig").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "UpsertWorkspaceSSHGatewayConfig").Inc()
+	return r0
+}
+
+func (m queryMetricsStore) UpsertWorkspaceSSHGatewayHostPrivateKey(ctx context.Context, hostPrivateKey string) error {
+	start := time.Now()
+	r0 := m.s.UpsertWorkspaceSSHGatewayHostPrivateKey(ctx, hostPrivateKey)
+	m.queryLatencies.WithLabelValues("UpsertWorkspaceSSHGatewayHostPrivateKey").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "UpsertWorkspaceSSHGatewayHostPrivateKey").Inc()
+	return r0
 }
 
 func (m queryMetricsStore) UsageEventExistsByID(ctx context.Context, id string) (bool, error) {

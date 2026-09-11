@@ -26,8 +26,6 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "#/components/Tooltip/Tooltip";
-import { PremiumPaywall } from "#/modules/paywall/PremiumPaywall";
-import type { Permissions } from "#/modules/permissions";
 import { docs } from "#/utils/docs";
 import { LastConnectionHead } from "./LastConnectionHead";
 import { ProvisionerRow } from "./ProvisionerRow";
@@ -38,12 +36,10 @@ type ProvisionersFilter = {
 };
 
 interface OrganizationProvisionersPageViewProps {
-	showPaywall: boolean | undefined;
 	provisioners: readonly ProvisionerDaemon[] | undefined;
 	buildVersion: string | undefined;
 	error: unknown;
 	filter: ProvisionersFilter;
-	permissions: Permissions;
 	onRetry: () => void;
 	onFilterChange: (filter: ProvisionersFilter) => void;
 }
@@ -51,12 +47,10 @@ interface OrganizationProvisionersPageViewProps {
 export const OrganizationProvisionersPageView: FC<
 	OrganizationProvisionersPageViewProps
 > = ({
-	showPaywall,
 	error,
 	provisioners,
 	buildVersion,
 	filter,
-	permissions,
 	onFilterChange,
 	onRetry,
 }) => {
@@ -111,136 +105,107 @@ export const OrganizationProvisionersPageView: FC<
 					</div>
 				</div>
 			)}
-			{showPaywall ? (
-				<PremiumPaywall
-					source="provisioners"
-					message={tI18n(
-						"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.provisioners_82d4a12e",
-					)}
-					description={tI18n(
-						"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.provisioners_run_your_terraform_to_create_templa_09060a53",
-					)}
-					features={[
-						tI18n(
-							"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.run_build_jobs_in_isolation_172531de",
-						),
-						tI18n(
-							"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.isolate_cloud_apis_from_coder_bab1d6d8",
-						),
-						tI18n(
-							"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.keep_secrets_off_the_coder_host_68379f8f",
-						),
-						tI18n(
-							"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.reduce_server_load_and_queue_times_af610661",
-						),
-					]}
-					canViewPremium={permissions.viewAllLicenses}
+			<div className="flex items-center gap-2 mb-6">
+				<Checkbox
+					id="offline-filter"
+					checked={filter.offline}
+					onCheckedChange={(checked) => {
+						onFilterChange({
+							...filter,
+							offline: checked === true,
+						});
+					}}
 				/>
-			) : (
-				<>
-					<div className="flex items-center gap-2 mb-6">
-						<Checkbox
-							id="offline-filter"
-							checked={filter.offline}
-							onCheckedChange={(checked) => {
-								onFilterChange({
-									...filter,
-									offline: checked === true,
-								});
-							}}
-						/>
-						<label
-							htmlFor="offline-filter"
-							className="text-sm font-medium leading-none"
-						>
+				<label
+					htmlFor="offline-filter"
+					className="text-sm font-medium leading-none"
+				>
+					{tI18n(
+						"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.include_offline_provisioners_616cce9e",
+					)}
+				</label>
+			</div>
+			<Table>
+				<TableHeader>
+					<TableRow>
+						<TableHead>
 							{tI18n(
-								"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.include_offline_provisioners_616cce9e",
+								"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.name_dcd1d522",
 							)}
-						</label>
-					</div>
-					<Table>
-						<TableHeader>
-							<TableRow>
-								<TableHead>
-									{tI18n(
-										"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.name_dcd1d522",
-									)}
-								</TableHead>
-								<TableHead>
-									{tI18n(
-										"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.key_99a52df3",
-									)}
-								</TableHead>
-								<TableHead>
-									{tI18n(
-										"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.version_dd167905",
-									)}
-								</TableHead>
-								<TableHead>
-									{tI18n(
-										"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.status_920e413c",
-									)}
-								</TableHead>
-								<TableHead>
-									{tI18n(
-										"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.tags_1331275b",
-									)}
-								</TableHead>
-								<TableHead>
-									<LastConnectionHead />
-								</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							{provisioners ? (
-								provisioners.length > 0 ? (
-									provisioners.map((provisioner) => (
-										<ProvisionerRow
-											provisioner={provisioner}
-											key={provisioner.id}
-											buildVersion={buildVersion}
-											defaultIsOpen={filter.ids.includes(provisioner.id)}
-										/>
-									))
-								) : (
-									<TableEmpty
-										message={tI18n(
-											"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.no_provisioners_found_6a5751fd",
-										)}
-										description={tI18n(
-											"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.a_provisioner_is_required_before_you_can_create__94114ee5",
-										)}
-										cta={
-											<Button size="sm" asChild>
-												<Link href={docs("/admin/provisioners")}>
-													{tI18n(
-														"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.create_a_provisioner_8365116e",
-													)}
-												</Link>
-											</Button>
-										}
-									/>
-								)
-							) : error ? (
-								<TableEmpty
-									message={tI18n(
-										"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.error_loading_the_provisioner_jobs_c06b62fc",
-									)}
-									cta={
-										<Button onClick={onRetry} size="sm">
-											{tI18n(
-												"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.retry_942087cc",
-											)}
-										</Button>
-									}
+						</TableHead>
+						<TableHead>
+							{tI18n(
+								"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.key_99a52df3",
+							)}
+						</TableHead>
+						<TableHead>
+							{tI18n(
+								"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.version_dd167905",
+							)}
+						</TableHead>
+						<TableHead>
+							{tI18n(
+								"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.status_920e413c",
+							)}
+						</TableHead>
+						<TableHead>
+							{tI18n(
+								"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.tags_1331275b",
+							)}
+						</TableHead>
+						<TableHead>
+							<LastConnectionHead />
+						</TableHead>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
+					{provisioners ? (
+						provisioners.length > 0 ? (
+							provisioners.map((provisioner) => (
+								<ProvisionerRow
+									provisioner={provisioner}
+									key={provisioner.id}
+									buildVersion={buildVersion}
+									defaultIsOpen={filter.ids.includes(provisioner.id)}
 								/>
-							) : (
-								<TableLoader />
+							))
+						) : (
+							<TableEmpty
+								message={tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.no_provisioners_found_6a5751fd",
+								)}
+								description={tI18n(
+									"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.a_provisioner_is_required_before_you_can_create__94114ee5",
+								)}
+								cta={
+									<Button size="sm" asChild>
+										<Link href={docs("/admin/provisioners")}>
+											{tI18n(
+												"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.create_a_provisioner_8365116e",
+											)}
+										</Link>
+									</Button>
+								}
+							/>
+						)
+					) : error ? (
+						<TableEmpty
+							message={tI18n(
+								"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.error_loading_the_provisioner_jobs_c06b62fc",
 							)}
-						</TableBody>
-					</Table>
-				</>
-			)}
+							cta={
+								<Button onClick={onRetry} size="sm">
+									{tI18n(
+										"OrganizationSettingsPage.OrganizationProvisionersPage.OrganizationProvisionersPageView.retry_942087cc",
+									)}
+								</Button>
+							}
+						/>
+					) : (
+						<TableLoader />
+					)}
+				</TableBody>
+			</Table>
 		</section>
 	);
 };

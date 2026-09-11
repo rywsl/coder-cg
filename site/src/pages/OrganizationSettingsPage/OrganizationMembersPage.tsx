@@ -4,7 +4,6 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams, useSearchParams } from "react-router";
 import { toast } from "sonner";
 import { getErrorDetail, getErrorMessage } from "#/api/errors";
-import { groupsByUserIdInOrganization } from "#/api/queries/groups";
 import {
 	addOrganizationMember,
 	paginatedOrganizationMembers,
@@ -22,7 +21,6 @@ import { EmptyState } from "#/components/EmptyState/EmptyState";
 import { useFilter } from "#/components/Filter/Filter";
 import { useAuthenticated } from "#/hooks/useAuthenticated";
 import { usePaginatedQuery } from "#/hooks/usePaginatedQuery";
-import { useDashboard } from "#/modules/dashboard/useDashboard";
 import { useOrganizationSettings } from "#/modules/management/OrganizationSettingsLayout";
 import { RequirePermission } from "#/modules/permissions/RequirePermission";
 import { RoleSelectorDialog } from "#/modules/roles/RoleSelectorDialog";
@@ -38,14 +36,9 @@ const OrganizationMembersPage: FC = () => {
 		organization: string;
 	};
 	const { organization, organizationPermissions } = useOrganizationSettings();
-	const { entitlements } = useDashboard();
 	const searchParamsResult = useSearchParams();
 
 	const organizationRolesQuery = useQuery(organizationRoles(organizationName));
-	const groupsByUserIdQuery = useQuery(
-		groupsByUserIdInOrganization(organizationName),
-	);
-
 	const membersQuery = usePaginatedQuery(
 		paginatedOrganizationMembers(organizationName, searchParamsResult[0]),
 	);
@@ -54,13 +47,6 @@ const OrganizationMembersPage: FC = () => {
 		onSearchParamsChange: searchParamsResult[1],
 		onUpdate: membersQuery.goToFirstPage,
 	});
-
-	const members = membersQuery.data?.members.map(
-		(member: OrganizationMemberWithUserData) => {
-			const groups = groupsByUserIdQuery.data?.get(member.user_id) ?? [];
-			return { ...member, groups };
-		},
-	);
 
 	const addMemberMutation = useMutation(
 		addOrganizationMember(queryClient, organizationName),
@@ -134,7 +120,7 @@ const OrganizationMembersPage: FC = () => {
 				filterProps={{ filter: filterProps }}
 				organizationName={organizationName}
 				membersQuery={membersQuery}
-				members={members}
+				members={membersQuery.data?.members}
 				addMembers={async (users: User[]) => {
 					// TODO: Replace with a batch endpoint (POST /organizations/{org}/members)
 					// to add all users in a single request instead of N individual calls.
@@ -150,7 +136,6 @@ const OrganizationMembersPage: FC = () => {
 				me={me.id}
 				canEditMembers={organizationPermissions.editMembers}
 				canViewMembers={organizationPermissions.viewMembers}
-				canViewActivity={entitlements.features.audit_log.enabled}
 			/>
 			<RoleSelectorDialog
 				key={memberToEditRoles?.username}

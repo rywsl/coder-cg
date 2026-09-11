@@ -2790,6 +2790,13 @@ func (q *querier) DeleteWorkspaceAgentPortSharesByTemplate(ctx context.Context, 
 	return q.db.DeleteWorkspaceAgentPortSharesByTemplate(ctx, templateID)
 }
 
+func (q *querier) DeleteWorkspaceSSHGatewayCodexAPIKey(ctx context.Context) error {
+	if err := q.authorizeContext(ctx, policy.ActionUpdate, rbac.ResourceDeploymentConfig); err != nil {
+		return err
+	}
+	return q.db.DeleteWorkspaceSSHGatewayCodexAPIKey(ctx)
+}
+
 func (q *querier) DeleteWorkspaceSSHKeyByID(ctx context.Context, arg database.DeleteWorkspaceSSHKeyByIDParams) (database.WorkspaceSshKey, error) {
 	if err := q.authorizeContext(ctx, policy.ActionUpdatePersonal, rbac.ResourceUserObject(arg.UserID)); err != nil {
 		return database.WorkspaceSshKey{}, err
@@ -6065,6 +6072,13 @@ func (q *querier) GetWorkspaceSSHBootstrapTargetByAgentID(ctx context.Context, i
 		return database.GetWorkspaceSSHBootstrapTargetByAgentIDRow{}, err
 	}
 	return q.db.GetWorkspaceSSHBootstrapTargetByAgentID(ctx, id)
+}
+
+func (q *querier) GetWorkspaceSSHGatewayConfig(ctx context.Context) (database.GetWorkspaceSSHGatewayConfigRow, error) {
+	if err := q.authorizeContext(ctx, policy.ActionRead, rbac.ResourceDeploymentConfig); err != nil {
+		return database.GetWorkspaceSSHGatewayConfigRow{}, err
+	}
+	return q.db.GetWorkspaceSSHGatewayConfig(ctx)
 }
 
 func (q *querier) GetWorkspaceSSHGatewayTarget(ctx context.Context, arg database.GetWorkspaceSSHGatewayTargetParams) (database.GetWorkspaceSSHGatewayTargetRow, error) {
@@ -9618,6 +9632,27 @@ func (q *querier) UpsertWorkspaceAppAuditSession(ctx context.Context, arg databa
 		return false, err
 	}
 	return q.db.UpsertWorkspaceAppAuditSession(ctx, arg)
+}
+
+func (q *querier) UpsertWorkspaceSSHGatewayCodexAPIKey(ctx context.Context, codexAPIKey string) error {
+	if err := q.authorizeContext(ctx, policy.ActionUpdate, rbac.ResourceDeploymentConfig); err != nil {
+		return err
+	}
+	return q.db.UpsertWorkspaceSSHGatewayCodexAPIKey(ctx, codexAPIKey)
+}
+
+func (q *querier) UpsertWorkspaceSSHGatewayConfig(ctx context.Context, config string) error {
+	if err := q.authorizeContext(ctx, policy.ActionUpdate, rbac.ResourceDeploymentConfig); err != nil {
+		return err
+	}
+	return q.db.UpsertWorkspaceSSHGatewayConfig(ctx, config)
+}
+
+func (q *querier) UpsertWorkspaceSSHGatewayHostPrivateKey(ctx context.Context, hostPrivateKey string) error {
+	if err := q.authorizeContext(ctx, policy.ActionUpdate, rbac.ResourceDeploymentConfig); err != nil {
+		return err
+	}
+	return q.db.UpsertWorkspaceSSHGatewayHostPrivateKey(ctx, hostPrivateKey)
 }
 
 func (q *querier) UsageEventExistsByID(ctx context.Context, id string) (bool, error) {

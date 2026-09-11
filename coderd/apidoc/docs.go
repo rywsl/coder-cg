@@ -3910,6 +3910,118 @@ const docTemplate = `{
                 ]
             }
         },
+        "/api/v2/deployment/workspace-ssh-gateway": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "General"
+                ],
+                "summary": "Get workspace SSH gateway configuration",
+                "operationId": "get-workspace-ssh-gateway",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.WorkspaceSSHGatewayStatus"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "CoderSessionToken": []
+                    }
+                ]
+            },
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "General"
+                ],
+                "summary": "Update workspace SSH gateway configuration",
+                "operationId": "update-workspace-ssh-gateway",
+                "parameters": [
+                    {
+                        "description": "Workspace SSH gateway configuration",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.UpdateWorkspaceSSHGatewayRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.WorkspaceSSHGatewayStatus"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "CoderSessionToken": []
+                    }
+                ]
+            }
+        },
+        "/api/v2/deployment/workspace-ssh-gateway/start": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "General"
+                ],
+                "summary": "Start workspace SSH gateway",
+                "operationId": "start-workspace-ssh-gateway",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.WorkspaceSSHGatewayStatus"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "CoderSessionToken": []
+                    }
+                ]
+            }
+        },
+        "/api/v2/deployment/workspace-ssh-gateway/stop": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "General"
+                ],
+                "summary": "Stop workspace SSH gateway",
+                "operationId": "stop-workspace-ssh-gateway",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.WorkspaceSSHGatewayStatus"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "CoderSessionToken": []
+                    }
+                ]
+            }
+        },
         "/api/v2/derp-map": {
             "get": {
                 "tags": [
@@ -30293,6 +30405,20 @@ const docTemplate = `{
                 }
             }
         },
+        "codersdk.UpdateWorkspaceSSHGatewayRequest": {
+            "type": "object",
+            "properties": {
+                "clear_codex_api_key": {
+                    "type": "boolean"
+                },
+                "codex_api_key": {
+                    "type": "string"
+                },
+                "config": {
+                    "$ref": "#/definitions/codersdk.WorkspaceSSHGatewayRuntimeConfig"
+                }
+            }
+        },
         "codersdk.UpdateWorkspaceSharingSettingsRequest": {
             "type": "object",
             "properties": {
@@ -32730,6 +32856,96 @@ const docTemplate = `{
                 },
                 "port": {
                     "type": "integer"
+                }
+            }
+        },
+        "codersdk.WorkspaceSSHGatewayRuntimeConfig": {
+            "type": "object",
+            "properties": {
+                "advertise_host": {
+                    "type": "string"
+                },
+                "advertise_port": {
+                    "type": "integer"
+                },
+                "auth_attempts_burst": {
+                    "type": "integer"
+                },
+                "auth_attempts_per_minute": {
+                    "type": "integer"
+                },
+                "codex_base_url": {
+                    "type": "string"
+                },
+                "codex_model": {
+                    "type": "string"
+                },
+                "listen_address": {
+                    "type": "string"
+                },
+                "max_channels_per_connection": {
+                    "type": "integer"
+                },
+                "max_connections": {
+                    "type": "integer"
+                },
+                "max_connections_per_user": {
+                    "type": "integer"
+                },
+                "max_pending_connections": {
+                    "type": "integer"
+                },
+                "max_pending_connections_per_ip": {
+                    "type": "integer"
+                }
+            }
+        },
+        "codersdk.WorkspaceSSHGatewayState": {
+            "type": "string",
+            "enum": [
+                "stopped",
+                "starting",
+                "running",
+                "stopping",
+                "error"
+            ],
+            "x-enum-varnames": [
+                "WorkspaceSSHGatewayStateStopped",
+                "WorkspaceSSHGatewayStateStarting",
+                "WorkspaceSSHGatewayStateRunning",
+                "WorkspaceSSHGatewayStateStopping",
+                "WorkspaceSSHGatewayStateError"
+            ]
+        },
+        "codersdk.WorkspaceSSHGatewayStatus": {
+            "type": "object",
+            "properties": {
+                "api_key_configured": {
+                    "type": "boolean"
+                },
+                "bound_address": {
+                    "type": "string"
+                },
+                "config": {
+                    "$ref": "#/definitions/codersdk.WorkspaceSSHGatewayRuntimeConfig"
+                },
+                "configured": {
+                    "type": "boolean"
+                },
+                "desired_enabled": {
+                    "type": "boolean"
+                },
+                "error_code": {
+                    "type": "string"
+                },
+                "host_key_fingerprint": {
+                    "type": "string"
+                },
+                "host_public_key": {
+                    "type": "string"
+                },
+                "state": {
+                    "$ref": "#/definitions/codersdk.WorkspaceSSHGatewayState"
                 }
             }
         },

@@ -70,16 +70,6 @@ const AISettingsSidebarView: FC<AISettingsSidebarViewProps> = ({
 	return (
 		<BaseSidebar>
 			<div className="flex flex-col gap-1">
-				{permissions.viewDeploymentConfig && (
-					<SidebarNavItem href="/ai/settings/governance">
-						{tI18n("management.AISettingsSidebarView.ai_governance_2ab040bd")}
-					</SidebarNavItem>
-				)}
-				{permissions.viewAIGatewayKeys && (
-					<SidebarNavItem href="/ai/settings/gateway-keys">
-						{tI18n("management.AISettingsSidebarView.ai_gateway_keys_cab8f75b")}
-					</SidebarNavItem>
-				)}
 				{permissions.viewAnyAIProvider && (
 					<SidebarNavItem href="/ai/settings/providers">
 						{tI18n("management.AISettingsSidebarView.providers_996c32b3")}

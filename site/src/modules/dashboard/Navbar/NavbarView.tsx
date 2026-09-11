@@ -7,7 +7,6 @@ import type * as TypesGen from "#/api/typesGenerated";
 import { Badge } from "#/components/Badge/Badge";
 import { Button } from "#/components/Button/Button";
 import { ProductLogo } from "#/components/Icons/ProductLogo";
-import type { ProxyContextValue } from "#/contexts/ProxyContext";
 import { NotificationsInbox } from "#/modules/notifications/NotificationsInbox/NotificationsInbox";
 import { getPrereleaseFlag } from "#/utils/buildInfo";
 import {
@@ -16,7 +15,6 @@ import {
 } from "./AdminSettings";
 import { AdminSettingsDropdown } from "./DeploymentDropdown";
 import { MobileMenu } from "./MobileMenu";
-import { ProxyMenu } from "./ProxyMenu";
 import { SupportIcon } from "./SupportIcon";
 import { UserDropdown } from "./UserDropdown/UserDropdown";
 
@@ -28,8 +26,6 @@ interface NavbarViewProps {
 	onSignOut: () => void;
 	adminPermissions: AdminSettingsPermissions;
 	canCreateChat: boolean;
-	canViewLicenses: boolean;
-	proxyContextValue?: ProxyContextValue;
 }
 
 const linkStyles = {
@@ -46,8 +42,6 @@ export const NavbarView: FC<NavbarViewProps> = ({
 	onSignOut,
 	adminPermissions,
 	canCreateChat,
-	canViewLicenses,
-	proxyContextValue,
 }) => {
 	const prerelease = getPrereleaseFlag(buildInfo);
 
@@ -105,12 +99,6 @@ export const NavbarView: FC<NavbarViewProps> = ({
 					</div>
 				))}
 
-				{proxyContextValue && (
-					<div className="hidden md:block">
-						<ProxyMenu proxyContextValue={proxyContextValue} />
-					</div>
-				)}
-
 				{canViewAdminSettings(adminPermissions) && (
 					<div className="hidden md:block">
 						<AdminSettingsDropdown permissions={adminPermissions} />
@@ -134,13 +122,11 @@ export const NavbarView: FC<NavbarViewProps> = ({
 						supportLinks={supportLinks?.filter((link) => !isNavbarLink(link))}
 						codernautsEnabled={codernautsEnabled}
 						onSignOut={onSignOut}
-						canViewLicenses={canViewLicenses}
 					/>
 				</div>
 
 				<div className="md:hidden">
 					<MobileMenu
-						proxyContextValue={proxyContextValue}
 						adminPermissions={adminPermissions}
 						user={user}
 						supportLinks={supportLinks}

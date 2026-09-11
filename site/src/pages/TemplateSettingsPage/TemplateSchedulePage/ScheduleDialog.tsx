@@ -98,15 +98,23 @@ export const ScheduleDialog: FC<ScheduleDialogProps> = ({
 								)}{" "}
 								<strong>{inactiveWorkspacesToGoDormant}</strong>{" "}
 								{inactiveWorkspacesToGoDormant === 1
-									? "workspace"
-									: "workspaces"}{" "}
+									? tI18n(
+											"TemplateSettingsPage.TemplateSchedulePage.ScheduleDialog.workspace_21a3230e",
+										)
+									: tI18n(
+											"TemplateSettingsPage.TemplateSchedulePage.ScheduleDialog.workspaces_6e8d7998",
+										)}{" "}
 								{tI18n(
 									"TemplateSettingsPage.TemplateSchedulePage.ScheduleDialog.being_immediately_transitioned_to_the_dormant_st_3788c2de",
 								)}{" "}
 								<strong>{inactiveWorkspacesToGoDormantInWeek}</strong>{" "}
 								{inactiveWorkspacesToGoDormantInWeek === 1
-									? "workspace"
-									: "workspaces"}{" "}
+									? tI18n(
+											"TemplateSettingsPage.TemplateSchedulePage.ScheduleDialog.workspace_21a3230e",
+										)
+									: tI18n(
+											"TemplateSettingsPage.TemplateSchedulePage.ScheduleDialog.workspaces_6e8d7998",
+										)}{" "}
 								{tI18n(
 									"TemplateSettingsPage.TemplateSchedulePage.ScheduleDialog.over_the_next_7_days_to_prevent_this_do_you_want_9fa52bc7",
 								)}
@@ -144,15 +152,23 @@ export const ScheduleDialog: FC<ScheduleDialogProps> = ({
 								)}{" "}
 								<strong>{dormantWorkspacesToBeDeleted}</strong>{" "}
 								{dormantWorkspacesToBeDeleted === 1
-									? "workspace"
-									: "workspaces"}{" "}
+									? tI18n(
+											"TemplateSettingsPage.TemplateSchedulePage.ScheduleDialog.workspace_21a3230e",
+										)
+									: tI18n(
+											"TemplateSettingsPage.TemplateSchedulePage.ScheduleDialog.workspaces_6e8d7998",
+										)}{" "}
 								{tI18n(
 									"TemplateSettingsPage.TemplateSchedulePage.ScheduleDialog.being_immediately_deleted_and_762e17c6",
 								)}{" "}
 								<strong>{dormantWorkspacesToBeDeletedInWeek}</strong>{" "}
 								{dormantWorkspacesToBeDeletedInWeek === 1
-									? "workspace"
-									: "workspaces"}{" "}
+									? tI18n(
+											"TemplateSettingsPage.TemplateSchedulePage.ScheduleDialog.workspace_21a3230e",
+										)
+									: tI18n(
+											"TemplateSettingsPage.TemplateSchedulePage.ScheduleDialog.workspaces_6e8d7998",
+										)}{" "}
 								{tI18n(
 									"TemplateSettingsPage.TemplateSchedulePage.ScheduleDialog.over_the_next_7_days_to_prevent_this_do_you_want_1e29716f",
 								)}

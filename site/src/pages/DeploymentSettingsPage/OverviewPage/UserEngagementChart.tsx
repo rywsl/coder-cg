@@ -1,7 +1,6 @@
 import { ChevronRightIcon } from "lucide-react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { Link as RouterLink } from "react-router";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { Button } from "#/components/Button/Button";
 import {
@@ -15,7 +14,6 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "#/components/Collapsible/Collapsible";
-import { Link } from "#/components/Link/Link";
 import { Spinner } from "#/components/Spinner/Spinner";
 import { i18n } from "#/i18n";
 import { currentIntlLocale } from "#/i18n/locale";
@@ -77,27 +75,7 @@ export const UserEngagementChart: FC<UserEngagementChartProps> = ({ data }) => {
 					>
 						<p>
 							{tI18n(
-								"DeploymentSettingsPage.OverviewPage.UserEngagementChart.a_user_is_considered_engaged_if_they_initiate_a__70d06ac4",
-							)}{" "}
-							<Link size="sm" asChild>
-								<RouterLink to="/audit">
-									{tI18n(
-										"DeploymentSettingsPage.OverviewPage.UserEngagementChart.activity_audit_11dfc62e",
-									)}
-								</RouterLink>
-							</Link>{" "}
-							{tI18n(
-								"DeploymentSettingsPage.OverviewPage.UserEngagementChart.and_6201111b",
-							)}{" "}
-							<Link size="sm" asChild>
-								<RouterLink to="/deployment/licenses">
-									{tI18n(
-										"DeploymentSettingsPage.OverviewPage.UserEngagementChart.license_consumption_33ed153a",
-									)}
-								</RouterLink>
-							</Link>{" "}
-							{tI18n(
-								"DeploymentSettingsPage.OverviewPage.UserEngagementChart.tools_8e194cf4",
+								"DeploymentSettingsPage.OverviewPage.UserEngagementChart.a_user_is_considered_engaged_when_they_interact_360b37cf",
 							)}
 						</p>
 					</CollapsibleContent>
