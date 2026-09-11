@@ -106,7 +106,7 @@ export const DisplaysErrorWhenNameIsTaken: Story = {
 	},
 };
 
-export const DeprecatesTemplateWithAccessControl: Story = {
+export const HidesDeprecationWithAccessControl: Story = {
 	parameters: {
 		features: ["access_control"],
 	},
@@ -117,18 +117,23 @@ export const DeprecatesTemplateWithAccessControl: Story = {
 			API,
 			"updateTemplateMeta",
 		).mockResolvedValue(MockTemplate);
-		const deprecationMessage = "This template is deprecated";
-		await deprecateTemplate(canvas, user, deprecationMessage);
+		await fillAndSubmitForm(canvas, user);
+		expect(
+			canvas.queryByLabelText("Deprecation Message"),
+		).not.toBeInTheDocument();
 		await waitFor(() => expect(updateTemplateMetaSpy).toHaveBeenCalledTimes(1));
 		const [templateId, data] = updateTemplateMetaSpy.mock.calls[0];
 		expect(templateId).toEqual(MockTemplate.id);
 		expect(data).toEqual(
-			expect.objectContaining({ deprecation_message: deprecationMessage }),
+			expect.objectContaining({
+				deprecation_message: "",
+				agents_allowed: false,
+			}),
 		);
 	},
 };
 
-export const DoesNotDeprecateWithoutAccessControl: Story = {
+export const HidesDeprecationWithoutAccessControl: Story = {
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
 		const user = userEvent.setup();
@@ -136,15 +141,19 @@ export const DoesNotDeprecateWithoutAccessControl: Story = {
 			API,
 			"updateTemplateMeta",
 		).mockResolvedValue(MockTemplate);
-		await deprecateTemplate(
-			canvas,
-			user,
-			"This template should not be able to deprecate",
-		);
+		await fillAndSubmitForm(canvas, user);
+		expect(
+			canvas.queryByLabelText("Deprecation Message"),
+		).not.toBeInTheDocument();
 		await waitFor(() => expect(updateTemplateMetaSpy).toHaveBeenCalledTimes(1));
 		const [templateId, data] = updateTemplateMetaSpy.mock.calls[0];
 		expect(templateId).toEqual(MockTemplate.id);
-		expect(data).toEqual(expect.objectContaining({ deprecation_message: "" }));
+		expect(data).toEqual(
+			expect.objectContaining({
+				deprecation_message: "",
+				agents_allowed: false,
+			}),
+		);
 	},
 };
 
@@ -179,15 +188,5 @@ async function fillAndSubmitForm(
 	});
 	await user.click(allowCancelJobsField);
 
-	await user.click(await canvas.findByRole("button", { name: /save/i }));
-}
-
-async function deprecateTemplate(
-	canvas: ReturnType<typeof within>,
-	user: ReturnType<typeof userEvent.setup>,
-	message: string,
-) {
-	const deprecationField = await canvas.findByLabelText("Deprecation Message");
-	await user.type(deprecationField, message);
 	await user.click(await canvas.findByRole("button", { name: /save/i }));
 }
