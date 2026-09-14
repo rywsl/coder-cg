@@ -268,10 +268,9 @@ export default defineConfig({
 					setupFiles: [".storybook/vitest.setup.ts"],
 					// Stop early on systemic failures.
 					bail: 5,
-					// Cap concurrent browser iframes. The default
-					// (os.availableParallelism, 96 on dev workspaces)
-					// overwhelms vite's transform pipeline on cold cache.
-					maxWorkers: 2,
+					// Browser iframes share page focus. Serialize files so keyboard
+					// input and popovers cannot interfere with another story.
+					maxWorkers: 1,
 				},
 			},
 		],

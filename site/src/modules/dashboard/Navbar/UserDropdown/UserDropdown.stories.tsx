@@ -1,5 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, screen, spyOn, userEvent, within } from "storybook/test";
+import {
+	expect,
+	screen,
+	spyOn,
+	userEvent,
+	waitFor,
+	within,
+} from "storybook/test";
 import { MockBuildInfo, MockUserOwner } from "#/testHelpers/entities";
 import { withDashboardProvider } from "#/testHelpers/storybook";
 import { UserDropdown } from "./UserDropdown";
@@ -65,7 +72,9 @@ export const CommercialFeatureHidden: Story = {
 		await expect(
 			menu.queryByText(/AI spend|trial|premium/i),
 		).not.toBeInTheDocument();
-		await expect(menu.getByRole("menuitem", { name: /Account/ })).toBeVisible();
+		await waitFor(() => {
+			expect(menu.getByRole("menuitem", { name: /Account/ })).toBeVisible();
+		});
 	},
 };
 
