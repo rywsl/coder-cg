@@ -349,7 +349,8 @@ printf '%s' "$CODER_CODEX_API_KEY" > "$FAKE_CODEX_API_KEY_FILE"
 		require.NotContains(t, enrollmentPath, token)
 
 		bashScript := workspaceSSHEnrollmentScript(ctx, t, ownerClient, enrollmentPath+"/script?platform=bash", token)
-		require.Contains(t, bashScript, "Host "+alias+" *.ssh.coder")
+		require.Contains(t, bashScript, "Host "+alias+"\n")
+		require.Contains(t, bashScript, "  User "+alias+"\n")
 		require.Contains(t, bashScript, "StrictHostKeyChecking yes")
 		require.Contains(t, bashScript, "ProxyCommand none")
 		require.Contains(t, bashScript, "coder_chatgpt_known_hosts_")
@@ -358,7 +359,8 @@ printf '%s' "$CODER_CODEX_API_KEY" > "$FAKE_CODEX_API_KEY_FILE"
 		require.NotContains(t, bashScript, "test-only-codex-api-key")
 
 		powerShellScript := workspaceSSHEnrollmentScript(ctx, t, ownerClient, enrollmentPath+"/script?platform=powershell", token)
-		require.Contains(t, powerShellScript, "Host "+alias+" *.ssh.coder")
+		require.Contains(t, powerShellScript, "'Host "+alias+"'")
+		require.Contains(t, powerShellScript, "'  User "+alias+"'")
 		require.Contains(t, powerShellScript, "StrictHostKeyChecking yes")
 		require.Contains(t, powerShellScript, "ProxyCommand none")
 		require.NotContains(t, powerShellScript, "test-only-codex-api-key")

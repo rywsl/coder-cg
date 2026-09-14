@@ -677,7 +677,8 @@ func powershellQuote(value string) string {
 
 func (api *API) workspaceSSHBashScript(registrationURL, token, locale string, target workspaceSSHDesktopTarget) string {
 	gateway := api.workspaceSSHGatewayInfo()
-	marker := "CODER CHATGPT DESKTOP " + api.DeploymentID
+	deploymentMarker := "CODER CHATGPT DESKTOP " + api.DeploymentID
+	marker := deploymentMarker + " " + target.Alias
 	keyName := "coder_chatgpt_ed25519_" + api.DeploymentID
 	knownHostsName := "coder_chatgpt_known_hosts_" + api.DeploymentID
 	knownHost := gateway.Host
@@ -705,14 +706,16 @@ printf '%%s %%s\n' %s %s >"${known_hosts_file}"
 chmod 600 "${known_hosts_file}"
 begin=%s
 end=%s
+deployment_begin=%s
+deployment_end=%s
 touch "${config_file}"
 tmp_file="$(mktemp "${ssh_dir}/config.XXXXXX")"
 cat >"${tmp_file}" <<'CODER_SSH_CONFIG'
 %s
-Host %s *.%s
+Host %s
   HostName %s
   Port %d
-  User %%n
+  User %s
   ProxyCommand none
   IdentityFile ~/.ssh/%s
   IdentitiesOnly yes
@@ -720,9 +723,9 @@ Host %s *.%s
   UserKnownHostsFile ~/.ssh/%s
 %s
 CODER_SSH_CONFIG
-awk -v begin="${begin}" -v end="${end}" '
-  $0 == begin { skip=1; next }
-  $0 == end { skip=0; next }
+awk -v begin="${begin}" -v end="${end}" -v deployment_begin="${deployment_begin}" -v deployment_end="${deployment_end}" '
+  $0 == begin || $0 == deployment_begin { skip=1; next }
+  $0 == end || $0 == deployment_end { skip=0; next }
   !skip { print }
 ' "${config_file}" >>"${tmp_file}"
 mv "${tmp_file}" "${config_file}"
@@ -739,12 +742,13 @@ elif command -v xdg-open >/dev/null 2>&1; then
 else
   printf %s %s %s
 fi
-`, keyName, knownHostsName, shellquote.Join(knownHost), shellquote.Join(gateway.HostPublicKey), shellquote.Join("# BEGIN "+marker), shellquote.Join("# END "+marker), "# BEGIN "+marker, target.Alias, gateway.AliasSuffix, gateway.Host, gateway.Port, keyName, knownHostsName, "# END "+marker, shellquote.Join("Authorization: Bearer "+token), shellquote.Join(registrationURL), shellquote.Join(target.DeepLink), shellquote.Join(fallbackMessage), shellquote.Join(target.Alias), shellquote.Join(target.ProjectPath))
+`, keyName, knownHostsName, shellquote.Join(knownHost), shellquote.Join(gateway.HostPublicKey), shellquote.Join("# BEGIN "+marker), shellquote.Join("# END "+marker), shellquote.Join("# BEGIN "+deploymentMarker), shellquote.Join("# END "+deploymentMarker), "# BEGIN "+marker, target.Alias, gateway.Host, gateway.Port, target.Alias, keyName, knownHostsName, "# END "+marker, shellquote.Join("Authorization: Bearer "+token), shellquote.Join(registrationURL), shellquote.Join(target.DeepLink), shellquote.Join(fallbackMessage), shellquote.Join(target.Alias), shellquote.Join(target.ProjectPath))
 }
 
 func (api *API) workspaceSSHPowerShellScript(registrationURL, token, locale string, target workspaceSSHDesktopTarget) string {
 	gateway := api.workspaceSSHGatewayInfo()
-	marker := "CODER CHATGPT DESKTOP " + api.DeploymentID
+	deploymentMarker := "CODER CHATGPT DESKTOP " + api.DeploymentID
+	marker := deploymentMarker + " " + target.Alias
 	keyName := "coder_chatgpt_ed25519_" + api.DeploymentID
 	knownHostsName := "coder_chatgpt_known_hosts_" + api.DeploymentID
 	knownHost := gateway.Host
@@ -771,12 +775,14 @@ $utf8 = New-Object System.Text.UTF8Encoding($false)
 [IO.File]::WriteAllText($knownHostsFile, %s + ' ' + %s + [Environment]::NewLine, $utf8)
 $begin = %s
 $end = %s
+$deploymentBegin = %s
+$deploymentEnd = %s
 $lines = if (Test-Path $configFile) { [IO.File]::ReadAllLines($configFile) } else { @() }
 $kept = New-Object System.Collections.Generic.List[string]
 $skip = $false
 foreach ($line in $lines) {
-  if ($line -eq $begin) { $skip = $true; continue }
-  if ($line -eq $end) { $skip = $false; continue }
+  if ($line -eq $begin -or $line -eq $deploymentBegin) { $skip = $true; continue }
+  if ($line -eq $end -or $line -eq $deploymentEnd) { $skip = $false; continue }
   if (-not $skip) { $kept.Add($line) }
 }
 $block = @(
@@ -784,7 +790,7 @@ $block = @(
   %s,
   %s,
   %s,
-  '  User %%n',
+  %s,
   '  ProxyCommand none',
   %s,
   '  IdentitiesOnly yes',
@@ -803,5 +809,5 @@ try {
 } catch {
   Write-Error %s
 }
-`, powershellQuote(keyName), powershellQuote(knownHostsName), powershellQuote(keygenError), powershellQuote(knownHost), powershellQuote(gateway.HostPublicKey), powershellQuote("# BEGIN "+marker), powershellQuote("# END "+marker), powershellQuote("Host "+target.Alias+" *."+gateway.AliasSuffix), powershellQuote("  HostName "+gateway.Host), powershellQuote(fmt.Sprintf("  Port %d", gateway.Port)), powershellQuote("  IdentityFile ~/.ssh/"+keyName), powershellQuote("  UserKnownHostsFile ~/.ssh/"+knownHostsName), powershellQuote(registrationURL), powershellQuote("Bearer "+token), powershellQuote(target.DeepLink), powershellQuote(launchError))
+`, powershellQuote(keyName), powershellQuote(knownHostsName), powershellQuote(keygenError), powershellQuote(knownHost), powershellQuote(gateway.HostPublicKey), powershellQuote("# BEGIN "+marker), powershellQuote("# END "+marker), powershellQuote("# BEGIN "+deploymentMarker), powershellQuote("# END "+deploymentMarker), powershellQuote("Host "+target.Alias), powershellQuote("  HostName "+gateway.Host), powershellQuote(fmt.Sprintf("  Port %d", gateway.Port)), powershellQuote("  User "+target.Alias), powershellQuote("  IdentityFile ~/.ssh/"+keyName), powershellQuote("  UserKnownHostsFile ~/.ssh/"+knownHostsName), powershellQuote(registrationURL), powershellQuote("Bearer "+token), powershellQuote(target.DeepLink), powershellQuote(launchError))
 }

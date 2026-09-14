@@ -105,7 +105,9 @@ func TestWorkspaceSSHSetupScripts(t *testing.T) {
 	bashScript := api.workspaceSSHBashScript("https://coder.example.test/enrollment/id", "test-token", "zh-CN", target)
 	_, err = syntax.NewParser().Parse(strings.NewReader(bashScript), "workspace-ssh-bootstrap.sh")
 	require.NoError(t, err)
-	require.Contains(t, bashScript, "Host dev.workspace.owner.ssh.coder *.ssh.coder")
+	require.Contains(t, bashScript, "Host dev.workspace.owner.ssh.coder\n")
+	require.Contains(t, bashScript, "  User "+target.Alias+"\n")
+	require.NotContains(t, bashScript, "User %n")
 	require.Contains(t, bashScript, "ProxyCommand none")
 	require.Contains(t, bashScript, "[ssh.coder.example.test]:2222")
 	require.Contains(t, bashScript, "请打开 ChatGPT Desktop 的连接设置")
@@ -113,7 +115,9 @@ func TestWorkspaceSSHSetupScripts(t *testing.T) {
 	require.Less(t, strings.Index(bashScript, "cat >\"${tmp_file}\""), strings.Index(bashScript, "awk -v begin="))
 
 	powerShellScript := api.workspaceSSHPowerShellScript("https://coder.example.test/enrollment/id", "test-token", "zh-CN", target)
-	require.Contains(t, powerShellScript, "'Host dev.workspace.owner.ssh.coder *.ssh.coder'")
+	require.Contains(t, powerShellScript, "'Host dev.workspace.owner.ssh.coder'")
+	require.Contains(t, powerShellScript, "'  User "+target.Alias+"'")
+	require.NotContains(t, powerShellScript, "User %n")
 	require.Contains(t, powerShellScript, "'  ProxyCommand none'")
 	require.Contains(t, powerShellScript, "-N '\"\"'")
 	require.Contains(t, powerShellScript, "Start-Process 'codex://")
@@ -156,7 +160,7 @@ func TestWorkspaceSSHBashScriptIsIdempotentWithLegacySSHConfig(t *testing.T) {
 	sshDirectory := filepath.Join(home, ".ssh")
 	require.NoError(t, os.MkdirAll(sshDirectory, 0o700))
 	configPath := filepath.Join(sshDirectory, "config")
-	require.NoError(t, os.WriteFile(configPath, []byte("Host *.coder\n  ProxyCommand coder dial --stdio %h\n"), 0o600))
+	require.NoError(t, os.WriteFile(configPath, []byte("# BEGIN CODER CHATGPT DESKTOP coexistence-test\nHost *.ssh.coder\n  User %n\n# END CODER CHATGPT DESKTOP coexistence-test\nHost *.coder\n  ProxyCommand coder dial --stdio %h\n"), 0o600))
 	fakeBin := t.TempDir()
 	for _, command := range []string{"curl", "open", "xdg-open"} {
 		require.NoError(t, os.WriteFile(filepath.Join(fakeBin, command), []byte("#!/bin/sh\nexit 0\n"), 0o700)) //nolint:gosec // Test helpers must be executable.
@@ -193,6 +197,23 @@ func TestWorkspaceSSHBashScriptIsIdempotentWithLegacySSHConfig(t *testing.T) {
 	require.Contains(t, configuration, "userknownhostsfile ")
 	require.Contains(t, configuration, "/.ssh/coder_chatgpt_known_hosts_coexistence-test")
 	require.NotContains(t, configuration, "proxycommand coder dial")
+
+	otherTarget := target
+	otherTarget.Alias = "main.other.owner.ssh.coder"
+	script = api.workspaceSSHBashScript("https://coder.example.test/enrollment/id", "test-token", "zh-CN", otherTarget)
+	run()
+	run()
+	config, err = os.ReadFile(configPath)
+	require.NoError(t, err)
+	require.Equal(t, 2, strings.Count(string(config), "# BEGIN CODER CHATGPT DESKTOP coexistence-test"))
+	require.NotContains(t, string(config), "User %n")
+	for _, alias := range []string{target.Alias, otherTarget.Alias} {
+		resolved, err := exec.Command(sshPath, "-G", "-F", configPath, alias).CombinedOutput()
+		require.NoError(t, err, string(resolved))
+		require.Contains(t, string(resolved), "user "+alias+"\n")
+		require.Contains(t, string(resolved), "hostname ssh.coder.example.test\n")
+		require.NotContains(t, string(resolved), "proxycommand coder dial")
+	}
 }
 
 func TestWorkspaceSSHAgentUnavailableReason(t *testing.T) {

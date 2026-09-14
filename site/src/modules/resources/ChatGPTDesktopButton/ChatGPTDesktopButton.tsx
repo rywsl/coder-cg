@@ -61,8 +61,11 @@ const CHATGPT_DESKTOP_DOWNLOAD_URL = "https://openai.com/chatgpt/desktop/";
 const CHATGPT_CONNECTIONS_DEEP_LINK = "codex://settings/connections";
 const CHATGPT_DEVICE_CHANGE_EVENT = "coder:chatgpt-desktop-device-change";
 
-export const chatGPTDesktopDeviceStorageKey = (organizationID: string) =>
-	`chatgptDesktop.sshKey.${organizationID}`;
+export const chatGPTDesktopDeviceStorageKey = (
+	workspace: Workspace,
+	agentName: string,
+) =>
+	`chatgptDesktop.sshKey.v2.${workspace.id}.${workspace.owner_name}.${workspace.name}.${agentName}`;
 
 interface ChatGPTDesktopButtonProps {
 	agent: WorkspaceAgent;
@@ -100,7 +103,8 @@ export const ChatGPTDesktopButton: FC<ChatGPTDesktopButtonProps> = ({
 	const [setupPending, setSetupPending] = useState(false);
 	const [fallbackOpen, setFallbackOpen] = useState(false);
 	const deviceStorageKey = chatGPTDesktopDeviceStorageKey(
-		workspace.organization_id,
+		workspace,
+		agent.name,
 	);
 	const [configuredKeyID, setConfiguredKeyID] = useState(() =>
 		localStorage.getItem(deviceStorageKey),
@@ -148,6 +152,7 @@ export const ChatGPTDesktopButton: FC<ChatGPTDesktopButtonProps> = ({
 		const syncConfiguredKey = () => {
 			setConfiguredKeyID(localStorage.getItem(deviceStorageKey));
 		};
+		syncConfiguredKey();
 		window.addEventListener(CHATGPT_DEVICE_CHANGE_EVENT, syncConfiguredKey);
 		return () => {
 			window.removeEventListener(

@@ -32,7 +32,8 @@ const expectedDeepLink = chatGPTDesktopDeepLink(
 	workspaceWithUnicodePath.expanded_directory,
 );
 const deviceStorageKey = chatGPTDesktopDeviceStorageKey(
-	MockWorkspace.organization_id,
+	MockWorkspace,
+	MockWorkspaceAgentReady.name,
 );
 
 const bootstrap: WorkspaceSSHBootstrapResponse = {
@@ -270,6 +271,41 @@ export const NotConfigured: Story = {
 			).toBeVisible(),
 		);
 	},
+};
+
+export const OtherWorkspaceConfigured: Story = {
+	beforeEach: () => {
+		localStorage.removeItem(deviceStorageKey);
+		const otherKey = chatGPTDesktopDeviceStorageKey(
+			{ ...MockWorkspace, id: "other-workspace", name: "other" },
+			MockWorkspaceAgentReady.name,
+		);
+		localStorage.setItem(otherKey, workspaceSSHKey.id);
+		localStorage.setItem(
+			`chatgptDesktop.sshKey.${MockWorkspace.organization_id}`,
+			workspaceSSHKey.id,
+		);
+		spyOn(API, "createWorkspaceSSHBootstrap").mockResolvedValue(bootstrap);
+		return () => {
+			localStorage.removeItem(otherKey);
+			localStorage.removeItem(
+				`chatgptDesktop.sshKey.${MockWorkspace.organization_id}`,
+			);
+		};
+	},
+	parameters: {
+		queries: [
+			{
+				key: deploymentSSHConfigQueryKey,
+				data: MockDeploymentWorkspaceSSH,
+			},
+			{
+				key: workspaceSSHKeysQueryKey(MockWorkspace.organization_name),
+				data: [workspaceSSHKey],
+			},
+		],
+	},
+	play: NotConfigured.play,
 };
 
 export const SetupError: Story = {
