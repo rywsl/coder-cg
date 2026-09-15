@@ -2,12 +2,20 @@
 """Keep a Rust workspace's caches outside Zed's file discovery."""
 
 import json
+import os
 import pathlib
 import sys
 
 project = pathlib.Path(sys.argv[1]).resolve(strict=True)
 if not (project / "Cargo.toml").is_file():
     raise SystemExit("The project must contain Cargo.toml")
+
+build_directories = [project / "target"]
+for parent, directories, _ in os.walk(project):
+    for name in directories[:]:
+        if name in {"target", "node_modules", ".git"}:
+            build_directories.append(pathlib.Path(parent) / name)
+            directories.remove(name)
 
 for root in dict.fromkeys([pathlib.Path.home(), project]):
     settings_path = root / ".zed" / "settings.json"
@@ -19,8 +27,13 @@ for root in dict.fromkeys([pathlib.Path.home(), project]):
     rust = settings.setdefault("lsp", {}).setdefault("rust-analyzer", {}).setdefault("initialization_options", {})
     rust["linkedProjects"] = [str(project / "Cargo.toml")]
     rust.setdefault("cargo", {})["targetDir"] = str(project / "target" / "rust-analyzer")
-    excluded_dirs = rust.setdefault("files", {}).setdefault("excludeDirs", [])
-    for directory in [project / "target", project / "node_modules", project / ".git"]:
+    files = rust.setdefault("files", {})
+    files["watcher"] = "client"
+    excluded_dirs = files.setdefault("exclude", [])
+    for directory in files.pop("excludeDirs", []):
+        if directory not in excluded_dirs:
+            excluded_dirs.append(directory)
+    for directory in build_directories:
         if str(directory) not in excluded_dirs:
             excluded_dirs.append(str(directory))
     settings_path.parent.mkdir(parents=True, exist_ok=True)
