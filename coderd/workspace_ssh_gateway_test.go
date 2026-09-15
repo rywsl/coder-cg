@@ -106,6 +106,7 @@ func TestWorkspaceSSHSetupScripts(t *testing.T) {
 	_, err = syntax.NewParser().Parse(strings.NewReader(bashScript), "workspace-ssh-bootstrap.sh")
 	require.NoError(t, err)
 	require.Contains(t, bashScript, "Host dev.workspace.owner.ssh.coder\n")
+	require.Contains(t, bashScript, "Match host ssh.coder.example.test user "+target.Alias+"\n")
 	require.Contains(t, bashScript, "  User "+target.Alias+"\n")
 	require.NotContains(t, bashScript, "User %n")
 	require.Contains(t, bashScript, "ProxyCommand none")
@@ -116,6 +117,7 @@ func TestWorkspaceSSHSetupScripts(t *testing.T) {
 
 	powerShellScript := api.workspaceSSHPowerShellScript("https://coder.example.test/enrollment/id", "test-token", "zh-CN", target)
 	require.Contains(t, powerShellScript, "'Host dev.workspace.owner.ssh.coder'")
+	require.Contains(t, powerShellScript, "Match host ssh.coder.example.test user "+target.Alias+"\n")
 	require.Contains(t, powerShellScript, "'  User "+target.Alias+"'")
 	require.NotContains(t, powerShellScript, "User %n")
 	require.Contains(t, powerShellScript, "'  ProxyCommand none'")

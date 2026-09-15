@@ -59,7 +59,7 @@ export const useAppLink = (
 			token,
 			path: proxy.preferredPathAppURL,
 			host: proxy.preferredWildcardHostname,
-			sshGatewaySuffix: gateway?.enabled ? gateway.alias_suffix : undefined,
+			sshGateway: gateway,
 		});
 
 	// Custom-protocol (non-HTTP) external apps can silently fail when the target

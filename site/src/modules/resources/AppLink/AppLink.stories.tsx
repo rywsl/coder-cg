@@ -66,7 +66,7 @@ export const ZedSSHGateway: Story = {
 		await userEvent.hover(link);
 		await expect(link).toHaveAttribute(
 			"href",
-			`zed://ssh/${MockWorkspaceAgent.name}.${MockWorkspace.name}.${MockWorkspace.owner_name}.${MockDeploymentWorkspaceSSH.workspace_ssh_gateway?.alias_suffix}/home/coder/${encodeURIComponent("项目 文件")}`,
+			`zed://ssh/${MockWorkspaceAgent.name}.${MockWorkspace.name}.${MockWorkspace.owner_name}.${MockDeploymentWorkspaceSSH.workspace_ssh_gateway?.alias_suffix}@${MockDeploymentWorkspaceSSH.workspace_ssh_gateway?.host}:${MockDeploymentWorkspaceSSH.workspace_ssh_gateway?.port}/home/coder/${encodeURIComponent("项目 文件")}`,
 		);
 	},
 };

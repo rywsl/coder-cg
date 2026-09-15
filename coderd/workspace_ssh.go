@@ -675,6 +675,18 @@ func powershellQuote(value string) string {
 	return "'" + strings.ReplaceAll(value, "'", "''") + "'"
 }
 
+func workspaceSSHDirectConfig(host, alias, keyName, knownHostsName string) string {
+	// Match the routing user as well as the host so other SSH services on the
+	// same public IP keep their own identities and host key configuration.
+	return fmt.Sprintf(`Match host %s user %s
+  ProxyCommand none
+  IdentityFile ~/.ssh/%s
+  IdentitiesOnly yes
+  StrictHostKeyChecking yes
+  UserKnownHostsFile ~/.ssh/%s
+Host *`, host, alias, keyName, knownHostsName)
+}
+
 func (api *API) workspaceSSHBashScript(registrationURL, token, locale string, target workspaceSSHDesktopTarget) string {
 	gateway := api.workspaceSSHGatewayInfo()
 	deploymentMarker := "CODER CHATGPT DESKTOP " + api.DeploymentID
@@ -722,6 +734,7 @@ Host %s
   StrictHostKeyChecking yes
   UserKnownHostsFile ~/.ssh/%s
 %s
+%s
 CODER_SSH_CONFIG
 awk -v begin="${begin}" -v end="${end}" -v deployment_begin="${deployment_begin}" -v deployment_end="${deployment_end}" '
   $0 == begin || $0 == deployment_begin { skip=1; next }
@@ -742,7 +755,7 @@ elif command -v xdg-open >/dev/null 2>&1; then
 else
   printf %s %s %s
 fi
-`, keyName, knownHostsName, shellquote.Join(knownHost), shellquote.Join(gateway.HostPublicKey), shellquote.Join("# BEGIN "+marker), shellquote.Join("# END "+marker), shellquote.Join("# BEGIN "+deploymentMarker), shellquote.Join("# END "+deploymentMarker), "# BEGIN "+marker, target.Alias, gateway.Host, gateway.Port, target.Alias, keyName, knownHostsName, "# END "+marker, shellquote.Join("Authorization: Bearer "+token), shellquote.Join(registrationURL), shellquote.Join(target.DeepLink), shellquote.Join(fallbackMessage), shellquote.Join(target.Alias), shellquote.Join(target.ProjectPath))
+`, keyName, knownHostsName, shellquote.Join(knownHost), shellquote.Join(gateway.HostPublicKey), shellquote.Join("# BEGIN "+marker), shellquote.Join("# END "+marker), shellquote.Join("# BEGIN "+deploymentMarker), shellquote.Join("# END "+deploymentMarker), "# BEGIN "+marker, target.Alias, gateway.Host, gateway.Port, target.Alias, keyName, knownHostsName, workspaceSSHDirectConfig(gateway.Host, target.Alias, keyName, knownHostsName), "# END "+marker, shellquote.Join("Authorization: Bearer "+token), shellquote.Join(registrationURL), shellquote.Join(target.DeepLink), shellquote.Join(fallbackMessage), shellquote.Join(target.Alias), shellquote.Join(target.ProjectPath))
 }
 
 func (api *API) workspaceSSHPowerShellScript(registrationURL, token, locale string, target workspaceSSHDesktopTarget) string {
@@ -796,6 +809,7 @@ $block = @(
   '  IdentitiesOnly yes',
   '  StrictHostKeyChecking yes',
   %s,
+  %s,
   $end
 )
 [IO.File]::WriteAllLines($configFile, @($block) + @($kept), $utf8)
@@ -809,5 +823,5 @@ try {
 } catch {
   Write-Error %s
 }
-`, powershellQuote(keyName), powershellQuote(knownHostsName), powershellQuote(keygenError), powershellQuote(knownHost), powershellQuote(gateway.HostPublicKey), powershellQuote("# BEGIN "+marker), powershellQuote("# END "+marker), powershellQuote("# BEGIN "+deploymentMarker), powershellQuote("# END "+deploymentMarker), powershellQuote("Host "+target.Alias), powershellQuote("  HostName "+gateway.Host), powershellQuote(fmt.Sprintf("  Port %d", gateway.Port)), powershellQuote("  User "+target.Alias), powershellQuote("  IdentityFile ~/.ssh/"+keyName), powershellQuote("  UserKnownHostsFile ~/.ssh/"+knownHostsName), powershellQuote(registrationURL), powershellQuote("Bearer "+token), powershellQuote(target.DeepLink), powershellQuote(launchError))
+`, powershellQuote(keyName), powershellQuote(knownHostsName), powershellQuote(keygenError), powershellQuote(knownHost), powershellQuote(gateway.HostPublicKey), powershellQuote("# BEGIN "+marker), powershellQuote("# END "+marker), powershellQuote("# BEGIN "+deploymentMarker), powershellQuote("# END "+deploymentMarker), powershellQuote("Host "+target.Alias), powershellQuote("  HostName "+gateway.Host), powershellQuote(fmt.Sprintf("  Port %d", gateway.Port)), powershellQuote("  User "+target.Alias), powershellQuote("  IdentityFile ~/.ssh/"+keyName), powershellQuote("  UserKnownHostsFile ~/.ssh/"+knownHostsName), powershellQuote(workspaceSSHDirectConfig(gateway.Host, target.Alias, keyName, knownHostsName)), powershellQuote(registrationURL), powershellQuote("Bearer "+token), powershellQuote(target.DeepLink), powershellQuote(launchError))
 }

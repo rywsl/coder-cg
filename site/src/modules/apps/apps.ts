@@ -3,6 +3,7 @@ import type {
 	Workspace,
 	WorkspaceAgent,
 	WorkspaceApp,
+	WorkspaceSSHGatewayInfo,
 } from "#/api/typesGenerated";
 import { i18n } from "#/i18n";
 
@@ -118,15 +119,15 @@ type GetAppHrefParams = {
 	workspace: Workspace;
 	agent: WorkspaceAgent;
 	token?: string;
-	sshGatewaySuffix?: string;
+	sshGateway?: WorkspaceSSHGatewayInfo;
 };
 
 export const getAppHref = (
 	app: WorkspaceApp,
-	{ path, token, workspace, agent, host, sshGatewaySuffix }: GetAppHrefParams,
+	{ path, token, workspace, agent, host, sshGateway }: GetAppHrefParams,
 ): string => {
 	if (isExternalApp(app)) {
-		if (sshGatewaySuffix && app.url.startsWith("zed://ssh/")) {
+		if (sshGateway?.enabled && app.url.startsWith("zed://ssh/")) {
 			const target = app.url.slice("zed://ssh/".length);
 			const hostname = target.split(/[/?#]/, 1)[0];
 			const workspaceHosts = [
@@ -135,13 +136,16 @@ export const getAppHref = (
 				`${agent.name}.${workspace.name}.${workspace.owner_name}.coder`,
 			];
 			if (workspaceHosts.includes(hostname)) {
-				const alias = `${agent.name}.${workspace.name}.${workspace.owner_name}.${sshGatewaySuffix}`;
+				const alias = `${agent.name}.${workspace.name}.${workspace.owner_name}.${sshGateway.alias_suffix}`;
+				const gatewayHost = sshGateway.host.includes(":")
+					? `[${sshGateway.host}]`
+					: sshGateway.host;
 				const projectPath = target.slice(hostname.length);
 				const directory = (agent.expanded_directory ?? "")
 					.split("/")
 					.map(encodeURIComponent)
 					.join("/");
-				return `zed://ssh/${alias}${projectPath || directory}`;
+				return `zed://ssh/${alias}@${gatewayHost}:${sshGateway.port}${projectPath || directory}`;
 			}
 		}
 		let isAllowedProtocol = false;
