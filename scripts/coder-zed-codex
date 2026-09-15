@@ -1,0 +1,11 @@
+#!/usr/bin/env python3
+"""Start the workspace Codex runtime with SSH Gateway's in-memory overrides."""
+
+import json
+import os
+import sys
+
+overrides = json.loads(os.environ["CODER_CODEX_ARGS"])
+if not isinstance(overrides, list) or not all(isinstance(arg, str) for arg in overrides):
+    raise SystemExit("Invalid Codex gateway configuration")
+os.execv("/opt/codex/bin/codex", ["codex", *overrides, *sys.argv[1:]])

@@ -45,6 +45,15 @@ func (c CodexConfig) transformRequest(destination ssh.Channel) func(*ssh.Request
 		if err := ssh.Unmarshal(request.Payload, &execRequest); err != nil {
 			return false, request.Payload, false
 		}
+		if isZedProxyCommand(execRequest.Command) {
+			for _, variable := range c.zedEnvironment() {
+				accepted, err := destination.SendRequest("env", true, ssh.Marshal(variable))
+				if err != nil || !accepted {
+					return true, nil, false
+				}
+			}
+			return false, request.Payload, false
+		}
 		command, decision := c.transformCommand(execRequest.Command)
 		switch decision {
 		case codexCommandPass:
