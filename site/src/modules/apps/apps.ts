@@ -137,15 +137,13 @@ export const getAppHref = (
 			];
 			if (workspaceHosts.includes(hostname)) {
 				const alias = `${agent.name}.${workspace.name}.${workspace.owner_name}.${sshGateway.alias_suffix}`;
-				const gatewayHost = sshGateway.host.includes(":")
-					? `[${sshGateway.host}]`
-					: sshGateway.host;
 				const projectPath = target.slice(hostname.length);
 				const directory = (agent.expanded_directory ?? "")
 					.split("/")
 					.map(encodeURIComponent)
 					.join("/");
-				return `zed://ssh/${alias}@${gatewayHost}:${sshGateway.port}${projectPath || directory}`;
+				// Use the enrolled Host entry so Zed selects its dedicated SSH key.
+				return `zed://ssh/${alias}${projectPath || directory}`;
 			}
 		}
 		let isAllowedProtocol = false;
