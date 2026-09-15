@@ -101,9 +101,9 @@ func proxyChannel(incoming ssh.NewChannel, destination ssh.Conn, codex *CodexCon
 	if codex != nil && incoming.ChannelType() == "session" {
 		transform = codex.transformRequest(downstream)
 	}
-	proxyChannelRequests(upstreamRequests, downstream, transform)
+	upstreamRequestsDone := proxyChannelRequests(upstreamRequests, downstream, transform)
 	downstreamRequestsDone := proxyChannelRequests(downstreamRequests, upstream, nil)
-	copyChannel(upstream, downstream, downstreamRequestsDone)
+	copyChannel(upstream, downstream, upstreamRequestsDone, downstreamRequestsDone)
 }
 
 func proxyChannelRequests(requests <-chan *ssh.Request, destination ssh.Channel, transform func(*ssh.Request) (bool, []byte, bool)) <-chan struct{} {
@@ -134,18 +134,15 @@ func proxyChannelRequests(requests <-chan *ssh.Request, destination ssh.Channel,
 	return done
 }
 
-func copyChannel(first, second ssh.Channel, secondRequestsDone <-chan struct{}) {
+func copyChannel(first, second ssh.Channel, firstRequestsDone, secondRequestsDone <-chan struct{}) {
 	var wg sync.WaitGroup
 	wg.Add(2)
-	go copyChannelDirection(&wg, second, first)
-	go copyChannelDirection(&wg, first, second)
+	go copyChannelDirection(&wg, second, first, firstRequestsDone)
+	go copyChannelDirection(&wg, first, second, secondRequestsDone)
 	wg.Wait()
-	<-secondRequestsDone
-	_ = first.Close()
-	_ = second.Close()
 }
 
-func copyChannelDirection(wg *sync.WaitGroup, destination, source ssh.Channel) {
+func copyChannelDirection(wg *sync.WaitGroup, destination, source ssh.Channel, requestsDone <-chan struct{}) {
 	defer wg.Done()
 	var streams sync.WaitGroup
 	streams.Add(2)
@@ -153,6 +150,10 @@ func copyChannelDirection(wg *sync.WaitGroup, destination, source ssh.Channel) {
 	go copyStream(&streams, destination.Stderr(), source.Stderr())
 	streams.Wait()
 	_ = destination.CloseWrite()
+	// EOF only half-closes a channel. Once its requests also close, forward
+	// the full close after draining output and requests such as exit-status.
+	<-requestsDone
+	_ = destination.Close()
 }
 
 func copyStream(wg *sync.WaitGroup, destination io.Writer, source io.Reader) {
