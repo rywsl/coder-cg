@@ -137,7 +137,7 @@ export const getAppHref = (
 			if (workspaceHosts.includes(hostname)) {
 				const alias = `${agent.name}.${workspace.name}.${workspace.owner_name}.${sshGatewaySuffix}`;
 				const projectPath = target.slice(hostname.length);
-				const directory = agent.expanded_directory
+				const directory = (agent.expanded_directory ?? "")
 					.split("/")
 					.map(encodeURIComponent)
 					.join("/");

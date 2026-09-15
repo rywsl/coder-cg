@@ -42,7 +42,7 @@ export const useAppLink = (
 	const { proxy } = useProxy();
 	const sshConfig = useQuery({
 		...deploymentSSHConfig(),
-		enabled: app.external && app.url.startsWith("zed://ssh/"),
+		enabled: app.external && !!app.url?.startsWith("zed://ssh/"),
 	});
 	const gateway = sshConfig.data?.workspace_ssh_gateway;
 
