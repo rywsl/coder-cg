@@ -1,9 +1,10 @@
 import type React from "react";
 import { useTranslation } from "react-i18next";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { toast } from "sonner";
 import { API } from "#/api/api";
 import { getErrorMessage } from "#/api/errors";
+import { deploymentSSHConfig } from "#/api/queries/deployment";
 import type {
 	Workspace,
 	WorkspaceAgent,
@@ -39,6 +40,11 @@ export const useAppLink = (
 
 	const label = app.display_name ?? app.slug;
 	const { proxy } = useProxy();
+	const sshConfig = useQuery({
+		...deploymentSSHConfig(),
+		enabled: app.external && app.url.startsWith("zed://ssh/"),
+	});
+	const gateway = sshConfig.data?.workspace_ssh_gateway;
 
 	// External apps that embed the session token in their URL need a freshly
 	// minted key. We defer minting until the user clicks (see `onClick`) rather
@@ -53,6 +59,7 @@ export const useAppLink = (
 			token,
 			path: proxy.preferredPathAppURL,
 			host: proxy.preferredWildcardHostname,
+			sshGatewaySuffix: gateway?.enabled ? gateway.alias_suffix : undefined,
 		});
 
 	// Custom-protocol (non-HTTP) external apps can silently fail when the target
@@ -152,7 +159,8 @@ export const useAppLink = (
 	// and the final URL is built then. Exposing a tokenless href would let
 	// middle-click or "Open link" launch the custom protocol with an empty
 	// token, so we omit it entirely. Non-token apps still render as anchors.
-	const href = requiresSessionToken ? undefined : buildHref("");
+	const href =
+		requiresSessionToken || sshConfig.isLoading ? undefined : buildHref("");
 
 	const onClick = (e: React.MouseEvent) => {
 		// Apps that embed a session token mint it on click instead of on mount.
@@ -200,6 +208,6 @@ export const useAppLink = (
 		href,
 		onClick,
 		label,
-		isLoading: generateKeyMutation.isPending,
+		isLoading: generateKeyMutation.isPending || sshConfig.isLoading,
 	};
 };

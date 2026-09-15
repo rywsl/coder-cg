@@ -8,8 +8,10 @@ import {
 	within,
 } from "storybook/test";
 import { API } from "#/api/api";
+import { deploymentSSHConfigQueryKey } from "#/api/queries/deployment";
 import { getPreferredProxy } from "#/contexts/ProxyContext";
 import {
+	MockDeploymentWorkspaceSSH,
 	MockPrimaryWorkspaceProxy,
 	MockWorkspace,
 	MockWorkspaceAgent,
@@ -34,6 +36,63 @@ const meta: Meta<typeof AppLink> = {
 
 export default meta;
 type Story = StoryObj<typeof AppLink>;
+
+export const ZedSSHGateway: Story = {
+	parameters: {
+		queries: [
+			{
+				key: deploymentSSHConfigQueryKey,
+				data: MockDeploymentWorkspaceSSH,
+			},
+		],
+	},
+	args: {
+		workspace: MockWorkspace,
+		agent: {
+			...MockWorkspaceAgent,
+			expanded_directory: "/home/coder/项目 文件",
+		},
+		app: {
+			...MockWorkspaceApp,
+			display_name: "Zed",
+			external: true,
+			url: `zed://ssh/${MockWorkspace.name}.coder`,
+		},
+	},
+	play: async ({ canvasElement }) => {
+		const link = await within(canvasElement).findByRole("link", {
+			name: /Zed/,
+		});
+		await userEvent.hover(link);
+		await expect(link).toHaveAttribute(
+			"href",
+			`zed://ssh/${MockWorkspaceAgent.name}.${MockWorkspace.name}.${MockWorkspace.owner_name}.${MockDeploymentWorkspaceSSH.workspace_ssh_gateway?.alias_suffix}/home/coder/${encodeURIComponent("项目 文件")}`,
+		);
+	},
+};
+
+export const ZedCustomHost: Story = {
+	...ZedSSHGateway,
+	args: {
+		...ZedSSHGateway.args,
+		app: {
+			...MockWorkspaceApp,
+			display_name: "Zed",
+			external: true,
+			url: "zed://ssh/custom.example.com/project",
+		},
+	},
+	play: async ({ canvasElement }) => {
+		const link = await within(canvasElement).findByRole("link", {
+			name: /Zed/,
+		});
+		await userEvent.hover(link);
+		await expect(link).toHaveAttribute(
+			"href",
+			"zed://ssh/custom.example.com/project",
+		);
+	},
+};
 
 export const WithIcon: Story = {
 	args: {

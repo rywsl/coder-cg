@@ -118,13 +118,32 @@ type GetAppHrefParams = {
 	workspace: Workspace;
 	agent: WorkspaceAgent;
 	token?: string;
+	sshGatewaySuffix?: string;
 };
 
 export const getAppHref = (
 	app: WorkspaceApp,
-	{ path, token, workspace, agent, host }: GetAppHrefParams,
+	{ path, token, workspace, agent, host, sshGatewaySuffix }: GetAppHrefParams,
 ): string => {
 	if (isExternalApp(app)) {
+		if (sshGatewaySuffix && app.url.startsWith("zed://ssh/")) {
+			const target = app.url.slice("zed://ssh/".length);
+			const hostname = target.split(/[/?#]/, 1)[0];
+			const workspaceHosts = [
+				`${workspace.name}.coder`,
+				`coder.${workspace.name}`,
+				`${agent.name}.${workspace.name}.${workspace.owner_name}.coder`,
+			];
+			if (workspaceHosts.includes(hostname)) {
+				const alias = `${agent.name}.${workspace.name}.${workspace.owner_name}.${sshGatewaySuffix}`;
+				const projectPath = target.slice(hostname.length);
+				const directory = agent.expanded_directory
+					.split("/")
+					.map(encodeURIComponent)
+					.join("/");
+				return `zed://ssh/${alias}${projectPath || directory}`;
+			}
+		}
 		let isAllowedProtocol = false;
 		try {
 			isAllowedProtocol = ALLOWED_EXTERNAL_APP_PROTOCOLS.includes(
