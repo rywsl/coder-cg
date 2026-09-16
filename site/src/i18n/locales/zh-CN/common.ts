@@ -27,9 +27,9 @@ export const common = {
 		open: "打开",
 		remove: "移除端口",
 		install:
-			"下载并运行适合此电脑的连接器，按提示输入公网地址、注册 ID 和一次性授权码。首次运行会配置登录自启。",
+			"下载并运行适合此电脑的连接器，按提示输入公网地址（URL）、注册 ID 和一次性授权码。首次运行会配置登录自启。",
 		unix: "macOS/Linux 下载后先执行 chmod +x 文件名，再运行该文件。Windows 双击运行。系统安全确认需要手动完成。",
-		address: "公网地址",
+		address: "公网地址（URL）",
 		enrollment: "注册 ID",
 		token: "一次性授权码（10 分钟有效，仅在程序提示时粘贴）",
 		complete: "授权完成，请在设备列表中选择这台电脑。",
