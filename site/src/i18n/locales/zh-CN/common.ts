@@ -38,6 +38,7 @@ export const common = {
 		checksum: "SHA256 校验值",
 		conflict: "本地端口被占用，已自动分配新端口",
 		unavailable: "监听失败",
+		capacity: "连接或通道已达到安全上限，请稍后重试。",
 		webFallback: "使用 Web 预览",
 		webLimit: "路径代理可能不支持根路径资源或热更新，建议使用本地访问。",
 	},

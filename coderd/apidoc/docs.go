@@ -5225,7 +5225,7 @@ const docTemplate = `{
                     "SSH"
                 ],
                 "summary": "Synchronize local connector lease and status",
-                "operationId": "sync-local-connector",
+                "operationId": "synchronize-local-connector-lease-and-status",
                 "parameters": [
                     {
                         "type": "string",
@@ -5269,7 +5269,7 @@ const docTemplate = `{
                     "SSH"
                 ],
                 "summary": "Download local connector artifact",
-                "operationId": "download-local-connector",
+                "operationId": "download-local-connector-artifact",
                 "parameters": [
                     {
                         "type": "string",
@@ -5345,7 +5345,7 @@ const docTemplate = `{
                     "SSH"
                 ],
                 "summary": "Get local connector release manifest",
-                "operationId": "local-connector-release",
+                "operationId": "get-local-connector-release-manifest",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -7169,7 +7169,7 @@ const docTemplate = `{
                     "SSH"
                 ],
                 "summary": "List current user's local connectors",
-                "operationId": "list-local-connectors",
+                "operationId": "list-current-users-local-connectors",
                 "parameters": [
                     {
                         "type": "string",
@@ -7210,7 +7210,7 @@ const docTemplate = `{
                     "SSH"
                 ],
                 "summary": "Update local connector forwarding",
-                "operationId": "update-local-connector",
+                "operationId": "update-local-connector-forwarding",
                 "parameters": [
                     {
                         "type": "string",

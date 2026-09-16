@@ -11,9 +11,26 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
+	"golang.org/x/crypto/ssh"
 
 	"github.com/coder/coder/v2/localconnect"
 )
+
+func TestForwardReportsChannelCapacity(t *testing.T) {
+	t.Parallel()
+	forward, err := localconnect.Listen(t.Context(), 0, func(context.Context) (net.Conn, error) {
+		return nil, &ssh.OpenChannelError{Reason: ssh.ResourceShortage, Message: "channel limit"}
+	})
+	require.NoError(t, err)
+	t.Cleanup(forward.Close)
+	client, err := net.DialTimeout("tcp", net.JoinHostPort("127.0.0.1", strconv.Itoa(int(forward.Port()))), time.Second)
+	require.NoError(t, err)
+	defer client.Close()
+	require.NoError(t, client.SetReadDeadline(time.Now().Add(time.Second)))
+	_, err = client.Read(make([]byte, 1))
+	require.ErrorIs(t, err, io.EOF)
+	require.Equal(t, "capacity", forward.ErrorCode())
+}
 
 func TestForwardIPv6AndPortConflict(t *testing.T) {
 	t.Parallel()

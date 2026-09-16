@@ -140,6 +140,45 @@ export const BrowserOnly: Story = {
 	},
 };
 
+const capacityLimitedDevice = {
+	...MockLocalConnector,
+	reported: MockLocalConnector.reported.map((port) => ({
+		...port,
+		error_code: "capacity",
+	})),
+};
+
+export const CapacityLimited: Story = {
+	beforeEach: () => {
+		spyOn(API, "getLocalConnectors").mockResolvedValue([capacityLimitedDevice]);
+		localStorage.setItem(
+			localDeviceKey(MockWorkspace.organization_id),
+			capacityLimitedDevice.id,
+		);
+	},
+	parameters: {
+		queries: [
+			{
+				key: localConnectorsKey(MockWorkspace.organization_id),
+				data: [capacityLimitedDevice],
+			},
+			{ key: deploymentSSHConfigQueryKey, data: MockDeploymentWorkspaceSSH },
+		],
+	},
+	play: async ({ canvasElement }) => {
+		await userEvent.click(
+			within(canvasElement).getByRole("button", { name: "本地访问" }),
+		);
+		const dialog = within(await within(document.body).findByRole("dialog"));
+		await expect(dialog.getByRole("alert")).toHaveTextContent(
+			"连接或通道已达到安全上限，请稍后重试。",
+		);
+		await expect(
+			dialog.getByRole("link", { name: "打开 http://localhost:5174" }),
+		).toHaveAttribute("href", "http://localhost:5174/");
+	},
+};
+
 export const Loading: Story = {
 	beforeEach: () => {
 		spyOn(API, "getLocalConnectors").mockReturnValue(

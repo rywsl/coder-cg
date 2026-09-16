@@ -287,7 +287,11 @@ export function LocalAccess({
 										{mapping.remote_port} → {mapping.local_port}
 									</p>
 									{mapping.error_code && (
-										<p role="alert">{t("localConnect.unavailable")}</p>
+										<p role="alert">
+											{mapping.error_code === "capacity"
+												? t("localConnect.capacity")
+												: t("localConnect.unavailable")}
+										</p>
 									)}
 									{mapping.local_port > 0 &&
 										mapping.local_port !== mapping.remote_port && (
@@ -296,7 +300,8 @@ export function LocalAccess({
 									{device.online &&
 										canConnect &&
 										selected &&
-										!mapping.error_code &&
+										(!mapping.error_code ||
+											mapping.error_code === "capacity") &&
 										["http", "https"].includes(mapping.protocol) &&
 										mapping.local_port > 0 && (
 											<a

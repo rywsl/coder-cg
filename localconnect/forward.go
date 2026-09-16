@@ -12,6 +12,7 @@ import (
 	"syscall"
 	"time"
 
+	"golang.org/x/crypto/ssh"
 	"golang.org/x/xerrors"
 )
 
@@ -35,14 +36,15 @@ func DialLoopback(ctx context.Context, dial func(context.Context, string, string
 
 // Forward owns local listeners and all connections accepted by them.
 type Forward struct {
-	port        uint16
-	cancel      context.CancelFunc
-	listeners   []net.Listener
-	mu          sync.Mutex
-	connections map[net.Conn]struct{}
-	closed      bool
-	wg          sync.WaitGroup
-	once        sync.Once
+	port          uint16
+	cancel        context.CancelFunc
+	listeners     []net.Listener
+	mu            sync.Mutex
+	connections   map[net.Conn]struct{}
+	closed        bool
+	capacityUntil time.Time
+	wg            sync.WaitGroup
+	once          sync.Once
 }
 
 // Listen binds loopback listeners, choosing another port if preferred is busy.
@@ -107,6 +109,22 @@ func Listen(ctx context.Context, preferred uint16, dial func(context.Context) (n
 // Port returns the actual local port.
 func (f *Forward) Port() uint16 { return f.port }
 
+// ErrorCode reports a recent capacity rejection without exposing protocol errors.
+func (f *Forward) ErrorCode() string {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if time.Now().Before(f.capacityUntil) {
+		return "capacity"
+	}
+	return ""
+}
+
+func (f *Forward) recordCapacity() {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	f.capacityUntil = time.Now().Add(10 * time.Second)
+}
+
 func (f *Forward) track(conn net.Conn) bool {
 	f.mu.Lock()
 	defer f.mu.Unlock()
@@ -136,6 +154,7 @@ func (f *Forward) accept(ctx context.Context, listener net.Listener, dial func(c
 		select {
 		case slots <- struct{}{}:
 		default:
+			f.recordCapacity()
 			_ = conn.Close()
 			continue
 		}
@@ -148,6 +167,9 @@ func (f *Forward) accept(ctx context.Context, listener net.Listener, dial func(c
 			defer f.release(conn)
 			remote, err := dial(ctx)
 			if err != nil {
+				if channel, ok := errors.AsType[*ssh.OpenChannelError](err); ok && channel.Reason == ssh.ResourceShortage {
+					f.recordCapacity()
+				}
 				return
 			}
 			if !f.track(remote) {

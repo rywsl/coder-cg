@@ -218,6 +218,7 @@ func Run(ctx context.Context, cfg Config, remembered map[string]uint16, persist 
 					}
 				}
 				mapping.LocalPort = forward.Port()
+				mapping.ErrorCode = forward.ErrorCode()
 				reported = append(reported, mapping)
 			}
 		}

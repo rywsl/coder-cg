@@ -41,6 +41,8 @@ export const common = {
 		checksum: "SHA256 checksum",
 		conflict: "Local port occupied; another port was assigned",
 		unavailable: "Unable to listen",
+		capacity:
+			"The connection or channel safety limit was reached. Please retry shortly.",
 		webFallback: "Use Web preview",
 		webLimit:
 			"Path proxies may not support root-relative resources or hot reload. Local access is recommended.",

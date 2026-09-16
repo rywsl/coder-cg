@@ -1058,6 +1058,12 @@
 		"template version archived": "template version archived",
 		"threshold_percent is out of range.": "threshold_percent is out of range.",
 		"user must be a member of this group": "user must be a member of this group",
+		"最多连接 16 个工作区。": "最多连接 16 个工作区。",
+		"端口数量超过限制。": "端口数量超过限制。",
+		"端口状态无效。": "端口状态无效。",
+		"端口配置无效或部署禁止非浏览器连接。": "端口配置无效或部署禁止非浏览器连接。",
+		"设备配置已变化，请刷新后重试。": "设备配置已变化，请刷新后重试。",
+		"请同时配置 API 地址、模型和 API 密钥，或全部清空以仅使用 SSH。": "请同时配置 API 地址、模型和 API 密钥，或全部清空以仅使用 SSH。",
 		"👋": "👋"
 	},
 	"templates": [

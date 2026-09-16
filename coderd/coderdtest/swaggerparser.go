@@ -361,6 +361,16 @@ func assertSecurityDefined(t *testing.T, comment SwaggerComment) {
 		"CoderProvisionerKey",
 		"AIGatewayKey",
 	}
+	if comment.router == "/api/v2/local-connect/release" ||
+		comment.router == "/api/v2/local-connect/download/{artifact}" {
+		assert.Empty(t, comment.security, "release artifacts are public")
+		return
+	}
+	if comment.router == "/api/v2/local-connect/enrollments/{enrollment}" ||
+		comment.router == "/api/v2/local-connect/devices/{connector}/sync" {
+		assert.Equal(t, "Authorization", comment.security, "@Security must describe the narrow bearer credential")
+		return
+	}
 
 	if comment.router == "/api/v2/updatecheck" ||
 		comment.router == "/api/v2/buildinfo" ||
@@ -419,6 +429,11 @@ func assertProduce(t *testing.T, comment SwaggerComment) {
 			hasResponseModel = true
 			break
 		}
+	}
+	if comment.router == "/api/v2/local-connect/download/{artifact}" && comment.method == "get" {
+		assert.True(t, hasResponseModel, "artifact downloads must declare their file response")
+		assert.Equal(t, "application/octet-stream", comment.produce)
+		return
 	}
 
 	if hasResponseModel {

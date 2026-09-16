@@ -136,7 +136,7 @@ func localConnectorSDK(row database.WorkspaceLocalConnector) codersdk.LocalConne
 }
 
 // @Summary List current user's local connectors
-// @ID list-local-connectors
+// @ID list-current-users-local-connectors
 // @Security CoderSessionToken
 // @Tags SSH
 // @Produce json
@@ -163,7 +163,7 @@ func (api *API) localConnectors(rw http.ResponseWriter, r *http.Request) {
 }
 
 // @Summary Update local connector forwarding
-// @ID update-local-connector
+// @ID update-local-connector-forwarding
 // @Security CoderSessionToken
 // @Tags SSH
 // @Accept json
@@ -226,7 +226,7 @@ func (api *API) updateLocalConnector(rw http.ResponseWriter, r *http.Request) {
 }
 
 // @Summary Synchronize local connector lease and status
-// @ID sync-local-connector
+// @ID synchronize-local-connector-lease-and-status
 // @Security Authorization
 // @Tags SSH
 // @Accept json

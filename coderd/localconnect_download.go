@@ -16,7 +16,7 @@ import (
 var localConnectorArtifactName = regexp.MustCompile(`^coder-local-(linux|windows|darwin)-(amd64|arm64)(\.exe)?$`)
 
 // @Summary Get local connector release manifest
-// @ID local-connector-release
+// @ID get-local-connector-release-manifest
 // @Tags SSH
 // @Produce json
 // @Success 200 {object} codersdk.LocalConnectorRelease
@@ -41,7 +41,7 @@ func (*API) localConnectorRelease(rw http.ResponseWriter, r *http.Request) {
 }
 
 // @Summary Download local connector artifact
-// @ID download-local-connector
+// @ID download-local-connector-artifact
 // @Tags SSH
 // @Produce application/octet-stream
 // @Param artifact path string true "Release artifact name"
