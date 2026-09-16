@@ -6919,6 +6919,20 @@ type WorkspaceLatestBuild struct {
 	JobStatus               ProvisionerJobStatus `db:"job_status" json:"job_status"`
 }
 
+type WorkspaceLocalConnector struct {
+	ID                uuid.UUID       `db:"id" json:"id"`
+	OrganizationID    uuid.UUID       `db:"organization_id" json:"organization_id"`
+	UserID            uuid.UUID       `db:"user_id" json:"user_id"`
+	WorkspaceSshKeyID uuid.UUID       `db:"workspace_ssh_key_id" json:"workspace_ssh_key_id"`
+	TokenHash         []byte          `db:"token_hash" json:"token_hash"`
+	Name              string          `db:"name" json:"name"`
+	Desired           json.RawMessage `db:"desired" json:"desired"`
+	Revision          int64           `db:"revision" json:"revision"`
+	Reported          json.RawMessage `db:"reported" json:"reported"`
+	CreatedAt         time.Time       `db:"created_at" json:"created_at"`
+	LastSeenAt        sql.NullTime    `db:"last_seen_at" json:"last_seen_at"`
+}
+
 type WorkspaceModule struct {
 	ID         uuid.UUID           `db:"id" json:"id"`
 	JobID      uuid.UUID           `db:"job_id" json:"job_id"`

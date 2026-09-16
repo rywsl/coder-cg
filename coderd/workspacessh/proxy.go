@@ -101,16 +101,18 @@ func proxyChannel(incoming ssh.NewChannel, destination ssh.Conn, codex *CodexCon
 	if codex != nil && incoming.ChannelType() == "session" {
 		transform = codex.transformRequest(downstream)
 	}
-	upstreamRequestsDone := proxyChannelRequests(upstreamRequests, downstream, transform)
-	downstreamRequestsDone := proxyChannelRequests(downstreamRequests, upstream, nil)
-	copyChannel(upstream, downstream, upstreamRequestsDone, downstreamRequestsDone)
+	var replies sync.RWMutex
+	upstreamRequestsDone := proxyChannelRequests(upstreamRequests, downstream, transform, &replies)
+	downstreamRequestsDone := proxyChannelRequests(downstreamRequests, upstream, nil, &replies)
+	copyChannel(upstream, downstream, upstreamRequestsDone, downstreamRequestsDone, &replies)
 }
 
-func proxyChannelRequests(requests <-chan *ssh.Request, destination ssh.Channel, transform func(*ssh.Request) (bool, []byte, bool)) <-chan struct{} {
+func proxyChannelRequests(requests <-chan *ssh.Request, destination ssh.Channel, transform func(*ssh.Request) (bool, []byte, bool), replies *sync.RWMutex) <-chan struct{} {
 	done := make(chan struct{})
 	go func() {
 		defer close(done)
 		for request := range requests {
+			replies.RLock()
 			payload := request.Payload
 			if transform != nil {
 				handled, transformed, ok := transform(request)
@@ -118,6 +120,7 @@ func proxyChannelRequests(requests <-chan *ssh.Request, destination ssh.Channel,
 					if request.WantReply {
 						_ = request.Reply(ok, nil)
 					}
+					replies.RUnlock()
 					continue
 				}
 				payload = transformed
@@ -129,20 +132,21 @@ func proxyChannelRequests(requests <-chan *ssh.Request, destination ssh.Channel,
 			if request.WantReply {
 				_ = request.Reply(ok, nil)
 			}
+			replies.RUnlock()
 		}
 	}()
 	return done
 }
 
-func copyChannel(first, second ssh.Channel, firstRequestsDone, secondRequestsDone <-chan struct{}) {
+func copyChannel(first, second ssh.Channel, firstRequestsDone, secondRequestsDone <-chan struct{}, replies *sync.RWMutex) {
 	var wg sync.WaitGroup
 	wg.Add(2)
-	go copyChannelDirection(&wg, second, first, firstRequestsDone)
-	go copyChannelDirection(&wg, first, second, secondRequestsDone)
+	go copyChannelDirection(&wg, second, first, firstRequestsDone, replies)
+	go copyChannelDirection(&wg, first, second, secondRequestsDone, replies)
 	wg.Wait()
 }
 
-func copyChannelDirection(wg *sync.WaitGroup, destination, source ssh.Channel, requestsDone <-chan struct{}) {
+func copyChannelDirection(wg *sync.WaitGroup, destination, source ssh.Channel, requestsDone <-chan struct{}, replies *sync.RWMutex) {
 	defer wg.Done()
 	var streams sync.WaitGroup
 	streams.Add(2)
@@ -153,7 +157,10 @@ func copyChannelDirection(wg *sync.WaitGroup, destination, source ssh.Channel, r
 	// EOF only half-closes a channel. Once its requests also close, forward
 	// the full close after draining output and requests such as exit-status.
 	<-requestsDone
+	// A fast exec may send EOF before its success reply reaches the client.
+	replies.Lock()
 	_ = destination.Close()
+	replies.Unlock()
 }
 
 func copyStream(wg *sync.WaitGroup, destination io.Writer, source io.Reader) {

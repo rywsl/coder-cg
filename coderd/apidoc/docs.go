@@ -5213,6 +5213,149 @@ const docTemplate = `{
                 ]
             }
         },
+        "/api/v2/local-connect/devices/{connector}/sync": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SSH"
+                ],
+                "summary": "Synchronize local connector lease and status",
+                "operationId": "sync-local-connector",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Connector",
+                        "name": "connector",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Reported status",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.LocalConnectorSyncRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.LocalConnectorSync"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/api/v2/local-connect/download/{artifact}": {
+            "get": {
+                "produces": [
+                    "application/octet-stream"
+                ],
+                "tags": [
+                    "SSH"
+                ],
+                "summary": "Download local connector artifact",
+                "operationId": "download-local-connector",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Release artifact name",
+                        "name": "artifact",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "file"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/local-connect/enrollments/{enrollment}": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SSH"
+                ],
+                "summary": "Register local connector",
+                "operationId": "register-local-connector",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Enrollment ID",
+                        "name": "enrollment",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Device registration",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.LocalConnectorRegister"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.LocalConnectorRegistration"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/api/v2/local-connect/release": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SSH"
+                ],
+                "summary": "Get local connector release manifest",
+                "operationId": "local-connector-release",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.LocalConnectorRelease"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v2/mcp/servers/{mcpServer}/oauth2/disconnect": {
             "delete": {
                 "produces": [
@@ -7007,6 +7150,99 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/codersdk.GroupMembersAISpend"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "CoderSessionToken": []
+                    }
+                ]
+            }
+        },
+        "/api/v2/organizations/{organization}/local-connectors": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SSH"
+                ],
+                "summary": "List current user's local connectors",
+                "operationId": "list-local-connectors",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Organization",
+                        "name": "organization",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/codersdk.LocalConnector"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "CoderSessionToken": []
+                    }
+                ]
+            }
+        },
+        "/api/v2/organizations/{organization}/local-connectors/{connector}": {
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SSH"
+                ],
+                "summary": "Update local connector forwarding",
+                "operationId": "update-local-connector",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Organization",
+                        "name": "organization",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Connector",
+                        "name": "connector",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Desired forwarding",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.LocalConnectorUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.LocalConnector"
                         }
                     }
                 },
@@ -14942,6 +15178,41 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/codersdk.WorkspaceAgentListeningPortsResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "CoderSessionToken": []
+                    }
+                ]
+            }
+        },
+        "/api/v2/workspaceagents/{workspaceagent}/local-connect-bootstrap": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SSH"
+                ],
+                "summary": "Create local connector enrollment",
+                "operationId": "create-local-connector-enrollment",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Agent ID",
+                        "name": "workspaceagent",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.LocalConnectorEnrollment"
                         }
                     }
                 },
@@ -24754,6 +25025,248 @@ const docTemplate = `{
                 },
                 "unread_count": {
                     "type": "integer"
+                }
+            }
+        },
+        "codersdk.LocalConnector": {
+            "type": "object",
+            "properties": {
+                "desired": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/codersdk.LocalConnectorWorkspace"
+                    }
+                },
+                "id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "online": {
+                    "type": "boolean"
+                },
+                "organization_id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "reported": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/codersdk.LocalConnectorPort"
+                    }
+                },
+                "revision": {
+                    "type": "integer"
+                },
+                "workspace_ssh_key_id": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            }
+        },
+        "codersdk.LocalConnectorArtifact": {
+            "type": "object",
+            "properties": {
+                "arch": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "os": {
+                    "type": "string"
+                },
+                "sha256": {
+                    "type": "string"
+                }
+            }
+        },
+        "codersdk.LocalConnectorEnrollment": {
+            "type": "object",
+            "properties": {
+                "enrollment_id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "expires_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "codersdk.LocalConnectorPort": {
+            "type": "object",
+            "properties": {
+                "agent_name": {
+                    "type": "string"
+                },
+                "error_code": {
+                    "type": "string"
+                },
+                "local_port": {
+                    "type": "integer"
+                },
+                "protocol": {
+                    "type": "string",
+                    "enum": [
+                        "http",
+                        "https",
+                        "tcp"
+                    ]
+                },
+                "remote_port": {
+                    "type": "integer"
+                },
+                "workspace_id": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            }
+        },
+        "codersdk.LocalConnectorRegister": {
+            "type": "object",
+            "properties": {
+                "device_name": {
+                    "type": "string"
+                },
+                "public_key": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "codersdk.LocalConnectorRegistration": {
+            "type": "object",
+            "properties": {
+                "device": {
+                    "$ref": "#/definitions/codersdk.LocalConnector"
+                },
+                "gateway": {
+                    "$ref": "#/definitions/codersdk.WorkspaceSSHGatewayInfo"
+                }
+            }
+        },
+        "codersdk.LocalConnectorRelease": {
+            "type": "object",
+            "properties": {
+                "artifacts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/codersdk.LocalConnectorArtifact"
+                    }
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        },
+        "codersdk.LocalConnectorSync": {
+            "type": "object",
+            "properties": {
+                "gateway": {
+                    "$ref": "#/definitions/codersdk.WorkspaceSSHGatewayInfo"
+                },
+                "lease_seconds": {
+                    "type": "integer"
+                },
+                "revision": {
+                    "type": "integer"
+                },
+                "targets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/codersdk.LocalConnectorTarget"
+                    }
+                }
+            }
+        },
+        "codersdk.LocalConnectorSyncRequest": {
+            "type": "object",
+            "properties": {
+                "reported": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/codersdk.LocalConnectorPort"
+                    }
+                },
+                "revision": {
+                    "type": "integer"
+                }
+            }
+        },
+        "codersdk.LocalConnectorTarget": {
+            "type": "object",
+            "properties": {
+                "agent_id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "agent_name": {
+                    "type": "string"
+                },
+                "alias": {
+                    "type": "string"
+                },
+                "automatic": {
+                    "type": "boolean"
+                },
+                "candidates": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "ports": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "workspace_id": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            }
+        },
+        "codersdk.LocalConnectorUpdate": {
+            "type": "object",
+            "properties": {
+                "desired": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/codersdk.LocalConnectorWorkspace"
+                    }
+                },
+                "revision": {
+                    "type": "integer"
+                }
+            }
+        },
+        "codersdk.LocalConnectorWorkspace": {
+            "type": "object",
+            "properties": {
+                "agent_name": {
+                    "type": "string"
+                },
+                "automatic": {
+                    "type": "boolean"
+                },
+                "ports": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "workspace_id": {
+                    "type": "string",
+                    "format": "uuid"
                 }
             }
         },

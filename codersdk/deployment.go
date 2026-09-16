@@ -869,10 +869,10 @@ func (c WorkspaceSSHGatewayRuntimeConfig) Validate() error {
 		return xerrors.New("workspace SSH gateway advertise port must be between 1 and 65535")
 	}
 	baseURL, err := url.Parse(c.CodexBaseURL)
-	if err != nil || baseURL.Scheme == "" || baseURL.Host == "" || baseURL.Hostname() == "" || baseURL.User != nil || baseURL.RawQuery != "" || baseURL.Fragment != "" || (baseURL.Scheme != "http" && baseURL.Scheme != "https") {
+	if (c.CodexBaseURL != "" || c.CodexModel != "") && (err != nil || baseURL.Scheme == "" || baseURL.Host == "" || baseURL.Hostname() == "" || baseURL.User != nil || baseURL.RawQuery != "" || baseURL.Fragment != "" || (baseURL.Scheme != "http" && baseURL.Scheme != "https")) {
 		return xerrors.New("workspace SSH gateway Codex base URL must be an absolute HTTP or HTTPS URL")
 	}
-	if strings.TrimSpace(c.CodexModel) == "" {
+	if c.CodexBaseURL != "" && strings.TrimSpace(c.CodexModel) == "" {
 		return xerrors.New("workspace SSH gateway Codex model is required")
 	}
 	limits := []struct {

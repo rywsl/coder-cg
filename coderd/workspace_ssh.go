@@ -164,6 +164,10 @@ func (api *API) deleteWorkspaceSSHKey(rw http.ResponseWriter, r *http.Request) {
 // @Success 201 {object} codersdk.WorkspaceSSHBootstrapResponse
 // @Router /api/v2/workspaceagents/{workspaceagent}/workspace-ssh-bootstrap [post]
 func (api *API) workspaceSSHBootstrap(rw http.ResponseWriter, r *http.Request) {
+	api.createWorkspaceSSHEnrollment(rw, r, "ssh")
+}
+
+func (api *API) createWorkspaceSSHEnrollment(rw http.ResponseWriter, r *http.Request, responseKind string) {
 	ctx := r.Context()
 	if !api.workspaceSSHGatewayEnabled(rw, r) {
 		return
@@ -228,6 +232,13 @@ func (api *API) workspaceSSHBootstrap(rw http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil {
 		httpapi.InternalServerError(rw, xerrors.Errorf("create workspace SSH key enrollment: %w", err))
+		return
+	}
+	if responseKind == "connector" {
+		rw.Header().Set("Cache-Control", "no-store")
+		httpapi.Write(ctx, rw, http.StatusCreated, codersdk.LocalConnectorEnrollment{
+			EnrollmentID: enrollmentID, Token: token, ExpiresAt: expiresAt,
+		})
 		return
 	}
 	target := api.workspaceSSHTarget(waws)

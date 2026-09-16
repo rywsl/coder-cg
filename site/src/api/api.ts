@@ -2497,6 +2497,42 @@ class ApiMethods {
 			return response.data;
 		};
 
+	getLocalConnectors = async (
+		organization: string,
+	): Promise<TypesGen.LocalConnector[]> => {
+		const response = await this.axios.get(
+			`/api/v2/organizations/${encodeURIComponent(organization)}/local-connectors`,
+		);
+		return response.data;
+	};
+
+	updateLocalConnector = async (
+		organization: string,
+		device: string,
+		request: TypesGen.LocalConnectorUpdate,
+	): Promise<TypesGen.LocalConnector> => {
+		const response = await this.axios.put(
+			`/api/v2/organizations/${encodeURIComponent(organization)}/local-connectors/${encodeURIComponent(device)}`,
+			request,
+		);
+		return response.data;
+	};
+
+	createLocalConnectorEnrollment = async (
+		agentID: string,
+	): Promise<TypesGen.LocalConnectorEnrollment> => {
+		const response = await this.axios.post(
+			`/api/v2/workspaceagents/${encodeURIComponent(agentID)}/local-connect-bootstrap`,
+		);
+		return response.data;
+	};
+
+	getLocalConnectorRelease =
+		async (): Promise<TypesGen.LocalConnectorRelease> => {
+			const response = await this.axios.get("/api/v2/local-connect/release");
+			return response.data;
+		};
+
 	getWorkspaceSSHKeys = async (
 		organization: string,
 	): Promise<TypesGen.WorkspaceSSHKey[]> => {

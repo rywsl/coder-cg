@@ -161,6 +161,25 @@ type Story = StoryObj<typeof AgentRow>;
 
 export const Example: Story = {};
 
+export const LocalAccessEntry: Story = {
+	globals: { locale: "zh-CN" },
+	beforeEach: () => {
+		spyOn(API, "getLocalConnectors").mockResolvedValue([]);
+	},
+	play: async ({ canvasElement }) => {
+		await userEvent.click(
+			within(canvasElement).getByRole("button", { name: "本地访问" }),
+		);
+		const dialog = within(await within(document.body).findByRole("dialog"));
+		await expect(
+			await dialog.findByText("此账号尚未注册本地连接器。"),
+		).toBeVisible();
+		await expect(
+			dialog.getByRole("button", { name: "设置此设备" }),
+		).toBeVisible();
+	},
+};
+
 export const BunchOfApps: Story = {
 	args: {
 		agent: {

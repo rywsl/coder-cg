@@ -129,21 +129,23 @@ func TestWorkspaceSSHGatewayManagement(t *testing.T) {
 	require.True(t, status.APIKeyConfigured, "an empty API key must preserve the stored secret")
 	require.Equal(t, "gpt-updated", status.Config.CodexModel)
 
-	status, err = client.UpdateWorkspaceSSHGateway(ctx, codersdk.UpdateWorkspaceSSHGatewayRequest{
+	_, err = client.UpdateWorkspaceSSHGateway(ctx, codersdk.UpdateWorkspaceSSHGatewayRequest{
 		Config:           config,
 		ClearCodexAPIKey: true,
 	})
+	var invalid *codersdk.Error
+	require.ErrorAs(t, err, &invalid)
+	require.Equal(t, http.StatusBadRequest, invalid.StatusCode())
+	sshOnly := config
+	sshOnly.CodexBaseURL, sshOnly.CodexModel = "", ""
+	status, err = client.UpdateWorkspaceSSHGateway(ctx, codersdk.UpdateWorkspaceSSHGatewayRequest{Config: sshOnly, ClearCodexAPIKey: true})
 	require.NoError(t, err)
 	require.False(t, status.APIKeyConfigured)
-
-	_, err = client.StartWorkspaceSSHGateway(ctx)
-	var startErr *codersdk.Error
-	require.ErrorAs(t, err, &startErr)
-	require.Equal(t, http.StatusConflict, startErr.StatusCode())
-	status, err = client.WorkspaceSSHGateway(ctx)
+	status, err = client.StartWorkspaceSSHGateway(ctx)
 	require.NoError(t, err)
-	require.Equal(t, codersdk.WorkspaceSSHGatewayStateError, status.State)
-	require.Equal(t, "api_key_missing", status.ErrorCode)
+	require.Equal(t, codersdk.WorkspaceSSHGatewayStateRunning, status.State)
+	_, err = client.StopWorkspaceSSHGateway(ctx)
+	require.NoError(t, err)
 
 	status, err = client.UpdateWorkspaceSSHGateway(ctx, codersdk.UpdateWorkspaceSSHGatewayRequest{
 		Config:      config,

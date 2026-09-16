@@ -3,7 +3,7 @@
 # This script builds a Docker image of Coder containing the given binary, for
 # the given architecture. Only linux binaries are supported at this time.
 #
-# Usage: ./build_docker.sh --arch amd64 [--version 1.2.3] [--target image_tag] [--build-base image_tag] [--push] path/to/coder
+# Usage: ./build_docker.sh --arch amd64 [--version 1.2.3] [--target image_tag] [--build-base image_tag] [--local-connect-dir directory] [--push] path/to/coder
 #
 # The --arch parameter is required and accepts a Golang arch specification. It
 # will be automatically mapped to a suitable architecture that Docker accepts
@@ -36,8 +36,9 @@ image_tag=""
 build_base="${CODER_IMAGE_BUILD_BASE_TAG:-}"
 version=""
 push=0
+local_connect_dir=""
 
-args="$(getopt -o "" -l arch:,target:,build-base:,version:,push -- "$@")"
+args="$(getopt -o "" -l arch:,target:,build-base:,version:,local-connect-dir:,push -- "$@")"
 eval set -- "$args"
 while true; do
 	case "$1" in
@@ -60,6 +61,10 @@ while true; do
 	--push)
 		push=1
 		shift
+		;;
+	--local-connect-dir)
+		local_connect_dir="$(realpath "$2")"
+		shift 2
 		;;
 	--)
 		shift
@@ -114,6 +119,11 @@ temp_dir="$(TMPDIR="$(dirname "$input_file")" mktemp -d)"
 ln "$input_file" "$temp_dir/coder"
 ln ./scripts/Dockerfile.base "$temp_dir/"
 ln ./scripts/Dockerfile "$temp_dir/"
+mkdir "$temp_dir/local-connect"
+if [[ -n "$local_connect_dir" ]]; then
+	test -f "$local_connect_dir/manifest.json"
+	cp -a "$local_connect_dir/." "$temp_dir/local-connect/"
+fi
 
 cd "$temp_dir"
 

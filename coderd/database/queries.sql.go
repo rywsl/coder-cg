@@ -33141,6 +33141,182 @@ func (q *sqlQuerier) ValidateUserIDs(ctx context.Context, userIds []uuid.UUID) (
 	return i, err
 }
 
+const getWorkspaceLocalConnectorByID = `-- name: GetWorkspaceLocalConnectorByID :one
+SELECT id, organization_id, user_id, workspace_ssh_key_id, token_hash, name, desired, revision, reported, created_at, last_seen_at FROM workspace_local_connectors WHERE id = $1
+`
+
+func (q *sqlQuerier) GetWorkspaceLocalConnectorByID(ctx context.Context, id uuid.UUID) (WorkspaceLocalConnector, error) {
+	row := q.db.QueryRowContext(ctx, getWorkspaceLocalConnectorByID, id)
+	var i WorkspaceLocalConnector
+	err := row.Scan(
+		&i.ID,
+		&i.OrganizationID,
+		&i.UserID,
+		&i.WorkspaceSshKeyID,
+		&i.TokenHash,
+		&i.Name,
+		&i.Desired,
+		&i.Revision,
+		&i.Reported,
+		&i.CreatedAt,
+		&i.LastSeenAt,
+	)
+	return i, err
+}
+
+const getWorkspaceLocalConnectorsByOwner = `-- name: GetWorkspaceLocalConnectorsByOwner :many
+SELECT id, organization_id, user_id, workspace_ssh_key_id, token_hash, name, desired, revision, reported, created_at, last_seen_at FROM workspace_local_connectors WHERE user_id = $1 AND organization_id = $2 ORDER BY created_at
+`
+
+type GetWorkspaceLocalConnectorsByOwnerParams struct {
+	UserID         uuid.UUID `db:"user_id" json:"user_id"`
+	OrganizationID uuid.UUID `db:"organization_id" json:"organization_id"`
+}
+
+func (q *sqlQuerier) GetWorkspaceLocalConnectorsByOwner(ctx context.Context, arg GetWorkspaceLocalConnectorsByOwnerParams) ([]WorkspaceLocalConnector, error) {
+	rows, err := q.db.QueryContext(ctx, getWorkspaceLocalConnectorsByOwner, arg.UserID, arg.OrganizationID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []WorkspaceLocalConnector
+	for rows.Next() {
+		var i WorkspaceLocalConnector
+		if err := rows.Scan(
+			&i.ID,
+			&i.OrganizationID,
+			&i.UserID,
+			&i.WorkspaceSshKeyID,
+			&i.TokenHash,
+			&i.Name,
+			&i.Desired,
+			&i.Revision,
+			&i.Reported,
+			&i.CreatedAt,
+			&i.LastSeenAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const insertWorkspaceLocalConnector = `-- name: InsertWorkspaceLocalConnector :one
+INSERT INTO workspace_local_connectors (id, organization_id, user_id, workspace_ssh_key_id, token_hash, name)
+VALUES ($1, $2, $3, $4, $5, $6)
+RETURNING id, organization_id, user_id, workspace_ssh_key_id, token_hash, name, desired, revision, reported, created_at, last_seen_at
+`
+
+type InsertWorkspaceLocalConnectorParams struct {
+	ID                uuid.UUID `db:"id" json:"id"`
+	OrganizationID    uuid.UUID `db:"organization_id" json:"organization_id"`
+	UserID            uuid.UUID `db:"user_id" json:"user_id"`
+	WorkspaceSshKeyID uuid.UUID `db:"workspace_ssh_key_id" json:"workspace_ssh_key_id"`
+	TokenHash         []byte    `db:"token_hash" json:"token_hash"`
+	Name              string    `db:"name" json:"name"`
+}
+
+func (q *sqlQuerier) InsertWorkspaceLocalConnector(ctx context.Context, arg InsertWorkspaceLocalConnectorParams) (WorkspaceLocalConnector, error) {
+	row := q.db.QueryRowContext(ctx, insertWorkspaceLocalConnector,
+		arg.ID,
+		arg.OrganizationID,
+		arg.UserID,
+		arg.WorkspaceSshKeyID,
+		arg.TokenHash,
+		arg.Name,
+	)
+	var i WorkspaceLocalConnector
+	err := row.Scan(
+		&i.ID,
+		&i.OrganizationID,
+		&i.UserID,
+		&i.WorkspaceSshKeyID,
+		&i.TokenHash,
+		&i.Name,
+		&i.Desired,
+		&i.Revision,
+		&i.Reported,
+		&i.CreatedAt,
+		&i.LastSeenAt,
+	)
+	return i, err
+}
+
+const updateWorkspaceLocalConnectorDesired = `-- name: UpdateWorkspaceLocalConnectorDesired :one
+UPDATE workspace_local_connectors SET desired = $1, revision = revision + 1, reported = '[]'::jsonb
+WHERE id = $2 AND revision = $3 RETURNING id, organization_id, user_id, workspace_ssh_key_id, token_hash, name, desired, revision, reported, created_at, last_seen_at
+`
+
+type UpdateWorkspaceLocalConnectorDesiredParams struct {
+	Desired  json.RawMessage `db:"desired" json:"desired"`
+	ID       uuid.UUID       `db:"id" json:"id"`
+	Revision int64           `db:"revision" json:"revision"`
+}
+
+func (q *sqlQuerier) UpdateWorkspaceLocalConnectorDesired(ctx context.Context, arg UpdateWorkspaceLocalConnectorDesiredParams) (WorkspaceLocalConnector, error) {
+	row := q.db.QueryRowContext(ctx, updateWorkspaceLocalConnectorDesired, arg.Desired, arg.ID, arg.Revision)
+	var i WorkspaceLocalConnector
+	err := row.Scan(
+		&i.ID,
+		&i.OrganizationID,
+		&i.UserID,
+		&i.WorkspaceSshKeyID,
+		&i.TokenHash,
+		&i.Name,
+		&i.Desired,
+		&i.Revision,
+		&i.Reported,
+		&i.CreatedAt,
+		&i.LastSeenAt,
+	)
+	return i, err
+}
+
+const updateWorkspaceLocalConnectorReported = `-- name: UpdateWorkspaceLocalConnectorReported :one
+UPDATE workspace_local_connectors
+SET reported = CASE WHEN revision = $1 THEN $2::jsonb ELSE '[]'::jsonb END,
+    last_seen_at = $3
+WHERE id = $4 RETURNING id, organization_id, user_id, workspace_ssh_key_id, token_hash, name, desired, revision, reported, created_at, last_seen_at
+`
+
+type UpdateWorkspaceLocalConnectorReportedParams struct {
+	ReportedRevision int64           `db:"reported_revision" json:"reported_revision"`
+	Reported         json.RawMessage `db:"reported" json:"reported"`
+	LastSeenAt       sql.NullTime    `db:"last_seen_at" json:"last_seen_at"`
+	ID               uuid.UUID       `db:"id" json:"id"`
+}
+
+func (q *sqlQuerier) UpdateWorkspaceLocalConnectorReported(ctx context.Context, arg UpdateWorkspaceLocalConnectorReportedParams) (WorkspaceLocalConnector, error) {
+	row := q.db.QueryRowContext(ctx, updateWorkspaceLocalConnectorReported,
+		arg.ReportedRevision,
+		arg.Reported,
+		arg.LastSeenAt,
+		arg.ID,
+	)
+	var i WorkspaceLocalConnector
+	err := row.Scan(
+		&i.ID,
+		&i.OrganizationID,
+		&i.UserID,
+		&i.WorkspaceSshKeyID,
+		&i.TokenHash,
+		&i.Name,
+		&i.Desired,
+		&i.Revision,
+		&i.Reported,
+		&i.CreatedAt,
+		&i.LastSeenAt,
+	)
+	return i, err
+}
+
 const completeWorkspaceSSHKeyEnrollment = `-- name: CompleteWorkspaceSSHKeyEnrollment :one
 UPDATE workspace_ssh_key_enrollments
 SET

@@ -12,6 +12,7 @@ import (
 	"os"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/google/uuid"
@@ -106,6 +107,7 @@ type Config struct {
 	Timeouts      Timeouts
 	Authenticate  func(context.Context, ssh.ConnMetadata, ssh.PublicKey) (Target, error)
 	Verified      func(context.Context, Target) error
+	Revalidate    func(context.Context, Target) error
 	DialAgent     func(context.Context, Target) (net.Conn, func(), error)
 	Record        func(context.Context, ConnectionEvent)
 }
@@ -701,6 +703,33 @@ func (g *Gateway) handle(ctx context.Context, state *connectionState) {
 	}
 	_ = agentRaw.SetDeadline(time.Time{})
 	defer agentConn.Close()
+	var authorizationRevoked atomic.Bool
+	if g.config.Revalidate != nil {
+		validationCtx, cancelValidation := context.WithCancel(ctx)
+		validationDone := make(chan struct{})
+		defer func() { cancelValidation(); <-validationDone }()
+		go func() {
+			defer close(validationDone)
+			ticker := time.NewTicker(5 * time.Second)
+			defer ticker.Stop()
+			for {
+				select {
+				case <-validationCtx.Done():
+					return
+				case <-ticker.C:
+					checkCtx, cancel := context.WithTimeout(validationCtx, 5*time.Second)
+					err := g.config.Revalidate(checkCtx, target)
+					cancel()
+					if err != nil {
+						authorizationRevoked.Store(true)
+						_ = external.Close()
+						_ = agentConn.Close()
+						return
+					}
+				}
+			}
+		}()
+	}
 
 	g.config.Logger.Info(context.Background(), "workspace SSH gateway connection established",
 		slog.F("connection_id", connectionID),
@@ -731,6 +760,8 @@ func (g *Gateway) handle(ctx context.Context, state *connectionState) {
 	switch {
 	case g.isShutdown(state):
 		result = "shutdown"
+	case authorizationRevoked.Load():
+		result = "authorization_revoked"
 	case !isCompletedConnection(err):
 		result = "protocol_error"
 	default:

@@ -3944,6 +3944,22 @@ func (m queryMetricsStore) GetWorkspaceByWorkspaceAppID(ctx context.Context, wor
 	return r0, r1
 }
 
+func (m queryMetricsStore) GetWorkspaceLocalConnectorByID(ctx context.Context, id uuid.UUID) (database.WorkspaceLocalConnector, error) {
+	start := time.Now()
+	r0, r1 := m.s.GetWorkspaceLocalConnectorByID(ctx, id)
+	m.queryLatencies.WithLabelValues("GetWorkspaceLocalConnectorByID").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "GetWorkspaceLocalConnectorByID").Inc()
+	return r0, r1
+}
+
+func (m queryMetricsStore) GetWorkspaceLocalConnectorsByOwner(ctx context.Context, arg database.GetWorkspaceLocalConnectorsByOwnerParams) ([]database.WorkspaceLocalConnector, error) {
+	start := time.Now()
+	r0, r1 := m.s.GetWorkspaceLocalConnectorsByOwner(ctx, arg)
+	m.queryLatencies.WithLabelValues("GetWorkspaceLocalConnectorsByOwner").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "GetWorkspaceLocalConnectorsByOwner").Inc()
+	return r0, r1
+}
+
 func (m queryMetricsStore) GetWorkspaceModulesByJobID(ctx context.Context, jobID uuid.UUID) ([]database.WorkspaceModule, error) {
 	start := time.Now()
 	r0, r1 := m.s.GetWorkspaceModulesByJobID(ctx, jobID)
@@ -4838,6 +4854,14 @@ func (m queryMetricsStore) InsertWorkspaceBuildParameters(ctx context.Context, a
 	m.queryLatencies.WithLabelValues("InsertWorkspaceBuildParameters").Observe(time.Since(start).Seconds())
 	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "InsertWorkspaceBuildParameters").Inc()
 	return r0
+}
+
+func (m queryMetricsStore) InsertWorkspaceLocalConnector(ctx context.Context, arg database.InsertWorkspaceLocalConnectorParams) (database.WorkspaceLocalConnector, error) {
+	start := time.Now()
+	r0, r1 := m.s.InsertWorkspaceLocalConnector(ctx, arg)
+	m.queryLatencies.WithLabelValues("InsertWorkspaceLocalConnector").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "InsertWorkspaceLocalConnector").Inc()
+	return r0, r1
 }
 
 func (m queryMetricsStore) InsertWorkspaceModule(ctx context.Context, arg database.InsertWorkspaceModuleParams) (database.WorkspaceModule, error) {
@@ -6382,6 +6406,22 @@ func (m queryMetricsStore) UpdateWorkspaceLastUsedAt(ctx context.Context, arg da
 	m.queryLatencies.WithLabelValues("UpdateWorkspaceLastUsedAt").Observe(time.Since(start).Seconds())
 	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "UpdateWorkspaceLastUsedAt").Inc()
 	return r0
+}
+
+func (m queryMetricsStore) UpdateWorkspaceLocalConnectorDesired(ctx context.Context, arg database.UpdateWorkspaceLocalConnectorDesiredParams) (database.WorkspaceLocalConnector, error) {
+	start := time.Now()
+	r0, r1 := m.s.UpdateWorkspaceLocalConnectorDesired(ctx, arg)
+	m.queryLatencies.WithLabelValues("UpdateWorkspaceLocalConnectorDesired").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "UpdateWorkspaceLocalConnectorDesired").Inc()
+	return r0, r1
+}
+
+func (m queryMetricsStore) UpdateWorkspaceLocalConnectorReported(ctx context.Context, arg database.UpdateWorkspaceLocalConnectorReportedParams) (database.WorkspaceLocalConnector, error) {
+	start := time.Now()
+	r0, r1 := m.s.UpdateWorkspaceLocalConnectorReported(ctx, arg)
+	m.queryLatencies.WithLabelValues("UpdateWorkspaceLocalConnectorReported").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "UpdateWorkspaceLocalConnectorReported").Inc()
+	return r0, r1
 }
 
 func (m queryMetricsStore) UpdateWorkspaceNextStartAt(ctx context.Context, arg database.UpdateWorkspaceNextStartAtParams) error {

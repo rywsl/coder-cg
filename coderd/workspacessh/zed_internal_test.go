@@ -34,6 +34,7 @@ type zedEnvironmentChannel struct {
 	reject    bool
 }
 
+//nolint:revive // The SSH Channel interface requires the wantReply flag.
 func (c *zedEnvironmentChannel) SendRequest(name string, wantReply bool, payload []byte) (bool, error) {
 	var variable sshEnvironment
 	if name != "env" || !wantReply || ssh.Unmarshal(payload, &variable) != nil {

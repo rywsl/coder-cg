@@ -4171,6 +4171,22 @@ CREATE VIEW workspace_latest_builds AS
   WHERE (workspaces.deleted = false)
   ORDER BY workspaces.id;
 
+CREATE TABLE workspace_local_connectors (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    organization_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    workspace_ssh_key_id uuid NOT NULL,
+    token_hash bytea NOT NULL,
+    name text NOT NULL,
+    desired jsonb DEFAULT '[]'::jsonb NOT NULL,
+    revision bigint DEFAULT 1 NOT NULL,
+    reported jsonb DEFAULT '[]'::jsonb NOT NULL,
+    created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    last_seen_at timestamp with time zone,
+    CONSTRAINT workspace_local_connectors_name_check CHECK (((length(name) >= 1) AND (length(name) <= 255))),
+    CONSTRAINT workspace_local_connectors_token_hash_check CHECK ((octet_length(token_hash) = 32))
+);
+
 CREATE TABLE workspace_modules (
     id uuid NOT NULL,
     job_id uuid NOT NULL,
@@ -4811,6 +4827,15 @@ ALTER TABLE ONLY workspace_builds
 ALTER TABLE ONLY workspace_builds
     ADD CONSTRAINT workspace_builds_workspace_id_build_number_key UNIQUE (workspace_id, build_number);
 
+ALTER TABLE ONLY workspace_local_connectors
+    ADD CONSTRAINT workspace_local_connectors_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY workspace_local_connectors
+    ADD CONSTRAINT workspace_local_connectors_token_hash_key UNIQUE (token_hash);
+
+ALTER TABLE ONLY workspace_local_connectors
+    ADD CONSTRAINT workspace_local_connectors_workspace_ssh_key_id_key UNIQUE (workspace_ssh_key_id);
+
 ALTER TABLE ONLY workspace_proxies
     ADD CONSTRAINT workspace_proxies_pkey PRIMARY KEY (id);
 
@@ -5164,6 +5189,8 @@ COMMENT ON INDEX workspace_app_audit_sessions_unique_index IS 'Unique index to e
 CREATE INDEX workspace_app_stats_workspace_id_idx ON workspace_app_stats USING btree (workspace_id);
 
 CREATE INDEX workspace_app_statuses_app_id_idx ON workspace_app_statuses USING btree (app_id, created_at DESC);
+
+CREATE INDEX workspace_local_connectors_owner ON workspace_local_connectors USING btree (user_id, organization_id);
 
 CREATE INDEX workspace_modules_created_at_idx ON workspace_modules USING btree (created_at);
 
@@ -5765,6 +5792,15 @@ ALTER TABLE ONLY workspace_builds
 
 ALTER TABLE ONLY workspace_builds
     ADD CONSTRAINT workspace_builds_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY workspace_local_connectors
+    ADD CONSTRAINT workspace_local_connectors_organization_id_fkey FOREIGN KEY (organization_id) REFERENCES organizations(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY workspace_local_connectors
+    ADD CONSTRAINT workspace_local_connectors_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY workspace_local_connectors
+    ADD CONSTRAINT workspace_local_connectors_workspace_ssh_key_id_fkey FOREIGN KEY (workspace_ssh_key_id) REFERENCES workspace_ssh_keys(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY workspace_modules
     ADD CONSTRAINT workspace_modules_job_id_fkey FOREIGN KEY (job_id) REFERENCES provisioner_jobs(id) ON DELETE CASCADE;

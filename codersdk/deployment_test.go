@@ -491,6 +491,9 @@ func TestWorkspaceSSHGatewayRuntimeConfigValidate(t *testing.T) {
 		wantErr string
 	}{
 		{name: "Valid"},
+		{name: "NoAIConfiguration", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
+			config.CodexBaseURL, config.CodexModel = "", ""
+		}},
 		{name: "InvalidListenAddress", mutate: func(config *codersdk.WorkspaceSSHGatewayRuntimeConfig) {
 			config.ListenAddress = "127.0.0.1"
 		}, wantErr: "listen address"},

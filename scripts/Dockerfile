@@ -20,5 +20,6 @@ LABEL \
 
 # The coder binary is injected by scripts/build_docker.sh.
 COPY --chown=1000:1000 --chmod=755 coder /opt/coder
+COPY --chown=1000:1000 local-connect /opt/local-connect
 
 ENTRYPOINT [ "/opt/coder", "server" ]

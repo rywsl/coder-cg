@@ -1460,6 +1460,10 @@ func New(options *Options) *API {
 			r.Post("/", api.enrollWorkspaceSSHKey)
 			r.With(apiKeyMiddleware).Get("/", api.workspaceSSHEnrollmentStatus)
 		})
+		r.Post("/local-connect/enrollments/{enrollment}", api.registerLocalConnector)
+		r.Get("/local-connect/release", api.localConnectorRelease)
+		r.Get("/local-connect/download/{artifact}", api.localConnectorDownload)
+		r.Post("/local-connect/devices/{connector}/sync", api.syncLocalConnector)
 		r.Route("/experiments", func(r chi.Router) {
 			r.Use(apiKeyMiddleware)
 			r.Get("/available", handleExperimentsAvailable)
@@ -1534,6 +1538,8 @@ func New(options *Options) *API {
 					httpmw.ExtractOrganizationParam(options.Database),
 				)
 				api.registerOrganizationChatRoutes(r, chatAPIPrefixV2)
+				r.Get("/local-connectors", api.localConnectors)
+				r.Put("/local-connectors/{connector}", api.updateLocalConnector)
 				r.Get("/", api.organization)
 				r.Route("/workspace-ssh-keys", func(r chi.Router) {
 					r.Get("/", api.workspaceSSHKeys)
@@ -1807,6 +1813,7 @@ func New(options *Options) *API {
 			r.Post("/aws-instance-identity", api.postWorkspaceAuthAWSInstanceIdentity)
 			r.Post("/google-instance-identity", api.postWorkspaceAuthGoogleInstanceIdentity)
 			r.With(apiKeyMiddleware).Post("/{workspaceagent}/workspace-ssh-bootstrap", api.workspaceSSHBootstrap)
+			r.With(apiKeyMiddleware).Post("/{workspaceagent}/local-connect-bootstrap", api.localConnectorBootstrap)
 			r.With(
 				apiKeyMiddlewareOptional,
 				httpmw.ExtractWorkspaceProxy(httpmw.ExtractWorkspaceProxyConfig{

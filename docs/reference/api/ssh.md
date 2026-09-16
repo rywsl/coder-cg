@@ -5,6 +5,412 @@ title: SSH
 
 <!-- DO NOT EDIT | GENERATED CONTENT -->
 
+## Synchronize local connector lease and status
+
+### Code samples
+
+```sh
+# Example request using curl
+curl -X POST http://coder-server:8080/api/v2/local-connect/devices/{connector}/sync \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -H 'Authorization: API_KEY'
+```
+
+`POST /api/v2/local-connect/devices/{connector}/sync`
+
+> Body parameter
+
+```json
+{
+  "reported": [
+    {
+      "agent_name": "string",
+      "error_code": "string",
+      "local_port": 0,
+      "protocol": "http",
+      "remote_port": 0,
+      "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+    }
+  ],
+  "revision": 0
+}
+```
+
+### Parameters
+
+| Name        | In   | Type                                                                               | Required | Description     |
+|-------------|------|------------------------------------------------------------------------------------|----------|-----------------|
+| `connector` | path | string(uuid)                                                                       | true     | Connector       |
+| `body`      | body | [codersdk.LocalConnectorSyncRequest](schemas.md#codersdklocalconnectorsyncrequest) | true     | Reported status |
+
+### Example responses
+
+> 200 Response
+
+```json
+{
+  "gateway": {
+    "alias_suffix": "string",
+    "chatgpt_desktop_available": true,
+    "enabled": true,
+    "host": "string",
+    "host_key_fingerprint": "string",
+    "host_public_key": "string",
+    "port": 0
+  },
+  "lease_seconds": 0,
+  "revision": 0,
+  "targets": [
+    {
+      "agent_id": "2b1e3b65-2c04-4fa2-a2d7-467901e98978",
+      "agent_name": "string",
+      "alias": "string",
+      "automatic": true,
+      "candidates": [
+        0
+      ],
+      "ports": [
+        0
+      ],
+      "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+    }
+  ]
+}
+```
+
+### Responses
+
+| Status | Meaning                                                 | Description | Schema                                                               |
+|--------|---------------------------------------------------------|-------------|----------------------------------------------------------------------|
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | OK          | [codersdk.LocalConnectorSync](schemas.md#codersdklocalconnectorsync) |
+
+To perform this operation, you must be authenticated. [Learn more](authentication.md).
+
+## Download local connector artifact
+
+### Code samples
+
+```sh
+# Example request using curl
+curl -X GET http://coder-server:8080/api/v2/local-connect/download/{artifact} \
+  -H 'Accept: application/octet-stream'
+```
+
+`GET /api/v2/local-connect/download/{artifact}`
+
+### Parameters
+
+| Name       | In   | Type   | Required | Description           |
+|------------|------|--------|----------|-----------------------|
+| `artifact` | path | string | true     | Release artifact name |
+
+### Responses
+
+| Status | Meaning                                                 | Description | Schema |
+|--------|---------------------------------------------------------|-------------|--------|
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | OK          | string |
+
+## Register local connector
+
+### Code samples
+
+```sh
+# Example request using curl
+curl -X POST http://coder-server:8080/api/v2/local-connect/enrollments/{enrollment} \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -H 'Authorization: API_KEY'
+```
+
+`POST /api/v2/local-connect/enrollments/{enrollment}`
+
+> Body parameter
+
+```json
+{
+  "device_name": "string",
+  "public_key": "string",
+  "token": "string"
+}
+```
+
+### Parameters
+
+| Name         | In   | Type                                                                         | Required | Description         |
+|--------------|------|------------------------------------------------------------------------------|----------|---------------------|
+| `enrollment` | path | string(uuid)                                                                 | true     | Enrollment ID       |
+| `body`       | body | [codersdk.LocalConnectorRegister](schemas.md#codersdklocalconnectorregister) | true     | Device registration |
+
+### Example responses
+
+> 201 Response
+
+```json
+{
+  "device": {
+    "desired": [
+      {
+        "agent_name": "string",
+        "automatic": true,
+        "ports": [
+          0
+        ],
+        "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+      }
+    ],
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "name": "string",
+    "online": true,
+    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+    "reported": [
+      {
+        "agent_name": "string",
+        "error_code": "string",
+        "local_port": 0,
+        "protocol": "http",
+        "remote_port": 0,
+        "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+      }
+    ],
+    "revision": 0,
+    "workspace_ssh_key_id": "4272796a-ebc0-4f14-9afa-b803128bc222"
+  },
+  "gateway": {
+    "alias_suffix": "string",
+    "chatgpt_desktop_available": true,
+    "enabled": true,
+    "host": "string",
+    "host_key_fingerprint": "string",
+    "host_public_key": "string",
+    "port": 0
+  }
+}
+```
+
+### Responses
+
+| Status | Meaning                                                      | Description | Schema                                                                               |
+|--------|--------------------------------------------------------------|-------------|--------------------------------------------------------------------------------------|
+| 201    | [Created](https://tools.ietf.org/html/rfc7231#section-6.3.2) | Created     | [codersdk.LocalConnectorRegistration](schemas.md#codersdklocalconnectorregistration) |
+
+To perform this operation, you must be authenticated. [Learn more](authentication.md).
+
+## Get local connector release manifest
+
+### Code samples
+
+```sh
+# Example request using curl
+curl -X GET http://coder-server:8080/api/v2/local-connect/release \
+  -H 'Accept: application/json'
+```
+
+`GET /api/v2/local-connect/release`
+
+### Example responses
+
+> 200 Response
+
+```json
+{
+  "artifacts": [
+    {
+      "arch": "string",
+      "name": "string",
+      "os": "string",
+      "sha256": "string"
+    }
+  ],
+  "version": "string"
+}
+```
+
+### Responses
+
+| Status | Meaning                                                 | Description | Schema                                                                     |
+|--------|---------------------------------------------------------|-------------|----------------------------------------------------------------------------|
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | OK          | [codersdk.LocalConnectorRelease](schemas.md#codersdklocalconnectorrelease) |
+
+## List current user's local connectors
+
+### Code samples
+
+```sh
+# Example request using curl
+curl -X GET http://coder-server:8080/api/v2/organizations/{organization}/local-connectors \
+  -H 'Accept: application/json' \
+  -H 'Coder-Session-Token: API_KEY'
+```
+
+`GET /api/v2/organizations/{organization}/local-connectors`
+
+### Parameters
+
+| Name           | In   | Type         | Required | Description  |
+|----------------|------|--------------|----------|--------------|
+| `organization` | path | string(uuid) | true     | Organization |
+
+### Example responses
+
+> 200 Response
+
+```json
+[
+  {
+    "desired": [
+      {
+        "agent_name": "string",
+        "automatic": true,
+        "ports": [
+          0
+        ],
+        "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+      }
+    ],
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "name": "string",
+    "online": true,
+    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+    "reported": [
+      {
+        "agent_name": "string",
+        "error_code": "string",
+        "local_port": 0,
+        "protocol": "http",
+        "remote_port": 0,
+        "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+      }
+    ],
+    "revision": 0,
+    "workspace_ssh_key_id": "4272796a-ebc0-4f14-9afa-b803128bc222"
+  }
+]
+```
+
+### Responses
+
+| Status | Meaning                                                 | Description | Schema                                                                |
+|--------|---------------------------------------------------------|-------------|-----------------------------------------------------------------------|
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | OK          | array of [codersdk.LocalConnector](schemas.md#codersdklocalconnector) |
+
+<h3 id="list-current-user's-local-connectors-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+| Name                     | Type         | Required | Restrictions | Description |
+|--------------------------|--------------|----------|--------------|-------------|
+| `[array item]`           | array        | false    |              |             |
+| `» desired`              | array        | false    |              |             |
+| `»» agent_name`          | string       | false    |              |             |
+| `»» automatic`           | boolean      | false    |              |             |
+| `»» ports`               | array        | false    |              |             |
+| `»» workspace_id`        | string(uuid) | false    |              |             |
+| `» id`                   | string(uuid) | false    |              |             |
+| `» name`                 | string       | false    |              |             |
+| `» online`               | boolean      | false    |              |             |
+| `» organization_id`      | string(uuid) | false    |              |             |
+| `» reported`             | array        | false    |              |             |
+| `»» agent_name`          | string       | false    |              |             |
+| `»» error_code`          | string       | false    |              |             |
+| `»» local_port`          | integer      | false    |              |             |
+| `»» protocol`            | string       | false    |              |             |
+| `»» remote_port`         | integer      | false    |              |             |
+| `»» workspace_id`        | string(uuid) | false    |              |             |
+| `» revision`             | integer      | false    |              |             |
+| `» workspace_ssh_key_id` | string(uuid) | false    |              |             |
+
+#### Enumerated Values
+
+| Property   | Value(s)               |
+|------------|------------------------|
+| `protocol` | `http`, `https`, `tcp` |
+
+To perform this operation, you must be authenticated. [Learn more](authentication.md).
+
+## Update local connector forwarding
+
+### Code samples
+
+```sh
+# Example request using curl
+curl -X PUT http://coder-server:8080/api/v2/organizations/{organization}/local-connectors/{connector} \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -H 'Coder-Session-Token: API_KEY'
+```
+
+`PUT /api/v2/organizations/{organization}/local-connectors/{connector}`
+
+> Body parameter
+
+```json
+{
+  "desired": [
+    {
+      "agent_name": "string",
+      "automatic": true,
+      "ports": [
+        0
+      ],
+      "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+    }
+  ],
+  "revision": 0
+}
+```
+
+### Parameters
+
+| Name           | In   | Type                                                                     | Required | Description        |
+|----------------|------|--------------------------------------------------------------------------|----------|--------------------|
+| `organization` | path | string(uuid)                                                             | true     | Organization       |
+| `connector`    | path | string(uuid)                                                             | true     | Connector          |
+| `body`         | body | [codersdk.LocalConnectorUpdate](schemas.md#codersdklocalconnectorupdate) | true     | Desired forwarding |
+
+### Example responses
+
+> 200 Response
+
+```json
+{
+  "desired": [
+    {
+      "agent_name": "string",
+      "automatic": true,
+      "ports": [
+        0
+      ],
+      "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+    }
+  ],
+  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+  "name": "string",
+  "online": true,
+  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+  "reported": [
+    {
+      "agent_name": "string",
+      "error_code": "string",
+      "local_port": 0,
+      "protocol": "http",
+      "remote_port": 0,
+      "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+    }
+  ],
+  "revision": 0,
+  "workspace_ssh_key_id": "4272796a-ebc0-4f14-9afa-b803128bc222"
+}
+```
+
+### Responses
+
+| Status | Meaning                                                 | Description | Schema                                                       |
+|--------|---------------------------------------------------------|-------------|--------------------------------------------------------------|
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | OK          | [codersdk.LocalConnector](schemas.md#codersdklocalconnector) |
+
+To perform this operation, you must be authenticated. [Learn more](authentication.md).
+
 ## List workspace SSH keys
 
 ### Code samples
@@ -284,6 +690,45 @@ Authenticate with a one-time enrollment token using the Bearer scheme in the Aut
 | Status | Meaning                                                 | Description | Schema |
 |--------|---------------------------------------------------------|-------------|--------|
 | 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | OK          | string |
+
+To perform this operation, you must be authenticated. [Learn more](authentication.md).
+
+## Create local connector enrollment
+
+### Code samples
+
+```sh
+# Example request using curl
+curl -X POST http://coder-server:8080/api/v2/workspaceagents/{workspaceagent}/local-connect-bootstrap \
+  -H 'Accept: application/json' \
+  -H 'Coder-Session-Token: API_KEY'
+```
+
+`POST /api/v2/workspaceagents/{workspaceagent}/local-connect-bootstrap`
+
+### Parameters
+
+| Name             | In   | Type         | Required | Description |
+|------------------|------|--------------|----------|-------------|
+| `workspaceagent` | path | string(uuid) | true     | Agent ID    |
+
+### Example responses
+
+> 201 Response
+
+```json
+{
+  "enrollment_id": "cd8e6b59-f5cf-4894-8850-4dc2dc1aaf8e",
+  "expires_at": "2019-08-24T14:15:22Z",
+  "token": "string"
+}
+```
+
+### Responses
+
+| Status | Meaning                                                      | Description | Schema                                                                           |
+|--------|--------------------------------------------------------------|-------------|----------------------------------------------------------------------------------|
+| 201    | [Created](https://tools.ietf.org/html/rfc7231#section-6.3.2) | Created     | [codersdk.LocalConnectorEnrollment](schemas.md#codersdklocalconnectorenrollment) |
 
 To perform this operation, you must be authenticated. [Learn more](authentication.md).
 

@@ -1072,6 +1072,8 @@ type sqlcQuerier interface {
 	GetWorkspaceByOwnerIDAndName(ctx context.Context, arg GetWorkspaceByOwnerIDAndNameParams) (Workspace, error)
 	GetWorkspaceByResourceID(ctx context.Context, resourceID uuid.UUID) (Workspace, error)
 	GetWorkspaceByWorkspaceAppID(ctx context.Context, workspaceAppID uuid.UUID) (Workspace, error)
+	GetWorkspaceLocalConnectorByID(ctx context.Context, id uuid.UUID) (WorkspaceLocalConnector, error)
+	GetWorkspaceLocalConnectorsByOwner(ctx context.Context, arg GetWorkspaceLocalConnectorsByOwnerParams) ([]WorkspaceLocalConnector, error)
 	GetWorkspaceModulesByJobID(ctx context.Context, jobID uuid.UUID) ([]WorkspaceModule, error)
 	GetWorkspaceModulesCreatedAfter(ctx context.Context, createdAt time.Time) ([]WorkspaceModule, error)
 	GetWorkspaceProxies(ctx context.Context) ([]WorkspaceProxy, error)
@@ -1261,6 +1263,7 @@ type sqlcQuerier interface {
 	InsertWorkspaceBuild(ctx context.Context, arg InsertWorkspaceBuildParams) error
 	InsertWorkspaceBuildOrchestration(ctx context.Context, arg InsertWorkspaceBuildOrchestrationParams) (WorkspaceBuildOrchestration, error)
 	InsertWorkspaceBuildParameters(ctx context.Context, arg InsertWorkspaceBuildParametersParams) error
+	InsertWorkspaceLocalConnector(ctx context.Context, arg InsertWorkspaceLocalConnectorParams) (WorkspaceLocalConnector, error)
 	InsertWorkspaceModule(ctx context.Context, arg InsertWorkspaceModuleParams) (WorkspaceModule, error)
 	InsertWorkspaceProxy(ctx context.Context, arg InsertWorkspaceProxyParams) (WorkspaceProxy, error)
 	InsertWorkspaceResource(ctx context.Context, arg InsertWorkspaceResourceParams) (WorkspaceResource, error)
@@ -1671,6 +1674,8 @@ type sqlcQuerier interface {
 	UpdateWorkspaceDeletedByID(ctx context.Context, arg UpdateWorkspaceDeletedByIDParams) error
 	UpdateWorkspaceDormantDeletingAt(ctx context.Context, arg UpdateWorkspaceDormantDeletingAtParams) (WorkspaceTable, error)
 	UpdateWorkspaceLastUsedAt(ctx context.Context, arg UpdateWorkspaceLastUsedAtParams) error
+	UpdateWorkspaceLocalConnectorDesired(ctx context.Context, arg UpdateWorkspaceLocalConnectorDesiredParams) (WorkspaceLocalConnector, error)
+	UpdateWorkspaceLocalConnectorReported(ctx context.Context, arg UpdateWorkspaceLocalConnectorReportedParams) (WorkspaceLocalConnector, error)
 	UpdateWorkspaceNextStartAt(ctx context.Context, arg UpdateWorkspaceNextStartAtParams) error
 	// This allows editing the properties of a workspace proxy.
 	UpdateWorkspaceProxy(ctx context.Context, arg UpdateWorkspaceProxyParams) (WorkspaceProxy, error)

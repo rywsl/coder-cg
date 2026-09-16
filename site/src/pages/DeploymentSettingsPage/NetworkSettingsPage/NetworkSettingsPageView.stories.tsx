@@ -167,6 +167,21 @@ export const NotConfigured: Story = {
 	},
 };
 
+export const SSHWithoutAI: Story = {
+	args: {
+		gateway: {
+			...stoppedGateway,
+			api_key_configured: false,
+			config: { ...stoppedGateway.config, codex_base_url: "", codex_model: "" },
+		},
+	},
+	play: async ({ canvasElement, args }) => {
+		const canvas = within(canvasElement);
+		await userEvent.click(canvas.getByRole("button", { name: "Start" }));
+		await expect(args.onStartGateway).toHaveBeenCalled();
+	},
+};
+
 export const Running: Story = {
 	args: {
 		gateway: {

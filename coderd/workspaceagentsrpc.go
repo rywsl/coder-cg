@@ -154,6 +154,10 @@ func (api *API) workspaceAgentRPC(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	agentAPI := agentapi.New(agentapi.Options{
+		LocalPortForwarding: func() bool {
+			info := api.workspaceSSHGatewayInfo()
+			return info != nil && info.Enabled && !api.workspaceSSHBrowserOnly()
+		},
 		AgentID:           workspaceAgent.ID,
 		OwnerID:           workspace.OwnerID,
 		WorkspaceID:       workspace.ID,

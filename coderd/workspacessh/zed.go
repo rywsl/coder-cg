@@ -8,8 +8,10 @@ import (
 	"mvdan.cc/sh/v3/syntax"
 )
 
-var zedProxyBinary = regexp.MustCompile(`^\.zed_server/zed-remote-server-(stable|preview|nightly)-[a-zA-Z0-9.+-]+$`)
-var zedWorkspaceIdentifier = regexp.MustCompile(`^workspace-[0-9]+$`)
+var (
+	zedProxyBinary         = regexp.MustCompile(`^\.zed_server/zed-remote-server-(stable|preview|nightly)-[a-zA-Z0-9.+-]+$`)
+	zedWorkspaceIdentifier = regexp.MustCompile(`^workspace-[0-9]+$`)
+)
 
 // isZedProxyCommand recognizes the Linux launch command emitted by Zed 1.19.2.
 // Only literal arguments and Zed's three diagnostic variables are accepted.

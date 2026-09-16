@@ -26,6 +26,38 @@ import (
 	"github.com/coder/coder/v2/tailnet"
 )
 
+func TestGetManifestLocalPreview(t *testing.T) {
+	t.Parallel()
+	for _, enabled := range []bool{false, true} {
+		t.Run(fmt.Sprintf("Enabled=%t", enabled), func(t *testing.T) {
+			t.Parallel()
+			agent := database.WorkspaceAgent{ID: uuid.New(), Name: "main"}
+			workspace := database.Workspace{ID: uuid.New(), OwnerID: uuid.New(), OwnerUsername: "owner", Name: "project"}
+			store := dbmock.NewMockStore(gomock.NewController(t))
+			store.EXPECT().GetWorkspaceAppsByAgentID(gomock.Any(), agent.ID).Return(nil, nil)
+			store.EXPECT().GetWorkspaceAgentScriptsByAgentIDs(gomock.Any(), []uuid.UUID{agent.ID}).Return(nil, nil)
+			store.EXPECT().GetWorkspaceAgentMetadata(gomock.Any(), gomock.Any()).Return(nil, nil)
+			store.EXPECT().GetWorkspaceAgentDevcontainersByAgentID(gomock.Any(), agent.ID).Return(nil, nil)
+			store.EXPECT().GetWorkspaceByID(gomock.Any(), workspace.ID).Return(workspace, nil)
+			store.EXPECT().ListUserSecretsWithValues(gomock.Any(), workspace.OwnerID).Return(nil, nil)
+			api := &agentapi.ManifestAPI{
+				AccessURL:   &url.URL{Scheme: "https", Host: "212.64.22.217:8443"},
+				AgentFn:     func(context.Context) (database.WorkspaceAgent, error) { return agent, nil },
+				WorkspaceID: workspace.ID, Database: store,
+				DerpMapFn:           func() *tailcfg.DERPMap { return &tailcfg.DERPMap{} },
+				LocalPortForwarding: func() bool { return enabled },
+			}
+			manifest, err := api.GetManifest(t.Context(), &agentproto.GetManifestRequest{})
+			require.NoError(t, err)
+			if enabled {
+				require.Equal(t, "https://212.64.22.217:8443/@owner/project/local-preview/main/{{port}}", manifest.VsCodePortProxyUri)
+			} else {
+				require.Empty(t, manifest.VsCodePortProxyUri)
+			}
+		})
+	}
+}
+
 func TestGetManifest(t *testing.T) {
 	t.Parallel()
 

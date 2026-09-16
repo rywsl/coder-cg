@@ -6014,6 +6014,133 @@ export interface ListUserExternalAuthResponse {
 	readonly links: readonly ExternalAuthLink[];
 }
 
+// From codersdk/localconnect.go
+/**
+ * LocalConnector identifies an organization-scoped local device, without secrets.
+ */
+export interface LocalConnector {
+	readonly id: string;
+	readonly organization_id: string;
+	readonly workspace_ssh_key_id: string;
+	readonly name: string;
+	readonly revision: number;
+	readonly online: boolean;
+	readonly desired: readonly LocalConnectorWorkspace[];
+	readonly reported: readonly LocalConnectorPort[];
+}
+
+// From codersdk/localconnect.go
+/**
+ * LocalConnectorArtifact describes an HTTPS-downloadable executable.
+ */
+export interface LocalConnectorArtifact {
+	readonly os: string;
+	readonly arch: string;
+	readonly name: string;
+	readonly sha256: string;
+}
+
+// From codersdk/localconnect.go
+/**
+ * LocalConnectorEnrollment is entered interactively, never passed in argv or URLs.
+ */
+export interface LocalConnectorEnrollment {
+	readonly enrollment_id: string;
+	readonly token: string;
+	readonly expires_at: string;
+}
+
+// From codersdk/localconnect.go
+/**
+ * LocalConnectorPort describes a reported loopback mapping.
+ */
+export interface LocalConnectorPort {
+	readonly workspace_id: string;
+	readonly agent_name: string;
+	readonly remote_port: number;
+	readonly local_port: number;
+	readonly protocol: string;
+	readonly error_code: string;
+}
+
+// From codersdk/localconnect.go
+/**
+ * LocalConnectorRegister registers a device using an existing one-time enrollment.
+ */
+export interface LocalConnectorRegister {
+	readonly public_key: string;
+	readonly device_name: string;
+	readonly token: string;
+}
+
+// From codersdk/localconnect.go
+/**
+ * LocalConnectorRegistration pins the host key as part of device authorization.
+ */
+export interface LocalConnectorRegistration {
+	readonly device: LocalConnector;
+	readonly gateway: WorkspaceSSHGatewayInfo;
+}
+
+// From codersdk/localconnect.go
+/**
+ * LocalConnectorRelease lists reproducible platform artifacts and checksums.
+ */
+export interface LocalConnectorRelease {
+	readonly version: string;
+	readonly artifacts: readonly LocalConnectorArtifact[];
+}
+
+// From codersdk/localconnect.go
+/**
+ * LocalConnectorSync is a renewable authorization lease for local forwarding.
+ */
+export interface LocalConnectorSync {
+	readonly revision: number;
+	readonly gateway: WorkspaceSSHGatewayInfo;
+	readonly targets: readonly LocalConnectorTarget[];
+	readonly lease_seconds: number;
+}
+
+// From codersdk/localconnect.go
+/**
+ * LocalConnectorSyncRequest contains bounded status, not arbitrary local URLs.
+ */
+export interface LocalConnectorSyncRequest {
+	readonly revision: number;
+	readonly reported: readonly LocalConnectorPort[];
+}
+
+// From codersdk/localconnect.go
+/**
+ * LocalConnectorTarget describes one currently authorized and ready agent.
+ */
+export interface LocalConnectorTarget extends LocalConnectorWorkspace {
+	readonly agent_id: string;
+	readonly alias: string;
+	readonly candidates: readonly number[];
+}
+
+// From codersdk/localconnect.go
+/**
+ * LocalConnectorUpdate uses optimistic concurrency to preserve other workspaces.
+ */
+export interface LocalConnectorUpdate {
+	readonly revision: number;
+	readonly desired: readonly LocalConnectorWorkspace[];
+}
+
+// From codersdk/localconnect.go
+/**
+ * LocalConnectorWorkspace selects an agent by stable workspace ID and agent name.
+ */
+export interface LocalConnectorWorkspace {
+	readonly workspace_id: string;
+	readonly agent_name: string;
+	readonly automatic: boolean;
+	readonly ports: readonly number[];
+}
+
 // From codersdk/provisionerdaemons.go
 export type LogLevel = "debug" | "error" | "info" | "trace" | "warn";
 

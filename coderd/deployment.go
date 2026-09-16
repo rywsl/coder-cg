@@ -133,6 +133,10 @@ func (api *API) updateWorkspaceSSHGateway(rw http.ResponseWriter, r *http.Reques
 		return
 	}
 	if err := api.workspaceSSHGatewayManager.update(r.Context(), req); err != nil {
+		if errors.Is(err, errWorkspaceSSHGatewayIncompleteAI) {
+			httpapi.Write(r.Context(), rw, http.StatusBadRequest, codersdk.Response{Message: "请同时配置 API 地址、模型和 API 密钥，或全部清空以仅使用 SSH。"})
+			return
+		}
 		if errors.Is(err, errWorkspaceSSHGatewayRunning) {
 			httpapi.Write(r.Context(), rw, http.StatusConflict, codersdk.Response{Message: "Workspace SSH gateway must be stopped before updating configuration."})
 			return

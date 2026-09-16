@@ -154,6 +154,8 @@ func (m *workspaceSSHGatewayManager) reconcile(ctx context.Context) error {
 	return m.startLocal(ctx, row, stored)
 }
 
+var errWorkspaceSSHGatewayIncompleteAI = xerrors.New("incomplete workspace SSH gateway AI configuration")
+
 func (m *workspaceSSHGatewayManager) update(ctx context.Context, req codersdk.UpdateWorkspaceSSHGatewayRequest) error {
 	if err := req.Config.Validate(); err != nil {
 		return err
@@ -184,6 +186,16 @@ func (m *workspaceSSHGatewayManager) update(ctx context.Context, req codersdk.Up
 		row, err := tx.GetWorkspaceSSHGatewayConfig(systemCtx)
 		if err != nil {
 			return xerrors.Errorf("read workspace SSH gateway configuration: %w", err)
+		}
+		keyConfigured := row.CodexApiKeyExists && row.CodexApiKey != ""
+		if req.ClearCodexAPIKey {
+			keyConfigured = false
+		}
+		if req.CodexAPIKey != "" {
+			keyConfigured = true
+		}
+		if keyConfigured != (req.Config.CodexBaseURL != "" && req.Config.CodexModel != "") {
+			return errWorkspaceSSHGatewayIncompleteAI
 		}
 		if row.ConfigExists {
 			stored, err := parseWorkspaceSSHGatewayStoredConfig(row.Config)
@@ -306,7 +318,7 @@ func (m *workspaceSSHGatewayManager) startLocal(ctx context.Context, row databas
 	if err := stored.Config.Validate(); err != nil {
 		return m.cannotStart("configuration_invalid", err)
 	}
-	if !row.CodexApiKeyExists || row.CodexApiKey == "" {
+	if (stored.Config.CodexBaseURL != "" || stored.Config.CodexModel != "") && (!row.CodexApiKeyExists || row.CodexApiKey == "") {
 		return m.cannotStart("api_key_missing", xerrors.New("workspace SSH gateway Codex API key is required"))
 	}
 	if !row.HostPrivateKeyExists {
@@ -338,6 +350,7 @@ func (m *workspaceSSHGatewayManager) startLocal(ctx context.Context, row databas
 		},
 		Authenticate: m.api.authenticateWorkspaceSSH,
 		Verified:     m.api.verifiedWorkspaceSSHKey,
+		Revalidate:   m.api.revalidateWorkspaceSSH,
 		DialAgent:    m.api.dialWorkspaceSSHAgent,
 		Record:       m.api.recordWorkspaceSSHConnection,
 	})
@@ -617,7 +630,7 @@ func (m *workspaceSSHGatewayManager) enabledInfo(config codersdk.WorkspaceSSHGat
 		HostPublicKey:           strings.TrimSpace(string(ssh.MarshalAuthorizedKey(signer.PublicKey()))),
 		HostKeyFingerprint:      ssh.FingerprintSHA256(signer.PublicKey()),
 		AliasSuffix:             "ssh." + m.api.DeploymentValues.WorkspaceHostnameSuffix.Value(),
-		ChatGPTDesktopAvailable: true,
+		ChatGPTDesktopAvailable: config.CodexBaseURL != "" && config.CodexModel != "",
 	}
 }
 

@@ -222,7 +222,6 @@ export const WorkspaceSSHGatewaySection: FC<
 		status.state === "stopping";
 	const canStart =
 		status.configured &&
-		status.api_key_configured &&
 		!operationInProgress &&
 		(status.state === "stopped" || status.state === "error");
 	const canStop = status.desired_enabled || status.state === "running";
@@ -359,7 +358,7 @@ export const WorkspaceSSHGatewaySection: FC<
 							placeholder="https://api.example.com/v1"
 							type="url"
 							disabled={fieldsDisabled}
-							required
+							required={Boolean(form.values.codex_model)}
 						/>
 						<FormField
 							field={getFieldHelpers("codex_model")}
@@ -370,7 +369,7 @@ export const WorkspaceSSHGatewaySection: FC<
 								"DeploymentSettingsPage.NetworkSettingsPage.WorkspaceSSHGatewaySection.gpt_5_3_codex_a3da4ff8",
 							)}
 							disabled={fieldsDisabled}
-							required
+							required={Boolean(form.values.codex_base_url)}
 						/>
 						<FormField
 							field={getFieldHelpers("codex_api_key", {

@@ -92,6 +92,34 @@ func (api *API) verifiedWorkspaceSSHKey(ctx context.Context, target workspacessh
 	return nil
 }
 
+func (api *API) revalidateWorkspaceSSH(ctx context.Context, target workspacessh.Target) error {
+	if api.workspaceSSHBrowserOnly() {
+		return xerrors.New("workspace SSH access revoked")
+	}
+	systemCtx := dbauthz.AsSystemRestricted(ctx) //nolint:gocritic // Revalidate an already authenticated identity, without extending its authority.
+	key, err := api.Database.GetWorkspaceSSHKeyByID(systemCtx, target.WorkspaceSSHKeyID)
+	if err != nil || key.UserID != target.UserID || key.OrganizationID != target.OrganizationID {
+		return xerrors.New("workspace SSH access revoked")
+	}
+	subject, status, err := httpmw.UserRBACSubject(systemCtx, api.Database, key.UserID, rbac.ScopeAll)
+	if err != nil || status != database.UserStatusActive {
+		return xerrors.New("workspace SSH access revoked")
+	}
+	ws, err := api.Database.GetWorkspaceByID(systemCtx, target.WorkspaceID)
+	if err != nil || api.Authorizer.Authorize(ctx, subject, policy.ActionSSH, ws.RBACObject()) != nil {
+		return xerrors.New("workspace SSH access revoked")
+	}
+	owner, err := api.Database.GetUserByID(systemCtx, ws.OwnerID)
+	if err != nil {
+		return err
+	}
+	current, err := api.Database.GetWorkspaceSSHGatewayTarget(systemCtx, database.GetWorkspaceSSHGatewayTargetParams{OwnerUsername: owner.Username, WorkspaceName: ws.Name, AgentName: target.AgentName})
+	if err != nil || current.WorkspaceAgent.ID != target.AgentID || workspaceSSHGatewayTargetUnavailableReason(current, api.AgentInactiveDisconnectTimeout) != "" {
+		return xerrors.New("workspace SSH target unavailable")
+	}
+	return nil
+}
+
 func (api *API) workspaceSSHBrowserOnly() bool {
 	override := api.WorkspaceClientCoordinateOverride.Load()
 	return override != nil && *override != nil

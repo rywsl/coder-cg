@@ -7421,6 +7421,36 @@ func (mr *MockStoreMockRecorder) GetWorkspaceByWorkspaceAppID(ctx, workspaceAppI
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspaceByWorkspaceAppID", reflect.TypeOf((*MockStore)(nil).GetWorkspaceByWorkspaceAppID), ctx, workspaceAppID)
 }
 
+// GetWorkspaceLocalConnectorByID mocks base method.
+func (m *MockStore) GetWorkspaceLocalConnectorByID(ctx context.Context, id uuid.UUID) (database.WorkspaceLocalConnector, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetWorkspaceLocalConnectorByID", ctx, id)
+	ret0, _ := ret[0].(database.WorkspaceLocalConnector)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetWorkspaceLocalConnectorByID indicates an expected call of GetWorkspaceLocalConnectorByID.
+func (mr *MockStoreMockRecorder) GetWorkspaceLocalConnectorByID(ctx, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspaceLocalConnectorByID", reflect.TypeOf((*MockStore)(nil).GetWorkspaceLocalConnectorByID), ctx, id)
+}
+
+// GetWorkspaceLocalConnectorsByOwner mocks base method.
+func (m *MockStore) GetWorkspaceLocalConnectorsByOwner(ctx context.Context, arg database.GetWorkspaceLocalConnectorsByOwnerParams) ([]database.WorkspaceLocalConnector, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetWorkspaceLocalConnectorsByOwner", ctx, arg)
+	ret0, _ := ret[0].([]database.WorkspaceLocalConnector)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetWorkspaceLocalConnectorsByOwner indicates an expected call of GetWorkspaceLocalConnectorsByOwner.
+func (mr *MockStoreMockRecorder) GetWorkspaceLocalConnectorsByOwner(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspaceLocalConnectorsByOwner", reflect.TypeOf((*MockStore)(nil).GetWorkspaceLocalConnectorsByOwner), ctx, arg)
+}
+
 // GetWorkspaceModulesByJobID mocks base method.
 func (m *MockStore) GetWorkspaceModulesByJobID(ctx context.Context, jobID uuid.UUID) ([]database.WorkspaceModule, error) {
 	m.ctrl.T.Helper()
@@ -9097,6 +9127,21 @@ func (m *MockStore) InsertWorkspaceBuildParameters(ctx context.Context, arg data
 func (mr *MockStoreMockRecorder) InsertWorkspaceBuildParameters(ctx, arg any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertWorkspaceBuildParameters", reflect.TypeOf((*MockStore)(nil).InsertWorkspaceBuildParameters), ctx, arg)
+}
+
+// InsertWorkspaceLocalConnector mocks base method.
+func (m *MockStore) InsertWorkspaceLocalConnector(ctx context.Context, arg database.InsertWorkspaceLocalConnectorParams) (database.WorkspaceLocalConnector, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "InsertWorkspaceLocalConnector", ctx, arg)
+	ret0, _ := ret[0].(database.WorkspaceLocalConnector)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// InsertWorkspaceLocalConnector indicates an expected call of InsertWorkspaceLocalConnector.
+func (mr *MockStoreMockRecorder) InsertWorkspaceLocalConnector(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertWorkspaceLocalConnector", reflect.TypeOf((*MockStore)(nil).InsertWorkspaceLocalConnector), ctx, arg)
 }
 
 // InsertWorkspaceModule mocks base method.
@@ -12029,6 +12074,36 @@ func (m *MockStore) UpdateWorkspaceLastUsedAt(ctx context.Context, arg database.
 func (mr *MockStoreMockRecorder) UpdateWorkspaceLastUsedAt(ctx, arg any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateWorkspaceLastUsedAt", reflect.TypeOf((*MockStore)(nil).UpdateWorkspaceLastUsedAt), ctx, arg)
+}
+
+// UpdateWorkspaceLocalConnectorDesired mocks base method.
+func (m *MockStore) UpdateWorkspaceLocalConnectorDesired(ctx context.Context, arg database.UpdateWorkspaceLocalConnectorDesiredParams) (database.WorkspaceLocalConnector, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateWorkspaceLocalConnectorDesired", ctx, arg)
+	ret0, _ := ret[0].(database.WorkspaceLocalConnector)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateWorkspaceLocalConnectorDesired indicates an expected call of UpdateWorkspaceLocalConnectorDesired.
+func (mr *MockStoreMockRecorder) UpdateWorkspaceLocalConnectorDesired(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateWorkspaceLocalConnectorDesired", reflect.TypeOf((*MockStore)(nil).UpdateWorkspaceLocalConnectorDesired), ctx, arg)
+}
+
+// UpdateWorkspaceLocalConnectorReported mocks base method.
+func (m *MockStore) UpdateWorkspaceLocalConnectorReported(ctx context.Context, arg database.UpdateWorkspaceLocalConnectorReportedParams) (database.WorkspaceLocalConnector, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateWorkspaceLocalConnectorReported", ctx, arg)
+	ret0, _ := ret[0].(database.WorkspaceLocalConnector)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateWorkspaceLocalConnectorReported indicates an expected call of UpdateWorkspaceLocalConnectorReported.
+func (mr *MockStoreMockRecorder) UpdateWorkspaceLocalConnectorReported(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateWorkspaceLocalConnectorReported", reflect.TypeOf((*MockStore)(nil).UpdateWorkspaceLocalConnectorReported), ctx, arg)
 }
 
 // UpdateWorkspaceNextStartAt mocks base method.

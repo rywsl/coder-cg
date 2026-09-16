@@ -45,7 +45,7 @@ func (c CodexConfig) transformRequest(destination ssh.Channel) func(*ssh.Request
 		if err := ssh.Unmarshal(request.Payload, &execRequest); err != nil {
 			return false, request.Payload, false
 		}
-		if isZedProxyCommand(execRequest.Command) {
+		if isZedProxyCommand(execRequest.Command) && c.APIKey != "" {
 			for _, variable := range c.zedEnvironment() {
 				accepted, err := destination.SendRequest("env", true, ssh.Marshal(variable))
 				if err != nil || !accepted {
@@ -61,6 +61,9 @@ func (c CodexConfig) transformRequest(destination ssh.Channel) func(*ssh.Request
 		case codexCommandReject:
 			return true, nil, false
 		case codexCommandInject:
+			if c.APIKey == "" || c.BaseURL == "" || c.Model == "" {
+				return true, nil, false
+			}
 		default:
 			return true, nil, false
 		}

@@ -25,6 +25,7 @@ import (
 )
 
 type ManifestAPI struct {
+	LocalPortForwarding       func() bool
 	AccessURL                 *url.URL
 	AppHostname               string
 	ExternalAuthConfigs       []*externalauth.Config
@@ -107,6 +108,9 @@ func (a *ManifestAPI) GetManifest(ctx context.Context, _ *agentproto.GetManifest
 	}
 
 	vscodeProxyURI := vscodeProxyURI(appSlug, a.AccessURL, a.AppHostname)
+	if a.LocalPortForwarding != nil && a.LocalPortForwarding() {
+		vscodeProxyURI = strings.TrimRight(a.AccessURL.String(), "/") + "/@" + url.PathEscape(workspace.OwnerUsername) + "/" + url.PathEscape(workspace.Name) + "/local-preview/" + url.PathEscape(workspaceAgent.Name) + "/{{port}}"
+	}
 
 	envs, err := db2sdk.WorkspaceAgentEnvironment(workspaceAgent)
 	if err != nil {

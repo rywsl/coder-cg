@@ -10093,6 +10093,356 @@ Git clone makes use of this by parsing the URL from: 'Username for "https://gith
 | `notifications` | array of [codersdk.InboxNotification](#codersdkinboxnotification) | false    |              |             |
 | `unread_count`  | integer                                                           | false    |              |             |
 
+## codersdk.LocalConnector
+
+```json
+{
+  "desired": [
+    {
+      "agent_name": "string",
+      "automatic": true,
+      "ports": [
+        0
+      ],
+      "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+    }
+  ],
+  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+  "name": "string",
+  "online": true,
+  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+  "reported": [
+    {
+      "agent_name": "string",
+      "error_code": "string",
+      "local_port": 0,
+      "protocol": "http",
+      "remote_port": 0,
+      "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+    }
+  ],
+  "revision": 0,
+  "workspace_ssh_key_id": "4272796a-ebc0-4f14-9afa-b803128bc222"
+}
+```
+
+### Properties
+
+| Name                   | Type                                                                          | Required | Restrictions | Description |
+|------------------------|-------------------------------------------------------------------------------|----------|--------------|-------------|
+| `desired`              | array of [codersdk.LocalConnectorWorkspace](#codersdklocalconnectorworkspace) | false    |              |             |
+| `id`                   | string                                                                        | false    |              |             |
+| `name`                 | string                                                                        | false    |              |             |
+| `online`               | boolean                                                                       | false    |              |             |
+| `organization_id`      | string                                                                        | false    |              |             |
+| `reported`             | array of [codersdk.LocalConnectorPort](#codersdklocalconnectorport)           | false    |              |             |
+| `revision`             | integer                                                                       | false    |              |             |
+| `workspace_ssh_key_id` | string                                                                        | false    |              |             |
+
+## codersdk.LocalConnectorArtifact
+
+```json
+{
+  "arch": "string",
+  "name": "string",
+  "os": "string",
+  "sha256": "string"
+}
+```
+
+### Properties
+
+| Name     | Type   | Required | Restrictions | Description |
+|----------|--------|----------|--------------|-------------|
+| `arch`   | string | false    |              |             |
+| `name`   | string | false    |              |             |
+| `os`     | string | false    |              |             |
+| `sha256` | string | false    |              |             |
+
+## codersdk.LocalConnectorEnrollment
+
+```json
+{
+  "enrollment_id": "cd8e6b59-f5cf-4894-8850-4dc2dc1aaf8e",
+  "expires_at": "2019-08-24T14:15:22Z",
+  "token": "string"
+}
+```
+
+### Properties
+
+| Name            | Type   | Required | Restrictions | Description |
+|-----------------|--------|----------|--------------|-------------|
+| `enrollment_id` | string | false    |              |             |
+| `expires_at`    | string | false    |              |             |
+| `token`         | string | false    |              |             |
+
+## codersdk.LocalConnectorPort
+
+```json
+{
+  "agent_name": "string",
+  "error_code": "string",
+  "local_port": 0,
+  "protocol": "http",
+  "remote_port": 0,
+  "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+}
+```
+
+### Properties
+
+| Name           | Type    | Required | Restrictions | Description |
+|----------------|---------|----------|--------------|-------------|
+| `agent_name`   | string  | false    |              |             |
+| `error_code`   | string  | false    |              |             |
+| `local_port`   | integer | false    |              |             |
+| `protocol`     | string  | false    |              |             |
+| `remote_port`  | integer | false    |              |             |
+| `workspace_id` | string  | false    |              |             |
+
+#### Enumerated Values
+
+| Property   | Value(s)               |
+|------------|------------------------|
+| `protocol` | `http`, `https`, `tcp` |
+
+## codersdk.LocalConnectorRegister
+
+```json
+{
+  "device_name": "string",
+  "public_key": "string",
+  "token": "string"
+}
+```
+
+### Properties
+
+| Name          | Type   | Required | Restrictions | Description |
+|---------------|--------|----------|--------------|-------------|
+| `device_name` | string | false    |              |             |
+| `public_key`  | string | false    |              |             |
+| `token`       | string | false    |              |             |
+
+## codersdk.LocalConnectorRegistration
+
+```json
+{
+  "device": {
+    "desired": [
+      {
+        "agent_name": "string",
+        "automatic": true,
+        "ports": [
+          0
+        ],
+        "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+      }
+    ],
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "name": "string",
+    "online": true,
+    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+    "reported": [
+      {
+        "agent_name": "string",
+        "error_code": "string",
+        "local_port": 0,
+        "protocol": "http",
+        "remote_port": 0,
+        "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+      }
+    ],
+    "revision": 0,
+    "workspace_ssh_key_id": "4272796a-ebc0-4f14-9afa-b803128bc222"
+  },
+  "gateway": {
+    "alias_suffix": "string",
+    "chatgpt_desktop_available": true,
+    "enabled": true,
+    "host": "string",
+    "host_key_fingerprint": "string",
+    "host_public_key": "string",
+    "port": 0
+  }
+}
+```
+
+### Properties
+
+| Name      | Type                                                                 | Required | Restrictions | Description |
+|-----------|----------------------------------------------------------------------|----------|--------------|-------------|
+| `device`  | [codersdk.LocalConnector](#codersdklocalconnector)                   | false    |              |             |
+| `gateway` | [codersdk.WorkspaceSSHGatewayInfo](#codersdkworkspacesshgatewayinfo) | false    |              |             |
+
+## codersdk.LocalConnectorRelease
+
+```json
+{
+  "artifacts": [
+    {
+      "arch": "string",
+      "name": "string",
+      "os": "string",
+      "sha256": "string"
+    }
+  ],
+  "version": "string"
+}
+```
+
+### Properties
+
+| Name        | Type                                                                        | Required | Restrictions | Description |
+|-------------|-----------------------------------------------------------------------------|----------|--------------|-------------|
+| `artifacts` | array of [codersdk.LocalConnectorArtifact](#codersdklocalconnectorartifact) | false    |              |             |
+| `version`   | string                                                                      | false    |              |             |
+
+## codersdk.LocalConnectorSync
+
+```json
+{
+  "gateway": {
+    "alias_suffix": "string",
+    "chatgpt_desktop_available": true,
+    "enabled": true,
+    "host": "string",
+    "host_key_fingerprint": "string",
+    "host_public_key": "string",
+    "port": 0
+  },
+  "lease_seconds": 0,
+  "revision": 0,
+  "targets": [
+    {
+      "agent_id": "2b1e3b65-2c04-4fa2-a2d7-467901e98978",
+      "agent_name": "string",
+      "alias": "string",
+      "automatic": true,
+      "candidates": [
+        0
+      ],
+      "ports": [
+        0
+      ],
+      "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+    }
+  ]
+}
+```
+
+### Properties
+
+| Name            | Type                                                                    | Required | Restrictions | Description |
+|-----------------|-------------------------------------------------------------------------|----------|--------------|-------------|
+| `gateway`       | [codersdk.WorkspaceSSHGatewayInfo](#codersdkworkspacesshgatewayinfo)    | false    |              |             |
+| `lease_seconds` | integer                                                                 | false    |              |             |
+| `revision`      | integer                                                                 | false    |              |             |
+| `targets`       | array of [codersdk.LocalConnectorTarget](#codersdklocalconnectortarget) | false    |              |             |
+
+## codersdk.LocalConnectorSyncRequest
+
+```json
+{
+  "reported": [
+    {
+      "agent_name": "string",
+      "error_code": "string",
+      "local_port": 0,
+      "protocol": "http",
+      "remote_port": 0,
+      "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+    }
+  ],
+  "revision": 0
+}
+```
+
+### Properties
+
+| Name       | Type                                                                | Required | Restrictions | Description |
+|------------|---------------------------------------------------------------------|----------|--------------|-------------|
+| `reported` | array of [codersdk.LocalConnectorPort](#codersdklocalconnectorport) | false    |              |             |
+| `revision` | integer                                                             | false    |              |             |
+
+## codersdk.LocalConnectorTarget
+
+```json
+{
+  "agent_id": "2b1e3b65-2c04-4fa2-a2d7-467901e98978",
+  "agent_name": "string",
+  "alias": "string",
+  "automatic": true,
+  "candidates": [
+    0
+  ],
+  "ports": [
+    0
+  ],
+  "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+}
+```
+
+### Properties
+
+| Name           | Type             | Required | Restrictions | Description |
+|----------------|------------------|----------|--------------|-------------|
+| `agent_id`     | string           | false    |              |             |
+| `agent_name`   | string           | false    |              |             |
+| `alias`        | string           | false    |              |             |
+| `automatic`    | boolean          | false    |              |             |
+| `candidates`   | array of integer | false    |              |             |
+| `ports`        | array of integer | false    |              |             |
+| `workspace_id` | string           | false    |              |             |
+
+## codersdk.LocalConnectorUpdate
+
+```json
+{
+  "desired": [
+    {
+      "agent_name": "string",
+      "automatic": true,
+      "ports": [
+        0
+      ],
+      "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+    }
+  ],
+  "revision": 0
+}
+```
+
+### Properties
+
+| Name       | Type                                                                          | Required | Restrictions | Description |
+|------------|-------------------------------------------------------------------------------|----------|--------------|-------------|
+| `desired`  | array of [codersdk.LocalConnectorWorkspace](#codersdklocalconnectorworkspace) | false    |              |             |
+| `revision` | integer                                                                       | false    |              |             |
+
+## codersdk.LocalConnectorWorkspace
+
+```json
+{
+  "agent_name": "string",
+  "automatic": true,
+  "ports": [
+    0
+  ],
+  "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+}
+```
+
+### Properties
+
+| Name           | Type             | Required | Restrictions | Description |
+|----------------|------------------|----------|--------------|-------------|
+| `agent_name`   | string           | false    |              |             |
+| `automatic`    | boolean          | false    |              |             |
+| `ports`        | array of integer | false    |              |             |
+| `workspace_id` | string           | false    |              |             |
+
 ## codersdk.LogLevel
 
 ```json

@@ -79,6 +79,7 @@ import { AgentStatus } from "./AgentStatus";
 import { AgentVersion } from "./AgentVersion";
 import { ChatGPTDesktopButton } from "./ChatGPTDesktopButton/ChatGPTDesktopButton";
 import { DownloadSelectedAgentLogsButton } from "./DownloadSelectedAgentLogsButton";
+import { LocalAccess } from "./LocalAccess/LocalAccess";
 import { PortForwardButton } from "./PortForwardButton";
 import { AgentSSHButton } from "./SSHButton/SSHButton";
 import { TerminalLink } from "./TerminalLink/TerminalLink";
@@ -439,6 +440,11 @@ export const AgentRow: FC<AgentRowProps> = ({
 				</div>
 
 				<div className="flex items-center gap-2">
+					<LocalAccess
+						agent={agent}
+						workspace={workspace}
+						browserOnly={browser_only}
+					/>
 					<ChatGPTDesktopButton
 						agent={agent}
 						workspace={workspace}

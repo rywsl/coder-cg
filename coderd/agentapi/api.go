@@ -91,11 +91,12 @@ func (s *agentTailnetService) Coordinate(stream tailnetproto.DRPCTailnet_Coordin
 var _ tailnetproto.DRPCTailnetServer = (*agentTailnetService)(nil)
 
 type Options struct {
-	AgentID           uuid.UUID
-	OwnerID           uuid.UUID
-	WorkspaceID       uuid.UUID
-	OrganizationID    uuid.UUID
-	TemplateVersionID uuid.UUID
+	LocalPortForwarding func() bool
+	AgentID             uuid.UUID
+	OwnerID             uuid.UUID
+	WorkspaceID         uuid.UUID
+	OrganizationID      uuid.UUID
+	TemplateVersionID   uuid.UUID
 
 	AuthenticatedCtx      context.Context
 	Log                   slog.Logger
@@ -146,6 +147,7 @@ func New(opts Options, workspace database.Workspace, agent database.WorkspaceAge
 	}
 
 	api.ManifestAPI = &ManifestAPI{
+		LocalPortForwarding:       opts.LocalPortForwarding,
 		AccessURL:                 opts.AccessURL,
 		AppHostname:               opts.AppHostname,
 		ExternalAuthConfigs:       opts.ExternalAuthConfigs,

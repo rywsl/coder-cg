@@ -76,6 +76,9 @@ const WorkspaceBuildPage = lazy(
 	() => import("./pages/WorkspaceBuildPage/WorkspaceBuildPage"),
 );
 const WorkspacePage = lazy(() => import("./pages/WorkspacePage/WorkspacePage"));
+const LocalPreviewPage = lazy(
+	() => import("./pages/LocalPreviewPage/LocalPreviewPage"),
+);
 const WorkspaceSchedulePage = lazy(
 	() =>
 		import(
@@ -544,6 +547,10 @@ export const router = createBrowserRouter(
 					{/* In order for the 404 page to work properly the routes that start with
               top level parameter must be fully qualified. */}
 					<Route path="/:username/:workspace">
+						<Route
+							path="local-preview/:agent/:port"
+							element={<LocalPreviewPage />}
+						/>
 						<Route index element={<WorkspacePage />} />
 						<Route
 							path="builds/:buildNumber"
