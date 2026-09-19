@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, spyOn, userEvent, within } from "storybook/test";
+import { expect, spyOn, userEvent, waitFor, within } from "storybook/test";
 import { API } from "#/api/api";
 import { MockWorkspace, MockWorkspaceAgentReady } from "#/testHelpers/entities";
 import { MockPublicPortMapping } from "#/testHelpers/publicPorts";
@@ -37,9 +37,9 @@ export const PublishWithConsent: Story = {
 			within(canvasElement).getByRole("button", { name: "公网访问" }),
 		);
 		const dialog = within(await within(document.body).findByRole("dialog"));
-		await expect(
-			await dialog.findByText("此 Agent 尚未公开任何端口。"),
-		).toBeVisible();
+		await waitFor(() =>
+			expect(dialog.getByText("此 Agent 尚未公开任何端口。")).toBeVisible(),
+		);
 		await userEvent.type(
 			dialog.getByRole("spinbutton", { name: "远端 Web 端口" }),
 			"5173",
@@ -117,11 +117,13 @@ export const Disabled: Story = {
 			within(canvasElement).getByRole("button", { name: "公网访问" }),
 		);
 		const dialog = within(await within(document.body).findByRole("dialog"));
-		await expect(
-			await dialog.findByText(
-				"部署尚未启用公网端口池，请联系管理员配置 HTTPS 和 FRP。",
-			),
-		).toBeVisible();
+		await waitFor(() =>
+			expect(
+				dialog.getByText(
+					"部署尚未启用公网端口池，请联系管理员配置 HTTPS 和 FRP。",
+				),
+			).toBeVisible(),
+		);
 		await expect(
 			dialog.queryByRole("button", { name: "公开端口" }),
 		).not.toBeInTheDocument();
@@ -135,11 +137,13 @@ export const BrowserOnly: Story = {
 			within(canvasElement).getByRole("button", { name: "公网访问" }),
 		);
 		const dialog = within(await within(document.body).findByRole("dialog"));
-		await expect(
-			await dialog.findByText(
-				"当前部署仅允许浏览器访问，不能创建公网分享。已有分享仍可关闭。",
-			),
-		).toBeVisible();
+		await waitFor(() =>
+			expect(
+				dialog.getByText(
+					"当前部署仅允许浏览器访问，不能创建公网分享。已有分享仍可关闭。",
+				),
+			).toBeVisible(),
+		);
 		await expect(
 			dialog.getByRole("button", { name: "公开端口" }),
 		).toBeDisabled();
@@ -173,7 +177,7 @@ export const Failure: Story = {
 			within(canvasElement).getByRole("button", { name: "公网访问" }),
 		);
 		const dialog = within(await within(document.body).findByRole("dialog"));
-		await expect(await dialog.findByRole("alert")).toBeVisible();
+		await waitFor(() => expect(dialog.getByRole("alert")).toBeVisible());
 		await expect(dialog.getByRole("button", { name: "重试" })).toBeEnabled();
 	},
 };

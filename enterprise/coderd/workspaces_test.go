@@ -3259,14 +3259,19 @@ func TestWorkspaceProvisionerdServerMetrics(t *testing.T) {
 // It does not try to do this in coder/coder.
 func TestWorkspaceTemplateParamsChange(t *testing.T) {
 	indicatorFile := filepath.ToSlash(filepath.Join(t.TempDir(), "workspace_indicator.txt"))
-	mainTfTemplate := fmt.Sprintf(`
+	const providerConfig = `
 		terraform {
 			required_providers {
 				coder = {
 					source = "coder/coder"
 				}
+				local = {
+					source = "hashicorp/local"
+				}
 			}
 		}
+	`
+	mainTfTemplate := providerConfig + fmt.Sprintf(`
 		provider "coder" {}
 		data "coder_workspace" "me" {}
 		data "coder_workspace_owner" "me" {}
@@ -3291,7 +3296,8 @@ func TestWorkspaceTemplateParamsChange(t *testing.T) {
 		  filename = "%s"
 		}
 	`, indicatorFile)
-	tfCliConfigPath := downloadProviders(t, mainTfTemplate)
+	// Keep the temporary indicator path out of the provider cache key.
+	tfCliConfigPath := downloadProviders(t, providerConfig)
 	t.Setenv("TF_CLI_CONFIG_FILE", tfCliConfigPath)
 
 	logger := slogtest.Make(t, &slogtest.Options{IgnoreErrors: false})
