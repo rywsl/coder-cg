@@ -55,14 +55,18 @@ var (
 )
 
 // initDefaultConnection initializes the default postgres connection parameters.
-// It first checks if the database is running at localhost:5432. If it is, it will
-// use that database. If it's not, it will start a new container and use that.
+// CODER_TEST_POSTGRES_PORT selects an existing local test server while keeping
+// per-test database isolation. Only the default port supports container startup.
 func initDefaultConnection(t TBSubset) error {
+	port, err := configuredPostgresPort(os.Getenv("CODER_TEST_POSTGRES_PORT"))
+	if err != nil {
+		return xerrors.Errorf("configure test postgres port: %w", err)
+	}
 	params := ConnectionParams{
 		Username: "postgres",
 		Password: "postgres",
 		Host:     "127.0.0.1",
-		Port:     "5432",
+		Port:     strconv.FormatUint(uint64(port), 10),
 		DBName:   "postgres",
 	}
 	dsn := params.DSN()
@@ -97,7 +101,7 @@ func initDefaultConnection(t TBSubset) error {
 	}
 
 	// After the loop dbErr is the last connection error (if any).
-	if dbErr != nil && containsAnySubstring(dbErr.Error(), noPostgresRunningErrSubstrings) {
+	if dbErr != nil && port == 5432 && containsAnySubstring(dbErr.Error(), noPostgresRunningErrSubstrings) {
 		// If there's no database running on the default port, we'll start a
 		// postgres container. We won't be cleaning it up so it can be reused
 		// by subsequent tests. It'll keep on running until the user terminates
@@ -136,6 +140,20 @@ func initDefaultConnection(t TBSubset) error {
 	return nil
 }
 
+func configuredPostgresPort(value string) (uint16, error) {
+	if value == "" {
+		return 5432, nil
+	}
+	port, err := strconv.ParseUint(value, 10, 16)
+	if err != nil {
+		return 0, xerrors.Errorf("parse CODER_TEST_POSTGRES_PORT: %w", err)
+	}
+	if port == 0 {
+		return 0, xerrors.New("CODER_TEST_POSTGRES_PORT must be between 1 and 65535")
+	}
+	return uint16(port), nil
+}
+
 type OpenOptions struct {
 	DBFrom *string
 	LogDSN bool
@@ -170,8 +188,8 @@ type TBSubset interface {
 }
 
 // Open creates a new PostgreSQL database instance.
-// If there's a database running at localhost:5432, it will use that.
-// Otherwise, it will start a new postgres container.
+// CODER_TEST_POSTGRES_PORT selects the local server port (default 5432).
+// If no server is running on the default port, it starts a postgres container.
 func Open(t TBSubset, opts ...OpenOption) (string, error) {
 	t.Helper()
 	params, err := DefaultBroker.Create(t, opts...)

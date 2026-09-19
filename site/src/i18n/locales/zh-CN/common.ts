@@ -10,7 +10,7 @@ export const common = {
 			"当前部署仅允许浏览器访问，不能创建公网分享。已有分享仍可关闭。",
 		offline: "Agent 未就绪，暂时无法创建分享。已有分享仍可关闭。",
 		empty: "此 Agent 尚未公开任何端口。",
-		copy: "复制公网地址",
+		copy: "复制公网 URL",
 		remove: "关闭端口 {{port}} 的公网访问",
 		port: "远端 Web 端口",
 		detected: "检测到的监听端口：{{ports}}",

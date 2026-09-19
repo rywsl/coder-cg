@@ -15086,7 +15086,7 @@
 			"get": {
 				"produces": ["application/json"],
 				"tags": ["PortSharing"],
-				"summary": "List public workspace port mappings",
+				"summary": "List workspace public port mappings",
 				"operationId": "list-workspace-public-port-mappings",
 				"parameters": [
 					{
@@ -15116,7 +15116,7 @@
 				"consumes": ["application/json"],
 				"produces": ["application/json"],
 				"tags": ["PortSharing"],
-				"summary": "Create public workspace port mapping",
+				"summary": "Create workspace public port mapping",
 				"operationId": "create-workspace-public-port-mapping",
 				"parameters": [
 					{
@@ -15155,7 +15155,7 @@
 		"/api/v2/workspaces/{workspace}/public-port-mappings/{mapping}": {
 			"delete": {
 				"tags": ["PortSharing"],
-				"summary": "Delete public workspace port mapping",
+				"summary": "Delete workspace public port mapping",
 				"operationId": "delete-workspace-public-port-mapping",
 				"parameters": [
 					{

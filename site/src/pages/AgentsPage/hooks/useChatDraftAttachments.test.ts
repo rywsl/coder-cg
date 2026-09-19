@@ -768,10 +768,12 @@ describe("useChatDraftAttachments", () => {
 			);
 			// 7 MiB: over Anthropic's 5 MiB but under the default
 			// 10 MiB. OpenAI uploads directly without resize.
-			const file = new File([new Uint8Array(7 * 1024 * 1024)], "medium.png", {
+			const file = new File([new Uint8Array(8)], "medium.png", {
 				type: "image/png",
 				lastModified: 300,
 			});
+			// Exercise the size limit without serializing a large draft payload.
+			vi.spyOn(file, "size", "get").mockReturnValue(7 * 1024 * 1024);
 
 			act(() => {
 				result.current.handleAttach([file]);

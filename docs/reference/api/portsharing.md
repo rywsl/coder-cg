@@ -141,7 +141,7 @@ curl -X DELETE http://coder-server:8080/api/v2/workspaces/{workspace}/port-share
 
 To perform this operation, you must be authenticated. [Learn more](authentication.md).
 
-## List public workspace port mappings
+## List workspace public port mappings
 
 ### Code samples
 
@@ -196,7 +196,7 @@ curl -X GET http://coder-server:8080/api/v2/workspaces/{workspace}/public-port-m
 
 To perform this operation, you must be authenticated. [Learn more](authentication.md).
 
-## Create public workspace port mapping
+## Create workspace public port mapping
 
 ### Code samples
 
@@ -259,7 +259,7 @@ curl -X POST http://coder-server:8080/api/v2/workspaces/{workspace}/public-port-
 
 To perform this operation, you must be authenticated. [Learn more](authentication.md).
 
-## Delete public workspace port mapping
+## Delete workspace public port mapping
 
 ### Code samples
 

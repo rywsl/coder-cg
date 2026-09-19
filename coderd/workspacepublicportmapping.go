@@ -36,7 +36,7 @@ var (
 	errPublicPortIngress       = xerrors.New("public ingress unavailable")
 )
 
-// @Summary List public workspace port mappings
+// @Summary List workspace public port mappings
 // @ID list-workspace-public-port-mappings
 // @Security CoderSessionToken
 // @Produce json
@@ -67,7 +67,7 @@ func (api *API) listWorkspacePublicPortMappings(rw http.ResponseWriter, r *http.
 	httpapi.Write(r.Context(), rw, http.StatusOK, codersdk.WorkspacePublicPortMappings{Enabled: api.publicPortManager != nil, Mappings: out})
 }
 
-// @Summary Create public workspace port mapping
+// @Summary Create workspace public port mapping
 // @ID create-workspace-public-port-mapping
 // @Security CoderSessionToken
 // @Accept json
@@ -236,7 +236,7 @@ func allocateWorkspacePublicPort(rows []database.WorkspacePublicPortMapping) (in
 	return 0, false
 }
 
-// @Summary Delete public workspace port mapping
+// @Summary Delete workspace public port mapping
 // @ID delete-workspace-public-port-mapping
 // @Security CoderSessionToken
 // @Tags PortSharing

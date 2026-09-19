@@ -16985,7 +16985,7 @@ const docTemplate = `{
                 "tags": [
                     "PortSharing"
                 ],
-                "summary": "List public workspace port mappings",
+                "summary": "List workspace public port mappings",
                 "operationId": "list-workspace-public-port-mappings",
                 "parameters": [
                     {
@@ -17021,7 +17021,7 @@ const docTemplate = `{
                 "tags": [
                     "PortSharing"
                 ],
-                "summary": "Create public workspace port mapping",
+                "summary": "Create workspace public port mapping",
                 "operationId": "create-workspace-public-port-mapping",
                 "parameters": [
                     {
@@ -17062,7 +17062,7 @@ const docTemplate = `{
                 "tags": [
                     "PortSharing"
                 ],
-                "summary": "Delete public workspace port mapping",
+                "summary": "Delete workspace public port mapping",
                 "operationId": "delete-workspace-public-port-mapping",
                 "parameters": [
                     {
