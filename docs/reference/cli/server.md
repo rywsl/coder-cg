@@ -2176,6 +2176,17 @@ Disable the template builder feature for guided template creation. When disabled
 
 The module registry host the template builder uses for module source paths (for example, "registry.coder.com" or "mirror.internal:8443"). An http(s):// scheme and trailing slash are stripped; a path, query, fragment, or credentials is rejected.
 
+### --workspace-public-ports-enabled
+
+|             |                                                     |
+|-------------|-----------------------------------------------------|
+| Type        | <code>bool</code>                                   |
+| Environment | <code>$CODER_WORKSPACE_PUBLIC_PORTS_ENABLED</code>  |
+| YAML        | <code>networking.workspacePublicPortsEnabled</code> |
+| Default     | <code>false</code>                                  |
+
+Enable explicit public HTTP previews on loopback ports 18000-18099 behind a trusted HTTPS ingress.
+
 ### --workspace-ssh-gateway-enabled
 
 |             |                                                     |

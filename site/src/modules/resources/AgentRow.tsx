@@ -81,6 +81,7 @@ import { ChatGPTDesktopButton } from "./ChatGPTDesktopButton/ChatGPTDesktopButto
 import { DownloadSelectedAgentLogsButton } from "./DownloadSelectedAgentLogsButton";
 import { LocalAccess } from "./LocalAccess/LocalAccess";
 import { PortForwardButton } from "./PortForwardButton";
+import { PublicAccess } from "./PublicAccess";
 import { AgentSSHButton } from "./SSHButton/SSHButton";
 import { TerminalLink } from "./TerminalLink/TerminalLink";
 import { useAgentContainers } from "./useAgentContainers";
@@ -474,6 +475,13 @@ export const AgentRow: FC<AgentRowProps> = ({
 							workspace={workspace}
 							agent={agent}
 							template={template}
+						/>
+					)}
+					{agent.display_apps.includes("port_forwarding_helper") && (
+						<PublicAccess
+							workspace={workspace}
+							agent={agent}
+							browserOnly={browser_only}
 						/>
 					)}
 				</div>

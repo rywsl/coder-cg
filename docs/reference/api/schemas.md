@@ -6956,6 +6956,33 @@ This is required on creation to enable a user-flow of validating a template work
 | `icon`         | string | false    |              |             |
 | `name`         | string | true     |              |             |
 
+## codersdk.CreateWorkspacePublicPortMappingRequest
+
+```json
+{
+  "agent_name": "string",
+  "protocol": "http",
+  "remote_port": 0,
+  "share_level": "public"
+}
+```
+
+### Properties
+
+| Name          | Type    | Required | Restrictions | Description |
+|---------------|---------|----------|--------------|-------------|
+| `agent_name`  | string  | false    |              |             |
+| `protocol`    | string  | false    |              |             |
+| `remote_port` | integer | false    |              |             |
+| `share_level` | string  | false    |              |             |
+
+#### Enumerated Values
+
+| Property      | Value(s)        |
+|---------------|-----------------|
+| `protocol`    | `http`, `https` |
+| `share_level` | `public`        |
+
 ## codersdk.CreateWorkspaceRequest
 
 ```json
@@ -7891,6 +7918,7 @@ CreateWorkspaceRequest provides options for creating a new workspace. Only one o
       "reconciliation_backoff_lookback": 0,
       "reconciliation_interval": 0
     },
+    "workspace_public_ports_enabled": true,
     "workspace_ssh_gateway": {
       "advertise_host": "string",
       "advertise_port": 0,
@@ -8541,6 +8569,7 @@ CreateWorkspaceRequest provides options for creating a new workspace. Only one o
     "reconciliation_backoff_lookback": 0,
     "reconciliation_interval": 0
   },
+  "workspace_public_ports_enabled": true,
   "workspace_ssh_gateway": {
     "advertise_host": "string",
     "advertise_port": 0,
@@ -8643,6 +8672,7 @@ CreateWorkspaceRequest provides options for creating a new workspace. Only one o
 | `wildcard_access_url`                          | string                                                                                               | false    |              |                                                                           |
 | `workspace_hostname_suffix`                    | string                                                                                               | false    |              |                                                                           |
 | `workspace_prebuilds`                          | [codersdk.PrebuildsConfig](#codersdkprebuildsconfig)                                                 | false    |              |                                                                           |
+| `workspace_public_ports_enabled`               | boolean                                                                                              | false    |              |                                                                           |
 | `workspace_ssh_gateway`                        | [codersdk.WorkspaceSSHGatewayConfig](#codersdkworkspacesshgatewayconfig)                             | false    |              |                                                                           |
 | `write_config`                                 | boolean                                                                                              | false    |              |                                                                           |
 
@@ -19577,6 +19607,87 @@ If the schedule is empty, the user will be updated to use the default schedule.|
 | `checked_at` | string                                                   | false    |              |                                                                           |
 | `report`     | [codersdk.ProxyHealthReport](#codersdkproxyhealthreport) | false    |              | Report provides more information about the health of the workspace proxy. |
 | `status`     | [codersdk.ProxyHealthStatus](#codersdkproxyhealthstatus) | false    |              |                                                                           |
+
+## codersdk.WorkspacePublicPortMapping
+
+```json
+{
+  "agent_name": "string",
+  "created_at": "2019-08-24T14:15:22Z",
+  "created_by": "ee824cad-d7a6-4f48-87dc-e8461a9201c4",
+  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+  "protocol": "http",
+  "public_port": 0,
+  "remote_port": 0,
+  "share_level": "public",
+  "state": "ready",
+  "updated_at": "2019-08-24T14:15:22Z",
+  "url": "string",
+  "workspace_agent_id": "7ad2e618-fea7-4c1a-b70a-f501566a72f1",
+  "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+}
+```
+
+### Properties
+
+| Name                 | Type    | Required | Restrictions | Description |
+|----------------------|---------|----------|--------------|-------------|
+| `agent_name`         | string  | false    |              |             |
+| `created_at`         | string  | false    |              |             |
+| `created_by`         | string  | false    |              |             |
+| `id`                 | string  | false    |              |             |
+| `organization_id`    | string  | false    |              |             |
+| `protocol`           | string  | false    |              |             |
+| `public_port`        | integer | false    |              |             |
+| `remote_port`        | integer | false    |              |             |
+| `share_level`        | string  | false    |              |             |
+| `state`              | string  | false    |              |             |
+| `updated_at`         | string  | false    |              |             |
+| `url`                | string  | false    |              |             |
+| `workspace_agent_id` | string  | false    |              |             |
+| `workspace_id`       | string  | false    |              |             |
+
+#### Enumerated Values
+
+| Property      | Value(s)                                                           |
+|---------------|--------------------------------------------------------------------|
+| `protocol`    | `http`, `https`                                                    |
+| `share_level` | `public`                                                           |
+| `state`       | `disabled`, `ingress_error`, `proxy_error`, `ready`, `unavailable` |
+
+## codersdk.WorkspacePublicPortMappings
+
+```json
+{
+  "enabled": true,
+  "mappings": [
+    {
+      "agent_name": "string",
+      "created_at": "2019-08-24T14:15:22Z",
+      "created_by": "ee824cad-d7a6-4f48-87dc-e8461a9201c4",
+      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+      "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+      "protocol": "http",
+      "public_port": 0,
+      "remote_port": 0,
+      "share_level": "public",
+      "state": "ready",
+      "updated_at": "2019-08-24T14:15:22Z",
+      "url": "string",
+      "workspace_agent_id": "7ad2e618-fea7-4c1a-b70a-f501566a72f1",
+      "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+    }
+  ]
+}
+```
+
+### Properties
+
+| Name       | Type                                                                                | Required | Restrictions | Description |
+|------------|-------------------------------------------------------------------------------------|----------|--------------|-------------|
+| `enabled`  | boolean                                                                             | false    |              |             |
+| `mappings` | array of [codersdk.WorkspacePublicPortMapping](#codersdkworkspacepublicportmapping) | false    |              |             |
 
 ## codersdk.WorkspaceQuota
 

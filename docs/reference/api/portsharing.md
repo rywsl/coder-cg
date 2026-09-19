@@ -140,3 +140,148 @@ curl -X DELETE http://coder-server:8080/api/v2/workspaces/{workspace}/port-share
 | 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | OK          |        |
 
 To perform this operation, you must be authenticated. [Learn more](authentication.md).
+
+## List public workspace port mappings
+
+### Code samples
+
+```sh
+# Example request using curl
+curl -X GET http://coder-server:8080/api/v2/workspaces/{workspace}/public-port-mappings \
+  -H 'Accept: application/json' \
+  -H 'Coder-Session-Token: API_KEY'
+```
+
+`GET /api/v2/workspaces/{workspace}/public-port-mappings`
+
+### Parameters
+
+| Name        | In   | Type         | Required | Description  |
+|-------------|------|--------------|----------|--------------|
+| `workspace` | path | string(uuid) | true     | Workspace ID |
+
+### Example responses
+
+> 200 Response
+
+```json
+{
+  "enabled": true,
+  "mappings": [
+    {
+      "agent_name": "string",
+      "created_at": "2019-08-24T14:15:22Z",
+      "created_by": "ee824cad-d7a6-4f48-87dc-e8461a9201c4",
+      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+      "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+      "protocol": "http",
+      "public_port": 0,
+      "remote_port": 0,
+      "share_level": "public",
+      "state": "ready",
+      "updated_at": "2019-08-24T14:15:22Z",
+      "url": "string",
+      "workspace_agent_id": "7ad2e618-fea7-4c1a-b70a-f501566a72f1",
+      "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+    }
+  ]
+}
+```
+
+### Responses
+
+| Status | Meaning                                                 | Description | Schema                                                                                 |
+|--------|---------------------------------------------------------|-------------|----------------------------------------------------------------------------------------|
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | OK          | [codersdk.WorkspacePublicPortMappings](schemas.md#codersdkworkspacepublicportmappings) |
+
+To perform this operation, you must be authenticated. [Learn more](authentication.md).
+
+## Create public workspace port mapping
+
+### Code samples
+
+```sh
+# Example request using curl
+curl -X POST http://coder-server:8080/api/v2/workspaces/{workspace}/public-port-mappings \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -H 'Coder-Session-Token: API_KEY'
+```
+
+`POST /api/v2/workspaces/{workspace}/public-port-mappings`
+
+> Body parameter
+
+```json
+{
+  "agent_name": "string",
+  "protocol": "http",
+  "remote_port": 0,
+  "share_level": "public"
+}
+```
+
+### Parameters
+
+| Name        | In   | Type                                                                                                           | Required | Description         |
+|-------------|------|----------------------------------------------------------------------------------------------------------------|----------|---------------------|
+| `workspace` | path | string(uuid)                                                                                                   | true     | Workspace ID        |
+| `body`      | body | [codersdk.CreateWorkspacePublicPortMappingRequest](schemas.md#codersdkcreateworkspacepublicportmappingrequest) | true     | Public port mapping |
+
+### Example responses
+
+> 200 Response
+
+```json
+{
+  "agent_name": "string",
+  "created_at": "2019-08-24T14:15:22Z",
+  "created_by": "ee824cad-d7a6-4f48-87dc-e8461a9201c4",
+  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+  "protocol": "http",
+  "public_port": 0,
+  "remote_port": 0,
+  "share_level": "public",
+  "state": "ready",
+  "updated_at": "2019-08-24T14:15:22Z",
+  "url": "string",
+  "workspace_agent_id": "7ad2e618-fea7-4c1a-b70a-f501566a72f1",
+  "workspace_id": "0967198e-ec7b-4c6b-b4d3-f71244cadbe9"
+}
+```
+
+### Responses
+
+| Status | Meaning                                                 | Description | Schema                                                                               |
+|--------|---------------------------------------------------------|-------------|--------------------------------------------------------------------------------------|
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | OK          | [codersdk.WorkspacePublicPortMapping](schemas.md#codersdkworkspacepublicportmapping) |
+
+To perform this operation, you must be authenticated. [Learn more](authentication.md).
+
+## Delete public workspace port mapping
+
+### Code samples
+
+```sh
+# Example request using curl
+curl -X DELETE http://coder-server:8080/api/v2/workspaces/{workspace}/public-port-mappings/{mapping} \
+  -H 'Coder-Session-Token: API_KEY'
+```
+
+`DELETE /api/v2/workspaces/{workspace}/public-port-mappings/{mapping}`
+
+### Parameters
+
+| Name        | In   | Type         | Required | Description  |
+|-------------|------|--------------|----------|--------------|
+| `workspace` | path | string(uuid) | true     | Workspace ID |
+| `mapping`   | path | string(uuid) | true     | Mapping ID   |
+
+### Responses
+
+| Status | Meaning                                                 | Description | Schema |
+|--------|---------------------------------------------------------|-------------|--------|
+| 200    | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | OK          |        |
+
+To perform this operation, you must be authenticated. [Learn more](authentication.md).

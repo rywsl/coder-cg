@@ -26,3 +26,19 @@ export const deleteWorkspacePortShare = (workspaceId: string) => {
 		},
 	};
 };
+
+export const workspacePublicPortMappings = (workspaceId: string) => ({
+	queryKey: ["publicPortMappings", workspaceId],
+	queryFn: () => API.getWorkspacePublicPortMappings(workspaceId),
+});
+
+export const createWorkspacePublicPortMapping = (workspaceId: string) => ({
+	mutationFn: (
+		options: import("#/api/typesGenerated").CreateWorkspacePublicPortMappingRequest,
+	) => API.createWorkspacePublicPortMapping(workspaceId, options),
+});
+
+export const deleteWorkspacePublicPortMapping = (workspaceId: string) => ({
+	mutationFn: (mappingId: string) =>
+		API.deleteWorkspacePublicPortMapping(workspaceId, mappingId),
+});

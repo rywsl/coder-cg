@@ -246,6 +246,7 @@ type sqlcQuerier interface {
 	DeleteWorkspaceACLsByOrganization(ctx context.Context, arg DeleteWorkspaceACLsByOrganizationParams) error
 	DeleteWorkspaceAgentPortShare(ctx context.Context, arg DeleteWorkspaceAgentPortShareParams) error
 	DeleteWorkspaceAgentPortSharesByTemplate(ctx context.Context, templateID uuid.UUID) error
+	DeleteWorkspacePublicPortMapping(ctx context.Context, id uuid.UUID) error
 	DeleteWorkspaceSSHGatewayCodexAPIKey(ctx context.Context) error
 	DeleteWorkspaceSSHKeyByID(ctx context.Context, arg DeleteWorkspaceSSHKeyByIDParams) (WorkspaceSshKey, error)
 	// Soft-deletes a single sub-agent (a child agent such as a devcontainer
@@ -1087,6 +1088,9 @@ type sqlcQuerier interface {
 	GetWorkspaceProxyByHostname(ctx context.Context, arg GetWorkspaceProxyByHostnameParams) (WorkspaceProxy, error)
 	GetWorkspaceProxyByID(ctx context.Context, id uuid.UUID) (WorkspaceProxy, error)
 	GetWorkspaceProxyByName(ctx context.Context, name string) (WorkspaceProxy, error)
+	GetWorkspacePublicPortMapping(ctx context.Context, id uuid.UUID) (WorkspacePublicPortMapping, error)
+	GetWorkspacePublicPortMappingByPublicPort(ctx context.Context, publicPort int32) (WorkspacePublicPortMapping, error)
+	GetWorkspacePublicPortMappingByWorkspaceAgentPort(ctx context.Context, arg GetWorkspacePublicPortMappingByWorkspaceAgentPortParams) (WorkspacePublicPortMapping, error)
 	GetWorkspaceResourceByID(ctx context.Context, id uuid.UUID) (WorkspaceResource, error)
 	GetWorkspaceResourceMetadataByResourceIDs(ctx context.Context, ids []uuid.UUID) ([]WorkspaceResourceMetadatum, error)
 	GetWorkspaceResourceMetadataCreatedAfter(ctx context.Context, createdAt time.Time) ([]WorkspaceResourceMetadatum, error)
@@ -1266,6 +1270,7 @@ type sqlcQuerier interface {
 	InsertWorkspaceLocalConnector(ctx context.Context, arg InsertWorkspaceLocalConnectorParams) (WorkspaceLocalConnector, error)
 	InsertWorkspaceModule(ctx context.Context, arg InsertWorkspaceModuleParams) (WorkspaceModule, error)
 	InsertWorkspaceProxy(ctx context.Context, arg InsertWorkspaceProxyParams) (WorkspaceProxy, error)
+	InsertWorkspacePublicPortMapping(ctx context.Context, arg InsertWorkspacePublicPortMappingParams) (WorkspacePublicPortMapping, error)
 	InsertWorkspaceResource(ctx context.Context, arg InsertWorkspaceResourceParams) (WorkspaceResource, error)
 	InsertWorkspaceResourceMetadata(ctx context.Context, arg InsertWorkspaceResourceMetadataParams) ([]WorkspaceResourceMetadatum, error)
 	InsertWorkspaceSSHKey(ctx context.Context, arg InsertWorkspaceSSHKeyParams) (WorkspaceSshKey, error)
@@ -1348,6 +1353,8 @@ type sqlcQuerier interface {
 	ListUserSkillMetadataByUserID(ctx context.Context, userID uuid.UUID) ([]ListUserSkillMetadataByUserIDRow, error)
 	ListWorkspaceAgentContextResources(ctx context.Context, workspaceAgentID uuid.UUID) ([]WorkspaceAgentContextResource, error)
 	ListWorkspaceAgentPortShares(ctx context.Context, workspaceID uuid.UUID) ([]WorkspaceAgentPortShare, error)
+	ListWorkspacePublicPortMappings(ctx context.Context, workspaceID uuid.UUID) ([]WorkspacePublicPortMapping, error)
+	ListWorkspacePublicPortMappingsAll(ctx context.Context) ([]WorkspacePublicPortMapping, error)
 	// Locks the chat row with FOR UPDATE and atomically increments its
 	// snapshot_version, returning the post-bump chat. This is the single
 	// entry point ChatMachine.Update uses to acquire the row lock and

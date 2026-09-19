@@ -1,0 +1,1 @@
+DROP TABLE workspace_public_port_mappings;

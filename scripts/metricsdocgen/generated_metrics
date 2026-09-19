@@ -583,3 +583,9 @@ coderd_workspace_creation_total{organization_name="",template_name="",preset_nam
 # HELP coderd_workspace_latest_build_status The current workspace statuses by template, transition, and owner for all non-deleted workspaces.
 # TYPE coderd_workspace_latest_build_status gauge
 coderd_workspace_latest_build_status{status="",template_name="",template_version="",workspace_owner="",workspace_transition=""} 0
+# HELP coderd_workspace_public_ports_connections Number of active connections to public workspace port listeners.
+# TYPE coderd_workspace_public_ports_connections gauge
+coderd_workspace_public_ports_connections 0
+# HELP coderd_workspace_public_ports_rejections_total Number of public workspace requests rejected by capacity, authorization, or upstream availability.
+# TYPE coderd_workspace_public_ports_rejections_total counter
+coderd_workspace_public_ports_rejections_total{reason=""} 0

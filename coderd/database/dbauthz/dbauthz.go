@@ -2790,6 +2790,23 @@ func (q *querier) DeleteWorkspaceAgentPortSharesByTemplate(ctx context.Context, 
 	return q.db.DeleteWorkspaceAgentPortSharesByTemplate(ctx, templateID)
 }
 
+func (q *querier) DeleteWorkspacePublicPortMapping(ctx context.Context, id uuid.UUID) error {
+	row, err := q.db.GetWorkspacePublicPortMapping(ctx, id)
+	if err != nil {
+		return err
+	}
+	workspace, err := q.db.GetWorkspaceByID(ctx, row.WorkspaceID)
+	if err != nil {
+		return err
+	}
+	if err := q.authorizeContext(ctx, policy.ActionApplicationConnect, workspace); err != nil {
+		if err := q.authorizeContext(ctx, policy.ActionSSH, workspace); err != nil {
+			return err
+		}
+	}
+	return q.db.DeleteWorkspacePublicPortMapping(ctx, id)
+}
+
 func (q *querier) DeleteWorkspaceSSHGatewayCodexAPIKey(ctx context.Context) error {
 	if err := q.authorizeContext(ctx, policy.ActionUpdate, rbac.ResourceDeploymentConfig); err != nil {
 		return err
@@ -5974,6 +5991,51 @@ func (q *querier) GetWorkspaceProxyByName(ctx context.Context, name string) (dat
 	return fetch(q.log, q.auth, q.db.GetWorkspaceProxyByName)(ctx, name)
 }
 
+func (q *querier) GetWorkspacePublicPortMapping(ctx context.Context, id uuid.UUID) (database.WorkspacePublicPortMapping, error) {
+	row, err := q.db.GetWorkspacePublicPortMapping(ctx, id)
+	if err != nil {
+		return database.WorkspacePublicPortMapping{}, err
+	}
+	workspace, err := q.db.GetWorkspaceByID(ctx, row.WorkspaceID)
+	if err != nil {
+		return database.WorkspacePublicPortMapping{}, err
+	}
+	if err := q.authorizeContext(ctx, policy.ActionRead, workspace); err != nil {
+		return database.WorkspacePublicPortMapping{}, err
+	}
+	return row, nil
+}
+
+func (q *querier) GetWorkspacePublicPortMappingByPublicPort(ctx context.Context, publicPort int32) (database.WorkspacePublicPortMapping, error) {
+	row, err := q.db.GetWorkspacePublicPortMappingByPublicPort(ctx, publicPort)
+	if err != nil {
+		return database.WorkspacePublicPortMapping{}, err
+	}
+	workspace, err := q.db.GetWorkspaceByID(ctx, row.WorkspaceID)
+	if err != nil {
+		return database.WorkspacePublicPortMapping{}, err
+	}
+	if err := q.authorizeContext(ctx, policy.ActionRead, workspace); err != nil {
+		return database.WorkspacePublicPortMapping{}, err
+	}
+	return row, nil
+}
+
+func (q *querier) GetWorkspacePublicPortMappingByWorkspaceAgentPort(ctx context.Context, arg database.GetWorkspacePublicPortMappingByWorkspaceAgentPortParams) (database.WorkspacePublicPortMapping, error) {
+	row, err := q.db.GetWorkspacePublicPortMappingByWorkspaceAgentPort(ctx, arg)
+	if err != nil {
+		return database.WorkspacePublicPortMapping{}, err
+	}
+	workspace, err := q.db.GetWorkspaceByID(ctx, row.WorkspaceID)
+	if err != nil {
+		return database.WorkspacePublicPortMapping{}, err
+	}
+	if err := q.authorizeContext(ctx, policy.ActionRead, workspace); err != nil {
+		return database.WorkspacePublicPortMapping{}, err
+	}
+	return row, nil
+}
+
 func (q *querier) GetWorkspaceResourceByID(ctx context.Context, id uuid.UUID) (database.WorkspaceResource, error) {
 	// TODO: Optimize this
 	resource, err := q.db.GetWorkspaceResourceByID(ctx, id)
@@ -7018,6 +7080,36 @@ func (q *querier) InsertWorkspaceProxy(ctx context.Context, arg database.InsertW
 	return insert(q.log, q.auth, rbac.ResourceWorkspaceProxy, q.db.InsertWorkspaceProxy)(ctx, arg)
 }
 
+func (q *querier) InsertWorkspacePublicPortMapping(ctx context.Context, arg database.InsertWorkspacePublicPortMappingParams) (database.WorkspacePublicPortMapping, error) {
+	workspace, err := q.db.GetWorkspaceByID(ctx, arg.WorkspaceID)
+	if err != nil {
+		return database.WorkspacePublicPortMapping{}, err
+	}
+	if workspace.OrganizationID != arg.OrganizationID {
+		return database.WorkspacePublicPortMapping{}, sql.ErrNoRows
+	}
+	agents, err := q.db.GetWorkspaceAgentsInLatestBuildByWorkspaceID(ctx, arg.WorkspaceID)
+	if err != nil {
+		return database.WorkspacePublicPortMapping{}, err
+	}
+	found := false
+	for _, agent := range agents {
+		if agent.ID == arg.WorkspaceAgentID && agent.Name == arg.AgentName && !agent.Deleted {
+			found = true
+			break
+		}
+	}
+	if !found {
+		return database.WorkspacePublicPortMapping{}, sql.ErrNoRows
+	}
+	if err := q.authorizeContext(ctx, policy.ActionApplicationConnect, workspace); err != nil {
+		if err := q.authorizeContext(ctx, policy.ActionSSH, workspace); err != nil {
+			return database.WorkspacePublicPortMapping{}, err
+		}
+	}
+	return q.db.InsertWorkspacePublicPortMapping(ctx, arg)
+}
+
 func (q *querier) InsertWorkspaceResource(ctx context.Context, arg database.InsertWorkspaceResourceParams) (database.WorkspaceResource, error) {
 	if err := q.authorizeContext(ctx, policy.ActionCreate, rbac.ResourceSystem); err != nil {
 		return database.WorkspaceResource{}, err
@@ -7239,6 +7331,24 @@ func (q *querier) ListWorkspaceAgentPortShares(ctx context.Context, workspaceID 
 	}
 
 	return q.db.ListWorkspaceAgentPortShares(ctx, workspaceID)
+}
+
+func (q *querier) ListWorkspacePublicPortMappings(ctx context.Context, workspaceID uuid.UUID) ([]database.WorkspacePublicPortMapping, error) {
+	workspace, err := q.db.GetWorkspaceByID(ctx, workspaceID)
+	if err != nil {
+		return nil, err
+	}
+	if err := q.authorizeContext(ctx, policy.ActionRead, workspace); err != nil {
+		return nil, err
+	}
+	return q.db.ListWorkspacePublicPortMappings(ctx, workspaceID)
+}
+
+func (q *querier) ListWorkspacePublicPortMappingsAll(ctx context.Context) ([]database.WorkspacePublicPortMapping, error) {
+	if err := q.authorizeContext(ctx, policy.ActionRead, rbac.ResourceSystem); err != nil {
+		return nil, err
+	}
+	return q.db.ListWorkspacePublicPortMappingsAll(ctx)
 }
 
 func (q *querier) LockChatAndBumpSnapshotVersion(ctx context.Context, id uuid.UUID) (database.Chat, error) {

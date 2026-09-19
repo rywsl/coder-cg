@@ -33317,6 +33317,224 @@ func (q *sqlQuerier) UpdateWorkspaceLocalConnectorReported(ctx context.Context, 
 	return i, err
 }
 
+const deleteWorkspacePublicPortMapping = `-- name: DeleteWorkspacePublicPortMapping :exec
+DELETE FROM workspace_public_port_mappings WHERE id = $1
+`
+
+func (q *sqlQuerier) DeleteWorkspacePublicPortMapping(ctx context.Context, id uuid.UUID) error {
+	_, err := q.db.ExecContext(ctx, deleteWorkspacePublicPortMapping, id)
+	return err
+}
+
+const getWorkspacePublicPortMapping = `-- name: GetWorkspacePublicPortMapping :one
+SELECT id, organization_id, workspace_id, workspace_agent_id, agent_name, remote_port, public_port, protocol, share_level, created_by, created_at, updated_at FROM workspace_public_port_mappings WHERE id = $1
+`
+
+func (q *sqlQuerier) GetWorkspacePublicPortMapping(ctx context.Context, id uuid.UUID) (WorkspacePublicPortMapping, error) {
+	row := q.db.QueryRowContext(ctx, getWorkspacePublicPortMapping, id)
+	var i WorkspacePublicPortMapping
+	err := row.Scan(
+		&i.ID,
+		&i.OrganizationID,
+		&i.WorkspaceID,
+		&i.WorkspaceAgentID,
+		&i.AgentName,
+		&i.RemotePort,
+		&i.PublicPort,
+		&i.Protocol,
+		&i.ShareLevel,
+		&i.CreatedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const getWorkspacePublicPortMappingByPublicPort = `-- name: GetWorkspacePublicPortMappingByPublicPort :one
+SELECT id, organization_id, workspace_id, workspace_agent_id, agent_name, remote_port, public_port, protocol, share_level, created_by, created_at, updated_at FROM workspace_public_port_mappings WHERE public_port = $1
+`
+
+func (q *sqlQuerier) GetWorkspacePublicPortMappingByPublicPort(ctx context.Context, publicPort int32) (WorkspacePublicPortMapping, error) {
+	row := q.db.QueryRowContext(ctx, getWorkspacePublicPortMappingByPublicPort, publicPort)
+	var i WorkspacePublicPortMapping
+	err := row.Scan(
+		&i.ID,
+		&i.OrganizationID,
+		&i.WorkspaceID,
+		&i.WorkspaceAgentID,
+		&i.AgentName,
+		&i.RemotePort,
+		&i.PublicPort,
+		&i.Protocol,
+		&i.ShareLevel,
+		&i.CreatedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const getWorkspacePublicPortMappingByWorkspaceAgentPort = `-- name: GetWorkspacePublicPortMappingByWorkspaceAgentPort :one
+SELECT id, organization_id, workspace_id, workspace_agent_id, agent_name, remote_port, public_port, protocol, share_level, created_by, created_at, updated_at FROM workspace_public_port_mappings
+WHERE workspace_id = $1 AND agent_name = $2 AND remote_port = $3
+`
+
+type GetWorkspacePublicPortMappingByWorkspaceAgentPortParams struct {
+	WorkspaceID uuid.UUID `db:"workspace_id" json:"workspace_id"`
+	AgentName   string    `db:"agent_name" json:"agent_name"`
+	RemotePort  int32     `db:"remote_port" json:"remote_port"`
+}
+
+func (q *sqlQuerier) GetWorkspacePublicPortMappingByWorkspaceAgentPort(ctx context.Context, arg GetWorkspacePublicPortMappingByWorkspaceAgentPortParams) (WorkspacePublicPortMapping, error) {
+	row := q.db.QueryRowContext(ctx, getWorkspacePublicPortMappingByWorkspaceAgentPort, arg.WorkspaceID, arg.AgentName, arg.RemotePort)
+	var i WorkspacePublicPortMapping
+	err := row.Scan(
+		&i.ID,
+		&i.OrganizationID,
+		&i.WorkspaceID,
+		&i.WorkspaceAgentID,
+		&i.AgentName,
+		&i.RemotePort,
+		&i.PublicPort,
+		&i.Protocol,
+		&i.ShareLevel,
+		&i.CreatedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const insertWorkspacePublicPortMapping = `-- name: InsertWorkspacePublicPortMapping :one
+INSERT INTO workspace_public_port_mappings (
+    organization_id, workspace_id, workspace_agent_id, agent_name,
+    remote_port, public_port, protocol, created_by
+) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+RETURNING id, organization_id, workspace_id, workspace_agent_id, agent_name, remote_port, public_port, protocol, share_level, created_by, created_at, updated_at
+`
+
+type InsertWorkspacePublicPortMappingParams struct {
+	OrganizationID   uuid.UUID `db:"organization_id" json:"organization_id"`
+	WorkspaceID      uuid.UUID `db:"workspace_id" json:"workspace_id"`
+	WorkspaceAgentID uuid.UUID `db:"workspace_agent_id" json:"workspace_agent_id"`
+	AgentName        string    `db:"agent_name" json:"agent_name"`
+	RemotePort       int32     `db:"remote_port" json:"remote_port"`
+	PublicPort       int32     `db:"public_port" json:"public_port"`
+	Protocol         string    `db:"protocol" json:"protocol"`
+	CreatedBy        uuid.UUID `db:"created_by" json:"created_by"`
+}
+
+func (q *sqlQuerier) InsertWorkspacePublicPortMapping(ctx context.Context, arg InsertWorkspacePublicPortMappingParams) (WorkspacePublicPortMapping, error) {
+	row := q.db.QueryRowContext(ctx, insertWorkspacePublicPortMapping,
+		arg.OrganizationID,
+		arg.WorkspaceID,
+		arg.WorkspaceAgentID,
+		arg.AgentName,
+		arg.RemotePort,
+		arg.PublicPort,
+		arg.Protocol,
+		arg.CreatedBy,
+	)
+	var i WorkspacePublicPortMapping
+	err := row.Scan(
+		&i.ID,
+		&i.OrganizationID,
+		&i.WorkspaceID,
+		&i.WorkspaceAgentID,
+		&i.AgentName,
+		&i.RemotePort,
+		&i.PublicPort,
+		&i.Protocol,
+		&i.ShareLevel,
+		&i.CreatedBy,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const listWorkspacePublicPortMappings = `-- name: ListWorkspacePublicPortMappings :many
+SELECT id, organization_id, workspace_id, workspace_agent_id, agent_name, remote_port, public_port, protocol, share_level, created_by, created_at, updated_at FROM workspace_public_port_mappings
+WHERE workspace_id = $1
+ORDER BY public_port
+`
+
+func (q *sqlQuerier) ListWorkspacePublicPortMappings(ctx context.Context, workspaceID uuid.UUID) ([]WorkspacePublicPortMapping, error) {
+	rows, err := q.db.QueryContext(ctx, listWorkspacePublicPortMappings, workspaceID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []WorkspacePublicPortMapping
+	for rows.Next() {
+		var i WorkspacePublicPortMapping
+		if err := rows.Scan(
+			&i.ID,
+			&i.OrganizationID,
+			&i.WorkspaceID,
+			&i.WorkspaceAgentID,
+			&i.AgentName,
+			&i.RemotePort,
+			&i.PublicPort,
+			&i.Protocol,
+			&i.ShareLevel,
+			&i.CreatedBy,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listWorkspacePublicPortMappingsAll = `-- name: ListWorkspacePublicPortMappingsAll :many
+SELECT id, organization_id, workspace_id, workspace_agent_id, agent_name, remote_port, public_port, protocol, share_level, created_by, created_at, updated_at FROM workspace_public_port_mappings ORDER BY public_port
+`
+
+func (q *sqlQuerier) ListWorkspacePublicPortMappingsAll(ctx context.Context) ([]WorkspacePublicPortMapping, error) {
+	rows, err := q.db.QueryContext(ctx, listWorkspacePublicPortMappingsAll)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []WorkspacePublicPortMapping
+	for rows.Next() {
+		var i WorkspacePublicPortMapping
+		if err := rows.Scan(
+			&i.ID,
+			&i.OrganizationID,
+			&i.WorkspaceID,
+			&i.WorkspaceAgentID,
+			&i.AgentName,
+			&i.RemotePort,
+			&i.PublicPort,
+			&i.Protocol,
+			&i.ShareLevel,
+			&i.CreatedBy,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const completeWorkspaceSSHKeyEnrollment = `-- name: CompleteWorkspaceSSHKeyEnrollment :one
 UPDATE workspace_ssh_key_enrollments
 SET

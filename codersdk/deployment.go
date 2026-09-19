@@ -738,6 +738,7 @@ type DeploymentValues struct {
 	ExternalAuthGithubDefaultProviderEnable serpent.Bool                         `json:"external_auth_github_default_provider_enable,omitempty" typescript:",notnull"`
 	SSHConfig                               SSHConfig                            `json:"config_ssh,omitempty" typescript:",notnull"`
 	WorkspaceSSHGateway                     WorkspaceSSHGatewayConfig            `json:"workspace_ssh_gateway,omitempty" typescript:",notnull"`
+	WorkspacePublicPortsEnabled             serpent.Bool                         `json:"workspace_public_ports_enabled,omitempty"`
 	WgtunnelHost                            serpent.String                       `json:"wgtunnel_host,omitempty" typescript:",notnull"`
 	DisableOwnerWorkspaceExec               serpent.Bool                         `json:"disable_owner_workspace_exec,omitempty" typescript:",notnull"`
 	DisableWorkspaceSharing                 serpent.Bool                         `json:"disable_workspace_sharing,omitempty" typescript:",notnull"`
@@ -2081,6 +2082,16 @@ communicating directly.`,
 		Default:     "coder",
 	}
 	workspaceSSHGatewayOptions := serpent.OptionSet{
+		{
+			Name:        "Workspace Public Ports Enabled",
+			Description: "Enable explicit public HTTP previews on loopback ports 18000-18099 behind a trusted HTTPS ingress.",
+			Flag:        "workspace-public-ports-enabled",
+			Env:         "CODER_WORKSPACE_PUBLIC_PORTS_ENABLED",
+			YAML:        "workspacePublicPortsEnabled",
+			Group:       &deploymentGroupNetworking,
+			Value:       &c.WorkspacePublicPortsEnabled,
+			Default:     "false",
+		},
 		{
 			Name:        "Workspace SSH Gateway Enabled",
 			Description: "Whether to accept system OpenSSH connections and proxy them to workspace agents.",

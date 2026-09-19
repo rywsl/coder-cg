@@ -1,4 +1,33 @@
 export const common = {
+	publicPorts: {
+		title: "公网访问",
+		description:
+			"通过同一公网 IP 的独立 HTTPS 端口访问工作区，无需安装连接器。开启后，知道地址的任何人都能访问。",
+		loading: "正在读取公开端口…",
+		retry: "重试",
+		disabled: "部署尚未启用公网端口池，请联系管理员配置 HTTPS 和 FRP。",
+		browserOnly:
+			"当前部署仅允许浏览器访问，不能创建公网分享。已有分享仍可关闭。",
+		offline: "Agent 未就绪，暂时无法创建分享。已有分享仍可关闭。",
+		empty: "此 Agent 尚未公开任何端口。",
+		copy: "复制公网地址",
+		remove: "关闭端口 {{port}} 的公网访问",
+		port: "远端 Web 端口",
+		detected: "检测到的监听端口：{{ports}}",
+		none: "暂无",
+		protocol: "远端服务协议",
+		consent: "允许任何人免登录访问此端口",
+		publish: "公开端口",
+		certificate:
+			"公网入口需要覆盖该 IP 的有效 HTTPS 证书。若浏览器提示证书错误，请联系管理员修复，不要跳过校验。",
+		states: {
+			ingress_error: "公网 HTTPS 或 FRP 连接异常",
+			ready: "代理就绪",
+			unavailable: "工作区或权限不可用",
+			proxy_error: "代理监听失败",
+			disabled: "部署已禁用",
+		},
+	},
 	localConnect: {
 		localURL: "{{protocol}}://localhost:{{port}}",
 		invalidTarget: "无效的工作区或端口",

@@ -881,6 +881,15 @@ func New(options *Options) *API {
 		panic("failed to setup server tailnet: " + err.Error())
 	}
 	api.agentProvider = stn
+	if options.DeploymentValues.WorkspacePublicPortsEnabled.Value() {
+		api.publicPortManager = newWorkspacePublicPortManager(api.agentProvider, options.Logger.Named("workspace-public-ports"), api.validateWorkspacePublicPortMapping)
+		api.publicPortManager.externalHost = api.AccessURL.Hostname()
+		api.publicPortManager.externalScheme = api.AccessURL.Scheme
+		api.publicPortManager.registerMetrics(options.PrometheusRegistry)
+		api.publicPortManager.Start(api.ctx, func(ctx context.Context) ([]database.WorkspacePublicPortMapping, error) {
+			return api.Database.ListWorkspacePublicPortMappingsAll(dbauthz.AsSystemRestricted(ctx)) //nolint:gocritic // Restore only saved, explicitly public shares.
+		})
+	}
 	api.workspaceSSHGatewayManager, err = newWorkspaceSSHGatewayManager(api)
 	if err != nil {
 		_ = stn.Close()
@@ -1912,6 +1921,11 @@ func New(options *Options) *API {
 					r.Post("/", api.postWorkspaceAgentPortShare)
 					r.Delete("/", api.deleteWorkspaceAgentPortShare)
 				})
+				r.Route("/public-port-mappings", func(r chi.Router) {
+					r.Get("/", api.listWorkspacePublicPortMappings)
+					r.Post("/", api.createWorkspacePublicPortMapping)
+					r.Delete("/{mapping}", api.deleteWorkspacePublicPortMapping)
+				})
 				r.Get("/timings", api.workspaceTimings)
 				r.Route("/acl", func(r chi.Router) {
 					r.Get("/", api.workspaceACL)
@@ -2338,6 +2352,7 @@ type API struct {
 	workspaceAppServer         *workspaceapps.Server
 	agentProvider              workspaceapps.AgentProvider
 	workspaceSSHGatewayManager *workspaceSSHGatewayManager
+	publicPortManager          *workspacePublicPortManager
 
 	// Experiments contains the list of experiments currently enabled.
 	// This is used to gate features that are not yet ready for production.
@@ -2405,6 +2420,13 @@ func (api *API) Close() error {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		if err := api.CloseWorkspaceSSHGateway(ctx); err != nil {
 			api.Logger.Warn(context.Background(), "workspace SSH gateway shutdown did not drain", slog.Error(err))
+		}
+		cancel()
+	}
+	if api.publicPortManager != nil {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		if err := api.publicPortManager.Close(ctx); err != nil {
+			api.Logger.Warn(context.Background(), "workspace public port shutdown did not drain", slog.Error(err))
 		}
 		cancel()
 	}

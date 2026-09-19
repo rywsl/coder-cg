@@ -2457,6 +2457,35 @@ class ApiMethods {
 		return response.data;
 	};
 
+	getWorkspacePublicPortMappings = async (
+		workspaceID: string,
+	): Promise<TypesGen.WorkspacePublicPortMappings> => {
+		const response = await this.axios.get(
+			`/api/v2/workspaces/${workspaceID}/public-port-mappings`,
+		);
+		return response.data;
+	};
+
+	createWorkspacePublicPortMapping = async (
+		workspaceID: string,
+		data: TypesGen.CreateWorkspacePublicPortMappingRequest,
+	): Promise<TypesGen.WorkspacePublicPortMapping> => {
+		const response = await this.axios.post(
+			`/api/v2/workspaces/${workspaceID}/public-port-mappings`,
+			data,
+		);
+		return response.data;
+	};
+
+	deleteWorkspacePublicPortMapping = async (
+		workspaceID: string,
+		mappingID: string,
+	): Promise<void> => {
+		await this.axios.delete(
+			`/api/v2/workspaces/${workspaceID}/public-port-mappings/${mappingID}`,
+		);
+	};
+
 	// getDeploymentSSHConfig is used by the VSCode-Extension.
 	getDeploymentSSHConfig = async (): Promise<TypesGen.SSHConfigResponse> => {
 		const response = await this.axios.get("/api/v2/deployment/ssh");

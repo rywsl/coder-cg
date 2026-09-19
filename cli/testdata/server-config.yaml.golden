@@ -204,6 +204,10 @@ networking:
     # Hostname or (more commonly) IP to reach this replica for clustering.
     # (default: <unset>, type: string)
     clusterHost: ""
+  # Enable explicit public HTTP previews on loopback ports 18000-18099 behind a
+  # trusted HTTPS ingress.
+  # (default: false, type: bool)
+  workspacePublicPortsEnabled: false
   # Expose workspace agents through a deployment-managed OpenSSH endpoint.
   workspaceSSHGateway:
     # Whether to accept system OpenSSH connections and proxy them to workspace agents.

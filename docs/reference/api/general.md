@@ -683,6 +683,7 @@ curl -X GET http://coder-server:8080/api/v2/deployment/config \
       "reconciliation_backoff_lookback": 0,
       "reconciliation_interval": 0
     },
+    "workspace_public_ports_enabled": true,
     "workspace_ssh_gateway": {
       "advertise_host": "string",
       "advertise_port": 0,

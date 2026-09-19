@@ -935,6 +935,15 @@ Specifies the wildcard hostname to use for workspace applications in the form "*
 - CLI flag: [`--wildcard-access-url`](../../reference/cli/server.md#--wildcard-access-url)
 - YAML key: `networking.wildcardAccessURL`
 
+### Workspace public ports enabled
+
+Enable explicit public HTTP previews on loopback ports 18000-18099 behind a trusted HTTPS ingress.
+
+- Environment variable: `CODER_WORKSPACE_PUBLIC_PORTS_ENABLED`
+- CLI flag: [`--workspace-public-ports-enabled`](../../reference/cli/server.md#--workspace-public-ports-enabled)
+- YAML key: `networking.workspacePublicPortsEnabled`
+- Default value: `false`
+
 ### __Host prefix cookies
 
 Recommended to be enabled. Enables `__Host-` prefix for cookies to guarantee they are only set by the right domain. This change is disruptive to any workspaces built before release 2.31, requiring a workspace restart.

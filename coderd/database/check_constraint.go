@@ -82,6 +82,10 @@ const (
 	CheckWorkspaceBuildOrchestrationsStatusCheck             CheckConstraint = "workspace_build_orchestrations_status_check"               // workspace_build_orchestrations
 	CheckWorkspaceLocalConnectorsNameCheck                   CheckConstraint = "workspace_local_connectors_name_check"                     // workspace_local_connectors
 	CheckWorkspaceLocalConnectorsTokenHashCheck              CheckConstraint = "workspace_local_connectors_token_hash_check"               // workspace_local_connectors
+	CheckWorkspacePublicPortMappingsProtocolCheck            CheckConstraint = "workspace_public_port_mappings_protocol_check"             // workspace_public_port_mappings
+	CheckWorkspacePublicPortMappingsPublicPortCheck          CheckConstraint = "workspace_public_port_mappings_public_port_check"          // workspace_public_port_mappings
+	CheckWorkspacePublicPortMappingsRemotePortCheck          CheckConstraint = "workspace_public_port_mappings_remote_port_check"          // workspace_public_port_mappings
+	CheckWorkspacePublicPortMappingsShareLevelCheck          CheckConstraint = "workspace_public_port_mappings_share_level_check"          // workspace_public_port_mappings
 	CheckWorkspaceSshKeyEnrollmentsCheck                     CheckConstraint = "workspace_ssh_key_enrollments_check"                       // workspace_ssh_key_enrollments
 	CheckWorkspaceSshKeyEnrollmentsConsumptionCheck          CheckConstraint = "workspace_ssh_key_enrollments_consumption_check"           // workspace_ssh_key_enrollments
 	CheckWorkspaceSshKeyEnrollmentsLocaleCheck               CheckConstraint = "workspace_ssh_key_enrollments_locale_check"                // workspace_ssh_key_enrollments

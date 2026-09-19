@@ -1,4 +1,34 @@
 export const common = {
+	publicPorts: {
+		title: "Public access",
+		description:
+			"Access this workspace on a dedicated HTTPS port on the public IP. No connector is needed. Anyone with the address can access a published service.",
+		loading: "Loading public ports…",
+		retry: "Retry",
+		disabled:
+			"Public ports are disabled. Ask your administrator to configure HTTPS ingress and FRP.",
+		browserOnly:
+			"Browser-only policy prevents publishing ports. Existing shares can still be removed.",
+		offline: "The agent is not ready. Existing shares can still be removed.",
+		empty: "This agent has no public ports.",
+		copy: "Copy public URL",
+		remove: "Remove public access to port {{port}}",
+		port: "Remote web port",
+		detected: "Detected listening ports: {{ports}}",
+		none: "None",
+		protocol: "Remote service protocol",
+		consent: "Allow anyone to access this port without signing in",
+		publish: "Publish port",
+		certificate:
+			"The public endpoint needs a valid HTTPS certificate for this IP. If your browser reports a certificate error, ask your administrator to fix it. Do not bypass verification.",
+		states: {
+			ingress_error: "HTTPS ingress or FRP unavailable",
+			ready: "Proxy ready",
+			unavailable: "Workspace or permission unavailable",
+			proxy_error: "Proxy listener failed",
+			disabled: "Disabled by administrator",
+		},
+	},
 	localConnect: {
 		localURL: "{{protocol}}://localhost:{{port}}",
 		invalidTarget: "Invalid workspace or port",

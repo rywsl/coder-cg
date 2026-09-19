@@ -6985,6 +6985,21 @@ type WorkspaceProxy struct {
 	Version  string `db:"version" json:"version"`
 }
 
+type WorkspacePublicPortMapping struct {
+	ID               uuid.UUID `db:"id" json:"id"`
+	OrganizationID   uuid.UUID `db:"organization_id" json:"organization_id"`
+	WorkspaceID      uuid.UUID `db:"workspace_id" json:"workspace_id"`
+	WorkspaceAgentID uuid.UUID `db:"workspace_agent_id" json:"workspace_agent_id"`
+	AgentName        string    `db:"agent_name" json:"agent_name"`
+	RemotePort       int32     `db:"remote_port" json:"remote_port"`
+	PublicPort       int32     `db:"public_port" json:"public_port"`
+	Protocol         string    `db:"protocol" json:"protocol"`
+	ShareLevel       string    `db:"share_level" json:"share_level"`
+	CreatedBy        uuid.UUID `db:"created_by" json:"created_by"`
+	CreatedAt        time.Time `db:"created_at" json:"created_at"`
+	UpdatedAt        time.Time `db:"updated_at" json:"updated_at"`
+}
+
 type WorkspaceResource struct {
 	ID           uuid.UUID           `db:"id" json:"id"`
 	CreatedAt    time.Time           `db:"created_at" json:"created_at"`

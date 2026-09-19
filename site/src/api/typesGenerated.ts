@@ -4464,6 +4464,17 @@ export interface CreateWorkspaceProxyRequest {
 	readonly icon: string;
 }
 
+// From codersdk/workspacepublicportmapping.go
+/**
+ * CreateWorkspacePublicPortMappingRequest requires explicit public consent.
+ */
+export interface CreateWorkspacePublicPortMappingRequest {
+	readonly agent_name: string;
+	readonly remote_port: number;
+	readonly protocol: string;
+	readonly share_level: string;
+}
+
 // From codersdk/organizations.go
 /**
  * CreateWorkspaceRequest provides options for creating a new workspace.
@@ -4846,6 +4857,7 @@ export interface DeploymentValues {
 	readonly external_auth_github_default_provider_enable?: boolean;
 	readonly config_ssh?: SSHConfig;
 	readonly workspace_ssh_gateway?: WorkspaceSSHGatewayConfig;
+	readonly workspace_public_ports_enabled?: boolean;
 	readonly wgtunnel_host?: string;
 	readonly disable_owner_workspace_exec?: boolean;
 	readonly disable_workspace_sharing?: boolean;
@@ -11965,6 +11977,36 @@ export interface WorkspaceProxyStatus {
 	 */
 	readonly report?: ProxyHealthReport;
 	readonly checked_at: string;
+}
+
+// From codersdk/workspacepublicportmapping.go
+/**
+ * WorkspacePublicPortMapping describes an explicitly public workspace service.
+ */
+export interface WorkspacePublicPortMapping {
+	readonly id: string;
+	readonly organization_id: string;
+	readonly workspace_id: string;
+	readonly workspace_agent_id: string;
+	readonly agent_name: string;
+	readonly remote_port: number;
+	readonly public_port: number;
+	readonly protocol: string;
+	readonly url: string;
+	readonly created_by: string;
+	readonly share_level: string;
+	readonly state: string;
+	readonly created_at: string;
+	readonly updated_at: string;
+}
+
+// From codersdk/workspacepublicportmapping.go
+/**
+ * WorkspacePublicPortMappings includes deployment availability and saved shares.
+ */
+export interface WorkspacePublicPortMappings {
+	readonly enabled: boolean;
+	readonly mappings: readonly WorkspacePublicPortMapping[];
 }
 
 // From codersdk/workspaces.go

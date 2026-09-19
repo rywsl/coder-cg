@@ -1008,6 +1008,14 @@ func (m queryMetricsStore) DeleteWorkspaceAgentPortSharesByTemplate(ctx context.
 	return r0
 }
 
+func (m queryMetricsStore) DeleteWorkspacePublicPortMapping(ctx context.Context, id uuid.UUID) error {
+	start := time.Now()
+	r0 := m.s.DeleteWorkspacePublicPortMapping(ctx, id)
+	m.queryLatencies.WithLabelValues("DeleteWorkspacePublicPortMapping").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "DeleteWorkspacePublicPortMapping").Inc()
+	return r0
+}
+
 func (m queryMetricsStore) DeleteWorkspaceSSHGatewayCodexAPIKey(ctx context.Context) error {
 	start := time.Now()
 	r0 := m.s.DeleteWorkspaceSSHGatewayCodexAPIKey(ctx)
@@ -4008,6 +4016,30 @@ func (m queryMetricsStore) GetWorkspaceProxyByName(ctx context.Context, name str
 	return r0, r1
 }
 
+func (m queryMetricsStore) GetWorkspacePublicPortMapping(ctx context.Context, id uuid.UUID) (database.WorkspacePublicPortMapping, error) {
+	start := time.Now()
+	r0, r1 := m.s.GetWorkspacePublicPortMapping(ctx, id)
+	m.queryLatencies.WithLabelValues("GetWorkspacePublicPortMapping").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "GetWorkspacePublicPortMapping").Inc()
+	return r0, r1
+}
+
+func (m queryMetricsStore) GetWorkspacePublicPortMappingByPublicPort(ctx context.Context, publicPort int32) (database.WorkspacePublicPortMapping, error) {
+	start := time.Now()
+	r0, r1 := m.s.GetWorkspacePublicPortMappingByPublicPort(ctx, publicPort)
+	m.queryLatencies.WithLabelValues("GetWorkspacePublicPortMappingByPublicPort").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "GetWorkspacePublicPortMappingByPublicPort").Inc()
+	return r0, r1
+}
+
+func (m queryMetricsStore) GetWorkspacePublicPortMappingByWorkspaceAgentPort(ctx context.Context, arg database.GetWorkspacePublicPortMappingByWorkspaceAgentPortParams) (database.WorkspacePublicPortMapping, error) {
+	start := time.Now()
+	r0, r1 := m.s.GetWorkspacePublicPortMappingByWorkspaceAgentPort(ctx, arg)
+	m.queryLatencies.WithLabelValues("GetWorkspacePublicPortMappingByWorkspaceAgentPort").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "GetWorkspacePublicPortMappingByWorkspaceAgentPort").Inc()
+	return r0, r1
+}
+
 func (m queryMetricsStore) GetWorkspaceResourceByID(ctx context.Context, id uuid.UUID) (database.WorkspaceResource, error) {
 	start := time.Now()
 	r0, r1 := m.s.GetWorkspaceResourceByID(ctx, id)
@@ -4880,6 +4912,14 @@ func (m queryMetricsStore) InsertWorkspaceProxy(ctx context.Context, arg databas
 	return r0, r1
 }
 
+func (m queryMetricsStore) InsertWorkspacePublicPortMapping(ctx context.Context, arg database.InsertWorkspacePublicPortMappingParams) (database.WorkspacePublicPortMapping, error) {
+	start := time.Now()
+	r0, r1 := m.s.InsertWorkspacePublicPortMapping(ctx, arg)
+	m.queryLatencies.WithLabelValues("InsertWorkspacePublicPortMapping").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "InsertWorkspacePublicPortMapping").Inc()
+	return r0, r1
+}
+
 func (m queryMetricsStore) InsertWorkspaceResource(ctx context.Context, arg database.InsertWorkspaceResourceParams) (database.WorkspaceResource, error) {
 	start := time.Now()
 	r0, r1 := m.s.InsertWorkspaceResource(ctx, arg)
@@ -5109,6 +5149,22 @@ func (m queryMetricsStore) ListWorkspaceAgentPortShares(ctx context.Context, wor
 	r0, r1 := m.s.ListWorkspaceAgentPortShares(ctx, workspaceID)
 	m.queryLatencies.WithLabelValues("ListWorkspaceAgentPortShares").Observe(time.Since(start).Seconds())
 	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "ListWorkspaceAgentPortShares").Inc()
+	return r0, r1
+}
+
+func (m queryMetricsStore) ListWorkspacePublicPortMappings(ctx context.Context, workspaceID uuid.UUID) ([]database.WorkspacePublicPortMapping, error) {
+	start := time.Now()
+	r0, r1 := m.s.ListWorkspacePublicPortMappings(ctx, workspaceID)
+	m.queryLatencies.WithLabelValues("ListWorkspacePublicPortMappings").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "ListWorkspacePublicPortMappings").Inc()
+	return r0, r1
+}
+
+func (m queryMetricsStore) ListWorkspacePublicPortMappingsAll(ctx context.Context) ([]database.WorkspacePublicPortMapping, error) {
+	start := time.Now()
+	r0, r1 := m.s.ListWorkspacePublicPortMappingsAll(ctx)
+	m.queryLatencies.WithLabelValues("ListWorkspacePublicPortMappingsAll").Observe(time.Since(start).Seconds())
+	m.queryCounts.WithLabelValues(httpmw.ExtractHTTPRoute(ctx), httpmw.ExtractHTTPMethod(ctx), "ListWorkspacePublicPortMappingsAll").Inc()
 	return r0, r1
 }
 

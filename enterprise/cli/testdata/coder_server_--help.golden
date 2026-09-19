@@ -489,6 +489,10 @@ NETWORKING OPTIONS:
           Specifies the wildcard hostname to use for workspace applications in
           the form "*.example.com".
 
+      --workspace-public-ports-enabled bool, $CODER_WORKSPACE_PUBLIC_PORTS_ENABLED (default: false)
+          Enable explicit public HTTP previews on loopback ports 18000-18099
+          behind a trusted HTTPS ingress.
+
       --host-prefix-cookie bool, $CODER_HOST_PREFIX_COOKIE (default: false)
           Recommended to be enabled. Enables `__Host-` prefix for cookies to
           guarantee they are only set by the right domain. This change is

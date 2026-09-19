@@ -1742,6 +1742,20 @@ func (mr *MockStoreMockRecorder) DeleteWorkspaceAgentPortSharesByTemplate(ctx, t
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteWorkspaceAgentPortSharesByTemplate", reflect.TypeOf((*MockStore)(nil).DeleteWorkspaceAgentPortSharesByTemplate), ctx, templateID)
 }
 
+// DeleteWorkspacePublicPortMapping mocks base method.
+func (m *MockStore) DeleteWorkspacePublicPortMapping(ctx context.Context, id uuid.UUID) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteWorkspacePublicPortMapping", ctx, id)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteWorkspacePublicPortMapping indicates an expected call of DeleteWorkspacePublicPortMapping.
+func (mr *MockStoreMockRecorder) DeleteWorkspacePublicPortMapping(ctx, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteWorkspacePublicPortMapping", reflect.TypeOf((*MockStore)(nil).DeleteWorkspacePublicPortMapping), ctx, id)
+}
+
 // DeleteWorkspaceSSHGatewayCodexAPIKey mocks base method.
 func (m *MockStore) DeleteWorkspaceSSHGatewayCodexAPIKey(ctx context.Context) error {
 	m.ctrl.T.Helper()
@@ -7541,6 +7555,51 @@ func (mr *MockStoreMockRecorder) GetWorkspaceProxyByName(ctx, name any) *gomock.
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspaceProxyByName", reflect.TypeOf((*MockStore)(nil).GetWorkspaceProxyByName), ctx, name)
 }
 
+// GetWorkspacePublicPortMapping mocks base method.
+func (m *MockStore) GetWorkspacePublicPortMapping(ctx context.Context, id uuid.UUID) (database.WorkspacePublicPortMapping, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetWorkspacePublicPortMapping", ctx, id)
+	ret0, _ := ret[0].(database.WorkspacePublicPortMapping)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetWorkspacePublicPortMapping indicates an expected call of GetWorkspacePublicPortMapping.
+func (mr *MockStoreMockRecorder) GetWorkspacePublicPortMapping(ctx, id any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspacePublicPortMapping", reflect.TypeOf((*MockStore)(nil).GetWorkspacePublicPortMapping), ctx, id)
+}
+
+// GetWorkspacePublicPortMappingByPublicPort mocks base method.
+func (m *MockStore) GetWorkspacePublicPortMappingByPublicPort(ctx context.Context, publicPort int32) (database.WorkspacePublicPortMapping, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetWorkspacePublicPortMappingByPublicPort", ctx, publicPort)
+	ret0, _ := ret[0].(database.WorkspacePublicPortMapping)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetWorkspacePublicPortMappingByPublicPort indicates an expected call of GetWorkspacePublicPortMappingByPublicPort.
+func (mr *MockStoreMockRecorder) GetWorkspacePublicPortMappingByPublicPort(ctx, publicPort any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspacePublicPortMappingByPublicPort", reflect.TypeOf((*MockStore)(nil).GetWorkspacePublicPortMappingByPublicPort), ctx, publicPort)
+}
+
+// GetWorkspacePublicPortMappingByWorkspaceAgentPort mocks base method.
+func (m *MockStore) GetWorkspacePublicPortMappingByWorkspaceAgentPort(ctx context.Context, arg database.GetWorkspacePublicPortMappingByWorkspaceAgentPortParams) (database.WorkspacePublicPortMapping, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetWorkspacePublicPortMappingByWorkspaceAgentPort", ctx, arg)
+	ret0, _ := ret[0].(database.WorkspacePublicPortMapping)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetWorkspacePublicPortMappingByWorkspaceAgentPort indicates an expected call of GetWorkspacePublicPortMappingByWorkspaceAgentPort.
+func (mr *MockStoreMockRecorder) GetWorkspacePublicPortMappingByWorkspaceAgentPort(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWorkspacePublicPortMappingByWorkspaceAgentPort", reflect.TypeOf((*MockStore)(nil).GetWorkspacePublicPortMappingByWorkspaceAgentPort), ctx, arg)
+}
+
 // GetWorkspaceResourceByID mocks base method.
 func (m *MockStore) GetWorkspaceResourceByID(ctx context.Context, id uuid.UUID) (database.WorkspaceResource, error) {
 	m.ctrl.T.Helper()
@@ -9174,6 +9233,21 @@ func (mr *MockStoreMockRecorder) InsertWorkspaceProxy(ctx, arg any) *gomock.Call
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertWorkspaceProxy", reflect.TypeOf((*MockStore)(nil).InsertWorkspaceProxy), ctx, arg)
 }
 
+// InsertWorkspacePublicPortMapping mocks base method.
+func (m *MockStore) InsertWorkspacePublicPortMapping(ctx context.Context, arg database.InsertWorkspacePublicPortMappingParams) (database.WorkspacePublicPortMapping, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "InsertWorkspacePublicPortMapping", ctx, arg)
+	ret0, _ := ret[0].(database.WorkspacePublicPortMapping)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// InsertWorkspacePublicPortMapping indicates an expected call of InsertWorkspacePublicPortMapping.
+func (mr *MockStoreMockRecorder) InsertWorkspacePublicPortMapping(ctx, arg any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertWorkspacePublicPortMapping", reflect.TypeOf((*MockStore)(nil).InsertWorkspacePublicPortMapping), ctx, arg)
+}
+
 // InsertWorkspaceResource mocks base method.
 func (m *MockStore) InsertWorkspaceResource(ctx context.Context, arg database.InsertWorkspaceResourceParams) (database.WorkspaceResource, error) {
 	m.ctrl.T.Helper()
@@ -9682,6 +9756,36 @@ func (m *MockStore) ListWorkspaceAgentPortShares(ctx context.Context, workspaceI
 func (mr *MockStoreMockRecorder) ListWorkspaceAgentPortShares(ctx, workspaceID any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListWorkspaceAgentPortShares", reflect.TypeOf((*MockStore)(nil).ListWorkspaceAgentPortShares), ctx, workspaceID)
+}
+
+// ListWorkspacePublicPortMappings mocks base method.
+func (m *MockStore) ListWorkspacePublicPortMappings(ctx context.Context, workspaceID uuid.UUID) ([]database.WorkspacePublicPortMapping, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListWorkspacePublicPortMappings", ctx, workspaceID)
+	ret0, _ := ret[0].([]database.WorkspacePublicPortMapping)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListWorkspacePublicPortMappings indicates an expected call of ListWorkspacePublicPortMappings.
+func (mr *MockStoreMockRecorder) ListWorkspacePublicPortMappings(ctx, workspaceID any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListWorkspacePublicPortMappings", reflect.TypeOf((*MockStore)(nil).ListWorkspacePublicPortMappings), ctx, workspaceID)
+}
+
+// ListWorkspacePublicPortMappingsAll mocks base method.
+func (m *MockStore) ListWorkspacePublicPortMappingsAll(ctx context.Context) ([]database.WorkspacePublicPortMapping, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListWorkspacePublicPortMappingsAll", ctx)
+	ret0, _ := ret[0].([]database.WorkspacePublicPortMapping)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListWorkspacePublicPortMappingsAll indicates an expected call of ListWorkspacePublicPortMappingsAll.
+func (mr *MockStoreMockRecorder) ListWorkspacePublicPortMappingsAll(ctx any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListWorkspacePublicPortMappingsAll", reflect.TypeOf((*MockStore)(nil).ListWorkspacePublicPortMappingsAll), ctx)
 }
 
 // LockChatAndBumpSnapshotVersion mocks base method.

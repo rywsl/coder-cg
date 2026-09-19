@@ -16977,6 +16977,123 @@ const docTemplate = `{
                 ]
             }
         },
+        "/api/v2/workspaces/{workspace}/public-port-mappings": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PortSharing"
+                ],
+                "summary": "List public workspace port mappings",
+                "operationId": "list-workspace-public-port-mappings",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Workspace ID",
+                        "name": "workspace",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.WorkspacePublicPortMappings"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "CoderSessionToken": []
+                    }
+                ]
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PortSharing"
+                ],
+                "summary": "Create public workspace port mapping",
+                "operationId": "create-workspace-public-port-mapping",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Workspace ID",
+                        "name": "workspace",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Public port mapping",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.CreateWorkspacePublicPortMappingRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/codersdk.WorkspacePublicPortMapping"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "CoderSessionToken": []
+                    }
+                ]
+            }
+        },
+        "/api/v2/workspaces/{workspace}/public-port-mappings/{mapping}": {
+            "delete": {
+                "tags": [
+                    "PortSharing"
+                ],
+                "summary": "Delete public workspace port mapping",
+                "operationId": "delete-workspace-public-port-mapping",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Workspace ID",
+                        "name": "workspace",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "Mapping ID",
+                        "name": "mapping",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "CoderSessionToken": []
+                    }
+                ]
+            }
+        },
         "/api/v2/workspaces/{workspace}/resolve-autostart": {
             "get": {
                 "produces": [
@@ -23316,6 +23433,30 @@ const docTemplate = `{
                 }
             }
         },
+        "codersdk.CreateWorkspacePublicPortMappingRequest": {
+            "type": "object",
+            "properties": {
+                "agent_name": {
+                    "type": "string"
+                },
+                "protocol": {
+                    "type": "string",
+                    "enum": [
+                        "http",
+                        "https"
+                    ]
+                },
+                "remote_port": {
+                    "type": "integer"
+                },
+                "share_level": {
+                    "type": "string",
+                    "enum": [
+                        "public"
+                    ]
+                }
+            }
+        },
         "codersdk.CreateWorkspaceRequest": {
             "description": "CreateWorkspaceRequest provides options for creating a new workspace. Only one of TemplateID or TemplateVersionID can be specified, not both. If TemplateID is specified, the active version of the template will be used. Workspace names: - Must start with a letter or number - Can only contain letters, numbers, and hyphens - Cannot contain spaces or special characters - Cannot be named ` + "`" + `new` + "`" + ` or ` + "`" + `create` + "`" + ` - Must be unique within your workspaces - Maximum length of 32 characters",
             "type": "object",
@@ -23908,6 +24049,9 @@ const docTemplate = `{
                 },
                 "workspace_prebuilds": {
                     "$ref": "#/definitions/codersdk.PrebuildsConfig"
+                },
+                "workspace_public_ports_enabled": {
+                    "type": "boolean"
                 },
                 "workspace_ssh_gateway": {
                     "$ref": "#/definitions/codersdk.WorkspaceSSHGatewayConfig"
@@ -33119,6 +33263,88 @@ const docTemplate = `{
                 },
                 "status": {
                     "$ref": "#/definitions/codersdk.ProxyHealthStatus"
+                }
+            }
+        },
+        "codersdk.WorkspacePublicPortMapping": {
+            "type": "object",
+            "properties": {
+                "agent_name": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "created_by": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "organization_id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "protocol": {
+                    "type": "string",
+                    "enum": [
+                        "http",
+                        "https"
+                    ]
+                },
+                "public_port": {
+                    "type": "integer"
+                },
+                "remote_port": {
+                    "type": "integer"
+                },
+                "share_level": {
+                    "type": "string",
+                    "enum": [
+                        "public"
+                    ]
+                },
+                "state": {
+                    "type": "string",
+                    "enum": [
+                        "ready",
+                        "unavailable",
+                        "proxy_error",
+                        "ingress_error",
+                        "disabled"
+                    ]
+                },
+                "updated_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "workspace_agent_id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "workspace_id": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            }
+        },
+        "codersdk.WorkspacePublicPortMappings": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "mappings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/codersdk.WorkspacePublicPortMapping"
+                    }
                 }
             }
         },

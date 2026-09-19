@@ -4301,6 +4301,25 @@ CREATE SEQUENCE workspace_proxies_region_id_seq
 
 ALTER SEQUENCE workspace_proxies_region_id_seq OWNED BY workspace_proxies.region_id;
 
+CREATE TABLE workspace_public_port_mappings (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    organization_id uuid NOT NULL,
+    workspace_id uuid NOT NULL,
+    workspace_agent_id uuid NOT NULL,
+    agent_name text NOT NULL,
+    remote_port integer NOT NULL,
+    public_port integer NOT NULL,
+    protocol text NOT NULL,
+    share_level text DEFAULT 'public'::text NOT NULL,
+    created_by uuid NOT NULL,
+    created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    CONSTRAINT workspace_public_port_mappings_protocol_check CHECK ((protocol = ANY (ARRAY['http'::text, 'https'::text]))),
+    CONSTRAINT workspace_public_port_mappings_public_port_check CHECK (((public_port >= 18000) AND (public_port <= 18099))),
+    CONSTRAINT workspace_public_port_mappings_remote_port_check CHECK (((remote_port >= 1) AND (remote_port <= 65535))),
+    CONSTRAINT workspace_public_port_mappings_share_level_check CHECK ((share_level = 'public'::text))
+);
+
 CREATE TABLE workspace_resource_metadata (
     workspace_resource_id uuid NOT NULL,
     key character varying(1024) NOT NULL,
@@ -4842,6 +4861,15 @@ ALTER TABLE ONLY workspace_proxies
 ALTER TABLE ONLY workspace_proxies
     ADD CONSTRAINT workspace_proxies_region_id_unique UNIQUE (region_id);
 
+ALTER TABLE ONLY workspace_public_port_mappings
+    ADD CONSTRAINT workspace_public_port_mappings_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY workspace_public_port_mappings
+    ADD CONSTRAINT workspace_public_port_mappings_public_port_key UNIQUE (public_port);
+
+ALTER TABLE ONLY workspace_public_port_mappings
+    ADD CONSTRAINT workspace_public_ports_workspace_agent_port_key UNIQUE (workspace_id, agent_name, remote_port);
+
 ALTER TABLE ONLY workspace_resource_metadata
     ADD CONSTRAINT workspace_resource_metadata_name UNIQUE (workspace_resource_id, key);
 
@@ -5197,6 +5225,10 @@ CREATE INDEX workspace_modules_created_at_idx ON workspace_modules USING btree (
 CREATE INDEX workspace_next_start_at_idx ON workspaces USING btree (next_start_at) WHERE (deleted = false);
 
 CREATE UNIQUE INDEX workspace_proxies_lower_name_idx ON workspace_proxies USING btree (lower(name)) WHERE (deleted = false);
+
+CREATE INDEX workspace_public_port_mappings_organization_idx ON workspace_public_port_mappings USING btree (organization_id);
+
+CREATE INDEX workspace_public_port_mappings_workspace_idx ON workspace_public_port_mappings USING btree (workspace_id);
 
 CREATE INDEX workspace_resources_job_id_idx ON workspace_resources USING btree (job_id);
 
@@ -5804,6 +5836,18 @@ ALTER TABLE ONLY workspace_local_connectors
 
 ALTER TABLE ONLY workspace_modules
     ADD CONSTRAINT workspace_modules_job_id_fkey FOREIGN KEY (job_id) REFERENCES provisioner_jobs(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY workspace_public_port_mappings
+    ADD CONSTRAINT workspace_public_port_mappings_created_by_fkey FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY workspace_public_port_mappings
+    ADD CONSTRAINT workspace_public_port_mappings_organization_id_fkey FOREIGN KEY (organization_id) REFERENCES organizations(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY workspace_public_port_mappings
+    ADD CONSTRAINT workspace_public_port_mappings_workspace_agent_id_fkey FOREIGN KEY (workspace_agent_id) REFERENCES workspace_agents(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY workspace_public_port_mappings
+    ADD CONSTRAINT workspace_public_port_mappings_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY workspace_resource_metadata
     ADD CONSTRAINT workspace_resource_metadata_workspace_resource_id_fkey FOREIGN KEY (workspace_resource_id) REFERENCES workspace_resources(id) ON DELETE CASCADE;
